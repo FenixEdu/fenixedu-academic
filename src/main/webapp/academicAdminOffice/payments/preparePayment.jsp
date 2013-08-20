@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:define id="personId" name="paymentsManagementDTO" property="person.idInternal"/>
+<bean:define id="personId" name="paymentsManagementDTO" property="person.externalId"/>
 <fr:form action="<%="/payments.do?personId=" + personId %>">
 	
 

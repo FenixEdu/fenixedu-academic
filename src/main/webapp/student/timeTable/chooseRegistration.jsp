@@ -14,7 +14,7 @@
        		<p class="mtop2">
        			<bean:message  key="label.studentCurricularPlan"/>
             	   	<html:select property="registrationId">
-       				<html:options collection="registrations" property="idInternal" labelProperty="degreeNameWithDegreeCurricularPlanName"/>
+       				<html:options collection="registrations" property="externalId" labelProperty="degreeNameWithDegreeCurricularPlanName"/>
        			</html:select>
       	 	</p>
        

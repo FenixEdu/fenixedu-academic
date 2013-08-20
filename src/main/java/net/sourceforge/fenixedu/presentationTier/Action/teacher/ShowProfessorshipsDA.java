@@ -25,6 +25,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "teacher", path = "/showProfessorships", input = "/showProfessorships.do?method=list",
         attribute = "showProfessorshipsForm", formBean = "showProfessorshipsForm", scope = "request", validate = false,
@@ -44,10 +45,11 @@ public class ShowProfessorshipsDA extends FenixDispatchAction {
         final ExecutionSemester selectedExecutionPeriod;
         if (executionPeriodIDString == null) {
             selectedExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
+            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
         } else if (executionPeriodIDString.length() > 0) {
-            selectedExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodIDString));
-            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+            selectedExecutionPeriod = AbstractDomainObject.fromExternalId(executionPeriodIDString);
+            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
         } else {
             selectedExecutionPeriod = null;
             dynaActionForm.set("executionPeriodID", "");

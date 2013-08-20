@@ -6,8 +6,8 @@
 
 <h2><strong><bean:message key="label.optionalCurricularCourses.move" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
 
-<bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="idInternal" />
-<bean:define id="url">/optionalCurricularCoursesLocation.do?scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
+<bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="externalId" />
+<bean:define id="url">/optionalCurricularCoursesLocation.do?scpID=<bean:write name="studentCurricularPlan" property="externalId" /></bean:define>
 
 <fr:form action="<%= url.toString() %>">
 	<input type="hidden" name="method" />

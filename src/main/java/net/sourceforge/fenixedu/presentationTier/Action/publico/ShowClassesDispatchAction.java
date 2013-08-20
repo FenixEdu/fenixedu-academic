@@ -34,6 +34,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "publico", path = "/showClasses", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "show-classes-list", path = "df.page.showClassesList") })
@@ -49,7 +50,7 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
     public Degree getDegree(HttpServletRequest request) throws FenixActionException {
         final Degree degree = ShowDegreeSiteAction.getDegree(request);
         if (degree != null) {
-            request.setAttribute("degreeID", degree.getIdInternal());
+            request.setAttribute("degreeID", degree.getExternalId());
             request.setAttribute("degree", degree);
         }
         return degree;
@@ -61,9 +62,9 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
 
         getInfoDegreeCurricularPlan(request, degree);
 
-        final Integer executionPeriodID =
-                ((InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD)).getIdInternal();
-        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        final String executionPeriodID =
+                ((InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD)).getExternalId();
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
 
         if (executionSemester != null) {
             final ExecutionSemester nextExecutionPeriod = executionSemester.getNextExecutionPeriod();
@@ -143,7 +144,7 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
 
     private void getInfoDegreeCurricularPlan(HttpServletRequest request, Degree degree) {
 
-        InfoDegree infoDegree = ReadDegreeByOID.run(degree.getIdInternal());
+        InfoDegree infoDegree = ReadDegreeByOID.run(degree.getExternalId());
         request.setAttribute("infoDegree", infoDegree);
     }
 

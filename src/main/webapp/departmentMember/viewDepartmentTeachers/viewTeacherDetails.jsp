@@ -101,7 +101,7 @@
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.common.courseDegrees']}" />
 					</f:facet>
-					<h:outputText value="#{viewDepartmentTeachers.lecturedDegreeExecutionCourseDegreeNames[lecturedCourse.idInternal]}" />
+					<h:outputText value="#{viewDepartmentTeachers.lecturedDegreeExecutionCourseDegreeNames[lecturedCourse.externalId]}" />
 				</h:column>
 			</h:dataTable>
 		</h:panelGroup>
@@ -137,7 +137,7 @@
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.common.courseDegrees']}" />
 					</f:facet>
-					<h:outputText value="#{viewDepartmentTeachers.lecturedMasterDegreeExecutionCourseDegreeNames[lecturedCourse.idInternal]}" />
+					<h:outputText value="#{viewDepartmentTeachers.lecturedMasterDegreeExecutionCourseDegreeNames[lecturedCourse.externalId]}" />
 				</h:column>
 			</h:dataTable>
 		</h:panelGroup>

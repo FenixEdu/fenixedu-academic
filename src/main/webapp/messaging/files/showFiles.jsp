@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 
-<bean:define id="unitID" name="unit" property="idInternal"/>
+<bean:define id="unitID" name="unit" property="externalId"/>
 
 <em>
 	<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.portal"/>
@@ -48,7 +48,7 @@
 <fr:view name="unit" property="unitFileTags">
 	<fr:layout name="tag-search">
 		<fr:property name="classes" value="tcloud"/>
-		<fr:property name="linkFormat" value="<%= "/viewFiles.do?method=viewFilesByTag&unitId=${unit.idInternal}" + sortUrlParameter %>"/>
+		<fr:property name="linkFormat" value="<%= "/viewFiles.do?method=viewFilesByTag&unitId=${unit.externalId}" + sortUrlParameter %>"/>
 		<fr:property name="popularCount" value="10"/>
 		<fr:property name="minimumLevel" value="0.4"/>
 		<fr:property name="sortBy" value="name"/>
@@ -98,7 +98,7 @@ pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
 	<bean:message key="label.unitFileTags" bundle="RESEARCHER_RESOURCES"/>: 
 	<fr:view name="unit" property="unitFileTags">
 		<fr:layout name="tag-count">
-			<fr:property name="linkFormat" value="<%= "/viewFiles.do?method=viewFilesByTag&selectedTags=${name}&unitId=${unit.idInternal}" %>"/>
+			<fr:property name="linkFormat" value="<%= "/viewFiles.do?method=viewFilesByTag&selectedTags=${name}&unitId=${unit.externalId}" %>"/>
 			<fr:property name="showAllUrl" value="<%= "/viewFiles.do?method=viewFiles&unitId=" + unitID%>"/>
 			<fr:property name="sortBy" value="name"/>
 		</fr:layout>

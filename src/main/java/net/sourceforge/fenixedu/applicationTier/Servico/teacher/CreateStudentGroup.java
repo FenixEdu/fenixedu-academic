@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author ansr & scpo
@@ -34,15 +34,15 @@ public class CreateStudentGroup {
         return studentList;
     }
 
-    protected Boolean run(Integer executionCourseID, Integer groupNumber, Integer groupingID, Integer shiftID,
-            List studentUserNames) throws FenixServiceException {
-        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupingID);
+    protected Boolean run(String executionCourseID, Integer groupNumber, String groupingID, String shiftID, List studentUserNames)
+            throws FenixServiceException {
+        final Grouping grouping = AbstractDomainObject.fromExternalId(groupingID);
 
         if (grouping == null) {
             throw new FenixServiceException();
         }
 
-        Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftID);
+        Shift shift = AbstractDomainObject.fromExternalId(shiftID);
 
         List studentList = buildStudentList(studentUserNames, grouping);
 
@@ -56,8 +56,8 @@ public class CreateStudentGroup {
     private static final CreateStudentGroup serviceInstance = new CreateStudentGroup();
 
     @Service
-    public static Boolean runCreateStudentGroup(Integer executionCourseID, Integer groupNumber, Integer groupingID,
-            Integer shiftID, List studentUserNames) throws FenixServiceException, NotAuthorizedException {
+    public static Boolean runCreateStudentGroup(String executionCourseID, Integer groupNumber, String groupingID, String shiftID,
+            List studentUserNames) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID, groupNumber, groupingID, shiftID, studentUserNames);
     }

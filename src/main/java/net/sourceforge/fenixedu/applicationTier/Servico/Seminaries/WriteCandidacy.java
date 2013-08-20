@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.domain.Seminaries.Modality;
@@ -19,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt Created at
@@ -32,27 +32,27 @@ public class WriteCandidacy {
         candidacy.setMotivation(infoCandidacy.getMotivation());
 
         // Modality
-        final Modality modality = RootDomainObject.getInstance().readModalityByOID(infoCandidacy.getInfoModality().getIdInternal());
+        final Modality modality = AbstractDomainObject.fromExternalId(infoCandidacy.getInfoModality().getExternalId());
         candidacy.setModality(modality);
 
         // Registration
-        final Registration readStudent = RootDomainObject.getInstance().readRegistrationByOID(infoCandidacy.getInfoStudent().getIdInternal());
+        final Registration readStudent = AbstractDomainObject.fromExternalId(infoCandidacy.getInfoStudent().getExternalId());
         candidacy.setStudent(readStudent);
 
         // Seminary
-        final Seminary readSeminary = RootDomainObject.getInstance().readSeminaryByOID(infoCandidacy.getInfoSeminary().getIdInternal());
+        final Seminary readSeminary = AbstractDomainObject.fromExternalId(infoCandidacy.getInfoSeminary().getExternalId());
         candidacy.setSeminary(readSeminary);
 
         // Curricular Course
         final CurricularCourse readCurricularCourse =
-                (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(infoCandidacy.getCurricularCourse().getIdInternal());
+                (CurricularCourse) AbstractDomainObject.fromExternalId(infoCandidacy.getCurricularCourse().getExternalId());
         candidacy.setCurricularCourse(readCurricularCourse);
 
         // Theme
-        if (modality.getIdInternal().equals(infoCandidacy.getInfoModality().getIdInternal())) {
+        if (modality.getExternalId().equals(infoCandidacy.getInfoModality().getExternalId())) {
             candidacy.setTheme(null);
         } else {
-            final Theme readTheme = RootDomainObject.getInstance().readThemeByOID(infoCandidacy.getTheme().getIdInternal());
+            final Theme readTheme = AbstractDomainObject.fromExternalId(infoCandidacy.getTheme().getExternalId());
             candidacy.setTheme(readTheme);
         }
         if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue()) {
@@ -65,7 +65,7 @@ public class WriteCandidacy {
 
             caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
 
-            final CaseStudy caseStudy = RootDomainObject.getInstance().readCaseStudyByOID(infoCaseStudyChoice.getCaseStudy().getIdInternal());
+            final CaseStudy caseStudy = AbstractDomainObject.fromExternalId(infoCaseStudyChoice.getCaseStudy().getExternalId());
             caseStudyChoice.setCaseStudy(caseStudy);
 
             caseStudyChoice.setCandidacy(candidacy);

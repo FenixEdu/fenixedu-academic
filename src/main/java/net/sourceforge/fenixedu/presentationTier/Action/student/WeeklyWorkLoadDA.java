@@ -103,7 +103,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
         final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
         final Set<ExecutionSemester> sortedExecutionPeriods = new TreeSet<ExecutionSemester>(executionSemesters);
@@ -111,11 +111,11 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        final Integer executionPeriodID = getExecutionPeriodID(dynaActionForm);
+        final String executionPeriodID = getExecutionPeriodID(dynaActionForm);
         final ExecutionSemester selectedExecutionPeriod = findExecutionPeriod(executionSemesters, executionPeriodID);
         request.setAttribute("selectedExecutionPeriod", selectedExecutionPeriod);
 
-        dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+        dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
 
         // if (selectedExecutionPeriod.isCurrent()) {
         // request.setAttribute("weeks", getWeeks(selectedExecutionPeriod));
@@ -180,7 +180,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     private Attends findFirstAttends(final HttpServletRequest request, final ExecutionSemester selectedExecutionPeriod)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         for (final Registration registration : getUserView(request).getPerson().getStudents()) {
             for (final Attends attend : registration.getOrderedAttends()) {
                 final ExecutionCourse executionCourse = attend.getExecutionCourse();
@@ -193,10 +193,10 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         final WeeklyWorkLoadBean weeklyWorkLoadBean = getWeeklyWorkLoadBean(request);
 
-        final Integer attendsID = weeklyWorkLoadBean.getAttendsID();
+        final String attendsID = weeklyWorkLoadBean.getAttendsID();
         final Integer contact = weeklyWorkLoadBean.getContact();
         final Integer autonomousStudy = weeklyWorkLoadBean.getAutonomousStudy();
         final Integer other = weeklyWorkLoadBean.getOther();
@@ -207,10 +207,10 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     public ActionForward createFromForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        final Integer attendsID = getInteger(dynaActionForm, "attendsID");
+        final String attendsID = dynaActionForm.getString("attendsID");
         final Integer contact = getInteger(dynaActionForm, "contact");
         final Integer autonomousStudy = getInteger(dynaActionForm, "autonomousStudy");
         final Integer other = getInteger(dynaActionForm, "other");
@@ -224,8 +224,8 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         return prepare(mapping, form, request, response);
     }
 
-    public void create(final HttpServletRequest request, final Integer attendsID, final Integer contact,
-            final Integer autonomousStudy, final Integer other) throws  FenixServiceException {
+    public void create(final HttpServletRequest request, final String attendsID, final Integer contact,
+            final Integer autonomousStudy, final Integer other) throws FenixServiceException {
 
         CreateWeeklyWorkLoad.run(attendsID, contact, autonomousStudy, other);
     }
@@ -235,19 +235,18 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         return (WeeklyWorkLoadBean) viewState.getMetaObject().getObject();
     }
 
-    private Integer getExecutionPeriodID(final DynaActionForm dynaActionForm) {
+    private String getExecutionPeriodID(final DynaActionForm dynaActionForm) {
         final String exeutionPeriodIDString = dynaActionForm.getString("executionPeriodID");
-        return exeutionPeriodIDString == null || exeutionPeriodIDString.length() == 0 ? null : Integer
-                .valueOf(exeutionPeriodIDString);
+        return exeutionPeriodIDString == null || exeutionPeriodIDString.length() == 0 ? null : exeutionPeriodIDString;
     }
 
     private ExecutionSemester findExecutionPeriod(final Collection<ExecutionSemester> executionSemesters,
-            final Integer executionPeriodID) {
+            final String executionPeriodID) {
         for (final ExecutionSemester executionSemester : executionSemesters) {
             if (executionPeriodID == null && executionSemester.getState().equals(PeriodState.CURRENT)) {
                 return executionSemester;
             }
-            if (executionPeriodID != null && executionSemester.getIdInternal().equals(executionPeriodID)) {
+            if (executionPeriodID != null && executionSemester.getExternalId().equals(executionPeriodID)) {
                 return executionSemester;
             }
         }

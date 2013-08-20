@@ -5,7 +5,7 @@
       <form-beans type="org.apache.struts.action.ActionFormBean">
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentReportForm">
                   <form-property type="java.lang.Integer" name="page"></form-property>
-                  <form-property initial="0" type="java.lang.Integer" name="idInternal"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="externalId"></form-property>
                   <form-property type="java.lang.String" name="studentReport"></form-property>
                   <form-property type="java.lang.String" name="strongPoints"></form-property>
                   <form-property type="java.lang.String" name="weakPoints"></form-property>

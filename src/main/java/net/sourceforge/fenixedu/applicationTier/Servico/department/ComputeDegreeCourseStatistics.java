@@ -11,15 +11,14 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
 
-    public List<DegreeCourseStatisticsDTO> run(Integer competenceCourseId, Integer executionPeriodId)
-            throws FenixServiceException {
-        CompetenceCourse competenceCourse = RootDomainObject.getInstance().readCompetenceCourseByOID(competenceCourseId);
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+    public List<DegreeCourseStatisticsDTO> run(String competenceCourseId, String executionPeriodId) throws FenixServiceException {
+        CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseId);
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
         Map<Degree, List<CurricularCourse>> groupedCourses = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree();
 
         List<DegreeCourseStatisticsDTO> results = new ArrayList<DegreeCourseStatisticsDTO>();
@@ -33,7 +32,7 @@ public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
             }
 
             DegreeCourseStatisticsDTO degreeCourseStatistics = new DegreeCourseStatisticsDTO();
-            degreeCourseStatistics.setIdInternal(degree.getIdInternal());
+            degreeCourseStatistics.setExternalId(degree.getExternalId());
             degreeCourseStatistics.setName(degree.getSigla());
             createCourseStatistics(degreeCourseStatistics, enrollments);
 
@@ -48,7 +47,8 @@ public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
     private static final ComputeDegreeCourseStatistics serviceInstance = new ComputeDegreeCourseStatistics();
 
     @Service
-    public static List<DegreeCourseStatisticsDTO> runComputeDegreeCourseStatistics(Integer competenceCourseId, Integer executionPeriodId) throws FenixServiceException  {
+    public static List<DegreeCourseStatisticsDTO> runComputeDegreeCourseStatistics(String competenceCourseId,
+            String executionPeriodId) throws FenixServiceException {
         return serviceInstance.run(competenceCourseId, executionPeriodId);
     }
 

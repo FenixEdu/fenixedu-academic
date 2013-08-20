@@ -42,7 +42,7 @@
             <td>    
  				<html:select bundle="HTMLALT_RESOURCES" altKey="select.goalExecutionCourseId" property="goalExecutionCourseId" size="1">
   	 				<option value=""><bean:message key="label.choose.executionCourse"/></option>
- 					<html:options	property="idInternal" labelProperty="nome" collection="exeCourseList" />
+ 					<html:options	property="externalId" labelProperty="nome" collection="exeCourseList" />
   	 			</html:select>             
             </td>
         </tr>

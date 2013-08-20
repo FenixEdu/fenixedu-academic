@@ -58,8 +58,8 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
             throws Exception {
         ContextUtils.setCurricularYearsContext(request);
 
-        Integer executionCourseOID =
-                ((InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE)).getIdInternal();
+        String executionCourseOID =
+                ((InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE)).getExternalId();
 
         InfoExecutionCourse executionCourse;
         try {
@@ -80,7 +80,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         request.setAttribute(PresentationConstants.LABLELIST_SEASONS, examSeasons);
 
         DynaValidatorForm createExamForm = (DynaValidatorForm) form;
-        String[] executionCourseIDList = { executionCourse.getIdInternal().toString() };
+        String[] executionCourseIDList = { executionCourse.getExternalId().toString() };
         createExamForm.set("executionCourses", executionCourseIDList);
 
         List scopeIDList = new ArrayList();
@@ -88,7 +88,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         while (iter1.hasNext()) {
             Iterator iter2 = ((InfoCurricularCourse) iter1.next()).getInfoScopes().iterator();
             while (iter2.hasNext()) {
-                scopeIDList.add(((InfoCurricularCourseScope) iter2.next()).getIdInternal().toString());
+                scopeIDList.add(((InfoCurricularCourseScope) iter2.next()).getExternalId().toString());
             }
         }
         String[] scopeIDArray = CollectionUtils.toArrayOfString(scopeIDList);
@@ -200,7 +200,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(element));
+                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(element);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -222,7 +222,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         while (iter2.hasNext()) {
             Iterator iter3 = ((InfoCurricularCourse) iter2.next()).getInfoScopes().iterator();
             while (iter3.hasNext()) {
-                scopeIDList.add(((InfoCurricularCourseScope) iter3.next()).getIdInternal().toString());
+                scopeIDList.add(((InfoCurricularCourseScope) iter3.next()).getExternalId().toString());
             }
         }
         scopeIDArray = CollectionUtils.toArrayOfString(scopeIDList);
@@ -235,7 +235,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             for (String room : rooms) {
 
-                InfoRoom infoRoom = ReadRoomByOID.run(new Integer(room));
+                InfoRoom infoRoom = ReadRoomByOID.run(room);
 
                 roomNames.add(infoRoom);
             }
@@ -267,7 +267,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(element));
+                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(element);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -293,7 +293,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             for (String room : rooms) {
 
-                InfoRoom infoRoom = ReadRoomByOID.run(new Integer(room));
+                InfoRoom infoRoom = ReadRoomByOID.run(room);
 
                 roomNames.add(infoRoom);
             }
@@ -386,7 +386,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(element));
+                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(element);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -411,7 +411,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             for (String room : rooms) {
 
-                InfoRoom infoRoom = ReadRoomByOID.run(new Integer(room));
+                InfoRoom infoRoom = ReadRoomByOID.run(room);
 
                 roomNames.add(infoRoom);
             }
@@ -424,7 +424,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
     public ActionForward prepareForEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer infoExamId = (Integer) request.getAttribute(PresentationConstants.EXAM_OID);
+        String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
         request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
         ContextUtils.setCurricularYearsContext(request);
@@ -438,7 +438,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(element.getIdInternal());
+                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(element.getExternalId());
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -458,7 +458,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
         String[] executionCourseIDList = new String[executionCourseList.size()];
         for (int i = 0; i < executionCourseList.size(); i++) {
-            executionCourseIDList[i] = ((InfoExecutionCourse) executionCourseList.get(i)).getIdInternal().toString();
+            executionCourseIDList[i] = ((InfoExecutionCourse) executionCourseList.get(i)).getExternalId().toString();
         }
         createExamForm.set("executionCourses", executionCourseIDList);
 
@@ -467,7 +467,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         Object[] infoRoomsArray = new Object[roomsList.size()];
         for (int i = 0; i < roomsList.size(); i++) {
             infoRoomsArray[i] = roomsList.get(i).getInfoRoom();
-            roomsIDArray[i] = ((InfoRoom) infoRoomsArray[i]).getIdInternal().toString();
+            roomsIDArray[i] = ((InfoRoom) infoRoomsArray[i]).getExternalId().toString();
         }
         createExamForm.set("rooms", roomsIDArray);
         request.setAttribute("rooms", infoRoomsArray);
@@ -475,7 +475,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         List scopeList = infoExam.getAssociatedCurricularCourseScope();
         String[] scopeIDArray = new String[scopeList.size()];
         for (int i = 0; i < scopeList.size(); i++) {
-            scopeIDArray[i] = ((InfoCurricularCourseScope) scopeList.get(i)).getIdInternal().toString();
+            scopeIDArray[i] = ((InfoCurricularCourseScope) scopeList.get(i)).getExternalId().toString();
         }
         createExamForm.set("scopes", scopeIDArray);
 
@@ -607,7 +607,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(element));
+                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(element);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -681,7 +681,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             for (String room : rooms) {
 
-                InfoRoom infoRoom = ReadRoomByOID.run(Integer.valueOf(room));
+                InfoRoom infoRoom = ReadRoomByOID.run(room);
 
                 selectedRooms.add(infoRoom);
             }

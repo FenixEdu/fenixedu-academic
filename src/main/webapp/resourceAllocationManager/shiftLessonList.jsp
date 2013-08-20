@@ -70,11 +70,11 @@
 				return confirm('<bean:message key="message.confirm.delete.lesson"/>')
 			</bean:define>			
 			<logic:iterate id="lesson" name="shift" property="infoLessons">
-				<bean:define id="lessonOID" name="lesson" property="idInternal"/>
+				<bean:define id="lessonOID" name="lesson" property="externalId"/>
 				<tr>
               		<td>
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
-							<bean:write name="lesson" property="idInternal"/>
+							<bean:write name="lesson" property="externalId"/>
 						</html:multibox>
 					</td>
 					<td>

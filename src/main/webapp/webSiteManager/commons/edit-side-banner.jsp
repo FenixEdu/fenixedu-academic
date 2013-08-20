@@ -34,7 +34,7 @@
     </div>
 </fr:hasMessages>
 
-<bean:define id="oid" name="site" property="idInternal"/>
+<bean:define id="oid" name="site" property="externalId"/>
 <fr:form action="<%= String.format("%s?method=sideBanner&amp;%s", actionName, context) %>">
     <fr:edit id="editSideBanner" name="site" slot="sideBanner">
         <fr:layout name="rich-text">

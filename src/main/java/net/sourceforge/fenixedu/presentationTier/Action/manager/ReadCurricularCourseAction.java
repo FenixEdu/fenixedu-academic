@@ -54,7 +54,7 @@ public class ReadCurricularCourseAction extends FenixAction {
             throws FenixActionException {
 
         IUserView userView = UserView.getUser();
-        Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+        String curricularCourseId = request.getParameter("curricularCourseId");
 
         request.setAttribute("degreeId", request.getParameter("degreeId"));
         request.setAttribute("degreeCurricularPlanId", request.getParameter("degreeCurricularPlanId"));
@@ -63,8 +63,7 @@ public class ReadCurricularCourseAction extends FenixAction {
         InfoCurricularCourse infoCurricularCourse = null;
 
         try {
-            infoCurricularCourse =
-                    (InfoCurricularCourse) ReadCurricularCourse.runReadCurricularCourse( curricularCourseId );
+            infoCurricularCourse = ReadCurricularCourse.runReadCurricularCourse(curricularCourseId);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingCurricularCourse", "", e);

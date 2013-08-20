@@ -7,7 +7,7 @@
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="title.manager.executionDegreeManagement.announcements.swap"/></h2>
 
-<bean:define id="sourceExecutionCourseId" name="bean" property="sourceExecutionCourse.idInternal"/>
+<bean:define id="sourceExecutionCourseId" name="bean" property="sourceExecutionCourse.externalId"/>
 <bean:define id="degreeName" name="bean" property="sourceExecutionCourse.degreePresentationString"/>
 
 <logic:messagesPresent message="true" property="success">
@@ -37,7 +37,7 @@
 	</strong>
 </p>
 
-<bean:define id="periodId" name="bean" property="sourceExecutionCourse.executionPeriod.idInternal"/>
+<bean:define id="periodId" name="bean" property="sourceExecutionCourse.executionPeriod.externalId"/>
 <bean:define id="periodName" name="bean" property="sourceExecutionCourse.executionPeriod.name"/>
 <bean:define id="periodYear" name="bean" property="sourceExecutionCourse.executionPeriod.executionYear.year"/>
 

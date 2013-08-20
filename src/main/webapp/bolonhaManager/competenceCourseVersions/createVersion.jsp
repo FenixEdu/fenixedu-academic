@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <bean:define id="competenceCourseID" name="bean"
-	property="competenceCourse.idInternal" />
+	property="competenceCourse.externalId" />
 <bean:define id="proposal"
 	value="<%= String.valueOf(request.getParameter("proposal") != null) %>" />
 

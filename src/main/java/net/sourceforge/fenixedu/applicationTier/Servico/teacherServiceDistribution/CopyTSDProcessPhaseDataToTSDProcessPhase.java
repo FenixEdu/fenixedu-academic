@@ -1,20 +1,19 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.CopyTSDProcessPhaseService;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CopyTSDProcessPhaseDataToTSDProcessPhase {
 
-    protected void run(Integer oldTSDProcessPhaseId, Integer newTSDProcessPhaseId) {
-        TSDProcessPhase oldTSDProcessPhase = RootDomainObject.getInstance().readTSDProcessPhaseByOID(oldTSDProcessPhaseId);
-        TSDProcessPhase newTSDProcessPhase = RootDomainObject.getInstance().readTSDProcessPhaseByOID(newTSDProcessPhaseId);
+    protected void run(String oldTSDProcessPhaseId, String newTSDProcessPhaseId) {
+        TSDProcessPhase oldTSDProcessPhase = AbstractDomainObject.fromExternalId(oldTSDProcessPhaseId);
+        TSDProcessPhase newTSDProcessPhase = AbstractDomainObject.fromExternalId(newTSDProcessPhaseId);
 
         CopyTSDProcessPhaseService service = CopyTSDProcessPhaseService.getInstance();
 
@@ -27,7 +26,7 @@ public class CopyTSDProcessPhaseDataToTSDProcessPhase {
             new CopyTSDProcessPhaseDataToTSDProcessPhase();
 
     @Service
-    public static void runCopyTSDProcessPhaseDataToTSDProcessPhase(Integer oldTSDProcessPhaseId, Integer newTSDProcessPhaseId)
+    public static void runCopyTSDProcessPhaseDataToTSDProcessPhase(String oldTSDProcessPhaseId, String newTSDProcessPhaseId)
             throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

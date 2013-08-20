@@ -23,17 +23,17 @@
               <form-property type="java.lang.String[]" name="creditsToDelete"></form-property>
         </form-bean>
       	<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="markSheetManagementForm">
-              <form-property type="java.lang.Integer" name="epID"></form-property>
-              <form-property type="java.lang.Integer" name="dID"></form-property>
-              <form-property type="java.lang.Integer" name="dcpID"></form-property>
-              <form-property type="java.lang.Integer" name="ccID"></form-property>
-              <form-property type="java.lang.Integer" name="msID"></form-property>
+              <form-property type="java.lang.String" name="epID"></form-property>
+              <form-property type="java.lang.String" name="dID"></form-property>
+              <form-property type="java.lang.String" name="dcpID"></form-property>
+              <form-property type="java.lang.String" name="ccID"></form-property>
+              <form-property type="java.lang.String" name="msID"></form-property>
               <form-property type="java.lang.String" name="tn"></form-property>
               <form-property type="java.lang.String" name="ed"></form-property>
               <form-property type="java.lang.String" name="mss"></form-property>
               <form-property type="java.lang.String" name="mst"></form-property>
-              <form-property type="java.lang.Integer" name="evaluationID"></form-property>
-              <form-property type="java.lang.Integer[]" name="evaluationsToRemove"></form-property>
+              <form-property type="java.lang.String" name="evaluationID"></form-property>
+              <form-property type="java.lang.String[]" name="evaluationsToRemove"></form-property>
         </form-bean>
         <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="markSheetSendMailForm">
               <form-property type="java.lang.String" name="method"></form-property>
@@ -62,7 +62,7 @@
               <form-property type="java.lang.String" name="parishOfResidence"></form-property>
               <form-property type="java.lang.String" name="districtSubdivisionOfResidence"></form-property>
               <form-property type="java.lang.String" name="districtOfResidence"></form-property>
-              <form-property type="java.lang.Integer" name="contributorId"></form-property>
+              <form-property type="java.lang.String" name="contributorId"></form-property>
         </form-bean>
         <!-- Bean for The Choosing of a Contributor -->
         <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="chooseContributorForm">
@@ -87,7 +87,7 @@
               <form-property type="java.lang.String" name="select"></form-property>
               <form-property type="java.lang.String" name="studentNumber"></form-property>
               <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-              <form-property initial="0" type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+              <form-property initial="0" type="java.lang.String" name="degreeCurricularPlanID"></form-property>
               <form-property type="java.lang.String" name="organizedBy"></form-property>
               <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
               <form-property type="java.lang.String" name="viewType"></form-property>

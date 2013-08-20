@@ -41,7 +41,7 @@
 	
 		<logic:notEmpty name="searchPartyBean" property="party.parkingParty">
 			<bean:define id="parkingParty" name="searchPartyBean" property="party.parkingParty" type="net.sourceforge.fenixedu.domain.parking.ParkingParty"/>
-			<bean:define id="personID" name="parkingParty" property="party.idInternal" />
+			<bean:define id="personID" name="parkingParty" property="party.externalId" />
 			
 			<h3 class="separator2 mtop2"><bean:message key="label.parkUserInfo"/></h3>
 			<p>
@@ -58,22 +58,22 @@
 			</p>
 			--%>
 			<p class="mtop05">
-				<html:link page="<%= "/parking.do?method=prepareEditParkingParty&amp;addVehicle=false&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">
+				<html:link page="<%= "/parking.do?method=prepareEditParkingParty&amp;addVehicle=false&amp;parkingPartyID=" + parkingParty.getExternalId()%>">
 					<bean:message key="link.editUserCard" bundle="PARKING_RESOURCES"/>
 				</html:link>
 				<logic:notEmpty name="parkingParty" property="cardNumber">
 					<%--
-					<html:link target="printFrame" page="<%= "/parking.do?method=printParkingCard&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">
+					<html:link target="printFrame" page="<%= "/parking.do?method=printParkingCard&amp;parkingPartyID=" + parkingParty.getExternalId()%>">
 					<bean:message key="label.printCard" bundle="PARKING_RESOURCES"/>
 					</html:link>, 
 					--%>
-					 | <html:link target="printFrame" page="<%= "/parking.do?method=exportToPDFParkingCard&amp;parkingPartyID=" +  parkingParty.getIdInternal()%>">
+					 | <html:link target="printFrame" page="<%= "/parking.do?method=exportToPDFParkingCard&amp;parkingPartyID=" +  parkingParty.getExternalId()%>">
 					<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/></html:link>
 				</logic:notEmpty>
 
 				<bean:size id="historySize" name="parkingParty" property="party.parkingPartyHistories"/>
 				<logic:notEqual name="historySize" value="0">
-					 | <html:link page="<%= "/parking.do?method=showParkingPartyHistory&amp;idInternal=" +  parkingParty.getIdInternal()%>">
+					 | <html:link page="<%= "/parking.do?method=showParkingPartyHistory&amp;externalId=" +  parkingParty.getExternalId()%>">
 					<bean:message key="link.viewHistory" bundle="PARKING_RESOURCES"/></html:link>
 				</logic:notEqual>
 			</p>
@@ -205,7 +205,7 @@
 						<fr:property name="columnClasses" value="acenter,,,," />
 						<fr:property name="link(view)" value="/parking.do?method=showRequest" />
 						<fr:property name="key(view)" value="link.viewRequest" />
-						<fr:property name="param(view)" value="idInternal" />
+						<fr:property name="param(view)" value="externalId" />
 						<fr:property name="bundle(view)" value="PARKING_RESOURCES" />
 					</fr:layout>
 				</fr:view>
@@ -259,7 +259,7 @@
 				</logic:iterate>
 				<td class="nowrap" rowspan="<%= numberUnits %>">
 					<bean:define id="searchPartyBean" name="searchPartyBean" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean"/>
-					<bean:define id="url" type="java.lang.String">/parking.do?method=showParkingPartyRequests&amp;partyID=<bean:write name="person" property="idInternal"/>&amp;plateNumber=<bean:write name="searchPartyBean" property="carPlateNumber"/>&amp;parkingCardNumber=<bean:write name="searchPartyBean" property="parkingCardNumber"/></bean:define>
+					<bean:define id="url" type="java.lang.String">/parking.do?method=showParkingPartyRequests&amp;partyID=<bean:write name="person" property="externalId"/>&amp;plateNumber=<bean:write name="searchPartyBean" property="carPlateNumber"/>&amp;parkingCardNumber=<bean:write name="searchPartyBean" property="parkingCardNumber"/></bean:define>
 					<html:link page="<%= url %>"><bean:message key="link.viewUser" /></html:link>
 				</td>
 			</tr>

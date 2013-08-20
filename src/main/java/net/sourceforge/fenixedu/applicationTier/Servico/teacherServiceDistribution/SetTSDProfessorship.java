@@ -6,19 +6,19 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthoriza
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SetTSDProfessorship {
-    protected TSDProfessorship run(Integer tsdCourseId, Integer tsdTeacherId, Map<String, Object> tsdCourseParameters) {
+    protected TSDProfessorship run(String tsdCourseId, String tsdTeacherId, Map<String, Object> tsdCourseParameters) {
 
-        TSDCourse tsdCourse = RootDomainObject.getInstance().readTSDCourseByOID(tsdCourseId);
-        TSDTeacher tsdTeacher = RootDomainObject.getInstance().readTSDTeacherByOID(tsdTeacherId);
+        TSDCourse tsdCourse = AbstractDomainObject.fromExternalId(tsdCourseId);
+        TSDTeacher tsdTeacher = AbstractDomainObject.fromExternalId(tsdTeacherId);
         ShiftType type = ShiftType.valueOf((String) tsdCourseParameters.get("shiftType"));
 
         TSDProfessorship tsdProfessorship = tsdCourse.getTSDProfessorshipByTSDTeacherAndShiftType(tsdTeacher, type);
@@ -38,7 +38,7 @@ public class SetTSDProfessorship {
     private static final SetTSDProfessorship serviceInstance = new SetTSDProfessorship();
 
     @Service
-    public static TSDProfessorship runSetTSDProfessorship(Integer tsdCourseId, Integer tsdTeacherId,
+    public static TSDProfessorship runSetTSDProfessorship(String tsdCourseId, String tsdTeacherId,
             Map<String, Object> tsdCourseParameters) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

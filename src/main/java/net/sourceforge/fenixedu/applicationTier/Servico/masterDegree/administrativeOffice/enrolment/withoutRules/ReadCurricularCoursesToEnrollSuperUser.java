@@ -39,7 +39,7 @@ public class ReadCurricularCoursesToEnrollSuperUser extends ReadCurricularCourse
     @Service
     public static List<CurricularCourse2Enroll> runReadCurricularCoursesToEnrollSuperUser(
             final StudentCurricularPlan studentCurricularPlan, final DegreeType degreeType,
-            final ExecutionSemester executionSemester, final Integer executionDegreeID, final List<Integer> curricularYearsList,
+            final ExecutionSemester executionSemester, final String executionDegreeID, final List<Integer> curricularYearsList,
             final List<Integer> curricularSemestersList) throws FenixServiceException {
 
         DegreeAdministrativeOfficeSuperUserAuthorizationFilter.instance.execute();

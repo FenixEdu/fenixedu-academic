@@ -41,8 +41,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
             return unit;
         }
 
-        Integer unitId = getIdInternal(request, "unitID");
-        return (Unit) RootDomainObject.getInstance().readPartyByOID(unitId);
+        return getDomainObject(request, "unitID");
     }
 
     @Override
@@ -53,7 +52,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
     }
 
     public ActionForward createSite(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         Unit unit = getUnit(request);
 
         try {
@@ -73,7 +72,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
     public ActionForward prepareCreateEntryPoint(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("multiLanguageStringBean", getMultiLanguageString());
-        request.setAttribute("siteOid", getSite(request).getIdInternal());
+        request.setAttribute("siteOid", getSite(request).getExternalId());
         return mapping.findForward("createEntryPoint");
     }
 

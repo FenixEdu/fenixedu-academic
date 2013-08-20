@@ -37,7 +37,7 @@
 			<td>
 				<logic:iterate id="department" name="departments">
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.departmentIDs" property="departmentIDs" >
-						<bean:write name="department" property="idInternal"/>
+						<bean:write name="department" property="externalId"/>
 					</html:multibox>
 					<bean:write name="department" property="realName"/><br/>
 				</logic:iterate>

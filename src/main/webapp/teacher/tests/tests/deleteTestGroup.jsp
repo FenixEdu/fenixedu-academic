@@ -23,7 +23,7 @@
 	<li>
 		<html:link page="/tests/tests.do?method=deleteTestGroup"
 		           paramId="oid" paramName="testGroup"
-		           paramProperty="idInternal">
+		           paramProperty="externalId">
 			<bean:message key="message.delete" bundle="TESTS_RESOURCES" />
 		</html:link>
 	</li>

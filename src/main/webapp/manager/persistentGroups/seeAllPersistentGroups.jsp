@@ -33,13 +33,13 @@
 	   			<fr:property name="columnClasses" value="aleft,,,,"/>
 	   			
 	   			<fr:property name="link(edit)" value="<%= "/accessControlPersistentGroupsManagement.do?method=prepareEditPersistentGroup" %>"/>
-	            <fr:property name="param(edit)" value="idInternal/persistentGroupID"/>
+	            <fr:property name="param(edit)" value="externalId/persistentGroupID"/>
 		        <fr:property name="key(edit)" value="link.edit"/>
 	            <fr:property name="bundle(edit)" value="MANAGER_RESOURCES"/>
 	            <fr:property name="order(edit)" value="0"/>
 	            
 	            <fr:property name="link(delete)" value="<%= "/accessControlPersistentGroupsManagement.do?method=deletePersistentGroup" %>"/>
-	            <fr:property name="param(delete)" value="idInternal/persistentGroupID"/>
+	            <fr:property name="param(delete)" value="externalId/persistentGroupID"/>
 		        <fr:property name="key(delete)" value="link.delete"/>
 	            <fr:property name="bundle(delete)" value="MANAGER_RESOURCES"/>
 	            <fr:property name="order(delete)" value="0"/>                                           	           

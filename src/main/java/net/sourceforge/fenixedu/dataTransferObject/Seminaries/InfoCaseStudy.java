@@ -103,7 +103,7 @@ public class InfoCaseStudy extends InfoObject {
     public String toString() {
         String result = "[InfoCaseStudy:";
         result += "Name=" + this.getName() + ";";
-        result += "IdInternal=" + this.getIdInternal() + ";";
+        result += "ExternalId=" + this.getExternalId() + ";";
         result += "Code=" + this.getCode() + ";";
         result += "Description=" + this.getDescription() + "]";
         return result;

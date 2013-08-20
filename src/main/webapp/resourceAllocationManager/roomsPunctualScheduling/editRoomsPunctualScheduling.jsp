@@ -103,10 +103,10 @@
 
 			<bean:define id="deleteURL" value="" />
 			<logic:empty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
-				<bean:define id="deleteURL">/roomsPunctualScheduling.do?method=deleteRoomsPunctualScheduling&amp;genericEventID=<bean:write name="genericEvent" property="idInternal"/></bean:define>
+				<bean:define id="deleteURL">/roomsPunctualScheduling.do?method=deleteRoomsPunctualScheduling&amp;genericEventID=<bean:write name="genericEvent" property="externalId"/></bean:define>
 			</logic:empty>
 			<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
-				<bean:define id="deleteURL">/roomsReserveManagement.do?method=deleteRoomsPunctualScheduling&amp;genericEventID=<bean:write name="genericEvent" property="idInternal"/>&amp;reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.idInternal"/></bean:define>
+				<bean:define id="deleteURL">/roomsReserveManagement.do?method=deleteRoomsPunctualScheduling&amp;genericEventID=<bean:write name="genericEvent" property="externalId"/>&amp;reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.externalId"/></bean:define>
 			</logic:notEmpty>
 			
 			<ul class="mtop0 mbottom2">
@@ -147,7 +147,7 @@
 						<fr:layout name="tabular">							
 							<fr:property name="checkable" value="true"/>
 							<fr:property name="checkboxName" value="selectedRoom"/>
-							<fr:property name="checkboxValue" value="idInternal"/>
+							<fr:property name="checkboxValue" value="externalId"/>
 							<fr:property name="classes" value="tstyle1 vamiddle thlight thcenter mtop025 mbottom0"/>
 							<fr:property name="columnClasses" value="width2em,width8em acenter,width15em acenter,width15em acenter"/>
 						</fr:layout>							
@@ -186,7 +186,7 @@
 						<fr:destination name="cancel" path="/roomsPunctualScheduling.do?method=prepare"/>
 					</logic:empty>
 					<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
-						<bean:define id="CancelURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.idInternal"/></bean:define>
+						<bean:define id="CancelURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.externalId"/></bean:define>
 						<fr:destination name="cancel" path="<%= CancelURL %>"/>					
 					</logic:notEmpty>
 				</fr:edit>

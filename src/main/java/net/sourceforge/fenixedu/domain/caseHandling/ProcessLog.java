@@ -13,7 +13,7 @@ public class ProcessLog extends ProcessLog_Base {
         @Override
         public int compare(ProcessLog leftProcessLog, ProcessLog rightProcessLog) {
             int comparationResult = leftProcessLog.getWhenDateTime().compareTo(rightProcessLog.getWhenDateTime());
-            return (comparationResult == 0) ? leftProcessLog.getIdInternal().compareTo(rightProcessLog.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftProcessLog.getExternalId().compareTo(rightProcessLog.getExternalId()) : comparationResult;
         }
     };
 

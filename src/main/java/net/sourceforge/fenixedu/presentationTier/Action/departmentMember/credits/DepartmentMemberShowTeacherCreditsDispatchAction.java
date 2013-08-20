@@ -25,12 +25,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DepartmentMemberShowTeacherCreditsDispatchAction extends ShowTeacherCreditsDispatchAction {
 
     public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException,
-            ParseException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException, ParseException {
 
         DynaActionForm teacherCreditsForm = (DynaActionForm) form;
         ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID((Integer) teacherCreditsForm.get("executionPeriodId"));
+                AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("executionPeriodId"));
 
         Teacher requestedTeacher = AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
 

@@ -12,7 +12,7 @@
 
 <div>
     <logic:iterate id="crumb" name="crumbs">
-        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="externalId">
             <fr:view name="crumb" property="name"/>
         </html:link> &gt;
     </logic:iterate>
@@ -36,10 +36,10 @@
      ======================  -->
 
 <p class="mtop025">
-<html:link page="/functionality/edit.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
+<html:link page="/functionality/edit.do" paramId="functionality" paramName="functionality" paramProperty="externalId">
     <bean:message key="link.functionality.edit" bundle="FUNCTIONALITY_RESOURCES"/>
 </html:link>, 
-<html:link page="/functionality/confirm.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
+<html:link page="/functionality/confirm.do" paramId="functionality" paramName="functionality" paramProperty="externalId">
     <bean:message key="link.functionality.delete" bundle="FUNCTIONALITY_RESOURCES"/>
 </html:link>
 </p>
@@ -55,10 +55,10 @@
 </fr:view>
 
 <p class="mtop025">
-<html:link page="/functionality/manage.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
+<html:link page="/functionality/manage.do" paramId="functionality" paramName="functionality" paramProperty="externalId">
     <bean:message key="link.functionality.manage" bundle="FUNCTIONALITY_RESOURCES"/>
 </html:link>, 
-<html:link page="/functionality/exportStructure.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
+<html:link page="/functionality/exportStructure.do" paramId="functionality" paramName="functionality" paramProperty="externalId">
     <bean:message key="link.functionality.export" bundle="FUNCTIONALITY_RESOURCES"/>
 </html:link>
 </p>
@@ -69,13 +69,13 @@
   
 <br/>
 <h3><bean:message key="title.functionality.parameters" bundle="FUNCTIONALITY_RESOURCES"/></h3>  
-<bean:define id="id" name="functionality" property="idInternal"/>     
-<bean:define id="removeURL" type="java.lang.String">/functionality/removeParameter.do?functionality=<bean:write name="functionality" property="idInternal"/></bean:define>
+<bean:define id="id" name="functionality" property="externalId"/>     
+<bean:define id="removeURL" type="java.lang.String">/functionality/removeParameter.do?functionality=<bean:write name="functionality" property="externalId"/></bean:define>
 <fr:view name="functionality" property="parameters" schema="functionalities.functionality.parameter.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright mvert05"/>
 		<fr:property name="link(removeParameter)" value="<%= removeURL %>" />
-		<fr:property name="param(removeParameter)" value="idInternal/functionalityParameter" />
+		<fr:property name="param(removeParameter)" value="externalId/functionalityParameter" />
 		<fr:property name="key(removeParameter)" value="link.remove" />
 	</fr:layout>
 </fr:view>

@@ -35,9 +35,9 @@
 	<td class="acenter">
 		<div class="gen-button">
 			<html:link page="/professionalCareer.do?method=prepareEdit&amp;page=0" 
-					   paramId="idInternal" 
+					   paramId="externalId" 
 					   paramName="infoProfessionalCareer" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.edit" />
 			</html:link>
 		</div>
@@ -45,9 +45,9 @@
 	<td class="acenter">
 		<div class="gen-button">
 			<html:link page="/professionalCareer.do?method=delete&amp;page=0" 
-					   paramId="idInternal" 
+					   paramId="externalId" 
 					   paramName="infoProfessionalCareer" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.delete" />
 			</html:link>
 		</div>
@@ -58,9 +58,9 @@
 
 <p class="mtop05 mbottom15">
 	<html:link page="<%= "/professionalCareer.do?method=prepareEdit&amp;page=0&amp;careerType=" + net.sourceforge.fenixedu.domain.CareerType.PROFESSIONAL.toString() %>" 
-			   paramId="infoTeacher#idInternal" 
+			   paramId="infoTeacher#externalId" 
 			   paramName="infoSiteCareers" 
-			   paramProperty="infoTeacher.idInternal" >
+			   paramProperty="infoTeacher.externalId" >
 		<bean:message key="message.professionalCareer.insert" />
 	</html:link>
 </p>

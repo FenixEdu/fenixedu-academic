@@ -15,8 +15,8 @@
 
 	<bean:define id="infoGrouping" name="component" property="infoGrouping"/>
 	<bean:define id="attends" name="infoGrouping" property="infoAttends"/>
-	<bean:define id="groupPropertiesCode" name="infoGrouping" property="idInternal"/>
-	<bean:define id="groupingOID" name="infoGrouping" property="idInternal"/>
+	<bean:define id="groupPropertiesCode" name="infoGrouping" property="externalId"/>
+	<bean:define id="groupingOID" name="infoGrouping" property="externalId"/>
 
 	<logic:empty name="attends">
 		<div class="infoop2">
@@ -144,7 +144,7 @@
 			</td>
 			<logic:notPresent name="showPhotos">
 				<td class="acenter">
-					<bean:define id="personID" name="person" property="idInternal"/>
+					<bean:define id="personID" name="person" property="externalId"/>
 					<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 				</td>
 			</logic:notPresent>

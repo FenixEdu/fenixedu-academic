@@ -22,7 +22,7 @@ public class InfoQualificationWithPersonAndCountry extends InfoQualification {
             if (country != null) {
                 final InfoCountryEditor infoCountryEditor = new InfoCountryEditor();
                 infoCountryEditor.setCode(country.getCode());
-                infoCountryEditor.setIdInternal(country.getIdInternal());
+                infoCountryEditor.setExternalId(country.getExternalId());
                 infoCountryEditor.setName(country.getName());
                 infoCountryEditor.setNationality(country.getNationality());
                 setInfoCountry(infoCountryEditor);

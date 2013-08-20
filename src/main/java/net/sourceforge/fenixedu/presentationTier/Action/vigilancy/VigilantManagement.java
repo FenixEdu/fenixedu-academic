@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ConfirmConvoke;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
@@ -24,6 +23,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class VigilantManagement extends FenixDispatchAction {
 
@@ -56,10 +56,7 @@ public class VigilantManagement extends FenixDispatchAction {
     public ActionForward vigilantAcceptsConvoke(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        String id = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(id);
-        OtherCourseVigilancy vigilancy =
-                (OtherCourseVigilancy) RootDomainObject.readDomainObjectByOID(OtherCourseVigilancy.class, idInternal);
+        OtherCourseVigilancy vigilancy = getDomainObject(request, "oid");
 
         ConfirmConvoke.run(vigilancy);
 
@@ -87,17 +84,14 @@ public class VigilantManagement extends FenixDispatchAction {
     public ActionForward showWrittenEvaluationReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        String writtenEvaluationId = request.getParameter("writtenEvaluationId");
-        WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
-                        Integer.valueOf(writtenEvaluationId));
+        WrittenEvaluation writtenEvaluation = getDomainObject(request, "writtenEvaluationId");
 
         request.setAttribute("writtenEvaluation", writtenEvaluation);
         return mapping.findForward("showReport");
     }
 
     private void prepareBean(VigilantBean bean, HttpServletRequest request, ExecutionYear executionYear)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         List<VigilantWrapper> vigilantWrappers = getVigilantWrappersForPerson(request);
 
         bean.setExecutionYear(executionYear);
@@ -138,8 +132,7 @@ public class VigilantManagement extends FenixDispatchAction {
         request.setAttribute("bean", bean);
     }
 
-    private List<VigilantWrapper> getVigilantWrappersForPerson(HttpServletRequest request) throws 
-            FenixServiceException {
+    private List<VigilantWrapper> getVigilantWrappersForPerson(HttpServletRequest request) throws FenixServiceException {
         Person person = getLoggedPerson(request);
         List<VigilantWrapper> vigilantWrappers = person.getVigilantWrappers();
         return vigilantWrappers;
@@ -147,8 +140,7 @@ public class VigilantManagement extends FenixDispatchAction {
 
     private VigilantGroup getGroupFromRequestOrVigilant(HttpServletRequest request, VigilantWrapper vigilant) {
         String groupId = request.getParameter("gid");
-        return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) RootDomainObject.readDomainObjectByOID(
-                VigilantGroup.class, Integer.valueOf(groupId));
+        return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) AbstractDomainObject.fromExternalId(groupId);
     }
 
 }

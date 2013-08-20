@@ -202,7 +202,7 @@
 				<td>&nbsp;</td>									
 			</tr>			
 			<logic:iterate id="externalJury" name="externalJuriesList">
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalJuriesIDs" property="externalJuriesIDs" value="<%= ((ExternalContract)externalJury).getIdInternal().toString() %>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalJuriesIDs" property="externalJuriesIDs" value="<%= ((ExternalContract)externalJury).getExternalId().toString() %>"/>
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalJury" property="person.name"/></td>
@@ -213,7 +213,7 @@
 					</td>
 					<td align="center">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedExternalJuriesIDs" property="removedExternalJuriesIDs">
-							<bean:write name="externalJury" property="idInternal"/>
+							<bean:write name="externalJury" property="externalId"/>
 						</html:multibox>	
 					</td>						
 				</tr>				
@@ -286,7 +286,7 @@
 						</logic:notEmpty>&nbsp;
 					</td>						
 					<td>
-						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.externalJuriesIDs" idName="externalJury" property="externalJuriesIDs" value="idInternal"/>	
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.externalJuriesIDs" idName="externalJury" property="externalJuriesIDs" value="externalId"/>	
 					</td>
 				</tr>				
 			</logic:iterate>

@@ -5,11 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-	<bean:define id="resultId" name="publication" property="idInternal"/>
+	<bean:define id="resultId" name="publication" property="externalId"/>
 	<bean:define id="resultType" name="publication" property="class.simpleName"/>
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>"/>
 	<logic:present name="unit">
-		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="unitID" name="unit" property="externalId"/>
 		<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
 	</logic:present>
 	<bean:define id="backAction" value="/resultPublications/showPublication.do"/>
@@ -37,13 +37,13 @@
 			<fr:property name="key(delete)" value="label.delete" />
 			<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
 			<fr:property name="link(delete)" value="<%= "/resultPublications/deletePrize.do?" + parameters %>"/>
-			<fr:property name="param(delete)" value="idInternal/oid"/>
+			<fr:property name="param(delete)" value="externalId/oid"/>
 			<fr:property name="visibleIf(edit)" value="editableByCurrentUser"/>
 			<fr:property name="order(edit)" value="1"/>
 			<fr:property name="key(edit)" value="label.edit" />
 			<fr:property name="bundle(edit)" value="APPLICATION_RESOURCES" />
 			<fr:property name="link(edit)" value="<%= "/resultPublications/editPrize.do?" + parameters %>"/>
-			<fr:property name="param(edit)" value="idInternal/oid"/>
+			<fr:property name="param(edit)" value="externalId/oid"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

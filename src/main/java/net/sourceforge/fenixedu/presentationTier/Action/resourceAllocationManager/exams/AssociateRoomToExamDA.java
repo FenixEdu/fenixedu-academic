@@ -70,7 +70,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 
         for (String element : executionCourse) {
 
-            InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(new Integer(element));
+            InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(element);
 
             executionCourseNames.add(infoExecutionCourse.getNome());
         }
@@ -117,7 +117,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
         if (rooms != null && rooms.length > 0) {
 
             for (String room : rooms) {
-                InfoRoom infoRoom = ReadRoomByOID.run(Integer.valueOf(room));
+                InfoRoom infoRoom = ReadRoomByOID.run(room);
                 selectedRooms.add(infoRoom);
             }
 
@@ -165,7 +165,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 
         InfoExecutionCourse infoExecutionCourse =
                 (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
-        request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
+        request.setAttribute("executionCourseOID", infoExecutionCourse.getExternalId());
 
         return mapping.findForward("AssociateRoom");
     }
@@ -197,7 +197,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 
         InfoExecutionCourse infoExecutionCourse =
                 (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
-        request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
+        request.setAttribute("executionCourseOID", infoExecutionCourse.getExternalId());
 
         return mapping.findForward("forwardChoose");
     }

@@ -49,7 +49,7 @@
 			</tr>
 
 			<logic:iterate id="executionCourse" name="<%= PresentationConstants.LIST_INFOEXECUTIONCOURSE %>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">
-				<bean:define id="executionCourseOID" name="executionCourse" property="idInternal"/>
+				<bean:define id="executionCourseOID" name="executionCourse" property="externalId"/>
 				<bean:define id="evaluated" name="executionCourse" property="infoSiteEvaluationStatistics.evaluated" type="java.lang.Integer"/>
 				<bean:define id="enrolled" name="executionCourse" property="infoSiteEvaluationStatistics.enrolled" type="java.lang.Integer"/>
 				<bean:define id="approved" name="executionCourse" property="infoSiteEvaluationStatistics.approved" type="java.lang.Integer"/>

@@ -12,17 +12,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
  */
 public class EditGrouping {
 
-    protected List run(Integer executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException {
-        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(infoGroupProperties.getIdInternal());
+    protected List run(String executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException {
+        final Grouping grouping = AbstractDomainObject.fromExternalId(infoGroupProperties.getExternalId());
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -104,7 +104,7 @@ public class EditGrouping {
     private static final EditGrouping serviceInstance = new EditGrouping();
 
     @Service
-    public static List runEditGrouping(Integer executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException,
+    public static List runEditGrouping(String executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID, infoGroupProperties);

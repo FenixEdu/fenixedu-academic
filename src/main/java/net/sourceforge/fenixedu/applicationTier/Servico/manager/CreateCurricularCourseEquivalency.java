@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateCurricularCourseEquivalency {
 
@@ -20,30 +20,28 @@ public class CreateCurricularCourseEquivalency {
      * equivalence or not
      */
     @Service
-    public static void run(final Integer degreeCurricularPlanID, final Integer curricularCourseID,
-            final Integer oldCurricularCourseID) {
-        final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-        final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
+    public static void run(final String degreeCurricularPlanID, final String curricularCourseID,
+            final String oldCurricularCourseID) {
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
         final CurricularCourse oldCurricularCourse =
-                (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(oldCurricularCourseID);
+                (CurricularCourse) AbstractDomainObject.fromExternalId(oldCurricularCourseID);
 
         new CurricularCourseEquivalence(degreeCurricularPlan, curricularCourse, Collections.singleton(oldCurricularCourse));
     }
 
     // Service Invokers migrated from Berserk
 
-    private static final CreateCurricularCourseEquivalency serviceInstance = new CreateCurricularCourseEquivalency();
-
     @Service
-    public static void runCreateCurricularCourseEquivalency(Integer degreeCurricularPlanID, Integer curricularCourseID,
-            Integer oldCurricularCourseID) throws NotAuthorizedException {
+    public static void runCreateCurricularCourseEquivalency(String degreeCurricularPlanID, String curricularCourseID,
+            String oldCurricularCourseID) throws NotAuthorizedException {
         try {
             DegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
-            serviceInstance.run(degreeCurricularPlanID, curricularCourseID, oldCurricularCourseID);
+            run(degreeCurricularPlanID, curricularCourseID, oldCurricularCourseID);
         } catch (NotAuthorizedException ex1) {
             try {
                 ManagerAuthorizationFilter.instance.execute();
-                serviceInstance.run(degreeCurricularPlanID, curricularCourseID, oldCurricularCourseID);
+                run(degreeCurricularPlanID, curricularCourseID, oldCurricularCourseID);
             } catch (NotAuthorizedException ex2) {
                 throw ex2;
             }

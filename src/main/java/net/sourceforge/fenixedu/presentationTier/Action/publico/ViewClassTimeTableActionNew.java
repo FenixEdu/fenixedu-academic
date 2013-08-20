@@ -31,6 +31,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Jo�o Mota
@@ -61,11 +62,11 @@ public class ViewClassTimeTableActionNew extends FenixAction {
         }
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
         String className = request.getParameter("className");
-        Integer indice = (Integer) escolherContextoForm.get("indice");
+        String indice = (String) escolherContextoForm.get("indice");
         escolherContextoForm.set("indice", indice);
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
 
         String classIdString = request.getParameter("classId");
         request.setAttribute("classId", classIdString);
@@ -73,19 +74,16 @@ public class ViewClassTimeTableActionNew extends FenixAction {
         request.setAttribute("degreeInitials", degreeInitials);
         String nameDegreeCurricularPlan = request.getParameter("nameDegreeCurricularPlan");
         request.setAttribute("nameDegreeCurricularPlan", nameDegreeCurricularPlan);
-        Integer degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+        String degreeCurricularPlanId = request.getParameter("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
-        Integer degreeId = Integer.valueOf(request.getParameter("degreeID"));
+        String degreeId = request.getParameter("degreeID");
         request.setAttribute("degreeID", degreeId);
-        Integer classId = null;
 
-        if (classIdString != null) {
-            classId = new Integer(classIdString);
-        } else {
+        if (classIdString == null) {
             return mapping.getInputForward();
-
         }
-        final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(classId);
+
+        final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(classIdString);
         InfoExecutionDegree infoExecutionDegree =
                 ReadExecutionDegreesByExecutionYearAndDegreeInitials.getInfoExecutionDegree(schoolClass.getExecutionDegree());
         // try {
@@ -106,7 +104,7 @@ public class ViewClassTimeTableActionNew extends FenixAction {
         try {
             siteView =
                     (SiteView) ClassSiteComponentService.run(component, infoExecutionPeriod.getInfoExecutionYear().getYear(),
-                            infoExecutionPeriod.getName(), null, null, className, null, classId);
+                            infoExecutionPeriod.getName(), null, null, className, null, classIdString);
         } catch (FenixServiceException e1) {
             throw new FenixActionException(e1);
         }

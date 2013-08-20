@@ -17,7 +17,7 @@
 <bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
 <bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
 <bean:define id="extraParameters" name="extraParameters" />
-<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
+<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>
 <bean:define id="announcementBoard" name="announcementBoard"/>
 
 <fr:form action="<%= contextPrefix + "method=viewAnnouncements&announcementBoardId="+announcementBoardId+ "&"+extraParameters%>">

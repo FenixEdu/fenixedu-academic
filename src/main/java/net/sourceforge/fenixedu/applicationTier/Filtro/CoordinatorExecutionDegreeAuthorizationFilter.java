@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -23,7 +23,7 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
     public static final CoordinatorExecutionDegreeAuthorizationFilter instance =
             new CoordinatorExecutionDegreeAuthorizationFilter();
 
-    public void execute(Integer executionDegreeId) throws NotAuthorizedException {
+    public void execute(String executionDegreeId) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, executionDegreeId)) || (id == null)
@@ -40,19 +40,19 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
         return roles;
     }
 
-    private boolean hasPrivilege(IUserView id, Integer executionDegreeId) {
+    private boolean hasPrivilege(IUserView id, String executionDegreeId) {
         if (id.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             return true;
         }
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
-            Integer executionDegreeID = executionDegreeId;
+            String executionDegreeID = executionDegreeId;
 
             if (executionDegreeID == null) {
                 return false;
             }
             final Person person = id.getPerson();
-            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
             if (executionDegree == null) {
                 return false;
             }

@@ -12,12 +12,12 @@
 
 <div>   
     <logic:iterate id="crumb" name="crumbs">
-        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="externalId">
             <fr:view name="crumb" property="name"/>
         </html:link> &gt;
     </logic:iterate>
     
-    <html:link page="/functionality/view.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
+    <html:link page="/functionality/view.do" paramId="functionality" paramName="functionality" paramProperty="externalId">
         <fr:view name="functionality" property="name"/>
     </html:link>
 </div>
@@ -38,7 +38,7 @@
          edit form
      ======================  -->
 
-<bean:define id="id" name="functionality" property="idInternal"/>
+<bean:define id="id" name="functionality" property="externalId"/>
 
 <fr:edit id="viewFunctionality" name="functionality" layout="tabular" schema="functionalities.functionality.edit" action="<%= "/functionality/view.do?functionality=" + id %>">
 	<fr:layout>
@@ -47,13 +47,13 @@
 	</fr:layout>
 </fr:edit>
 
-<bean:define id="removeURL" type="java.lang.String">/functionality/removeParameter.do?functionality=<bean:write name="functionality" property="idInternal"/></bean:define>
+<bean:define id="removeURL" type="java.lang.String">/functionality/removeParameter.do?functionality=<bean:write name="functionality" property="externalId"/></bean:define>
 <fr:view name="functionality" property="parameters" schema="functionalities.functionality.parameter.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright mvert05"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		<fr:property name="link(removeParameter)" value="<%= removeURL %>" />
-		<fr:property name="param(removeParameter)" value="idInternal/functionalityParameter" />
+		<fr:property name="param(removeParameter)" value="externalId/functionalityParameter" />
 		<fr:property name="key(removeParameter)" value="link.remove" />
 	</fr:layout>
 </fr:view>

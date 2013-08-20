@@ -25,12 +25,12 @@ public abstract class ThesisLibraryOperation extends ThesisLibraryOperation_Base
         super.setOperation(new DateTime());
     }
 
-    public Integer getThesisId() {
-        return getThesis().getIdInternal();
+    public String getThesisId() {
+        return getThesis().getExternalId();
     }
 
-    public Integer getPerformerId() {
-        return getPerformer().getIdInternal();
+    public String getPerformerId() {
+        return getPerformer().getExternalId();
     }
 
     public abstract ThesisLibraryState getState();

@@ -26,7 +26,7 @@
    			<fr:property name="columnClasses" value="listClasses"/>
    			
    			<fr:property name="link(edit)" value="/rulesManagement.do?method=deleteRule"/>
-            <fr:property name="param(edit)" value="idInternal/oid"/>
+            <fr:property name="param(edit)" value="externalId/oid"/>
 	        <fr:property name="key(edit)" value="message.manager.delete"/>
             <fr:property name="bundle(edit)" value="MANAGER_RESOURCES"/>
             <fr:property name="order(edit)" value="0"/>

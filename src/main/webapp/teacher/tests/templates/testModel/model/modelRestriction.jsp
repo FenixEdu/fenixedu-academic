@@ -12,15 +12,15 @@
 <logic:equal name="modelRestriction" property="question.composite" value="true">
 	<ft:view property="position" />) Grupo <ft:view property="question.name" />
 	(<f:parameterLink page="/tests/testModels.do?method=unselectRestriction">
-		<f:parameter id="oid" name="modelRestriction" property="idInternal" />
+		<f:parameter id="oid" name="modelRestriction" property="externalId" />
 		Remover
 	</f:parameterLink>)
 
-	<div class="switchBlock" id="<%= "view-model-restriction-div" + modelRestriction.getIdInternal() %>">
+	<div class="switchBlock" id="<%= "view-model-restriction-div" + modelRestriction.getExternalId() %>">
 	<table class="tstyle1 thright" style="width: 60em;">
 	<tr><th class="width10em">Regra:</th>
 		<td>Escolher <ft:view property="count" /> pergunta(s)</td>
-		<td rowspan="2"><a href="javascript:switchDisplay('edit-model-restriction-div<%= modelRestriction.getIdInternal() %>');switchDisplay('view-model-restriction-div<%= modelRestriction.getIdInternal() %>')">Editar</a></td>
+		<td rowspan="2"><a href="javascript:switchDisplay('edit-model-restriction-div<%= modelRestriction.getExternalId() %>');switchDisplay('view-model-restriction-div<%= modelRestriction.getExternalId() %>')">Editar</a></td>
 	</tr>
 	<tr><th>Cota��o:</th><td>
 		<logic:empty name="modelRestriction" property="value">
@@ -33,10 +33,10 @@
 	</table>
 	</div>
 
-	<div class="switchNone" id="<%= "edit-model-restriction-div" + modelRestriction.getIdInternal() %>">
+	<div class="switchNone" id="<%= "edit-model-restriction-div" + modelRestriction.getExternalId() %>">
 		<html:form action="/tests/testModels.do?method=editModelRestriction">
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= modelRestriction.getIdInternal().toString() %>" />
-			<ft:edit id="<%= "edit-model-restriction" + modelRestriction.getIdInternal() %>"
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= modelRestriction.getExternalId().toString() %>" />
+			<ft:edit id="<%= "edit-model-restriction" + modelRestriction.getExternalId() %>"
 			         schema="tests.modelRestriction.edit.questionGroup"
 			         nested="true">
 				<ft:layout name="tabular">
@@ -47,13 +47,13 @@
 				<ft:destination name="invalid" path="/tests/testModels.do?method=editModelRestriction" />
 			</ft:edit>
 			<html:submit><bean:message key="label.button.continue" bundle="TESTS_RESOURCES" /></html:submit>
-			<span class="switchInline"><a href="javascript:switchDisplay('edit-model-restriction-div<%= modelRestriction.getIdInternal() %>');switchDisplay('view-model-restriction-div<%= modelRestriction.getIdInternal() %>')">Cancelar</a></span>
+			<span class="switchInline"><a href="javascript:switchDisplay('edit-model-restriction-div<%= modelRestriction.getExternalId() %>');switchDisplay('view-model-restriction-div<%= modelRestriction.getExternalId() %>')">Cancelar</a></span>
 		</html:form>
 	</div>
-	<fr:hasMessages for="<%= "edit-model-restriction" + modelRestriction.getIdInternal() %>">
+	<fr:hasMessages for="<%= "edit-model-restriction" + modelRestriction.getExternalId() %>">
 		<script type="text/javascript">
-			showElement('edit-model-restriction-div<%= modelRestriction.getIdInternal() %>');
-			hideElement('view-model-restriction-div<%= modelRestriction.getIdInternal() %>');
+			showElement('edit-model-restriction-div<%= modelRestriction.getExternalId() %>');
+			hideElement('view-model-restriction-div<%= modelRestriction.getExternalId() %>');
 		</script>
 	</fr:hasMessages>
 </logic:equal>
@@ -61,7 +61,7 @@
 <logic:equal name="modelRestriction" property="question.composite" value="false">
 	<ft:view property="position" />) Pergunta
 	(<f:parameterLink page="/tests/testModels.do?method=unselectRestriction">
-		<f:parameter id="oid" name="modelRestriction" property="idInternal" />
+		<f:parameter id="oid" name="modelRestriction" property="externalId" />
 		Remover
 	</f:parameterLink>)
 
@@ -72,7 +72,7 @@
 			<ft:property name="columnClasses" value="width10em," />
 		</ft:layout>
 	</ft:view>
-	<div class="switchBlock" id="<%= "view-model-restriction-div" + modelRestriction.getIdInternal() %>">
+	<div class="switchBlock" id="<%= "view-model-restriction-div" + modelRestriction.getExternalId() %>">
 		<table class="tstyle7 thright mtop0" style="width: 60em;"><tr>
 		<th class="width10em">Cota��o:</th>
 		<td>
@@ -82,15 +82,15 @@
 			<logic:notEmpty name="modelRestriction" property="value">
 				<ft:view property="value" />/<ft:view property="testModel.scale" />
 			</logic:notEmpty>
-			(<a href="javascript:switchDisplay('edit-model-restriction-div<%= modelRestriction.getIdInternal() %>');switchDisplay('view-model-restriction-div<%= modelRestriction.getIdInternal() %>')">Editar</a>)
+			(<a href="javascript:switchDisplay('edit-model-restriction-div<%= modelRestriction.getExternalId() %>');switchDisplay('view-model-restriction-div<%= modelRestriction.getExternalId() %>')">Editar</a>)
 		</td>
 		</tr></table>
 	</div>
 
-	<div class="switchNone" id="<%= "edit-model-restriction-div" + modelRestriction.getIdInternal() %>">
+	<div class="switchNone" id="<%= "edit-model-restriction-div" + modelRestriction.getExternalId() %>">
 		<html:form action="/tests/testModels.do?method=editModelRestriction">
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= modelRestriction.getIdInternal().toString() %>" />
-			<ft:edit id="<%= "edit-model-restriction" + modelRestriction.getIdInternal() %>"
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= modelRestriction.getExternalId().toString() %>" />
+			<ft:edit id="<%= "edit-model-restriction" + modelRestriction.getExternalId() %>"
 			         schema="tests.modelRestriction.edit.atomicQuestion"
 			         nested="true">
 				<ft:layout name="tabular">
@@ -101,13 +101,13 @@
 				<ft:destination name="invalid" path="/tests/testModels.do?method=editModelRestriction" />
 			</ft:edit>
 			<html:submit><bean:message key="label.button.continue" bundle="TESTS_RESOURCES" /></html:submit>
-			<span class="switchInline"><a href="javascript:switchDisplay('edit-model-restriction-div<%= modelRestriction.getIdInternal() %>');switchDisplay('view-model-restriction-div<%= modelRestriction.getIdInternal() %>')">Cancelar</a></span>
+			<span class="switchInline"><a href="javascript:switchDisplay('edit-model-restriction-div<%= modelRestriction.getExternalId() %>');switchDisplay('view-model-restriction-div<%= modelRestriction.getExternalId() %>')">Cancelar</a></span>
 		</html:form>
 	</div>
-	<fr:hasMessages for="<%= "edit-model-restriction" + modelRestriction.getIdInternal() %>">
+	<fr:hasMessages for="<%= "edit-model-restriction" + modelRestriction.getExternalId() %>">
 		<script type="text/javascript">
-			switchDisplay('edit-model-restriction-div<%= modelRestriction.getIdInternal() %>');
-			switchDisplay('view-model-restriction-div<%= modelRestriction.getIdInternal() %>');
+			switchDisplay('edit-model-restriction-div<%= modelRestriction.getExternalId() %>');
+			switchDisplay('view-model-restriction-div<%= modelRestriction.getExternalId() %>');
 		</script>
 	</fr:hasMessages>
 </logic:equal>

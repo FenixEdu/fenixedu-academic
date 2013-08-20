@@ -28,34 +28,30 @@ public class ShowMarksListOptionsAction extends FenixDispatchAction {
 
         IUserView userView = getUserView(request);
 
-        Integer executionCourseCode = null;
         String executionCourseCodeString = request.getParameter("objectCode");
         if (executionCourseCodeString == null) {
             executionCourseCodeString = request.getAttribute("objectCode").toString();
         }
-        executionCourseCode = new Integer(executionCourseCodeString);
 
-        Integer evaluationCode = null;
         String evaluationCodeString = request.getParameter("evaluationCode");
         if (evaluationCodeString == null) {
             evaluationCodeString = request.getAttribute("evaluationCode").toString();
         }
-        evaluationCode = new Integer(evaluationCodeString);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
 
         TeacherAdministrationSiteView siteView = null;
         try {
             siteView =
-                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(executionCourseCode,
-                            commonComponent, null, null, null, null);
+                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(
+                            executionCourseCodeString, commonComponent, null, null, null);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
         request.setAttribute("siteView", siteView);
-        request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
-        request.setAttribute("evaluationCode", evaluationCode);
+        request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getExternalId());
+        request.setAttribute("evaluationCode", evaluationCodeString);
 
         return mapping.findForward("showMarksListOptions");
     }

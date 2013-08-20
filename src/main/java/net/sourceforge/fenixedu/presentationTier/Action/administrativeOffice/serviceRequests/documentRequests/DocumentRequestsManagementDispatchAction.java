@@ -44,6 +44,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/documentRequestsManagement", module = "academicAdministration",
         formBeanClass = AcademicServiceRequestsManagementDispatchAction.AcademicServiceRequestsManagementForm.class)
@@ -63,17 +64,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
 
     protected IDocumentRequest getDocumentRequest(HttpServletRequest request) {
-        return (IDocumentRequest) rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
-                "documentRequestId"));
+        return (IDocumentRequest) getDomainObject(request, "documentRequestId");
     }
 
     private AcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
-        Integer academicServiceRequestId = getRequestParameterAsInteger(request, "academicServiceRequestId");
-        if (academicServiceRequestId == null) {
-            academicServiceRequestId = (Integer) request.getAttribute("academicServiceRequestId");
-        }
-        final AcademicServiceRequest academicServiceRequest =
-                rootDomainObject.readAcademicServiceRequestByOID(academicServiceRequestId);
+        final AcademicServiceRequest academicServiceRequest = getDomainObject(request, "academicServiceRequestId");
         request.setAttribute("academicServiceRequest", academicServiceRequest);
         return academicServiceRequest;
     }
@@ -98,7 +93,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException,  FenixServiceException {
+            HttpServletResponse response) throws JRException, IOException, FenixServiceException {
         final IDocumentRequest documentRequest = getDocumentRequest(request);
         try {
             byte[] data = documentRequest.generateDocument();
@@ -157,8 +152,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     private Registration getRegistration(final HttpServletRequest request) {
-        String registrationID = (String) getFromRequest(request, "registrationId");
-        final Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
+        final Registration registration = getDomainObject(request, "registrationId");
         request.setAttribute("registration", registration);
         return registration;
     }
@@ -319,7 +313,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
         final List<Exam> result = new ArrayList<Exam>();
         for (final String examId : examIds) {
-            result.add((Exam) rootDomainObject.readEvaluationByOID(Integer.valueOf(examId)));
+            result.add((Exam) AbstractDomainObject.fromExternalId(examId));
         }
 
         return result;
@@ -327,7 +321,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final DocumentRequestCreateBean documentRequestCreateBean = getRenderedObject();
         final Registration registration = documentRequestCreateBean.getRegistration();
@@ -345,7 +339,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         }
 
         if (documentRequestCreateBean.getChosenDocumentRequestType().isAllowedToQuickDeliver()) {
-            request.setAttribute("academicServiceRequestId", documentRequest.getIdInternal());
+            request.setAttribute("academicServiceRequestId", documentRequest.getExternalId());
             return mapping.findForward("processNewAcademicServiceRequest");
         } else {
             addActionMessage(request, "document.request.created.with.success");
@@ -358,7 +352,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         forwardBuilded.setName(forward.getName());
         forwardBuilded.setRedirect(true);
         StringBuilder path = new StringBuilder(forward.getPath());
-        // path.append("&registrationID=").append(registration.getIdInternal());
+        // path.append("&registrationID=").append(registration.getExternalId());
         forwardBuilded.setPath(path.toString());
         return forwardBuilded;
     }

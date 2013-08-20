@@ -54,13 +54,13 @@
 				<fr:property name="classes" value="tstyle4 thlight tdcenter"/>
 					
 				<fr:property name="link(edit)" value="<%="/materialManagement.do?method=prepareEditMaterial"%>"/>
-            	<fr:property name="param(edit)" value="idInternal/materialID"/>
+            	<fr:property name="param(edit)" value="externalId/materialID"/>
 		        <fr:property name="key(edit)" value="link.edit"/>
 	            <fr:property name="bundle(edit)" value="RESOURCE_MANAGER_RESOURCES"/>
 	            <fr:property name="order(edit)" value="0"/>
 	            
 	    		<fr:property name="link(delete)" value="<%="/materialManagement.do?method=deleteMaterial"%>"/>
-            	<fr:property name="param(delete)" value="idInternal/materialID"/>
+            	<fr:property name="param(delete)" value="externalId/materialID"/>
 		        <fr:property name="key(delete)" value="link.delete"/>
 	            <fr:property name="bundle(delete)" value="RESOURCE_MANAGER_RESOURCES"/>
 	            <fr:property name="order(delete)" value="1"/>

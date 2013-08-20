@@ -32,6 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
@@ -68,7 +69,7 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
     public ActionForward exportXls(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String tutorId = request.getParameter("tutorOID");
-        Person person = (Person) rootDomainObject.readPartyByOID(Integer.parseInt(tutorId));
+        Person person = (Person) AbstractDomainObject.fromExternalId(tutorId);
         NumberBean numberBean = new NumberBean();
         numberBean.setId(person.getIstUsername());
         request.setAttribute("tutorateBean", numberBean);
@@ -154,7 +155,7 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
     public ActionForward prepareAllStudentsStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String tutorId = request.getParameter("tutorOID");
-        Person person = (Person) rootDomainObject.readPartyByOID(Integer.parseInt(tutorId));
+        Person person = (Person) AbstractDomainObject.fromExternalId(tutorId);
         NumberBean numberBean = new NumberBean();
         numberBean.setId(person.getIstUsername());
         request.setAttribute("tutorateBean", numberBean);

@@ -62,7 +62,7 @@
                 </logic:notPresent>
             </td>
             <td class="listClasses">
-                <bean:define id="idQualification" name="infoGrantQualification" property="idInternal"/>
+                <bean:define id="idQualification" name="infoGrantQualification" property="externalId"/>
                 <html:link page='<%= "/editGrantQualification.do?method=prepareEditGrantQualificationForm&amp;idQualification=" + idQualification + "&amp;idGrantOwner=" + request.getAttribute("idGrantOwner").toString() + "&amp;load=" + 1 + "&amp;grantOwnerNumber=" + request.getAttribute("grantOwnerNumber").toString() + "&amp;username=" + request.getAttribute("username").toString() %>' > 
                     <bean:message key="link.grant.qualification.edit" />
                 </html:link>
@@ -95,7 +95,7 @@
 <html:form action="/manageGrantOwner" style="display:inline">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantOwnerForm"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 		<bean:message key="button.manageGrantOwner"/>
 	</html:submit>

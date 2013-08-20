@@ -10,18 +10,18 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DissociateProfessorShipsAndResponsibleFor {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static Map run(String personNumber, List<Integer> professorships, List<Integer> responsibleFors)
+    public static Map run(String personNumber, List<String> professorships, List<String> responsibleFors)
             throws FenixServiceException {
 
         if (personNumber == null) {
@@ -37,8 +37,8 @@ public class DissociateProfessorShipsAndResponsibleFor {
         List<InfoProfessorship> professorshipsWithShifts = new ArrayList<InfoProfessorship>();
         if (professorships != null && responsibleFors != null) {
             List<Professorship> newProfessorships = new ArrayList<Professorship>();
-            for (Integer professorshipId : professorships) {
-                Professorship professorship = RootDomainObject.getInstance().readProfessorshipByOID(professorshipId);
+            for (String professorshipId : professorships) {
+                Professorship professorship = AbstractDomainObject.fromExternalId(professorshipId);
                 if (professorship == null) {
                     throw new FenixServiceException("nullPSNorRF");
                 }
@@ -50,8 +50,8 @@ public class DissociateProfessorShipsAndResponsibleFor {
             }
 
             List<Professorship> newResponsibleFor = new ArrayList<Professorship>();
-            for (Integer responsibleForId : responsibleFors) {
-                Professorship responsibleFor = RootDomainObject.getInstance().readProfessorshipByOID(responsibleForId);
+            for (String responsibleForId : responsibleFors) {
+                Professorship responsibleFor = AbstractDomainObject.fromExternalId(responsibleForId);
                 if (responsibleFor == null) {
                     throw new FenixServiceException("nullPSNorRF");
                 }

@@ -27,7 +27,7 @@
 
 <ul>
 	<li>
-		<bean:define id="url1"><bean:write name="contextInformation"/>method=chooseExternalUnit&amp;registrationId=<bean:write name="registration" property="idInternal" /><bean:write name="parameters"/></bean:define>
+		<bean:define id="url1"><bean:write name="contextInformation"/>method=chooseExternalUnit&amp;registrationId=<bean:write name="registration" property="externalId" /><bean:write name="parameters"/></bean:define>
 		<html:link action='<%= url1 %>'><bean:message key="label.student.create.external.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
 </ul>
@@ -38,7 +38,7 @@
 	</p>
 </html:messages>
 
-<bean:define id="registrationId" name="registration" property="idInternal" />
+<bean:define id="registrationId" name="registration" property="externalId" />
 
 <fr:form action="<%= contextInformation.toString() + "registrationId=" + registrationId + parameters.toString()  %>">
 
@@ -52,9 +52,9 @@
 				<fr:property name="columnClasses" value=",inobullet ulmvert0 acenter,inobullet ulmvert0,acenter,acenter,acenter,acenter" />
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="externalEnrolmentsToDelete" />
-				<fr:property name="checkboxValue" value="idInternal" />	
+				<fr:property name="checkboxValue" value="externalId" />	
 				
-				<fr:property name="linkFormat(edit)" value="<%= contextInformation.toString() + "method=prepareEditExternalEnrolment&externalEnrolmentId=${idInternal}" %>" />
+				<fr:property name="linkFormat(edit)" value="<%= contextInformation.toString() + "method=prepareEditExternalEnrolment&externalEnrolmentId=${externalId}" %>" />
 				<fr:property name="key(edit)" value="label.edit"/>
 				<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			</fr:layout>

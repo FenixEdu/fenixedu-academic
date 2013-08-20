@@ -20,7 +20,7 @@
 	</tr>
 </table>
 <bean:define id="degreeCurricularPlanId" name="infoDegreeCurricularPlan"
-	property="idInternal" />
+	property="externalId" />
 <ul style="list-style-type: square;">
 	<li><html:link module="/manager"
 		page="<%="/editDegreeCurricularPlan.do?method=prepareEdit&degreeId="  + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>">
@@ -90,26 +90,26 @@
 						<td class="listClasses"><html:multibox
 							bundle="HTMLALT_RESOURCES" altKey="multibox.internalIds"
 							property="internalIds">
-							<bean:write name="curricularCourse" property="idInternal" />
+							<bean:write name="curricularCourse" property="externalId" />
 						</html:multibox></td>
 						<td class="listClasses">
 						<p align="left"><html:link module="/manager"
 							page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"
 							paramId="curricularCourseId" paramName="curricularCourse"
-							paramProperty="idInternal">
+							paramProperty="externalId">
 							<bean:write name="curricularCourse" property="name" />
 						</html:link></p>
 						</td>
 						<td class="listClasses"><html:link module="/manager"
 							page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"
 							paramId="curricularCourseId" paramName="curricularCourse"
-							paramProperty="idInternal">
+							paramProperty="externalId">
 							<bean:write name="curricularCourse" property="code" />
 						</html:link></td>
 						<td class="listClasses"><html:link module="/manager"
 							page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"
 							paramId="curricularCourseId" paramName="curricularCourse"
-							paramProperty="idInternal">
+							paramProperty="externalId">
 							<bean:write name="curricularCourse" property="acronym" />
 						</html:link></td>
 					</tr>

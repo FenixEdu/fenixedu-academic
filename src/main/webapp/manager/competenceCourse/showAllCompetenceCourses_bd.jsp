@@ -21,7 +21,7 @@
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.departmentID" property="departmentID" onchange="this.form.method.value='showDepartmentCompetenceCourses';this.form.submit();">
 					<html:option value="null">&nbsp;</html:option>
-					<html:options collection="departments" property="idInternal" labelProperty="realName"/>
+					<html:options collection="departments" property="externalId" labelProperty="realName"/>
     			</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
@@ -48,12 +48,12 @@
 						<td class="listClasses">
 						
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.competenceCoursesIds" property="competenceCoursesIds">
-							<bean:write name="competenceCourse" property="idInternal"/>
+							<bean:write name="competenceCourse" property="externalId"/>
 						</html:multibox>
 						</td>	
-						<td class="listClasses"><html:link module="/manager" module="/manager" page="/competenceCourseManagement.do?method=showCompetenceCourse" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="idInternal"><bean:write name="competenceCourse" property="code"/></html:link>
+						<td class="listClasses"><html:link module="/manager" module="/manager" page="/competenceCourseManagement.do?method=showCompetenceCourse" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="externalId"><bean:write name="competenceCourse" property="code"/></html:link>
 						</td>			
-						<td class="listClasses"><p align="left"><html:link module="/manager" module="/manager" page="/competenceCourseManagement.do?method=showCompetenceCourse" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="idInternal"><bean:write name="competenceCourse" property="name"/></html:link></p>
+						<td class="listClasses"><p align="left"><html:link module="/manager" module="/manager" page="/competenceCourseManagement.do?method=showCompetenceCourse" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="externalId"><bean:write name="competenceCourse" property="name"/></html:link></p>
 						</td>
 				 	</tr>
 				 		

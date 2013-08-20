@@ -15,7 +15,7 @@ public class FixSibsPaymentFileEntriesForm extends ActionForm {
 
     private Integer page = 0;
 
-    private Integer sibsPaymentFileEntryId;
+    private String sibsPaymentFileEntryId;
 
     public Integer getPage() {
         return page;
@@ -25,11 +25,11 @@ public class FixSibsPaymentFileEntriesForm extends ActionForm {
         this.page = page;
     }
 
-    public Integer getSibsPaymentFileEntryId() {
+    public String getSibsPaymentFileEntryId() {
         return sibsPaymentFileEntryId;
     }
 
-    public void setSibsPaymentFileEntryId(Integer sibsPaymentFileEntryId) {
+    public void setSibsPaymentFileEntryId(String sibsPaymentFileEntryId) {
         this.sibsPaymentFileEntryId = sibsPaymentFileEntryId;
     }
 }

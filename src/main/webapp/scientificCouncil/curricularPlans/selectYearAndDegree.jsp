@@ -51,7 +51,7 @@
 					<fr:property name="sortBy" value="degreeCurricularPlan.name"/>
 					
 					<fr:property name="linkFormat(editCoordinationTeam)"
-						value="/curricularPlans/editExecutionDegreeCoordination.do?method=editCoordination&executionDegreeId=${idInternal}&from=byYears"/>
+						value="/curricularPlans/editExecutionDegreeCoordination.do?method=editCoordination&executionDegreeId=${externalId}&from=byYears"/>
 					<fr:property name="order(editCoordinationTeam)" value="1" />
 					<fr:property name="key(editCoordinationTeam)"
 						value="label.edit.coordinationTeam" />
@@ -85,7 +85,7 @@
 					<fr:property name="sortBy" value="degreeCurricularPlan.name"/>
 					
 					<fr:property name="linkFormat(editCoordinationTeam)"
-						value="/curricularPlans/editExecutionDegreeCoordination.do?method=editCoordination&executionDegreeId=${idInternal}&from=byYears"/>
+						value="/curricularPlans/editExecutionDegreeCoordination.do?method=editCoordination&executionDegreeId=${externalId}&from=byYears"/>
 					<fr:property name="order(editCoordinationTeam)" value="1" />
 					<fr:property name="key(editCoordinationTeam)"
 						value="label.edit.coordinationTeam" />
@@ -119,7 +119,7 @@
 					<fr:property name="sortBy" value="degreeCurricularPlan.name"/>
 					
 					<fr:property name="linkFormat(editCoordinationTeam)"
-						value="/curricularPlans/editExecutionDegreeCoordination.do?method=editCoordination&executionDegreeId=${idInternal}&from=byYears"/>
+						value="/curricularPlans/editExecutionDegreeCoordination.do?method=editCoordination&executionDegreeId=${externalId}&from=byYears"/>
 					<fr:property name="order(editCoordinationTeam)" value="1" />
 					<fr:property name="key(editCoordinationTeam)"
 						value="label.edit.coordinationTeam" />
@@ -153,7 +153,7 @@
 					<fr:property name="sortBy" value="degreeCurricularPlan.name"/>
 					
 					<fr:property name="linkFormat(editCoordinationTeam)"
-						value="/curricularPlans/editExecutionDegreeCoordination.do?method=editCoordination&executionDegreeId=${idInternal}&from=byYears"/>
+						value="/curricularPlans/editExecutionDegreeCoordination.do?method=editCoordination&executionDegreeId=${externalId}&from=byYears"/>
 					<fr:property name="order(editCoordinationTeam)" value="1" />
 					<fr:property name="key(editCoordinationTeam)"
 						value="label.edit.coordinationTeam" />

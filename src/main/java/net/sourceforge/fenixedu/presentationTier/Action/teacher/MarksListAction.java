@@ -32,20 +32,20 @@ public class MarksListAction extends FenixDispatchAction {
 
         IUserView userView = getUserView(request);
 
-        Integer executionCourseCode = getFromRequest("objectCode", request);
+        String executionCourseCode = getFromRequest("objectCode", request);
 
-        Integer evaluationCode = getFromRequest("evaluationCode", request);
+        String evaluationCode = getFromRequest("evaluationCode", request);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
 
         try {
             TeacherAdministrationSiteView siteView =
                     TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(executionCourseCode,
-                            commonComponent, new InfoEvaluation(), null, evaluationCode, null);
+                            commonComponent, new InfoEvaluation(), evaluationCode, null);
 
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getIdInternal());
+                    .getExternalId());
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -61,9 +61,9 @@ public class MarksListAction extends FenixDispatchAction {
 
         IUserView userView = getUserView(request);
 
-        Integer executionCourseCode = getFromRequest("objectCode", request);
+        String executionCourseCode = getFromRequest("objectCode", request);
 
-        Integer evaluationCode = getFromRequest("evaluationCode", request);
+        String evaluationCode = getFromRequest("evaluationCode", request);
 
         TeacherAdministrationSiteView siteView = null;
 
@@ -89,9 +89,9 @@ public class MarksListAction extends FenixDispatchAction {
     public ActionForward preparePublishMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer evaluationCode = getFromRequest("evaluationCode", request);
+        String evaluationCode = getFromRequest("evaluationCode", request);
 
-        Integer infoExecutionCourseCode = getFromRequest("objectCode", request);
+        String infoExecutionCourseCode = getFromRequest("objectCode", request);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
         IUserView userView = getUserView(request);
@@ -99,7 +99,7 @@ public class MarksListAction extends FenixDispatchAction {
         try {
             siteView =
                     TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(
-                            infoExecutionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null);
+                            infoExecutionCourseCode, commonComponent, new InfoEvaluation(), evaluationCode, null);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -115,9 +115,9 @@ public class MarksListAction extends FenixDispatchAction {
     public ActionForward publishMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer evaluationCode = getFromRequest("evaluationCode", request);
+        String evaluationCode = getFromRequest("evaluationCode", request);
 
-        Integer objectCode = getFromRequest("objectCode", request);
+        String objectCode = getFromRequest("objectCode", request);
 
         DynaValidatorForm publishForm = (DynaValidatorForm) form;
         String publishmentMessage = (String) publishForm.get("publishmentMessage");
@@ -142,16 +142,11 @@ public class MarksListAction extends FenixDispatchAction {
         return mapping.findForward("viewMarksOptions");
     }
 
-    private Integer getFromRequest(String parameter, HttpServletRequest request) {
-        Integer parameterCode = null;
+    private String getFromRequest(String parameter, HttpServletRequest request) {
         String parameterCodeString = request.getParameter(parameter);
         if (parameterCodeString == null) {
             parameterCodeString = request.getAttribute(parameter).toString();
         }
-        if (parameterCodeString != null) {
-            parameterCode = new Integer(parameterCodeString);
-        }
-        return parameterCode;
-
+        return parameterCodeString;
     }
 }

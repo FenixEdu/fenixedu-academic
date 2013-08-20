@@ -102,8 +102,8 @@
 					-
 					</logic:notPresent>
 					<logic:present name="operation">
-						<bean:define id="requestId" name="requestBody" property="idInternal" />
-						<bean:define id="personId" name="personBody" property="idInternal" />
+						<bean:define id="requestId" name="requestBody" property="externalId" />
+						<bean:define id="personId" name="personBody" property="externalId" />
 						<html:link page="<%= "/alumni.do?method=updateSocialSecurityNumber&requestId=" + requestId + "&personId=" + personId %>">
 							<bean:message key="alumni.update.socialSecurityNumber" bundle="MANAGER_RESOURCES"/>
 						</html:link>

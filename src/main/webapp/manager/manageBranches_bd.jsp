@@ -41,7 +41,7 @@
 				<tr>	
 					<td class="listClasses">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.internalIds" property="internalIds">
-							<bean:write name="infoBranch" property="idInternal"/>
+							<bean:write name="infoBranch" property="externalId"/>
 						</html:multibox>
 					</td>	
 					<td class="listClasses">
@@ -51,7 +51,7 @@
 						<bean:write name="infoBranch" property="code"/>
 					</td>
 					<td class="listClasses">
-						<html:link module="/manager" page="<%="/manageBranches.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") %>" paramId="branchId" paramName="infoBranch" paramProperty="idInternal">
+						<html:link module="/manager" page="<%="/manageBranches.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") %>" paramId="branchId" paramName="infoBranch" paramProperty="externalId">
 							<bean:message bundle="MANAGER_RESOURCES" key="link.edit"/>
 						</html:link>
 					</td>

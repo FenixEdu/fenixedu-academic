@@ -16,7 +16,7 @@
 	</strong>
 </p>
 
-<fr:form action="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal() %>">
+<fr:form action="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getExternalId() %>">
 
 	<p class="mtop2 mbottom05"><bean:message key="message.set.non.list.fields" bundle="APPLICATION_RESOURCES"/>:</p>
 
@@ -104,7 +104,7 @@
 	</div>
 
 
-	<fr:form action="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal() %>">
+	<fr:form action="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getExternalId() %>">
 		<fr:edit id="EquivalencePlanEntry.Creator.create" name="equivalencePlanEntryCreator" type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry$EquivalencePlanEntryCreator"
 				schema="EquivalencePlanEntry.Creator.create">
 			<fr:layout name="tabular">

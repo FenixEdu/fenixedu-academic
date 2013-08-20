@@ -4,7 +4,7 @@
 <html:xhtml/>
 
 <bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
-<bean:define id="registrationOID" name="registration" property="idInternal"/>
+<bean:define id="registrationOID" name="registration" property="externalId"/>
 
 <logic:present name="executionCourse">
 <ul>
@@ -24,7 +24,7 @@
 	
 	<logic:iterate id="schoolClass" name="schoolClassesToEnrol">
 	
-		<bean:define id="schoolClassId" name="schoolClass" property="idInternal"/>
+		<bean:define id="schoolClassId" name="schoolClass" property="externalId"/>
 		<bean:define id="schoolClassName" name="schoolClass" property="nome"/>
 		
 		<bean:define id="classSelected">
@@ -33,12 +33,12 @@
 		
 		<li>
 			<logic:present name="selectedSchoolClass" >
-				<bean:define id="classIdSelected" name="selectedSchoolClass" property="idInternal" />
+				<bean:define id="classIdSelected" name="selectedSchoolClass" property="externalId" />
 				
 				<logic:notEqual name="schoolClassId" value="<%= classIdSelected.toString() %>">		
 						
 					<logic:present name="executionCourse">
-						<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>
+						<bean:define id="executionCourseID" name="executionCourse" property="externalId"/>
 						<html:link page="<%= "/studentShiftEnrollmentManagerLoockup.do?method=" + classSelected + "&amp;registrationOID=" + registrationOID.toString()
 						 + "&amp;classId=" + schoolClassId.toString() + "&amp;executionCourseID=" + executionCourseID.toString() %>">
 							<bean:message key="label.class" />&nbsp;<bean:write name="schoolClass" property="nome" />		
@@ -62,7 +62,7 @@
 			
 				<logic:present name="executionCourse">
 					
-					<bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
+					<bean:define id="executionCourseID" name="executionCourse" property="externalId" />
 					
 					<html:link page="<%= "/studentShiftEnrollmentManagerLoockup.do?method=" + classSelected + "&amp;registrationOID=" + registrationOID.toString()
 					  + "&amp;classId=" + schoolClassId.toString() + "&amp;executionCourseID=" + executionCourseID.toString() %>">
@@ -81,5 +81,5 @@
 		</li>
 	</logic:iterate> 
 	<br />
-	<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registration.getIdInternal().toString()%>"><bean:message key="button.back" /></html:link></li>
+	<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registration.getExternalId().toString()%>"><bean:message key="button.back" /></html:link></li>
 </ul>

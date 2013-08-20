@@ -38,7 +38,7 @@
 	</logic:equal>
 	
 <% } else { %>
-	<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="currentSpace" paramProperty="spaceInformation.idInternal">
+	<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="currentSpace" paramProperty="spaceInformation.externalId">
 		<logic:equal name="currentSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 			<bean:write name="currentSpace" property="spaceInformation.presentationName"/>
 		</logic:equal>

@@ -1,22 +1,22 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AssociateTSDTeacherWithTeacherServiceDistribution {
-    protected void run(Integer tsdId, Integer tsdTeacherId) {
-        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
+    protected void run(String tsdId, String tsdTeacherId) {
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
 
         if (tsdTeacherId == null) {
             tsd.getTSDTeachersSet().addAll(tsd.getParent().getTSDTeachers());
         } else {
-            tsd.addTSDTeachers(RootDomainObject.getInstance().readTSDTeacherByOID(tsdTeacherId));
+            tsd.addTSDTeachers(AbstractDomainObject.<TSDTeacher> fromExternalId(tsdTeacherId));
         }
     }
 
@@ -26,7 +26,7 @@ public class AssociateTSDTeacherWithTeacherServiceDistribution {
             new AssociateTSDTeacherWithTeacherServiceDistribution();
 
     @Service
-    public static void runAssociateTSDTeacherWithTeacherServiceDistribution(Integer tsdId, Integer tsdTeacherId)
+    public static void runAssociateTSDTeacherWithTeacherServiceDistribution(String tsdId, String tsdTeacherId)
             throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

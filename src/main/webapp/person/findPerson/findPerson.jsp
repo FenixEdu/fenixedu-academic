@@ -140,11 +140,11 @@ function check(e,v){
 	
 	<%-- <bean:define id="degreeId" value="" type="java.lang.String"/>
 	<logic:present name="bean" property="degree">
-		<bean:define id="degreeId" name="bean" property="degree.idInternal" type="java.lang.String"/>	
+		<bean:define id="degreeId" name="bean" property="degree.externalId" type="java.lang.String"/>	
 	</logic:present>
 	<bean:define id="departmentId" value="" type="java.lang.String"/>
 	<logic:present name="bean" property="department">
-		<bean:define id="departmentId" name="bean" property="department.idInternal" type="java.lang.String"/>	
+		<bean:define id="departmentId" name="bean" property="department.externalId" type="java.lang.String"/>	
 	</logic:present> --%>
 
 	
@@ -164,7 +164,7 @@ function check(e,v){
 
 	<logic:iterate id="personalInfo" name="personListFinded"
 		indexId="personIndex">
-		<bean:define id="personID" name="personalInfo" property="idInternal" />
+		<bean:define id="personID" name="personalInfo" property="externalId" />
 
 		<div class="pp">
 			<table class="ppid" cellpadding="0" cellspacing="0">
@@ -197,7 +197,7 @@ function check(e,v){
 			</table>
 
 			<logic:equal name="viewPhoto" value="true">
-				<bean:define id="personID" name="personalInfo" property="idInternal" />
+				<bean:define id="personID" name="personalInfo" property="externalId" />
 				<html:img
 					src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>"
 					altKey="personPhoto" bundle="IMAGE_RESOURCES" />

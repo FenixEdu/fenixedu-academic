@@ -237,8 +237,8 @@
 					</logic:equal>
 					<bean:size id="questionsSize" name="metadata" property="visibleQuestions"/>
 					<td class="listClasses"><bean:write name="questionsSize" /></td>
-					<bean:define id="exerciseCode" name="metadata" property="idInternal" />
-					<bean:define id="metadataCode" name="metadata" property="idInternal" />
+					<bean:define id="exerciseCode" name="metadata" property="externalId" />
+					<bean:define id="metadataCode" name="metadata" property="externalId" />
 					<td>
 					<div class="gen-button"><html:link
 						page="<%= "/exercisesManagement.do?method=prepareEditExercise&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;exerciseCode=" + pageContext.findAttribute("exerciseCode")+ "&amp;order="+ pageContext.findAttribute("order")+"&amp;asc="+pageContext.findAttribute("asc")%>">

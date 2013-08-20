@@ -29,10 +29,10 @@
 			<logic:iterate id="externalPerson" name="externalPersonsList">
 
 				<bean:define id="linkViewExternalPerson">
-					/viewExternalPerson.do?method=view&id=<bean:write name="externalPerson" property="idInternal"/>
+					/viewExternalPerson.do?method=view&id=<bean:write name="externalPerson" property="externalId"/>
 				</bean:define>				
 				<bean:define id="linkEditExternalPerson">
-					/editExternalPerson.do?method=prepare&id=<bean:write name="externalPerson" property="idInternal"/>
+					/editExternalPerson.do?method=prepare&id=<bean:write name="externalPerson" property="externalId"/>
 				</bean:define>
 				
 				<tr>					

@@ -18,13 +18,13 @@
 		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
 		<bean:define id="testScope" name="distributedTest" property="testScope"/>
 		<bean:define id="domainObject" name="testScope" property="domainObject"/>
-		<bean:define id="objectCode" name="domainObject" property="idInternal"/>
-		<bean:define id="questionCode" name="question" property="idInternal"/>
+		<bean:define id="objectCode" name="domainObject" property="externalId"/>
+		<bean:define id="questionCode" name="question" property="externalId"/>
 		<bean:define id="questionOrder" name="testQuestion" property="testQuestionOrder"/>
 		<bean:define id="correction" name="testQuestion" property="distributedTest.correctionAvailability" type="net.sourceforge.fenixedu.util.tests.CorrectionAvailability"/>
 		<bean:define id="formula" name="testQuestion" property="correctionFormula.formula"/>
 		<bean:define id="testType" name="testQuestion" property="distributedTest.testType.type"/>
-		<bean:define id="student" name="testQuestion" property="student.idInternal"/>
+		<bean:define id="student" name="testQuestion" property="student.externalId"/>
 
 	<logic:iterate id="subQuestion" name="testQuestion" property="studentSubQuestions" type="net.sourceforge.fenixedu.domain.onlineTests.SubQuestion" indexId="itemIndex">
 	<bean:define id="item" value="<%=itemIndex.toString()%>"/>

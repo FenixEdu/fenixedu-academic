@@ -48,6 +48,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -74,9 +75,9 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
     public ActionForward prepareSelectCandidates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer degreeCurricularPlanID = Integer.valueOf(getFromRequest("degreeCurricularPlanID", request));
-        Integer executionDegreeID = Integer.valueOf(getFromRequest("executionDegreeID", request));
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        String degreeCurricularPlanID = getFromRequest("degreeCurricularPlanID", request);
+        String executionDegreeID = getFromRequest("executionDegreeID", request);
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
         ActionErrors errors = new ActionErrors();
         if (executionDegree == null) {
@@ -143,7 +144,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         String executionYear = getFromRequest("executionYear", request);
 
         String candidateID = getFromRequest("candidateID", request);
-        chooseSecondMasterDegreeForm.set("candidateID", Integer.valueOf(candidateID));
+        chooseSecondMasterDegreeForm.set("candidateID", candidateID);
         chooseSecondMasterDegreeForm.set("masterDegree", null);
 
         request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
@@ -216,7 +217,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
         String executionYear = getFromRequest("executionYear", request);
-        Integer degreeCurricularPlanID = readDegreeCurricularPlanID(request);
+        String degreeCurricularPlanID = readDegreeCurricularPlanID(request);
 
         String degree = getFromRequest("degree", request);
         String candidateID = getFromRequest("candidateID", request);
@@ -242,8 +243,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         List candidateEnrolments = null;
 
         try {
-            candidateEnrolments =
-                    ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(new Integer(candidateID));
+            candidateEnrolments = ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);
 
         } catch (NotAuthorizedException e) {
             throw new NotAuthorizedActionException(e);
@@ -262,7 +262,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
         try {
 
-            infoMasterDegreeCandidate = GetCandidatesByID.run(new Integer(candidateID));
+            infoMasterDegreeCandidate = GetCandidatesByID.run(candidateID);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -270,8 +270,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
         if (infoExecutionDegree == null) {
             try {
-                infoExecutionDegree =
-                        ReadExecutionDegreeByCandidateID.runReadExecutionDegreeByCandidateID(new Integer(candidateID));
+                infoExecutionDegree = ReadExecutionDegreeByCandidateID.runReadExecutionDegreeByCandidateID(candidateID);
             } catch (NotAuthorizedException e) {
                 throw new NotAuthorizedActionException(e);
             } catch (FenixServiceException e) {
@@ -287,10 +286,10 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         return mapping.findForward("PrepareSuccess");
     }
 
-    private Integer readDegreeCurricularPlanID(HttpServletRequest request) {
-        Integer degreeCurricularPlanID = null;
+    private String readDegreeCurricularPlanID(HttpServletRequest request) {
+        String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
         return degreeCurricularPlanID;
@@ -303,7 +302,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
     private void initForm(HttpServletRequest request, DynaActionForm chooseCurricularCoursesForm, String candidateID,
             List curricularCourseList, List candidateEnrolments) {
-        Integer selection[] = new Integer[curricularCourseList.size() + candidateEnrolments.size()];
+        String selection[] = new String[curricularCourseList.size() + candidateEnrolments.size()];
         InfoCandidateEnrolment infoCandidateEnrolment = null;
 
         if ((candidateEnrolments != null) && (candidateEnrolments.size() != 0)) {
@@ -329,7 +328,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
                 if (i < candidateEnrolments.size()) {
                     selection[i] = ((InfoCandidateEnrolment) candidateEnrolments.get(i))
                     // .getInfoCurricularCourseScope()
-                            .getInfoCurricularCourse().getIdInternal();
+                            .getInfoCurricularCourse().getExternalId();
                 } else {
                     selection[i] = null;
                 }
@@ -341,7 +340,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
             chooseCurricularCoursesForm.set("attributedCredits", null);
         }
 
-        chooseCurricularCoursesForm.set("candidateID", Integer.valueOf(candidateID));
+        chooseCurricularCoursesForm.set("candidateID", candidateID);
         chooseCurricularCoursesForm.set("selection", selection);
     }
 
@@ -381,8 +380,8 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
         DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
-        Integer[] selection = (Integer[]) chooseCurricularCoursesForm.get("selection");
-        Integer degreeCurricularPlanID = (Integer) chooseCurricularCoursesForm.get("degreeCurricularPlanID");
+        String[] selection = (String[]) chooseCurricularCoursesForm.get("selection");
+        String degreeCurricularPlanID = (String) chooseCurricularCoursesForm.get("degreeCurricularPlanID");
 
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
@@ -390,7 +389,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
             throw new NoChoiceMadeActionException(null);
         }
 
-        Integer candidateID = (Integer) chooseCurricularCoursesForm.get("candidateID");
+        String candidateID = (String) chooseCurricularCoursesForm.get("candidateID");
 
         String attributedCreditsString = (String) chooseCurricularCoursesForm.get("attributedCredits");
 
@@ -403,7 +402,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
         String givenCreditsRemarks = (String) chooseCurricularCoursesForm.get("givenCreditsRemarks");
 
-        Set<Integer> selectedCurricularCourses = convertIntegerArrayToSet(selection);
+        Set<String> selectedCurricularCourses = convertStringArrayToSet(selection);
 
         try {
 
@@ -453,9 +452,9 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         return mapping.findForward("ChooseSuccess");
     }
 
-    private Set<Integer> convertIntegerArrayToSet(Integer[] values) {
-        Set<Integer> selectedCurricularCourses = new HashSet<Integer>();
-        for (Integer value : values) {
+    private Set<String> convertStringArrayToSet(String[] values) {
+        Set<String> selectedCurricularCourses = new HashSet<String>();
+        for (String value : values) {
             selectedCurricularCourses.add(value);
         }
         return selectedCurricularCourses;
@@ -465,13 +464,13 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
      * @param selection
      * @return
      */
-    private boolean validChoice(Integer[] selection) {
+    private boolean validChoice(String[] selection) {
 
         if ((selection != null) && (selection.length == 0) || (selection[0] == null)) {
             return false;
         }
 
-        for (Integer element : selection) {
+        for (String element : selection) {
             if (element == null) {
                 return false;
             }
@@ -490,7 +489,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
     public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Integer candidateID = new Integer(request.getParameter("candidateID"));
+        String candidateID = request.getParameter("candidateID");
 
         List candidateEnrolments = null;
         try {
@@ -551,7 +550,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal()
+            executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId()
                     .toString()));
         }
         return executionDegreeLabels;

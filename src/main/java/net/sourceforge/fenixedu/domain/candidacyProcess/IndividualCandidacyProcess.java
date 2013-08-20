@@ -90,7 +90,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
         String endExecutionYear =
                 String.valueOf(period.getExecutionInterval().getEndDateYearMonthDay().get(DateTimeFieldType.year())).substring(2,
                         4);
-        setProcessCode(beginExecutionYear + endExecutionYear + getIdInternal());
+        setProcessCode(beginExecutionYear + endExecutionYear + getExternalId());
     }
 
     protected void setCandidacyDocumentFiles(IndividualCandidacyProcessBean bean) {

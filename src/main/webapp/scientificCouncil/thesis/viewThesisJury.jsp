@@ -34,7 +34,7 @@
 		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.add.jury.member"/>
 	</html:link>
 	|
-	<bean:define id="url">/scientificCouncilManageThesis.do?method=listScientificComission&amp;degreeId=<%= thesis.getDegree().getIdInternal() %>&amp;executionYearId=<%= thesis.getEnrolment().getExecutionYear().getIdInternal() %></bean:define>
+	<bean:define id="url">/scientificCouncilManageThesis.do?method=listScientificComission&amp;degreeId=<%= thesis.getDegree().getExternalId() %>&amp;executionYearId=<%= thesis.getEnrolment().getExecutionYear().getExternalId() %></bean:define>
 	<html:link page="<%= url %>">
 		<bean:message key="link.list.scientific.comission"/>
 	</html:link>
@@ -42,7 +42,7 @@
 		if (thesis.getState().ordinal() >= ThesisState.SUBMITTED.ordinal()) {
 	%>
 	|
-	<html:link href="<%= request.getContextPath() + String.format("/coordinator/manageThesis.do?method=printApprovalDocument&amp;executionYearId=%s&amp;thesisID=%s", thesis.getExecutionYear().getIdInternal(), thesis.getExternalId()) %>">
+	<html:link href="<%= request.getContextPath() + String.format("/coordinator/manageThesis.do?method=printApprovalDocument&amp;executionYearId=%s&amp;thesisID=%s", thesis.getExecutionYear().getExternalId(), thesis.getExternalId()) %>">
 		<bean:message bundle="APPLICATION_RESOURCES" key="label.coordinator.list.submitted.thesis.reprint"/>
 	</html:link>
 	<%

@@ -12,7 +12,7 @@
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean" />
 
 <ul>
-	<li><html:link page="/tests/questionBank.do?method=editTestElement" paramId="oid" paramName="bean" paramProperty="question.idInternal">
+	<li><html:link page="/tests/questionBank.do?method=editTestElement" paramId="oid" paramName="bean" paramProperty="question.externalId">
 		<bean:message key="message.back" bundle="TESTS_RESOURCES" />
 	</html:link></li>
 </ul>
@@ -110,7 +110,7 @@
 <h4><bean:message key="message.validator.choosen" bundle="TESTS_RESOURCES" /></h4>
 <logic:notEmpty name="bean" property="question.validator">
 	<ul>
-		<li><html:link page="/tests/questionBank.do?method=deleteValidator" paramId="oid" paramName="bean" paramProperty="question.idInternal">
+		<li><html:link page="/tests/questionBank.do?method=deleteValidator" paramId="oid" paramName="bean" paramProperty="question.externalId">
 			<bean:message key="message.delete" bundle="TESTS_RESOURCES" />
 		</html:link></li>
 	</ul>

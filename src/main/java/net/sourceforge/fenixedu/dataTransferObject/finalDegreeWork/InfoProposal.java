@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
  */
 public class InfoProposal extends InfoObject {
 
-    private Proposal proposalDomainReference;
+    private final Proposal proposalDomainReference;
 
     public InfoProposal(final Proposal proposal) {
         proposalDomainReference = proposal;
@@ -38,12 +38,12 @@ public class InfoProposal extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getProposal().getIdInternal();
+    public String getExternalId() {
+        return getProposal().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

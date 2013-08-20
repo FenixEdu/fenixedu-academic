@@ -45,7 +45,7 @@
 					<tr>
 						<td>
 							<logic:notEmpty name="mapEntry" property="value">
-								<html:link page="/listTeachersPersonalExpectations.do?method=seeTeacherPersonalExpectation" paramId="teacherPersonalExpectationID" paramName="mapEntry" paramProperty="value.idInternal">
+								<html:link page="/listTeachersPersonalExpectations.do?method=seeTeacherPersonalExpectation" paramId="teacherPersonalExpectationID" paramName="mapEntry" paramProperty="value.externalId">
 									<bean:write name="teacher" property="person.name"/>
 								</html:link>
 							</logic:notEmpty>

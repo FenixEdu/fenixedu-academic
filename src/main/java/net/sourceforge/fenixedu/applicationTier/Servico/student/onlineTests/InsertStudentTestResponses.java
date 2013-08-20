@@ -19,9 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateCompa
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
@@ -40,6 +38,7 @@ import org.apache.log4j.Logger;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class InsertStudentTestResponses {
@@ -50,7 +49,7 @@ public class InsertStudentTestResponses {
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static InfoSiteStudentTestFeedback run(Registration registration, Integer studentNumber,
-            final Integer distributedTestId, Response[] response, String path) throws FenixServiceException {
+            final String distributedTestId, Response[] response, String path) throws FenixServiceException {
 
         ServiceMonitoring.logService(InsertStudentTestResponses.class, registration, studentNumber, distributedTestId, response,
                 path);
@@ -66,7 +65,7 @@ public class InsertStudentTestResponses {
             throw new NotAuthorizedStudentToDoTestException();
         }
 
-        final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         if (distributedTest == null) {
             throw new FenixServiceException();
         }
@@ -163,7 +162,7 @@ public class InsertStudentTestResponses {
             studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
             for (StudentTestQuestion stq : newTestQuestions) {
                 for (StudentTestQuestion question : studentTestQuestionList) {
-                    if (!question.getIdInternal().equals(stq.getIdInternal())
+                    if (!question.getExternalId().equals(stq.getExternalId())
                             && stq.getTestQuestionOrder().compareTo(question.getTestQuestionOrder()) <= 0) {
                         question.setTestQuestionOrder(new Integer(question.getTestQuestionOrder() + 1));
                     }
@@ -175,7 +174,7 @@ public class InsertStudentTestResponses {
                 OnlineTest onlineTest = distributedTest.getOnlineTest();
                 Attends attend =
                         registration.getStudent().readAttendByExecutionCourse(
-                                ((ExecutionCourse) distributedTest.getTestScope().getDomainObject()));
+                                (distributedTest.getTestScope().getExecutionCourse()));
                 Mark mark = onlineTest.getMarkByAttend(attend);
 
                 if (mark == null) {

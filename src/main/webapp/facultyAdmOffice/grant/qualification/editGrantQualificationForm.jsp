@@ -96,7 +96,7 @@
 			</td>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.country" property="country">
-					<html:options collection="countryList" property="idInternal" labelProperty="name"/>
+					<html:options collection="countryList" property="externalId" labelProperty="name"/>
 				</html:select>
 			</td>
 		</tr>
@@ -135,7 +135,7 @@
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantQualificationForm"/>
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idPerson" property="idPerson" value='<%= request.getAttribute("idPerson").toString() %>'/>
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.username" property="username" value='<%= request.getAttribute("username").toString() %>'/>
-					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/> 
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId" value='<%= request.getAttribute("idGrantOwner").toString() %>'/> 
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.grantOwnerNumber" property="grantOwnerNumber" value='<%= request.getAttribute("grantOwnerNumber").toString() %>'/>
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 						<bean:message key="button.cancel"/>

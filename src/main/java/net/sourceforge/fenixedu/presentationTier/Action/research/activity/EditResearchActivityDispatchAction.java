@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.Remove
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ParticipantBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchActivityParticipantEditionBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
@@ -27,6 +26,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditResearchActivityDispatchAction extends ActivitiesManagementDispatchAction {
 
@@ -165,7 +165,7 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
     }
 
     public ActionForward editParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         String forwardTo = request.getParameter("forwardTo");
 
@@ -261,8 +261,8 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 
         String forwardTo = request.getParameter("forwardTo");
 
-        final Integer oid = Integer.parseInt(request.getParameter("participationId"));
-        Participation participation = (Participation) RootDomainObject.readDomainObjectByOID(Participation.class, oid);
+        Participation participation =
+                (Participation) AbstractDomainObject.fromExternalId(request.getParameter("participationId"));
 
         if (participation != null) {
             try {

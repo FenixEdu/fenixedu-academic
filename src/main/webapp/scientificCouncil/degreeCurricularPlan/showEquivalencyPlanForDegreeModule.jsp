@@ -25,9 +25,9 @@
 				</td>
 				<td class="highlight2 smalltxt" align="center" style="width: 14em;">
 					<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="
-							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-							+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
-							+ curricularCourse.getIdInternal() %>">
+							+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+							+ equivalencePlan.getExternalId() + "&amp;degreeModuleID="
+							+ curricularCourse.getExternalId() %>">
 						<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
 					</html:link>
 				</td>
@@ -44,9 +44,9 @@
 					</logic:equal>
 					<logic:notEqual name="numElements" value="0">
 						<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
-								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-								+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
-								+ curricularCourse.getIdInternal() %>">
+								+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+								+ equivalencePlan.getExternalId() + "&amp;degreeModuleID="
+								+ curricularCourse.getExternalId() %>">
 							<bean:message key="link.equivalencies.for.curricular.course.view" bundle="APPLICATION_RESOURCES"/>
 						</html:link>
 					</logic:notEqual>
@@ -71,9 +71,9 @@
 				</th>
 				<th class="smalltxt" align="center" style="width: 14em;">
 					<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="
-							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-							+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
-							+ courseGroup.getIdInternal() %>">
+							+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+							+ equivalencePlan.getExternalId() + "&amp;degreeModuleID="
+							+ courseGroup.getExternalId() %>">
 						<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
 					</html:link>
 				</th>
@@ -90,9 +90,9 @@
 					</logic:equal>
 					<logic:notEqual name="numElements" value="0">
 						<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
-								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-								+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
-								+ courseGroup.getIdInternal() %>">
+								+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+								+ equivalencePlan.getExternalId() + "&amp;degreeModuleID="
+								+ courseGroup.getExternalId() %>">
 							<bean:message key="link.equivalencies.for.course.group.view" bundle="APPLICATION_RESOURCES"/>
 						</html:link>
 					</logic:notEqual>

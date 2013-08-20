@@ -28,7 +28,7 @@
 	<logic:present name="departmentDegreeBean" property="department">
 		<br/>
 		<br/>
-		<bean:define id="url" type="java.lang.String">/manageDepartmentDegrees.do?method=remove&departmentID=<bean:write name="departmentDegreeBean" property="department.idInternal"/></bean:define>
+		<bean:define id="url" type="java.lang.String">/manageDepartmentDegrees.do?method=remove&departmentID=<bean:write name="departmentDegreeBean" property="department.externalId"/></bean:define>
 		<fr:view name="departmentDegreeBean" property="department.degrees"
 				schema="net.sourceforge.fenixedu.domain.Degree.List.For.Department.Association">
 			<fr:layout name="tabular" >
@@ -36,7 +36,7 @@
 		        <fr:property name="columnClasses" value=",,,"/>
 		        <fr:property name="sortBy" value="tipoCurso=asc,name=asc"/>
 
-				<fr:property name="linkFormat(remove)" value="<%= url + "&degreeID=${idInternal}" %>"/>
+				<fr:property name="linkFormat(remove)" value="<%= url + "&degreeID=${externalId}" %>"/>
 				<fr:property name="key(remove)" value="label.remove"/>
 			</fr:layout>
 		</fr:view>		

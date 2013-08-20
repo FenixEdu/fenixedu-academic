@@ -89,7 +89,7 @@
 				<h:outputText value="<td>#{cycleCourseGroupInformation.graduatedTitleEn}</td>" escape="false"/>
 				<h:outputText value="<td>" escape="false"/>
 				<h:commandButton alt="#{htmlAltBundle['commandButton.edit']}" styleClass="inputbutton" value="#{bolonhaBundle['edit']}"
-					action="#{CycleCourseGroupInformationManagement.prepareEditCourseGroupInformation}" onclick="$('#informationId').attr('value', #{cycleCourseGroupInformation.idInternal})"/>
+					action="#{CycleCourseGroupInformationManagement.prepareEditCourseGroupInformation}" onclick="$('#informationId').attr('value', #{cycleCourseGroupInformation.externalId})"/>
 				<h:outputText value="</td>" escape="false"/>
 			<h:outputText value="</tr>" escape="false"/>
 		</fc:dataRepeater>

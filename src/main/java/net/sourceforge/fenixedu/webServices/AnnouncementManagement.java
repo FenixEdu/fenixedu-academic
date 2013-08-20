@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.ServletRequest;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory;
@@ -20,6 +19,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.sun.faces.util.Base64;
@@ -31,8 +31,8 @@ public class AnnouncementManagement implements IAnnouncementManagement {
     private static final String EVENT_ANNOUNCEMENT_BOARD = "EVENT_BOARD";
     private static final String NEWS_ANNOUNCEMENT_BOARD = "NEWS_BOARD";
 
-    private static final int EVENT_BOARD_ID = 28367;
-    private static final int NEWS_BOARD_ID = 28368;
+    private static final String EVENT_BOARD_ID = "678604861135";
+    private static final String NEWS_BOARD_ID = "678604861136";
 
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
 
@@ -67,9 +67,9 @@ public class AnnouncementManagement implements IAnnouncementManagement {
 
             AnnouncementBoard board = null;
             if (announcementBoard.equals(EVENT_ANNOUNCEMENT_BOARD)) {
-                board = (AnnouncementBoard) RootDomainObject.readDomainObjectByOID(AnnouncementBoard.class, EVENT_BOARD_ID);
+                board = (AnnouncementBoard) AbstractDomainObject.fromExternalId(EVENT_BOARD_ID);
             } else if (announcementBoard.equals(NEWS_ANNOUNCEMENT_BOARD)) {
-                board = (AnnouncementBoard) RootDomainObject.readDomainObjectByOID(AnnouncementBoard.class, NEWS_BOARD_ID);
+                board = (AnnouncementBoard) AbstractDomainObject.fromExternalId(NEWS_BOARD_ID);
             } else {
                 return FAILURE + " - " + "announcementBoard value must be EVENT_BOARD or NEWS_BOARD";
             }

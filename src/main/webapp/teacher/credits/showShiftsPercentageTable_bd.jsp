@@ -70,13 +70,13 @@
 							
 							<td class="listClasses" rowspan="<%= lessonsSize %>">
 								<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.shiftProfessorships" property="shiftProfessorships">
-									<bean:write name="infoShiftPercentage" property="shift.idInternal"/>
+									<bean:write name="infoShiftPercentage" property="shift.externalId"/>
 								</html:multibox>
 							</td>	
 
 							<td class="listClasses" rowspan="<%= lessonsSize %>">
 						  		<bean:define id="propertyName">
-									percentage_<bean:write name="infoShiftPercentage" property="shift.idInternal"/>
+									percentage_<bean:write name="infoShiftPercentage" property="shift.externalId"/>
 								</bean:define>
 								<html:text alt='<%= propertyName.toString() %>' property='<%= propertyName.toString() %>' size="4" value=""/> %
 							</td>

@@ -14,12 +14,13 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UpdateDepartmentsCompetenceCourseManagementGroup {
 
     @Checked("RolePredicates.DEPARTMENT_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static void run(Department department, Integer[] add, Integer[] remove) {
+    public static void run(Department department, String[] add, String[] remove) {
         List<Person> toAdd = materializePersons(add);
         List<Person> toRemove = materializePersons(remove);
         List<Person> finalList = new ArrayList<Person>();
@@ -51,12 +52,12 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup {
         department.setCompetenceCourseMembersGroup(new FixedSetGroup(finalList));
     }
 
-    private static List<Person> materializePersons(Integer[] personsIDs) {
+    private static List<Person> materializePersons(String[] personsIDs) {
         if (personsIDs != null) {
             List<Person> result = new ArrayList<Person>();
 
-            for (Integer personID : personsIDs) {
-                result.add((Person) RootDomainObject.getInstance().readPartyByOID(personID));
+            for (String personID : personsIDs) {
+                result.add((Person) AbstractDomainObject.fromExternalId(personID));
             }
 
             return result;

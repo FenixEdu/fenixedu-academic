@@ -35,7 +35,7 @@
 </logic:present>
 
 <p class="mbottom025"><strong><bean:message key="label.information" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
-<html:form action="<%="/academicServiceRequestsManagement.do?method=sendAcademicServiceRequest&amp;academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>" style="display: inline;">
+<html:form action="<%="/academicServiceRequestsManagement.do?method=sendAcademicServiceRequest&amp;academicServiceRequestId=" + academicServiceRequest.getExternalId().toString()%>" style="display: inline;">
 	<fr:edit id="serviceRequestBean" name="serviceRequestBean" schema="AcademicServiceRequestBean.external.entity.edit">
 		<fr:layout>
 			<fr:property name="classes" value="tstyle4 thright thlight mtop025 mbottom05"/>
@@ -48,7 +48,7 @@
 	</span>
 </html:form>
 
-<html:form action="<%="/student.do?method=visualizeRegistration&amp;registrationID=" + academicServiceRequest.getRegistration().getIdInternal().toString()%>" style="display: inline;">
+<html:form action="<%="/student.do?method=visualizeRegistration&amp;registrationID=" + academicServiceRequest.getRegistration().getExternalId().toString()%>" style="display: inline;">
 	<span>
 		<html:submit><bean:message key="label.back" bundle="APPLICATION_RESOURCES"/></html:submit>
 	</span>

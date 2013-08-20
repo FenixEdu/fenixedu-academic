@@ -35,7 +35,7 @@ public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
 
         final DynaActionForm form = (DynaValidatorForm) actionForm;
         final String teacherId = form.getString("id");
-        final Integer executionCourseId = Integer.valueOf(request.getParameter("executionCourseId"));
+        final String executionCourseId = request.getParameter("executionCourseId");
 
         try {
             InsertProfessorShip.runInsertProfessorShip(executionCourseId, teacherId, Boolean.FALSE, 0.0);

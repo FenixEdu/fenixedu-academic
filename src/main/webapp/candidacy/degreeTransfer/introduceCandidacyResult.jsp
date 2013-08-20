@@ -12,11 +12,11 @@
 	<br />
 </html:messages>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 <bean:define id="processName" name="processName" />
 
 <h3 class="mtop15 mbottom025">Escolher Curso</h3>
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 <fr:form action='<%="/caseHandling" + processName + ".do?processId=" + processId.toString() %>'>
 	<html:hidden property="method" value="prepareExecuteIntroduceCandidacyResult" />
 	<fr:edit name="individualCandidacyResultBean">

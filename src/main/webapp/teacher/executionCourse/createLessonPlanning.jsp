@@ -18,8 +18,8 @@
 		</p>
 	</logic:messagesPresent>
 						
-	<bean:define id="showLessonPlannings">/manageExecutionCourse.do?method=lessonPlannings&executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>	
-	<bean:define id="createLessonPlanningPath">/manageExecutionCourse.do?method=createLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>	
+	<bean:define id="showLessonPlannings">/manageExecutionCourse.do?method=lessonPlannings&executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>	
+	<bean:define id="createLessonPlanningPath">/manageExecutionCourse.do?method=createLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>	
 
 	<logic:notEmpty name="lessonPlanningBean">
 		<h2><bean:message key="link.create.lessonPlanning"/></h2>

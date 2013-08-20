@@ -34,9 +34,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ManageEnrolmentModelDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Registration registration =
-                rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request, "registrationID"));
+            HttpServletResponse response) throws FenixServiceException {
+        Registration registration = getDomainObject(request, "registrationID");
         EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = new EnrolmentModelFactoryEditor(registration);
 
         request.setAttribute("enrolmentModelBean", enrolmentModelFactoryEditor);
@@ -44,7 +43,7 @@ public class ManageEnrolmentModelDA extends FenixDispatchAction {
     }
 
     public ActionForward setEnrolmentModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = null;
 
         if (RenderUtils.getViewState() != null) {
@@ -53,7 +52,7 @@ public class ManageEnrolmentModelDA extends FenixDispatchAction {
         }
 
         return redirect("/student.do?method=visualizeRegistration&registrationID="
-                + enrolmentModelFactoryEditor.getRegistration().getIdInternal(), request);
+                + enrolmentModelFactoryEditor.getRegistration().getExternalId(), request);
     }
 
     public ActionForward postback(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

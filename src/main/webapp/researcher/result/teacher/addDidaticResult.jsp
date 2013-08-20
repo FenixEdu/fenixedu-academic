@@ -32,7 +32,7 @@
 		</td>
 		<td class="listClasses">
 			<div class="gen-button">
-				<bean:define id="resultId" name="result" property="idInternal"/>
+				<bean:define id="resultId" name="result" property="externalId"/>
 				<html:link page="<%="/resultTeacherManagement.do?method=insertResultTeacher&amp;typeResult=Didatic&amp;resultId="+resultId%>">
 					<bean:message key="message.publications.insert"/>
 				</html:link>

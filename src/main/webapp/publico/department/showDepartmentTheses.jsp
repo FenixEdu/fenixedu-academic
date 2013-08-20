@@ -7,7 +7,7 @@
 
 <html:xhtml/>
 
-<bean:define id="unitId" name="unit" property="idInternal"/>
+<bean:define id="unitId" name="unit" property="externalId"/>
 <bean:define id="listThesesActionPath" value="/department/theses.do" toScope="request"/>
 <bean:define id="listThesesContext" value="<%= "selectedDepartmentUnitID=" + unitId %>" toScope="request"/>
 <bean:define id="listThesesSchema" value="department.thesis.list.filter" toScope="request"/>

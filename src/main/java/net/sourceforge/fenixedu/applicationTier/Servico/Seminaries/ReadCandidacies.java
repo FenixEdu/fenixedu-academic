@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Grade;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
@@ -35,6 +34,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -45,30 +45,26 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCandidacies {
 
-    protected List run(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id, Integer case2Id,
-            Integer case3Id, Integer case4Id, Integer case5Id, Integer curricularCourseID, Integer degreeCurricularPlanID,
-            Boolean approved) throws BDException {
+    protected List run(String modalityID, String seminaryID, String themeID, String case1Id, String case2Id, String case3Id,
+            String case4Id, String case5Id, String curricularCourseID, String degreeCurricularPlanID, Boolean approved)
+            throws BDException {
         // IDs == -1 => not selected
         // approved == nulll => not selected
         //
         // case[1-5]Id => case study ids in the desired order
 
-        Modality modality = modalityID.intValue() == -1 ? null : RootDomainObject.getInstance().readModalityByOID(modalityID);
-        Seminary seminary = seminaryID.intValue() == -1 ? null : RootDomainObject.getInstance().readSeminaryByOID(seminaryID);
-        Theme theme = themeID.intValue() == -1 ? null : RootDomainObject.getInstance().readThemeByOID(themeID);
+        Modality modality = AbstractDomainObject.fromExternalId(modalityID);
+        Seminary seminary = AbstractDomainObject.fromExternalId(seminaryID);
+        Theme theme = AbstractDomainObject.fromExternalId(themeID);
 
-        DegreeCurricularPlan degreeCurricularPlan =
-                degreeCurricularPlanID.intValue() == -1 ? null : RootDomainObject.getInstance()
-                        .readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-        CurricularCourse curricularCourse =
-                curricularCourseID.intValue() == -1 ? null : (CurricularCourse) RootDomainObject.getInstance()
-                        .readDegreeModuleByOID(curricularCourseID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        CurricularCourse curricularCourse = AbstractDomainObject.fromExternalId(curricularCourseID);
 
-        CaseStudy caseStudy1 = case1Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case1Id);
-        CaseStudy caseStudy2 = case2Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case2Id);
-        CaseStudy caseStudy3 = case3Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case3Id);
-        CaseStudy caseStudy4 = case4Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case4Id);
-        CaseStudy caseStudy5 = case5Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case5Id);
+        CaseStudy caseStudy1 = AbstractDomainObject.fromExternalId(case1Id);
+        CaseStudy caseStudy2 = AbstractDomainObject.fromExternalId(case2Id);
+        CaseStudy caseStudy3 = AbstractDomainObject.fromExternalId(case3Id);
+        CaseStudy caseStudy4 = AbstractDomainObject.fromExternalId(case4Id);
+        CaseStudy caseStudy5 = AbstractDomainObject.fromExternalId(case5Id);
 
         List<SeminaryCandidacy> filteredCandidacies = new ArrayList<SeminaryCandidacy>();
 
@@ -87,7 +83,7 @@ public class ReadCandidacies {
 
             // TODO: converte Modality into a enumeration
             if (theme != null) {
-                if (!candidacy.getTheme().equals(theme) && !(candidacy.getModality().getIdInternal().intValue() == 1)) {
+                if (!candidacy.getTheme().equals(theme) /*&& !(candidacy.getModality().getExternalId().intValue() == 1) */) {
                     continue;
                 }
             }
@@ -133,7 +129,7 @@ public class ReadCandidacies {
 
                 InfoCandidacyDetails candidacyDTO = new InfoCandidacyDetails();
                 candidacyDTO.setCurricularCourse(InfoCurricularCourse.newInfoFromDomain(candidacy.getCurricularCourse()));
-                candidacyDTO.setIdInternal(candidacy.getIdInternal());
+                candidacyDTO.setExternalId(candidacy.getExternalId());
                 candidacyDTO.setInfoClassification(getInfoClassification(enrollments));
                 candidacyDTO.setModality(InfoModality.newInfoFromDomain(candidacy.getModality()));
                 candidacyDTO.setMotivation(candidacy.getMotivation());
@@ -186,9 +182,9 @@ public class ReadCandidacies {
     private static final ReadCandidacies serviceInstance = new ReadCandidacies();
 
     @Service
-    public static List runReadCandidacies(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id,
-            Integer case2Id, Integer case3Id, Integer case4Id, Integer case5Id, Integer curricularCourseID,
-            Integer degreeCurricularPlanID, Boolean approved) throws NotAuthorizedException, BDException {
+    public static List runReadCandidacies(String modalityID, String seminaryID, String themeID, String case1Id, String case2Id,
+            String case3Id, String case4Id, String case5Id, String curricularCourseID, String degreeCurricularPlanID,
+            Boolean approved) throws NotAuthorizedException, BDException {
         CandidaciesAccessFilter.instance.execute();
         return serviceInstance.run(modalityID, seminaryID, themeID, case1Id, case2Id, case3Id, case4Id, case5Id,
                 curricularCourseID, degreeCurricularPlanID, approved);

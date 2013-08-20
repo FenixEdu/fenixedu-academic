@@ -6,7 +6,7 @@
 
 <h2><bean:message key="label.addFile" bundle="RESEARCHER_RESOURCES"/></h2>
 
-<bean:define id="unitID" name="unit" property="idInternal"/>
+<bean:define id="unitID" name="unit" property="externalId"/>
 <bean:define id="actionName" name="functionalityAction"/>
 
 <logic:equal name="unit" property="currentUserAllowedToUploadFiles" value="true">

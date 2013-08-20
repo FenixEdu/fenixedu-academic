@@ -13,7 +13,7 @@
 
 <logic:iterate id="entry" name="coursesProjectsMap">
 	<bean:define id="course" name="entry" property="key"/>
-	<bean:define id="courseID" name="course" property="idInternal"/>
+	<bean:define id="courseID" name="course" property="externalId"/>
 	<bean:define id="projects" name="entry" property="value"/>
 	<div class="mvert25">
 		<h3>

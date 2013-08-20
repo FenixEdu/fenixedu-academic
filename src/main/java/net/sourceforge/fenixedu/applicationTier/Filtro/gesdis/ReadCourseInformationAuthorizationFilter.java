@@ -26,12 +26,12 @@ public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthor
     }
 
     @Override
-    protected boolean verifyCondition(IUserView id, Integer executionCourseID) {
+    protected boolean verifyCondition(IUserView id, String executionCourseID) {
         final Person person = id.getPerson();
 
         for (final Professorship professorship : person.getProfessorshipsSet()) {
             final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-            if (executionCourse.getIdInternal().equals(executionCourseID)) {
+            if (executionCourse.getExternalId().equals(executionCourseID)) {
                 return true;
             }
         }

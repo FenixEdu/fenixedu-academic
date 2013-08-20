@@ -35,7 +35,7 @@
 
 			<logic:present name="student" property="delegateFunction">
 				<bean:define id="degree" name="student" property="delegateFunction.unit.degree" />
-				<bean:define id="degreeId" name="degree" property="idInternal" />
+				<bean:define id="degreeId" name="degree" property="externalId" />
 				<li>
 					<html:link page="<%= "/evaluationsForDelegates.faces?degreeID=" + degreeId%>">
 						<bean:message key="link.evaluations" bundle="DELEGATES_RESOURCES"/>

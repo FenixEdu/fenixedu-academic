@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
@@ -32,6 +31,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ChangeApplicationInfo {
 
@@ -41,7 +41,7 @@ public class ChangeApplicationInfo {
             InfoPersonEditor infoPersonEditor, IUserView userView, Boolean isNewPerson) throws FenixServiceException {
 
         final ExecutionDegree executionDegree =
-                RootDomainObject.getInstance().readExecutionDegreeByOID(newMasterDegreeCandidate.getInfoExecutionDegree().getIdInternal());
+                AbstractDomainObject.fromExternalId(newMasterDegreeCandidate.getInfoExecutionDegree().getExternalId());
 
         Person person =
                 Person.readByDocumentIdNumberAndIdDocumentType(newMasterDegreeCandidate.getInfoPerson()

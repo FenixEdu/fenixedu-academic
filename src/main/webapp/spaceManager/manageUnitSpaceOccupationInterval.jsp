@@ -11,7 +11,7 @@
 <logic:present name="selectedSpaceInformation">
 
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
-	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
+	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="externalId" />
 	<jsp:include page="spaceCrumbs.jsp"/>
 	
 	<bean:define id="space" name="selectedSpaceInformation" property="space"/>	
@@ -43,7 +43,7 @@
 			</tr>											
 		</table>
 		
-		<bean:define id="exceptionLink">/manageUnitSpaceOccupations.do?method=prepareManageUnitOccupationInterval&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&unitID=<bean:write name="unit" property="idInternal"/></bean:define>	
+		<bean:define id="exceptionLink">/manageUnitSpaceOccupations.do?method=prepareManageUnitOccupationInterval&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&unitID=<bean:write name="unit" property="externalId"/></bean:define>	
 		<fr:hasMessages for="create" type="conversion">
 			<p>
 				<span class="error0">			
@@ -72,7 +72,7 @@
 			</tr>											
 		</table>
 				
-		<bean:define id="exceptionLink2">/manageUnitSpaceOccupations.do?method=prepareEditUnitSpaceOccupation&page=0&unitSpaceOccupationID=<bean:write name="unitSpaceOccupation" property="idInternal"/></bean:define>	
+		<bean:define id="exceptionLink2">/manageUnitSpaceOccupations.do?method=prepareEditUnitSpaceOccupation&page=0&unitSpaceOccupationID=<bean:write name="unitSpaceOccupation" property="externalId"/></bean:define>	
 		<fr:hasMessages for="edit" type="conversion">
 			<p>
 				<span class="error0">			

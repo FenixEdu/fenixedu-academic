@@ -108,16 +108,16 @@
 						|| curriculum.getGeneralObjectives() == null || curriculum.getGeneralObjectivesEn() == null
 						|| curriculum.getGeneralObjectives().equals(org.apache.commons.lang.StringUtils.EMPTY) || curriculum.getGeneralObjectivesEn().equals(org.apache.commons.lang.StringUtils.EMPTY)) { %>
 
-						<bean:define id="url" type="java.lang.String">/editObjectives.do?method=prepareEditObjectives&amp;curriculumID=<bean:write name="curriculum" property="idInternal"/></bean:define>
-						<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+						<bean:define id="url" type="java.lang.String">/editObjectives.do?method=prepareEditObjectives&amp;curriculumID=<bean:write name="curriculum" property="externalId"/></bean:define>
+						<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 							<bean:message key="button.edit"/>
 						</html:link>
 					<% } %>
 				</logic:present>
 				<logic:notPresent name="curriculum">
 					<% if (curricularCourse.getBasic() == null || !curricularCourse.getBasic().booleanValue()) { %>
-						<bean:define id="url" type="java.lang.String">/createObjectives.do?method=prepareCreateObjectives&amp;curricularCourseID=<bean:write name="curricularCourse" property="idInternal"/></bean:define>
-						<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+						<bean:define id="url" type="java.lang.String">/createObjectives.do?method=prepareCreateObjectives&amp;curricularCourseID=<bean:write name="curricularCourse" property="externalId"/></bean:define>
+						<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 							<bean:message key="button.create"/>
 						</html:link>
 					<% } %>

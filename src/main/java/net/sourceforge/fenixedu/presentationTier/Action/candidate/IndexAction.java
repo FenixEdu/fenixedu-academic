@@ -38,7 +38,7 @@ public class IndexAction extends FenixAction {
             final Candidacy candidacy = getUserView(request).getPerson().getCandidaciesIterator().next();
 
             if (candidacy instanceof DegreeCandidacy || candidacy instanceof IMDCandidacy) {
-                request.setAttribute("candidacyID", candidacy.getIdInternal());
+                request.setAttribute("candidacyID", candidacy.getExternalId());
                 final CandidacySituation activeCandidacySituation = candidacy.getActiveCandidacySituation();
                 if (activeCandidacySituation != null
                         && CandidacySituationType.STAND_BY == activeCandidacySituation.getCandidacySituationType()) {

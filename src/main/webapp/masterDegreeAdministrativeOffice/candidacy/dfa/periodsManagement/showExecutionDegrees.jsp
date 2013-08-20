@@ -14,10 +14,10 @@
 <fr:view name="executionDegrees" schema="DFAPeriodsManagement.ExecutionDegree.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4" />
-		<fr:property name="linkFormat(editCandidacyPeriod)" value="/dfaPeriodsManagement.do?method=prepareEditCandidacyPeriod&executionDegreeId=${idInternal}"/>
+		<fr:property name="linkFormat(editCandidacyPeriod)" value="/dfaPeriodsManagement.do?method=prepareEditCandidacyPeriod&executionDegreeId=${externalId}"/>
 		<fr:property name="key(editCandidacyPeriod)" value="link.candidacy.dfa.editCandidacyPeriod"/>
 		<fr:property name="bundle(editCandidacyPeriod)" value="ADMIN_OFFICE_RESOURCES" />
-		<fr:property name="linkFormat(editRegistrationPeriod)" value="/dfaPeriodsManagement.do?method=prepareEditRegistrationPeriod&executionDegreeId=${idInternal}"/>
+		<fr:property name="linkFormat(editRegistrationPeriod)" value="/dfaPeriodsManagement.do?method=prepareEditRegistrationPeriod&executionDegreeId=${externalId}"/>
 		<fr:property name="key(editRegistrationPeriod)" value="link.candidacy.dfa.editRegistrationPeriod"/>
 		<fr:property name="bundle(editRegistrationPeriod)" value="ADMIN_OFFICE_RESOURCES" />
 	</fr:layout>

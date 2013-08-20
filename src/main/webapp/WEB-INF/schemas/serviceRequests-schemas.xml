@@ -729,7 +729,7 @@
 <schema name="DocumentRequest.view-documentPurposeTypeInformation" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="serviceRequestNumberYear" key="label.serviceRequestNumberYear.withLineBreak" />
 	<slot name="registration.number" layout="conditional-link" key="label.registration.number.withLineBreak">
-        <property name="linkFormat" value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
+        <property name="linkFormat" value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.externalId}"/>
         <property name="contextRelative" value="true"/>
         <property name="moduleRelative" value="true"/>
         <property name="useParent" value="true"/>
@@ -749,7 +749,7 @@
 <schema name="AcademicServiceRequest.view-for-given-registration-and-search" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="registration.number" layout="link">
-        <property name="linkFormat" value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
+        <property name="linkFormat" value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.externalId}"/>
         <property name="contextRelative" value="true"/>
         <property name="moduleRelative" value="true"/>
         <property name="useParent" value="true"/>

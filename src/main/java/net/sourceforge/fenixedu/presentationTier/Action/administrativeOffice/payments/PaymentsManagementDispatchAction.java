@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreatePayment
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
@@ -140,8 +139,8 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
                             paymentsManagementDTO.getPerson(), paymentsManagementDTO.getContributorParty(),
                             paymentsManagementDTO.getContributorName());
 
-            request.setAttribute("personId", paymentsManagementDTO.getPerson().getIdInternal());
-            request.setAttribute("receiptID", receipt.getIdInternal());
+            request.setAttribute("personId", paymentsManagementDTO.getPerson().getExternalId());
+            request.setAttribute("receiptID", receipt.getExternalId());
 
             return mapping.findForward("showReceipt");
 
@@ -159,7 +158,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     }
 
     protected Person getPerson(HttpServletRequest request) {
-        return (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
+        return getDomainObject(request, "personId");
     }
 
     protected Unit getCurrentUnit(HttpServletRequest request) {
@@ -223,7 +222,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     }
 
     protected Event getEvent(HttpServletRequest request) {
-        return (Event) RootDomainObject.readDomainObjectByOID(Event.class, getIntegerFromRequest(request, "eventId"));
+        return getDomainObject(request, "eventId");
     }
 
     public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

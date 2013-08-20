@@ -53,7 +53,7 @@ public class EscolherContextoFormAction extends FenixContextAction {
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
         Integer semestre = infoExecutionPeriod.getSemester();
-        Integer anoCurricular = (Integer) escolherContextoForm.get("anoCurricular");
+        String anoCurricular = (String) escolherContextoForm.get("anoCurricular");
 
         InfoCurricularYear infoCurricularYear = ReadCurricularYearByOID.run(anoCurricular);
 
@@ -67,7 +67,8 @@ public class EscolherContextoFormAction extends FenixContextAction {
 
         if (infoExecutionDegree != null) {
             CurricularYearAndSemesterAndInfoExecutionDegree cYSiED =
-                    new CurricularYearAndSemesterAndInfoExecutionDegree(anoCurricular, semestre, infoExecutionDegree);
+                    new CurricularYearAndSemesterAndInfoExecutionDegree(Integer.parseInt(anoCurricular), semestre,
+                            infoExecutionDegree);
             request.setAttribute(PresentationConstants.CONTEXT_KEY, cYSiED);
 
             request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);

@@ -6,7 +6,7 @@
 <html:xhtml/>
 
 <h2><bean:message key="label.managePeople.title" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
-<bean:define id="siteID" name="site" property="idInternal"/>
+<bean:define id="siteID" name="site" property="externalId"/>
 
 <logic:messagesPresent message="true">
 	<html:messages id="messages" message="true" bundle="WEBSITEMANAGER_RESOURCES">
@@ -24,12 +24,12 @@
 		<fr:property name="key(remove)" value="label.remove" />
 		<fr:property name="bundle(remove)" value="WEBSITEMANAGER_RESOURCES" />
 		<fr:property name="link(remove)" value="<%= "/manageResearchUnitSite.do?method=removePerson&oid=" + siteID %>"/>
-		<fr:property name="param(remove)" value="idInternal/cid" />
+		<fr:property name="param(remove)" value="externalId/cid" />
 		<fr:property name="order(remove)" value="2"/>
 		<fr:property name="key(edit)" value="label.edit" />
 		<fr:property name="bundle(edit)" value="DEFAULT" />
 		<fr:property name="link(edit)" value="<%= "/manageResearchUnitSite.do?method=editContract&oid=" + siteID %>"/>
-		<fr:property name="param(edit)" value="idInternal/cid" />
+		<fr:property name="param(edit)" value="externalId/cid" />
 		<fr:property name="order(edit)" value="1"/>
 	</fr:layout>
 </fr:view>

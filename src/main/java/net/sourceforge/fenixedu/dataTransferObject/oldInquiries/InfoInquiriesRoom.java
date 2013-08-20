@@ -152,7 +152,7 @@ public class InfoInquiriesRoom extends InfoObject implements Comparable {
 
         this.setEnvironmentalConditions(inquiriesRoom.getEnvironmentalConditions());
         this.setEnvironmentalConditions(inquiriesRoom.getEnvironmentalConditions());
-        this.setIdInternal(inquiriesRoom.getIdInternal());
+        this.setExternalId(inquiriesRoom.getExternalId());
         this.setSpaceAdequation(inquiriesRoom.getSpaceAdequation());
         this.setInquiriesCourse(InfoInquiriesCourse.newInfoFromDomain(inquiriesRoom.getInquiriesCourse()));
         this.setRoom(InfoRoomWithInfoInquiriesRoom.newInfoFromDomain(inquiriesRoom.getRoom()));
@@ -161,7 +161,7 @@ public class InfoInquiriesRoom extends InfoObject implements Comparable {
     @Override
     public String toString() {
         String result = "[INFOINQUIRIESROOM";
-        result += ", id=" + getIdInternal();
+        result += ", id=" + getExternalId();
         if (room != null) {
             result += ", room=" + room.toString();
         }

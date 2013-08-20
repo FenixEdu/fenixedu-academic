@@ -8,7 +8,7 @@
 <logic:present role="MANAGER">
 	<h2><bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 	
-	<bean:define id="registrationId" name="registrationConclusionBean" property="registration.idInternal" />
+	<bean:define id="registrationId" name="registrationConclusionBean" property="registration.externalId" />
 	 
 	<fr:view name="registrationConclusionBean"
 		schema="RegistrationConclusionBean.viewForRegistrationWithConclusionProcessedInformation">
@@ -20,14 +20,14 @@
 	
 	
 	<logic:equal name="registrationConclusionBean" property="registration.registrationConclusionProcessed" value="true">
-		<html:link action="<%="/registrationConclusion.do?method=prepareEditForRegistration" %>" paramId="registrationId" paramName="registrationConclusionBean" paramProperty="registration.idInternal">
+		<html:link action="<%="/registrationConclusion.do?method=prepareEditForRegistration" %>" paramId="registrationId" paramName="registrationConclusionBean" paramProperty="registration.externalId">
 			<bean:message  key="label.edit" bundle="APPLICATION_RESOURCES"/>
 		</html:link>
 	</logic:equal>
 	
 	<br/>
 	<br/>
-	<bean:define id="studentId" name="registrationConclusionBean" property="registration.student.idInternal" />
+	<bean:define id="studentId" name="registrationConclusionBean" property="registration.student.externalId" />
 	<fr:form action="<%="/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans&amp;studentId=" + studentId%>">
 		<html:cancel altKey="cancel.cancel" bundle="HTMLALT_RESOURCES">
 			<bean:message  key="label.back" bundle="APPLICATION_RESOURCES"/>

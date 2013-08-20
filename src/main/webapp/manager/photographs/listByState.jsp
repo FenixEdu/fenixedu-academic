@@ -19,7 +19,7 @@
                 </p>
                 <div>
 	                <logic:iterate id="photo" name="datedRejection" property="photographs">
-	                       <bean:define id="photoId" name="photo" property="idInternal"/>
+	                       <bean:define id="photoId" name="photo" property="externalId"/>
                            <bean:define id="username" name="userHistory" property="person.username"/>
                            <bean:define id="name" name="userHistory" property="person.name"/>
 	    				   <html:img align="middle"

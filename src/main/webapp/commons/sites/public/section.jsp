@@ -48,7 +48,7 @@
 		<%
 			} else {
 		%>
-	            <html:link page="<%= String.format("%s?method=sectionWithLogin&amp;%s&amp;sectionID=%s", actionName, context, section.getIdInternal()) %>">
+	            <html:link page="<%= String.format("%s?method=sectionWithLogin&amp;%s&amp;sectionID=%s", actionName, context, section.getExternalId()) %>">
     	            <bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
         	   </html:link>.
        	<%
@@ -104,7 +104,7 @@
             <bean:define id="available" name="protectedItem" property="available"/>
             
             <logic:equal name="item" property="nameVisible" value="true">
-	       		<h3 class="mtop2 mbottom05" id="<%= "item" + item.getIdInternal() %>">
+	       		<h3 class="mtop2 mbottom05" id="<%= "item" + item.getExternalId() %>">
 	                <fr:view name="item" property="name"/>
 
 		            <logic:equal name="item" property="publicAvailable" value="true">

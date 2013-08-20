@@ -50,9 +50,9 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 
         request.setAttribute(
                 PresentationConstants.CURRICULAR_YEAR_OID,
-                contextSelectionBean.getCurricularYear() != null ? contextSelectionBean.getCurricularYear().getIdInternal() : null);
+                contextSelectionBean.getCurricularYear() != null ? contextSelectionBean.getCurricularYear().getExternalId() : null);
         request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, contextSelectionBean.getExecutionDegree()
-                .getIdInternal());
+                .getExternalId());
 
         request.setAttribute("execution_course_name", contextSelectionBean.getCourseName().replaceAll("%", "%25"));
 
@@ -100,8 +100,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
             HttpServletResponse response) throws Exception {
 
         InfoExecutionCourseOccupancy infoExecutionCourseOccupancy =
-                ReadShiftsByExecutionCourseID.runReadShiftsByExecutionCourseID(new Integer(request
-                        .getParameter("executionCourseOID")));
+                ReadShiftsByExecutionCourseID.runReadShiftsByExecutionCourseID(request.getParameter("executionCourseOID"));
 
         arranjeShifts(infoExecutionCourseOccupancy);
 
@@ -226,7 +225,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
     public ActionForward showLoads(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer executionCourceOId = new Integer(request.getParameter("executionCourseOID"));
+        String executionCourceOId = request.getParameter("executionCourseOID");
         InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourceOId);
 
         List scopes = ReadCurricularCourseScopesByExecutionCourseID.run(executionCourceOId);

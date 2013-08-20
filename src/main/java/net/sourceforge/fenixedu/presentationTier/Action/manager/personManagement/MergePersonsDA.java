@@ -61,8 +61,8 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward chooseObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
-            NoSuchMethodException, ClassNotFoundException {
+            HttpServletResponse response) throws FenixServiceException, IllegalAccessException, NoSuchMethodException,
+            ClassNotFoundException {
         Person person = checkUser();
 
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
@@ -96,8 +96,8 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward chooseObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String leftOid, String rightOid, String currentClass) throws 
-            FenixServiceException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException {
+            HttpServletResponse response, String leftOid, String rightOid, String currentClass) throws FenixServiceException,
+            IllegalAccessException, NoSuchMethodException, ClassNotFoundException {
 
         DomainObject domainObject1 = RootDomainObject.fromExternalId(leftOid);
         DomainObject domainObject2 = RootDomainObject.fromExternalId(rightOid);
@@ -199,8 +199,8 @@ public class MergePersonsDA extends FenixDispatchAction {
 
         if (bean == null) {
             bean = new MergePersonsBean();
-            bean.setLeftOid(request.getParameter("object1IdInternal"));
-            bean.setRightOid(request.getParameter("object2IdInternal"));
+            bean.setLeftOid(request.getParameter("object1ExternalId"));
+            bean.setRightOid(request.getParameter("object2ExternalId"));
             bean.setCurrentClass(request.getParameter("classToMerge"));
         }
 
@@ -221,9 +221,9 @@ public class MergePersonsDA extends FenixDispatchAction {
     private void fillDtoWithSimpleProperty(Role roleSlot, MergeSlotDTO mergeSlot, Object reference, String order) {
         if (reference != null) {
             if (roleSlot.getType() instanceof DomainClass) {
-                final long idInternal = ((DomainObject) reference).getOID();
-                mergeSlot.setValueProperty(order, "OID: " + idInternal);
-                mergeSlot.setValueLinkProperty(order, "/domainbrowser/showObj?OID=" + idInternal);
+                final long externalId = ((DomainObject) reference).getOID();
+                mergeSlot.setValueProperty(order, "OID: " + externalId);
+                mergeSlot.setValueLinkProperty(order, "/domainbrowser/showObj?OID=" + externalId);
             } else {
                 // enum ??
                 mergeSlot.setValueProperty(order, reference.toString());
@@ -234,8 +234,8 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward mergeProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
-            InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
+            HttpServletResponse response) throws FenixServiceException, IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException, ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
         Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
@@ -257,8 +257,8 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public void mergeProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response,
-            String leftOid, String rightOid, String currentClass) throws  FenixServiceException,
-            IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
+            String leftOid, String rightOid, String currentClass) throws FenixServiceException, IllegalAccessException,
+            InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
 
         IUserView userView = UserView.getUser();
 
@@ -274,8 +274,8 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward mergeStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
-            NoSuchMethodException, ClassNotFoundException {
+            HttpServletResponse response) throws FenixServiceException, IllegalAccessException, NoSuchMethodException,
+            ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
         Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
@@ -292,8 +292,8 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareTransferRegistrations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
-            NoSuchMethodException, ClassNotFoundException {
+            HttpServletResponse response) throws FenixServiceException, IllegalAccessException, NoSuchMethodException,
+            ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
         Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
@@ -333,7 +333,7 @@ public class MergePersonsDA extends FenixDispatchAction {
         Student studentToRemove = domainObject2.getStudent();
 
         if (studentToRemove != null) {
-            DeleteObjectByOID.run(Student.class, studentToRemove.getIdInternal());
+            DeleteObjectByOID.run(studentToRemove.getExternalId());
             request.setAttribute("studentRemoved", true);
         }
 
@@ -367,8 +367,8 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward transferRegistrations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException,  IllegalAccessException,
-            NoSuchMethodException, ClassNotFoundException {
+            HttpServletResponse response) throws FenixServiceException, IllegalAccessException, NoSuchMethodException,
+            ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
         Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
@@ -384,8 +384,8 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareTransferEventsAndAccounts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
-            NoSuchMethodException, ClassNotFoundException {
+            HttpServletResponse response) throws FenixServiceException, IllegalAccessException, NoSuchMethodException,
+            ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
         Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
@@ -398,8 +398,8 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward transferEventsAndAccounts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
-            NoSuchMethodException, ClassNotFoundException {
+            HttpServletResponse response) throws FenixServiceException, IllegalAccessException, NoSuchMethodException,
+            ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
         Person destinyPerson = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());

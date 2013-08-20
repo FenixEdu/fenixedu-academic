@@ -1,18 +1,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
-
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UnEnrollStudentFromShift {
 
-    protected void run(final Registration registration, final Integer shiftId) throws StudentNotFoundServiceException,
+    protected void run(final Registration registration, final String shiftId) throws StudentNotFoundServiceException,
             ShiftNotFoundServiceException, ShiftEnrolmentNotFoundServiceException, FenixServiceException {
 
         ServiceMonitoring.logService(this.getClass(), registration, shiftId);
@@ -24,7 +23,7 @@ public class UnEnrollStudentFromShift {
             throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 
-        final Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftId);
+        final Shift shift = AbstractDomainObject.fromExternalId(shiftId);
         if (shift == null) {
             throw new ShiftNotFoundServiceException();
         }
@@ -46,7 +45,7 @@ public class UnEnrollStudentFromShift {
     private static final UnEnrollStudentFromShift serviceInstance = new UnEnrollStudentFromShift();
 
     @Service
-    public static void runUnEnrollStudentFromShift(Registration registration, Integer shiftId)
+    public static void runUnEnrollStudentFromShift(Registration registration, String shiftId)
             throws StudentNotFoundServiceException, ShiftNotFoundServiceException, ShiftEnrolmentNotFoundServiceException,
             FenixServiceException, NotAuthorizedException {
         ClassEnrollmentAuthorizationFilter.instance.execute(registration);

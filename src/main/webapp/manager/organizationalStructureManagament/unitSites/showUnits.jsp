@@ -25,15 +25,15 @@
         <fr:property name="unitWithoutSiteImage" value="/images/functionalities/folder-disabled.gif"/>
 
         <fr:property name="createSiteLink">
-        	<html:link page="/unitSiteManagement.do?method=createSite&amp;unitID=${idInternal}">
+        	<html:link page="/unitSiteManagement.do?method=createSite&amp;unitID=${externalId}">
         		<bean:message key="link.site.manage.createSite" bundle="SITE_RESOURCES"/>
         	</html:link>
 		</fr:property>
         <fr:property name="chooseManagersLink">
-        	<html:link page="/unitSiteManagement.do?method=chooseManagers&amp;oid=${site.idInternal}">
+        	<html:link page="/unitSiteManagement.do?method=chooseManagers&amp;oid=${site.externalId}">
         		<bean:message key="link.site.manage.chooseManagers" bundle="SITE_RESOURCES"/>
         	</html:link> , 
-        	<html:link page="/unitSiteManagement.do?method=prepareCreateEntryPoint&amp;oid=${site.idInternal}">
+        	<html:link page="/unitSiteManagement.do?method=prepareCreateEntryPoint&amp;oid=${site.externalId}">
         		<bean:message key="link.site.manage.entryPoint" bundle="SITE_RESOURCES"/>
         	</html:link>
 		</fr:property>

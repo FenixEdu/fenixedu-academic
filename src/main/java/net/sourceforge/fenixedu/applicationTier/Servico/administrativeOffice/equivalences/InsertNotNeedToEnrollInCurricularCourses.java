@@ -3,16 +3,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Ricardo Rodrigues
@@ -21,11 +20,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class InsertNotNeedToEnrollInCurricularCourses {
 
-    protected void run(Integer studentCurricularPlanID, Integer[] curricularCoursesID) {
-        StudentCurricularPlan scp = RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
+    protected void run(String studentCurricularPlanID, String[] curricularCoursesID) {
+        StudentCurricularPlan scp = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
 
-        for (Integer curricularCourseID : curricularCoursesID) {
-            CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
+        for (String curricularCourseID : curricularCoursesID) {
+            CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
             NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = new NotNeedToEnrollInCurricularCourse();
             notNeedToEnrollInCurricularCourse.setCurricularCourse(curricularCourse);
             notNeedToEnrollInCurricularCourse.setStudentCurricularPlan(scp);
@@ -38,7 +37,7 @@ public class InsertNotNeedToEnrollInCurricularCourses {
             new InsertNotNeedToEnrollInCurricularCourses();
 
     @Service
-    public static void runInsertNotNeedToEnrollInCurricularCourses(Integer studentCurricularPlanID, Integer[] curricularCoursesID)
+    public static void runInsertNotNeedToEnrollInCurricularCourses(String studentCurricularPlanID, String[] curricularCoursesID)
             throws NotAuthorizedException {
         try {
             DegreeAdministrativeOfficeAuthorizationFilter.instance.execute();

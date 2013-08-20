@@ -12,25 +12,28 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author jpvl
  */
 public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends ReadDetailedTeacherProfessorshipsAbstractService {
 
-    protected List run(Integer teacherOID, Integer executionPeriodOID) throws FenixServiceException {
+    protected List run(String teacherOID, String executionPeriodOID) throws FenixServiceException {
 
         final ExecutionSemester executionSemester;
-        if (executionPeriodOID == null) {
+        if (StringUtils.isEmpty(executionPeriodOID)) {
             executionSemester = ExecutionSemester.readActualExecutionSemester();
         } else {
-            executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodOID);
+            executionSemester = AbstractDomainObject.fromExternalId(executionPeriodOID);
         }
 
-        final Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherOID);
+        final Teacher teacher = AbstractDomainObject.fromExternalId(teacherOID);
         final List<Professorship> responsibleFors = new ArrayList<Professorship>();
         for (Professorship professorship : teacher.responsibleFors()) {
             if (professorship.getExecutionCourse().getExecutionPeriod() == executionSemester) {
@@ -46,7 +49,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends ReadDeta
             new ReadDetailedTeacherProfessorshipsByExecutionPeriod();
 
     @Service
-    public static List runReadDetailedTeacherProfessorshipsByExecutionPeriod(Integer teacherOID, Integer executionPeriodOID)
+    public static List runReadDetailedTeacherProfessorshipsByExecutionPeriod(String teacherOID, String executionPeriodOID)
             throws FenixServiceException, NotAuthorizedException {
         CreditsServiceWithTeacherIdArgumentAuthorization.instance.execute(teacherOID);
         return serviceInstance.run(teacherOID, executionPeriodOID);

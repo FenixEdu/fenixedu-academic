@@ -61,7 +61,7 @@
 	<fr:view name="thesis" property="publication.organization"/>
 
 	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
-	<bean:define id="publicationId" name="thesis" property="publication.idInternal"/>
+	<bean:define id="publicationId" name="thesis" property="publication.externalId"/>
 	<p>
 	<%
 		if (thesis.getDissertation().isPersonAllowedToAccess(AccessControl.getPerson())) {

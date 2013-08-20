@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -19,27 +18,28 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class WriteMarks {
 
     @Service
     @Checked("RolePredicates.TEACHER_PREDICATE")
-    public static void writeByStudent(final Integer executioCourseOID, final Integer evaluationOID, final List<StudentMark> marks)
+    public static void writeByStudent(final String executioCourseOID, final String evaluationOID, final List<StudentMark> marks)
             throws FenixServiceException {
 
-        final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationOID);
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executioCourseOID);
+        final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationOID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executioCourseOID);
 
         writeMarks(convertMarks(executionCourse, marks), executionCourse, evaluation);
     }
 
     @Service
     @Checked("RolePredicates.TEACHER_PREDICATE")
-    public static void writeByAttend(final Integer executioCourseOID, final Integer evaluationOID, final List<AttendsMark> marks)
+    public static void writeByAttend(final String executioCourseOID, final String evaluationOID, final List<AttendsMark> marks)
             throws FenixServiceException {
 
-        final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationOID);
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executioCourseOID);
+        final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationOID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executioCourseOID);
 
         writeMarks(marks, executionCourse, evaluation);
     }
@@ -53,7 +53,7 @@ public class WriteMarks {
         for (final StudentMark studentMark : marks) {
             final Attends attend = findAttend(executionCourse, studentMark.studentNumber, exceptionList);
             if (attend != null) {
-                result.add(new AttendsMark(attend.getIdInternal(), studentMark.mark));
+                result.add(new AttendsMark(attend.getExternalId(), studentMark.mark));
             }
         }
 
@@ -152,9 +152,9 @@ public class WriteMarks {
                 executionCourse.getName(), executionCourse.getDegreePresentationString());
     }
 
-    private static Attends findAttend(final ExecutionCourse executionCourse, final Integer attendId) {
+    private static Attends findAttend(final ExecutionCourse executionCourse, final String attendId) {
         for (final Attends attend : executionCourse.getAttends()) {
-            if (attend.getIdInternal().equals(attendId)) {
+            if (attend.getExternalId().equals(attendId)) {
                 return attend;
             }
         }
@@ -166,8 +166,8 @@ public class WriteMarks {
     }
 
     public static class StudentMark implements Serializable {
-        private Integer studentNumber;
-        private String mark;
+        private final Integer studentNumber;
+        private final String mark;
 
         public StudentMark(final Integer studentNumber, final String mark) {
             this.studentNumber = studentNumber;
@@ -176,10 +176,10 @@ public class WriteMarks {
     }
 
     public static class AttendsMark implements Serializable {
-        private Integer attendId;
-        private String mark;
+        private final String attendId;
+        private final String mark;
 
-        public AttendsMark(final Integer attendId, final String mark) {
+        public AttendsMark(final String attendId, final String mark) {
             this.attendId = attendId;
             this.mark = mark;
         }

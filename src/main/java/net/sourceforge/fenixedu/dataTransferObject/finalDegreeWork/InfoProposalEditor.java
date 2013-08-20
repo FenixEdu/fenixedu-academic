@@ -76,7 +76,7 @@ public class InfoProposalEditor extends InfoObject {
     @Override
     public String toString() {
         String result = "[Proposal";
-        result += ", idInternal=" + getIdInternal();
+        result += ", externalId=" + getExternalId();
         result += ", title=" + getTitle();
         result += ", InfoDegreeCurricularPlan=" + getExecutionDegree();
         result += "]";

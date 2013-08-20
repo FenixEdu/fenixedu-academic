@@ -30,7 +30,7 @@
 </logic:messagesPresent>
 
 <logic:present name="infoExecutionCourse">
-	<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal"/>
+	<bean:define id="executionCourseID" name="infoExecutionCourse" property="externalId"/>
 
 	<bean:message bundle="MANAGER_RESOURCES" key="executionCourse.origin"/>: 
 	<strong><bean:write name="infoExecutionCourse" property="nome"/></strong>
@@ -68,7 +68,7 @@
 			<bean:message bundle="MANAGER_RESOURCES" key="executionCourse.destination"/>:<br />
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationExecutionCourseID" property="destinationExecutionCourseID" size="1">
 				<html:option value="" />
-				<html:options collection="executionCourses" labelProperty="nome" property="idInternal" />
+				<html:options collection="executionCourses" labelProperty="nome" property="externalId" />
 			</html:select>
 			<br />
 		</logic:present>
@@ -97,7 +97,7 @@
 				<tr>
 					<td class="listClasses">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularCourseIdsToTransfer" property="curricularCourseIdsToTransfer">
-							<bean:write name="infoCurricularCourse" property="idInternal"/>
+							<bean:write name="infoCurricularCourse" property="externalId"/>
 						</html:multibox>
 					</td>
 					<td class="listClasses">
@@ -140,7 +140,7 @@
 				<tr>
 					<td class="listClasses">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.shiftIdsToTransfer" property="shiftIdsToTransfer">
-							<bean:write name="infoShift" property="idInternal"/>
+							<bean:write name="infoShift" property="externalId"/>
 						</html:multibox>
 					</td>
 					<td class="listClasses">

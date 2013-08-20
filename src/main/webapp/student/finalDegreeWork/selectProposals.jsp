@@ -10,7 +10,7 @@
 <html:form action="/finalDegreeWorkCandidacy">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="somemethod"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearOID" property="executionYearOID"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID"/>
 
@@ -41,14 +41,14 @@
 				<logic:iterate id="finalDegreeWorkProposalHeader" name="finalDegreeWorkProposalHeaders">
 					<tr>
 						<td class="listClasses" rowspan="2">
-							<bean:define id="proposalOID" name="finalDegreeWorkProposalHeader" property="idInternal"/>
+							<bean:define id="proposalOID" name="finalDegreeWorkProposalHeader" property="externalId"/>
 							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.selectedProposal" property="selectedProposal" value='<%= proposalOID.toString() %>'/>
 						</td>
 						<td class="listClasses" rowspan="2">
 							<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/> 
 						</td>
 						<td class="listClasses" rowspan="2">
-				        	<html:link target="_blank" href="<%= request.getContextPath() + "/publico/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
+				        	<html:link target="_blank" href="<%= request.getContextPath() + "/publico/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId().toString() %>">
 								<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
 					        </html:link>
 						</td>

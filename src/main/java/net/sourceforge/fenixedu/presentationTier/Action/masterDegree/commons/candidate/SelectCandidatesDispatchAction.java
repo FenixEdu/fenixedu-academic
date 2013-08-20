@@ -51,15 +51,15 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         String executionYear = (String) request.getAttribute("executionYear");
         String degree = (String) request.getAttribute("degree");
 
-        Integer executionDegree = Integer.valueOf(getFromRequest("executionDegreeID", request));
+        String executionDegree = getFromRequest("executionDegreeID", request);
         if (executionDegree == null) {
-            executionDegree = Integer.valueOf((String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE));
+            executionDegree = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
         }
         request.setAttribute(PresentationConstants.EXECUTION_DEGREE, executionDegree);
 
-        Integer degreeCurricularPlanID = Integer.valueOf(getFromRequest("degreeCurricularPlanID", request));
+        String degreeCurricularPlanID = getFromRequest("degreeCurricularPlanID", request);
         if (degreeCurricularPlanID == null) {
-            degreeCurricularPlanID = Integer.valueOf((String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE));
+            degreeCurricularPlanID = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
         }
         if (executionYear == null) {
             executionYear = (String) approvalForm.get("executionYear");
@@ -140,7 +140,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         Iterator iterator = candidateList.iterator();
         int i = 0;
         while (iterator.hasNext()) {
-            ids[i++] = ((InfoMasterDegreeCandidate) iterator.next()).getIdInternal().toString();
+            ids[i++] = ((InfoMasterDegreeCandidate) iterator.next()).getExternalId().toString();
         }
 
         approvalForm.set("candidatesID", ids);
@@ -170,17 +170,14 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
             return mapping.findForward("BackError");
         }
 
-        Integer degreeCurricularPlanID = (Integer) approvalForm.get("degreeCurricularPlanID");
+        String degreeCurricularPlanID = (String) approvalForm.get("degreeCurricularPlanID");
         String[] candidateList = (String[]) approvalForm.get("situations");
         String[] ids = (String[]) approvalForm.get("candidatesID");
         String[] remarks = (String[]) approvalForm.get("remarks");
         String executionYear = (String) approvalForm.get("executionYear");
         String degree = (String) approvalForm.get("degree");
-        Integer executionDegree = null;
         String executionDegreeFromRequest = request.getParameter("executionDegreeID");
-        if (executionDegreeFromRequest != null && executionDegreeFromRequest.length() > 0) {
-            executionDegree = Integer.valueOf(executionDegreeFromRequest);
-        }
+
         List candidatesAdmited = new ArrayList();
 
         try {
@@ -196,8 +193,8 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         request.setAttribute("remarks", remarks);
         request.setAttribute("executionYear", executionYear);
         request.setAttribute("degree", degree);
-        request.setAttribute(PresentationConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
-        request.setAttribute(PresentationConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
+        request.setAttribute(PresentationConstants.EXECUTION_DEGREE, executionDegreeFromRequest);
+        request.setAttribute(PresentationConstants.EXECUTION_DEGREE, executionDegreeFromRequest);
 
         // Get Numerus Clausus
         Integer numerusClausus = null;
@@ -316,7 +313,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         String[] ids = (String[]) resultForm.get("candidatesID");
         String[] remarks = (String[]) resultForm.get("remarks");
         String[] substitutes = (String[]) resultForm.get("substitutes");
-        Integer degreeCurricularPlanID = (Integer) resultForm.get("degreeCurricularPlanID");
+        String degreeCurricularPlanID = (String) resultForm.get("degreeCurricularPlanID");
 
         String executionDegree = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
         if (!isTokenValid(request)) {
@@ -383,7 +380,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         String[] ids = (String[]) resultForm.get("candidatesID");
         String[] remarks = (String[]) resultForm.get("remarks");
         String[] substitutes = (String[]) resultForm.get("substitutes");
-        Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
+        String executionDegree = request.getParameter("executionDegreeID");
 
         request.setAttribute("situations", candidateList);
         request.setAttribute("candidatesID", ids);
@@ -480,7 +477,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         String[] ids = (String[]) substituteForm.get("candidatesID");
         String[] remarks = (String[]) substituteForm.get("remarks");
         String[] substitutes = (String[]) substituteForm.get("substitutes");
-        Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
+        String executionDegree = request.getParameter("executionDegreeID");
 
         substituteForm.set("executionYear", substituteForm.get("executionYear"));
         substituteForm.set("degree", substituteForm.get("degree"));
@@ -544,7 +541,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         for (int i = 0; i < candidateList.length; i++) {
             InfoCandidateApproval infoCandidateApproval = new InfoCandidateApproval();
             infoCandidateApproval.setCandidateName(((InfoMasterDegreeCandidate) candidates.get(i)).getInfoPerson().getNome());
-            infoCandidateApproval.setIdInternal(new Integer(ids[i]));
+            infoCandidateApproval.setExternalId(ids[i]);
             if ((substitutes[i] != null) && (substitutes[i].length() > 0)) {
                 infoCandidateApproval.setOrderPosition(new Integer(substitutes[i]));
             } else {

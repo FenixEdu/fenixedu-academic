@@ -52,7 +52,7 @@
 	</ul>
 </fr:hasMessages>
 
-<bean:define id="scpID" name="accountingEventCreateBean" property="studentCurricularPlan.idInternal" />
+<bean:define id="scpID" name="accountingEventCreateBean" property="studentCurricularPlan.externalId" />
 <fr:edit id="accountingEventCreateBean"
 	name="accountingEventCreateBean"
 	schema="AccountingEventCreateBean.editExecutionYear"

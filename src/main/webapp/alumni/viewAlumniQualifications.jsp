@@ -31,7 +31,7 @@
 
 <logic:notEmpty name="educationFormationList">
 	<logic:iterate id="eachFormation" indexId="formationIndex" name="educationFormationList">
-		<bean:define id="formationID" name="eachFormation" property="idInternal" />
+		<bean:define id="formationID" name="eachFormation" property="externalId" />
 		<fr:view name="eachFormation" layout="tabular" schema="alumni.formation.list">
 			<fr:layout>
 				<fr:property name="subLayout" value="values"/>

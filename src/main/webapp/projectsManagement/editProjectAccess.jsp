@@ -40,7 +40,7 @@ function getIndex(input){
 		<html:hidden property="backendInstance" value="<%= backendInstance.name() %>"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editProjectAccess" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.projectCode" property="projectCode" value="<%=projectCode.toString()%>" />
-		<bean:define id="personCode" name="person" property="idInternal" />
+		<bean:define id="personCode" name="person" property="externalId" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.personCode" property="personCode" value="<%=personCode.toString()%>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.username" property="username" value="<%=username.toString()%>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />

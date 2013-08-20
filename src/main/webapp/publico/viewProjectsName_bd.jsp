@@ -24,7 +24,7 @@
 			<logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
 			<tr>
 				<td>
-					<html:link page="<%= "/viewSite.do" + "?method=viewShiftsAndGroupsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID) %>" paramId="groupProperties" paramName="infoGroupProperties" paramProperty="idInternal">
+					<html:link page="<%= "/viewSite.do" + "?method=viewShiftsAndGroupsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID) %>" paramId="groupProperties" paramName="infoGroupProperties" paramProperty="externalId">
 						<b><bean:write name="infoGroupProperties" property="name"/></b>
 					</html:link>
 				</td>

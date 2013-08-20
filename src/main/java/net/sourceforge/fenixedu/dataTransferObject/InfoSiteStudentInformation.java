@@ -26,7 +26,7 @@ public class InfoSiteStudentInformation extends DataTranferObject implements ISi
     private Integer number;
     private String email;
     private String username;
-    private Integer personID;
+    private String personID;
 
     public InfoSiteStudentInformation() {
     }
@@ -70,11 +70,11 @@ public class InfoSiteStudentInformation extends DataTranferObject implements ISi
         this.number = number;
     }
 
-    public Integer getPersonID() {
+    public String getPersonID() {
         return personID;
     }
 
-    public void setPersonID(Integer personID) {
+    public void setPersonID(String personID) {
         this.personID = personID;
     }
 

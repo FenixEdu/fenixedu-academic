@@ -36,7 +36,7 @@
 		        <fr:property name="eachLayout" value="values"/>
 		        <fr:property name="eachSchema" value="site.section.name"/>
 		    </fr:layout>
-		    <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${idInternal}&amp;" + context %>"/>
+		    <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${externalId}&amp;" + context %>"/>
 		</fr:view>
     </logic:notEmpty>
    
@@ -70,7 +70,7 @@
 		</logic:notEmpty>
 	</logic:equal>
 	<logic:equal name="itemAvailable" value="false">
-		<bean:define id="itemId" name="item" property="idInternal"/>
+		<bean:define id="itemId" name="item" property="externalId"/>
 		<p>
 		<em><bean:message key="message.item.view.mustLogin" bundle="SITE_RESOURCES"/></em>
 		<%

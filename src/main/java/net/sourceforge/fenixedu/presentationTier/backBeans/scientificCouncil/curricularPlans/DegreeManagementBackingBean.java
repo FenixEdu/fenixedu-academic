@@ -52,7 +52,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     private final String NO_SELECTION = "noSelection";
 
-    private Integer degreeId;
+    private String degreeId;
 
     private Degree degree;
 
@@ -70,7 +70,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     private String prevailingScientificArea;
 
-    private Integer selectedExecutionYearID;
+    private String selectedExecutionYearID;
 
     private String academicAdminOfficeId;
 
@@ -119,16 +119,16 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         return orderedResult;
     }
 
-    public Integer getDegreeId() {
-        return (degreeId == null) ? (degreeId = getAndHoldIntegerParameter("degreeId")) : degreeId;
+    public String getDegreeId() {
+        return (degreeId == null) ? (degreeId = getAndHoldStringParameter("degreeId")) : degreeId;
     }
 
-    public void setDegreeId(Integer degreeId) {
+    public void setDegreeId(String degreeId) {
         this.degreeId = degreeId;
     }
 
     public Degree getDegree() {
-        return (degree == null) ? (degree = rootDomainObject.readDegreeByOID(getDegreeId())) : degree;
+        return (degree == null) ? (degree = AbstractDomainObject.fromExternalId(getDegreeId())) : degree;
     }
 
     public String getName() {
@@ -319,13 +319,13 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         return "curricularPlansManagement";
     }
 
-    public void setSelectedExecutionYearId(Integer executionYearId) {
+    public void setSelectedExecutionYearId(String executionYearId) {
         this.selectedExecutionYearID = executionYearId;
     }
 
     public void onChangeExecutionYear(ValueChangeEvent valueChangeEvent) {
-        Integer executionYearId = (Integer) valueChangeEvent.getNewValue();
-        if (getSelectedExecutionYearId() != executionYearId && getDegree() != null) {
+        String executionYearId = (String) valueChangeEvent.getNewValue();
+        if (!getSelectedExecutionYearId().equals(executionYearId) && getDegree() != null) {
             setSelectedExecutionYearId(executionYearId);
             ExecutionYear executionYear = getSelectedExecutionYear();
             DegreeInfo degreeInfo = getDegree().getMostRecentDegreeInfo(executionYear);
@@ -344,24 +344,24 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public Integer getSelectedExecutionYearId() {
+    public String getSelectedExecutionYearId() {
         if (selectedExecutionYearID == null) {
-            selectedExecutionYearID = getAndHoldIntegerParameter("selectedExecutionYearId");
+            selectedExecutionYearID = getAndHoldStringParameter("selectedExecutionYearId");
             if (selectedExecutionYearID == null) {
-                selectedExecutionYearID = ExecutionYear.readCurrentExecutionYear().getIdInternal();
+                selectedExecutionYearID = ExecutionYear.readCurrentExecutionYear().getExternalId();
             }
         }
         return selectedExecutionYearID;
     }
 
     public ExecutionYear getSelectedExecutionYear() {
-        return rootDomainObject.readExecutionYearByOID(getSelectedExecutionYearId());
+        return AbstractDomainObject.fromExternalId(getSelectedExecutionYearId());
     }
 
     public List<SelectItem> getOpenExecutionYears() {
         List<SelectItem> selectItems = new ArrayList<SelectItem>();
         for (ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
-            selectItems.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+            selectItems.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
         }
         return selectItems;
     }
@@ -373,7 +373,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
                     (getSelectedExecutionYear() != null) ? getSelectedExecutionYear() : ExecutionYear.readCurrentExecutionYear();
 
             DegreeInfo degreeInfo = getDegreeInfo(executionYear);
-            setSelectedExecutionYearId(degreeInfo.getExecutionYear().getIdInternal());
+            setSelectedExecutionYearId(degreeInfo.getExecutionYear().getExternalId());
             this.nameInputComponent.setValue(degreeInfo.getName().getContent(Language.pt));
         }
         return this.nameInputComponent;
@@ -404,7 +404,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         if (degreeInfo == null) {
             degreeInfo = getDegree().getMostRecentDegreeInfo();
             // setSelectedExecutionYearId(degreeInfo.getExecutionYear().
-            // getIdInternal());
+            // getExternalId());
         }
         return degreeInfo;
     }

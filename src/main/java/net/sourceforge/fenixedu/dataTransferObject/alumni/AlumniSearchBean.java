@@ -5,9 +5,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AlumniSearchBean extends AlumniMailSendToBean {
 
@@ -73,8 +73,8 @@ public class AlumniSearchBean extends AlumniMailSendToBean {
 
     public String getSearchElementsAsParameters() {
         String urlParameters = "&amp;beansearch=" + this.getDegreeType() + ":" + this.getName() + ":";
-        urlParameters += (this.getFirstExecutionYear() == null ? "null" : this.getFirstExecutionYear().getIdInternal()) + ":";
-        urlParameters += (this.getFinalExecutionYear() == null ? "null" : this.getFinalExecutionYear().getIdInternal());
+        urlParameters += (this.getFirstExecutionYear() == null ? "null" : this.getFirstExecutionYear().getExternalId()) + ":";
+        urlParameters += (this.getFinalExecutionYear() == null ? "null" : this.getFinalExecutionYear().getExternalId());
         return urlParameters;
     }
 
@@ -84,11 +84,11 @@ public class AlumniSearchBean extends AlumniMailSendToBean {
         final String finalYear = values[3];
 
         ExecutionYear first =
-                (firstYear.equals("null") ? ExecutionYear.readFirstExecutionYear() : RootDomainObject.getInstance()
-                        .readExecutionYearByOID(Integer.valueOf(firstYear)));
+                (firstYear.equals("null") ? ExecutionYear.readFirstExecutionYear() : AbstractDomainObject
+                        .<ExecutionYear> fromExternalId(firstYear));
         ExecutionYear last =
-                (finalYear.equals("null") ? ExecutionYear.readLastExecutionYear() : RootDomainObject.getInstance()
-                        .readExecutionYearByOID(Integer.valueOf(finalYear)));
+                (finalYear.equals("null") ? ExecutionYear.readLastExecutionYear() : AbstractDomainObject
+                        .<ExecutionYear> fromExternalId(finalYear));
 
         if (values[0].equals("null")) {
             return new AlumniSearchBean(values[1], first, last);

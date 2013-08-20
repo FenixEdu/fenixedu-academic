@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
@@ -32,6 +31,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br/>
@@ -52,9 +52,9 @@ public class EditReimbursementGuide {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks, IUserView userView)
+    public static void run(String reimbursementGuideId, String situation, Date officialDate, String remarks, IUserView userView)
             throws FenixServiceException {
-        ReimbursementGuide reimbursementGuide = RootDomainObject.getInstance().readReimbursementGuideByOID(reimbursementGuideId);
+        ReimbursementGuide reimbursementGuide = AbstractDomainObject.fromExternalId(reimbursementGuideId);
         if (reimbursementGuide == null) {
             throw new NonExistingServiceException();
         }
@@ -112,7 +112,7 @@ public class EditReimbursementGuide {
                     // reimbursementGuideEntry = (ReimbursementGuideEntry)
                     // reimbursementGuideEntryDAO
                     // .readByOID(ReimbursementGuideEntry.class,
-                    // reimbursementGuideEntry.getIdInternal());
+                    // reimbursementGuideEntry.getExternalId());
 
                     reimbursementTransaction =
                             new ReimbursementTransaction(reimbursementGuideEntry.getValue(), new Timestamp(Calendar.getInstance()
@@ -221,8 +221,7 @@ public class EditReimbursementGuide {
 
             // because of an OJB with cache bug we have to read the guide entry
             // again
-            reimbursementGuideEntryTmp =
-                    RootDomainObject.getInstance().readReimbursementGuideEntryByOID(reimbursementGuideEntryTmp.getIdInternal());
+            reimbursementGuideEntryTmp = AbstractDomainObject.fromExternalId(reimbursementGuideEntryTmp.getExternalId());
 
             if (reimbursementGuideEntryTmp.getReimbursementGuide().getActiveReimbursementGuideSituation()
                     .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {

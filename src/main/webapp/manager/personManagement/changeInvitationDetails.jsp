@@ -46,19 +46,19 @@
 		
 		<ul class="mvert15 list5">
 			<li>	
-				<html:link page="/invitationsManagement.do?method=prepareEditPersonInvitation" paramId="invitationID" paramName="invitation" paramProperty="idInternal">
+				<html:link page="/invitationsManagement.do?method=prepareEditPersonInvitation" paramId="invitationID" paramName="invitation" paramProperty="externalId">
 					<bean:message key="label.return" bundle="MANAGER_RESOURCES"/>
 				</html:link>
 			</li>
 		</ul>		
 		<logic:notEmpty name="infoToEdit">	
 			
-			<bean:define id="goToPrepareEditPage" type="java.lang.String">/invitationsManagement.do?method=prepareEditPersonInvitation&invitationID=<bean:write name="invitation" property="idInternal"/></bean:define>
+			<bean:define id="goToPrepareEditPage" type="java.lang.String">/invitationsManagement.do?method=prepareEditPersonInvitation&invitationID=<bean:write name="invitation" property="externalId"/></bean:define>
 			
 			<%-- Invitation Unit --%>	
 			<logic:equal name="infoToEdit" value="hostUnit">
 				<p><b><bean:message key="label.choose.new.invitation.host.unit" bundle="MANAGER_RESOURCES"/></b></p>
-				<bean:define id="editHostUnitURL" type="java.lang.String">/manager/invitationsManagement.do?method=editPersonInvitationHostUnit&invitationID=<bean:write name="invitation" property="idInternal"/></bean:define>
+				<bean:define id="editHostUnitURL" type="java.lang.String">/manager/invitationsManagement.do?method=editPersonInvitationHostUnit&invitationID=<bean:write name="invitation" property="externalId"/></bean:define>
 				<un:tree initialUnit="initialUnit" unitParamName="unitID" path="<%= editHostUnitURL %>" state="true"/>															
 			</logic:equal>
 	
@@ -67,7 +67,7 @@
 				<p><b><bean:message key="label.choose.new.invitation.responsible.entity" bundle="MANAGER_RESOURCES"/></b></p>
 								
 				<p><em><bean:message key="label.choose.responsibility.unit" bundle="MANAGER_RESOURCES"/></em></p>										
-				<bean:define id="editResponsibleURL" type="java.lang.String">/manager/invitationsManagement.do?method=editPersonInvitationResponsible&invitationID=<bean:write name="invitation" property="idInternal"/></bean:define>
+				<bean:define id="editResponsibleURL" type="java.lang.String">/manager/invitationsManagement.do?method=editPersonInvitationResponsible&invitationID=<bean:write name="invitation" property="externalId"/></bean:define>
 				<un:tree initialUnit="initialUnit" unitParamName="unitID" path="<%= editResponsibleURL %>" state="true"/>								
 				
 				<p><em><bean:message key="label.choose.responsibility.person" bundle="MANAGER_RESOURCES"/></em></p>		

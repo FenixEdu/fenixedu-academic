@@ -21,7 +21,7 @@
     <% if (((List) studentCPList).size() != 0) { %>
         	<logic:iterate id="studentCP" name="studentCPList" >
             	<bean:define id="studentCPLink">
-            		<bean:write name="link"/><bean:write name="studentCP" property="idInternal" />
+            		<bean:write name="link"/><bean:write name="studentCP" property="externalId" />
             	</bean:define>
                 <html:link page='<%= pageContext.findAttribute("studentCPLink").toString() %>'>
                 	(<bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.degreeType" />)  

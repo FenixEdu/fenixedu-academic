@@ -14,7 +14,7 @@
 <bean:define id="action" name="announcementActionVariable" toScope="request"/>
 
 <logic:present name="announcement">
-<bean:define id="announcementID" name="announcement" property="idInternal"/>
+<bean:define id="announcementID" name="announcement" property="externalId"/>
 
 <p class="mvert025 smalltxt greytxt2">
 	<img src="<%= request.getContextPath() + "/images/dotist_post.gif"%>"/>

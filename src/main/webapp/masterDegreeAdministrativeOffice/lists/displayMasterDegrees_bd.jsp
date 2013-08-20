@@ -20,7 +20,7 @@
 	<bean:message key="label.manager.degrees" /><br/>
    	     	<logic:iterate id="masterDegree" name="masterDegreeList">
         	<bean:define id="masterDegreeLink">
-        		<bean:write name="link"/><bean:write name="masterDegree" property="idInternal"/>
+        		<bean:write name="link"/><bean:write name="masterDegree" property="externalId"/>
         	</bean:define>
         	<html:link page='<%= pageContext.findAttribute("masterDegreeLink").toString() %>'>
 				<bean:write name="masterDegree" property="nome"/> - 

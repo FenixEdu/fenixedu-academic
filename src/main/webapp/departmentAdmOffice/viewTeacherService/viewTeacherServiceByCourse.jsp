@@ -103,7 +103,7 @@
 		<h:outputText value="</tr>" escape="false" />
 		<f:verbatim>
 			<fc:dataRepeater value="#{viewTeacherService.executionCourseServiceDTO}" var="course">
-				<h:outputText value="<tr id=#{course.executionCourseIdInternal}>" escape="false" />
+				<h:outputText value="<tr id=#{course.executionCourseExternalId}>" escape="false" />
 					<h:outputText value="<td class='courses' title=\"#{bundle['label.teacherService.course.name']}\">#{course.executionCourseName}</td>" escape="false" />	
 					
 					<h:panelGroup rendered="#{viewTeacherService.viewCourseInformation == true}">
@@ -158,7 +158,7 @@
 					<h:outputText value="<ul>" escape="false" />
 						<fc:dataRepeater value="#{course.teacherExecutionCourseServiceList}" var="teacherList">
 						 	<h:panelGroup rendered="#{teacherList.teacherOfDepartment == true}">
-								<h:outputText value="<li><a href='viewTeacherService.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{teacherList.teacherIdInternal}'>"  escape="false"/>
+								<h:outputText value="<li><a href='viewTeacherService.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{teacherList.teacherExternalId}'>"  escape="false"/>
 								<h:outputText value="#{teacherList.description} " escape="false" />	
 							 	<h:outputText value="</a></li>"  escape="false"/>
 						 	</h:panelGroup>

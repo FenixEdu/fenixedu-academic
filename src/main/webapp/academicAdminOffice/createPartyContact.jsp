@@ -13,7 +13,7 @@
     <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method"
         value="createPartyContact" />
 
-    <bean:define id="studentID" type="java.lang.Integer" name="student" property="idInternal" />
+    <bean:define id="studentID" type="java.lang.String" name="student" property="externalId" />
     <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="studentID"
         value="<%= studentID.toString() %>" />
 

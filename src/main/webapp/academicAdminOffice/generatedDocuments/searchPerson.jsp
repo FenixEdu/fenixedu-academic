@@ -41,7 +41,7 @@
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle4"/>
 	        	<fr:property name="columnClasses" value="listClasses,,"/>
-				<fr:property name="linkFormat(showAnnualIRS)" value="/generatedDocuments.do?method=showAnnualIRSDocuments&personId=${idInternal}" />
+				<fr:property name="linkFormat(showAnnualIRS)" value="/generatedDocuments.do?method=showAnnualIRSDocuments&personId=${externalId}" />
 				<fr:property name="key(showAnnualIRS)" value="label.documents.anualIRS"/>
 				<fr:property name="bundle(showAnnualIRS)" value="ACADEMIC_OFFICE_RESOURCES"/>
 				<fr:property name="contextRelative(showAnnualIRS)" value="true"/>	

@@ -46,15 +46,13 @@ public class SelectCandidacies extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         ActionForward destiny = null;
         String seminaryIDString = request.getParameter("seminaryID");
-        Integer seminaryID = null;
-        Integer wildcard = new Integer(-1);
+        String seminaryID = null;
         try {
-            seminaryID = new Integer(seminaryIDString);
+            seminaryID = seminaryIDString;
         } catch (NumberFormatException ex) {
-            seminaryID = wildcard;
+            seminaryID = null;
         }
 
-        Object[] args = { new Boolean(false), seminaryID };
         try {
             SelectCandidaciesDTO serviceResult = SelectCandidaciesService.runSelectCandidaciesService(false, seminaryID);
             request.setAttribute("seminaries", serviceResult.getSeminaries());

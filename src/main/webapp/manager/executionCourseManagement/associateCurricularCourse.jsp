@@ -1,5 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -90,9 +91,9 @@
 			<logic:iterate id="curricularCourse" name="infoCurricularCourses" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse">
 				<tr>	 			
 					<td class="listClasses">
-						<bean:define id="internalId" name="curricularCourse" property="idInternal"/>
+						<bean:define id="internalId" name="curricularCourse" property="externalId"/>
 						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.chosen" name="curricularCourse" property="chosen" indexed="true"/>
-						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="curricularCourse" property="idInternal" indexed="true" value="<%= internalId.toString() %>"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" name="curricularCourse" property="externalId" indexed="true" value="<%= internalId.toString() %>"/>
 					</td>
 					<td class="listClasses" style="text-align:left">
 						<bean:write name="curricularCourse" property="name"/>
@@ -101,7 +102,7 @@
 						<bean:write name="curricularCourse" property="acronym"/>
 					</td>
  				</tr>
- 			</logic:iterate>						
+ 			</logic:iterate>
 		</table>
 		<br />
 		</td>

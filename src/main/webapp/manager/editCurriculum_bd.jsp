@@ -25,7 +25,7 @@
 		<tr>
 			<td>
 			<html:select property="executionYearId">
-				<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
+				<html:options collection="executionYears" property="externalId" labelProperty="year"/>
 			</html:select>
 			</td>
 		</tr>	

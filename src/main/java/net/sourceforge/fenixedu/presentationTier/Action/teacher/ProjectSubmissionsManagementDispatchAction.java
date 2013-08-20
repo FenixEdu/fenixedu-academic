@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.ProjectSubmission;
 import net.sourceforge.fenixedu.domain.ProjectSubmissionLog;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -37,6 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "teacher", path = "/projectSubmissionsManagement", scope = "request", parameter = "method")
 @Forwards(
@@ -90,7 +90,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward downloadProjectsInZipFormat(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  IOException, ServletException {
+            HttpServletResponse response) throws FenixActionException, IOException, ServletException {
 
         final Project project = getProject(request);
         final List<ProjectSubmission> projectSubmissions =
@@ -111,7 +111,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward prepareSelectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  IOException, ServletException {
+            HttpServletResponse response) throws FenixActionException, IOException, ServletException {
 
         IViewState viewState = RenderUtils.getViewState("selectiveDownload");
         Integer value = (viewState != null) ? (Integer) viewState.getMetaObject().getObject() : null;
@@ -132,7 +132,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward selectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  IOException, ServletException {
+            HttpServletResponse response) throws FenixActionException, IOException, ServletException {
 
         final Project project = getProject(request);
         final Integer startIndex = Integer.valueOf(request.getParameter("startIndex"));
@@ -170,12 +170,11 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward sendCommentThroughEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final Project project = getProject(request);
 
-        ExecutionCourse course =
-                (ExecutionCourse) RootDomainObject.readDomainObjectByOID(ExecutionCourse.class, getExecutionCourseID(request));
+        ExecutionCourse course = (ExecutionCourse) AbstractDomainObject.fromExternalId(getExecutionCourseID(request));
 
         NotifyStudentGroup.run(project.getLastProjectSubmissionForStudentGroup(getStudentGroup(request)), course,
                 getLoggedPerson(request));
@@ -193,21 +192,21 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     private StudentGroup getStudentGroup(HttpServletRequest request) {
-        return rootDomainObject.readStudentGroupByOID(getRequestParameterAsInteger(request, "studentGroupID"));
+        return getDomainObject(request, "studentGroupID");
     }
 
     private Project getProject(HttpServletRequest request) {
         final String projectExtId = request.getParameter("projectOID");
         if (projectExtId != null) {
             final Project project = Project.fromExternalId(projectExtId);
-            request.setAttribute("projectID", project.getIdInternal().toString());
+            request.setAttribute("projectID", project.getExternalId().toString());
             return project;
         }
         final Person person = getUserView(request).getPerson();
-        final Integer projectId = getRequestParameterAsInteger(request, "projectID");
+        final String projectId = request.getParameter("projectID");
         for (final Professorship professorship : person.getProfessorships()) {
             for (final Project project : professorship.getExecutionCourse().getAssociatedProjects()) {
-                if (project.getIdInternal().equals(projectId)) {
+                if (project.getExternalId().equals(projectId)) {
                     request.setAttribute("projectOID", project.getExternalId());
                     return project;
                 }
@@ -217,8 +216,8 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
         return null;
     }
 
-    private Integer getExecutionCourseID(HttpServletRequest request) {
-        return getRequestParameterAsInteger(request, "executionCourseID");
+    private String getExecutionCourseID(HttpServletRequest request) {
+        return request.getParameter("executionCourseID");
     }
 
 }

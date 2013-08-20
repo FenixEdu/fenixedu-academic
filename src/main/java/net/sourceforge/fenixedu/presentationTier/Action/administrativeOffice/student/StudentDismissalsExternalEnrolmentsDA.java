@@ -41,11 +41,10 @@ public class StudentDismissalsExternalEnrolmentsDA extends StudentExternalEnrolm
 
     @Override
     protected String getParameters(final HttpServletRequest request) {
-        return "scpID=" + getIntegerFromRequest(request, "scpID");
+        return "scpID=" + getStringFromRequest(request, "scpID");
     }
 
     private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
-        final Integer scpID = getIntegerFromRequest(request, "scpID");
-        return rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        return getDomainObject(request, "scpID");
     }
 }

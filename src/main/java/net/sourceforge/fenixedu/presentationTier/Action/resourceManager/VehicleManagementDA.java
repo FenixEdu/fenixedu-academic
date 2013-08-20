@@ -23,6 +23,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "resourceManager", path = "/vehicleManagement", scope = "request", parameter = "method")
@@ -96,7 +97,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createVehicle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
 
         VehicleBean bean = getRenderedObject("createVehicleBeanID");
 
@@ -114,7 +115,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteVehicle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
 
         Vehicle vehicle = getVehicleFromParameter(request);
 
@@ -132,8 +133,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
 
     private Vehicle getVehicleFromParameter(HttpServletRequest request) {
         final String vehicleIDString = request.getParameter("vehicleID");
-        final Integer vehicleID = vehicleIDString != null ? Integer.valueOf(vehicleIDString) : null;
-        return (Vehicle) rootDomainObject.readResourceByOID(vehicleID);
+        return (Vehicle) AbstractDomainObject.fromExternalId(vehicleIDString);
     }
 
 }

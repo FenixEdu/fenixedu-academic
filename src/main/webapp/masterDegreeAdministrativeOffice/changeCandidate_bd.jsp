@@ -306,7 +306,7 @@
       if (!infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation().equals(SituationName.PRE_CANDIDATO_STRING)) {	%>
 
 		<bean:define id="link">/editCandidate.do?method=changePassword&candidateID=
-			<bean:write name="infoCandidate" property="idInternal"/>
+			<bean:write name="infoCandidate" property="externalId"/>
 		</bean:define>
 		
         <html:link page='<%= pageContext.findAttribute("link").toString() %>' target="_blank">

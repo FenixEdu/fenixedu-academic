@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -42,6 +41,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /*
  * 
  * @author Fernanda Quitério 23/Dez/2003
@@ -54,14 +55,12 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
 
         String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
         String curricularCourseId = RequestUtils.getAndSetStringToRequest(request, "curricularCourseId");
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseId));
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         String executionCourseName = executionCourse.getName() + " [" + executionCourse.getDegreePresentationString() + "]";
 
         try {
-            DissociateCurricularCourseByExecutionCourseId.run(Integer.valueOf(executionCourseId),
-                    Integer.valueOf(curricularCourseId));
-            CurricularCourse curricularCourse =
-                    (CurricularCourse) rootDomainObject.readDegreeModuleByOID(Integer.valueOf(curricularCourseId));
+            DissociateCurricularCourseByExecutionCourseId.run(executionCourseId, curricularCourseId);
+            CurricularCourse curricularCourse = AbstractDomainObject.fromExternalId(curricularCourseId);
             addActionMessage("success", request, "message.manager.executionCourseManagement.dissociate.success",
                     curricularCourse.getName(), curricularCourse.getDegreeCurricularPlan().getName());
         } catch (FenixServiceException e) {
@@ -71,8 +70,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         Set<Degree> degrees = executionCourse.getDegreesSortedByDegreeName();
         // destination attributes
         String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
-        ExecutionDegree originExecutionDegree =
-                rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(originExecutionDegreeId));
+        ExecutionDegree originExecutionDegree = AbstractDomainObject.fromExternalId(originExecutionDegreeId);
         request.setAttribute("originExecutionDegreeName", originExecutionDegree.getPresentationName());
         Boolean chooseNotLinked = Boolean.valueOf(RequestUtils.getAndSetStringToRequest(request, "executionCoursesNotLinked"));
         String curricularYearId = RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
@@ -82,7 +80,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
             sessionBean.setSourceExecutionCourse(executionCourse);
             sessionBean.setExecutionSemester(executionCourse.getExecutionPeriod());
             sessionBean.setChooseNotLinked(chooseNotLinked);
-            CurricularYear curYear = RootDomainObject.getInstance().readCurricularYearByOID(Integer.valueOf(curricularYearId));
+            CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
             sessionBean.setExecutionDegree(originExecutionDegree);
             sessionBean.setCurricularYear(curYear);
 
@@ -103,7 +101,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         String executionPeriodId = RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
         List<InfoExecutionDegree> executionDegreeList = new ArrayList<InfoExecutionDegree>();
         try {
-            executionDegreeList = ReadExecutionDegreesByExecutionPeriodId.runForAcademicAdmin(Integer.valueOf(executionPeriodId));
+            executionDegreeList = ReadExecutionDegreesByExecutionPeriodId.runForAcademicAdmin(executionPeriodId);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -121,13 +119,13 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         if (StringUtils.isEmpty(executionCoursesNotLinked) || !Boolean.valueOf(executionCoursesNotLinked)) {
             RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
             String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(originExecutionDegreeId));
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(originExecutionDegreeId);
             request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());
 
         }
         RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
         RequestUtils.getAndSetStringToRequest(request, "executionCourseName");
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId));
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
         request.setAttribute("executionPeriodName", executionSemester.getQualifiedName());
         return mapping.findForward("prepareAssociateCurricularCourseChooseDegreeCurricularPlan");
     }
@@ -141,11 +139,11 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         if (StringUtils.isEmpty(executionCoursesNotLinked) || !Boolean.valueOf(executionCoursesNotLinked)) {
             RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
             String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(originExecutionDegreeId));
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(originExecutionDegreeId);
             request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());
         }
         String executionPeriodId = RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
-        ExecutionSemester executionPeriod = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId));
+        ExecutionSemester executionPeriod = AbstractDomainObject.fromExternalId(executionPeriodId);
         request.setAttribute("executionPeriodName", executionPeriod.getQualifiedName());
         RequestUtils.getAndSetStringToRequest(request, "executionCourseName");
 
@@ -154,7 +152,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         String degreeCurricularPlanId = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanId");
         DegreeCurricularPlan degreeCurricularPlan = null;
         if (!StringUtils.isEmpty(degreeCurricularPlanId)) {
-            degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(Integer.valueOf(degreeCurricularPlanId));
+            degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         }
         try {
             if (degreeCurricularPlan == null) {
@@ -164,7 +162,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
                     degreeCurricularPlan.getPresentationName(executionPeriod.getExecutionYear()));
             request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
             String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
-            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseId));
+            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
             final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
             final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
             for (final DegreeModule degreeModule : rootDomainObject.getDegreeModulesSet()) {
@@ -200,22 +198,20 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
 
         Integer curricularCoursesListSize = (Integer) executionCourseForm.get("curricularCoursesListSize");
 
-        List<Integer> curricularCourseIds =
-                getInformationToDissociate(request, curricularCoursesListSize, "curricularCourse", "idInternal", "chosen");
+        List<String> curricularCourseIds =
+                getInformationToDissociate(request, curricularCoursesListSize, "curricularCourse", "externalId", "chosen");
 
         try {
-            AssociateCurricularCoursesToExecutionCourse.run(Integer.valueOf(executionCourseId), curricularCourseIds);
+            AssociateCurricularCoursesToExecutionCourse.run(executionCourseId, curricularCourseIds);
 
             // avmc (ist150958): success messages: 1 line for each curricular course
             String degreeCurricularPlanId = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanId");
-            DegreeCurricularPlan degreeCurricularPlan =
-                    RootDomainObject.getInstance().readDegreeCurricularPlanByOID(new Integer(degreeCurricularPlanId));
+            DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
             addActionMessage("success", request, "message.manager.executionCourseManagement.associateCourse.success",
                     degreeCurricularPlan.getName());
-            for (final Integer curricularCourseId : curricularCourseIds) {
-                final CurricularCourse curricularCourse =
-                        (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+            for (final String curricularCourseId : curricularCourseIds) {
+                final CurricularCourse curricularCourse = AbstractDomainObject.fromExternalId(curricularCourseId);
                 addActionMessage("successCourse", request,
                         "message.manager.executionCourseManagement.associateCourse.success.line", curricularCourse.getName());
             }
@@ -243,17 +239,17 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
 
             name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
             */
-            // courses.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
-            courses.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
+            // courses.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId().toString()));
+            courses.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId()));
         }
     }
 
-    private List<Integer> getInformationToDissociate(HttpServletRequest request, Integer curricularCoursesListSize, String what,
+    private List<String> getInformationToDissociate(HttpServletRequest request, Integer curricularCoursesListSize, String what,
             String property, String formProperty) {
 
-        List<Integer> informationToDeleteList = new ArrayList<Integer>();
+        List<String> informationToDeleteList = new ArrayList<String>();
         for (int i = 0; i < curricularCoursesListSize.intValue(); i++) {
-            Integer informationToDelete = dataToDelete(request, i, what, property, formProperty);
+            String informationToDelete = dataToDelete(request, i, what, property, formProperty);
             if (informationToDelete != null) {
                 informationToDeleteList.add(informationToDelete);
             }
@@ -261,16 +257,16 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         return informationToDeleteList;
     }
 
-    private Integer dataToDelete(HttpServletRequest request, int index, String what, String property, String formProperty) {
+    private String dataToDelete(HttpServletRequest request, int index, String what, String property, String formProperty) {
 
-        Integer itemToDelete = null;
+        String itemToDelete = null;
         String checkbox = request.getParameter(what + "[" + index + "]." + formProperty);
         String toDelete = null;
         if (checkbox != null && (checkbox.equals("on") || checkbox.equals("yes") || checkbox.equals("true"))) {
             toDelete = request.getParameter(what + "[" + index + "]." + property);
         }
         if (toDelete != null) {
-            itemToDelete = new Integer(toDelete);
+            itemToDelete = toDelete;
         }
         return itemToDelete;
     }

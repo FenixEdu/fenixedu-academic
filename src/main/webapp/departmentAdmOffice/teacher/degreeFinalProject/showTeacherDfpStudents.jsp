@@ -8,7 +8,7 @@
 
 <bean:define id="infoTeacher" name="teacherDegreeFinalProjectStudents" property="infoTeacher" scope="request" />
 <bean:define id="infoExecutionPeriod" name="teacherDegreeFinalProjectStudents" property="infoExecutionPeriod" />
-<bean:define id="executionPeriodId" name="infoExecutionPeriod" property="idInternal"/>
+<bean:define id="executionPeriodId" name="infoExecutionPeriod" property="externalId"/>
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
 	<bean:define id="teacherId" name="infoTeacher" property="teacherId"/>
@@ -26,7 +26,7 @@
 <html:form action="/manageTeacherDFPStudent">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>
@@ -90,7 +90,7 @@
 			</th>
 			
 		</tr>			
-			<bean:define id="teacherId" name="infoTeacher" property="idInternal"/>
+			<bean:define id="teacherId" name="infoTeacher" property="externalId"/>
 			<logic:iterate id="infoTeacherDfpStudent" name="teacherDfpStudentsList">
 				<tr>
 					<td class="listClasses">
@@ -104,7 +104,7 @@
 					</td>
 					
 					<td class="listClasses">
-						<html:link page='<%= "/manageTeacherDFPStudent.do?method=delete&amp;page=0&amp;teacherId=" + teacherId.toString()+"&amp;executionPeriodId=" + executionPeriodId %>' paramId="idInternal" paramName="infoTeacherDfpStudent" paramProperty="idInternal">
+						<html:link page='<%= "/manageTeacherDFPStudent.do?method=delete&amp;page=0&amp;teacherId=" + teacherId.toString()+"&amp;executionPeriodId=" + executionPeriodId %>' paramId="externalId" paramName="infoTeacherDfpStudent" paramProperty="externalId">
 							<bean:message key="link.remove"/>
 						</html:link>
 					</td>

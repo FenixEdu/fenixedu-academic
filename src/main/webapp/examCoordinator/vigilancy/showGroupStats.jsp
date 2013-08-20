@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <bean:define id="showVigilants" value="<%= request.getParameter("showVigilants") != null ? request.getParameter("showVigilants") : "false" %>"/>
-<bean:define id="groupId" name="vigilantGroup" property="idInternal"/>
+<bean:define id="groupId" name="vigilantGroup" property="externalId"/>
 
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.GroupReport"/></h2>

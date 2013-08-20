@@ -26,11 +26,11 @@
 				<br/>
 				<table>
 				<logic:iterate id="infoFileItem" name="item" property="infoFileItems">
-				<bean:define id="itemCode" name="item" property="idInternal" type="java.lang.Integer"/>
+				<bean:define id="itemCode" name="item" property="externalId" type="java.lang.String"/>
 				<bean:define id="displayName" name="infoFileItem" property="displayName" type="java.lang.String"/>
 				<bean:define id="externalStorageIdentification" name="infoFileItem" property="externalStorageIdentification" type="java.lang.String"/>
 				<bean:define id="filename" name="infoFileItem" property="htmlFriendlyFilename" type="java.lang.String"/>
-				<bean:define id="fileItemId" name="infoFileItem" property="idInternal" type="java.lang.Integer"/>
+				<bean:define id="fileItemId" name="infoFileItem" property="externalId" type="java.lang.String"/>
 					<tr>
 						<td><img src="<%= request.getContextPath() %>/images/list-bullet.gif" alt="<bean:message key="list-bullet" bundle="IMAGE_RESOURCES" />" /></td>
 						<td>

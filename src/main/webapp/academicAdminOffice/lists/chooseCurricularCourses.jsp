@@ -58,7 +58,7 @@
 
 <logic:present name="degreeModuleScopes">
 
-	<bean:define id="executionYear" name="searchBean" property="executionYear.idInternal" />
+	<bean:define id="executionYear" name="searchBean" property="executionYear.externalId" />
 
 	<table class="tstyle1 thleft thlight">
 		<%
@@ -84,7 +84,7 @@
 				<td class="acenter"><bean:write name="degreeModuleScope" property="curricularYear" /></td>
 				<td class="acenter"><bean:write name="degreeModuleScope" property="curricularSemester" /></td>
 				<td style="text-align: left"><bean:define id="curricularCourseCode" name="degreeModuleScope"
-						property="curricularCourse.idInternal" /> <bean:define id="currentSemester" name="degreeModuleScope"
+						property="curricularCourse.externalId" /> <bean:define id="currentSemester" name="degreeModuleScope"
 						property="curricularSemester" /> <bean:define id="currentYear" name="degreeModuleScope" property="curricularYear" />
 					<html:link
 						page="<%="/studentsListByCurricularCourse.do?method=searchByCurricularCourse&amp;curricularCourseCode="

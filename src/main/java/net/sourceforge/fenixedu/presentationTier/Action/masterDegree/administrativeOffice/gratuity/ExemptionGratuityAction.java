@@ -131,7 +131,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         }
 
         if (infoStudentCurricularPlans.size() == 1) {
-            request.setAttribute("studentCurricularPlanID", (infoStudentCurricularPlans.get(0)).getIdInternal());
+            request.setAttribute("studentCurricularPlanID", (infoStudentCurricularPlans.get(0)).getExternalId());
             return mapping.findForward("readExemptionGratuity");
         }
 
@@ -156,7 +156,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         }
         request.setAttribute("executionYear", executionYear);
 
-        Integer studentCurricularPlanID = getFromRequest("studentCurricularPlanID", request);
+        String studentCurricularPlanID = getFromRequest("studentCurricularPlanID", request);
         request.setAttribute("studentCurricularPlanID", studentCurricularPlanID);
 
         // read student curricular plan only for show in jsp
@@ -178,7 +178,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         try {
             infoGratuityValues =
                     (InfoGratuityValues) ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear.run(infoStudentCurricularPlan
-                            .getInfoDegreeCurricularPlan().getIdInternal(), executionYear);
+                            .getInfoDegreeCurricularPlan().getExternalId(), executionYear);
         } catch (FenixServiceException fenixServiceException) {
             fenixServiceException.printStackTrace();
             errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
@@ -196,7 +196,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
             return mapping.findForward("chooseStudent");
         }
 
-        request.setAttribute("gratuityValuesID", infoGratuityValues.getIdInternal());
+        request.setAttribute("gratuityValuesID", infoGratuityValues.getExternalId());
 
         // read gratuity situation of the student
         InfoGratuitySituation infoGratuitySituation = null;
@@ -204,7 +204,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         try {
             infoGratuitySituation =
                     (InfoGratuitySituation) ReadGratuitySituationByStudentCurricularPlanByGratuityValues.run(
-                            studentCurricularPlanID, infoGratuityValues.getIdInternal());
+                            studentCurricularPlanID, infoGratuityValues.getExternalId());
         } catch (FenixServiceException fenixServiceException) {
             fenixServiceException.printStackTrace();
             errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
@@ -213,7 +213,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         }
         // if infoGratuitySituation is null than it will be created in next step
         if (infoGratuitySituation != null) {
-            request.setAttribute("gratuitySituationID", infoGratuitySituation.getIdInternal());
+            request.setAttribute("gratuitySituationID", infoGratuitySituation.getExternalId());
         }
 
         DynaActionForm exemptionGrauityForm = (DynaActionForm) actionForm;
@@ -246,13 +246,13 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         }
     }
 
-    private Integer getFromRequest(String parameter, HttpServletRequest request) {
-        Integer parameterCode = null;
+    private String getFromRequest(String parameter, HttpServletRequest request) {
+        String parameterCode = null;
         String parameterCodeString = request.getParameter(parameter);
         if (parameterCodeString != null) // parameter
         {
             try {
-                parameterCode = new Integer(parameterCodeString);
+                parameterCode = parameterCodeString;
             } catch (Exception exception) {
                 return null;
             }
@@ -260,12 +260,10 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         {
             if (request.getAttribute(parameter) instanceof String) {
                 try {
-                    parameterCode = new Integer((String) request.getAttribute(parameter));
+                    parameterCode = (String) request.getAttribute(parameter);
                 } catch (Exception exception) {
                     return null;
                 }
-            } else if (request.getAttribute(parameter) instanceof Integer) {
-                parameterCode = (Integer) request.getAttribute(parameter);
             }
         }
         return parameterCode;

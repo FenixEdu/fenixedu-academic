@@ -41,15 +41,15 @@ public class ViewCourseInformationAction extends FenixAction {
 
         ActionErrors errors = new ActionErrors();
         String executionCourseId = request.getParameter("executionCourseId");
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
         SiteView siteView = null;
         try {
-            siteView = ReadCourseInformation.runReadCourseInformation(new Integer(executionCourseId));
+            siteView = ReadCourseInformation.runReadCourseInformation(executionCourseId);
         } catch (NotAuthorizedException e) {
             errors.add("notResponsible", new ActionError("label.notAuthorized.courseInformation"));
             saveErrors(request, errors);

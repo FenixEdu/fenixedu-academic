@@ -45,7 +45,7 @@ public class CheckIsAliveService {
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
-        if (executionYear == null || executionYear.getIdInternal() == null) {
+        if (executionYear == null || executionYear.getExternalId() == null) {
             if (LogLevel.FATAL) {
                 logger.fatal("Got a null result checking fenix database.");
             }

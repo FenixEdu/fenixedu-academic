@@ -273,11 +273,6 @@ public class AlumniFormation implements Serializable, IFormation {
         this.educationArea = educationArea;
     }
 
-    public void setEducationArea(Integer educationAreaId) {
-        this.educationArea =
-                (educationAreaId != null) ? RootDomainObject.getInstance().readEducationAreaByOID(educationAreaId) : null;
-    }
-
     public AcademicalInstitutionUnit getInstitution() {
         if (getInstitutionType() != null) {
             if (isNationalInstitution()) {

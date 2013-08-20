@@ -10,7 +10,7 @@
     </fr:layout>
 </fr:view>
 
-<bean:define id="candidacyID" name="candidacy" property="idInternal" />
+<bean:define id="candidacyID" name="candidacy" property="externalId" />
 <fr:form action="<%="/viewCandidacies.do?candidacyID=" +candidacyID %>" encoding="multipart/form-data">
 	<p class="infoop"><span><h2 class="inline"><bean:message key="label.candidacy.title.documents" /></h2></span></p>
 	<fr:edit id="candidacyDocuments" name="candidacyDocuments" schema="candidacyDocuments.full">

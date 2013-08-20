@@ -40,7 +40,7 @@ import com.mysql.jdbc.StatementInterceptor;
  * SQL Interceptor that is used to record the modifications in the content
  * structure in order to generate another SQL which will have the SQL
  * instructions for the modifications using only the CONTENT_IDs instead of
- * idInternals
+ * externalIds
  * 
  * @author pcma
  * 
@@ -185,14 +185,14 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 
             Matcher replaceIdsMatcher = updatePattern.matcher(modified);
             while (replaceIdsMatcher.find()) {
-                String idInternal = replaceIdsMatcher.group(3);
+                String externalId = replaceIdsMatcher.group(3);
                 String parameter = replaceIdsMatcher.group(2);
 
                 modified =
                         modified.replaceFirst(
-                                replaceIdsMatcher.group(1) + idInternal,
+                                replaceIdsMatcher.group(1) + externalId,
                                 replaceIdsMatcher.group(1)
-                                        + registerKey(objHelper.getTableFromKey(ojbConcreteClass, parameter), idInternal,
+                                        + registerKey(objHelper.getTableFromKey(ojbConcreteClass, parameter), externalId,
                                                 mainContentId));
             }
             return modified;
@@ -235,29 +235,29 @@ public class FenixStatementInterceptor implements StatementInterceptor {
     }
 
     private String generateSQLDelete(String sql) {
-        Matcher idInternalMatcher = deletePattern.matcher(sql);
-        if (idInternalMatcher.find()) {
-            String idInternal = idInternalMatcher.group(2);
-            String table = idInternalMatcher.group(1);
-            return "DELETE FROM " + table + " WHERE CONTENT_ID = '" + getContentFromTable(table, idInternal) + "'";
+        Matcher externalIdMatcher = deletePattern.matcher(sql);
+        if (externalIdMatcher.find()) {
+            String externalId = externalIdMatcher.group(2);
+            String table = externalIdMatcher.group(1);
+            return "DELETE FROM " + table + " WHERE CONTENT_ID = '" + getContentFromTable(table, externalId) + "'";
         }
         return null;
     }
 
-    private int registerKey(String table, String idInternal, String fromUUID) {
-        String contentId = findContentId(table, idInternal);
+    private int registerKey(String table, String externalId, String fromUUID) {
+        String contentId = findContentId(table, externalId);
         counter++;
         uuidTableCommands.add("INSERT INTO UUID_TEMP_TABLE(COUNTER,UUID,FROM_UUID) VALUES(" + counter + ",'" + contentId + "','"
                 + fromUUID + "')");
         return counter;
     }
 
-    private String findContentId(String table, String idInternal) {
-        String contentId = getContentFromTable(table, idInternal);
-        return (contentId == null) ? "TOKEN(" + table + "," + idInternal + ")" : contentId;
+    private String findContentId(String table, String externalId) {
+        String contentId = getContentFromTable(table, externalId);
+        return (contentId == null) ? "TOKEN(" + table + "," + externalId + ")" : contentId;
     }
 
-    private String getContentFromTable(String table, String idInternalAsString) {
+    private String getContentFromTable(String table, String externalIdAsString) {
         try {
             if (connection == null) {
                 connection = PersistenceBrokerFactory.defaultPersistenceBroker().serviceConnectionManager().getConnection();
@@ -265,7 +265,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
             }
             java.sql.PreparedStatement stmt =
                     connection.prepareStatement("SELECT CONTENT_ID FROM " + table + " WHERE ID_INTERNAL= ?");
-            stmt.setString(1, idInternalAsString);
+            stmt.setString(1, externalIdAsString);
             java.sql.ResultSet set = stmt.executeQuery();
             if (set.next()) {
                 String contentId = set.getString(1);

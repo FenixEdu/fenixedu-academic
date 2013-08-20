@@ -62,7 +62,7 @@
 		<fr:layout name="tabular" >
 		<fr:property name="classes" value="tstyle4 mtop05 mbottom0 width700px" />
 		<fr:property name="columnClasses" value="width8em acenter, width30em acenter,width8em acenter,width15em aright"/>
-			<fr:property name="sortBy" value="whenRegistered=asc,idInternal=asc"/>
+			<fr:property name="sortBy" value="whenRegistered=asc,externalId=asc"/>
 		</fr:layout>
 		</fr:view>
 
@@ -71,7 +71,7 @@
 		<td class="aright" colspan="4"><span style="background-color: #fdfbdd;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.totalAmount"/>: <bean:define id="totalAmount" name="receipt" property="totalAmount" type="Money"/>&nbsp;<%= totalAmount.toPlainString() %>&nbsp;<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.currencySymbol"/></span></td>
 	</tr>
 </table>
-<bean:define id="personId" name="receipt" property="person.idInternal"/>
+<bean:define id="personId" name="receipt" property="person.externalId"/>
 
 <table>
 		<tr>

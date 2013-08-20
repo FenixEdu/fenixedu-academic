@@ -32,6 +32,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @Mapping(path = "/markSheetManagement", module = "academicAdministration", formBean = "markSheetManagementForm",
@@ -119,10 +120,10 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("&epID=").append(searchBean.getExecutionPeriod().getIdInternal());
-        stringBuilder.append("&dID=").append(searchBean.getDegree().getIdInternal());
-        stringBuilder.append("&dcpID=").append(searchBean.getDegreeCurricularPlan().getIdInternal());
-        stringBuilder.append("&ccID=").append(searchBean.getCurricularCourse().getIdInternal());
+        stringBuilder.append("&epID=").append(searchBean.getExecutionPeriod().getExternalId());
+        stringBuilder.append("&dID=").append(searchBean.getDegree().getExternalId());
+        stringBuilder.append("&dcpID=").append(searchBean.getDegreeCurricularPlan().getExternalId());
+        stringBuilder.append("&ccID=").append(searchBean.getCurricularCourse().getExternalId());
 
         if (searchBean.getTeacherId() != null) {
             stringBuilder.append("&tn=").append(searchBean.getTeacherId());
@@ -143,8 +144,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             HttpServletRequest request, HttpServletResponse response) {
 
         DynaActionForm form = (DynaActionForm) actionForm;
-        Integer evaluationID = (Integer) form.get("evaluationID");
-        EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(evaluationID);
+        EnrolmentEvaluation enrolmentEvaluation = getDomainObject(form, "evaluationID");
         MarkSheet markSheet = enrolmentEvaluation.getRectificationMarkSheet();
 
         request.setAttribute("markSheet", markSheet);
@@ -154,15 +154,15 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward choosePrinter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response)  {
+            HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) actionForm;
-        Integer markSheetID = (Integer) form.get("msID");
+        String markSheetID = (String) form.get("msID");
         request.setAttribute("markSheet", markSheetID.toString());
         return mapping.findForward("choosePrinter");
     }
 
     public ActionForward searchConfirmedMarkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response)  {
+            HttpServletResponse response) {
         MarkSheetManagementSearchBean searchBean = getRenderedObject();
 
         Collection<MarkSheet> result = new ArrayList<MarkSheet>();
@@ -182,9 +182,8 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     public ActionForward listMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) actionForm;
-        Integer markSheetID = (Integer) form.get("msID");
 
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+        MarkSheet markSheet = getDomainObject(form, "msID");
 
         request.setAttribute("markSheet", markSheet);
         request.setAttribute("url", buildUrl(form));
@@ -193,7 +192,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward searchConfirmedMarkSheetsFilled(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response)  {
+            HttpServletRequest request, HttpServletResponse response) {
         MarkSheetManagementSearchBean searchBean = new MarkSheetManagementSearchBean();
         fillMarkSheetBean(actionForm, request, searchBean);
 
@@ -214,9 +213,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     public ActionForward removeGrades(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
         DynaActionForm form = (DynaActionForm) actionForm;
-        Integer markSheetID = (Integer) form.get("msID");
-
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+        MarkSheet markSheet = getDomainObject(form, "msID");
         List<EnrolmentEvaluation> evaluations = getEvaluationsToRemove(form);
         try {
             RemoveGradesFromConfirmedMarkSheet.run(markSheet, evaluations);
@@ -230,9 +227,9 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
     private List<EnrolmentEvaluation> getEvaluationsToRemove(DynaActionForm actionForm) {
         List<EnrolmentEvaluation> res = new ArrayList<EnrolmentEvaluation>();
-        Integer[] evaluationsToRemove = (Integer[]) actionForm.get("evaluationsToRemove");
-        for (Integer eeID : evaluationsToRemove) {
-            EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(eeID);
+        String[] evaluationsToRemove = (String[]) actionForm.get("evaluationsToRemove");
+        for (String eeID : evaluationsToRemove) {
+            EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(eeID);
             if (enrolmentEvaluation != null) {
                 res.add(enrolmentEvaluation);
             }

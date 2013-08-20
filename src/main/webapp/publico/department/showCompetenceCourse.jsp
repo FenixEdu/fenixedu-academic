@@ -35,7 +35,7 @@
 	&nbsp;&gt;&nbsp;	
 	<h:outputLink value="#{CompetenceCourseManagement.contextPath}/publico/department/showDepartmentCompetenceCourses.faces">
 		<h:outputText value="#{publicDepartmentBundle['department.courses']}"/>
-		<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.idInternal}"/>
+		<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.externalId}"/>
 	</h:outputLink>
 	
 	&nbsp;&gt;&nbsp;
@@ -78,9 +78,9 @@
 			<h:outputText value="<!-- BLOCK_HAS_CONTEXT -->" escape="false"/>
 			<h:outputLink value="#{CompetenceCourseManagement.contextPath}/publico/degreeSite/viewCurricularCourse.faces">
 				<h:outputText value="#{curricularCourse.oneFullName}" escape="false"/>
-				<f:param name="degreeID" value="#{curricularCourse.parentDegreeCurricularPlan.degree.idInternal}"/>
-				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.idInternal}"/>
-				<f:param name="curricularCourseID" value="#{curricularCourse.idInternal}"/>
+				<f:param name="degreeID" value="#{curricularCourse.parentDegreeCurricularPlan.degree.externalId}"/>
+				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.externalId}"/>
+				<f:param name="curricularCourseID" value="#{curricularCourse.externalId}"/>
 				<f:param name="#{CompetenceCourseManagement.contentContextPathAttributeName}" value="#{curricularCourse.parentDegreeCurricularPlan.degree.site.reversePath}"/>
 			</h:outputLink>
 			<h:outputText value="<!-- END_BLOCK_HAS_CONTEXT -->" escape="false"/>			
@@ -226,7 +226,7 @@
 	</fc:dataRepeater>
 
 	<h:form id="SomeIdFoRvAlidHtmlGeneration">
-		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.externalId}'/>"/>
  		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{CurricularCourseManagement.executionPeriodOID}'/>"/>
 	</h:form>
 

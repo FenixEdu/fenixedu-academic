@@ -48,7 +48,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
 
-        Integer candidateID = (Integer) changeApplicationInfoForm.get("candidateID");
+        String candidateID = (String) changeApplicationInfoForm.get("candidateID");
         request.setAttribute("candidateID", candidateID);
 
         if (!isTokenValid(request)) {
@@ -162,7 +162,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
         DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
 
-        Integer choosenCandidateID = Integer.valueOf(request.getParameter("candidateID"));
+        String choosenCandidateID = request.getParameter("candidateID");
         request.setAttribute("candidateID", choosenCandidateID);
 
         InfoMasterDegreeCandidate masterDegreeCandidate = readMasterDegreeCandidate(userView, choosenCandidateID);
@@ -202,7 +202,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
         request.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
         request.setAttribute(PresentationConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
         request.setAttribute(PresentationConstants.PERSONAL_INFO_KEY, masterDegreeCandidate.getInfoPerson());
-        changeApplicationInfoForm.set("candidateID", masterDegreeCandidate.getIdInternal());
+        changeApplicationInfoForm.set("candidateID", masterDegreeCandidate.getExternalId());
 
         // if New Person -> All personal info can be changed
         if (userView.getRoleTypes().size() == 2) {
@@ -216,8 +216,8 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
 
     }
 
-    private InfoMasterDegreeCandidate readMasterDegreeCandidate(IUserView userView, Integer candidateID)
-            throws  FenixActionException {
+    private InfoMasterDegreeCandidate readMasterDegreeCandidate(IUserView userView, String candidateID)
+            throws FenixActionException {
         InfoMasterDegreeCandidate masterDegreeCandidate = null;
         masterDegreeCandidate = ReadMasterDegreeCandidateByID.run(candidateID);
         return masterDegreeCandidate;

@@ -34,7 +34,7 @@
 
 
 <bean:define id="dismissalTypeName" name="dismissalBean" property="dismissalType.name" />
-<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.idInternal" />
+<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.externalId" />
 
 <fr:form action="<%= "/studentInternalSubstitutions.do?scpID=" + scpID.toString() %>">
 	<html:hidden property="method" value="confirmCreateDismissals"/>

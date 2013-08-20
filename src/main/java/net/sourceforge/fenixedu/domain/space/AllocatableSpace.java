@@ -33,7 +33,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     public final static Comparator<AllocatableSpace> ROOM_COMPARATOR_BY_NAME = new ComparatorChain();
     static {
         ((ComparatorChain) ROOM_COMPARATOR_BY_NAME).addComparator(new BeanComparator("identification", Collator.getInstance()));
-        ((ComparatorChain) ROOM_COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
+        ((ComparatorChain) ROOM_COMPARATOR_BY_NAME).addComparator(new BeanComparator("externalId"));
     }
 
     public abstract List<ResourceAllocation> getResourceAllocationsForCheck();

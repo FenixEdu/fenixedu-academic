@@ -70,8 +70,8 @@
 		
 		<td> 
 		
-		<bean:define id="curricularCourseId" name="infoCurricularCourse" property="idInternal"/>
-		<bean:define id="degreeCurricularPlanId" name="infoCurricularCourse" property="infoDegreeCurricularPlan.idInternal"/>
+		<bean:define id="curricularCourseId" name="infoCurricularCourse" property="externalId"/>
+		<bean:define id="degreeCurricularPlanId" name="infoCurricularCourse" property="infoDegreeCurricularPlan.externalId"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.index" property="index" value="<%= degreeCurricularPlanId.toString() %>"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseId" property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
 			 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertCurriculum"/>

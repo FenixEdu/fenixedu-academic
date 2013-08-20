@@ -38,11 +38,11 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 thlight mtop05"/>
 		<fr:property name="link(view)" value="<%= "/competenceCourses/manageVersions.do?method=showCompetenceCourseInformation&competenceCourseID=" + competenceCourseID %>"/>
-		<fr:property name="param(view)" value="idInternal/oid"/>		
+		<fr:property name="param(view)" value="externalId/oid"/>		
 		<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
 		<fr:property name="key(view)" value="label.generic.check"/>
 		<fr:property name="link(propose)" value="<%= "/competenceCourses/manageVersions.do?method=prepareCreateVersion&proposal=y&competenceCourseID=" + competenceCourseID %>"/>
-		<fr:property name="param(propose)" value="executionPeriod.idInternal/executionPeriodID"/>
+		<fr:property name="param(propose)" value="executionPeriod.externalId/executionPeriodID"/>
 		<fr:property name="bundle(propose)" value="BOLONHA_MANAGER_RESOURCES"/>
 		<fr:property name="key(propose)" value="label.new.version.proposal"/>
 		<fr:property name="visibleIf(propose)" value="loggedPersonAllowedToEdit"/>
@@ -68,7 +68,7 @@
 	</tr>
 	
 	<logic:iterate id="changeRequest" name="competenceCourse" property="competenceCourseInformationChangeRequests" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest">
-		<bean:define id="changeRequestID" name="changeRequest" property="idInternal"/>
+		<bean:define id="changeRequestID" name="changeRequest" property="externalId"/>
 		<tr>
 			<td><fr:view name="changeRequest" property="executionPeriod.executionYear.year"/></td>			
 			<td><fr:view name="changeRequest" property="executionPeriod.name"/></td>

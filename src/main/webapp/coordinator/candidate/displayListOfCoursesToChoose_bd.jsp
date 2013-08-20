@@ -118,7 +118,7 @@
 	<%--							<html:multibox alt='<%= "selection[" + index.intValue() + "]" %>' property='<%= "selection[" + index.intValue() + "]" %>'>
 	--%>						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selection" property="selection" >	
 	
-									<bean:write name="candidateEnrolment" property="infoCurricularCourse.idInternal"/>
+									<bean:write name="candidateEnrolment" property="infoCurricularCourse.externalId"/>
 								</html:multibox>
 							</td>
 							<td>
@@ -157,7 +157,7 @@
 		        						<logic:equal name="curricularCourseScope" property="infoBranch.name"  value='<%= new String("") %>'>
 		        							<bean:define id="offset" value="1"/>
 		            						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selection" property="selection">
-		                						<bean:write name="curricularCourseScope" property="infoCurricularCourse.idInternal"/>
+		                						<bean:write name="curricularCourseScope" property="infoCurricularCourse.externalId"/>
 		            						</html:multibox>
 		        						</logic:equal>
 		        						<logic:notEqual name="curricularCourseScope" property="infoBranch.name"  value='<%= new String("") %>'>
@@ -170,7 +170,7 @@
 		            			<logic:iterate id="curricularCourseScope" name="curricularCourseElem"  indexId="scopeID" property="infoScopes" 
 		            						    offset="<%= new String(offset) %>" length="<%= String.valueOf(ccsSize.intValue() - Integer.parseInt(offset)) %>">
 		                						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selection" property="selection">
-		                    						<bean:write name="curricularCourseScope" property="infoCurricularCourse.idInternal"/>
+		                    						<bean:write name="curricularCourseScope" property="infoCurricularCourse.externalId"/>
 		                						</html:multibox>
 		               							<bean:write name="curricularCourseScope" property="infoBranch.name"/> <br/>
 								</logic:iterate>	

@@ -12,16 +12,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadStudentCurriculum {
 
-    protected List run(Integer executionDegreeCode, Integer studentCurricularPlanID) throws FenixServiceException {
+    protected List run(String executionDegreeCode, String studentCurricularPlanID) throws FenixServiceException {
 
-        final StudentCurricularPlan studentCurricularPlan =
-                RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
+        final StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
         if (studentCurricularPlan == null) {
             throw new NonExistingServiceException("error.readStudentCurriculum.noStudentCurricularPlan");
         }
@@ -38,14 +37,14 @@ public class ReadStudentCurriculum {
     private static final ReadStudentCurriculum serviceInstance = new ReadStudentCurriculum();
 
     @Service
-    public static List runReadStudentCurriculum(Integer executionDegreeCode, Integer studentCurricularPlanID)
+    public static List runReadStudentCurriculum(String executionDegreeCode, String studentCurricularPlanID)
             throws FenixServiceException, NotAuthorizedException {
         try {
             SeminariesCoordinatorFilter.instance.execute(executionDegreeCode, studentCurricularPlanID);
             return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
         } catch (NotAuthorizedException ex1) {
             try {
-                StudentCurriculumViewAuthorizationFilter.instance.execute(executionDegreeCode, studentCurricularPlanID);
+                StudentCurriculumViewAuthorizationFilter.instance.execute();
                 return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
             } catch (NotAuthorizedException ex2) {
                 try {

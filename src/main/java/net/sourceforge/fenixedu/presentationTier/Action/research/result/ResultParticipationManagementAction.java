@@ -46,7 +46,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class ResultParticipationManagementAction extends ResultsManagementAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final ResearchResult result = getResultFromRequest(request);
         Person person = getLoggedPerson(request);
         if (result == null || (!result.hasPersonParticipation(person) && !result.getCreator().equals(person))) {
@@ -60,7 +60,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     public ActionForward changeParticipationType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final ResultParticipationCreationBean bean = getRenderedObject("bean");
         bean.setParticipator(null);
         bean.setParticipatorName(null);
@@ -74,7 +74,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     public ActionForward changeUnitType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final ResultParticipationCreationBean bean = getRenderedObject("bean");
         ResearchResult result = bean.getResult();
         request.setAttribute("bean", bean);
@@ -96,7 +96,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     public ActionForward createWrapper(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         if (getFromRequest(request, "createNew") != null) {
             return prepareCreateParticipator(mapping, form, request, response);
@@ -106,7 +106,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         final ResultParticipationCreationBean bean = getRenderedObject("bean");
 
         request.setAttribute("bean", bean);
@@ -139,13 +139,13 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
         return mapping.findForward("editParticipation");
     }
 
-    private void createParticipation(ResultParticipationCreationBean bean) throws  FenixServiceException {
+    private void createParticipation(ResultParticipationCreationBean bean) throws FenixServiceException {
 
         CreateResultParticipation.run(bean);
     }
 
     public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         final ResultParticipation participation = readResultParticipationFromRequest(request);
         if (participation == null) {
             return backToResultList(mapping, form, request, response);
@@ -155,7 +155,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 
         if (participation.getPerson().equals(loggedPerson) && getFromRequest(request, "confirm") == null
                 && getFromRequest(request, "cancel") == null) {
-            request.setAttribute("deleteConfirmation", participation.getIdInternal());
+            request.setAttribute("deleteConfirmation", participation.getExternalId());
         }
 
         if (getFromRequest(request, "confirm") != null || !participation.getPerson().equals(loggedPerson)) {
@@ -173,7 +173,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     public ActionForward saveOrder(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final String treeStructure = (String) getFromRequest(request, "tree");
         final ResearchResult result = getResultFromRequest(request);
 
@@ -224,7 +224,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     public ActionForward prepareCreateParticipator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         ResearchResult result = getResultFromRequest(request);
         ResultParticipationCreationBean bean =
@@ -244,7 +244,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     public ActionForward createParticipator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         ResearchResult result = getResultFromRequest(request);
         ResultParticipationCreationBean bean =
@@ -269,7 +269,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     public ActionForward unitWrapper(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         ResultParticipationCreationBean bean =
                 (ResultParticipationCreationBean) RenderUtils.getViewState("beanForExternalPerson").getMetaObject().getObject();
@@ -282,7 +282,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     public ActionForward createUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         getResultFromRequest(request);
 
@@ -297,7 +297,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     private ActionForward move(OrderChange orderChange, ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final ResultParticipation participation = readResultParticipationFromRequest(request);
         if (participation == null) {
             return backToResultList(mapping, form, request, response);
@@ -373,8 +373,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
         request.setAttribute("createSchema", createResultParticipationSchema);
     }
 
-    private void checkNeededWarnings(HttpServletRequest request, ResearchResult result) throws 
-            FenixServiceException {
+    private void checkNeededWarnings(HttpServletRequest request, ResearchResult result) throws FenixServiceException {
         Person person = getLoggedPerson(request);
         if (!result.hasPersonParticipation(person) && !result.getCreator().equals(person)) {
             addActionMessage(request, "researcher.ResultParticipation.last.participation.warning");
@@ -397,7 +396,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     private ResultParticipationCreationBean getBeanFromRequest(HttpServletRequest request, ResearchResult result)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         ResultParticipationCreationBean bean = (ResultParticipationCreationBean) getFromRequest(request, "bean");
 
         if (bean == null) {
@@ -408,7 +407,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     private ResultParticipation readResultParticipationFromRequest(HttpServletRequest request) {
-        final Integer oid = getRequestParameterAsInteger(request, "participationId");
+        final String oid = getRequestParameterAsString(request, "participationId");
         ResultParticipation participation = null;
 
         try {
@@ -421,7 +420,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     private void setResParticipationRequestAttributes(HttpServletRequest request, ResearchResult result,
-            ResultParticipationCreationBean bean) throws  FenixServiceException {
+            ResultParticipationCreationBean bean) throws FenixServiceException {
 
         schemasStateAutomaton(request, result, bean, false); // Define
         // schemas to

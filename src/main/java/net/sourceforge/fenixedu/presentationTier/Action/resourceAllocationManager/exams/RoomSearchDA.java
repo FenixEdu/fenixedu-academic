@@ -150,7 +150,7 @@ public class RoomSearchDA extends FenixContextDispatchAction {
             int i = 0;
             while (iter.hasNext()) {
                 InfoRoom elem = iter.next();
-                availableRoomId[i] = elem.getIdInternal().toString();
+                availableRoomId[i] = elem.getExternalId().toString();
             }
             request.setAttribute(PresentationConstants.AVAILABLE_ROOMS_ID, availableRoomId);
 
@@ -170,7 +170,7 @@ public class RoomSearchDA extends FenixContextDispatchAction {
         List<InfoRoom> availableRooms = new ArrayList<InfoRoom>();
         for (String element : availableRoomsId) {
 
-            InfoRoom infoRoom = ReadRoomByOID.run(new Integer(element));
+            InfoRoom infoRoom = ReadRoomByOID.run(element);
             availableRooms.add(infoRoom);
         }
         if ((sortParameter != null) && (sortParameter.length() != 0)) {

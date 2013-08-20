@@ -39,7 +39,7 @@
 	<bean:write name="operations" property="empty" />
 </bean:define>
 
-<bean:define id="candidacyID" name="candidacy" property="idInternal" />
+<bean:define id="candidacyID" name="candidacy" property="externalId" />
 <logic:notEmpty name="operations">
 	<bean:define id="emptyOperations" value="true" />
 	<ul>

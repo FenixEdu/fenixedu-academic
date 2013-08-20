@@ -8,7 +8,7 @@
 
 <h2><bean:message key="label.shifts"/></h2>
 
-<bean:define id="shiftID" name="shift" property="idInternal"/>
+<bean:define id="shiftID" name="shift" property="externalId"/>
 <bean:define id="executionCourseID" name="executionCourseID"/>
 
 <logic:present name="removeAll">
@@ -27,7 +27,7 @@
 	</logic:present>
 	
 	<logic:notPresent name="removeAll">
-		<bean:define id="registrationID" name="registration" property="idInternal"/>
+		<bean:define id="registrationID" name="registration" property="externalId"/>
 		<fr:form action="<%="/manageExecutionCourse.do?method=editShift&amp;registrationID=" + registrationID + "&amp;shiftID=" + shiftID + "&amp;executionCourseID=" + executionCourseID %>">
 			<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
 		</fr:form>

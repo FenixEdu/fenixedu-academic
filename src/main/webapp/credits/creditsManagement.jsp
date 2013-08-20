@@ -32,7 +32,7 @@
 	<br />
 	<br />
 	<bean:define id="link">
-		/executionCourseShiftsPercentageManager.do?method=show&amp;teacherOID=<bean:write name="creditsView" property="infoCredits.infoTeacher.idInternal"/>
+		/executionCourseShiftsPercentageManager.do?method=show&amp;teacherOID=<bean:write name="creditsView" property="infoCredits.infoTeacher.externalId"/>
 	</bean:define>
 	<logic:empty name="creditsView" property="infoProfessorshipList">
 		<span class="error"><!-- Error messages go here --><bean:message key="message.teacher.no.professorship"/></span>
@@ -49,12 +49,12 @@
 				<bean:define id="infoExecutionCourse" name="professorship" property="infoExecutionCourse"/>
 				<tr>
 					<td class="listClasses">
-						<html:link page="<%= link %>" paramId="objectCode" paramName="infoExecutionCourse" paramProperty="idInternal">
+						<html:link page="<%= link %>" paramId="objectCode" paramName="infoExecutionCourse" paramProperty="externalId">
 							<bean:write name="infoExecutionCourse" property="sigla"/>
 						</html:link>
 					</td>			
 					<td class="listClasses">
-						<html:link page="<%= link %>" paramId="objectCode" paramName="infoExecutionCourse" paramProperty="idInternal">
+						<html:link page="<%= link %>" paramId="objectCode" paramName="infoExecutionCourse" paramProperty="externalId">
 							<bean:write name="infoExecutionCourse" property="nome"/>
 						</html:link>
 					</td>

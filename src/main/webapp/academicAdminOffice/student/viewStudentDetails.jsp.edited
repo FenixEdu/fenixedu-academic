@@ -6,7 +6,7 @@
 <html:xhtml/>
 
 <div style="float: right;">
-	<bean:define id="personID" name="student" property="person.idInternal"/>
+	<bean:define id="personID" name="student" property="person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -37,20 +37,20 @@
 
 <p class="mvert05">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link page="/student.do?method=viewPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
+	<html:link page="/student.do?method=viewPersonalData" paramId="studentID" paramName="student" paramProperty="externalId">
 		<bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 
 	<academic:allowed operation="EDIT_STUDENT_PERSONAL_DATA">
 		<span class="pleft05">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
+			<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="externalId">
 				<bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			</html:link>
 		</span>
 		<span class="pleft05">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/student.do?method=viewStudentLog" paramId="studentID" paramName="student" paramProperty="idInternal">
+			<html:link page="/student.do?method=viewStudentLog" paramId="studentID" paramName="student" paramProperty="externalId">
 				<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</span>
@@ -66,7 +66,7 @@
 		<fr:property name="classes" value="tstyle1 thlight mtop025 boldlink1"/>
 		<fr:property name="columnClasses" value="acenter,acenter,tdhl1,,acenter,nowrap"/>
 
-		<fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${idInternal}" />
+		<fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${externalId}" />
 		<fr:property name="key(view)" value="link.student.visualizeRegistration"/>
 		<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
 		<fr:property name="visibleIf(view)" value="allowedToManageRegistration"/>
@@ -80,7 +80,7 @@
 <h3 class="mbottom025"><bean:message key="label.statutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mvert05">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link action="/studentStatutes.do?method=prepare" paramName="student" paramProperty="idInternal" paramId="studentId">
+	<html:link action="/studentStatutes.do?method=prepare" paramName="student" paramProperty="externalId" paramId="studentId">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentStatutes.manage" />
 	</html:link>
 </p>
@@ -109,7 +109,7 @@
 <h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mtop05 mbottom15">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link action="/payments.do?method=showOperations" paramName="student" paramProperty="person.idInternal" paramId="personId">
+	<html:link action="/payments.do?method=showOperations" paramName="student" paramProperty="person.externalId" paramId="personId">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" />
 	</html:link>
 </p>

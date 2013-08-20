@@ -24,7 +24,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularSemester;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -44,6 +46,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -70,8 +73,8 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-        Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
+        String degreeCurricularPlanId = request.getParameter("degreeCurricularPlanId");
+        String curricularCourseScopeId = request.getParameter("curricularCourseScopeId");
         InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
 
         try {
@@ -87,8 +90,8 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
             dynaForm.set("beginDate", Data.format2DayMonthYear(oldInfoCurricularCourseScope.getBeginDate().getTime(), "/"));
         }
 
-        dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
-        dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal().toString());
+        dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getExternalId().toString());
+        dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getExternalId().toString());
         dynaForm.set("anotation", oldInfoCurricularCourseScope.getAnotation());
 
         // obtain branches to show in jsp
@@ -114,7 +117,7 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
         String label, value;
         while (iter.hasNext()) {
             infoBranch = (InfoBranch) iter.next();
-            value = infoBranch.getIdInternal().toString();
+            value = infoBranch.getExternalId().toString();
             label = infoBranch.getCode() + " - " + infoBranch.getName();
             branchesList.add(new LabelValueBean(label, value));
         }
@@ -153,17 +156,14 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
         String branchIdString = (String) dynaForm.get("branchId");
         String beginDateString = (String) dynaForm.get("beginDate");
 
-        Integer curricularSemesterId = new Integer(curricularSemesterIdString);
         InfoCurricularSemester infoCurricularSemester =
-                new InfoCurricularSemester(rootDomainObject.readCurricularSemesterByOID(curricularSemesterId));
+                new InfoCurricularSemester(AbstractDomainObject.<CurricularSemester> fromExternalId(curricularSemesterIdString));
         newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 
-        Integer branchId = new Integer(branchIdString);
-        InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(branchId));
+        InfoBranch infoBranch = new InfoBranch(AbstractDomainObject.<Branch> fromExternalId(branchIdString));
         newInfoCurricularCourseScope.setInfoBranch(infoBranch);
         final CurricularCourse curricularCourse =
-                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(Integer.valueOf(request
-                        .getParameter("curricularCourseId")));
+                (CurricularCourse) AbstractDomainObject.fromExternalId(request.getParameter("curricularCourseId"));
         InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
         newInfoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
 

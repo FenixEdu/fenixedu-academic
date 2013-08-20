@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
@@ -25,6 +24,7 @@ import org.apache.log4j.Logger;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear {
 
@@ -39,9 +39,9 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear {
     public static List<InfoShift> run(AcademicInterval academicInterval, InfoExecutionDegree infoExecutionDegree,
             InfoCurricularYear infoCurricularYear) {
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-        final CurricularYear curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(infoCurricularYear.getIdInternal());
+        final CurricularYear curricularYear = AbstractDomainObject.fromExternalId(infoCurricularYear.getExternalId());
         logger.warn(String.format("executionDegree %s degreeCurricularPlan %s curricularYear %s", logExternalId(executionDegree),
                 logExternalId(degreeCurricularPlan), logExternalId(curricularYear)));
         final List<InfoShift> infoShifts = new ArrayList<InfoShift>();

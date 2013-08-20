@@ -20,7 +20,7 @@
 	<html:select bundle="HTMLALT_RESOURCES" property="executionYearOID" size="1"
 				 onchange='this.form.method.value=\'prepare\';this.form.page.value=\'0\';this.form.submit();'>
 		<html:option value=""><!-- w3c complient--></html:option>
-		<html:options property="idInternal"
+		<html:options property="externalId"
 					  labelProperty="nextYearsYearString"
 					  collection="executionYears" />
 	</html:select>
@@ -103,7 +103,7 @@
 							<bean:write name="groupProposal" property="finalDegreeWorkProposal.proposalNumber"/>
 						</td>
 						<td rowspan="2">
-							<bean:define id="proposalID" name="groupProposal" property="finalDegreeWorkProposal.idInternal"/>
+							<bean:define id="proposalID" name="groupProposal" property="finalDegreeWorkProposal.externalId"/>
 							<html:link target="_blank" href="<%= request.getContextPath() + "/publico/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + proposalID.toString() %>">
 								<bean:write name="groupProposal" property="finalDegreeWorkProposal.title"/>
 					        </html:link>
@@ -116,7 +116,7 @@
 						</td>
 						<td rowspan="2">
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.attributedByTeacher" property="attributedByTeacher" disabled="true">
-								<bean:write name="groupProposal" property="finalDegreeWorkProposal.idInternal"/>
+								<bean:write name="groupProposal" property="finalDegreeWorkProposal.externalId"/>
 							</html:multibox>
 						</td>
 						<logic:present name="infoGroup" property="groupStudents">
@@ -126,10 +126,10 @@
 									<bean:define id="username"><%= userView.getUtilizador() %></bean:define>
 									<logic:equal name="groupStudent" property="student.infoPerson.username" value="<%= username %>">
 										<bean:define id="onChange">
-											this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="idInternal"/>';this.form.submit();
+											this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="externalId"/>';this.form.submit();
 										</bean:define>
 										<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.confirmAttributions" property="confirmAttributions" onchange='<%= onChange.toString() %>'>
-											<bean:write name="groupProposal" property="finalDegreeWorkProposal.idInternal"/><bean:write name="groupStudent" property="student.idInternal"/>
+											<bean:write name="groupProposal" property="finalDegreeWorkProposal.externalId"/><bean:write name="groupStudent" property="student.externalId"/>
 										</html:multibox>
 <!--
 										<html:submit styleId="<%= "javascriptButtonID" + i %>" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -139,7 +139,7 @@
 									</logic:equal>
 									<logic:notEqual name="groupStudent" property="student.infoPerson.username" value="<%= username %>">
 										<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.confirmAttributions" property="confirmAttributions" disabled="true">
-											<bean:write name="groupProposal" property="finalDegreeWorkProposal.idInternal"/><bean:write name="groupStudent" property="student.idInternal"/>
+											<bean:write name="groupProposal" property="finalDegreeWorkProposal.externalId"/><bean:write name="groupStudent" property="student.externalId"/>
 										</html:multibox>
 									</logic:notEqual>
 								</td>							

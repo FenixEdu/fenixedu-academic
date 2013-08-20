@@ -14,7 +14,7 @@
 
 <bean:define id="fileItem" type="net.sourceforge.fenixedu.domain.FileContent" name="fileItem"/>
 <bean:define id="section" type="net.sourceforge.fenixedu.domain.Section" name="section"/>
-<bean:define id="siteId" name="site" property="idInternal"/>
+<bean:define id="siteId" name="site" property="externalId"/>
 
 <h2>
 	<logic:present name="item">
@@ -42,12 +42,12 @@
 </fr:view>
 
 <fr:edit name="fileItemBean" schema="item.file.permittedGroup" 
-         action="<%= String.format("%s?method=editItemFilePermissions&%s&fileItemId=%s&sectionID=%s", actionName, context, fileItem.getIdInternal(), section.getIdInternal()) %>">
+         action="<%= String.format("%s?method=editItemFilePermissions&%s&fileItemId=%s&sectionID=%s", actionName, context, fileItem.getExternalId(), section.getExternalId()) %>">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
     
-    <fr:destination name="cancel" path="<%= String.format("%s?method=section&%s&sectionID=%s", actionName, context, section.getIdInternal()) %>"/>
+    <fr:destination name="cancel" path="<%= String.format("%s?method=section&%s&sectionID=%s", actionName, context, section.getExternalId()) %>"/>
 </fr:edit>
 

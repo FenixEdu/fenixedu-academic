@@ -126,7 +126,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 
     protected void setCandidacyProcessInformation(final ActionForm actionForm, final CandidacyProcess process) {
         final CandidacyProcessForm form = (CandidacyProcessForm) actionForm;
-        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
+        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getExternalId());
     }
 
     @Override

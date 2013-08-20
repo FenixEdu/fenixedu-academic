@@ -47,7 +47,7 @@ public class EurAceReportFile extends EurAceReportFile_Base {
                                                 final Row row = spreadsheet.addRow();
                                                 setDegreeCells(row, degree);
                                                 row.setCell(curricularCourse.getName());
-                                                row.setCell(executionCourse.getIdInternal());
+                                                row.setCell(executionCourse.getExternalId());
                                                 row.setCell(teacher.getPerson().getIstUsername());
                                                 row.setCell(String.valueOf(executionCourse.getOid()));
                                             }

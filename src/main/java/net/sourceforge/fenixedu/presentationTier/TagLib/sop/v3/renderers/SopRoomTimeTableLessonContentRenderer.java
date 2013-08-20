@@ -36,7 +36,7 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getAcademicInterval()
                     .getResumedRepresentationInStringFormat());
             strBuffer.append("&amp;execution_course_oid=");
-            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal());
+            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getExternalId());
             strBuffer.append("'>");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
             strBuffer.append("</a>");
@@ -56,7 +56,7 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getAcademicInterval()
                     .getResumedRepresentationInStringFormat());
             strBuffer.append("&amp;execution_course_oid=");
-            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal());
+            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getExternalId());
             strBuffer.append("'>");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
             strBuffer.append("</a>");
@@ -100,7 +100,7 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
                 strBuffer.append("<a href=\"");
                 strBuffer.append(context).append("/resourceAllocationManager/");
                 strBuffer.append("roomsPunctualScheduling.do?method=prepareView&genericEventID=")
-                        .append(infoGenericEvent.getIdInternal()).append("\">");
+                        .append(infoGenericEvent.getExternalId()).append("\">");
                 strBuffer.append(infoGenericEvent.getTitle());
                 strBuffer.append("</a>");
             } else {

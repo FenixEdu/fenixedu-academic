@@ -48,15 +48,15 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1" />
 		<fr:property name="link(generate)" value="/tests/testModels.do?method=prepareGenerateTests" />
-		<fr:property name="param(generate)" value="idInternal/oid" />
+		<fr:property name="param(generate)" value="externalId/oid" />
 		<fr:property name="key(generate)" value="label.button.generateTest" />
 		<fr:property name="bundle(generate)" value="TESTS_RESOURCES" />
 		<fr:property name="link(edit)" value="/tests/testModels.do?method=editTestModel" />
-		<fr:property name="param(edit)" value="idInternal/oid" />
+		<fr:property name="param(edit)" value="externalId/oid" />
 		<fr:property name="key(edit)" value="message.question.edit" />
 		<fr:property name="bundle(edit)" value="TESTS_RESOURCES" />
 		<fr:property name="link(delete)" value="/tests/testModels.do?method=prepareDeleteTestModel" />
-		<fr:property name="param(delete)" value="idInternal/oid" />
+		<fr:property name="param(delete)" value="externalId/oid" />
 		<fr:property name="key(delete)" value="message.delete" />
 		<fr:property name="bundle(delete)" value="TESTS_RESOURCES" />
 		

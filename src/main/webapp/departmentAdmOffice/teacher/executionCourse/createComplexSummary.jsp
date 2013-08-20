@@ -40,7 +40,7 @@ function check(e,v){
 		document.getElementById('instructionsButton').className="dblock";
 	</script>
 
-	<bean:define id="executionCourseID" name="summariesManagementBean" property="executionCourse.idInternal" />
+	<bean:define id="executionCourseID" name="summariesManagementBean" property="executionCourse.externalId" />
 	<bean:define id="teacherNumber" name="loggedTeacherProfessorship" property="teacher.teacherNumber" />
 	
 	<logic:messagesPresent message="true">

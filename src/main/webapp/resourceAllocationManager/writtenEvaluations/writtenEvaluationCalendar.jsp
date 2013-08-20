@@ -125,7 +125,7 @@
 							<c:url var="creationURL" value="showExecutionCourses.faces">
 								<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 								<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
-								<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal}"/>
+								<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.externalId}"/>
 								<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 							</c:url>
 							<a href='<c:out value="${creationURL}"/>' style="text-decoration:none">
@@ -136,7 +136,7 @@
 							<c:url var="commentURL" value="commentExecutionCourse.faces">
 								<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 								<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
-								<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal}"/>
+								<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.externalId}"/>
 								<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 							</c:url>
 							<a href='<c:out value="${commentURL}"/>' style="text-decoration:none">
@@ -165,12 +165,12 @@
 								<c:out value=" ${bundle['label.coordinator.to']} "/>
 								<fmt:formatDate pattern="HH:mm" value="${evaluation.endDate}"/>
 							</td> <!--  enrolled students  -->
-							<td><c:out value="${SOPEvaluationManagementBackingBean.executionCoursesEnroledStudents[evaluation.idInternal]}"/></td>
+							<td><c:out value="${SOPEvaluationManagementBackingBean.executionCoursesEnroledStudents[evaluation.externalId]}"/></td>
 							<td>
-								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal] != 0}">
-									<c:out value="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal]}"/>
+								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.externalId] != 0}">
+									<c:out value="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.externalId]}"/>
 								</c:if>
-								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal] == 0}">
+								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.externalId] == 0}">
 									<c:out value="-"/>
 								</c:if>
 							</td>
@@ -191,20 +191,20 @@
 								</td>
 							</c:if>
 							<td> <!-- rooms  -->
-								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.idInternal] != ''}">
-									<c:out value="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.idInternal]}"/>
+								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.externalId] != ''}">
+									<c:out value="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.externalId]}"/>
 								</c:if>
-								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.idInternal] == ''}">
+								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.externalId] == ''}">
 									<c:out value="-"/>
 								</c:if>
 							</td>
 							<td> <!-- links -->
 								<c:url var="editEvaluationURL" value="editWrittenTest.faces">
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
-									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 									<c:param name="evaluationTypeClassname" value="${evaluation.class.name}"/>
 									<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
-									<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.externalId}"/>
 									<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 								</c:url>
 								<a href='<c:out escapeXml="false" value="${editEvaluationURL}"/>'>
@@ -213,10 +213,10 @@
 								<c:out value=" | "/>
 								<c:url var="deleteEvaluationURL" value="deleteWrittenEvaluation.faces">
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
-									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 									<c:param name="evaluationTypeClassname" value="${evaluation.class.name}"/>
 									<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
-									<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.externalId}"/>
 									<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 								</c:url>
 								<a href='<c:out value="${deleteEvaluationURL}"/>' onclick="return confirm('#{bundle['message.confirm.written.test']}')">
@@ -246,7 +246,7 @@
 									<c:url var="creationURL" value="showExecutionCourses.faces">
 										<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
-										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>										
+										<c:param name="executionCourseID" value="${executionCourse.externalId}"/>										
 										<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 									</c:url>
 									<a href='<c:out value="${creationURL}"/>' style="text-decoration:none">
@@ -257,7 +257,7 @@
 									<c:url var="commentURL" value="commentExecutionCourse.faces">
 										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 										<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
-										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>							
+										<c:param name="executionCourseID" value="${executionCourse.externalId}"/>							
 										<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>			
 									</c:url>
 									<a href='<c:out value="${commentURL}"/>' style="text-decoration:none">

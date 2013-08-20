@@ -28,8 +28,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeacherCreditsDispatchAction {
 
     public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException,
-            ParseException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException, ParseException {
 
         InfoTeacherCredits infoTeacherCredits = new InfoTeacherCredits(form, request);
         Teacher teacher = infoTeacherCredits.getTeacher();
@@ -60,8 +59,7 @@ public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeach
     }
 
     public ActionForward editTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException,
-            ParseException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException, ParseException {
         InfoTeacherCredits infoTeacherCredits = new InfoTeacherCredits(form, request);
         Teacher teacher = infoTeacherCredits.getTeacher();
         ExecutionSemester executionSemester = infoTeacherCredits.getExecutionSemester();
@@ -73,11 +71,11 @@ public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeach
 
     private ExecutionSemester getExecutionSemesterFromRequestOrForm(HttpServletRequest request, DynaActionForm teacherCreditsForm) {
         ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID((Integer) teacherCreditsForm.get("executionPeriodId"));
+                AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("executionPeriodId"));
         if (executionSemester != null) {
             return executionSemester;
         }
-        return rootDomainObject.readExecutionSemesterByOID(getIntegerFromRequest(request, "executionPeriodId"));
+        return getDomainObject(request, "executionPeriodId");
     }
 
     private class InfoTeacherCredits {

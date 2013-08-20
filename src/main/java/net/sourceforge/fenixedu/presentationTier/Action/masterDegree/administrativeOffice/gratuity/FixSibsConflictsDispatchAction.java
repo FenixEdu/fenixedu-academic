@@ -76,7 +76,7 @@ public class FixSibsConflictsDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         FixSibsPaymentFileEntriesForm fixSibsPaymentFileEntriesForm = (FixSibsPaymentFileEntriesForm) form;
 
-        Integer sibsPaymentFileEntryId = fixSibsPaymentFileEntriesForm.getSibsPaymentFileEntryId();
+        String sibsPaymentFileEntryId = fixSibsPaymentFileEntriesForm.getSibsPaymentFileEntryId();
 
         if (sibsPaymentFileEntryId == null) {
             ActionErrors errors = new ActionErrors();

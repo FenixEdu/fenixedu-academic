@@ -57,7 +57,7 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
     }
 
     protected Module getParent(HttpServletRequest request) {
-        return (Module) getObject(request, Module.class, "parent");
+        return getDomainObject(request, "parent");
     }
 
     public ActionForward organize(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -124,6 +124,19 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
         }
 
         rearrangeFunctionalities(arrangements);
+    }
+
+    private Integer getId(String id) {
+        if (id == null) {
+            return null;
+        }
+
+        try {
+            return new Integer(id);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private List<Content> flatten(List<Content> roots) {

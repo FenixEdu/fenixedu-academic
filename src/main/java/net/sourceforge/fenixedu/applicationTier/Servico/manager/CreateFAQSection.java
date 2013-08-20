@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz
@@ -20,8 +20,8 @@ public class CreateFAQSection {
     @Service
     public static void run(InfoFAQSection infoFAQSection) {
         FAQSection parentFAQSection = null;
-        if (infoFAQSection.getParentSection() != null && infoFAQSection.getParentSection().getIdInternal() != null) {
-            parentFAQSection = RootDomainObject.getInstance().readFAQSectionByOID(infoFAQSection.getParentSection().getIdInternal());
+        if (infoFAQSection.getParentSection() != null && infoFAQSection.getParentSection().getExternalId() != null) {
+            parentFAQSection = AbstractDomainObject.fromExternalId(infoFAQSection.getParentSection().getExternalId());
         }
 
         FAQSection faqSection = new FAQSection();

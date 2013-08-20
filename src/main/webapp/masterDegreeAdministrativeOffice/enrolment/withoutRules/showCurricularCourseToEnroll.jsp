@@ -55,7 +55,7 @@
 				<th class="listClasses-header"><bean:message key="label.enrollment.extra.curricular.course" bundle="DEGREE_ADM_OFFICE"/></th>
 			</tr>
 				<logic:iterate id="curricularCourse2Enroll" name="curricularCourses2Enroll">
-					<bean:define id="curricularCourseId" name="curricularCourse2Enroll" property="curricularCourse.idInternal" />
+					<bean:define id="curricularCourseId" name="curricularCourse2Enroll" property="curricularCourse.externalId" />
 					<tr>
 						<td class="listClasses" style="text-align:left">
 							<bean:write name="curricularCourse2Enroll" property="curricularCourse.name"/>

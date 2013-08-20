@@ -18,7 +18,7 @@
 		<property name="label" value="label.createPeriod" />
 		<property name="key" value="true"/>
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
-		<property name="linkFormat" value="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&amp;selectedDegree=${degree.idInternal}&amp;selectedYear=1&amp;forwardTo=createEditCandidacyPeriods"/>
+		<property name="linkFormat" value="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&amp;selectedDegree=${degree.externalId}&amp;selectedYear=1&amp;forwardTo=createEditCandidacyPeriods"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="contextRelative" value="true"/>
 		<property name="subLayout" value="values"/>
@@ -28,7 +28,7 @@
 		<property name="label" value="label.createPeriod" />
 		<property name="key" value="true"/>
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
-		<property name="linkFormat" value="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&amp;selectedDegree=${degree.idInternal}&amp;selectedYear=2&amp;forwardTo=createEditCandidacyPeriods"/>
+		<property name="linkFormat" value="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&amp;selectedDegree=${degree.externalId}&amp;selectedYear=2&amp;forwardTo=createEditCandidacyPeriods"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="contextRelative" value="true"/>
 		<property name="subLayout" value="values"/>
@@ -41,7 +41,7 @@
 		<property name="label" value="label.createPeriod" />
 		<property name="key" value="true"/>
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
-		<property name="linkFormat" value="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&amp;selectedDegree=${degree.idInternal}&amp;selectedYear=3&amp;forwardTo=createEditCandidacyPeriods"/>
+		<property name="linkFormat" value="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&amp;selectedDegree=${degree.externalId}&amp;selectedYear=3&amp;forwardTo=createEditCandidacyPeriods"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="contextRelative" value="true"/>
 		<property name="subLayout" value="values"/>
@@ -55,7 +55,7 @@
 		<property name="label" value="label.createPeriod" />
 		<property name="key" value="true"/>
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
-		<property name="linkFormat" value="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&amp;selectedDegree=${degree.idInternal}&amp;selectedYear=4&amp;forwardTo=createEditCandidacyPeriods"/>
+		<property name="linkFormat" value="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&amp;selectedDegree=${degree.externalId}&amp;selectedYear=4&amp;forwardTo=createEditCandidacyPeriods"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="contextRelative" value="true"/>
 		<property name="subLayout" value="values"/>
@@ -65,7 +65,7 @@
 		<property name="label" value="label.createPeriod" />
 		<property name="key" value="true"/>
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
-		<property name="linkFormat" value="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&amp;selectedDegree=${degree.idInternal}&amp;selectedYear=5&amp;forwardTo=createEditCandidacyPeriods"/>
+		<property name="linkFormat" value="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&amp;selectedDegree=${degree.externalId}&amp;selectedYear=5&amp;forwardTo=createEditCandidacyPeriods"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="contextRelative" value="true"/>
 		<property name="subLayout" value="values"/>
@@ -88,7 +88,7 @@
 		<property name="candidacyPeriodPostLabel" value="label.candidacyResume" />
 		<property name="isCandidacyPeriodPostLabelKey" value="true" />		
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
-		<property name="linkFormat" value="/electionsPeriodsManagement.do?method=manageSingleYearDelegateCandidacyPeriod&amp;selectedPeriod=${idInternal}&amp;forwardTo=createEditCandidacyPeriods"/>
+		<property name="linkFormat" value="/electionsPeriodsManagement.do?method=manageSingleYearDelegateCandidacyPeriod&amp;selectedPeriod=${externalId}&amp;forwardTo=createEditCandidacyPeriods"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 	</slot>
@@ -191,8 +191,8 @@
 		<property name="isCandidacyPeriodPostLabelKey" value="true" />	
 		<property name="secondRoundPeriodLabel" value="label.secondRoundElections" />		
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
-		<property name="linkFormat" value="/electionsPeriodsManagement.do?method=manageSingleYearDelegateVotingPeriod&amp;selectedPeriod=${idInternal}&amp;forwardTo=createEditVotingPeriods"/>
-		<property name="secondRoundPeriodLink" value="/electionsPeriodsManagement.do?method=secondRoundElections&amp;selectedPeriod=${idInternal}&amp;"/>
+		<property name="linkFormat" value="/electionsPeriodsManagement.do?method=manageSingleYearDelegateVotingPeriod&amp;selectedPeriod=${externalId}&amp;forwardTo=createEditVotingPeriods"/>
+		<property name="secondRoundPeriodLink" value="/electionsPeriodsManagement.do?method=secondRoundElections&amp;selectedPeriod=${externalId}&amp;"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 	</slot>
@@ -374,7 +374,7 @@
 		<property name="periodPostLabel" value="label.candidacyResume" />
 		<property name="isPeriodPostLabelKey" value="true" />		
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
-		<property name="linkFormat" value="/electionsPeriodsManagement.do?method=showCandidates&amp;selectedCandidacyPeriod=${idInternal}"/>
+		<property name="linkFormat" value="/electionsPeriodsManagement.do?method=showCandidates&amp;selectedCandidacyPeriod=${externalId}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 	</slot>
@@ -444,7 +444,7 @@
 		<property name="periodPostLabel" value="label.votingResume" />
 		<property name="isPeriodPostLabelKey" value="true" />		
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
-		<property name="linkFormat" value="/electionsPeriodsManagement.do?method=showVotingResults&amp;selectedVotingPeriod=${idInternal}&amp;forwardTo=showVotingResults"/>
+		<property name="linkFormat" value="/electionsPeriodsManagement.do?method=showVotingResults&amp;selectedVotingPeriod=${externalId}&amp;forwardTo=showVotingResults"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 	</slot>
@@ -783,7 +783,7 @@
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="blankTarget" value="false"/>
-		<property name="linkFormat" value="/studentTutorship.do?method=showStudentRegistration&amp;studentNumber=${student.number}&amp;registrationOID=${idInternal}"/>	
+		<property name="linkFormat" value="/studentTutorship.do?method=showStudentRegistration&amp;studentNumber=${student.number}&amp;registrationOID=${externalId}"/>	
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="registration.number"/>
 	</slot>
@@ -821,7 +821,7 @@
 		<property name="key" value="link.delegates.changeDelegate" />
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
 		<property name="linkFormat"
-			value="/viewTutorship.do?method=prepareTutorship&amp;tutorshipId=${idInternal}" />
+			value="/viewTutorship.do?method=prepareTutorship&amp;tutorshipId=${externalId}" />
 	</slot>
 </schema>
 

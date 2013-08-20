@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério 21/Nov/2003
@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class EditCurriculumForCurricularCourse {
 
-    protected Boolean run(Integer infoExecutionDegreeId, Integer oldCurriculumId, Integer curricularCourseCode,
+    protected Boolean run(String infoExecutionDegreeId, String oldCurriculumId, String curricularCourseCode,
             InfoCurriculum newInfoCurriculum, String username, String language) throws FenixServiceException {
         Boolean result = new Boolean(false);
 
@@ -37,7 +37,7 @@ public class EditCurriculumForCurricularCourse {
             throw new FenixServiceException("nullUsername");
         }
 
-        CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseCode);
+        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");
         }
@@ -47,7 +47,7 @@ public class EditCurriculumForCurricularCourse {
             throw new NonExistingServiceException("noPerson");
         }
 
-        Curriculum oldCurriculum = RootDomainObject.getInstance().readCurriculumByOID(oldCurriculumId);
+        Curriculum oldCurriculum = AbstractDomainObject.fromExternalId(oldCurriculumId);
         if (oldCurriculum == null) {
             oldCurriculum = new Curriculum();
 
@@ -84,11 +84,10 @@ public class EditCurriculumForCurricularCourse {
     private static final EditCurriculumForCurricularCourse serviceInstance = new EditCurriculumForCurricularCourse();
 
     @Service
-    public static Boolean runEditCurriculumForCurricularCourse(Integer infoExecutionDegreeId, Integer oldCurriculumId,
-            Integer curricularCourseCode, InfoCurriculum newInfoCurriculum, String username, String language)
+    public static Boolean runEditCurriculumForCurricularCourse(String infoExecutionDegreeId, String oldCurriculumId,
+            String curricularCourseCode, InfoCurriculum newInfoCurriculum, String username, String language)
             throws FenixServiceException, NotAuthorizedException {
-        CurrentDegreeCoordinatorAuthorizationFilter.instance.execute(infoExecutionDegreeId, oldCurriculumId,
-                curricularCourseCode, newInfoCurriculum, username, language);
+        CurrentDegreeCoordinatorAuthorizationFilter.instance.execute(infoExecutionDegreeId);
         return serviceInstance.run(infoExecutionDegreeId, oldCurriculumId, curricularCourseCode, newInfoCurriculum, username,
                 language);
     }

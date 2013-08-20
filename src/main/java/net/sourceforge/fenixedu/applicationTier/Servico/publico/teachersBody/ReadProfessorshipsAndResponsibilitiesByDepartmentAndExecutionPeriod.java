@@ -16,23 +16,23 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod {
 
     @Service
-    public static List run(Integer departmentId, Integer executionYearID, Integer semester, Integer teacherType)
+    public static List run(String departmentId, String executionYearID, Integer semester, Integer teacherType)
             throws FenixServiceException {
 
         ExecutionYear executionYear = null;
         if (executionYearID != null) {
-            executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+            executionYear = AbstractDomainObject.fromExternalId(executionYearID);
         }
 
         final ExecutionSemester executionSemester = executionYear.getExecutionSemesterFor(semester);
@@ -40,7 +40,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
             throw new FenixServiceException("error.noExecutionPeriod");
         }
 
-        final Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
+        final Department department = AbstractDomainObject.fromExternalId(departmentId);
         if (department == null) {
             throw new FenixServiceException("error.noDepartment");
         }
@@ -105,9 +105,11 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
                 DetailedProfessorship detailedProfessorship1 = (DetailedProfessorship) o1;
                 DetailedProfessorship detailedProfessorship2 = (DetailedProfessorship) o2;
                 int result =
-                        detailedProfessorship1.getInfoProfessorship().getInfoExecutionCourse().getIdInternal().intValue()
-                                - detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse().getIdInternal()
-                                        .intValue();
+                        detailedProfessorship1
+                                .getInfoProfessorship()
+                                .getInfoExecutionCourse()
+                                .getExternalId()
+                                .compareTo(detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse().getExternalId());
                 if (result == 0
                         && (detailedProfessorship1.getResponsibleFor().booleanValue() || detailedProfessorship2
                                 .getResponsibleFor().booleanValue())) {

@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.thesis;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * Library operation for canceling an archive or pending operation.
@@ -18,9 +18,8 @@ public class ThesisLibraryCancelOperation extends ThesisLibraryCancelOperation_B
         init(thesis, performer);
     }
 
-    public ThesisLibraryCancelOperation(Integer thesisId, Integer performerId) {
-        this(RootDomainObject.getInstance().readThesisByOID(thesisId), (Person) RootDomainObject.getInstance().readPartyByOID(
-                performerId));
+    public ThesisLibraryCancelOperation(String thesisId, String performerId) {
+        this(AbstractDomainObject.<Thesis> fromExternalId(thesisId), AbstractDomainObject.<Person> fromExternalId(performerId));
     }
 
     @Override

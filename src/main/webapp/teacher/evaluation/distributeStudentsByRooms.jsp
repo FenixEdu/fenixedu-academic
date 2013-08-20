@@ -31,7 +31,7 @@
 			
 			<h:dataTable value="#{evaluationManagementBackingBean.evaluationRooms}" var="room">
 				<h:column>
-					<h:outputText value="#{evaluationManagementBackingBean.evaluationRoomsPositions[room.idInternal]}. " styleClass="bold" />
+					<h:outputText value="#{evaluationManagementBackingBean.evaluationRoomsPositions[room.externalId]}. " styleClass="bold" />
 				</h:column>
 				<h:column>
 					<h:outputText value="#{bundle['label.lesson.room']} " />

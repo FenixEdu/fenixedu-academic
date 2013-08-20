@@ -37,7 +37,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseCurricular"/>
 	<fr:edit id="enrolmentBean" name="enrolmentBean" visible="false"/>
 	<logic:present name="enrolments">
-		<bean:define id="url">/<%= actionName %>.do?method=delete&amp;enrolment=${idInternal}&amp;scpID=<%= bean.getStudentCurricularPlan().getIdInternal().toString() %>&amp;executionPeriodID=<%= bean.getExecutionPeriod().getIdInternal().toString() %></bean:define>
+		<bean:define id="url">/<%= actionName %>.do?method=delete&amp;enrolment=${externalId}&amp;scpID=<%= bean.getStudentCurricularPlan().getExternalId().toString() %>&amp;executionPeriodID=<%= bean.getExecutionPeriod().getExternalId().toString() %></bean:define>
 		<fr:view name="enrolments" property="enrolments" schema="student.no.course.group.enrolments">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4"/>

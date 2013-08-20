@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class LerAulasDeTurno {
 
@@ -23,7 +23,7 @@ public class LerAulasDeTurno {
     public static List run(ShiftKey shiftKey) {
 
         final ExecutionCourse executionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(shiftKey.getInfoExecutionCourse().getIdInternal());
+                AbstractDomainObject.fromExternalId(shiftKey.getInfoExecutionCourse().getExternalId());
         final Shift shift = executionCourse.findShiftByName(shiftKey.getShiftName());
 
         final List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();

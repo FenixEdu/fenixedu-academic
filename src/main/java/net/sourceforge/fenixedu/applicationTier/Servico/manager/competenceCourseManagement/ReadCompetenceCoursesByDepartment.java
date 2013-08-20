@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -15,16 +14,17 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadCompetenceCoursesByDepartment {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List<InfoCompetenceCourse> run(Integer departmentID) throws NotExistingServiceException {
+    public static List<InfoCompetenceCourse> run(String departmentID) throws NotExistingServiceException {
 
         final List<InfoCompetenceCourse> result = new ArrayList<InfoCompetenceCourse>();
         if (departmentID != null) {
-            final Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentID);
+            final Department department = AbstractDomainObject.fromExternalId(departmentID);
             if (department == null) {
                 throw new NotExistingServiceException("error.manager.noDepartment");
             }

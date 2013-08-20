@@ -14,13 +14,13 @@
 	
 
 	<h:form>
-		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.externalId}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
 		<h:outputText value="<ul><li>" escape="false"/>
 	 		<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
 					<h:outputText value="#{bolonhaBundle['createBibliographicReference']}"/>
 					<f:param name="action" value="#{CompetenceCourseManagement.action}"/>
-					<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.idInternal}"/>
+					<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.externalId}"/>
 			</h:outputLink>
 		<h:outputText value="</li></ul>" escape="false"/>
 
@@ -133,7 +133,7 @@
 						<h:outputText value="#{bolonhaBundle['edit']}"/>
 						<f:param name="bibliographicReferenceID" value="#{bibliographicReference.order}"/>
 						<f:param name="action" value="#{CompetenceCourseManagement.action}"/>
-						<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.idInternal}"/>
+						<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.externalId}"/>
 					</h:outputLink>
 					<h:outputText value=", " />
 					<h:commandLink value="#{bolonhaBundle['delete']}" action="#{CompetenceCourseManagement.deleteBibliographicReference}">	
@@ -191,7 +191,7 @@
 						<h:outputText value="#{bolonhaBundle['edit']}"/>
 						<f:param name="bibliographicReferenceID" value="#{bibliographicReference.order}"/>
 						<f:param name="action" value="#{CompetenceCourseManagement.action}"/>
-						<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.idInternal}"/>
+						<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.externalId}"/>
 					</h:outputLink>
 					<h:outputText value=", " />
 					<h:commandLink value="#{bolonhaBundle['delete']}" action="#{CompetenceCourseManagement.deleteBibliographicReference}">	

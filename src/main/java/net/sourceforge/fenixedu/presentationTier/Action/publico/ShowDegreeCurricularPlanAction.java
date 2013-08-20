@@ -28,26 +28,28 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
     public ActionForward showCurricularPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer degreeId = getFromRequest("degreeID", request);
+        String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
-        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        String executionDegreeId = getFromRequest("executionDegreeID", request);
         request.setAttribute("executionDegreeID", executionDegreeId);
 
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-        return showOldDegreeCurricularPlan(mapping, actionForm, request, degreeCurricularPlan.getIdInternal());
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        return showOldDegreeCurricularPlan(mapping, actionForm, request, degreeCurricularPlan.getExternalId());
     }
 
     private ActionForward showOldDegreeCurricularPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            Integer degreeCurricularPlanId) throws  FenixActionException {
+            String degreeCurricularPlanId) throws FenixActionException {
         final ActionErrors errors = new ActionErrors();
 
         InfoExecutionDegree infoExecutionDegreeForPeriod = null;
@@ -61,7 +63,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
                 List<LabelValueBean> executionPeriodsLabelValueList = new ArrayList<LabelValueBean>();
                 infoExecutionDegree1 = infoExecutionDegreeList.get(0);
                 executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionDegree1.getInfoExecutionYear().getYear(), ""
-                        + infoExecutionDegree1.getInfoExecutionYear().getIdInternal()));
+                        + infoExecutionDegree1.getInfoExecutionYear().getExternalId()));
 
                 for (int i = 1; i < infoExecutionDegreeList.size(); i++) {
                     infoExecutionDegreeForPeriod = infoExecutionDegreeList.get(i);
@@ -69,7 +71,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
                     if (infoExecutionDegreeForPeriod.getInfoExecutionYear().getYear() != infoExecutionDegree1
                             .getInfoExecutionYear().getYear()) {
                         executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionDegreeForPeriod.getInfoExecutionYear()
-                                .getYear(), "" + infoExecutionDegreeForPeriod.getInfoExecutionYear().getIdInternal()));
+                                .getYear(), "" + infoExecutionDegreeForPeriod.getInfoExecutionYear().getExternalId()));
                         infoExecutionDegree1 = infoExecutionDegreeList.get(i);
                     }
                 }
@@ -92,7 +94,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         }
 
         if (indexForm.get("indice") == null) {
-            indexForm.set("indice", infoExecutionDegreeForPeriod.getInfoExecutionYear().getIdInternal());
+            indexForm.set("indice", infoExecutionDegreeForPeriod.getInfoExecutionYear().getExternalId());
             curricularYear = Integer.valueOf(0);
         }
 
@@ -105,7 +107,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
             indexForm.set("indice", indexForm.get("indice"));
             indexForm.set("curYear", Integer.valueOf(anosCurriculares.indexOf(anosCurriculares.get(curricularYear))));
             request.setAttribute(PresentationConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
-            request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
+            request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getExternalId().toString());
         }
 
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
@@ -117,7 +119,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
             infoExecutionDegree =
                     ReadPublicExecutionDegreeByDCPID.run(degreeCurricularPlanId, selectedExecutionPeriod.getInfoExecutionYear()
-                            .getIdInternal());
+                            .getExternalId());
         }
         RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
 
@@ -138,7 +140,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
             try {
                 activeCurricularCourseScopes =
                         ReadActiveDegreeCurricularPlanByID.runReadActiveDegreeCurricularPlanByID(degreeCurricularPlanId,
-                                selectedExecutionPeriod.getIdInternal(), getLocale(request), "");
+                                selectedExecutionPeriod.getExternalId(), getLocale(request), "");
             } catch (FenixServiceException e) {
                 return new ActionForward(mapping.getInput());
             }

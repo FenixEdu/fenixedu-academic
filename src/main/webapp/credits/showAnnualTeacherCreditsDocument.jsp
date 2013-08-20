@@ -64,8 +64,8 @@ padding: 0;
 					</tr> 
 				
 				<logic:iterate id="professorship" name="annualTeachingCreditsByPeriodBean" property="professorships">
-					<bean:define id="professorshipID" name="professorship" property="idInternal"/>
-					<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.idInternal"/>
+					<bean:define id="professorshipID" name="professorship" property="externalId"/>
+					<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.externalId"/>
 					<bean:define id="totalNumberOfLessons" name="professorship" property="degreeTeachingServiceLessonRows"/>
 					<bean:size id="numberOfShifts" name="professorship" property="degreeTeachingServicesOrderedByShift"/>
 					<tr>
@@ -134,7 +134,7 @@ padding: 0;
 	
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
 			<h3 class="infoop"><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
-			<bean:define id="executionPeriodId" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.idInternal"/>
+			<bean:define id="executionPeriodId" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
 			<fr:view name="annualTeachingCreditsByPeriodBean" property="institutionWorkTime">
 				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime">
 					<fr:slot name="weekDay.label" key="label.teacher-institution-working-time.weekday"/>
@@ -210,7 +210,7 @@ padding: 0;
 	<logic:notEmpty name="projectAndTutorialProfessorships">
 		<logic:iterate id="professorship" name="projectAndTutorialProfessorships">
 			<bean:define id="professorshipID" name="professorship" property="externalId"/>
-			<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.idInternal"/>
+			<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.externalId"/>
 			
 			<h3 class="mtop15 mbottom05">
 				<fr:view name="professorship" layout="values">

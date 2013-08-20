@@ -1,10 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 
@@ -12,12 +10,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteTestQuestion {
 
-    protected void run(Integer executionCourseId, Integer testId, final Integer questionId)
-            throws InvalidArgumentsServiceException {
-        Test test = RootDomainObject.getInstance().readTestByOID(testId);
+    protected void run(String executionCourseId, String testId, final String questionId) throws InvalidArgumentsServiceException {
+        Test test = AbstractDomainObject.fromExternalId(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -26,7 +24,7 @@ public class DeleteTestQuestion {
             @Override
             public boolean evaluate(Object arg0) {
                 final TestQuestion testQuestion = (TestQuestion) arg0;
-                return testQuestion.getQuestion().getIdInternal().equals(questionId);
+                return testQuestion.getQuestion().getExternalId().equals(questionId);
             }
         });
         if (testQuestion == null) {
@@ -41,7 +39,7 @@ public class DeleteTestQuestion {
     private static final DeleteTestQuestion serviceInstance = new DeleteTestQuestion();
 
     @Service
-    public static void runDeleteTestQuestion(Integer executionCourseId, Integer testId, Integer questionId)
+    public static void runDeleteTestQuestion(String executionCourseId, String testId, String questionId)
             throws InvalidArgumentsServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, testId, questionId);

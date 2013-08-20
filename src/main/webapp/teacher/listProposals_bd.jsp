@@ -101,7 +101,7 @@
 							</logic:iterate>
 						</td>
 						<td class="listClasses" rowspan="2">
-					        <html:link page="<%= "/finalWorkManagement.do?method=editToCreateFinalDegreeWorkProposal&amp;degree=" + request.getParameter("degree") + "&amp;executionYear=" + request.getParameter("executionYear") + "&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal) proposal).getIdInternal().toString() %>">
+					        <html:link page="<%= "/finalWorkManagement.do?method=editToCreateFinalDegreeWorkProposal&amp;degree=" + request.getParameter("degree") + "&amp;executionYear=" + request.getParameter("executionYear") + "&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal) proposal).getExternalId().toString() %>">
 								<bean:message bundle="APPLICATION_RESOURCES" key="editToCreate"/>
 						    </html:link>
 						</td>

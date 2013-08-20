@@ -6,7 +6,7 @@
 
 <h2><bean:message  key="label.candidacy.operation.finished.title"/></h2>
 <hr/>
-<bean:define id="candidacyID" name="candidacy" property="idInternal" />
+<bean:define id="candidacyID" name="candidacy" property="externalId" />
 <bean:define id="operationQualifiedName" name="operation" property="type.qualifiedName" />
 
 <br/>

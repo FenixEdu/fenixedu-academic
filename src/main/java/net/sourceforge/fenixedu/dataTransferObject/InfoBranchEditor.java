@@ -20,7 +20,7 @@ public class InfoBranchEditor extends InfoBranch {
 
     private String acronym;
 
-    private Integer idInternal;
+    private String externalId;
 
     public InfoBranchEditor() {
         super(null);
@@ -99,13 +99,13 @@ public class InfoBranchEditor extends InfoBranch {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return idInternal;
+    public String getExternalId() {
+        return externalId;
     }
 
     @Override
-    public void setIdInternal(Integer idInternal) {
-        this.idInternal = idInternal;
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
 }

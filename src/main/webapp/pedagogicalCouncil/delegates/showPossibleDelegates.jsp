@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:define id="electionOID" name="electionPeriodBean" property="election.idInternal" />
+<bean:define id="electionOID" name="electionPeriodBean" property="election.externalId" />
 
 <h2><bean:message key="label.showElectionResults" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
@@ -58,13 +58,13 @@
 				<fr:property name="classes" value="tstyle1 thlight tdcenter mtop0"/>
 				<fr:property name="columnClasses" value=",aleft,,,,,"/>
 				<fr:property name="link(add)" value="/delegatesManagement.do?method=addYearDelegate" />
-				<fr:property name="param(add)" value="student.idInternal/selectedStudent,election.idInternal/selectedElection"/>
+				<fr:property name="param(add)" value="student.externalId/selectedStudent,election.externalId/selectedElection"/>
 				<fr:property name="key(add)" value="link.delegates.addRole"/>
 				<fr:property name="bundle(add)" value="PEDAGOGICAL_COUNCIL"/>
 				<fr:property name="visibleIfNot(add)" value="isElectedStudent"/>
 				<%--
 				<fr:property name="link(remove)" value="/delegatesManagement.do?method=removeDelegate" />
-				<fr:property name="param(remove)" value="election.electedStudent.idInternal/selectedDelegate"/>
+				<fr:property name="param(remove)" value="election.electedStudent.externalId/selectedDelegate"/>
 				<fr:property name="key(remove)" value="link.delegates.removeRole"/>
 				<fr:property name="bundle(remove)" value="PEDAGOGICAL_COUNCIL"/>
 				<fr:property name="visibleIf(remove)" value="isElectedStudent"/>

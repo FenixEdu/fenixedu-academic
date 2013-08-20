@@ -8,7 +8,7 @@
 <h3><bean:message key="message.questionBank.manage" bundle="TESTS_RESOURCES" /></h3>
 <h2><bean:message key="title.createQuestionGroup" bundle="TESTS_RESOURCES" /></h2>
 
-<bean:define id="questionGroupId"><bean:write name="questionGroup" property="idInternal" /></bean:define>
+<bean:define id="questionGroupId"><bean:write name="questionGroup" property="externalId" /></bean:define>
 
 <div><bean:message key="message.willAssociateTo" bundle="TESTS_RESOURCES" />
 <fr:view name="questionGroup" layout="short" />

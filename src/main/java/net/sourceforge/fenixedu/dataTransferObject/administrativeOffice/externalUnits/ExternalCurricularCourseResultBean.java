@@ -50,14 +50,14 @@ public class ExternalCurricularCourseResultBean extends AbstractExternalUnitResu
         final List<LinkObject> result = new ArrayList<LinkObject>();
         for (final Unit unit : searchFullPath()) {
             final LinkObject linkObject = new LinkObject();
-            linkObject.setId(unit.getIdInternal());
+            linkObject.setId(unit.getExternalId());
             linkObject.setLabel(unit.getName());
             linkObject.setMethod("viewUnit");
             result.add(linkObject);
         }
 
         final LinkObject linkObject = new LinkObject();
-        linkObject.setId(getExternalCurricularCourse().getIdInternal());
+        linkObject.setId(getExternalCurricularCourse().getExternalId());
         linkObject.setLabel(getExternalCurricularCourse().getName());
         linkObject.setMethod("viewExternalCurricularCourse");
         result.add(linkObject);

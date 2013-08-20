@@ -28,7 +28,7 @@
 				<fr:property name="columnClasses" value=",inobullet ulmvert0,inobullet ulmvert0,," />
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="selectedExams" />
-				<fr:property name="checkboxValue" value="exam.idInternal" />
+				<fr:property name="checkboxValue" value="exam.externalId" />
 				<fr:property name="sortBy" value="enrolment.curricularCourse.name=asc,exam.season.season=asc"/>
 			</fr:layout>
 		</fr:view>

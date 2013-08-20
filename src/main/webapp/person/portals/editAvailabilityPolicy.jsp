@@ -51,7 +51,7 @@
     </div>
 </logic:messagesPresent>
 
-<bean:define id="cid" name="content" property="idInternal"/>
+<bean:define id="cid" name="content" property="externalId"/>
 
 <fr:edit id="expressionBean" name="expressionBean" schema="functionalities.expression"
          action="<%= "/contentManagement.do?method=editAvailabilityPolicy&contentId=" + cid %>">

@@ -28,8 +28,8 @@
  
     <table>  
  	    <logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation"  >   
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="enrolmentEvaluation" property="idInternal" />
-			<bean:define id="studentCode" name="enrolmentEvaluation" property="idInternal" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" name="enrolmentEvaluation" property="externalId" />
+			<bean:define id="studentCode" name="enrolmentEvaluation" property="externalId" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentPosition" property="studentPosition" value="<%= pageContext.findAttribute("studentCode").toString() %>" />
 			<tr>
 				<th class="listClasses-header">

@@ -67,7 +67,7 @@
 				</td>
 				<td style="width: 450px;">
 					<strong>
-						<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+						<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 							<bean:write name="executionCourse" property="nome"/>
 		                    (<bean:write name="executionCourse" property="sigla"/>)
 						</html:link>

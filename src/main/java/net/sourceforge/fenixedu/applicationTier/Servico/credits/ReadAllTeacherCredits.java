@@ -9,11 +9,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Ricardo Rodrigues
@@ -23,10 +23,10 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadAllTeacherCredits {
 
     @Service
-    public static List<CreditLineDTO> run(Integer teacherID) throws ParseException {
+    public static List<CreditLineDTO> run(String teacherID) throws ParseException {
 
         List<CreditLineDTO> creditLines = new ArrayList<CreditLineDTO>();
-        final Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherID);
+        final Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
 
         ExecutionSemester executionSemester = ExecutionSemester.readStartExecutionSemesterForCredits();
 

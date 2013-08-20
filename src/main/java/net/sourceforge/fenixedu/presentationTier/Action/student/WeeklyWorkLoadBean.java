@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class WeeklyWorkLoadBean implements Serializable {
 
-    Integer attendsID;
+    String attendsID;
 
     Integer contact;
     Integer autonomousStudy;
@@ -34,11 +34,11 @@ public class WeeklyWorkLoadBean implements Serializable {
         this.other = other;
     }
 
-    public Integer getAttendsID() {
+    public String getAttendsID() {
         return attendsID;
     }
 
-    public void setAttendsID(Integer attendsID) {
+    public void setAttendsID(String attendsID) {
         this.attendsID = attendsID;
     }
 }

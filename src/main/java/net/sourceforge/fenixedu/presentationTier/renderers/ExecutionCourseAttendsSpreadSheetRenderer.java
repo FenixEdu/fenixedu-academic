@@ -74,10 +74,10 @@ public class ExecutionCourseAttendsSpreadSheetRenderer extends OutputRenderer {
 
         private String getGroupURL(StudentGroup studentGroup) {
             StringBuilder stringBuilder = new StringBuilder("/viewStudentGroupInformation.do?");
-            stringBuilder.append("studentGroupCode=" + studentGroup.getIdInternal());
+            stringBuilder.append("studentGroupCode=" + studentGroup.getExternalId());
             stringBuilder.append("&method=viewStudentGroupInformation");
-            stringBuilder.append("&objectCode=" + bean.getExecutionCourse().getIdInternal());
-            stringBuilder.append("&groupPropertiesCode=" + studentGroup.getGrouping().getIdInternal());
+            stringBuilder.append("&objectCode=" + bean.getExecutionCourse().getExternalId());
+            stringBuilder.append("&groupPropertiesCode=" + studentGroup.getGrouping().getExternalId());
             return stringBuilder.toString();
         }
 
@@ -151,7 +151,7 @@ public class ExecutionCourseAttendsSpreadSheetRenderer extends OutputRenderer {
                     HtmlImage htmlImage = new HtmlImage();
                     htmlImage.setSource(RenderUtils.getContextRelativePath("")
                             + "/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="
-                            + attends.getRegistration().getStudent().getPerson().getIdInternal());
+                            + attends.getRegistration().getStudent().getPerson().getExternalId());
                     row.createCell().setBody(htmlImage);
                 }
                 row.createCell(attends.getRegistration().getStudent().getNumber().toString());

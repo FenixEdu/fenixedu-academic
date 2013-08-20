@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.util.MessageResources;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBean {
@@ -42,63 +43,63 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 
     private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
 
-    private Integer degreeID;
+    private String degreeID;
 
-    private Integer degreeCurricularPlanID;
+    private String degreeCurricularPlanID;
 
-    private Integer executionPeriodID;
+    private String executionPeriodID;
 
-    private Integer curricularYearID;
+    private String curricularYearID;
 
     private Degree degree;
 
-    public Integer getDegreeID() {
-        return (degreeID == null) ? degreeID = getAndHoldIntegerParameter("degreeID") : degreeID;
+    public String getDegreeID() {
+        return (degreeID == null) ? degreeID = getAndHoldStringParameter("degreeID") : degreeID;
     }
 
-    public Integer getDegreeCurricularPlanID() {
+    public String getDegreeCurricularPlanID() {
         if (degreeCurricularPlanID == null) {
-            degreeCurricularPlanID = getAndHoldIntegerParameter("degreeCurricularPlanID");
+            degreeCurricularPlanID = getAndHoldStringParameter("degreeCurricularPlanID");
             if (degreeCurricularPlanID == null) {
-                degreeCurricularPlanID = getMostRecentDegreeCurricularPlan().getIdInternal();
+                degreeCurricularPlanID = getMostRecentDegreeCurricularPlan().getExternalId();
             }
         }
         return degreeCurricularPlanID;
     }
 
-    public Integer getExecutionPeriodID() {
+    public String getExecutionPeriodID() {
         if (executionPeriodID == null || !contains(getExecutionPeriodSelectItems(), executionPeriodID)) {
-            executionPeriodID = getAndHoldIntegerParameter("executionPeriodID");
+            executionPeriodID = getAndHoldStringParameter("executionPeriodID");
             if (executionPeriodID == null) {
                 ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
                 ExecutionDegree currentExecutionDegree =
                         getDegreeCurricularPlan().getExecutionDegreeByYear(currentExecutionPeriod.getExecutionYear());
 
                 executionPeriodID =
-                        (currentExecutionDegree != null) ? currentExecutionPeriod.getIdInternal() : getMostRecentExecutionPeriod()
-                                .getIdInternal();
+                        (currentExecutionDegree != null) ? currentExecutionPeriod.getExternalId() : getMostRecentExecutionPeriod()
+                                .getExternalId();
             }
         }
         return executionPeriodID;
     }
 
-    public Integer getCurricularYearID() {
-        return (curricularYearID == null) ? curricularYearID = getAndHoldIntegerParameter("curricularYearID") : curricularYearID;
+    public String getCurricularYearID() {
+        return (curricularYearID == null) ? curricularYearID = getAndHoldStringParameter("curricularYearID") : curricularYearID;
     }
 
     public Degree getDegree() {
         if (degree == null) {
-            degree = rootDomainObject.readDegreeByOID(getDegreeID());
+            degree = AbstractDomainObject.fromExternalId(getDegreeID());
         }
         return degree;
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
         final Degree degree = getDegree();
-        final Integer degreeCurricularPlanID = getDegreeCurricularPlanID();
+        final String degreeCurricularPlanID = getDegreeCurricularPlanID();
         if (degree != null && degreeCurricularPlanID != null) {
             for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
-                if (degreeCurricularPlanID.equals(degreeCurricularPlan.getIdInternal())) {
+                if (degreeCurricularPlanID.equals(degreeCurricularPlan.getExternalId())) {
                     return degreeCurricularPlan;
                 }
             }
@@ -112,12 +113,12 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 
     public ExecutionSemester getExecutionPeriod() {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-        final Integer executionPeriodID = getExecutionPeriodID();
+        final String executionPeriodID = getExecutionPeriodID();
         if (degreeCurricularPlan != null && executionPeriodID != null) {
             for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
                 final ExecutionYear executionYear = executionDegree.getExecutionYear();
                 for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
-                    if (executionSemester.getIdInternal().equals(executionPeriodID)) {
+                    if (executionSemester.getExternalId().equals(executionPeriodID)) {
                         return executionSemester;
                     }
                 }
@@ -126,7 +127,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
         return null;
     }
 
-    private boolean contains(final List<SelectItem> executionPeriodSelectItems, final Integer integer) {
+    private boolean contains(final List<SelectItem> executionPeriodSelectItems, final String integer) {
         for (final SelectItem selectItem : executionPeriodSelectItems) {
             if (selectItem.getValue().equals(integer)) {
                 return true;
@@ -136,9 +137,9 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
     }
 
     public CurricularYear getCurricularYear() {
-        final Integer curricularYearID = getCurricularYearID();
+        final String curricularYearID = getCurricularYearID();
         if (curricularYearID != null) {
-            return rootDomainObject.readCurricularYearByOID(curricularYearID);
+            return AbstractDomainObject.fromExternalId(curricularYearID);
         } else {
             return null;
         }
@@ -186,7 +187,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
         final Degree degree = getDegree();
         if (degree != null) {
             for (final DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
-                degreeCurricularPlanSelectItems.add(new SelectItem(degreeCurricularPlan.getIdInternal(), degreeCurricularPlan
+                degreeCurricularPlanSelectItems.add(new SelectItem(degreeCurricularPlan.getExternalId(), degreeCurricularPlan
                         .getName()));
             }
         }
@@ -202,7 +203,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
             final ExecutionYear executionYear = executionDegree.getExecutionYear();
             for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
                 if (executionSemester.getState() != PeriodState.CLOSED) {
-                    executionPeriodSelectItems.add(new SelectItem(executionSemester.getIdInternal(), executionSemester.getName()
+                    executionPeriodSelectItems.add(new SelectItem(executionSemester.getExternalId(), executionSemester.getName()
                             + " " + executionYear.getYear()));
                 }
             }
@@ -272,7 +273,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
     private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse) {
         final Map<String, String> linkParameters = new HashMap<String, String>();
         linkParameters.put("method", "evaluations");
-        linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
+        linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
         return linkParameters;
     }
 
@@ -308,19 +309,19 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
         return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
     }
 
-    public void setCurricularYearID(Integer curricularYearID) {
+    public void setCurricularYearID(String curricularYearID) {
         this.curricularYearID = curricularYearID;
     }
 
-    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+    public void setDegreeCurricularPlanID(String degreeCurricularPlanID) {
         this.degreeCurricularPlanID = degreeCurricularPlanID;
     }
 
-    public void setDegreeID(Integer degreeID) {
+    public void setDegreeID(String degreeID) {
         this.degreeID = degreeID;
     }
 
-    public void setExecutionPeriodID(Integer executionPeriodID) {
+    public void setExecutionPeriodID(String executionPeriodID) {
         this.executionPeriodID = executionPeriodID;
     }
 

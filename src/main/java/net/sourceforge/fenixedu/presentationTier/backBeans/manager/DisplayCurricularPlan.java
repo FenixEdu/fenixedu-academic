@@ -31,55 +31,55 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class DisplayCurricularPlan extends FenixBackingBean {
 
-    private Integer[] choosenDegreeCurricularPlansIDs;
+    private String[] choosenDegreeCurricularPlansIDs;
 
-    private Integer choosenExecutionYearID;
+    private String choosenExecutionYearID;
 
     public String choose() {
         return "success";
     }
 
-    public List getDegreeCurricularPlans() throws  FenixServiceException {
+    public List getDegreeCurricularPlans() throws FenixServiceException {
 
         List degreeCurricularPlans = (List) ReadActiveDegreeCurricularPlansByDegreeType.run(DegreeType.DEGREE);
 
         List<SelectItem> result = new ArrayList<SelectItem>(degreeCurricularPlans.size());
         for (InfoDegreeCurricularPlan degreeCurricularPlan : (List<InfoDegreeCurricularPlan>) degreeCurricularPlans) {
             String label = degreeCurricularPlan.getInfoDegree().getNome() + " - " + degreeCurricularPlan.getName();
-            result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), label));
+            result.add(new SelectItem(degreeCurricularPlan.getExternalId(), label));
         }
 
         return result;
     }
 
-    public List getExecutionYears() throws  FenixServiceException {
+    public List getExecutionYears() throws FenixServiceException {
 
         List<InfoExecutionYear> executionYears = ReadNotClosedExecutionYears.run();
 
         List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
         for (InfoExecutionYear executionYear : executionYears) {
-            result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+            result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
         }
 
         if (executionYears.size() > 0) {
-            setChoosenExecutionYearID(executionYears.get(executionYears.size() - 1).getIdInternal());
+            setChoosenExecutionYearID(executionYears.get(executionYears.size() - 1).getExternalId());
         }
 
         return result;
     }
 
-    public String getChoosenExecutionYear() throws  FenixServiceException {
+    public String getChoosenExecutionYear() throws FenixServiceException {
 
         InfoExecutionYear executionYear = ReadExecutionYearByID.run(getChoosenExecutionYearID());
 
         return executionYear.getYear();
     }
 
-    public List getScopes() throws  FenixServiceException {
+    public List getScopes() throws FenixServiceException {
 
         List<InfoCurricularCourseScope> scopes = new ArrayList<InfoCurricularCourseScope>();
 
-        for (Integer degreeCurricularPlanID : this.getChoosenDegreeCurricularPlansIDs()) {
+        for (String degreeCurricularPlanID : this.getChoosenDegreeCurricularPlansIDs()) {
             Collection<DegreeModuleScope> degreeModuleScopes =
                     ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear
                             .runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlanID,
@@ -113,19 +113,19 @@ public class DisplayCurricularPlan extends FenixBackingBean {
         Collections.sort(scopes, comparatorChain);
     }
 
-    public Integer getChoosenExecutionYearID() {
+    public String getChoosenExecutionYearID() {
         return choosenExecutionYearID;
     }
 
-    public void setChoosenExecutionYearID(Integer choosenExecutionYearID) {
+    public void setChoosenExecutionYearID(String choosenExecutionYearID) {
         this.choosenExecutionYearID = choosenExecutionYearID;
     }
 
-    public Integer[] getChoosenDegreeCurricularPlansIDs() {
+    public String[] getChoosenDegreeCurricularPlansIDs() {
         return choosenDegreeCurricularPlansIDs;
     }
 
-    public void setChoosenDegreeCurricularPlansIDs(Integer[] choosenDegreeCurricularPlansIDs) {
+    public void setChoosenDegreeCurricularPlansIDs(String[] choosenDegreeCurricularPlansIDs) {
         this.choosenDegreeCurricularPlansIDs = choosenDegreeCurricularPlansIDs;
     }
 

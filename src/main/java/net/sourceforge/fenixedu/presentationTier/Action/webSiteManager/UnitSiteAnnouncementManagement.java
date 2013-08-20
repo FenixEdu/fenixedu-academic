@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
@@ -41,13 +40,7 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
     }
 
     protected UnitSite getSite(HttpServletRequest request) {
-        Integer oid = getId(request.getParameter("oid"));
-
-        if (oid == null) {
-            return null;
-        }
-
-        return (UnitSite) RootDomainObject.getInstance().readContentByOID(oid);
+        return getDomainObject(request, "oid");
     }
 
     protected Unit getUnit(HttpServletRequest request) {
@@ -75,7 +68,7 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
 
                 ActionForward forward = new ActionForward(mapping.findForward("viewAnnouncementsRedirect"));
                 forward.setPath(forward.getPath()
-                        + String.format("&announcementBoardId=%s&oid=", board.getIdInternal(), site.getIdInternal()));
+                        + String.format("&announcementBoardId=%s&oid=", board.getExternalId(), site.getExternalId()));
                 forward.setRedirect(true);
 
                 return forward;

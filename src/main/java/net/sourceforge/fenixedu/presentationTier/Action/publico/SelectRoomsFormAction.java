@@ -22,6 +22,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * @author tfc130
  */
@@ -49,7 +51,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
-        request.setAttribute("objectCode", infoExecutionPeriod.getIdInternal());
+        request.setAttribute("objectCode", infoExecutionPeriod.getExternalId());
 
         ActionForward forward = mapping.getInputForward();
         if (infoRooms == null || infoRooms.isEmpty()) {
@@ -58,7 +60,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
             saveErrors(request, errors);
         } else if (infoRooms.size() == 1) {
             InfoRoom infoRoom = (InfoRoom) infoRooms.get(0);
-            request.setAttribute("objectCode", infoExecutionPeriod.getIdInternal().toString());
+            request.setAttribute("objectCode", infoExecutionPeriod.getExternalId().toString());
             request.setAttribute("roomName", infoRoom.getNome());
 
             forward = mapping.findForward("one");
@@ -98,9 +100,9 @@ public class SelectRoomsFormAction extends FenixContextAction {
     }
 
     private RoomClassification readTypeRoomFormValue(DynaActionForm roomForm, String name) {
-        Integer obj = readIntegerFormValue(roomForm, name);
+        String obj = readFormValue(roomForm, name);
         if (obj != null) {
-            return rootDomainObject.readRoomClassificationByOID(obj);
+            return AbstractDomainObject.fromExternalId(obj);
         }
 
         return null;

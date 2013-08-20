@@ -59,7 +59,7 @@ public class PrepareListDepartmentTeachersAction extends Action {
         forwardBuilded.setContextRelative(forward.getContextRelative());
         forwardBuilded.setRedirect(forward.getRedirect());
         StringBuilder path = new StringBuilder(forward.getPath());
-        path.append("&idInternal=").append(infoDepartment.getIdInternal());
+        path.append("&externalId=").append(infoDepartment.getExternalId());
         forwardBuilded.setPath(path.toString());
         return forwardBuilded;
     }

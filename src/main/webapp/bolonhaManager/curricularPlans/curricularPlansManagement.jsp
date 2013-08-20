@@ -25,7 +25,7 @@
 			<h:outputText value="<td style='width: 110px'>" escape="false"/>
 			<h:outputLink value="#{DegreeManagement.request.contextPath}/bolonhaManager/curricularPlans/viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
-				<f:param name="degreeId" value="#{degree.idInternal}"/>
+				<f:param name="degreeId" value="#{degree.externalId}"/>
 			</h:outputLink>
 			<h:outputText value="</td></tr>" escape="false"/>
 
@@ -47,7 +47,7 @@
 				<h:outputText value="<td>" escape="false"/>
 				<h:outputLink value="#{DegreeManagement.request.contextPath}/bolonhaManager/curricularPlans/viewCurricularPlan.faces">
 					<h:outputText value="#{bolonhaBundle['view']}" />
-					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
+					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.externalId}"/>
 					<f:param name="organizeBy" value="groups"/>
 					<f:param name="showRules" value="false"/>
 					<f:param name="hideCourses" value="false"/>					
@@ -56,7 +56,7 @@
 				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild && degreeCurricularPlan.canModify}"/>
 				<h:outputLink value="#{DegreeManagement.request.contextPath}/bolonhaManager/curricularPlans/buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild && degreeCurricularPlan.canModify}">
 					<h:outputText value="#{bolonhaBundle['manageCurricularPlan']}" />
-					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
+					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.externalId}"/>
 					<f:param name="organizeBy" value="groups"/>
 					<f:param name="showRules" value="false"/>
 					<f:param name="hideCourses" value="false"/>					

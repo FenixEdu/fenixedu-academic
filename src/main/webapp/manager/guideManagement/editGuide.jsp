@@ -98,7 +98,7 @@
 					
 				<bean:define id="behavior" >
 					this.form.method.value='deleteGuideEntry';
-					this.form.selectedGuideEntryID.value='<bean:write name="guideEntry" property="idInternal" />';					
+					this.form.selectedGuideEntryID.value='<bean:write name="guideEntry" property="externalId" />';					
 				</bean:define>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Apagar Entrada" onclick="<%= behavior %>" />					
 												
@@ -107,7 +107,7 @@
 				<% }else{ %>
 					<bean:define id="behavior" >
 						this.form.method.value='createPaymentTransaction';
-						this.form.selectedGuideEntryID.value='<bean:write name="guideEntry" property="idInternal" />';
+						this.form.selectedGuideEntryID.value='<bean:write name="guideEntry" property="externalId" />';
 						this.form.selectedGuideEntryDocumentType.value='<bean:write name="documentType" />';
 					</bean:define>
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Criar Transaï¿½ï¿½o" onclick="<%= behavior %>" />				
@@ -167,11 +167,11 @@
 			<tr>
 				<bean:define id="behavior" >
 					this.form.method.value='deleteGuideSituation';
-					this.form.guideSituationID.value='<bean:write name="guideSituation" property="idInternal" />';
+					this.form.guideSituationID.value='<bean:write name="guideSituation" property="externalId" />';
 				</bean:define>
 				
 				<td colspan="5"><bean:write name="guideSituation" property="remarks" />
-				- <bean:write name="guideSituation" property="idInternal" />
+				- <bean:write name="guideSituation" property="externalId" />
 				- <bean:write name="guideSituation" property="situation.name" />
 				- <bean:write name="guideSituation" property="state" />
 				- <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Apagar Situação" onclick="<%= behavior %>" />	</td>	

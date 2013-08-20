@@ -1,17 +1,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class OpenTSDProcessPhase {
-    protected void run(Integer tsdProcessPhaseId) {
-        TSDProcessPhase tsdProcessPhase = RootDomainObject.getInstance().readTSDProcessPhaseByOID(tsdProcessPhaseId);
+    protected void run(String tsdProcessPhaseId) {
+        TSDProcessPhase tsdProcessPhase = AbstractDomainObject.fromExternalId(tsdProcessPhaseId);
         tsdProcessPhase.setOpen();
     }
 
@@ -20,7 +19,7 @@ public class OpenTSDProcessPhase {
     private static final OpenTSDProcessPhase serviceInstance = new OpenTSDProcessPhase();
 
     @Service
-    public static void runOpenTSDProcessPhase(Integer tsdProcessPhaseId) throws NotAuthorizedException {
+    public static void runOpenTSDProcessPhase(String tsdProcessPhaseId) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             serviceInstance.run(tsdProcessPhaseId);

@@ -58,7 +58,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 		<%-- Title --%>
 			<logic:equal name="announcement" property="visible" value="true">
 				<h3 class="mtop0 mbottom025">
-				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
+				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getExternalId()%>">
 					<span><fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/></span>
 				</html:link> 	 	
 				</h3>
@@ -67,7 +67,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 			<logic:equal name="announcement" property="visible" value="false">
 				<p class="mvert025">
 				<h3 class="mvert0 dinline">
-				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
+				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getExternalId()%>">
 					<span><fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/></span>
 				</html:link> 	 	
 				</h3>
@@ -80,7 +80,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 				 <div class="ann_body mvert025">
 				 <logic:equal name="announcement" property="excerptEmpty" value="false">
 				 	<fr:view name="announcement" property="excerpt" layout="html"/>
-				 	 <html:link action="<%=contextPrefix + "method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
+				 	 <html:link action="<%=contextPrefix + "method=viewAnnouncement&amp;announcementId=" + announcement.getExternalId()%>">
 						 Continuar a ler...
 					 </html:link> 
 				</logic:equal>
@@ -101,7 +101,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 
 		<%-- Board e RSS --%>
 				Canal: 
-				<html:link action="<%=contextPrefix + extraParameters +"&amp;method=viewAnnouncements&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "#" + announcement.getIdInternal()%>">
+				<html:link action="<%=contextPrefix + extraParameters +"&amp;method=viewAnnouncements&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getExternalId() + "#" + announcement.getExternalId()%>">
 					<fr:view name="announcement" property="announcementBoard.name" type="java.lang.String"/>
 				</html:link>
 				  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
@@ -109,7 +109,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 		<%-- Editar, Apagar --%>
 			<logic:equal name="announcementBoard" property="currentUserWriter" value="true">
 				<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>:
-				<bean:define id="announcementId" name="announcement" property="idInternal" />
+				<bean:define id="announcementId" name="announcement" property="externalId" />
 				<html:link action="<%= contextPrefix + "method=editAnnouncement&amp;announcementId="+announcementId+"&amp;"+extraParameters%>">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.edit.link"/>
 				</html:link>
@@ -193,7 +193,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 		<%-- CreationDate --%>
 					<logic:equal name="announcementBoard" property="currentUserWriter" value="true">
 					<bean:message key="label.creationDate" bundle="MESSAGING_RESOURCES"/>
-					<span id="<%="ID_" + announcement.getIdInternal().toString()%>">
+					<span id="<%="ID_" + announcement.getExternalId().toString()%>">
 						<fr:view name="announcement" property="creationDate" layout="no-time"/>
 					</span>
 					</logic:equal>
@@ -222,7 +222,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 		%>
 
 		<div class="aarchives">
-			<messaging:archive name="archive" targetUrl="<%=context + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getIdInternal() + "&amp;" + extraParameters + "&amp;" %>"/>	
+			<messaging:archive name="archive" targetUrl="<%=context + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getExternalId() + "&amp;" + extraParameters + "&amp;" %>"/>	
 		</div>
 
 	</logic:present>

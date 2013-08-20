@@ -22,7 +22,7 @@ padding-bottom: 0.3em; /* é preciso criar uma class para isto <--- */
 
 <ul>
 	<logic:iterate id="departmentIterator" name="departments">
-		<bean:define id="departmentId" name="departmentIterator" property="idInternal"/>
+		<bean:define id="departmentId" name="departmentIterator" property="externalId"/>
 		<li>
 		<html:link page="<%= "/searchResearchers.do?method=browseByDepartment&departmentId=" + departmentId %>">
 			<fr:view name="departmentIterator" property="realName"/>

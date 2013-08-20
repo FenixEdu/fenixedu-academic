@@ -28,6 +28,7 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import dml.runtime.RelationAdapter;
 
 /**
@@ -65,7 +66,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
         @Override
         public int compare(RegistrationState leftState, RegistrationState rightState) {
             int comparationResult = leftState.getStateDate().compareTo(rightState.getStateDate());
-            return (comparationResult == 0) ? leftState.getIdInternal().compareTo(rightState.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftState.getExternalId().compareTo(rightState.getExternalId()) : comparationResult;
         }
     };
 
@@ -77,7 +78,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
                 return comparationResult;
             }
             comparationResult = leftState.getStateType().compareTo(rightState.getStateType());
-            return (comparationResult == 0) ? leftState.getIdInternal().compareTo(rightState.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftState.getExternalId().compareTo(rightState.getExternalId()) : comparationResult;
         }
     };
 
@@ -273,14 +274,14 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
     public static class RegistrationStateDeleter extends VariantBean implements FactoryExecutor {
 
-        public RegistrationStateDeleter(Integer idInternal) {
+        public RegistrationStateDeleter(Integer externalId) {
             super();
-            setInteger(idInternal);
+            setInteger(externalId);
         }
 
         @Override
         public Object execute() {
-            RootDomainObject.getInstance().readRegistrationStateByOID(getInteger()).delete();
+            AbstractDomainObject.<RegistrationState> fromExternalId(getString()).delete();
             return null;
         }
     }

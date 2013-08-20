@@ -30,26 +30,27 @@ import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CourseGroupManagementBackingBean extends CurricularCourseManagementBackingBean {
 
     private String name = null;
     private String nameEn = null;
-    private Integer courseGroupID;
+    private String courseGroupID;
     private List<SelectItem> courseGroups = null;
 
-    public Integer getParentCourseGroupID() {
-        return getAndHoldIntegerParameter("parentCourseGroupID");
+    public String getParentCourseGroupID() {
+        return getAndHoldStringParameter("parentCourseGroupID");
     }
 
     @Override
-    public Integer getCourseGroupID() {
-        return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldIntegerParameter("courseGroupID");
+    public String getCourseGroupID() {
+        return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldStringParameter("courseGroupID");
     }
 
     @Override
-    public void setCourseGroupID(Integer courseGroupID) {
+    public void setCourseGroupID(String courseGroupID) {
         this.courseGroupID = courseGroupID;
     }
 
@@ -77,8 +78,8 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         this.nameEn = nameEn;
     }
 
-    public CourseGroup getCourseGroup(Integer courseGroupID) {
-        return (CourseGroup) rootDomainObject.readDegreeModuleByOID(courseGroupID);
+    public CourseGroup getCourseGroup(String courseGroupID) {
+        return (CourseGroup) AbstractDomainObject.fromExternalId(courseGroupID);
     }
 
     @Override
@@ -201,11 +202,11 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
                 for (final DegreeModule degreeModule : degreeModules) {
                     pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
                 }
-                result.add(new SelectItem(lastDegreeModule.getIdInternal(), pathName.toString()));
+                result.add(new SelectItem(lastDegreeModule.getExternalId(), pathName.toString()));
             }
         }
         Collections.sort(result, new BeanComparator("label"));
-        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
+        result.add(0, new SelectItem(this.NO_SELECTION_STRING, bolonhaBundle.getString("choose")));
         return result;
     }
 

@@ -8,13 +8,13 @@
 
 <html:xhtml/>
 
-<bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
+<bean:define id="executionCourseId" name="executionCourse" property="externalId"/>
 
 <fr:view name="executionCourse" property="site" type="net.sourceforge.fenixedu.domain.Site" layout="side-menu"/>
 
 <ul>
     <li>
-        <html:link page="/executionCourse.do?method=rss" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal" styleClass="rss">
+        <html:link page="/executionCourse.do?method=rss" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId" styleClass="rss">
             <bean:message  key="link.rss"/>
         </html:link>
     </li>

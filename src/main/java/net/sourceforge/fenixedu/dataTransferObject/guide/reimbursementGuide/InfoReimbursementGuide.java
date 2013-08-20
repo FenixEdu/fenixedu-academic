@@ -49,8 +49,8 @@ public class InfoReimbursementGuide extends InfoObject {
     /**
      * @param reimbursementGuideId
      */
-    public InfoReimbursementGuide(Integer reimbursementGuideId) {
-        setIdInternal(reimbursementGuideId);
+    public InfoReimbursementGuide(String reimbursementGuideId) {
+        setExternalId(reimbursementGuideId);
     }
 
     /**

@@ -4,17 +4,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
@@ -33,8 +31,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer executionCourseID, Integer evaluationID, List<Integer> roomIDs, Boolean sendSMS,
-            Boolean distributeOnlyEnroledStudents) throws NotAuthorizedException {
+    public void execute(String executionCourseID, String evaluationID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         try {
@@ -49,7 +46,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
 
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, Integer executionCourseID) {
+    private boolean lecturesExecutionCourse(IUserView id, String executionCourseID) {
         if (executionCourseID == null) {
             return false;
         }
@@ -57,7 +54,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+                ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
                 professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             }
             return professorship != null;
@@ -67,16 +64,16 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
         }
     }
 
-    private boolean examBelongsExecutionCourse(IUserView id, Integer executionCourseID, Integer evaluationID) {
+    private boolean examBelongsExecutionCourse(IUserView id, String executionCourseID, String evaluationID) {
         if (executionCourseID == null || evaluationID == null) {
             return false;
         }
         try {
-            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
             if (executionCourse != null && evaluationID != null) {
                 for (Evaluation associatedEvaluation : executionCourse.getAssociatedEvaluations()) {
-                    if (associatedEvaluation.getIdInternal().equals(evaluationID)) {
+                    if (associatedEvaluation.getExternalId().equals(evaluationID)) {
                         return true;
                     }
                 }

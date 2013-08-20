@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.accessControl.groups.language.operators;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupContextProvider;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.OperatorArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * The <code>$I</code> operator obtains a domain object by it's id and type. The
@@ -48,10 +48,7 @@ public class IdOperator extends OperatorArgument {
 
     @Override
     protected DomainObject execute() {
-        Integer number = getNumber();
-        Class type = getClassType();
-
-        return RootDomainObject.readDomainObjectByOID(type, number);
+        throw new UnsupportedOperationException("Arguments by IdInternal are no longer supported!");
     }
 
     protected Integer getNumber() {

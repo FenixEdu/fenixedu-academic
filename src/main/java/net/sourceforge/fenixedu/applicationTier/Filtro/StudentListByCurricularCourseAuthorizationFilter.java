@@ -10,10 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -31,7 +31,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
         super();
     }
 
-    public void execute(IUserView userView, Integer curricularCourseID, String executionYear) throws NotAuthorizedException {
+    public void execute(String curricularCourseID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, curricularCourseID)) || (id == null)
@@ -56,13 +56,13 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Integer curricularCourseID) {
+    private boolean hasPrivilege(IUserView id, String curricularCourseID) {
 
         CurricularCourse curricularCourse = null;
 
         // Read The DegreeCurricularPlan
         try {
-            curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
+            curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
         } catch (Exception e) {
             return false;
         }

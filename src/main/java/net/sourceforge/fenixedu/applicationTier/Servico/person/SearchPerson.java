@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
@@ -27,6 +26,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
@@ -66,7 +66,7 @@ public class SearchPerson implements Serializable {
         }
 
         public SearchParameters(String name, String email, String username, String documentIdNumber, String idDocumentType,
-                String roleType, String degreeTypeString, Integer degreeId, Integer departmentId, Boolean activePersons,
+                String roleType, String degreeTypeString, String degreeId, String departmentId, Boolean activePersons,
                 Integer studentNumber, Boolean externalPersons, Boolean showOnlySearchableResearchers) {
 
             this(name, email, username, documentIdNumber, idDocumentType, roleType, degreeTypeString, degreeId, departmentId,
@@ -75,7 +75,7 @@ public class SearchPerson implements Serializable {
         }
 
         public SearchParameters(String name, String email, String username, String documentIdNumber, String idDocumentType,
-                String roleType, String degreeTypeString, Integer degreeId, Integer departmentId, Boolean activePersons,
+                String roleType, String degreeTypeString, String degreeId, String departmentId, Boolean activePersons,
                 Integer studentNumber, Boolean externalPersons, String paymentCode) {
             this();
 
@@ -96,7 +96,7 @@ public class SearchPerson implements Serializable {
             }
 
             if (degreeId != null) {
-                degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
+                degree = AbstractDomainObject.fromExternalId(degreeId);
             }
 
             if (degreeTypeString != null && degreeTypeString.length() > 0) {
@@ -104,7 +104,7 @@ public class SearchPerson implements Serializable {
             }
 
             if (departmentId != null) {
-                department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
+                department = AbstractDomainObject.fromExternalId(departmentId);
             }
         }
 
@@ -454,6 +454,7 @@ public class SearchPerson implements Serializable {
             return searchParameters;
         }
     }
+
     // Service Invokers migrated from Berserk
 
     private static final SearchPerson serviceInstance = new SearchPerson();

@@ -31,15 +31,15 @@
 </fr:view>
 
 <logic:notEmpty name="receiptsForAdministrativeOffice">
-	<bean:define id="personId" name="person" property="idInternal"/>
+	<bean:define id="personId" name="person" property="externalId"/>
 	<fr:view name="receiptsForAdministrativeOffice" schema="receipt.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 mtop15" />
 			<fr:property name="sortBy" value="year=desc,numberWithSeries=desc"/>
-			<fr:property name="linkFormat(view)" value="<%="/receipts.do?method=prepareShowReceipt&amp;receiptID=${idInternal}&amp;personId=" + personId %>"/>
+			<fr:property name="linkFormat(view)" value="<%="/receipts.do?method=prepareShowReceipt&amp;receiptID=${externalId}&amp;personId=" + personId %>"/>
 			<fr:property name="key(view)" value="label.payments.show"/>
 			<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="linkFormat(edit)" value="<%="/receipts.do?method=prepareEditReceipt&amp;receiptID=${idInternal}&amp;personId=" + personId %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/receipts.do?method=prepareEditReceipt&amp;receiptID=${externalId}&amp;personId=" + personId %>"/>
 			<fr:property name="key(edit)" value="label.payments.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="visibleIf(edit)" value="active"/>
@@ -50,7 +50,7 @@
 		<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.noReceipts"/></em>.
 </logic:empty>
 
-<bean:define id="personId" name="person" property="idInternal"/>
+<bean:define id="personId" name="person" property="externalId"/>
 <html:form action='<%= "/receipts.do?method=showOperations&amp;personId=" + personId %>'>
 	<br/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:submit>

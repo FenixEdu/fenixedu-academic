@@ -14,7 +14,7 @@
 	
 	<%-- Foto --%>
 	<div style="float: right;" class="printhidden">
-		<bean:define id="personID" name="studentCurricularPlan" property="registration.student.person.idInternal"/>
+		<bean:define id="personID" name="studentCurricularPlan" property="registration.student.person.externalId"/>
 		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 	</div>
 	
@@ -30,9 +30,9 @@
 		</span>
 	</p>
 	
-	<bean:define id="scpId" name="studentCurricularPlan" property="idInternal" />
+	<bean:define id="scpId" name="studentCurricularPlan" property="externalId" />
 	<bean:define id="detailedView" name="bolonhaStudentEnrolmentForm" property="detailed" />
-	<bean:define id="studentId" name="studentCurricularPlan" property="registration.student.idInternal" />
+	<bean:define id="studentId" name="studentCurricularPlan" property="registration.student.externalId" />
 	
 	<html:form action="<%= "/bolonhaStudentEnrolment.do?method=viewStudentCurriculum&scpId=" + scpId.toString() %>">
 		<strong><bean:message key="label.show.detail" bundle="MANAGER_RESOURCES" />: </strong>

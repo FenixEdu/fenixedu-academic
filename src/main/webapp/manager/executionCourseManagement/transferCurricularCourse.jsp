@@ -1,5 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -77,7 +78,7 @@ Nome - Código - Plano Curricular Disciplina Curricular: <span class="infoop4"><
 		Seleccionar Disciplina Execução destino:
 		<table>
 			<tr>
-				<th class="listClasses-header">idInternal
+				<th class="listClasses-header">externalId
 				</th>
 				<th class="listClasses-header">nome
 				</th>
@@ -85,10 +86,10 @@ Nome - Código - Plano Curricular Disciplina Curricular: <span class="infoop4"><
 				</th>
 			</tr>
 			<logic:iterate id="executionCourse" name="executionCourses">
-				<bean:define id="destinationExecutionCourseId" name="executionCourse" property="idInternal"/>
+				<bean:define id="destinationExecutionCourseId" name="executionCourse" property="externalId"/>
 				<tr>
 					<td class="listClasses">
-						<bean:write name="executionCourse" property="idInternal"/>
+						<bean:write name="executionCourse" property="externalId"/>
 						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.destinationExecutionCourseId" property="destinationExecutionCourseId"
 								value="<%= pageContext.findAttribute("destinationExecutionCourseId").toString() %>" />
 					</td>

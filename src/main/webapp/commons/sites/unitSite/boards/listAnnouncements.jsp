@@ -34,7 +34,7 @@
 
 <logic:notEmpty name="announcements">
 <logic:iterate id="announcement" name="announcements">
-	<bean:define id="announcementID" name="announcement" property="idInternal"/>
+	<bean:define id="announcementID" name="announcement" property="externalId"/>
 	
 	<div class="announcement mtop15 mbottom25">
 		<p class="mvert025 smalltxt greytxt2">
@@ -81,7 +81,7 @@
         <bean:define id="board" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
 
         <div class="aarchives">
-            <messaging:archive name="archive" targetUrl="<%= request.getContextPath() + "/publico" + action + "?method=viewArchive&amp;announcementBoardId=" + board.getIdInternal() + "&amp;" + context + "&amp;" %>"/>  
+            <messaging:archive name="archive" targetUrl="<%= request.getContextPath() + "/publico" + action + "?method=viewArchive&amp;announcementBoardId=" + board.getExternalId() + "&amp;" + context + "&amp;" %>"/>  
         </div>
 
     </logic:present>

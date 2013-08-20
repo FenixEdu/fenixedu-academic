@@ -23,7 +23,7 @@ public class CleanSubQuestions {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static void run(Registration registration, DistributedTest distributedTest, Integer exerciseCode, Integer itemCode,
+    public static void run(Registration registration, DistributedTest distributedTest, String exerciseCode, Integer itemCode,
             String path) throws FenixServiceException {
         if (distributedTest == null) {
             throw new FenixServiceException();
@@ -31,7 +31,7 @@ public class CleanSubQuestions {
         Set<StudentTestQuestion> studentTestQuestionList =
                 StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-            if (studentTestQuestion.getQuestion().getIdInternal().equals(exerciseCode)) {
+            if (studentTestQuestion.getQuestion().getExternalId().equals(exerciseCode)) {
                 ParseSubQuestion parse = new ParseSubQuestion();
                 try {
                     parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));

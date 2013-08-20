@@ -45,7 +45,7 @@
 							<ul> <%-- class="treemenu" --%>
 	
 								<logic:iterate id="infoDegree" name="degreesList" indexId="index">		
-								<bean:define id="degreeID" name="infoDegree" property="idInternal" />
+								<bean:define id="degreeID" name="infoDegree" property="externalId" />
 								
 									<li>
 										<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + pageContext.findAttribute("degreeID").toString()+ "&amp;index=" + pageContext.findAttribute("index").toString() %>" >

@@ -6,9 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /*
  * 
@@ -17,24 +17,23 @@ import pt.ist.fenixWebFramework.services.Service;
 public class AssociateCurricularCoursesToExecutionCourse {
 
     @Service
-    public static void run(Integer executionCourseId, List<Integer> curricularCourseIds) throws FenixServiceException {
+    public static void run(String executionCourseId, List<String> curricularCourseIds) throws FenixServiceException {
         if (executionCourseId == null) {
             throw new FenixServiceException("nullExecutionCourseId");
         }
 
         if (curricularCourseIds != null && !curricularCourseIds.isEmpty()) {
-            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
 
             if (executionCourse == null) {
                 throw new DomainException("message.nonExisting.executionCourse");
             }
 
-            Iterator<Integer> iter = curricularCourseIds.iterator();
+            Iterator<String> iter = curricularCourseIds.iterator();
             while (iter.hasNext()) {
-                Integer curricularCourseId = iter.next();
+                String curricularCourseId = iter.next();
 
-                CurricularCourse curricularCourse =
-                        (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+                CurricularCourse curricularCourse = AbstractDomainObject.fromExternalId(curricularCourseId);
                 if (curricularCourse == null) {
                     throw new DomainException("message.nonExistingDegreeCurricularPlan");
                 }

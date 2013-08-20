@@ -76,7 +76,7 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
     public ActionForward prepareSecondFilter(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         PrintAllCandidatesFilter filterBy = PrintAllCandidatesFilter.INVALID_FILTER;
-        int degreeCurricularPlanID = 0;
+        String degreeCurricularPlanID = null;
 
         DynaActionForm f = (DynaActionForm) form;
         String reqFilterBy = (String) f.get(REQUEST_FILTERBY);
@@ -106,7 +106,7 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
         // parse do valor do degreecurricularid
         if (reqDegreeCurricularId != null) {
             try {
-                degreeCurricularPlanID = Integer.parseInt(reqDegreeCurricularId);
+                degreeCurricularPlanID = reqDegreeCurricularId;
                 // voltar a coloca-lo no request
                 request.setAttribute(REQUEST_DEGREE_CURRICULAR_ID, reqDegreeCurricularId);
             } catch (Exception e) {
@@ -157,7 +157,7 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
 
         PrintAllCandidatesFilter filterBy = PrintAllCandidatesFilter.INVALID_FILTER;
         String filterValue = null;
-        int degreeCurricularID = 0;
+        String degreeCurricularID = null;
 
         DynaActionForm f = (DynaActionForm) form;
         String reqFilterWithValue = (String) f.get(REQUEST_FILTERWITHVALUE);
@@ -186,7 +186,7 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
             if (filterBy == PrintAllCandidatesFilter.FILTERBY_SPECIALIZATION_VALUE) {
                 filterValue = reqFilterWithValue;
             }
-            degreeCurricularID = Integer.parseInt(reqDegreeCurricularId);
+            degreeCurricularID = reqDegreeCurricularId;
         } catch (Exception e) {
             filterBy = PrintAllCandidatesFilter.INVALID_FILTER;
         }
@@ -197,12 +197,12 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
 
     /** lista todos os candidatos :: listagem ou csv **/
     private ActionForward callServiceListAllCandidatesAndForward(IUserView userView, HttpServletRequest request,
-            HttpServletResponse response, ActionMapping mapping, int degreeCurricularID, PrintAllCandidatesFilter filterBy,
+            HttpServletResponse response, ActionMapping mapping, String degreeCurricularID, PrintAllCandidatesFilter filterBy,
             String filterValue, boolean exportToCSV) throws FenixActionException, IOException {
         List candidates = null;
 
         try {
-            candidates = ReadDegreeCandidatesWithFilter.run(new Integer(degreeCurricularID), filterBy, filterValue);
+            candidates = ReadDegreeCandidatesWithFilter.run(degreeCurricularID, filterBy, filterValue);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

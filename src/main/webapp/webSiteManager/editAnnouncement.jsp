@@ -14,7 +14,7 @@
 
 <bean:define id="contextPrefix" name="contextPrefix" />
 <bean:define id="extraParameters" name="extraParameters" />
-<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
+<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>
 
 
 <bean:define id="action"><%= "method=listAnnouncements&announcementBoardId=" + announcementBoardId + "&" + extraParameters %></bean:define>

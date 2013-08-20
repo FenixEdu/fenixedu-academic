@@ -64,7 +64,7 @@
 	%>
 		</tr>
 	<logic:iterate id="degree" name="degrees">
-		<bean:define id="degreeId" name="degree" property="idInternal"/>
+		<bean:define id="degreeId" name="degree" property="externalId"/>
 		<tr>
 			<td>
 				<bean:write name="degree" property="sigla"/>

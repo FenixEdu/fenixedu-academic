@@ -84,7 +84,7 @@
    				</logic:equal>
             </td>
       <%--      <td class="listClasses">
-                <bean:define id="idContractRegime" name="infoGrantContractRegime" property="idInternal"/>
+                <bean:define id="idContractRegime" name="infoGrantContractRegime" property="externalId"/>
                 <html:link page='<%= "/editGrantContractRegime.do?method=prepareEditGrantContractRegime&amp;grantContractRegimeId=" + idContractRegime + "&amp;loaddb=1" %>' > 
                     <bean:message key="link.grant.contract.regime.edit" />
                 </html:link>        
@@ -171,7 +171,7 @@
    				</logic:equal>
             </td>
           <%--  <td class="listClasses">
-                <bean:define id="idContractRegime" name="infoGrantContractRegime" property="idInternal"/>
+                <bean:define id="idContractRegime" name="infoGrantContractRegime" property="externalId"/>
                 <html:link page='<%= "/editGrantContractRegime.do?method=prepareEditGrantContractRegime&amp;grantContractRegimeId=" + idContractRegime + "&amp;loaddb=1" %>' > 
                     <bean:message key="link.grant.contract.regime.edit" />
                 </html:link> --%>        
@@ -186,7 +186,7 @@
 <html:form action="/manageGrantContract" style="display:inline">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantContractForm"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 		<bean:message key="button.manageGrantContract"/>
 	</html:submit>

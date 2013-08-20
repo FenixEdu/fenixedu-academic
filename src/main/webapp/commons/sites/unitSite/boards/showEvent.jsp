@@ -14,7 +14,7 @@
 <bean:define id="action" name="announcementActionVariable" toScope="request"/>
 
 <logic:present name="announcement">
-<bean:define id="announcementID" name="announcement" property="idInternal"/>
+<bean:define id="announcementID" name="announcement" property="externalId"/>
 
 <h3 class="mvert025">
 	<fr:view name="announcement" property="subject"/>

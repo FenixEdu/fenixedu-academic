@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -35,6 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 @Mapping(module = "SpaceManager", path = "/manageBlueprints", scope = "session", parameter = "method")
@@ -67,7 +67,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
     }
 
     public ActionForward createBlueprintVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException, IOException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException, IOException {
 
         final IViewState viewState = RenderUtils.getViewState("spaceBlueprintVersion");
         final CreateBlueprintSubmissionBean blueprintSubmissionBean =
@@ -112,7 +112,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
     }
 
     public ActionForward editBlueprintVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IOException {
+            HttpServletResponse response) throws FenixServiceException, IOException {
 
         final IViewState viewState = RenderUtils.getViewState("spaceBlueprintVersion");
         final CreateBlueprintSubmissionBean blueprintSubmissionBean =
@@ -136,7 +136,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteBlueprintVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         Blueprint blueprint = getSpaceBlueprintFromParameter(request);
@@ -170,8 +170,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         BigDecimal scalePercentage = getScalePercentage(request);
 
         final String blueprintIdString = request.getParameter("blueprintId");
-        final Integer blueprintId = Integer.valueOf(blueprintIdString);
-        final Blueprint blueprint = rootDomainObject.readBlueprintByOID(blueprintId);
+        final Blueprint blueprint = AbstractDomainObject.fromExternalId(blueprintIdString);
         final BlueprintFile blueprintFile = blueprint.getBlueprintFile();
 
         // If dspace worked properly we could do this...
@@ -228,18 +227,14 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         final String spaceInformationIDString =
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
-        final Integer spaceInformationID =
-                (!StringUtils.isEmpty(spaceInformationIDString)) ? Integer.valueOf(spaceInformationIDString) : null;
-        return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+        return AbstractDomainObject.fromExternalId(spaceInformationIDString);
     }
 
     private Blueprint getSpaceBlueprintFromParameter(HttpServletRequest request) {
         final String spaceBlueprintIDString =
                 request.getParameterMap().containsKey("spaceBlueprintID") ? request.getParameter("spaceBlueprintID") : (String) request
                         .getAttribute("spaceBlueprintID");
-        final Integer spaceBlueprintID =
-                (!StringUtils.isEmpty(spaceBlueprintIDString)) ? Integer.valueOf(spaceBlueprintIDString) : null;
-        return rootDomainObject.readBlueprintByOID(spaceBlueprintID);
+        return AbstractDomainObject.fromExternalId(spaceBlueprintIDString);
     }
 
     private Boolean isToViewBlueprintNumbers(HttpServletRequest request) {

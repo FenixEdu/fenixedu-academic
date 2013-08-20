@@ -8,7 +8,7 @@
 <h2><bean:write name="process" property="displayName" /></h2>
 <h3><bean:message key="label.candidacy.choose.registation.for.creation" bundle="APPLICATION_RESOURCES"/></h3>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 <bean:define id="processName" name="processName"/>
 
 <bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" />

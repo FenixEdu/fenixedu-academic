@@ -95,9 +95,9 @@ public class Test extends Test_Base {
         super.deleteDomainObject();
     }
 
-    public Question findQuestionByOID(Integer questionId) {
+    public Question findQuestionByOID(String questionId) {
         for (TestQuestion testQuestion : this.getTestQuestions()) {
-            if (testQuestion.getQuestion().getIdInternal().equals(questionId)) {
+            if (testQuestion.getQuestion().getExternalId().equals(questionId)) {
                 return testQuestion.getQuestion();
             }
         }

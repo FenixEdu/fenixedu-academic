@@ -37,7 +37,7 @@
 </logic:notPresent>
 
 <logic:present name="section">
-    <bean:define id="sectionId" name="section" property="idInternal"/>
+    <bean:define id="sectionId" name="section" property="externalId"/>
 
 	<fr:edit name="creator" schema="net.sourceforge.fenixedu.domain.SectionCreator"
         action="<%= actionName + "?method=section&amp;" + context + "&amp;sectionID=" + sectionId %>">

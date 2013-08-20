@@ -36,7 +36,7 @@
 			<fr:layout name="tabular">
 		        <fr:property name="classes" value="tstyle4"/>
 		        <fr:property name="columnClasses" value=",,,acenter"/>
-		        <fr:property name="linkFormat(view)" value="/listDFACandidacy.do?method=viewCandidacy&candidacyID=${idInternal}"/>
+		        <fr:property name="linkFormat(view)" value="/listDFACandidacy.do?method=viewCandidacy&candidacyID=${externalId}"/>
 				<fr:property name="key(view)" value="link.view"/>
 				<fr:property name="sortBy" value="number"/>
 		    </fr:layout>

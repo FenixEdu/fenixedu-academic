@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.UpdateProfessorshipWithPerson;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -28,6 +27,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author jpvl
@@ -54,13 +54,13 @@ public class UpdateTeacherExecutionCourseResponsabilitiesAction extends Action {
             throws Exception {
 
         DynaActionForm teacherExecutionYearResponsabilitiesForm = (DynaActionForm) form;
-        Integer[] executionCourseResponsabilities =
-                (Integer[]) teacherExecutionYearResponsabilitiesForm.get("executionCourseResponsability");
+        String[] executionCourseResponsabilities =
+                (String[]) teacherExecutionYearResponsabilitiesForm.get("executionCourseResponsability");
 
         String teacherId = (String) teacherExecutionYearResponsabilitiesForm.get("teacherName");
-        Integer executionYearId = (Integer) teacherExecutionYearResponsabilitiesForm.get("executionYearId");
+        String executionYearId = (String) teacherExecutionYearResponsabilitiesForm.get("executionYearId");
         Person person = Person.readPersonByIstUsername(teacherId);
-        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearId);
+        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
         try {
             UpdateProfessorshipWithPerson.run(person, executionYear, Arrays.asList(executionCourseResponsabilities));
         } catch (NotAuthorizedException e) {

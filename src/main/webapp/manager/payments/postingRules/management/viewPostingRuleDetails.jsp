@@ -16,7 +16,7 @@
 	</fr:layout>
 </fr:view>
 
-<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan" property="idInternal" />
+<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan" property="externalId" />
 <html:link action="<%="/postingRules.do?method=showPostGraduationDegreeCurricularPlanPostingRules&amp;degreeCurricularPlanId=" + degreeCurricularPlanId %>">
 	<bean:message key="label.back" bundle="APPLICATION_RESOURCES" />
 </html:link>

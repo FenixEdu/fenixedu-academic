@@ -208,8 +208,8 @@ public abstract class SearchAction extends FenixDispatchAction {
 
     /**
      * If we search an object(s) using some criteria (for instance the
-     * idInternal) we may want to use it after the search. This method
-     * transforms the search criteria (the idInternal) into an object set in the
+     * externalId) we may want to use it after the search. This method
+     * transforms the search criteria (the externalId) into an object set in the
      * request.
      * 
      * @param mapping

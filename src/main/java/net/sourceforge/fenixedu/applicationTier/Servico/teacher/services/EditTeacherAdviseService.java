@@ -24,6 +24,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Ricardo Rodrigues
@@ -32,10 +33,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditTeacherAdviseService {
 
-    protected void run(Teacher teacher, Integer executionPeriodID, final Integer studentNumber, Double percentage,
+    protected void run(Teacher teacher, String executionPeriodID, final Integer studentNumber, Double percentage,
             AdviseType adviseType, RoleType roleType) throws FenixServiceException {
 
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
 
         List<Registration> students = RootDomainObject.getInstance().getRegistrations();
         Registration registration = (Registration) CollectionUtils.find(students, new Predicate() {
@@ -75,7 +76,7 @@ public class EditTeacherAdviseService {
     private static final EditTeacherAdviseService serviceInstance = new EditTeacherAdviseService();
 
     @Service
-    public static void runEditTeacherAdviseService(Teacher teacher, Integer executionPeriodID, Integer studentNumber,
+    public static void runEditTeacherAdviseService(Teacher teacher, String executionPeriodID, Integer studentNumber,
             Double percentage, AdviseType adviseType, RoleType roleType) throws FenixServiceException, NotAuthorizedException {
         try {
             ScientificCouncilAuthorizationFilter.instance.execute();

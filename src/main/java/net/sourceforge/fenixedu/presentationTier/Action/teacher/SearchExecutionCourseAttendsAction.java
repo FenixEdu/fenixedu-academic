@@ -35,6 +35,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
@@ -51,7 +52,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
         // Integer.valueOf(request.getParameter("objectCode"));
         ExecutionCourse executionCourse = getDomainObject(request, "objectCode");
         // ExecutionCourse executionCourse =
-        // rootDomainObject.readExecutionCourseByOID(objectCode);
+        // AbstractDomainObject.fromExternalId(objectCode);
         SearchExecutionCourseAttendsBean searchExecutionCourseAttendsBean = readSearchBean(request, executionCourse);
 
         executionCourse.searchAttends(searchExecutionCourseAttendsBean);
@@ -65,10 +66,9 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
 
     private SearchExecutionCourseAttendsBean readSearchBean(HttpServletRequest request, ExecutionCourse executionCourse) {
         String executionCourseID = request.getParameter("executionCourse");
-        Integer executionCourseIDInteger = (executionCourseID == null) ? null : Integer.parseInt(executionCourseID);
-        if (executionCourseIDInteger != null) {
+        if (executionCourseID != null) {
             SearchExecutionCourseAttendsBean searchExecutionCourseAttendsBean =
-                    new SearchExecutionCourseAttendsBean(rootDomainObject.readExecutionCourseByOID(executionCourseIDInteger));
+                    new SearchExecutionCourseAttendsBean(AbstractDomainObject.<ExecutionCourse> fromExternalId(executionCourseID));
 
             String viewPhoto = request.getParameter("viewPhoto");
             if (viewPhoto != null && viewPhoto.equalsIgnoreCase("true")) {
@@ -99,7 +99,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
             if (degreeCurricularPlans != null) {
                 List<DegreeCurricularPlan> list = new ArrayList<DegreeCurricularPlan>();
                 for (String degreeCurricularPlan : degreeCurricularPlans.split(":")) {
-                    list.add(rootDomainObject.readDegreeCurricularPlanByOID(Integer.parseInt(degreeCurricularPlan)));
+                    list.add(AbstractDomainObject.<DegreeCurricularPlan> fromExternalId(degreeCurricularPlan));
                 }
                 searchExecutionCourseAttendsBean.setDegreeCurricularPlans(list);
             }
@@ -108,7 +108,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
             if (shifts != null) {
                 List<Shift> list = new ArrayList<Shift>();
                 for (String shift : shifts.split(":")) {
-                    list.add(rootDomainObject.readShiftByOID(Integer.parseInt(shift)));
+                    list.add(AbstractDomainObject.<Shift> fromExternalId(shift));
                 }
                 searchExecutionCourseAttendsBean.setShifts(list);
             }
@@ -166,7 +166,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
             label = degreeStudentsGroup.getLabel();
             String executionDegreeId = (String) getFromRequestOrForm(request, (DynaActionForm) form, "executionDegreeId");
             studentsGroup = degreeStudentsGroup;
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(executionDegreeId));
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
             sender = CoordinatorSender.newInstance(executionDegree.getDegree());
         }
 

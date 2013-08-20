@@ -19,9 +19,9 @@
 <logic:notEmpty name="sessionBean" property="supervisors">
 	<fr:view name="sessionBean" property="supervisors">
 		<fr:layout name="tabular">
-			<fr:property name="sortBy" value="name,idInternal"/>
+			<fr:property name="sortBy" value="name,externalId"/>
 			
-			<fr:property name="linkFormat(delete)" value="<%="/manageExternalSupervision.do?method=deleteSupervisor&supervisorId=${idInternal}&registrationProtocolId=" + rpId.toString()%>"/>
+			<fr:property name="linkFormat(delete)" value="<%="/manageExternalSupervision.do?method=deleteSupervisor&supervisorId=${externalId}&registrationProtocolId=" + rpId.toString()%>"/>
 			<fr:property name="order(delete)" value="1" />
 			<fr:property name="key(delete)" value="label.showSupervisors.supervisor.delete" />
 			<fr:property name="bundle(delete)" value="DIRECTIVE_COUNCIL_RESOURCES" />

@@ -14,13 +14,13 @@ import javax.faces.convert.IntegerConverter;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.CharEncoding;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UIAutoComplete extends UIInput {
 
@@ -61,11 +61,11 @@ public class UIAutoComplete extends UIInput {
         String valueField = (String) this.getAttributes().get("valueField");
         String serviceName = (String) this.getAttributes().get("serviceName");
         String serviceArgs = (String) this.getAttributes().get("serviceArgs");
-        Integer value = (Integer) this.getValue();
+        String value = (String) this.getValue();
         String textFieldStyleClass = (String) this.getAttributes().get("textFieldStyleClass");
         Integer size = (Integer) this.getAttributes().get("size");
         String contextPath = ((HttpServletRequest) context.getExternalContext().getRequest()).getContextPath();
-        String inputTextValue = (value != null) ? getInputTextValue(getUserView(context), className, value, labelField) : null;
+        String inputTextValue = (value != null) ? getInputTextValue(getUserView(context), value, labelField) : null;
 
         encodeAutoCompleteInclusionScriptsIfRequired(writer, requestMap, contextPath);
         encodeInputTextField(writer, inputTextClientId, inputTextValue, textFieldStyleClass, size);
@@ -79,11 +79,9 @@ public class UIAutoComplete extends UIInput {
         return UserView.getUser();
     }
 
-    private String getInputTextValue(IUserView userView, String className, Integer idInternal, String labelField) {
-        Class clazz;
+    private String getInputTextValue(IUserView userView, String externalId, String labelField) {
         try {
-            clazz = Class.forName(className);
-            DomainObject domainObject = RootDomainObject.getInstance().readDomainObjectByOID(clazz, idInternal);
+            DomainObject domainObject = AbstractDomainObject.fromExternalId(externalId);
 
             return BeanUtils.getProperty(domainObject, labelField);
 
@@ -156,7 +154,7 @@ public class UIAutoComplete extends UIInput {
         }
     }
 
-    private void encodeValueHiddenField(ResponseWriter writer, String clientId, Integer value) throws IOException {
+    private void encodeValueHiddenField(ResponseWriter writer, String clientId, String value) throws IOException {
         writer.startElement("input", this);
         writer.writeAttribute("type", "hidden", null);
         writer.writeAttribute("id", clientId, null);
@@ -220,12 +218,11 @@ public class UIAutoComplete extends UIInput {
             String labelField = (String) this.getAttributes().get("labelField");
 
             try {
-                Class clazz = Class.forName(className);
-                DomainObject domainObject = RootDomainObject.getInstance().readDomainObjectByOID(clazz, (Integer) newValue);
+                DomainObject domainObject = AbstractDomainObject.fromExternalId((String) newValue);
 
-                String correctLabelForIdInternal = BeanUtils.getProperty(domainObject, labelField);
+                String correctLabelForExternalId = BeanUtils.getProperty(domainObject, labelField);
 
-                if (correctLabelForIdInternal.equals(submittedInputTextValue) == false) {
+                if (correctLabelForExternalId.equals(submittedInputTextValue) == false) {
                     String errorMessage = getMessageFromBundle(context, INVALID_AUTO_COMPLETE_INPUT);
 
                     context.addMessage(getClientId(context), new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage,

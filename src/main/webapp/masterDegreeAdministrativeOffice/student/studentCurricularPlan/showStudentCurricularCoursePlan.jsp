@@ -131,7 +131,7 @@
 		</td>
 	</tr>	
 </table>	
-<bean:define id="link">/editStudentCurricularPlan.do?method=prepare&studentCurricularPlanId=<bean:write name="studentCurricularPlan" property="idInternal"/></bean:define>   
+<bean:define id="link">/editStudentCurricularPlan.do?method=prepare&studentCurricularPlanId=<bean:write name="studentCurricularPlan" property="externalId"/></bean:define>   
 <html:link page='<%= pageContext.findAttribute("link").toString() %>'>
 	<bean:message key="label.masterDegree.administrativeOffice.edit"/>
 </html:link>		

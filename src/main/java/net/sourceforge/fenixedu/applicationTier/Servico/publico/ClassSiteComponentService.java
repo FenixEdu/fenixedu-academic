@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Jo�o Mota
@@ -30,7 +30,7 @@ public class ClassSiteComponentService {
 
     @Service
     public static Object run(ISiteComponent bodyComponent, String executionYearName, String executionPeriodName,
-            String degreeInitials, String nameDegreeCurricularPlan, String className, Integer curricularYear, Integer classId)
+            String degreeInitials, String nameDegreeCurricularPlan, String className, Integer curricularYear, String classId)
             throws FenixServiceException {
 
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
@@ -51,7 +51,7 @@ public class ClassSiteComponentService {
             }
         } else {
 
-            domainClass = RootDomainObject.getInstance().readSchoolClassByOID(classId);
+            domainClass = AbstractDomainObject.fromExternalId(classId);
         }
         bodyComponent = componentBuilder.getComponent(bodyComponent, domainClass);
         SiteView siteView = new SiteView(bodyComponent);

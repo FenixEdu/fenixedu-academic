@@ -14,7 +14,7 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight thcenter mtop05" />
 		<fr:property name="sortBy" value="degree.name=asc" />
-		<fr:property name="linkFormat(view)" value="/postingRules.do?method=showPostGraduationDegreeCurricularPlanPostingRules&amp;degreeCurricularPlanId=${idInternal}" />
+		<fr:property name="linkFormat(view)" value="/postingRules.do?method=showPostGraduationDegreeCurricularPlanPostingRules&amp;degreeCurricularPlanId=${externalId}" />
 		<fr:property name="key(view)" value="label.view" />
 		<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
 	</fr:layout>

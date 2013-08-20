@@ -38,7 +38,7 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
 
         IUserView userView = getUserView(request);
 
-        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanID"));
+        String degreeCurricularPlanId = request.getParameter("degreeCurricularPlanID");
 
         List candidates = null;
 
@@ -60,8 +60,8 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
 
-        Integer degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
-        Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
+        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
+        String candidateID = request.getParameter("candidateID");
 
         InfoMasterDegreeCandidate infoMasterDegreeCandidate;
         infoMasterDegreeCandidate = ReadMasterDegreeCandidateByID.run(candidateID);
@@ -82,7 +82,7 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
      * @param userView
      * @return
      */
-    private ArrayList getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
+    private ArrayList getCandidateStudyPlanByCandidateID(String candidateID, IUserView userView) {
         try {
             return (ArrayList) ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);
         } catch (Exception e) {

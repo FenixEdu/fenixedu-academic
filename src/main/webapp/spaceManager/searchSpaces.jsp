@@ -33,7 +33,7 @@
 				<fr:property name="classes" value="tstyle4 mtop05" />
 				<fr:property name="columnClasses" value="smalltxt,acenter smalltxt,acenter smalltxt,acenter smalltxt,acenter smalltxt," />
 				<fr:property name="link(view)" value="<%="/manageSpaces.do?method=viewSpace"%>" />
-				<fr:property name="param(view)" value="idInternal/spaceID" />
+				<fr:property name="param(view)" value="externalId/spaceID" />
 				<fr:property name="key(view)" value="link.view" />
 				<fr:property name="bundle(view)" value="SPACE_RESOURCES" />
 				<fr:property name="order(view)" value="0" />

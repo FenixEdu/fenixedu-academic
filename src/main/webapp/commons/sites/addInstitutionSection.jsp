@@ -17,8 +17,8 @@
 	<bean:message key="title.unitSite.institutionSection" bundle="SITE_RESOURCES"/>
 </h2>
 
-<bean:define id="parentId" name="parent" property="idInternal"/>
-<bean:define id="siteId" name="site" property="idInternal"/>
+<bean:define id="parentId" name="parent" property="externalId"/>
+<bean:define id="siteId" name="site" property="externalId"/>
 
 <logic:messagesPresent message="true">
     <div class="mvert15">
@@ -37,5 +37,5 @@
 		<fr:property name="eachLayout" value="values"/>
 		<fr:property name="eachSchema" value="functionalities.functionality.tree"/>
 	</fr:layout>
-	<fr:destination name="functionality.view" path="<%= actionName + "?method=addFromPool&amp;containerId=" +  parentId + "&amp;contentId=${idInternal}&amp;oid=" + siteId + "&amp;sectionID=" + parentId + "&amp;" + context%>"/>
+	<fr:destination name="functionality.view" path="<%= actionName + "?method=addFromPool&amp;containerId=" +  parentId + "&amp;contentId=${externalId}&amp;oid=" + siteId + "&amp;sectionID=" + parentId + "&amp;" + context%>"/>
 </fr:view>

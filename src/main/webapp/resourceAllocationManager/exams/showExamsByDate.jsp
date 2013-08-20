@@ -48,21 +48,21 @@
 				</logic:iterate>			
 			</logic:empty>
 			
-			<bean:define id="examID" name="infoViewExam" property="infoExam.idInternal"/> 
+			<bean:define id="examID" name="infoViewExam" property="infoExam.externalId"/> 
 			<tr>
 				<td class="listClasses">
 					<%-- DISCIPLINA --%>
 					<logic:iterate id="infoExecutionCourse" name="infoViewExam" property="infoExecutionCourses">
 						<bean:write name="infoExecutionCourse" property="nome"/><br />
-						<bean:define id="executionCourseOID" name="infoExecutionCourse" property="idInternal"/>
-						<bean:define id="executionPeriodOID" name="infoExecutionCourse" property="infoExecutionPeriod.idInternal"/>												
+						<bean:define id="executionCourseOID" name="infoExecutionCourse" property="externalId"/>
+						<bean:define id="executionPeriodOID" name="infoExecutionCourse" property="infoExecutionPeriod.externalId"/>												
 					</logic:iterate>					
 				</td>
 				<td class="listClasses">
 					<%-- CURSO --%>
 					<logic:iterate id="infoDegree" name="infoViewExam" property="infoDegrees">
 						<bean:write name="infoDegree" property="sigla"/><br />
-						<bean:define id="executionDegreeOID" name="infoDegree" property="idInternal"/>
+						<bean:define id="executionDegreeOID" name="infoDegree" property="externalId"/>
 					</logic:iterate>
 				</td>
 				<td class="listClasses">

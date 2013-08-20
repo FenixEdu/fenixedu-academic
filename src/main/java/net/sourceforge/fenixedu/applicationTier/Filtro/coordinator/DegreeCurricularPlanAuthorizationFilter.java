@@ -21,12 +21,12 @@ public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthori
     }
 
     @Override
-    protected boolean verifyCondition(IUserView id, Integer degreeCurricularPlanID) {
+    protected boolean verifyCondition(IUserView id, String degreeCurricularPlanID) {
         final Person person = id.getPerson();
         final Teacher teacher = person == null ? null : person.getTeacher();
 
         for (final Coordinator coordinator : person.getCoordinators()) {
-            if (coordinator.getExecutionDegree().getDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanID)) {
+            if (coordinator.getExecutionDegree().getDegreeCurricularPlan().getExternalId().equals(degreeCurricularPlanID)) {
                 return true;
             }
         }

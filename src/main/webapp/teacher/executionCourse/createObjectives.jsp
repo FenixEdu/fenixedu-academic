@@ -29,7 +29,7 @@
 		<bean:write name="curricularCourse" property="name"/>
 	</h3>
 	<blockquote>
-		<bean:define id="url" type="java.lang.String">/createObjectives.do?method=createObjectives&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+		<bean:define id="url" type="java.lang.String">/createObjectives.do?method=createObjectives&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>
 		<logic:present name="curricularCourse" property="findLatestCurriculum">
 			<fr:edit name="curricularCourse" property="curriculumFactoryEditCurriculum"
 					schema="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculumObjectives"

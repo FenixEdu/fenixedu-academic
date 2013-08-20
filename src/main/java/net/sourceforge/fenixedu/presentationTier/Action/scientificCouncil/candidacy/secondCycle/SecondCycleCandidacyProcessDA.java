@@ -31,6 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
@@ -43,13 +44,13 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class SecondCycleCandidacyProcessForm extends CandidacyProcessForm {
-        private Integer selectedProcessId;
+        private String selectedProcessId;
 
-        public Integer getSelectedProcessId() {
+        public String getSelectedProcessId() {
             return selectedProcessId;
         }
 
-        public void setSelectedProcessId(Integer selectedProcessId) {
+        public void setSelectedProcessId(String selectedProcessId) {
             this.selectedProcessId = selectedProcessId;
         }
     }
@@ -162,8 +163,8 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     private void setCandidacyProcessInformation(final ActionForm actionForm, final SecondCycleCandidacyProcess process) {
         final SecondCycleCandidacyProcessForm form = (SecondCycleCandidacyProcessForm) actionForm;
-        form.setSelectedProcessId(process.getIdInternal());
-        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
+        form.setSelectedProcessId(process.getExternalId());
+        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getExternalId());
     }
 
     @Override
@@ -175,10 +176,10 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     protected SecondCycleCandidacyProcess getCandidacyProcess(final HttpServletRequest request,
             final ExecutionInterval executionInterval) {
 
-        final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
+        final String selectedProcessId = getStringFromRequest(request, "selectedProcessId");
         if (selectedProcessId != null) {
             for (final SecondCycleCandidacyPeriod candidacyPeriod : executionInterval.getSecondCycleCandidacyPeriods()) {
-                if (candidacyPeriod.getSecondCycleCandidacyProcess().getIdInternal().equals(selectedProcessId)) {
+                if (candidacyPeriod.getSecondCycleCandidacyProcess().getExternalId().equals(selectedProcessId)) {
                     return candidacyPeriod.getSecondCycleCandidacyProcess();
                 }
             }
@@ -298,11 +299,11 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+        final String degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {
-            return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+            return AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
         }
 
         return null;

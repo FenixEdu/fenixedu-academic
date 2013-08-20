@@ -82,7 +82,7 @@
 <logic:present name="reportBean" property="executionYear">
 <logic:present name="reportBean" property="degreeType">
 
-<bean:define id="executionYearID" name="reportBean" property="executionYear.idInternal"/>
+<bean:define id="executionYearID" name="reportBean" property="executionYear.externalId"/>
 <bean:define id="degreeType" name="reportBean" property="degreeType"/>
 
 

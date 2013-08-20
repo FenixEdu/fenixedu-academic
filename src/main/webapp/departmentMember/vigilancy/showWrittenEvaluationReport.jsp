@@ -7,7 +7,7 @@
 
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.writtenEvaluationReport"/></h2>
-<bean:define id="writtenEvaluationId" name="writtenEvaluation" property="idInternal"/>
+<bean:define id="writtenEvaluationId" name="writtenEvaluation" property="externalId"/>
 
 <ul>
 	<li><html:link page="/vigilancy/vigilantManagement.do?method=prepareMap"><bean:message key="label.vigilancy.back" bundle="VIGILANCY_RESOURCES"/></html:link>

@@ -23,7 +23,7 @@
 	<logic:notEmpty name="fromUnit">	
 		<logic:notEmpty name="destinationUnit">
 	
-			<bean:define id="chooseNewDestinationUnitID">/unitsMerge.do?method=seeChoosedUnit&amp;unitID=<bean:write name="fromUnit" property="idInternal"/></bean:define>		
+			<bean:define id="chooseNewDestinationUnitID">/unitsMerge.do?method=seeChoosedUnit&amp;unitID=<bean:write name="fromUnit" property="externalId"/></bean:define>		
 			<ul class="list5 mtop2 mbottom3">
 				<li>						
 					<html:link page="<%= chooseNewDestinationUnitID %>">
@@ -52,8 +52,8 @@
 					</fr:layout>
 				</fr:view>
 						
-				<bean:define id="fromUnitID" name="fromUnit" property="idInternal" />
-				<bean:define id="destinationUnitID" name="destinationUnit" property="idInternal" />
+				<bean:define id="fromUnitID" name="fromUnit" property="externalId" />
+				<bean:define id="destinationUnitID" name="destinationUnit" property="externalId" />
 				<html:form action="/unitsMerge.do">
 					<html:hidden property="method" value="mergeUnits"/>
 					<html:hidden property="fromUnitID" value="<%= fromUnitID.toString() %>"/>
@@ -84,7 +84,7 @@
 					</fr:layout>
 				</fr:view>
 				
-				<bean:define id="mergeUnitsID">/unitsMerge.do?method=mergeUnits&amp;fromUnitID=<bean:write name="fromUnit" property="idInternal"/>&amp;unitID=<bean:write name="destinationUnit" property="idInternal"/></bean:define>		
+				<bean:define id="mergeUnitsID">/unitsMerge.do?method=mergeUnits&amp;fromUnitID=<bean:write name="fromUnit" property="externalId"/>&amp;unitID=<bean:write name="destinationUnit" property="externalId"/></bean:define>		
 				<fr:edit id="noOfficialMerge" name="destinationUnit" schema="ChangeNoOfficialName" action="<%= mergeUnitsID %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="mtop3 tstyle3 thlight thright"/>

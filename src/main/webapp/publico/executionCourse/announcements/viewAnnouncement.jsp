@@ -113,7 +113,7 @@ Canal: <bean:write name="announcement" property="announcementBoard.name"/> -
 	</logic:equal>
 	
 <%-- Data de Criação --%>
-	<html:link linkName="<%= "ID_" + announcement.getIdInternal().toString()%>"/>
+	<html:link linkName="<%= "ID_" + announcement.getExternalId().toString()%>"/>
 		<bean:message key="label.creationDate" bundle="MESSAGING_RESOURCES"/>: 
 		<fr:view name="announcement" property="creationDate" type="org.joda.time.DateTime" layout="no-time"/>
 	</em>

@@ -32,7 +32,7 @@
 			</ul>
 		</li>
         
-		<li><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&amp;selectCourses=true&amp;registrationOID=" + registration.getIdInternal().toString()%>"><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></li>		
+		<li><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&amp;selectCourses=true&amp;registrationOID=" + registration.getExternalId().toString()%>"><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></li>		
 
         <%--<li><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.first.year.first.semester" /></li>--%>
     
@@ -43,7 +43,7 @@
 	<html:form action="/studentShiftEnrollmentManager">
 		<input alt="input.method" type="hidden" name="method" value="start"/>
 		
-		<html:hidden property="registrationOID" value="<%=registration.getIdInternal().toString()%>"/>
+		<html:hidden property="registrationOID" value="<%=registration.getExternalId().toString()%>"/>
 		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message bundle="STUDENT_RESOURCES" key="button.continue.enrolment"/>

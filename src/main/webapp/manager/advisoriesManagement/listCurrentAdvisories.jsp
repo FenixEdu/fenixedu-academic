@@ -55,13 +55,13 @@
 			<h:column>			
 				<h:commandLink action="prepareEditAdvisory" >
 					<h:outputText value="(#{bundle['label.edit']})"/>
-					<f:param id="advisoryID1" name="advisoryID" value="#{advisory.idInternal}"/>
+					<f:param id="advisoryID1" name="advisoryID" value="#{advisory.externalId}"/>
 				</h:commandLink>
 			</h:column>
 			<h:column>			
 				<h:commandLink action="" actionListener="#{advisoriesManagementBackingBean.closeAdvisory}" >
 					<h:outputText value="(#{bundle['link.close.execution.period']})"/>
-					<f:param id="advisoryID2" name="advisoryID" value="#{advisory.idInternal}"/>
+					<f:param id="advisoryID2" name="advisoryID" value="#{advisory.externalId}"/>
 				</h:commandLink>
 			</h:column>			
 		</h:dataTable>	

@@ -22,7 +22,7 @@
 				<fr:property name="sortBy" value="startDate=desc"/>			
 				<fr:property name="classes" value="tstyle4 thlight mtop025 boldlink1" />
 				<fr:property name="columnClasses" value=",tdhl1,," />
-				<fr:property name="linkFormat(view)" value="/bolonhaTransitionManagement.do?method=showStudentCurricularPlan&amp;registrationId=${idInternal}&amp;studentId=${student.idInternal}" />
+				<fr:property name="linkFormat(view)" value="/bolonhaTransitionManagement.do?method=showStudentCurricularPlan&amp;registrationId=${externalId}&amp;studentId=${student.externalId}" />
 				<fr:property name="key(view)" value="label.view"/>
 				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="contextRelative(view)" value="true"/>

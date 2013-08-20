@@ -26,8 +26,8 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
                     if (result == 0) {
                         result = o1.getExecutionCourse().getNome().compareTo(o2.getExecutionCourse().getNome());
                     }
-                    return (result == 0) ? o1.getExecutionCourse().getIdInternal()
-                            .compareTo(o2.getExecutionCourse().getIdInternal()) : result;
+                    return (result == 0) ? o1.getExecutionCourse().getExternalId()
+                            .compareTo(o2.getExecutionCourse().getExternalId()) : result;
                 }
             };
 
@@ -131,7 +131,7 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
         StringBuffer actionPath = new StringBuffer();
         ExecutionCourse executionCourse = this.getExecutionCourse();
 
-        actionPath.append("&executionCourseID=" + executionCourse.getIdInternal());
+        actionPath.append("&executionCourseID=" + executionCourse.getExternalId());
         actionPath.append("&");
         actionPath.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
         actionPath.append("=");

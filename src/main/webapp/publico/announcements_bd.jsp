@@ -14,7 +14,7 @@
 	<logic:notEmpty name="component" property="announcements">
 		<h2><bean:message key="label.announcements"/></h2>
 		<logic:iterate id="announcement" name="component" property="announcements" >	
-			<bean:define id="announcementId" name ="announcement" property="idInternal" />
+			<bean:define id="announcementId" name ="announcement" property="externalId" />
 			<div class="info-lst" id="a<%= announcementId.toString() %>">
 				<h3>
 					<a class="info-title">

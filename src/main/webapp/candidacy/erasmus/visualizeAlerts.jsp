@@ -18,7 +18,7 @@
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="label.erasmus.visualize.alerts.title" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 
 <p>
 	<html:link action='<%= f("/caseHandlingMobilityIndividualApplicationProcess.do?method=listProcessAllowedActivities&amp;processId=%s", processId.toString()) %>'>

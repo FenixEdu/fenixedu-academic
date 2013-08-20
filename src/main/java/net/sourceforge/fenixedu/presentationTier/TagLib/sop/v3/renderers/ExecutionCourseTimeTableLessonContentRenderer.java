@@ -31,9 +31,9 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
                 strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
                 strBuffer.append(lesson.getInfoSala().getNome()).append("&amp;objectCode=");
-                strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal());
+                strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getExternalId());
                 strBuffer.append("&amp;executionPeriodOID=");
-                strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal())
+                strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getExternalId())
                         .append("'>");
                 strBuffer.append(lesson.getInfoSala().getNome()).append("</a>");
             }
@@ -51,9 +51,9 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
                 strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("&amp;objectCode=");
-                strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal());
+                strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getExternalId());
                 strBuffer.append("&amp;executionPeriodOID=");
-                strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal())
+                strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getExternalId())
                         .append("'>");
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
             }

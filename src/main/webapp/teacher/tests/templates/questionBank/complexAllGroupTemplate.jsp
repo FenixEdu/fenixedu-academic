@@ -12,17 +12,17 @@
 
 <ft:define id="questionGroup" type="net.sourceforge.fenixedu.domain.tests.NewAllGroup" />
 <bean:define id="questionGroup" name="questionGroup" toScope="request" type="net.sourceforge.fenixedu.domain.tests.NewAllGroup" />
-<bean:define id="modelSelectDivId">testModelDiv<bean:write name="questionGroup" property="idInternal" /></bean:define>
-<bean:define id="modelSelectId">testModel<bean:write name="questionGroup" property="idInternal" /></bean:define>
-<bean:define id="questionId"><bean:write name="questionGroup" property="idInternal" /></bean:define>
+<bean:define id="modelSelectDivId">testModelDiv<bean:write name="questionGroup" property="externalId" /></bean:define>
+<bean:define id="modelSelectId">testModel<bean:write name="questionGroup" property="externalId" /></bean:define>
+<bean:define id="questionId"><bean:write name="questionGroup" property="externalId" /></bean:define>
 <bean:define id="modelSelectPath">/tests/questionBank.do?method=selectForModel#<bean:write name="modelSelectDivId" /></bean:define>
 
 <ul>
-<li><html:link page="/tests/questionBank.do?method=deleteQuestion" paramId="oid" paramName="questionGroup" paramProperty="idInternal">Apagar pergunta</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=deleteQuestion" paramId="oid" paramName="questionGroup" paramProperty="externalId">Apagar pergunta</html:link></li>
 <logic:equal name="questionGroup" property="belongsToAllGroup" value="false">
-	<li><html:link page="/tests/questionBank.do?method=prepareAssociateParent" paramId="oid" paramName="questionGroup" paramProperty="idInternal">Associar a outro grupo</html:link></li>
+	<li><html:link page="/tests/questionBank.do?method=prepareAssociateParent" paramId="oid" paramName="questionGroup" paramProperty="externalId">Associar a outro grupo</html:link></li>
 	<logic:notEqual name="questionGroup" property="parentQuestionGroupsCount" value="1">
-		<li><html:link page="/tests/questionBank.do?method=prepareDisassociateParent" paramId="oid" paramName="questionGroup" paramProperty="idInternal">Disassociar de grupo</html:link></li>
+		<li><html:link page="/tests/questionBank.do?method=prepareDisassociateParent" paramId="oid" paramName="questionGroup" paramProperty="externalId">Disassociar de grupo</html:link></li>
 	</logic:notEqual>
 	<li><a href="javascript:switchDisplay('<%= modelSelectDivId %>')">Seleccionar</a></li>
 </logic:equal>
@@ -70,9 +70,9 @@
 <div class="questionBlockHeader">
 	<strong><bean:message key="label.testElement.presentationMaterials" bundle="TESTS_RESOURCES" />:</strong>
 	(<f:parameterLink page="/tests/questionBank/presentationMaterial.do?method=prepareEditPresentationMaterials">
-	 	<f:parameter id="oid" name="questionGroup" property="idInternal" />
+	 	<f:parameter id="oid" name="questionGroup" property="externalId" />
 	 	<f:parameter id="returnPath" value="/tests/questionBank.do?method=editTestElement" />
-	 	<f:parameter id="returnId" name="questionGroup" property="idInternal" />
+	 	<f:parameter id="returnId" name="questionGroup" property="externalId" />
 	 	<f:parameter id="contextKey" value="message.questionBank.manage" />
 	 	Editar
 	 </f:parameterLink>)
@@ -88,7 +88,7 @@
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareCreateAtomicQuestion">
-		<f:parameter id="oid" name="questionGroup" property="idInternal" />
+		<f:parameter id="oid" name="questionGroup" property="externalId" />
 		Criar al�nea
 	</f:parameterLink>
 </li>
@@ -110,7 +110,7 @@
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=deleteGrade">
-		<f:parameter id="oid" name="questionGroup" property="idInternal" />
+		<f:parameter id="oid" name="questionGroup" property="externalId" />
 		Apagar
 	</f:parameterLink>
 </li>
@@ -140,14 +140,14 @@
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=deletePreCondition">
-		<f:parameter id="oid" name="questionGroup" property="idInternal" />
+		<f:parameter id="oid" name="questionGroup" property="externalId" />
 		Apagar pr�-condi��o
 	</f:parameterLink>
 </li>
 
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareEditPreCondition">
-		<f:parameter id="oid" name="questionGroup" property="idInternal" />
+		<f:parameter id="oid" name="questionGroup" property="externalId" />
 		Editar pr�-condi��o
 	</f:parameterLink>
 </li>
@@ -161,7 +161,7 @@
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareEditPreCondition">
-		<f:parameter id="oid" name="questionGroup" property="idInternal" />
+		<f:parameter id="oid" name="questionGroup" property="externalId" />
 		Inserir pr�-condi��o
 	</f:parameterLink>
 </li>

@@ -26,13 +26,13 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.joda.time.Duration;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -40,22 +40,22 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadTeacherServiceDistributionByCourse {
 
-    protected List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException {
+    protected List run(String departmentId, List<String> executionPeriodsIDs) throws FenixServiceException {
 
-        Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
+        Department department = AbstractDomainObject.fromExternalId(departmentId);
 
         // List<CompetenceCourse> competenceCourseList =
         // department.getCompetenceCourses();
         List<CompetenceCourse> competenceCourseList = department.getDepartmentUnit().getCompetenceCourses();
 
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
-        for (Integer executionPeriodID : executionPeriodsIDs) {
-            executionPeriodList.add(RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID));
+        for (String executionPeriodID : executionPeriodsIDs) {
+            executionPeriodList.add(AbstractDomainObject.<ExecutionSemester> fromExternalId(executionPeriodID));
         }
 
         DistributionTeacherServicesByCourseDTO returnDTO = new DistributionTeacherServicesByCourseDTO();
 
-        Map<Integer, Boolean> executionCoursesMap = new HashMap<Integer, Boolean>();
+        Map<String, Boolean> executionCoursesMap = new HashMap<String, Boolean>();
 
         for (CompetenceCourse cc : competenceCourseList) {
             for (CurricularCourse curricularCourseEntry : cc.getAssociatedCurricularCourses()) {
@@ -67,10 +67,10 @@ public class ReadTeacherServiceDistributionByCourse {
                     for (ExecutionCourse executionCourseEntry : curricularCourseEntry
                             .getExecutionCoursesByExecutionPeriod(executionPeriodEntry)) {
 
-                        if (executionCoursesMap.containsKey(executionCourseEntry.getIdInternal())) {
-                            returnDTO.addDegreeNameToExecutionCourse(executionCourseEntry.getIdInternal(), curricularCourseEntry
+                        if (executionCoursesMap.containsKey(executionCourseEntry.getExternalId())) {
+                            returnDTO.addDegreeNameToExecutionCourse(executionCourseEntry.getExternalId(), curricularCourseEntry
                                     .getDegreeCurricularPlan().getDegree().getSigla());
-                            returnDTO.addCurricularYearsToExecutionCourse(executionCourseEntry.getIdInternal(),
+                            returnDTO.addCurricularYearsToExecutionCourse(executionCourseEntry.getExternalId(),
                                     curricularYearsSet);
                             continue;
                         }
@@ -118,7 +118,7 @@ public class ReadTeacherServiceDistributionByCourse {
                         String campus =
                                 getCampusForCurricularCourseAndExecutionPeriod(curricularCourseEntry, executionPeriodEntry);
 
-                        returnDTO.addExecutionCourse(executionCourseEntry.getIdInternal(), executionCourseEntry.getNome(),
+                        returnDTO.addExecutionCourse(executionCourseEntry.getExternalId(), executionCourseEntry.getNome(),
                                 campus, curricularCourseEntry.getDegreeCurricularPlan().getDegree().getSigla(),
                                 curricularYearsSet, executionCourseEntry.getExecutionPeriod().getSemester(),
                                 executionCourseFirstTimeEnrollementStudentNumber,
@@ -140,7 +140,7 @@ public class ReadTeacherServiceDistributionByCourse {
 
                         fillExecutionCourseDTOWithTeachers(returnDTO, executionCourseEntry, department);
 
-                        executionCoursesMap.put(executionCourseEntry.getIdInternal(), true);
+                        executionCoursesMap.put(executionCourseEntry.getExternalId(), true);
 
                     }
                 }
@@ -189,7 +189,7 @@ public class ReadTeacherServiceDistributionByCourse {
                 continue;
             }
 
-            Integer teacherIdInternal = teacher.getIdInternal();
+            String teacherExternalId = teacher.getExternalId();
             String teacherName = teacher.getPerson().getName();
 
             DecimalFormat df = new DecimalFormat("#.##");
@@ -206,7 +206,7 @@ public class ReadTeacherServiceDistributionByCourse {
                 teacherBelongsToDepartment = true;
             }
 
-            dto.addTeacherToExecutionCourse(executionCourse.getIdInternal(), teacherIdInternal, teacherName,
+            dto.addTeacherToExecutionCourse(executionCourse.getExternalId(), teacherExternalId, teacherName,
                     teacherRequiredHours, teacherLecturedTime, teacherBelongsToDepartment);
         }
 
@@ -231,7 +231,7 @@ public class ReadTeacherServiceDistributionByCourse {
     private static final ReadTeacherServiceDistributionByCourse serviceInstance = new ReadTeacherServiceDistributionByCourse();
 
     @Service
-    public static List runReadTeacherServiceDistributionByCourse(Integer departmentId, List<Integer> executionPeriodsIDs)
+    public static List runReadTeacherServiceDistributionByCourse(String departmentId, List<String> executionPeriodsIDs)
             throws FenixServiceException, NotAuthorizedException {
         try {
             DepartmentAdministrativeOfficeAuthorizationFilter.instance.execute();

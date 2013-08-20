@@ -463,7 +463,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
         for (Department department : allDepartments) {
             LabelValueBean labelValueBean = new LabelValueBean();
-            labelValueBean.setValue(department.getIdInternal().toString());
+            labelValueBean.setValue(department.getExternalId().toString());
             labelValueBean.setLabel(department.getRealName());
             departments.add(labelValueBean);
         }

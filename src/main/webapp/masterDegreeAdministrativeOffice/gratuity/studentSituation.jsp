@@ -83,7 +83,7 @@
 				%>
 				
 				<bean:define id="linkGratuitySituationDetails">
-					/gratuitySituationDetails.do?method=show&gratuitySituationId=<bean:write name="gratuitySituation" property="idInternal"/>&studentId=<bean:write name="student" property="idInternal"/>
+					/gratuitySituationDetails.do?method=show&gratuitySituationId=<bean:write name="gratuitySituation" property="externalId"/>&studentId=<bean:write name="student" property="externalId"/>
 				</bean:define>
 
 				<td align="center">
@@ -91,7 +91,7 @@
 				</td>
 				
 				<bean:define id="linkPenaltyExemption">
-					/penaltyExemption.do?method=prepare&gratuitySituationID=<bean:write name="gratuitySituation" property="idInternal"/>
+					/penaltyExemption.do?method=prepare&gratuitySituationID=<bean:write name="gratuitySituation" property="externalId"/>
 				</bean:define>
 
 				<td align="center">
@@ -104,7 +104,7 @@
 				%>
 				
 				<bean:define id="linkPayGratuity">
-					/payGratuity.do?method=chooseContributor&gratuitySituationId=<bean:write name="gratuitySituation" property="idInternal"/>&studentId=<bean:write name="student" property="idInternal"/>
+					/payGratuity.do?method=chooseContributor&gratuitySituationId=<bean:write name="gratuitySituation" property="externalId"/>&studentId=<bean:write name="student" property="externalId"/>
 				</bean:define>
 
 				<td align="center">
@@ -148,7 +148,7 @@
 					<bean:define id="payedValue" name="insuranceSituation" property="payedValue" />
 					<logic:greaterThan  name="insuranceSituation" property="anualValue" value="<%= payedValue.toString() %>">
 						<bean:define id="linkPayInsurance">
-							/payGratuity.do?method=chooseContributor&insuranceExecutionYearId=<bean:write name="insuranceSituation" property="executionYearID"/>&studentId=<bean:write name="student" property="idInternal"/>
+							/payGratuity.do?method=chooseContributor&insuranceExecutionYearId=<bean:write name="insuranceSituation" property="executionYearID"/>&studentId=<bean:write name="student" property="externalId"/>
 						</bean:define>
 						<html:link page="<%= linkPayInsurance %>" ><bean:message key="link.masterDegree.administrativeOffice.gratuity.pay"/></html:link>
 					</logic:greaterThan >

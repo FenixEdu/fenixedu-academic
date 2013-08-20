@@ -35,6 +35,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author jpvl
@@ -180,9 +181,9 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
                 (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
         InfoClass infoClass = null;
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
         for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
-            if (schoolClass.getExecutionPeriod().getIdInternal().equals(infoExecutionPeriod.getIdInternal())
+            if (schoolClass.getExecutionPeriod().getExternalId().equals(infoExecutionPeriod.getExternalId())
                     && schoolClass.getNome().equals(className)) {
                 infoClass = InfoClass.newInfoFromDomain(schoolClass);
                 break;

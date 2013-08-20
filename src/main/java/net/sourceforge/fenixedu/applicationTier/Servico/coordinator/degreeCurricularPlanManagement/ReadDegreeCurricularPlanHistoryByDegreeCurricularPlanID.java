@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -19,11 +19,11 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID {
     @Checked("RolePredicates.COORDINATOR_PREDICATE")
     @Service
-    public static InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException {
+    public static InfoDegreeCurricularPlan run(String degreeCurricularPlanID) throws FenixServiceException {
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         if (degreeCurricularPlan != null) {
             List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();

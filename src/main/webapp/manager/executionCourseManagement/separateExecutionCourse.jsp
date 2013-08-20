@@ -31,7 +31,7 @@
 </logic:messagesPresent>
 
 <logic:present name="infoExecutionCourse">
-	<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal"/>
+	<bean:define id="executionCourseId" name="infoExecutionCourse" property="externalId"/>
 	<bean:define id="executionCourseName" name="infoExecutionCourse" property="nome"/>
 	<bean:define id="executionPeriodName" name="infoExecutionCourse" property="infoExecutionPeriod.executionPeriod.qualifiedName"/>
 	<bean:define id="curricularYearName">
@@ -78,7 +78,7 @@
 				<tr>
 					<td class="listClasses">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularCourseIdsToTransfer" property="curricularCourseIdsToTransfer">
-							<bean:write name="infoCurricularCourse" property="idInternal"/>
+							<bean:write name="infoCurricularCourse" property="externalId"/>
 						</html:multibox>
 					</td>
 					<td class="listClasses">
@@ -120,7 +120,7 @@
 				<tr>
 					<td class="listClasses">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.shiftIdsToTransfer" property="shiftIdsToTransfer">
-							<bean:write name="infoShift" property="idInternal"/>
+							<bean:write name="infoShift" property="externalId"/>
 						</html:multibox>
 					</td>
 					<td class="listClasses">

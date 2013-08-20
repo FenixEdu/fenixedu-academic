@@ -55,8 +55,8 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
 
                         Row row = spreadsheet.addRow();
                         row.setCell(executionSemester.getSemester());
-                        row.setCell(executionCourse.getIdInternal());
-                        row.setCell(shift.getIdInternal());
+                        row.setCell(executionCourse.getExternalId());
+                        row.setCell(shift.getExternalId());
                         row.setCell(shift.getNome());
                         row.setCell(courseLoad.getType().name());
                         row.setCell(courseLoad.getTotalQuantity() != null ? courseLoad.getTotalQuantity().toPlainString()

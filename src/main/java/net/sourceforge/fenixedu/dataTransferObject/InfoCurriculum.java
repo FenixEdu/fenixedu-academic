@@ -10,7 +10,7 @@ import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author João Mota
@@ -35,23 +35,23 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
 
     protected InfoPerson infoPersonWhoAltered;
 
-    protected Integer executionYearId;
+    protected String executionYearId;
 
     public InfoCurriculum() {
 
     }
 
-    public void setExecutionYearId(Integer id) {
+    public void setExecutionYearId(String id) {
         this.executionYearId = id;
     }
 
-    public Integer getExecutionYearId() {
+    public String getExecutionYearId() {
         return this.executionYearId;
     }
 
     public ExecutionYear getExecutionYear() {
-        return this.executionYearId == null || this.executionYearId == 0 ? ExecutionYear.readCurrentExecutionYear() : RootDomainObject
-                .getInstance().readExecutionYearByOID(this.executionYearId);
+        return this.executionYearId == null || this.executionYearId == null ? ExecutionYear.readCurrentExecutionYear() : AbstractDomainObject
+                .<ExecutionYear> fromExternalId(this.executionYearId);
     }
 
     public InfoCurriculum(InfoCurricularCourse infoCurricularCourse) {

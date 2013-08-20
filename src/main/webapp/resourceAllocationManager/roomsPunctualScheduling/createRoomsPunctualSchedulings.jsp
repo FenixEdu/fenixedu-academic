@@ -66,7 +66,7 @@
 						<fr:destination name="cancel" path="/roomsPunctualScheduling.do?method=prepare"/>
 					</logic:empty>
 					<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
-						<bean:define id="CancelURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.idInternal"/></bean:define>
+						<bean:define id="CancelURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.externalId"/></bean:define>
 						<fr:destination name="cancel" path="<%= CancelURL %>"/>					
 					</logic:notEmpty>					
 				</fr:edit>										
@@ -98,7 +98,7 @@
 						<fr:destination name="cancel" path="/roomsPunctualScheduling.do?method=prepare"/>
 					</logic:empty>
 					<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
-						<bean:define id="CancelURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.idInternal"/></bean:define>
+						<bean:define id="CancelURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.externalId"/></bean:define>
 						<fr:destination name="cancel" path="<%= CancelURL %>"/>					
 					</logic:notEmpty>
 				</fr:edit>						
@@ -115,7 +115,7 @@
 						<fr:destination name="cancel" path="/roomsPunctualScheduling.do?method=prepare"/>
 					</logic:empty>
 					<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">						
-						<bean:define id="CancelURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.idInternal"/></bean:define>
+						<bean:define id="CancelURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.externalId"/></bean:define>
 						<fr:destination name="cancel" path="<%= CancelURL %>"/>					
 					</logic:notEmpty>					
 				</fr:edit>						

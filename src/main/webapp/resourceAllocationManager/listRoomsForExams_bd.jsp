@@ -14,7 +14,7 @@
       <logic:iterate id="infoRoom" name="selectedRooms">
         <tr align="center">
           <td>
-          	<bean:define id="roomId" name="infoRoom" property="idInternal"/>
+          	<bean:define id="roomId" name="infoRoom" property="externalId"/>
             <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.index" property="index" value="<%= pageContext.findAttribute("roomId").toString() %>"/>
             <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roomId" property="roomId" value="<%= pageContext.findAttribute("roomId").toString() %>"/>
           </td>

@@ -46,7 +46,7 @@
 
 	<br />
 
-	<bean:define id="eventId" name="event" property="idInternal" />
+	<bean:define id="eventId" name="event" property="externalId" />
 	<fr:form action='<%="/exemptionsManagement.do?eventId=" + eventId %>'>
 		<html:hidden property="method" value="" />
 

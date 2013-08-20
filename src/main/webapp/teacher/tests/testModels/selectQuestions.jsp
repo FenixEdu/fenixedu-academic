@@ -20,7 +20,7 @@
 	</li>
 	<li>
 		<f:parameterLink page="/tests/testModels.do?method=editTestModel">
-			<f:parameter id="oid" name="testModel" property="idInternal" />
+			<f:parameter id="oid" name="testModel" property="externalId" />
 			<bean:message key="message.toModel" bundle="TESTS_RESOURCES" />
 		</f:parameterLink>
 	</li>
@@ -29,7 +29,7 @@
 	</li>
 	<li>
 		<f:parameterLink page="/tests/testModels.do?method=sortTestModel">
-			<f:parameter id="oid" name="testModel" property="idInternal" />
+			<f:parameter id="oid" name="testModel" property="externalId" />
 			<bean:message key="message.toSort" bundle="TESTS_RESOURCES" />
 		</f:parameterLink>
 	</li>
@@ -69,17 +69,17 @@ e <fr:view name="testModel" property="bag.childQuestionGroupsCount" /> grupo(s)<
 <label style="display: inline;">
 
 <logic:present name="wasSelected">
-<input alt="input.selectedAtomicQuestionRestrictions" type="checkbox" name="selectedAtomicQuestionRestrictions" value="<%= atomicRestriction.getIdInternal().toString() %>" checked="checked" />
+<input alt="input.selectedAtomicQuestionRestrictions" type="checkbox" name="selectedAtomicQuestionRestrictions" value="<%= atomicRestriction.getExternalId().toString() %>" checked="checked" />
 </logic:present>
 <logic:notPresent name="wasSelected">
-<input alt="input.selectedAtomicQuestionRestrictions" type="checkbox" name="selectedAtomicQuestionRestrictions" value="<%= atomicRestriction.getIdInternal().toString() %>" />
+<input alt="input.selectedAtomicQuestionRestrictions" type="checkbox" name="selectedAtomicQuestionRestrictions" value="<%= atomicRestriction.getExternalId().toString() %>" />
 </logic:notPresent>
 <bean:message key="message.select.atomicQuestion" bundle="TESTS_RESOURCES" />
 </label>
 
 (<f:parameterLink page="/tests/testModels.do?method=deleteModelRestriction">
 	<f:parameter id="returnTo" value="/tests/testModels.do?method=selectQuestions" />
-	<f:parameter id="oid" name="atomicRestriction" property="idInternal" />
+	<f:parameter id="oid" name="atomicRestriction" property="externalId" />
 	<bean:message key="message.remove" bundle="TESTS_RESOURCES" />
 </f:parameterLink>)
 
@@ -116,17 +116,17 @@ e <fr:view name="testModel" property="bag.childQuestionGroupsCount" /> grupo(s)<
 <td>
 <label style="display: inline;">
 <logic:present name="wasSelected">
-<input alt="input.selectedQuestionGroup" type="radio" name="selectedQuestionGroup" value="<%= groupRestriction.getIdInternal().toString() %>" checked="checked" />
+<input alt="input.selectedQuestionGroup" type="radio" name="selectedQuestionGroup" value="<%= groupRestriction.getExternalId().toString() %>" checked="checked" />
 </logic:present>
 <logic:notPresent name="wasSelected">
-<input alt="input.selectedQuestionGroup" type="radio" name="selectedQuestionGroup" value="<%= groupRestriction.getIdInternal().toString() %>" />
+<input alt="input.selectedQuestionGroup" type="radio" name="selectedQuestionGroup" value="<%= groupRestriction.getExternalId().toString() %>" />
 </logic:notPresent>
 <fr:view name="groupRestriction" property="question" schema="tests.questionGroup.name" layout="values" />
 (<fr:view name="groupRestriction" property="question.allChildAtomicQuestionsCount" /> <bean:message key="message.select.atomicQuestion.header" bundle="TESTS_RESOURCES" />)
 </label>
 <f:parameterLink page="/tests/testModels.do?method=deleteModelRestriction">
 	<f:parameter id="returnTo" value="/tests/testModels.do?method=selectQuestions" />
-	<f:parameter id="oid" name="groupRestriction" property="idInternal" />
+	<f:parameter id="oid" name="groupRestriction" property="externalId" />
 	<bean:message key="message.remove" bundle="TESTS_RESOURCES" />
 </f:parameterLink>
 </td>

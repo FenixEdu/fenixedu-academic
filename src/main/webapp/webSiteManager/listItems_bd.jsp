@@ -7,7 +7,7 @@
 <bean:define id="sectionsList" name="infoWebSite" property="sections" />
 <logic:notEmpty name="sectionsList" >
 	<logic:iterate id="section" name="sectionsList">
-		<logic:equal name="section" property="idInternal" value="<%=pageContext.findAttribute("objectCode").toString()%>">
+		<logic:equal name="section" property="externalId" value="<%=pageContext.findAttribute("objectCode").toString()%>">
 			<h2><bean:message key="label.list"/>&nbsp;<bean:write name="section" property="name"/></h2>
 			<bean:define id="sectionName" name="section" property="name"/>
 			<bean:size id="itemsSize" name="section" property="infoItemsList"/>
@@ -83,7 +83,7 @@
 			</tr>
 			<logic:notEmpty name="sectionsList" >
 				<logic:iterate id="section" name="sectionsList">
-					<logic:equal name="section" property="idInternal" value="<%=pageContext.findAttribute("objectCode").toString()%>">
+					<logic:equal name="section" property="externalId" value="<%=pageContext.findAttribute("objectCode").toString()%>">
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.itemsListSize" property="itemsListSize" value="<%= itemsSize.toString() %>"/>
 						
 						<logic:iterate id="item" name="section" property="infoItemsList" indexId="itemId" type="net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem">
@@ -92,7 +92,7 @@
 							</bean:define>
 							<logic:equal name="isEven" value="0"> <%-- Linhas impares --%>
 								<tr>
-									<bean:define id="itemCode" name="item" property="idInternal"/>
+									<bean:define id="itemCode" name="item" property="externalId"/>
 									<td class="listClasses">
 										<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.toDelete" name="item" property="toDelete" indexed="true"/>
 										<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.itemCode" name="item" property="itemCode" value="<%= itemCode.toString() %>" indexed="true" />
@@ -119,7 +119,7 @@
 							</logic:equal>			
 							<logic:equal name="isEven" value="1"> <%-- Linhas pares  --%>
 								<tr>
-									<bean:define id="itemCode" name="item" property="idInternal"/>
+									<bean:define id="itemCode" name="item" property="externalId"/>
 									<td style="text-align: center;">
 										<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.toDelete" name="item" property="toDelete" indexed="true"/>
 										<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.itemCode" name="item" property="itemCode" value="<%= itemCode.toString() %>" indexed="true" />

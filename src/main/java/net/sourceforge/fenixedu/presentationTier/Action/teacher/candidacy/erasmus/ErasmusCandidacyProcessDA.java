@@ -29,6 +29,7 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "teacher",
         formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
@@ -72,11 +73,11 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+        final String degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {
-            return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+            return AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
         }
 
         return null;

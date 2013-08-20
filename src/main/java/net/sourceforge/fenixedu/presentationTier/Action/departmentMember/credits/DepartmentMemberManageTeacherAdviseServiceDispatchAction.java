@@ -23,7 +23,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "departmentMember", path = "/teacherAdviseServiceManagement",
         input = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0",
@@ -46,14 +45,13 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DepartmentMemberManageTeacherAdviseServiceDispatchAction extends ManageTeacherAdviseServiceDispatchAction {
 
     public ActionForward showTeacherAdvises(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
-        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        final ExecutionSemester executionSemester = getDomainObject(dynaForm, "executionPeriodId");
 
-        Teacher teacher = AbstractDomainObject.fromExternalId(dynaForm.getString("teacherId"));
+        Teacher teacher = getDomainObject(dynaForm, "teacherId");
 
         if (teacher == null || getLoggedTeacher(request) != teacher) {
             createNewActionMessage(request);
@@ -76,13 +74,13 @@ public class DepartmentMemberManageTeacherAdviseServiceDispatchAction extends Ma
     }
 
     public ActionForward editAdviseService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         return editAdviseService(form, request, mapping, RoleType.DEPARTMENT_MEMBER);
     }
 
     public ActionForward deleteAdviseService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         deleteAdviseService(request, RoleType.DEPARTMENT_MEMBER);
         return mapping.findForward("successfull-delete");

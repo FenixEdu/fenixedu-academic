@@ -33,7 +33,7 @@ public abstract class AbstractExecutionCourseContext extends ProcessingContext i
 
     @Override
     public String getSiteBasePath() {
-        return String.format(this.contexURI, "%s", getExecutionCourse().getIdInternal());
+        return String.format(this.contexURI, "%s", getExecutionCourse().getExternalId());
     }
 
 }

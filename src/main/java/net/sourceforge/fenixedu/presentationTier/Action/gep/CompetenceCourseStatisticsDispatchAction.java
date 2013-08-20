@@ -48,18 +48,18 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         request.setAttribute("executionYears", ReadNotClosedExecutionYears.run());
         return mapping.findForward("chooseExecutionYear");
     }
 
     public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IOException {
+            HttpServletResponse response) throws FenixServiceException, IOException {
 
         IUserView userView = getUserView(request);
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        Integer executionYearID = (Integer) dynaActionForm.get("executionYearID");
+        String executionYearID = (String) dynaActionForm.get("executionYearID");
         String agreementName = (String) dynaActionForm.get("registrationAgreement");
         RegistrationAgreement agreement =
                 StringUtils.isEmpty(agreementName) ? null : RegistrationAgreement.valueOf(agreementName);
@@ -92,7 +92,7 @@ public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchActio
             toProcessDegreeCurricularPlans.remove(degreeCurricularPlan.getName());
             processingDegreeCurricularPlans.add(degreeCurricularPlan.getName());
 
-            result.append(ComputeCurricularCourseStatistics.run(degreeCurricularPlan.getIdInternal(), executionYearID, agreement));
+            result.append(ComputeCurricularCourseStatistics.run(degreeCurricularPlan.getExternalId(), executionYearID, agreement));
 
             processingDegreeCurricularPlans.clear();
             processedDegreeCurricularPlans.add(degreeCurricularPlan.getName());

@@ -112,12 +112,12 @@ public class ExternalContract extends ExternalContract_Base {
     }
 
     public static ExternalContract readByPersonNameAddressAndInstitutionID(final String name, final String address,
-            final Integer institutionID) {
+            final String institutionID) {
         for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
             if (accountability instanceof ExternalContract) {
                 ExternalContract externalPerson = (ExternalContract) accountability;
                 if (externalPerson.hasPerson() && externalPerson.getPerson().getName().equals(name)
-                        && externalPerson.getInstitutionUnit().getIdInternal().equals(institutionID)
+                        && externalPerson.getInstitutionUnit().getExternalId().equals(institutionID)
                         && externalPerson.getPerson().hasDefaultPhysicalAddress()
                         && externalPerson.getPerson().getDefaultPhysicalAddress().getAddress().equals(address)) {
                     return externalPerson;
@@ -127,7 +127,7 @@ public class ExternalContract extends ExternalContract_Base {
         return null;
     }
 
-    public static List<ExternalContract> readByIDs(Collection<Integer> accountabilityIDs) {
+    public static List<ExternalContract> readByIDs(Collection<String> accountabilityIDs) {
         List<ExternalContract> externalPersons = new ArrayList<ExternalContract>();
         if (accountabilityIDs == null || accountabilityIDs.isEmpty()) {
             return externalPersons;
@@ -135,7 +135,7 @@ public class ExternalContract extends ExternalContract_Base {
         for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
             if (accountability instanceof ExternalContract) {
                 ExternalContract externalPerson = (ExternalContract) accountability;
-                if (accountabilityIDs.contains(externalPerson.getIdInternal())) {
+                if (accountabilityIDs.contains(externalPerson.getExternalId())) {
                     externalPersons.add(externalPerson);
                 }
             }

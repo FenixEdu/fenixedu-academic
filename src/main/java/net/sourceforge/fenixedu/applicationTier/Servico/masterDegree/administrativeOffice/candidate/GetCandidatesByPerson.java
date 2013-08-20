@@ -11,18 +11,18 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class GetCandidatesByPerson {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static List<InfoMasterDegreeCandidate> run(Integer personID) throws FenixServiceException {
+    public static List<InfoMasterDegreeCandidate> run(String personID) throws FenixServiceException {
 
-        final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
+        final Person person = (Person) AbstractDomainObject.fromExternalId(personID);
         final State activeCandidateSituationState = new State(State.ACTIVE);
 
         final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();

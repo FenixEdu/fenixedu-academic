@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -40,6 +41,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ExecutionDegreesManagementDispatchAction extends FenixDispatchAction {
@@ -60,10 +62,9 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             HttpServletResponse response) {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer degreeCurricularPlanID = (Integer) form.get("degreeCurricularPlanID");
-        if (degreeCurricularPlanID != null) {
-            final DegreeCurricularPlan degreeCurricularPlan =
-                    rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        final String degreeCurricularPlanID = (String) form.get("degreeCurricularPlanID");
+        if (!StringUtils.isEmpty(degreeCurricularPlanID)) {
+            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
             if (degreeCurricularPlan != null) {
                 request.setAttribute("executionDegrees", degreeCurricularPlan.getExecutionDegreesSet());
             }
@@ -75,9 +76,9 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             HttpServletResponse response) {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
-        if (executionDegreeID != null) {
-            final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final String executionDegreeID = (String) form.get("executionDegreeID");
+        if (!StringUtils.isEmpty(executionDegreeID)) {
+            final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
             request.setAttribute("executionDegree", executionDegree);
             setResponsibleCoordinatorsIDs(executionDegree, form);
@@ -89,14 +90,14 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     }
 
     private void setResponsibleCoordinatorsIDs(ExecutionDegree executionDegree, DynaActionForm form) {
-        final List<Integer> responsibleCoordinatorsList = new ArrayList<Integer>();
+        final List<String> responsibleCoordinatorsList = new ArrayList<String>();
         for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
             if (coordinator.isResponsible()) {
-                responsibleCoordinatorsList.add(coordinator.getIdInternal());
+                responsibleCoordinatorsList.add(coordinator.getExternalId());
             }
         }
         form.set("responsibleCoordinatorsIDs",
-                responsibleCoordinatorsList.toArray(new Integer[responsibleCoordinatorsList.size()]));
+                responsibleCoordinatorsList.toArray(new String[responsibleCoordinatorsList.size()]));
     }
 
     public ActionForward prepareInsertCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -109,7 +110,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final Integer coordinatorNumber = (Integer) form.get("coordinatorNumber");
-        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
+        final String executionDegreeID = (String) form.get("executionDegreeID");
         String istUsername = Employee.readByNumber(coordinatorNumber).getPerson().getIstUsername();
 
         try {
@@ -130,13 +131,13 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             HttpServletResponse response) {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
+        final String executionDegreeID = (String) form.get("executionDegreeID");
 
         try {
-            final Integer[] coordinatorsToBeResponsibleIDs = (Integer[]) form.get("responsibleCoordinatorsIDs");
+            final String[] coordinatorsToBeResponsibleIDs = (String[]) form.get("responsibleCoordinatorsIDs");
             ResponsibleCoordinators.run(executionDegreeID, Arrays.asList(coordinatorsToBeResponsibleIDs));
 
-            final Integer[] coordinatorsToRemoveIDs = (Integer[]) form.get("removeCoordinatorsIDs");
+            final String[] coordinatorsToRemoveIDs = (String[]) form.get("removeCoordinatorsIDs");
             RemoveCoordinators.run(executionDegreeID, Arrays.asList(coordinatorsToRemoveIDs));
 
         } catch (final IllegalDataAccessException e) {
@@ -153,16 +154,16 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             HttpServletResponse response) {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
-        if (executionDegreeID != null) {
-            final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final String executionDegreeID = (String) form.get("executionDegreeID");
+        if (!StringUtils.isEmpty(executionDegreeID)) {
+            final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
             request.setAttribute("executionDegree", executionDegree);
             request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
             request.setAttribute("campus", Campus.getAllActiveCampus());
 
-            form.set("executionYearID", executionDegree.getExecutionYear().getIdInternal());
-            form.set("campusID", executionDegree.getCampus().getIdInternal());
+            form.set("executionYearID", executionDegree.getExecutionYear().getExternalId());
+            form.set("campusID", executionDegree.getCampus().getExternalId());
 
             final String dateFormat = "dd/MM/yyyy";
             form.set("periodLessonsFirstSemesterBegin", executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay()
@@ -206,12 +207,12 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward editExecutionDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response)  {
+            HttpServletResponse response) {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
-        final Integer executionYearID = (Integer) form.get("executionYearID");
-        final Integer campusID = (Integer) form.get("campusID");
+        final String executionDegreeID = (String) form.get("executionDegreeID");
+        final String executionYearID = (String) form.get("executionYearID");
+        final String campusID = (String) form.get("campusID");
         final String dateFormat = "dd/MM/yyyy";
         final Boolean temporaryExamMap = Boolean.valueOf((String) form.get("temporaryExamMap"));
 
@@ -295,7 +296,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         final List<LabelValueBean> degreeCurricularPlans = new ArrayList<LabelValueBean>();
         for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
             degreeCurricularPlans.add(new LabelValueBean(degreeCurricularPlan.getDegree().getName() + " > "
-                    + degreeCurricularPlan.getName(), degreeCurricularPlan.getIdInternal().toString()));
+                    + degreeCurricularPlan.getName(), degreeCurricularPlan.getExternalId().toString()));
         }
 
         degreeCurricularPlans.add(0, new LabelValueBean(enumerationResources.getString("dropDown.Default"), ""));
@@ -305,9 +306,9 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     private ActionForward readExecutionDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             String findForward) {
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
-        if (executionDegreeID != null) {
-            final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final String executionDegreeID = (String) form.get("executionDegreeID");
+        if (!StringUtils.isEmpty(executionDegreeID)) {
+            final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
             request.setAttribute("executionDegree", executionDegree);
             return mapping.findForward(findForward);
         } else {
@@ -324,7 +325,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     public ActionForward deleteExecutionDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         DynaActionForm deleteForm = (DynaActionForm) form;
-        List<Integer> executionDegreesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
+        List<String> executionDegreesIds = Arrays.asList((String[]) deleteForm.get("internalIds"));
 
         try {
 

@@ -6,7 +6,7 @@
 
 <html:xhtml/>
 
-<bean:define id="unitID" name="unit" property="idInternal"/>
+<bean:define id="unitID" name="unit" property="externalId"/>
 <bean:define id="actionName" name="functionalityAction"/>
 
 <h2><bean:message key="label.manageAccessGroups" bundle="RESEARCHER_RESOURCES"/></h2>
@@ -30,11 +30,11 @@
 			<fr:property name="key(delete)" value="label.delete" />
 			<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
 			<fr:property name="link(delete)" value="<%= "/" + actionName + ".do?method=deletePersistedGroup&unitId=" + unitID %>"/>
-			<fr:property name="param(delete)" value="idInternal/groupId" />
+			<fr:property name="param(delete)" value="externalId/groupId" />
 			<fr:property name="key(edit)" value="label.edit" />
 			<fr:property name="bundle(edit)" value="APPLICATION_RESOURCES" />
 			<fr:property name="link(edit)" value="<%= "/" + actionName + ".do?method=prepareEditPersistedGroup&unitId=" + unitID %>"/>
-			<fr:property name="param(edit)" value="idInternal/groupId" />
+			<fr:property name="param(edit)" value="externalId/groupId" />
 		</fr:layout>
 	</fr:view>
 	</logic:notEmpty>

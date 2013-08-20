@@ -7,12 +7,12 @@
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 
 <logic:present name="forum">
-	<bean:define id="forumId" name="forum" property="idInternal" />
+	<bean:define id="forumId" name="forum" property="externalId" />
 	<bean:define id="module" name="module"/>
 	<logic:present name="thread">
 	<bean:define id="prefix" name="contextPrefix" type="java.lang.String"/>
 	<bean:define id="contextPrefix" value="<%= prefix + (prefix.contains("?") ? "&amp;" : "?") %>" type="java.lang.String"/>
-	<bean:define id="threadId" name="thread" property="idInternal" />
+	<bean:define id="threadId" name="thread" property="externalId" />
 		<logic:present name="person">
 			<logic:present name="messages">			
 				<bean:define id="conversationMessages" name="thread" property="conversationMessages" />
@@ -78,7 +78,7 @@
 							</fr:layout>
 						</fr:view>
 						<logic:equal name="loggedPersonCanWrite" value="true">
-							<bean:define id="quotedMessageId" name="conversationMessage" property="idInternal" />
+							<bean:define id="quotedMessageId" name="conversationMessage" property="externalId" />
 							<p class="mtop05">
 							<html:link action="<%=contextPrefix.toString() + "method=prepareCreateMessage&amp;showReplyBox=true&amp;threadId=" + threadId + "&amp;forumId=" + forumId + "&amp;quoteMessageId=" + quotedMessageId%>"> 
 								<bean:message key="messaging.viewThread.quote" bundle="MESSAGING_RESOURCES"/>

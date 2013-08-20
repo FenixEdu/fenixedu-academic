@@ -12,12 +12,12 @@
 	
 	<ul>
 		<li>
-			<html:link page="/manageExecutionCourse.do?method=prepareCreateLessonPlanning&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/manageExecutionCourse.do?method=prepareCreateLessonPlanning&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 				<bean:message key="link.create.lessonPlanning"/>
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/manageExecutionCourse.do?method=prepareImportLessonPlannings&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/manageExecutionCourse.do?method=prepareImportLessonPlannings&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 				<bean:message key="link.import.lessonPlanning"/>
 			</html:link>
 		</li>
@@ -27,7 +27,7 @@
 		<bean:message key="label.lessonsPlanning.instructions"/>
 	</div>
 		
-	<bean:define id="uri" toScope="page" type="java.lang.String">/manageExecutionCourse.do?method=lessonPlannings&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+	<bean:define id="uri" toScope="page" type="java.lang.String">/manageExecutionCourse.do?method=lessonPlannings&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>
 
 	
 	<fr:form action="<%= uri %>">
@@ -40,15 +40,15 @@
 		</fr:edit>
 	</fr:form>
 
-	<bean:define id="edit">/manageExecutionCourse.do?method=prepareEditLessonPlanning&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;page=0</bean:define>	
-	<bean:define id="delete">/manageExecutionCourse.do?method=deleteLessonPlanning&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;page=0</bean:define>	
-	<bean:define id="moveUp">/manageExecutionCourse.do?method=moveUpLessonPlanning&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;page=0</bean:define>
-	<bean:define id="moveDown">/manageExecutionCourse.do?method=moveDownLessonPlanning&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;page=0</bean:define>	
+	<bean:define id="edit">/manageExecutionCourse.do?method=prepareEditLessonPlanning&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/>&amp;page=0</bean:define>	
+	<bean:define id="delete">/manageExecutionCourse.do?method=deleteLessonPlanning&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/>&amp;page=0</bean:define>	
+	<bean:define id="moveUp">/manageExecutionCourse.do?method=moveUpLessonPlanning&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/>&amp;page=0</bean:define>
+	<bean:define id="moveDown">/manageExecutionCourse.do?method=moveDownLessonPlanning&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/>&amp;page=0</bean:define>	
 
 	<logic:iterate id="lessonPlannings" name="lessonPlanningsMap">
 		<logic:notEmpty name="lessonPlannings" property="value">
 			<h3 class="mtop2"><span class="underline1"><bean:message key="label.lessons"/> <bean:message name="lessonPlannings" property="key.name" bundle="APPLICATION_RESOURCES"/></span></h3>
-			<bean:define id="deleteLessonPlanings">/manageExecutionCourse.do?method=deleteLessonPlannings&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;shiftType=<bean:write name="lessonPlannings" property="key"/></bean:define>			
+			<bean:define id="deleteLessonPlanings">/manageExecutionCourse.do?method=deleteLessonPlannings&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/>&amp;shiftType=<bean:write name="lessonPlannings" property="key"/></bean:define>			
 			<ul>
 				<li><html:link titleKey="link.delete.all.lessonPlannings.by.type.title" action="<%= deleteLessonPlanings %>" onclick="return confirm('Tem a certeza que deseja apagar todos os planos deste tipo?')"><bean:message key="link.delete.all.lessonPlannings.by.type"/></html:link></li>
 			</ul>
@@ -68,17 +68,17 @@
 				</fr:view>
 				
 				<p class="mtop05">
-					<html:link page="<%= edit %>" paramId="lessonPlanningID" paramName="lessonPlanning" paramProperty="idInternal">
+					<html:link page="<%= edit %>" paramId="lessonPlanningID" paramName="lessonPlanning" paramProperty="externalId">
 						<bean:message key="link.edit"/>
 					</html:link>, 
-					<html:link page="<%= delete %>" paramId="lessonPlanningID" paramName="lessonPlanning" paramProperty="idInternal">
+					<html:link page="<%= delete %>" paramId="lessonPlanningID" paramName="lessonPlanning" paramProperty="externalId">
 						<bean:message key="link.delete"/>
 					</html:link>&nbsp;&nbsp;
 					<span style="color: #555;"><bean:message key="label.moveTo"/>: </span>
-					<html:link page="<%= moveUp %>" paramId="lessonPlanningID" paramName="lessonPlanning" paramProperty="idInternal">
+					<html:link page="<%= moveUp %>" paramId="lessonPlanningID" paramName="lessonPlanning" paramProperty="externalId">
 						<bean:message key="link.move.up"/>
 					</html:link>, 
-					<html:link page="<%= moveDown %>" paramId="lessonPlanningID" paramName="lessonPlanning" paramProperty="idInternal">
+					<html:link page="<%= moveDown %>" paramId="lessonPlanningID" paramName="lessonPlanning" paramProperty="externalId">
 						<bean:message key="link.move.down"/>
 					</html:link>
 				</p>

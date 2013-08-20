@@ -41,6 +41,7 @@ import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
@@ -83,23 +84,22 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
         return super.execute(mapping, actionForm, request, response);
     }
 
-    protected Integer getAnnouncementBoardId(HttpServletRequest request) {
-        return request.getParameter("announcementBoardId") == null ? null : Integer.valueOf(request
-                .getParameter("announcementBoardId"));
+    protected String getAnnouncementBoardId(HttpServletRequest request) {
+        return request.getParameter("announcementBoardId");
     }
 
-    protected Integer getAnnouncementId(HttpServletRequest request) {
-        return Integer.valueOf(request.getParameter("announcementId"));
+    protected String getAnnouncementId(HttpServletRequest request) {
+        return request.getParameter("announcementId");
     }
 
     protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
-        Integer id = this.getAnnouncementBoardId(request);
-        return id != null ? (AnnouncementBoard) rootDomainObject.readContentByOID(id) : null;
+        String id = this.getAnnouncementBoardId(request);
+        return id != null ? (AnnouncementBoard) AbstractDomainObject.fromExternalId(id) : null;
     }
 
     protected Announcement getRequestedAnnouncement(HttpServletRequest request) {
-        Integer id = this.getAnnouncementId(request);
-        return id != null ? (Announcement) rootDomainObject.readContentByOID(id) : null;
+        String id = this.getAnnouncementId(request);
+        return id != null ? (Announcement) AbstractDomainObject.fromExternalId(id) : null;
     }
 
     public ActionForward addBookmark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -262,7 +262,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
         return this.viewAnnouncements(mapping, form, request, response);
     }
 
-    protected boolean deleteAnnouncement(HttpServletRequest request) throws  FenixServiceException {
+    protected boolean deleteAnnouncement(HttpServletRequest request) throws FenixServiceException {
         IUserView userView = getUserView(request);
         final Announcement announcement = getRequestedAnnouncement(request);
         if (!announcement.getAnnouncementBoard().hasWriter(getLoggedPerson(request))) {
@@ -282,7 +282,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
         return this.viewAnnouncements(mapping, form, request, response);
     }
 
-    protected boolean aproveAction(HttpServletRequest request) throws  FenixServiceException {
+    protected boolean aproveAction(HttpServletRequest request) throws FenixServiceException {
         IUserView userView = getUserView(request);
         final Announcement announcement = getRequestedAnnouncement(request);
         final Boolean action = Boolean.valueOf(request.getParameter("action"));
@@ -402,8 +402,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     }
 
     private FileContent getFileContent(HttpServletRequest request) {
-        Integer fileContentId = Integer.valueOf(request.getParameter("fileId"));
-        FileContent fileContent = (FileContent) rootDomainObject.readFileByOID(fileContentId);
+        FileContent fileContent = (FileContent) AbstractDomainObject.fromExternalId(request.getParameter("fileId"));
         return fileContent;
     }
 

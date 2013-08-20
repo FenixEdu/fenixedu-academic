@@ -4,28 +4,27 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.EditCourseInformationAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author jdnf and mrsp
  */
 public class EditCourseInformation {
 
-    protected void run(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport) throws FenixServiceException {
+    protected void run(String courseReportID, InfoCourseReport infoCourseReport, String newReport) throws FenixServiceException {
         final CourseReport courseReport;
-        if (courseReportID != 0) {
-            courseReport = RootDomainObject.getInstance().readCourseReportByOID(courseReportID);
+        if (courseReportID != null) {
+            courseReport = AbstractDomainObject.fromExternalId(courseReportID);
         } else {
             final ExecutionCourse executionCourse =
-                    RootDomainObject.getInstance().readExecutionCourseByOID(infoCourseReport.getInfoExecutionCourse().getIdInternal());
+                    AbstractDomainObject.fromExternalId(infoCourseReport.getInfoExecutionCourse().getExternalId());
 
             courseReport = executionCourse.createCourseReport(newReport);
         }
@@ -42,7 +41,7 @@ public class EditCourseInformation {
     private static final EditCourseInformation serviceInstance = new EditCourseInformation();
 
     @Service
-    public static void runEditCourseInformation(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport)
+    public static void runEditCourseInformation(String courseReportID, InfoCourseReport infoCourseReport, String newReport)
             throws FenixServiceException, NotAuthorizedException {
         EditCourseInformationAuthorizationFilter.instance.execute(courseReportID, infoCourseReport, newReport);
         serviceInstance.run(courseReportID, infoCourseReport, newReport);

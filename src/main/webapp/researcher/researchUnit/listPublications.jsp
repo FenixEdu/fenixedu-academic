@@ -168,7 +168,7 @@
 		<bean:define id="results" name="unstructureds" toScope="request"/>
 		<ul>
 			<logic:iterate id="result" name="results" scope="request">
-	 			<bean:define id="resultId" name="result" property="idInternal"/>
+	 			<bean:define id="resultId" name="result" property="externalId"/>
 				<li>
 		 			<fr:view name="result" layout="values" schema="result.publication.presentation.Unstructured">
 		 				<fr:layout>

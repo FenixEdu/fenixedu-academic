@@ -91,7 +91,7 @@
 				</td>
 				<logic:notPresent name="showPhotos">
 					<td class="acenter">
-						<bean:define id="personID" name="infoPerson" property="person.idInternal"/>
+						<bean:define id="personID" name="infoPerson" property="person.externalId"/>
 						<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 					</td>
 				</logic:notPresent>
@@ -178,7 +178,7 @@
 		<tr>	
 			<td>
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentCodesToInsert" property="studentCodesToInsert">
-					<bean:write name="infoStudent" property="idInternal"/>
+					<bean:write name="infoStudent" property="externalId"/>
 				</html:multibox>
 			</td>	
 			<td>
@@ -188,7 +188,7 @@
 			<logic:notPresent name="showPhotos">
 				<td class="acenter">
 					<bean:define id="person" name="infoPerson" property="person"/>
-					<bean:define id="personID" name="person" property="idInternal"/>
+					<bean:define id="personID" name="person" property="externalId"/>
 					<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 				</td>
 			</logic:notPresent>		

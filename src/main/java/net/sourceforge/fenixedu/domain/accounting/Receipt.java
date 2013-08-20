@@ -51,7 +51,7 @@ public class Receipt extends Receipt_Base {
         @Override
         public int compare(Receipt leftReceipt, Receipt rightReceipt) {
             int comparationResult = leftReceipt.getReceiptNumber().compareTo(rightReceipt.getReceiptNumber());
-            return (comparationResult == 0) ? leftReceipt.getIdInternal().compareTo(rightReceipt.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftReceipt.getExternalId().compareTo(rightReceipt.getExternalId()) : comparationResult;
         }
     };
 

@@ -24,7 +24,7 @@
 			<tr>
 				<td class="listClasses">
 					<bean:define id="roleName" name="role" property="roleType"/>
-					<bean:define id="roleID" name="role" property="idInternal"/>
+					<bean:define id="roleID" name="role" property="externalId"/>
 					<html:link action="<%="/viewPersonsWithRole.do?method=searchWithRole&amp;roleID=" + roleID %>">
 						<bean:message bundle="MANAGER_RESOURCES" key="<%= pageContext.findAttribute("roleName").toString() %>"/>
 					</html:link>

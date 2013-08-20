@@ -10,7 +10,7 @@
 	<h2><bean:message key="title.evaluation.enrolment.management" arg0="<%= evaluation.getEvaluationType().toString() %>"/></h2>
 	<br />
 	<span class="error"><!-- Error messages go here --><html:errors /></span>	
-	<bean:define id="evaluationCode" name="evaluation" property="idInternal"/>			
+	<bean:define id="evaluationCode" name="evaluation" property="externalId"/>			
 	<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.EXAM_STRING %>">
 		<table> 	
 			<tr>

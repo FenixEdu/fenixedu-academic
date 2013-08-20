@@ -22,7 +22,7 @@
 							<b><bean:message key="message.seminaries.avaliableCases"/></b><br/>
 							<html:select bundle="HTMLALT_RESOURCES" altKey="select.selectedCases" style="width:100%" size = "7" multiple="true" property="selectedCases">
 						
-								<html:options collection="unselectedCases" property="idInternal" labelProperty="name"/>
+								<html:options collection="unselectedCases" property="externalId" labelProperty="name"/>
 							
 							 </html:select>
 						</td>
@@ -44,7 +44,7 @@
 							<b><bean:message key="message.seminaries.selectedCases"/></b><br/>
 							<html:select bundle="HTMLALT_RESOURCES" altKey="select.unselectedCases" style="width:100%" size = "5" multiple="true" property="unselectedCases">
 				
-								<html:options collection="selectedCases" property="idInternal" labelProperty="name"/>
+								<html:options collection="selectedCases" property="externalId" labelProperty="name"/>
 					
 							</html:select>
 						</td>
@@ -63,7 +63,7 @@
 					</logic:equal>
 					<tr>
 						<td>
-							<input alt="input.equivalencyID" type="hidden" name="equivalencyID" value="<%= equivalency.getIdInternal()%>">			
+							<input alt="input.equivalencyID" type="hidden" name="equivalencyID" value="<%= equivalency.getExternalId()%>">			
 						</td>
 					</tr>
 					<tr>
@@ -79,7 +79,7 @@
 					<tr>
 						<td>
 							<logic:iterate id="selectedCase" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy" name="hiddenSelectedCases">
-								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.hiddenSelectedCases" property="hiddenSelectedCases" value="<%=selectedCase.getIdInternal().toString()%>"/>
+								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.hiddenSelectedCases" property="hiddenSelectedCases" value="<%=selectedCase.getExternalId().toString()%>"/>
 							</logic:iterate>
 						</td>
 					</tr>

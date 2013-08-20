@@ -71,8 +71,8 @@ public class PhdCandidacyFeedbackRequestDocument extends PhdCandidacyFeedbackReq
     protected VirtualPath getVirtualPath() {
         final VirtualPath filePath = new VirtualPath();
         filePath.addNode(new VirtualPathNode("PhdIndividualProgram", "PhdIndividualProgram"));
-        filePath.addNode(new VirtualPathNode(getElement().getProcess().getIndividualProgramProcess().getIdInternal().toString(),
-                getElement().getProcess().getIndividualProgramProcess().getIdInternal().toString()));
+        filePath.addNode(new VirtualPathNode(getElement().getProcess().getIndividualProgramProcess().getExternalId().toString(),
+                getElement().getProcess().getIndividualProgramProcess().getExternalId().toString()));
         return filePath;
     }
 

@@ -18,7 +18,7 @@ public class UnitAnnouncementBoard extends UnitAnnouncementBoard_Base {
 
             if (result == 0) {
                 result = o1.getName().compareTo(o2.getName());
-                return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
+                return (result == 0) ? o1.getExternalId().compareTo(o2.getExternalId()) : result;
             } else {
                 return (result <= 0) ? -1 : 1;
             }

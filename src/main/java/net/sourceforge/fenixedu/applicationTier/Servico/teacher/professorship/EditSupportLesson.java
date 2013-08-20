@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -17,12 +16,13 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditSupportLesson {
 
     protected void run(SupportLessonDTO supportLessonDTO, RoleType roleType) {
 
-        Professorship professorship = RootDomainObject.getInstance().readProfessorshipByOID(supportLessonDTO.getProfessorshipID());
+        Professorship professorship = AbstractDomainObject.fromExternalId(supportLessonDTO.getProfessorshipID());
         ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
         Teacher teacher = professorship.getTeacher();
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
@@ -33,7 +33,7 @@ public class EditSupportLesson {
 
         final StringBuilder log = new StringBuilder();
 
-        SupportLesson supportLesson = RootDomainObject.getInstance().readSupportLessonByOID(supportLessonDTO.getIdInternal());
+        SupportLesson supportLesson = AbstractDomainObject.fromExternalId(supportLessonDTO.getExternalId());
         if (supportLesson == null) {
             supportLesson = new SupportLesson(supportLessonDTO, professorship, roleType);
             log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",

@@ -6,12 +6,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz
@@ -24,8 +24,8 @@ public class ConfirmAttributionOfFinalDegreeWork {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(String username, Integer selectedGroupProposalOID) throws FenixServiceException {
-        GroupProposal groupProposal = RootDomainObject.getInstance().readGroupProposalByOID(selectedGroupProposalOID);
+    public static Boolean run(String username, String selectedGroupProposalOID) throws FenixServiceException {
+        GroupProposal groupProposal = AbstractDomainObject.fromExternalId(selectedGroupProposalOID);
 
         if (groupProposal != null) {
             FinalDegreeWorkGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher();
@@ -36,7 +36,7 @@ public class ConfirmAttributionOfFinalDegreeWork {
 
             FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
             if (group != null) {
-                if (!group.getIdInternal().equals(groupAttributed.getIdInternal())) {
+                if (!group.getExternalId().equals(groupAttributed.getExternalId())) {
                     throw new NoAttributionToConfirmException();
                 }
 

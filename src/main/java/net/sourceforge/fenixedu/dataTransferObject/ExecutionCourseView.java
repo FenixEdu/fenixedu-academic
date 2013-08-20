@@ -70,16 +70,16 @@ public class ExecutionCourseView {
         return getExecutionCourse().getNome();
     }
 
-    public Integer getExecutionCourseOID() {
-        return getExecutionCourse().getIdInternal();
+    public String getExecutionCourseOID() {
+        return getExecutionCourse().getExternalId();
     }
 
     public Integer getSemester() {
         return getExecutionCourse().getExecutionPeriod().getSemester();
     }
 
-    public Integer getExecutionPeriodOID() {
-        return getExecutionCourse().getExecutionPeriod().getIdInternal();
+    public String getExecutionPeriodOID() {
+        return getExecutionCourse().getExecutionPeriod().getExternalId();
     }
 
     @Override

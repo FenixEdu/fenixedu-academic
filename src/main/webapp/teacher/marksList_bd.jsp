@@ -13,8 +13,8 @@
 	<bean:define id="marksListComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks"/>
 	<bean:define id="commonComponent" name="siteView" property="commonComponent" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon"/>
 
-	<bean:define id="executionCourseId" name="commonComponent" property="executionCourse.idInternal"/>
-	<bean:define id="evaluationId" name="marksListComponent" property="infoEvaluation.idInternal" />
+	<bean:define id="executionCourseId" name="commonComponent" property="executionCourse.externalId"/>
+	<bean:define id="evaluationId" name="marksListComponent" property="infoEvaluation.externalId" />
 	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= executionCourseId.toString() %>" />	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.evaluationCode" property="evaluationCode" value="<%= evaluationId.toString() %>" />
@@ -78,7 +78,7 @@
 				    			    		
 	    	<logic:iterate id="markElem" name="marksListComponent" property="infoAttends" indexId="markId" type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
 	    	
-		    	<bean:define id="studentCode" name="markElem" property="aluno.idInternal" />
+		    	<bean:define id="studentCode" name="markElem" property="aluno.externalId" />
 		    	<bean:define id="studentNumber" name="markElem" property="aluno.number" />
 
 				<bean:define id="studentMark" value=""/>

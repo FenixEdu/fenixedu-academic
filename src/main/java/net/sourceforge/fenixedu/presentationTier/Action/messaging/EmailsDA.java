@@ -33,6 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -100,7 +101,7 @@ public class EmailsDA extends FenixDispatchAction {
             HttpServletResponse response) {
         final String senderParam = request.getParameter("senderId");
         if (senderParam != null && !senderParam.isEmpty()) {
-            return viewSentEmails(mapping, request, new Integer(senderParam));
+            return viewSentEmails(mapping, request, senderParam);
         }
 
         final IUserView userView = UserView.getUser();
@@ -119,9 +120,9 @@ public class EmailsDA extends FenixDispatchAction {
         }
         if (isSenderUnique(sendersGroups, sendersGroupsCourses)) {
             if (sendersGroupsCourses.size() == 1) {
-                return viewSentEmails(mapping, request, (sendersGroupsCourses.iterator().next()).getIdInternal());
+                return viewSentEmails(mapping, request, (sendersGroupsCourses.iterator().next()).getExternalId());
             } else {
-                return viewSentEmails(mapping, request, sendersGroups.iterator().next().getIdInternal());
+                return viewSentEmails(mapping, request, sendersGroups.iterator().next().getExternalId());
             }
         }
         request.setAttribute("sendersGroups", sendersGroups);
@@ -139,8 +140,8 @@ public class EmailsDA extends FenixDispatchAction {
         return mapping.findForward("view.sent.emails");
     }
 
-    public ActionForward viewSentEmails(final ActionMapping mapping, final HttpServletRequest request, final Integer senderId) {
-        final Sender sender = rootDomainObject.readSenderByOID(senderId);
+    public ActionForward viewSentEmails(final ActionMapping mapping, final HttpServletRequest request, final String senderId) {
+        final Sender sender = AbstractDomainObject.fromExternalId(senderId);
         final int numberOfMessagesByPage = 40;
         final CollectionPager<Message> pager = new CollectionPager<Message>(sender.getMessagesSet(), numberOfMessagesByPage);
         request.setAttribute("numberOfPages", getNumberOfPages(pager));
@@ -168,7 +169,7 @@ public class EmailsDA extends FenixDispatchAction {
             final HttpServletResponse response) {
         final String messageParam = request.getParameter("messagesId");
         final Message message =
-                messageParam != null && !messageParam.isEmpty() ? rootDomainObject.readMessageByOID(new Integer(messageParam)) : null;
+                messageParam != null && !messageParam.isEmpty() ? AbstractDomainObject.<Message> fromExternalId(messageParam) : null;
         return viewEmail(mapping, request, message);
     }
 
@@ -176,13 +177,13 @@ public class EmailsDA extends FenixDispatchAction {
             final HttpServletRequest request, final HttpServletResponse response) {
         final String messageParam = request.getParameter("messagesId");
         final Message message =
-                messageParam != null && !messageParam.isEmpty() ? rootDomainObject.readMessageByOID(new Integer(messageParam)) : null;
+                messageParam != null && !messageParam.isEmpty() ? AbstractDomainObject.<Message> fromExternalId(messageParam) : null;
         if (message == null) {
             return viewSentEmails(mapping, actionForm, request, response);
         } else {
             final Sender sender = message.getSender();
             MessageDeleteService.delete(message);
-            return viewSentEmails(mapping, request, sender.getIdInternal());
+            return viewSentEmails(mapping, request, sender.getExternalId());
         }
     }
 
@@ -211,7 +212,7 @@ public class EmailsDA extends FenixDispatchAction {
 
     private Message getMessageFromRequest(HttpServletRequest request) {
         final String messageParam = request.getParameter("messagesId");
-        return rootDomainObject.readMessageByOID(new Integer(messageParam));
+        return AbstractDomainObject.fromExternalId(messageParam);
     }
 
     private int getNumberOfPages(CollectionPager pager) {

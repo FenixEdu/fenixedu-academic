@@ -28,7 +28,7 @@
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
-<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.idInternal" />
+<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.externalId" />
 <fr:form action="<%= "/studentDismissals.do?scpID=" + scpID.toString() %>">
 	<html:hidden property="method" value="createDismissals"/>
 	

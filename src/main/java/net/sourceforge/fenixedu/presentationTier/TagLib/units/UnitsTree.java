@@ -71,12 +71,12 @@ public class UnitsTree extends TagSupport {
         }
 
         buffer.append("<a href=\"").append(request.getContextPath()).append(path).append("&").append(paramName).append("=")
-                .append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getNameWithAcronym()).append("</a>")
+                .append(parentUnit.getExternalId()).append("\">").append(parentUnit.getNameWithAcronym()).append("</a>")
                 .append("</li>");
 
         if (!subUnits.isEmpty()) {
-            buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getIdInternal())
-                    .append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ")
+            buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getExternalId())
+                    .append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "").append("\" ")
                     .append("style='display:" + (getExpanded() != null && Boolean.valueOf(getExpanded()) ? "block" : "none"))
                     .append("'>\r\n");
 
@@ -114,12 +114,12 @@ public class UnitsTree extends TagSupport {
                 .append("src='")
                 .append(request.getContextPath())
                 .append((getExpanded() != null && Boolean.valueOf(getExpanded()) ? "/images/toggle_minus10.gif" : "/images/toggle_plus10.gif"))
-                .append("' id=\"").append(parentUnit.getIdInternal())
-                .append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ")
+                .append("' id=\"").append(parentUnit.getExternalId())
+                .append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "").append("\" ")
                 .append("indexed='true' onClick=\"").append("check(document.getElementById('").append("aa")
-                .append(parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "")
-                .append("'),document.getElementById('").append(parentUnit.getIdInternal())
-                .append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("'));return false;")
+                .append(parentUnit.getExternalId()).append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "")
+                .append("'),document.getElementById('").append(parentUnit.getExternalId())
+                .append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "").append("'));return false;")
                 .append("\"> ");
     }
 

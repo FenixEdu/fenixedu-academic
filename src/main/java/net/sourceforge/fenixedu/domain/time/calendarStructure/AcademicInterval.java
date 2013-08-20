@@ -182,27 +182,9 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     public static AcademicInterval getAcademicIntervalFromString(String representationInStringFormat) {
         String[] split = representationInStringFormat.split(FULL_SEPARATOR);
-        if (split.length == 3) {
-            // Do it the old fashioned way...
-            String entryClassName = split[0];
-            Integer entryIdInternal = Integer.valueOf(split[1]);
-            Integer academicCalendarExternalId = Integer.valueOf(split[2]);
-
-            AcademicCalendarEntry entry = RootDomainObject.getInstance().readAcademicCalendarEntryByOID(entryIdInternal);
-            if (!entry.getClass().getName().equals(entryClassName)) {
-                throw new DomainException("error.AcademicInterval.invalid.class.names");
-            }
-            AcademicCalendarRootEntry rootEntry =
-                    (AcademicCalendarRootEntry) RootDomainObject.getInstance().readAcademicCalendarEntryByOID(
-                            academicCalendarExternalId);
-
-            return new AcademicInterval(entry, rootEntry);
-        } else {
-            String entryExternalId = split[0];
-            String academicCalendarExternalId = split[1];
-            return new AcademicInterval(entryExternalId, academicCalendarExternalId);
-        }
-
+        String entryExternalId = split[0];
+        String academicCalendarExternalId = split[1];
+        return new AcademicInterval(entryExternalId, academicCalendarExternalId);
     }
 
     public String getResumedRepresentationInStringFormat() {

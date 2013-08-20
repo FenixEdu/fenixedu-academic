@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -21,15 +21,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionCourseResponsiblesIds {
 
-    protected List run(Integer executionCourseId) throws FenixServiceException {
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+    protected List<String> run(String executionCourseId) throws FenixServiceException {
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
 
         List<Professorship> responsibles = executionCourse.responsibleFors();
 
-        List<Integer> responsibleIDs = new ArrayList<Integer>();
+        List<String> responsibleIDs = new ArrayList<String>();
         if (responsibles != null) {
             for (Professorship responsibleFor : responsibles) {
-                responsibleIDs.add(responsibleFor.getTeacher().getIdInternal());
+                responsibleIDs.add(responsibleFor.getTeacher().getExternalId());
             }
         }
         return responsibleIDs;
@@ -40,7 +40,7 @@ public class ReadExecutionCourseResponsiblesIds {
     private static final ReadExecutionCourseResponsiblesIds serviceInstance = new ReadExecutionCourseResponsiblesIds();
 
     @Service
-    public static List runReadExecutionCourseResponsiblesIds(Integer executionCourseId) throws FenixServiceException,
+    public static List<String> runReadExecutionCourseResponsiblesIds(String executionCourseId) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

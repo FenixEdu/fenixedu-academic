@@ -27,7 +27,6 @@ public class BolonhaTransitionManagementDA extends AbstractBolonhaTransitionMana
     }
 
     private Student getStudent(final HttpServletRequest request) {
-        return rootDomainObject.readStudentByOID(getRequestParameterAsInteger(request, "studentId"));
+        return getDomainObject(request, "studentId");
     }
-
 }

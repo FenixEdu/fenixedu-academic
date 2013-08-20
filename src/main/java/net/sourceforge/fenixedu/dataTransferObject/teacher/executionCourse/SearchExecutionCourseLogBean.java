@@ -200,7 +200,7 @@ public class SearchExecutionCourseLogBean implements Serializable {
     public String getSearchElementsAsParameters() {
         String parameters = "";
 
-        parameters += "&amp;executionCourse=" + getExecutionCourse().getIdInternal();
+        parameters += "&amp;executionCourse=" + getExecutionCourse().getExternalId();
         if (viewPhoto) {
             parameters += "&amp;viewPhoto=true";
         }
@@ -213,7 +213,7 @@ public class SearchExecutionCourseLogBean implements Serializable {
         if (getProfessorships() != null && !getProfessorships().isEmpty()) {
             parameters += "&amp;professorships=";
             for (Professorship professorship : getProfessorships()) {
-                parameters += professorship.getIdInternal() + ":";
+                parameters += professorship.getExternalId() + ":";
             }
         }
         if (getMonths() != null && !getMonths().isEmpty()) {

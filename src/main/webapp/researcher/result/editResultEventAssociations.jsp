@@ -6,12 +6,12 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <bean:define id="associations" name="result" property="resultEventAssociations"/>
-<bean:define id="resultId" name="result" property="idInternal"/>
+<bean:define id="resultId" name="result" property="externalId"/>
 <bean:define id="resultType" name="result" property="class.simpleName"/>
 <bean:define id="result" name="result"/>
 <bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>"/>
 	<logic:present name="unit">
-	<bean:define id="unitID" name="unit" property="idInternal"/>
+	<bean:define id="unitID" name="unit" property="externalId"/>
 	<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
 </logic:present>
 
@@ -78,7 +78,7 @@
 				<fr:property name="columnClasses" value=",acenter,acenter"/>
 				
 				<fr:property name="link(remove)" value="<%= remove %>"/>
-				<fr:property name="param(remove)" value="idInternal/associationId"/>
+				<fr:property name="param(remove)" value="externalId/associationId"/>
 				<fr:property name="key(remove)" value="link.remove"/>
 				<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 			</fr:layout>

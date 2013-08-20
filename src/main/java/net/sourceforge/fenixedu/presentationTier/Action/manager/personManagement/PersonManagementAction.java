@@ -388,7 +388,7 @@ public class PersonManagementAction extends FenixDispatchAction {
     }
 
     protected PartyContact getPartyContact(final HttpServletRequest request) {
-        return rootDomainObject.readPartyContactByOID(getIntegerFromRequest(request, "addressID"));
+        return getDomainObject(request, "addressID");
     }
 
     private ActionForward goToPrepareCreateNewPersonInvitationPage(ActionMapping mapping, HttpServletRequest request,
@@ -426,7 +426,7 @@ public class PersonManagementAction extends FenixDispatchAction {
         request.setAttribute("invitedPersonBean", invitedPersonBean);
     }
 
-    private void readAndSetValidPersons(HttpServletRequest request) throws  FenixServiceException {
+    private void readAndSetValidPersons(HttpServletRequest request) throws FenixServiceException {
         final IViewState viewState = RenderUtils.getViewState("personBeanID");
         PersonBean personBean = (PersonBean) viewState.getMetaObject().getObject();
 
@@ -441,26 +441,19 @@ public class PersonManagementAction extends FenixDispatchAction {
     }
 
     private Unit getHostUnitFromParameter(HttpServletRequest request) {
-        String unitIDString = request.getParameter("unitID");
-        return (Unit) ((StringUtils.isEmpty(unitIDString)) ? null : rootDomainObject
-                .readPartyByOID(Integer.valueOf(unitIDString)));
+        return getDomainObject(request, "unitID");
     }
 
     private Person getPersonFromParameter(HttpServletRequest request) {
-        String personIDString = request.getParameter("personID");
-        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.fromExternalId(personIDString));
+        return getDomainObject(request, "personID");
     }
 
     private Invitation getInvitationFromParameter(HttpServletRequest request) {
-        String invitationIDString = request.getParameter("invitationID");
-        return (Invitation) ((StringUtils.isEmpty(invitationIDString)) ? null : rootDomainObject.readAccountabilityByOID(Integer
-                .valueOf(invitationIDString)));
+        return getDomainObject(request, "invitationID");
     }
 
     private Unit getResponsibleUnitFromParameter(HttpServletRequest request) {
-        String unitIDString = request.getParameter("responsibilityUnitID");
-        return (Unit) ((StringUtils.isEmpty(unitIDString)) ? null : rootDomainObject
-                .readPartyByOID(Integer.valueOf(unitIDString)));
+        return getDomainObject(request, "responsibilityUnitID");
     }
 
     private boolean isSpecified(final String string) {

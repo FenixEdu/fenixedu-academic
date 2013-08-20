@@ -25,7 +25,7 @@ public class Guide extends Guide_Base {
         @Override
         public int compare(Guide leftGuide, Guide rightGuide) {
             int comparationResult = leftGuide.getVersion().compareTo(rightGuide.getVersion());
-            return (comparationResult == 0) ? leftGuide.getIdInternal().compareTo(rightGuide.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftGuide.getExternalId().compareTo(rightGuide.getExternalId()) : comparationResult;
         }
     };
 

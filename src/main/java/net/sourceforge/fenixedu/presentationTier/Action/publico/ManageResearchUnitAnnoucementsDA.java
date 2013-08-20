@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
@@ -21,6 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Mapping(module = "publico", path = "/researchSite/manageResearchUnitAnnouncements", scope = "session", parameter = "method")
@@ -38,8 +38,7 @@ public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
         }
         String siteID = request.getParameter("siteID");
         if (siteID != null) {
-            ResearchUnitSite site =
-                    (ResearchUnitSite) RootDomainObject.readDomainObjectByOID(ResearchUnitSite.class, Integer.valueOf(siteID));
+            ResearchUnitSite site = (ResearchUnitSite) AbstractDomainObject.fromExternalId(siteID);
             return site;
         } else {
             return null;

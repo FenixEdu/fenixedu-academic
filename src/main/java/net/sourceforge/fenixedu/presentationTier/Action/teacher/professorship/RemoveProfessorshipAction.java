@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.RemoveProfessorshipWithPerson;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -25,6 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author jpvl
@@ -52,12 +53,12 @@ public class RemoveProfessorshipAction extends FenixDispatchAction {
         DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
 
         String id = (String) teacherExecutionCourseForm.get("teacherId");
-        Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionCourseId"));
+        String executionCourseId = (String) teacherExecutionCourseForm.get("executionCourseId");
 
         ActionMessages actionMessages = getMessages(request);
         try {
-            RemoveProfessorshipWithPerson.run(Person.readPersonByIstUsername(id), RootDomainObject.getInstance()
-                    .readExecutionCourseByOID(executionCourseId));
+            RemoveProfessorshipWithPerson.run(Person.readPersonByIstUsername(id),
+                    AbstractDomainObject.<ExecutionCourse> fromExternalId(executionCourseId));
         } catch (DomainException de) {
             actionMessages.add(de.getMessage(), new ActionMessage(de.getMessage()));
             saveMessages(request, actionMessages);

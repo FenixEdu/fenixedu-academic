@@ -51,9 +51,8 @@ public class GeneratePasswordsForCandidaciesAction extends FenixDispatchAction {
     public ActionForward showCandidacies(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final DynaActionForm actionForm = (DynaActionForm) form;
-        final Integer executionDegreeId = (Integer) actionForm.get("executionDegreeId");
         final EntryPhase entryPhase = EntryPhase.valueOf(actionForm.getString("entryPhase"));
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+        final ExecutionDegree executionDegree = getDomainObject(actionForm, "executionDegreeId");
         final Set<StudentCandidacy> studentCandidacies =
                 new HashSet<StudentCandidacy>(StudentCandidacy.readNotConcludedBy(executionDegree,
                         ExecutionYear.readCurrentExecutionYear(), entryPhase));
@@ -66,8 +65,8 @@ public class GeneratePasswordsForCandidaciesAction extends FenixDispatchAction {
     public ActionForward generatePasswords(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final List<PasswordBean> passwordBeans =
-                GeneratePasswordsForCandidacies.run(Arrays.asList((Integer[]) ((DynaActionForm) form)
-                        .get("candidacyIdsToProcess")));
+                GeneratePasswordsForCandidacies
+                        .run(Arrays.asList((String[]) ((DynaActionForm) form).get("candidacyIdsToProcess")));
 
         Collections.sort(passwordBeans, new BeanComparator("person.username"));
         request.setAttribute("passwordBeans", passwordBeans);

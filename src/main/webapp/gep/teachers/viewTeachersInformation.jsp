@@ -53,7 +53,7 @@
 				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
-						   paramProperty="idInternal">
+						   paramProperty="externalId">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
@@ -63,7 +63,7 @@
 				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
-						   paramProperty="idInternal">
+						   paramProperty="externalId">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES"/>
 				</html:link>
 			</div>
@@ -346,7 +346,7 @@
 				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
-						   paramProperty="idInternal">
+						   paramProperty="externalId">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
@@ -356,7 +356,7 @@
 				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
-						   paramProperty="idInternal">
+						   paramProperty="externalId">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES"/>
 				</html:link>
 			</div>

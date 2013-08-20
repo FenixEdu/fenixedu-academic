@@ -108,7 +108,7 @@ public class InfoPrice extends InfoObject {
         infoPrice.setDescription(price2.getDescription());
         infoPrice.setDocumentType(price2.getDocumentType());
         infoPrice.setGraduationType(price2.getGraduationType());
-        infoPrice.setIdInternal(price2.getIdInternal());
+        infoPrice.setExternalId(price2.getExternalId());
         infoPrice.setPrice(price2.getPrice());
         return infoPrice;
     }

@@ -12,7 +12,7 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-<bean:define id="sectionId" name="section" property="idInternal"/>
+<bean:define id="sectionId" name="section" property="externalId"/>
 
 <h2>
 	<bean:message key="label.section" bundle="SITE_RESOURCES"/>

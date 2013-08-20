@@ -8,7 +8,7 @@
                   <form-property type="java.lang.String" name="partyClassification"></form-property>
                   <form-property type="java.lang.String" name="parkingPartyID"></form-property>
                   <form-property type="java.lang.String" name="personName"></form-property>
-                  <form-property type="java.lang.Integer" name="groupID"></form-property>
+                  <form-property type="java.lang.String" name="groupID"></form-property>
                   <form-property type="java.lang.Integer" name="code"></form-property>
                   <form-property type="java.lang.Long" name="cardNumber"></form-property>
                   <form-property type="java.lang.String" name="note"></form-property>

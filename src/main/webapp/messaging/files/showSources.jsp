@@ -33,6 +33,6 @@
 	       <fr:property name="imageFor(PersonFileSourceBean)" value="/images/functionalities/folder.gif"/>
 	   </fr:layout>
 	   
-	   <fr:destination name="files.view" path="<%= "/viewFiles.do?method=viewFiles&unitId=${unit.idInternal}" %>"/>
+	   <fr:destination name="files.view" path="<%= "/viewFiles.do?method=viewFiles&unitId=${unit.externalId}" %>"/>
 	</fr:view>
 </logic:notEmpty>

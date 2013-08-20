@@ -20,7 +20,7 @@
 	<bean:define id="semester" name="semester" />
 	<bean:define id="curricularYear" name="curricularYear" property="year" />
 	<bean:define id="year" name="year" />
-	<bean:define id="curricularCourseCode" name="searchBean" property="curricularCourse.idInternal" />
+	<bean:define id="curricularCourseCode" name="searchBean" property="curricularCourse.externalId" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.searchBean" name="searchBean" property="searchBean"
 		value="<%=searchBean.toString()%>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.semester" property="semester" value="<%=semester.toString()%>" />
@@ -76,7 +76,7 @@
 			<fr:schema type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="studentCurricularPlan.registration.number" key="label.number" readOnly="true" layout="link">
 					<fr:property name="linkFormat"
-						value="/academicAdministration/viewStudentCurriculum.do?method=prepare&amp;registrationOID=${studentCurricularPlan.registration.idInternal}" />
+						value="/academicAdministration/viewStudentCurriculum.do?method=prepare&amp;registrationOID=${studentCurricularPlan.registration.externalId}" />
 					<fr:property name="contextRelative" value="true" />
 					<fr:property name="useParent" value="true" />
 				</fr:slot>

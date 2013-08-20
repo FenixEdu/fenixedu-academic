@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -29,14 +29,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteGroupingMembersByExecutionCourseID {
 
-    protected Boolean run(Integer executionCourseCode, Integer groupingCode) throws FenixServiceException {
-        Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupingCode);
+    protected Boolean run(String executionCourseCode, String groupingCode) throws FenixServiceException {
+        Grouping grouping = AbstractDomainObject.fromExternalId(groupingCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
 
         if (executionCourse == null) {
             throw new InvalidSituationServiceException();
@@ -98,7 +98,7 @@ public class DeleteGroupingMembersByExecutionCourseID {
             new DeleteGroupingMembersByExecutionCourseID();
 
     @Service
-    public static Boolean runDeleteGroupingMembersByExecutionCourseID(Integer executionCourseCode, Integer groupingCode)
+    public static Boolean runDeleteGroupingMembersByExecutionCourseID(String executionCourseCode, String groupingCode)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, groupingCode);

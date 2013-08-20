@@ -12,7 +12,7 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 thlight mtop025"/>
 		<fr:property name="columnClasses" value="acenter smalltxt,acenter smalltxt,smalltxt,smalltxt,acenter smalltxt,acenter smalltxt,acenter smalltxt,acenter smalltxt nowrap"/>
-		<fr:property name="linkFormat(view)" value="/seniorInformation.do?method=prepare&registrationOID=${idInternal}" />
+		<fr:property name="linkFormat(view)" value="/seniorInformation.do?method=prepare&registrationOID=${externalId}" />
 		<fr:property name="key(view)" value="view.senior.info"/>
 		<fr:property name="visibleIf(view)" value="degreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree"/>
 		<fr:property name="bundle(view)" value="STUDENT_RESOURCES"/>

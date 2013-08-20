@@ -22,9 +22,9 @@
 <bean:message key="message.teacherInformation.managementEdit" /></p>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoPerson#idInternal" property="infoPerson#idInternal"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.countryIdInternal" property="countryIdInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoPerson#externalId" property="infoPerson#externalId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.countryExternalId" property="countryExternalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.branch" property="branch" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.specializationArea" property="specializationArea" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeRecognition" property="degreeRecognition" />

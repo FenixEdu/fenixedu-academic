@@ -166,14 +166,14 @@ public class InquiriesUtil extends FenixUtil {
     /**
      * @return Returns the list containing with only the first occurrence of the
      *         elementes based on the equals method the result list is ordered
-     *         by the idInternal
+     *         by the externalId
      */
     public static void removeDuplicates(final List beanList) {
         if (beanList.isEmpty()) {
             return;
         }
 
-        Collections.sort(beanList, new BeanComparator("idInternal"));
+        Collections.sort(beanList, new BeanComparator("externalId"));
 
         final Iterator iter = beanList.iterator();
         InfoObject prev = (InfoObject) iter.next();

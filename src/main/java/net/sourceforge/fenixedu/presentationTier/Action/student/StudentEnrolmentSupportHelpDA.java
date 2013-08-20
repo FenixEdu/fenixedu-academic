@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction;
 
 import org.apache.struts.action.ActionForm;
@@ -16,6 +17,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/exceptionHandlingAction", module = "student")
@@ -31,7 +33,7 @@ public class StudentEnrolmentSupportHelpDA extends ExceptionHandlingAction {
 
         final SupportRequestBean requestBean = new SupportRequestBean();
         requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
-        requestBean.setRequestContext(rootDomainObject.readContentByOID(Integer.valueOf(request.getParameter("contextId"))));
+        requestBean.setRequestContext(AbstractDomainObject.<Content> fromExternalId(request.getParameter("contextId")));
 
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
         final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();

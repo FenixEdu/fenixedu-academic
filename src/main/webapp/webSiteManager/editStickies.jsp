@@ -19,7 +19,7 @@
 <logic:present name="alterOrder">
 	
 	<bean:define id="announcementBoardId" name="announcementBoard"
-		property="idInternal" />
+		property="externalId" />
 <p><bean:message key="messaging.sticky.info" bundle="MESSAGING_RESOURCES"/></p>		
 	<fr:form
 		action="<%="/announcementsManagement.do?method=changeOrderUsingAjaxTree&announcementBoardId="+announcementBoardId %>">
@@ -37,10 +37,10 @@
 		        <fr:property name="includeImage" value="false"/>
 		        <fr:property name="classes" value="mtop0 mbottom1"/>
 			     <fr:property name="hiddenLinks">
-		            <html:link page="/webSiteManager/announcementsManagement.do?method=up&oid=${idInternal}">
+		            <html:link page="/webSiteManager/announcementsManagement.do?method=up&oid=${externalId}">
 		                <bean:message key="link.moveUp" bundle="RESEARCHER_RESOURCES"/>
 		            </html:link>
-		            <html:link page="/webSiteManager/announcementsManagement.do?method=down&oid=${idInternal}">
+		            <html:link page="/webSiteManager/announcementsManagement.do?method=down&oid=${externalId}">
 		                <bean:message key="link.moveDown" bundle="RESEARCHER_RESOURCES"/>
 		            </html:link>
 	            </fr:property>

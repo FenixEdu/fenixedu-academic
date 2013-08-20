@@ -7,11 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
@@ -122,19 +120,12 @@ public class FixedSetGroup extends LeafGroup {
 
             for (Object object : arguments) {
                 Person person;
-                if (object instanceof Integer) {
-                    try {
-                        person = (Person) RootDomainObject.getInstance().readPartyByOID((Integer) object);
-                    } catch (ClassCastException e) {
-                        throw new GroupDynamicExpressionException("accessControl.group.builder.fixed.id.notPerson",
-                                object.toString());
-                    }
-                } else if (object instanceof String) {
+                if (object instanceof String) {
                     person = AbstractDomainObject.fromExternalId((String) object);
                 } else if (object instanceof Person) {
                     person = (Person) object;
                 } else {
-                    throw new WrongTypeOfArgumentException(1, Integer.class, object.getClass());
+                    throw new WrongTypeOfArgumentException(1, String.class, object.getClass());
                 }
 
                 if (person != null) {

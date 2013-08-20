@@ -56,9 +56,9 @@ public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
     }
 
     private Candidacy getCandidacy(HttpServletRequest request) {
-        final Integer candidacyID = Integer.valueOf(request.getParameter("candidacyID"));
+        final String candidacyID = request.getParameter("candidacyID");
         for (final Candidacy candidacy : getUserView(request).getPerson().getCandidaciesSet()) {
-            if (candidacy.getIdInternal().equals(candidacyID)) {
+            if (candidacy.getExternalId().equals(candidacyID)) {
                 return candidacy;
             }
         }
@@ -75,7 +75,7 @@ public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
     }
 
     public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         List<CandidacyDocumentUploadBean> beans =
                 (List<CandidacyDocumentUploadBean>) RenderUtils.getViewState("candidacyDocuments").getMetaObject().getObject();

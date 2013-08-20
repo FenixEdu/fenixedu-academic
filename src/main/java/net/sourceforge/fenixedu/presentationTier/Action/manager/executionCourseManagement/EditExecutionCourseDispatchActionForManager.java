@@ -101,7 +101,7 @@ public class EditExecutionCourseDispatchActionForManager extends EditExecutionCo
                         new LabelValueBean(infoExecutionPeriod.getName() + " - "
                                 + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getName() + " - "
                                 + infoExecutionPeriod.getInfoExecutionYear().getYear() + "~"
-                                + infoExecutionPeriod.getIdInternal().toString());
+                                + infoExecutionPeriod.getExternalId());
                 return executionPeriod;
             }
         }, executionPeriodLabels);
@@ -114,7 +114,7 @@ public class EditExecutionCourseDispatchActionForManager extends EditExecutionCo
         IUserView userView = UserView.getUser();
         buildCurricularYearLabelValueBean(request);
 
-        Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
+        String executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
         request.setAttribute("executionPeriodId", executionPeriodId);
 
         List<InfoExecutionDegree> executionDegreeList = null;
@@ -149,7 +149,7 @@ public class EditExecutionCourseDispatchActionForManager extends EditExecutionCo
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
             */
-            courses.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getIdInternal().toString()));
+            courses.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getExternalId()));
         }
     }
 
@@ -177,11 +177,11 @@ public class EditExecutionCourseDispatchActionForManager extends EditExecutionCo
 
         IUserView userView = UserView.getUser();
 
-        Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
+        String executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
 
         DynaActionForm executionCourseForm = (DynaValidatorForm) form;
         Boolean getNotLinked = (Boolean) executionCourseForm.get("executionCoursesNotLinked");
-        Integer executionDegreeId = null;
+        String executionDegreeId = null;
         Integer curYear = null;
         if (getNotLinked == null || getNotLinked.equals(Boolean.FALSE)) {
             executionDegreeId = separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");

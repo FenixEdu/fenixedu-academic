@@ -50,7 +50,7 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
     private VirtualPath getfilePath(TeacherEvaluationFileType teacherEvaluationFileType) {
         final VirtualPath filePath = new VirtualPath();
         filePath.addNode(new VirtualPathNode("TeacherEvaluationFiles", "TeacherEvaluation Files"));
-        filePath.addNode(new VirtualPathNode("TeacherEvaluation" + getIdInternal(), teacherEvaluationFileType.name()));
+        filePath.addNode(new VirtualPathNode("TeacherEvaluation" + getExternalId(), teacherEvaluationFileType.name()));
         return filePath;
     }
 

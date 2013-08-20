@@ -37,7 +37,7 @@
 			<fr:property name="headerClasses" value="acenter" />
             <fr:property name="link(edit)" value="/editGrantProject.do?method=prepareEditGrantProjectForm" />
 			<fr:property name="key(edit)" value="link.edit" />
-			<fr:property name="param(edit)" value="idInternal/idGrantProject" />
+			<fr:property name="param(edit)" value="externalId/idGrantProject" />
 		</fr:layout>
 	</fr:view> 
                     

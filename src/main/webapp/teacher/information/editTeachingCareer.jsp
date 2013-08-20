@@ -26,8 +26,8 @@
 	</span>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoTeacher#idInternal" property="infoTeacher#idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoTeacher#externalId" property="infoTeacher#externalId"/>
 
 <table class="tstyle5">
 	<tr>
@@ -40,8 +40,8 @@
 	<tr>
 		<td><bean:message key="message.teachingCareer.category" />:</td>
 		<td>
-			<html:select bundle="HTMLALT_RESOURCES" property="infoCategory#idInternal">
-				<html:options collection="categories" property="idInternal" labelProperty="shortName"/>
+			<html:select bundle="HTMLALT_RESOURCES" property="infoCategory#externalId">
+				<html:options collection="categories" property="externalId" labelProperty="shortName"/>
 			</html:select>
 		</td>
 	</tr>

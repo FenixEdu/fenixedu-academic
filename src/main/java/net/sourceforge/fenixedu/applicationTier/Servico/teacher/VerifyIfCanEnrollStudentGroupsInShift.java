@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -23,15 +23,14 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class VerifyIfCanEnrollStudentGroupsInShift {
 
-    protected Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode)
-            throws FenixServiceException {
-        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+    protected Boolean run(String executionCourseCode, String groupPropertiesCode, String shiftCode) throws FenixServiceException {
+        final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
+        final Shift shift = AbstractDomainObject.fromExternalId(shiftCode);
 
         if (!shift.containsType(grouping.getShiftType())) {
             return false;
@@ -63,8 +62,8 @@ public class VerifyIfCanEnrollStudentGroupsInShift {
     private static final VerifyIfCanEnrollStudentGroupsInShift serviceInstance = new VerifyIfCanEnrollStudentGroupsInShift();
 
     @Service
-    public static Boolean runVerifyIfCanEnrollStudentGroupsInShift(Integer executionCourseCode, Integer groupPropertiesCode,
-            Integer shiftCode) throws FenixServiceException, NotAuthorizedException {
+    public static Boolean runVerifyIfCanEnrollStudentGroupsInShift(String executionCourseCode, String groupPropertiesCode,
+            String shiftCode) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, groupPropertiesCode, shiftCode);
     }

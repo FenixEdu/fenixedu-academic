@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
@@ -32,16 +31,17 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadStudentsAndMarksByCurricularCourse {
 
     @Service
-    public static InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString) throws FenixServiceException {
+    public static InfoSiteEnrolmentEvaluation run(String curricularCourseCode, String yearString) throws FenixServiceException {
 
         List infoEnrolmentEvaluations = new ArrayList();
         Date lastEvaluationDate = null;
 
-        final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseCode);
+        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
         final List<Enrolment> enrolments =
                 (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString) : curricularCourse.getEnrolments();
 
@@ -90,7 +90,7 @@ public class ReadStudentsAndMarksByCurricularCourse {
                 EnrolmentEvaluation elem = (EnrolmentEvaluation) iter.next();
                 InfoEnrolmentEvaluation infoEnrolmentEvaluation =
                         InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(elem);
-                infoEnrolmentEvaluation.setIdInternal(elem.getIdInternal());
+                infoEnrolmentEvaluation.setExternalId(elem.getExternalId());
 
                 infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(elem.getEnrolment()));
                 infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);

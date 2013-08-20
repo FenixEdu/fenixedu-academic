@@ -37,18 +37,12 @@ public class CancelCandidacy extends FenixAction {
             throws FenixActionException {
         IUserView userView = getUserView(request);
         String candidacyIDString = request.getParameter("objectCode");
-        Integer candidacyID;
         if (candidacyIDString == null) {
-            throw new FenixActionException(mapping.findForward("invalidQueryString"));
-        }
-        try {
-            candidacyID = new Integer(candidacyIDString);
-        } catch (Exception ex) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }
         ActionForward destiny = null;
         try {
-            DeleteCandidacy.runDeleteCandidacy(candidacyID);
+            DeleteCandidacy.runDeleteCandidacy(candidacyIDString);
         } catch (Exception e) {
             throw new FenixActionException();
         }

@@ -25,7 +25,7 @@
 		<bean:message key="public.degree.information.label.theses"  bundle="PUBLIC_DEGREE_INFORMATION" />
 	</html:link>
 	&nbsp;&gt;&nbsp;
-	<bean:define id="yearId" name="thesis" property="enrolment.executionYear.idInternal"/>
+	<bean:define id="yearId" name="thesis" property="enrolment.executionYear.externalId"/>
 	<html:link page="<%= "/showDegreeTheses.do?method=showTheses&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;executionYearID=" + yearId  %>">
 		<fr:view name="thesis" property="enrolment.executionYear.year"/>
 	</html:link>

@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ProjectManagementBackingBean extends EvaluationManagementBackingBean {
@@ -41,7 +42,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     protected Project project;
 
-    protected Integer projectID;
+    protected String projectID;
 
     protected List<Project> associatedProjects;
 
@@ -49,7 +50,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     protected Integer maxSubmissionsToKeep;
 
-    protected Integer groupingID;
+    protected String groupingID;
 
     protected List<SelectItem> executionCourseGroupings;
 
@@ -133,14 +134,14 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     private Project getProject() {
         if (this.project == null && this.getProjectID() != null) {
-            this.project = (Project) rootDomainObject.readEvaluationByOID(getProjectID());
+            this.project = (Project) AbstractDomainObject.fromExternalId(getProjectID());
         }
         return this.project;
     }
 
-    public List<Project> getAssociatedProjects() throws  FenixServiceException {
+    public List<Project> getAssociatedProjects() throws FenixServiceException {
         if (this.associatedProjects == null) {
-            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
+            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID());
             this.associatedProjects = executionCourse.getAssociatedProjects();
             Collections.sort(this.associatedProjects, new BeanComparator("begin"));
         }
@@ -192,16 +193,16 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         return this.description;
     }
 
-    public Integer getProjectID() {
+    public String getProjectID() {
         if (this.projectID == null) {
             if (this.getRequestParameter("projectID") != null && !this.getRequestParameter("projectID").equals("")) {
-                this.projectID = Integer.valueOf(this.getRequestParameter("projectID"));
+                this.projectID = this.getRequestParameter("projectID");
             }
         }
         return this.projectID;
     }
 
-    public void setProjectID(Integer projectID) {
+    public void setProjectID(String projectID) {
         this.projectID = projectID;
     }
 
@@ -227,16 +228,16 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         this.endProjectHour = endProjectHour;
     }
 
-    public Integer getGroupingID() {
+    public String getGroupingID() {
         if (this.groupingID == null && this.getProject() != null) {
             Grouping grouping = this.getProject().getGrouping();
 
-            this.groupingID = (grouping != null) ? grouping.getIdInternal() : null;
+            this.groupingID = (grouping != null) ? grouping.getExternalId() : null;
         }
         return groupingID;
     }
 
-    public void setGroupingID(Integer groupingID) {
+    public void setGroupingID(String groupingID) {
         this.groupingID = groupingID;
     }
 
@@ -262,12 +263,12 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         this.onlineSubmissionsAllowed = onlineSubmissionsAllowed;
     }
 
-    public List<SelectItem> getExecutionCourseGroupings() throws  FenixServiceException {
+    public List<SelectItem> getExecutionCourseGroupings() throws FenixServiceException {
         if (this.executionCourseGroupings == null) {
             this.executionCourseGroupings = new ArrayList<SelectItem>();
 
             for (Grouping grouping : getExecutionCourse().getGroupings()) {
-                this.executionCourseGroupings.add(new SelectItem(grouping.getIdInternal(), grouping.getName()));
+                this.executionCourseGroupings.add(new SelectItem(grouping.getExternalId(), grouping.getName()));
             }
         }
 

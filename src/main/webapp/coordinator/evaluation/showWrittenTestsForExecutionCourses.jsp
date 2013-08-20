@@ -62,7 +62,7 @@
 				<c:forEach items="${coordinatorWrittenTestsInformationBackingBean.executionCoursesWithWrittenTests}" var="executionCourse">
 					<tr class="space"><td></td></tr>
 					<tr><td colspan="7" class="header"><c:out value="${executionCourse.sigla} - ${executionCourse.nome}" /></td></tr>
-					<c:forEach items="${coordinatorWrittenTestsInformationBackingBean.writtenTests[executionCourse.idInternal]}" var="evaluation">
+					<c:forEach items="${coordinatorWrittenTestsInformationBackingBean.writtenTests[executionCourse.externalId]}" var="evaluation">
 						<tr>
 							<td><c:out value="${evaluation.description}"/></td>
 							<td>
@@ -73,10 +73,10 @@
 							</td>
 							<td><c:out value="${evaluation.writtenEvaluationEnrolmentsCount}"/></td>
 							<td>
-								<c:if test="${coordinatorWrittenTestsInformationBackingBean.writtenTestsFreeSpace[evaluation.idInternal] != 0}">
-									<c:out value="${coordinatorWrittenTestsInformationBackingBean.writtenTestsFreeSpace[evaluation.idInternal]}"/>
+								<c:if test="${coordinatorWrittenTestsInformationBackingBean.writtenTestsFreeSpace[evaluation.externalId] != 0}">
+									<c:out value="${coordinatorWrittenTestsInformationBackingBean.writtenTestsFreeSpace[evaluation.externalId]}"/>
 								</c:if>
-								<c:if test="${coordinatorWrittenTestsInformationBackingBean.writtenTestsFreeSpace[evaluation.idInternal] == 0}">
+								<c:if test="${coordinatorWrittenTestsInformationBackingBean.writtenTestsFreeSpace[evaluation.externalId] == 0}">
 									<c:out value="-"/>
 								</c:if>
 							</td>
@@ -99,10 +99,10 @@
 								<c:if test="${evaluation.enrollmentEndDayDate == null}"></c:if>
 							</td>
 							<td>
-								<c:if test="${coordinatorWrittenTestsInformationBackingBean.writtenTestsRooms[evaluation.idInternal] != ''}">
-									<c:out value="${coordinatorWrittenTestsInformationBackingBean.writtenTestsRooms[evaluation.idInternal]}"/>
+								<c:if test="${coordinatorWrittenTestsInformationBackingBean.writtenTestsRooms[evaluation.externalId] != ''}">
+									<c:out value="${coordinatorWrittenTestsInformationBackingBean.writtenTestsRooms[evaluation.externalId]}"/>
 								</c:if>
-								<c:if test="${coordinatorWrittenTestsInformationBackingBean.writtenTestsRooms[evaluation.idInternal] == ''}">
+								<c:if test="${coordinatorWrittenTestsInformationBackingBean.writtenTestsRooms[evaluation.externalId] == ''}">
 									<c:out value="-"/>
 								</c:if>
 							</td>
@@ -111,8 +111,8 @@
 									<c:param name="degreeCurricularPlanID" value="${coordinatorWrittenTestsInformationBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${coordinatorWrittenTestsInformationBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${coordinatorWrittenTestsInformationBackingBean.curricularYearID}"/>
-									<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
-									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourse.externalId}"/>
+									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 								</c:url>
 								<a href='<c:out value="${editEvaluationURL}"/>'>
 									<c:out value="${bundle['label.edit']}"/>
@@ -122,8 +122,8 @@
 									<c:param name="degreeCurricularPlanID" value="${coordinatorWrittenTestsInformationBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${coordinatorWrittenTestsInformationBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${coordinatorWrittenTestsInformationBackingBean.curricularYearID}"/>
-									<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
-									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourse.externalId}"/>
+									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 								</c:url>
 								<a href='<c:out value="${deleteEvaluationURL}"/>'>
 									<c:out value="${bundle['label.remove']}"/>
@@ -149,7 +149,7 @@
 									<c:param name="degreeCurricularPlanID" value="${coordinatorWrittenTestsInformationBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${coordinatorWrittenTestsInformationBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${coordinatorWrittenTestsInformationBackingBean.curricularYearID}"/>
-									<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourse.externalId}"/>
 								</c:url>
 								<c:out value="${executionCourse.sigla} - ${executionCourse.nome}: ("/>
 								<a href='<c:out value="${evaluationManagementURL}"/>' style="text-decoration:none">

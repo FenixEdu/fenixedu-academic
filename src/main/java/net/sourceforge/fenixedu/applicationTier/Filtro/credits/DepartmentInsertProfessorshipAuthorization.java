@@ -14,9 +14,9 @@ public class DepartmentInsertProfessorshipAuthorization extends AbstractTeacherD
     public static final DepartmentInsertProfessorshipAuthorization instance = new DepartmentInsertProfessorshipAuthorization();
 
     @Override
-    protected Integer getTeacherId(String istId) {
+    protected String getTeacherId(String istId) {
         Teacher teacher = Teacher.readByIstId(istId);
-        return (teacher == null) ? null : teacher.getIdInternal();
+        return (teacher == null) ? null : teacher.getExternalId();
     }
 
 }

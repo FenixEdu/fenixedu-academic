@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
 
 import org.apache.struts.action.ActionForm;
@@ -18,6 +17,7 @@ import org.apache.struts.util.RequestUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "publico", path = "/showDegreeSiteContent", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "site-section-adviseLogin", path = "degree-section-adviseLogin"),
@@ -71,8 +71,7 @@ public class DegreeSiteVisualizationDA extends SiteVisualizationDA {
         }
 
         try {
-            Integer oid = new Integer(parameter);
-            return RootDomainObject.getInstance().readDegreeByOID(oid);
+            return AbstractDomainObject.fromExternalId(parameter);
         } catch (NumberFormatException e) {
             return null;
         }

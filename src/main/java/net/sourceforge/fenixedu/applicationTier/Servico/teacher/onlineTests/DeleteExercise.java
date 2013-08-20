@@ -8,7 +8,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
@@ -18,12 +17,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteExercise {
 
-    protected void run(Integer executionCourseId, Integer metadataId) throws InvalidArgumentsServiceException,
-            ExcepcaoPersistencia {
-        Metadata metadata = RootDomainObject.getInstance().readMetadataByOID(metadataId);
+    protected void run(String executionCourseId, String metadataId) throws InvalidArgumentsServiceException, ExcepcaoPersistencia {
+        Metadata metadata = AbstractDomainObject.fromExternalId(metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -74,7 +73,7 @@ public class DeleteExercise {
     private static final DeleteExercise serviceInstance = new DeleteExercise();
 
     @Service
-    public static void runDeleteExercise(Integer executionCourseId, Integer metadataId) throws InvalidArgumentsServiceException,
+    public static void runDeleteExercise(String executionCourseId, String metadataId) throws InvalidArgumentsServiceException,
             ExcepcaoPersistencia, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, metadataId);

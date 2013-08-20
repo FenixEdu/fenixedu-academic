@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -72,8 +71,7 @@ public class ShowThesisStatus extends ScientificCouncilManageThesisDA {
 
     public ActionForward viewThesisForSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final Integer thesisId = Integer.valueOf(request.getParameter("thesisID"));
-        final Thesis thesis = RootDomainObject.getInstance().readThesisByOID(thesisId);
+        final Thesis thesis = getDomainObject(request, "thesisID");
         final Student student = thesis.getStudent();
 
         request.setAttribute("student", student);

@@ -33,7 +33,7 @@
 	<div>
 	<ul class="listresearch">
 	<logic:iterate id="patent" name="resultPatents">
-		<bean:define id="patentId" name="patent" property="idInternal"/>
+		<bean:define id="patentId" name="patent" property="externalId"/>
 		<li class="mtop1">
 			<p class="mvert0">
 	 			<strong>

@@ -154,7 +154,7 @@
 	<logic:notEmpty name="userView" property="person.teacher">
 		<logic:notEmpty name="userView" property="person.teacher.currentWorkingDepartment">	
 			<bean:define id="unit" name="userView" property="person.teacher.currentWorkingDepartment.departmentUnit"/>
-			<bean:define id="unitID" name="unit" property="idInternal"/>
+			<bean:define id="unitID" name="unit" property="externalId"/>
 			<bean:define id="unitExternalId" name="unit" property="externalId"/>
 			
 			<ul>	
@@ -184,7 +184,7 @@
 				<logic:iterate id="subUnit" name="unit" property="allSubUnits">
 					<logic:equal name="subUnit" property="scientificAreaUnit"  value="true">
 						<logic:equal name="subUnit" property="currentUserMemberOfScientificArea" value="true">
-							<bean:define id="subUnitID" name="subUnit" property="idInternal"/>
+							<bean:define id="subUnitID" name="subUnit" property="externalId"/>
 							<bean:define id="subUnitExternalID" name="subUnit" property="externalId"/>
 							<li class="navheader"><fr:view name="subUnit" property="name"/></li>
 									<ul>

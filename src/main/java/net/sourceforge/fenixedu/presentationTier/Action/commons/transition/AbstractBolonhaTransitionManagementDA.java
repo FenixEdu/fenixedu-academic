@@ -37,7 +37,7 @@ public abstract class AbstractBolonhaTransitionManagementDA extends FenixDispatc
         setRegistration(request, registration);
 
         final DynaActionForm dynaActionForm = ((DynaActionForm) form);
-        dynaActionForm.set("registrationId", registration.getIdInternal());
+        dynaActionForm.set("registrationId", registration.getExternalId());
     }
 
     private void setRegistration(HttpServletRequest request, final Registration registration) {
@@ -53,12 +53,12 @@ public abstract class AbstractBolonhaTransitionManagementDA extends FenixDispatc
     }
 
     private Registration getRegistration(final HttpServletRequest request, final ActionForm form) {
-        return getRegistration(request, (Integer) ((DynaActionForm) form).get("registrationId"));
+        return getRegistration(request, (String) ((DynaActionForm) form).get("registrationId"));
     }
 
-    private Registration getRegistration(final HttpServletRequest request, final Integer registrationId) {
+    private Registration getRegistration(final HttpServletRequest request, final String registrationId) {
         for (final Registration registration : getRegistrations(request)) {
-            if (registration.getIdInternal().equals(registrationId)) {
+            if (registration.getExternalId().equals(registrationId)) {
                 return registration;
             }
         }

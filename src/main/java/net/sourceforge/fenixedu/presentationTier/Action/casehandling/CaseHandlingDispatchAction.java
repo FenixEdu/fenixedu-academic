@@ -38,8 +38,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
     }
 
     protected Process readProcess(final HttpServletRequest request) {
-        final Integer processId = getIntegerFromRequest(request, "processId");
-        return processId == null ? null : rootDomainObject.readProcessByOID(processId);
+        return getDomainObject(request, "processId");
     }
 
     protected void setProcess(final HttpServletRequest request) {
@@ -95,18 +94,17 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
             HttpServletResponse response);
 
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         Process process = CreateNewProcess.run(getProcessType().getName(), getRenderedObject());
         request.setAttribute("process", process);
         return listProcessAllowedActivities(mapping, form, request, response);
     }
 
-    protected void executeActivity(Process process, String activityId) throws  FenixServiceException {
+    protected void executeActivity(Process process, String activityId) throws FenixServiceException {
         executeActivity(process, activityId, null);
     }
 
-    protected Process executeActivity(Process process, String activityId, Object object) throws 
-            FenixServiceException {
+    protected Process executeActivity(Process process, String activityId, Object object) throws FenixServiceException {
         return ExecuteProcessActivity.run(process, activityId, object);
     }
 

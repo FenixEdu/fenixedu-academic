@@ -182,7 +182,7 @@
 			<bean:message key="title.unit.communication.section" bundle="RESEARCHER_RESOURCES"/>
 		</li>
 		
-		<bean:define id="unitId" name="unit" property="idInternal"/>
+		<bean:define id="unitId" name="unit" property="externalId"/>
 		<li>
 			<html:link page="<%= "/sendEmail.do?method=prepare&unitId=" + unitId %>">
 				<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>

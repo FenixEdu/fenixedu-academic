@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /*
  * 
@@ -21,14 +21,14 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear {
 
     @Service
-    public static List run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYearInt)
+    public static List run(String executionDegreeId, String executionPeriodId, Integer curricularYearInt)
             throws FenixServiceException {
 
         if (executionPeriodId == null) {
             throw new FenixServiceException("nullExecutionPeriodId");
         }
 
-        final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         final List<ExecutionCourse> executionCourseList;
         if (executionDegreeId == null && curricularYearInt == null) {
@@ -51,10 +51,10 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
     }
 
     private static ExecutionDegree findExecutionDegreeByID(final ExecutionSemester executionSemester,
-            final Integer executionDegreeId) {
+            final String executionDegreeId) {
         final ExecutionYear executionYear = executionSemester.getExecutionYear();
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-            if (executionDegree.getIdInternal().equals(executionDegreeId)) {
+            if (executionDegree.getExternalId().equals(executionDegreeId)) {
                 return executionDegree;
             }
         }

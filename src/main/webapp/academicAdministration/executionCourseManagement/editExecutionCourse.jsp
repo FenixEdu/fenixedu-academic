@@ -29,9 +29,9 @@
 
 <logic:present name="<%=PresentationConstants.EXECUTION_COURSE%>">
 	<bean:define id="executionCourseName" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="nome"/>
- 	<bean:define id="executionCourseId" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="idInternal"/>
+ 	<bean:define id="executionCourseId" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="externalId"/>
 	<bean:define id="executionPeriodName" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="infoExecutionPeriod.name"/>
-	<bean:define id="executionPeriodId" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="infoExecutionPeriod.idInternal"/>
+	<bean:define id="executionPeriodId" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="infoExecutionPeriod.externalId"/>
 	
 	<p><b><bean:write name="executionPeriodName"/>	
 	<logic:present name="executionDegreeName">

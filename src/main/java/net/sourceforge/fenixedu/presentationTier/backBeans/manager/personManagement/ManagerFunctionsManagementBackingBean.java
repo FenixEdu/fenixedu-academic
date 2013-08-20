@@ -94,7 +94,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
         buffer.append("<a href=\"").append(getContextPath())
                 .append("/manager/functionsManagement/chooseFunction.faces?personID=").append(personID).append("&unitID=")
-                .append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getPresentationName()).append("</a>")
+                .append(parentUnit.getExternalId()).append("\">").append(parentUnit.getPresentationName()).append("</a>")
                 .append("</li>");
 
         if (!subUnits.isEmpty()) {

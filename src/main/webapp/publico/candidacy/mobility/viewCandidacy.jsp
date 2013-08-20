@@ -41,7 +41,7 @@
 
 <bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean"/>
 <bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess" type="MobilityIndividualApplicationProcess"/>
-<bean:define id="processId" name="individualCandidacyProcess" property="idInternal"/>
+<bean:define id="processId" name="individualCandidacyProcess" property="externalId"/>
 
 <div class="breadcumbs">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;

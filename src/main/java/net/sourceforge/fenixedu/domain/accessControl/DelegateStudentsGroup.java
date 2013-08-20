@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
@@ -16,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.O
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DelegateStudentsGroup extends LeafGroup {
 
@@ -23,10 +23,10 @@ public class DelegateStudentsGroup extends LeafGroup {
 
     private final FunctionType functionType;
 
-    private final Integer personFunctionId;
+    private final String personFunctionId;
 
     public DelegateStudentsGroup(final PersonFunction delegateFunction, final FunctionType functionType) {
-        personFunctionId = delegateFunction.getIdInternal();
+        personFunctionId = delegateFunction.getExternalId();
         this.functionType = functionType;
     }
 
@@ -121,8 +121,7 @@ public class DelegateStudentsGroup extends LeafGroup {
     }
 
     public PersonFunction getPersonFunction() {
-        return personFunctionId != null ? (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(
-                personFunctionId) : null;
+        return personFunctionId != null ? (PersonFunction) AbstractDomainObject.fromExternalId(personFunctionId) : null;
     }
 
     public Student getStudent() {

@@ -4,5 +4,5 @@
 <h2><bean:message key="message.success.changePersonalData" /></h2>
 
 <br/>
-<bean:define id="candidacyID" name="candidacy" property="idInternal" />
+<bean:define id="candidacyID" name="candidacy" property="externalId" />
 <html:link action="<%="/viewCandidacies.do?method=viewDetail&candidacyID=" + candidacyID%>"><bean:message  key="link.back"/></html:link>

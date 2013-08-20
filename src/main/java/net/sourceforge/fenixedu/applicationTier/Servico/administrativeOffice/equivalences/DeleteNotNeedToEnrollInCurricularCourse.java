@@ -3,15 +3,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.AcademicAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Ricardo Rodrigues
@@ -20,9 +19,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteNotNeedToEnrollInCurricularCourse {
 
-    protected void run(Integer notNeedToEnrollInCurricularCourseID) {
+    protected void run(String notNeedToEnrollInCurricularCourseID) {
         NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse =
-                RootDomainObject.getInstance().readNotNeedToEnrollInCurricularCourseByOID(notNeedToEnrollInCurricularCourseID);
+                AbstractDomainObject.fromExternalId(notNeedToEnrollInCurricularCourseID);
         notNeedToEnrollInCurricularCourse.delete();
     }
 
@@ -31,7 +30,7 @@ public class DeleteNotNeedToEnrollInCurricularCourse {
     private static final DeleteNotNeedToEnrollInCurricularCourse serviceInstance = new DeleteNotNeedToEnrollInCurricularCourse();
 
     @Service
-    public static void runDeleteNotNeedToEnrollInCurricularCourse(Integer notNeedToEnrollInCurricularCourseID)
+    public static void runDeleteNotNeedToEnrollInCurricularCourse(String notNeedToEnrollInCurricularCourseID)
             throws NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

@@ -45,15 +45,15 @@
 					
 					<h:outputText value=" <p> " escape="false"/>
 
-					<h:outputText value="<a href='#{projectManagementBackingBean.contextPath}/teacher/projectSubmissionsManagement.do?method=viewLastProjectSubmissionForEachGroup&amp;executionCourseID=#{projectManagementBackingBean.executionCourseID}&amp;projectID=#{project.idInternal}'>#{bundle['link.teacher.executionCourseManagement.evaluation.project.viewProjectSubmissions']}</a>" escape="false"/>
+					<h:outputText value="<a href='#{projectManagementBackingBean.contextPath}/teacher/projectSubmissionsManagement.do?method=viewLastProjectSubmissionForEachGroup&amp;executionCourseID=#{projectManagementBackingBean.executionCourseID}&amp;projectID=#{project.externalId}'>#{bundle['link.teacher.executionCourseManagement.evaluation.project.viewProjectSubmissions']}</a>" escape="false"/>
 					<h:outputText value=" | " escape="false"/>
 					<h:commandLink action="enterEditProject">
-						<f:param id="projectIDToEdit" name="projectID" value="#{project.idInternal}" />
+						<f:param id="projectIDToEdit" name="projectID" value="#{project.externalId}" />
 						<h:outputFormat value="#{bundle['link.edit']}"/>
 					</h:commandLink>
 					<h:outputText value=" | " escape="false"/>
 					<h:commandLink action="#{projectManagementBackingBean.deleteProject}">
-						<f:param id="projectIDToDelete" name="projectID" value="#{project.idInternal}" />
+						<f:param id="projectIDToDelete" name="projectID" value="#{project.externalId}" />
 						<h:outputFormat value="#{bundle['link.delete']}" />
 					</h:commandLink>
 					

@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
-<bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="idInternal" />
+<bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="externalId" />
 <bean:define id="withRules" name="withRules" />
 
 <logic:equal name="withRules" value="true">

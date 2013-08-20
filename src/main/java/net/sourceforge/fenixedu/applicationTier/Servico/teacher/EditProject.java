@@ -11,20 +11,20 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditProject {
 
-    protected void run(Integer executionCourseID, Integer projectID, String name, Date begin, Date end, String description,
-            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Integer groupingID, GradeScale gradeScale,
+    protected void run(String executionCourseID, String projectID, String name, Date begin, Date end, String description,
+            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID, GradeScale gradeScale,
             List<Department> departments) throws FenixServiceException {
-        final Project project = (Project) RootDomainObject.getInstance().readEvaluationByOID(projectID);
+        final Project project = (Project) AbstractDomainObject.fromExternalId(projectID);
         if (project == null) {
             throw new FenixServiceException("error.noEvaluation");
         }
 
-        final Grouping grouping = (groupingID != null) ? RootDomainObject.getInstance().readGroupingByOID(groupingID) : null;
+        final Grouping grouping = (groupingID != null) ? AbstractDomainObject.<Grouping> fromExternalId(groupingID) : null;
 
         project.edit(name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping, gradeScale,
                 departments);
@@ -35,8 +35,8 @@ public class EditProject {
     private static final EditProject serviceInstance = new EditProject();
 
     @Service
-    public static void runEditProject(Integer executionCourseID, Integer projectID, String name, Date begin, Date end,
-            String description, Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Integer groupingID,
+    public static void runEditProject(String executionCourseID, String projectID, String name, Date begin, Date end,
+            String description, Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID,
             GradeScale gradeScale, List<Department> departments) throws FenixServiceException, NotAuthorizedException {
         try {
             ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);

@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.alumni.EditFormation;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.DeleteQualification;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormationBean;
+import net.sourceforge.fenixedu.domain.EducationArea;
 import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.struts.action.ActionForm;
@@ -85,7 +85,7 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
             HttpServletResponse response) throws Exception {
 
         AlumniFormation formationInfo = (AlumniFormation) getObjectFromViewState("alumniFormation");
-        formationInfo.setEducationArea(getIntegerFromRequest(request, "formationEducationArea"));
+        formationInfo.setEducationArea(this.<EducationArea> getDomainObject(request, "formationEducationArea"));
 
         try {
             if (formationInfo.hasAssociatedFormation()) {
@@ -114,10 +114,9 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
     }
 
     private ActionForward getFormation(ActionMapping mapping, HttpServletRequest request) {
-        final Integer formationId = getIntegerFromRequest(request, "formationId");
-        final Qualification qualification = RootDomainObject.getInstance().readQualificationByOID(formationId);
+        final Qualification qualification = getDomainObject(request, "formationId");
         final AlumniFormation formation = AlumniFormation.buildFrom((Formation) qualification);
-        request.setAttribute("formationEducationArea", formation.getEducationArea().getIdInternal());
+        request.setAttribute("formationEducationArea", formation.getEducationArea().getExternalId());
         request.setAttribute("alumniFormation", formation);
         return mapping.findForward("alumniEditFormation");
     }
@@ -127,7 +126,7 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 
         if (getFromRequest(request, "cancel") == null) {
             try {
-                DeleteQualification.runDeleteQualification(getIntegerFromRequest(request, "formationId"));
+                DeleteQualification.runDeleteQualification(getFromRequest(request, "formationId").toString());
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
             }

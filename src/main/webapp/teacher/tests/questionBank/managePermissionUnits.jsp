@@ -12,7 +12,7 @@
 <ul>
 	<li>
 		<html:link page="/tests/questionBank.do?method=manageQuestionBank&amp;view=tree"
-		           paramId="oid" paramName="question" paramProperty="questionBank.idInternal">
+		           paramId="oid" paramName="question" paramProperty="questionBank.externalId">
 			<bean:message key="message.back" bundle="TESTS_RESOURCES" />
 		</html:link>
 	</li>
@@ -39,6 +39,6 @@
 		<fr:property name="key(delete)" value="message.delete" />
 		<fr:property name="bundle(delete)" value="TESTS_RESOURCES" />
 		<fr:property name="link(delete)" value="<%= "/tests/questionBank.do?method=deletePermissionUnit&oid=" + request.getParameter("oid") %>" />
-		<fr:property name="param(delete)" value="idInternal/oid" />
+		<fr:property name="param(delete)" value="externalId/oid" />
 	</fr:layout>
 </fr:view>

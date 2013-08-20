@@ -41,7 +41,7 @@
 
 	<p class="mtop2"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="confirm.cancel"/></strong></p>
 		<p class="mbottom025"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="justification"/>:</p>
-		<html:form action="<%="/academicServiceRequestsManagement.do?method=cancelAcademicServiceRequest&academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>" style="display: inline;">
+		<html:form action="<%="/academicServiceRequestsManagement.do?method=cancelAcademicServiceRequest&academicServiceRequestId=" + academicServiceRequest.getExternalId().toString()%>" style="display: inline;">
 			<p class="mtop025">
 				<logic:present name="failingCondition" scope="request">
 					<bean:define id="failingCondition" name="failingCondition" scope="request"/>
@@ -59,7 +59,7 @@
 			</span>
 		</html:form>
 
-		<html:form action="<%="/student.do?method=visualizeRegistration&registrationID=" + academicServiceRequest.getRegistration().getIdInternal().toString()%>" style="display: inline;">
+		<html:form action="<%="/student.do?method=visualizeRegistration&registrationID=" + academicServiceRequest.getRegistration().getExternalId().toString()%>" style="display: inline;">
 			<span>
 				<html:submit><bean:message key="label.back" bundle="APPLICATION_RESOURCES"/></html:submit>
 			</span>

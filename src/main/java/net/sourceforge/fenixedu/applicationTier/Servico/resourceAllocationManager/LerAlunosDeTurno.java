@@ -12,11 +12,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class LerAlunosDeTurno {
 
@@ -25,7 +25,7 @@ public class LerAlunosDeTurno {
     public static List<InfoStudent> run(ShiftKey keyTurno) {
 
         final ExecutionCourse executionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(keyTurno.getInfoExecutionCourse().getIdInternal());
+                AbstractDomainObject.fromExternalId(keyTurno.getInfoExecutionCourse().getExternalId());
         final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
 
         List<Registration> alunos = shift.getStudents();

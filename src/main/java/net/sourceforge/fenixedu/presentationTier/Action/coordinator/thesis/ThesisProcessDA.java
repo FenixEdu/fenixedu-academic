@@ -41,8 +41,7 @@ public class ThesisProcessDA extends FenixDispatchAction {
     }
 
     private ExecutionDegree guessExecutionDegree(final HttpServletRequest request) {
-        final Integer id = getIdInternal(request, "degreeCurricularPlanID");
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(id);
+        final DegreeCurricularPlan degreeCurricularPlan = getDomainObject(request, "degreeCurricularPlanID");
         ExecutionDegree last = null;
         if (degreeCurricularPlan != null) {
             for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {

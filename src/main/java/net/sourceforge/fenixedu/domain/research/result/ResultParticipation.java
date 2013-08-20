@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ResultParticipation extends ResultParticipation_Base {
 
@@ -109,8 +110,8 @@ public class ResultParticipation extends ResultParticipation_Base {
         return !(getIsLastParticipation() || this.getPerson().equals(this.getResult().getCreator()));
     }
 
-    public final static ResultParticipation readByOid(Integer oid) {
-        final ResultParticipation participation = RootDomainObject.getInstance().readResultParticipationByOID(oid);
+    public final static ResultParticipation readByOid(String oid) {
+        final ResultParticipation participation = AbstractDomainObject.fromExternalId(oid);
 
         if (participation == null) {
             throw new DomainException("error.researcher.ResultParticipation.null");

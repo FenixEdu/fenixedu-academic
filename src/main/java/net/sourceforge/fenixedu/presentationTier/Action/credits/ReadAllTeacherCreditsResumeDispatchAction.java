@@ -48,10 +48,10 @@ public class ReadAllTeacherCreditsResumeDispatchAction extends FenixDispatchActi
         String teacherId = dynaForm.getString("teacherId");
 
         Teacher teacher = Teacher.readByIstId(teacherId);
-        dynaForm.set("teacherId", teacher.getIdInternal());
+        dynaForm.set("teacherId", teacher.getExternalId());
         request.setAttribute("teacher", teacher);
 
-        List<CreditLine> creditsLines = (List) ReadAllTeacherCredits.run(teacher.getIdInternal());
+        List<CreditLine> creditsLines = (List) ReadAllTeacherCredits.run(teacher.getExternalId());
         request.setAttribute("creditsLinesSize", creditsLines.size());
 
         BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");

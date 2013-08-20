@@ -116,7 +116,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     @Override
     public int compareTo(UnitName unitName) {
         final int stringCompare = getName().compareTo(unitName.getName());
-        return stringCompare == 0 ? getIdInternal().compareTo(unitName.getIdInternal()) : stringCompare;
+        return stringCompare == 0 ? getExternalId().compareTo(unitName.getExternalId()) : stringCompare;
     }
 
     @Override

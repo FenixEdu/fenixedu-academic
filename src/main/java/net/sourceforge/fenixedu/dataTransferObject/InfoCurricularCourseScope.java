@@ -83,7 +83,7 @@ public class InfoCurricularCourseScope extends InfoObject {
 
     private final CurricularCourseScope curricularCourseScope;
 
-    private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
+    private final boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
     public InfoCurricularCourseScope(final CurricularCourseScope curricularCourseScope) {
         this.curricularCourseScope = curricularCourseScope;
@@ -137,12 +137,12 @@ public class InfoCurricularCourseScope extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getCurricularCourseScope().getIdInternal();
+    public String getExternalId() {
+        return getCurricularCourseScope().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

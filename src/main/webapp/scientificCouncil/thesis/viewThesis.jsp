@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <bean:define id="thesisOid" name="thesis" property="externalId"/>
-<bean:define id="thesisId" name="thesis" property="idInternal"/>
+<bean:define id="thesisId" name="thesis" property="externalId"/>
 <bean:define id="degreeId" name="degreeId"/>
 <bean:define id="executionYearId" name="executionYearId"/>
 
@@ -570,7 +570,7 @@
             </fr:layout>
         </fr:view>
         
-        <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changePerson&amp;target=vowel&amp;vowelID=%s&amp;remove=true&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", vowel.getIdInternal(), degreeId, executionYearId, thesisId) %>">
+        <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changePerson&amp;target=vowel&amp;vowelID=%s&amp;remove=true&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", vowel.getExternalId(), degreeId, executionYearId, thesisId) %>">
             <bean:message key="link.coordinator.thesis.edit.removePerson" bundle="APPLICATION_RESOURCES"/>
         </html:link>
     </logic:iterate>

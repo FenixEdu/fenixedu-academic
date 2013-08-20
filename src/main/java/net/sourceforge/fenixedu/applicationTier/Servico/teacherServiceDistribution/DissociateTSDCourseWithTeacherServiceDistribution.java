@@ -1,19 +1,18 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DissociateTSDCourseWithTeacherServiceDistribution {
-    protected void run(Integer tsdId, Integer tsdCourseId) {
-        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
-        TSDCourse tsdCourse = RootDomainObject.getInstance().readTSDCourseByOID(tsdCourseId);
+    protected void run(String tsdId, String tsdCourseId) {
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        TSDCourse tsdCourse = AbstractDomainObject.fromExternalId(tsdCourseId);
 
         for (TSDCourse course : tsd.getTSDCoursesByCompetenceCourse(tsdCourse.getCompetenceCourse())) {
             tsd.removeTSDCourseFromAllChilds(course);
@@ -28,7 +27,7 @@ public class DissociateTSDCourseWithTeacherServiceDistribution {
             new DissociateTSDCourseWithTeacherServiceDistribution();
 
     @Service
-    public static void runDissociateTSDCourseWithTeacherServiceDistribution(Integer tsdId, Integer tsdCourseId)
+    public static void runDissociateTSDCourseWithTeacherServiceDistribution(String tsdId, String tsdCourseId)
             throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

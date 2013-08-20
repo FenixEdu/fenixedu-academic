@@ -35,7 +35,7 @@ public class GuidesManagementDA extends PaymentsManagementDispatchAction {
 
         if (managementDTO.getSelectedEntries().isEmpty()) {
             addActionMessage("context", request, "error.payments.guide.entries.selection.is.required");
-            request.setAttribute("personId", managementDTO.getPerson().getIdInternal());
+            request.setAttribute("personId", managementDTO.getPerson().getExternalId());
             return mapping.findForward("showEvents");
         } else {
             return mapping.findForward("showGuide");

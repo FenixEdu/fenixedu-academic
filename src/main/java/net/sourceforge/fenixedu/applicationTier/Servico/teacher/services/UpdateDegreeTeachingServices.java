@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthoriz
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -18,12 +17,13 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageDegreeTeachingServicesDispatchAction.ShiftIDTeachingPercentage;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UpdateDegreeTeachingServices {
 
-    protected void run(Integer professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) {
+    protected void run(String professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) {
 
-        Professorship professorship = RootDomainObject.getInstance().readProfessorshipByOID(professorshipID);
+        Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
         Teacher teacher = professorship.getTeacher();
         ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
@@ -36,7 +36,7 @@ public class UpdateDegreeTeachingServices {
                 "label.teacher.schedule.change"));
 
         for (ShiftIDTeachingPercentage shiftIDTeachingPercentage : shiftsIDsTeachingPercentages) {
-            Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftIDTeachingPercentage.getShiftID());
+            Shift shift = AbstractDomainObject.fromExternalId(shiftIDTeachingPercentage.getShiftID());
             DegreeTeachingService degreeTeachingService =
                     teacherService.getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);
             if (degreeTeachingService != null) {
@@ -65,7 +65,7 @@ public class UpdateDegreeTeachingServices {
     private static final UpdateDegreeTeachingServices serviceInstance = new UpdateDegreeTeachingServices();
 
     @Service
-    public static void runUpdateDegreeTeachingServices(Integer professorshipID,
+    public static void runUpdateDegreeTeachingServices(String professorshipID,
             List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) throws NotAuthorizedException {
         try {
             ScientificCouncilAuthorizationFilter.instance.execute();

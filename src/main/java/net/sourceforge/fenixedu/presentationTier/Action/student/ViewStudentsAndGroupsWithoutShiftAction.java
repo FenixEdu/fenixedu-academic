@@ -41,12 +41,11 @@ public class ViewStudentsAndGroupsWithoutShiftAction extends FenixContextAction 
         IUserView userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
         try {
-            infoSiteStudentsAndGroups = ReadStudentsAndGroupsWithoutShift.run(groupPropertiesCode);
+            infoSiteStudentsAndGroups = ReadStudentsAndGroupsWithoutShift.run(groupPropertiesCodeString);
 
         } catch (InvalidSituationServiceException e) {
             ActionErrors actionErrors2 = new ActionErrors();

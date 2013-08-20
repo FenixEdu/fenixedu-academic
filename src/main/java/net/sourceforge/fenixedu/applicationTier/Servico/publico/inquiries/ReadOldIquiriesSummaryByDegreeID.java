@@ -9,13 +9,13 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoOldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesSummary;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -24,8 +24,8 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadOldIquiriesSummaryByDegreeID {
 
     @Service
-    public static List run(Integer degreeID) throws FenixServiceException {
-        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeID);
+    public static List run(String degreeID) throws FenixServiceException {
+        Degree degree = AbstractDomainObject.fromExternalId(degreeID);
 
         if (degree == null) {
             throw new FenixServiceException("nullDegreeId");

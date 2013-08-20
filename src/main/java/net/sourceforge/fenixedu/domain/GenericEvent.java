@@ -273,7 +273,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     @Override
     public String getGanttDiagramEventIdentifier() {
-        return getIdInternal().toString();
+        return getExternalId().toString();
     }
 
     @Override

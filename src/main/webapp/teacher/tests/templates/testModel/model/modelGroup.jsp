@@ -12,12 +12,12 @@
 <ft:view property="position" />) <ft:view schema="tests.modelGroup.name" layout="values" />
 (<f:parameterLink page="/tests/testModels.do?method=deleteModelRestriction">
 	<f:parameter id="returnTo" value="/tests/testModels.do?method=editTestModel" />
-	<f:parameter id="oid" name="modelGroup" property="idInternal" />
+	<f:parameter id="oid" name="modelGroup" property="externalId" />
 	Remover
 </f:parameterLink>
 ,
 <f:parameterLink page="/tests/testModels.do?method=editModelGroup">
-	<f:parameter id="oid" name="modelGroup" property="idInternal" />
+	<f:parameter id="oid" name="modelGroup" property="externalId" />
 	Editar
 </f:parameterLink>)
 

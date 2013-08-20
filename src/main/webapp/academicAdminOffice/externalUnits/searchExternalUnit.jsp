@@ -38,7 +38,7 @@
 	</logic:empty>
 
 
-	<bean:define id="earthUnitId">&amp;oid=<bean:write name="searchBean" property="earthUnit.idInternal" /></bean:define>
+	<bean:define id="earthUnitId">&amp;oid=<bean:write name="searchBean" property="earthUnit.externalId" /></bean:define>
 	<ul>
 		<li><html:link page="<%="/externalUnits.do?method=prepareCreateCountry" + earthUnitId %>"><bean:message key="label.externalUnits.createCountry" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 	</ul>

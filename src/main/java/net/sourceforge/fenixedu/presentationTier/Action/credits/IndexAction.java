@@ -18,6 +18,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -50,7 +51,7 @@ public class IndexAction extends Action {
 
     private void removeCreditsPointZeroExecutionPeriod(List<InfoExecutionPeriod> executionPeriodsNotClosed) {
         for (InfoExecutionPeriod infoExecutionPeriod : executionPeriodsNotClosed) {
-            if (infoExecutionPeriod.getIdInternal().equals(1)) {
+            if (infoExecutionPeriod.getExternalId().equals(1)) {
                 executionPeriodsNotClosed.remove(infoExecutionPeriod);
                 break;
             }
@@ -64,9 +65,9 @@ public class IndexAction extends Action {
      */
     private void setChoosedExecutionPeriod(HttpServletRequest request, List executionPeriodsNotClosed,
             DynaValidatorForm executionPeriodForm) {
-        final Integer executionPeriodId = (Integer) executionPeriodForm.get("executionPeriodId");
+        final String executionPeriodId = (String) executionPeriodForm.get("executionPeriodId");
         InfoExecutionPeriod infoExecutionPeriod = null;
-        if (executionPeriodId == null) {
+        if (StringUtils.isEmpty(executionPeriodId)) {
             infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate() {
 
                 @Override
@@ -83,7 +84,7 @@ public class IndexAction extends Action {
                 public boolean evaluate(Object input) {
                     InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
 
-                    return infoExecutionPeriod.getIdInternal().equals(executionPeriodId);
+                    return infoExecutionPeriod.getExternalId().equals(executionPeriodId);
                 }
             });
 

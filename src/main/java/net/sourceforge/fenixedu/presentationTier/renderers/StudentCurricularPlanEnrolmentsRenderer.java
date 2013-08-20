@@ -347,10 +347,10 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
                     final HtmlLink htmlLink = new HtmlLink();
                     htmlLink.setText(academicAdminOfficeResources.getString("link.option.choose.curricular.course"));
                     htmlLink.setUrl(getLinkURL());
-                    htmlLink.setParameter("scpID", studentEnrolmentBean.getStudentCurricularPlan().getIdInternal());
-                    htmlLink.setParameter("executionPeriodID", studentEnrolmentBean.getExecutionPeriod().getIdInternal());
-                    htmlLink.setParameter("curriculumGroupID", degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
-                    htmlLink.setParameter("contextID", degreeModuleToEnrol.getContext().getIdInternal());
+                    htmlLink.setParameter("scpID", studentEnrolmentBean.getStudentCurricularPlan().getExternalId());
+                    htmlLink.setParameter("executionPeriodID", studentEnrolmentBean.getExecutionPeriod().getExternalId());
+                    htmlLink.setParameter("curriculumGroupID", degreeModuleToEnrol.getCurriculumGroup().getExternalId());
+                    htmlLink.setParameter("contextID", degreeModuleToEnrol.getContext().getExternalId());
                     linkTableCell.setBody(htmlLink);
                 }
             }

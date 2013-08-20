@@ -9,14 +9,14 @@
 	
 	<ul class="mtop2 list5">
 		<li>
-			<html:link page="/student.do?method=visualizeRegistration" paramId="registrationId" paramName="registrationCurriculumBean" paramProperty="registration.idInternal">
+			<html:link page="/student.do?method=visualizeRegistration" paramId="registrationId" paramName="registrationCurriculumBean" paramProperty="registration.externalId">
 				<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</li>
 	</ul>
 	
 	<div style="float: right;">
-		<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+		<bean:define id="personID" name="registration" property="student.person.externalId"/>
 		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 	</div>
 	
@@ -53,7 +53,7 @@
 	<br/>
 	
 	
-	<bean:define id="registrationId" name="registrationCurriculumBean" property="registration.idInternal" />
+	<bean:define id="registrationId" name="registrationCurriculumBean" property="registration.externalId" />
 	<fr:form action="/registration.do?method=chooseCycleForViewRegistrationCurriculum">
 
 		<fr:edit id="registrationCurriculumBean" 

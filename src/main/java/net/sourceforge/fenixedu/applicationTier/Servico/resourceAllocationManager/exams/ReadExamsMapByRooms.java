@@ -22,12 +22,12 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadExamsMapByRooms {
 
@@ -49,7 +49,7 @@ public class ReadExamsMapByRooms {
         }
 
         final ExecutionSemester executionSemester =
-                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
 
         for (final InfoRoom infoRoom : infoRooms) {
             final InfoRoomExamsMap infoRoomExamsMap = new InfoRoomExamsMap();
@@ -76,7 +76,7 @@ public class ReadExamsMapByRooms {
 
     private static List<InfoExam> getInfoExams(final InfoRoom infoRoom, final ExecutionSemester executionSemester) {
         final List<InfoExam> result = new ArrayList<InfoExam>();
-        final AllocatableSpace oldRoom = (AllocatableSpace) RootDomainObject.getInstance().readResourceByOID(infoRoom.getIdInternal());
+        final AllocatableSpace oldRoom = (AllocatableSpace) AbstractDomainObject.fromExternalId(infoRoom.getExternalId());
         for (final ResourceAllocation roomOccupation : oldRoom.getResourceAllocations()) {
             if (roomOccupation.isWrittenEvaluationSpaceOccupation()) {
                 List<WrittenEvaluation> writtenEvaluations =

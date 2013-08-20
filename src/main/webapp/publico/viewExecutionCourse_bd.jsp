@@ -24,10 +24,10 @@
 		<h2 class="brown"><bean:message key="label.curricular.information"/></h2>
 		<ul>
 				<logic:iterate id="curricularCourse" name="curricularCoursesList">
-					<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal" />
-					<bean:define id="degreeID" name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.idInternal" />
-					<bean:define id="degreeCurricularPlanID" name="curricularCourse" property="infoDegreeCurricularPlan.idInternal" />
-					<bean:define id="executionYearID" name="component" property="executionCourse.infoExecutionPeriod.infoExecutionYear.idInternal"/>
+					<bean:define id="curricularCourseId" name="curricularCourse" property="externalId" />
+					<bean:define id="degreeID" name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.externalId" />
+					<bean:define id="degreeCurricularPlanID" name="curricularCourse" property="infoDegreeCurricularPlan.externalId" />
+					<bean:define id="executionYearID" name="component" property="executionCourse.infoExecutionPeriod.infoExecutionYear.externalId"/>
 
 					<li>
 						<logic:notEqual name="curricularCourse" property="bolonhaDegree" value="true">
@@ -78,7 +78,7 @@
 		<logic:notEmpty name="lastFiveAnnouncements">		    	
 				<ul class="more-announc">
 				<logic:iterate id="announcement" name="lastFiveAnnouncements">
-					<bean:define id="announcementId" name ="announcement" property="idInternal" />
+					<bean:define id="announcementId" name ="announcement" property="externalId" />
 					<li class="more-announc"><span class="more-announc-date">
 						<fr:view name="announcement" property="lastModification"/> - </span>
 						<html:link  page="<%="/announcementManagement.do"+"?method=viewAnnouncements&amp;objectCode=" + pageContext.findAttribute("objectCode") + "#" + announcementId%>"
@@ -110,8 +110,8 @@
 			<h2><bean:message key="label.lecturingTeachers"/></h2>	
             	<logic:iterate id="infoResponsableTeacher" name="component" property="responsibleTeachers">
 				<p style="margin-top: 6px; margin-bottom: 6px;">
-					<bean:define id="teacherID" type="java.lang.Integer" name="infoResponsableTeacher" property="idInternal"/>
-					<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance().readTeacherByOID(teacherID).getPerson();
+					<bean:define id="teacherID" type="java.lang.String" name="infoResponsableTeacher" property="externalId"/>
+					<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.AbstractDomainObject.fromExternalId(teacherID).getPerson();
 					   request.setAttribute("person", person);
 					%>
 
@@ -145,8 +145,8 @@
 			</logic:empty>
             <logic:iterate id="infoTeacher" name="component" property="lecturingTeachers">
 				<p style="margin-top: 6px; margin-bottom: 6px;">
-					<bean:define id="teacherID" type="java.lang.Integer" name="infoTeacher" property="idInternal"/>
-					<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance().readTeacherByOID(teacherID).getPerson();
+					<bean:define id="teacherID" type="java.lang.String" name="infoTeacher" property="externalId"/>
+					<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.AbstractDomainObject.fromExternalId(teacherID).getPerson();
 					   request.setAttribute("person", person);
 					%>
 					<logic:present name="person" property="homepage">

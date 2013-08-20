@@ -14,11 +14,11 @@ import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.SituationName;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadCandidateList {
 
@@ -28,7 +28,7 @@ public class ReadCandidateList {
             Integer candidateNumber, String executionYearString) {
 
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(Integer.valueOf(degreeName));
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(degreeName);
 
         final Set<MasterDegreeCandidate> result;
         if (executionDegree == null && degreeType == null && candidateSituation == null && candidateNumber == null) {

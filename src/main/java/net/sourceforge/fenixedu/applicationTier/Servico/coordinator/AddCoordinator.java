@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ResponsibleDegreeCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -8,13 +7,13 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AddCoordinator {
 
     @Service
-    public static Boolean run(final Integer executionDegreeId, final String istUsername) throws FenixServiceException {
+    public static Boolean run(final String executionDegreeId, final String istUsername) throws FenixServiceException {
 
         final Person person = Person.readPersonByIstUsername(istUsername);
         if (person == null) {
@@ -26,7 +25,7 @@ public class AddCoordinator {
             throw new FenixServiceException("error.noEmployeeForIstUsername");
         }
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
         if (executionDegree == null) {
             throw new FenixServiceException("error.noExecutionDegree");
         }
@@ -41,13 +40,11 @@ public class AddCoordinator {
 
     // Service Invokers migrated from Berserk
 
-    private static final AddCoordinator serviceInstance = new AddCoordinator();
-
     @Service
-    public static Boolean runAddCoordinator(Integer executionDegreeId, String istUsername) throws FenixServiceException,
+    public static Boolean runAddCoordinator(String executionDegreeId, String istUsername) throws FenixServiceException,
             NotAuthorizedException {
         ResponsibleDegreeCoordinatorAuthorizationFilter.instance.execute(executionDegreeId);
-        return serviceInstance.run(executionDegreeId, istUsername);
+        return run(executionDegreeId, istUsername);
     }
 
 }

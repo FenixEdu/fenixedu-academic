@@ -70,7 +70,7 @@ public class InfoPeriod extends InfoObject {
         if (period != null) {
             setStartDate(period.getStartDate());
             setEndDate(period.getEndDate());
-            setIdInternal(period.getIdInternal());
+            setExternalId(period.getExternalId());
             if (period.getNextPeriod() != null) {
                 InfoPeriod infoPeriod = new InfoPeriod();
                 infoPeriod.copyFromDomain(period.getNextPeriod());

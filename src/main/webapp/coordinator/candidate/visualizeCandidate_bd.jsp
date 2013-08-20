@@ -251,7 +251,7 @@
    </logic:empty>
 
 
-<bean:define id="candidateID" name="masterDegreeCandidate" property="idInternal" />
+<bean:define id="candidateID" name="masterDegreeCandidate" property="externalId" />
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" />
 	
 <table class="mtop2" width="100%" cellspacing="0">

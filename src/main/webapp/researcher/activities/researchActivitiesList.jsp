@@ -12,7 +12,7 @@
 <div>
 <ul class="listresearch">
 	<logic:iterate id="participation" name="participations">
-		<bean:define id="participationId" name="participation" property="idInternal"/>
+		<bean:define id="participationId" name="participation" property="externalId"/>
 		<bean:define id="parameters" value="<%= "participationId=" + participationId + "&forwardTo=" +  forwardTo%>" toScope="request" />
 		<li class="mtop1">
 			<fr:view name="participation" layout="nonNullValues" schema="<%= schema %>">

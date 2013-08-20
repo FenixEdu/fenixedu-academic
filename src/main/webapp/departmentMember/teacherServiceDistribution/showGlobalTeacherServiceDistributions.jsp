@@ -37,7 +37,7 @@
 	<td>
 		<html:select property="executionYear" onchange="this.form.submit();">
 			<html:option value="-1"><bean:message key="label.teacherServiceDistribution.all"/></html:option>
-			<html:options collection="executionYearList" property="idInternal" labelProperty="year"/>
+			<html:options collection="executionYearList" property="externalId" labelProperty="year"/>
 		</html:select>
 	</td>
 </tr>
@@ -49,7 +49,7 @@
 		<logic:notEmpty name="executionPeriodsList">
 			<html:select property="executionPeriod" onchange="this.form.submit();">
 				<html:option value="-1"><bean:message key="label.teacherServiceDistribution.both"/></html:option>
-				<html:options collection="executionPeriodsList" property="idInternal" labelProperty="semester"/>
+				<html:options collection="executionPeriodsList" property="externalId" labelProperty="semester"/>
 			</html:select>
 		</logic:notEmpty>
 	</td>
@@ -81,7 +81,7 @@
 		</th>
 	</tr>
 <logic:iterate name="tsdProcessList" id="tsdProcess">
-	<bean:define id="tsdId" name="tsdProcess" property="idInternal" />
+	<bean:define id="tsdId" name="tsdProcess" property="externalId" />
 	<tr>
 	 	<td class="highlight7" align="left" width="250">
 			<html:link page='<%= "/globalTSDProcessValuation.do?method=showTSDProcess&amp;tsdProcess=" + tsdId %>'>

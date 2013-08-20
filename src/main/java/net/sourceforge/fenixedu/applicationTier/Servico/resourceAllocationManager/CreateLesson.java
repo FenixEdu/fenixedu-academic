@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -21,6 +20,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateLesson {
 
@@ -31,10 +31,10 @@ public class CreateLesson {
             throws FenixServiceException {
 
         final ExecutionSemester executionSemester =
-                RootDomainObject.getInstance().readExecutionSemesterByOID(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod()
-                        .getIdInternal());
+                AbstractDomainObject.fromExternalId(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod()
+                        .getExternalId());
 
-        final Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShift.getIdInternal());
+        final Shift shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
 
         AllocatableSpace room = null;
         if (infoRoomOccupation != null) {

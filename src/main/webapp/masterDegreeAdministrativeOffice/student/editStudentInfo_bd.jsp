@@ -20,7 +20,7 @@
 <br />
 <logic:present name="personalInfo">
 <html:form action="/editStudentInfo.do?method=change" >
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="personalInfo" property="idInternal" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" name="personalInfo" property="externalId" />
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.number" name="infoStudent" property="number"  />
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" />

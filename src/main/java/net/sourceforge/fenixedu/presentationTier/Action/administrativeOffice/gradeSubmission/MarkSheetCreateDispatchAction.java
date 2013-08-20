@@ -133,7 +133,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         IUserView userView = getUserView(request);
         try {
             MarkSheet markSheet = createMarkSheet(createBean, userView);
-            ((DynaActionForm) actionForm).set("msID", markSheet.getIdInternal());
+            ((DynaActionForm) actionForm).set("msID", markSheet.getExternalId());
             return viewMarkSheet(mapping, actionForm, request, response);
         } catch (final IllegalDataAccessException e) {
             addMessage(request, actionMessages, "error.notAuthorized");

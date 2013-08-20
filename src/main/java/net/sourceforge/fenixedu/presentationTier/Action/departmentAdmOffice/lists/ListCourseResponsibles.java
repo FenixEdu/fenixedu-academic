@@ -34,6 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -123,9 +124,7 @@ public class ListCourseResponsibles extends FenixDispatchAction {
 
     private ExecutionYear getExecutionYearParameter(final HttpServletRequest request) {
         final String executionYearIdString = request.getParameter("executionYearId");
-        final Integer executionYearId =
-                executionYearIdString != null && executionYearIdString.length() > 0 ? Integer.valueOf(executionYearIdString) : null;
-        return executionYearId == null ? null : rootDomainObject.readExecutionYearByOID(executionYearId);
+        return AbstractDomainObject.fromExternalId(executionYearIdString);
     }
 
     public ActionForward downloadStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

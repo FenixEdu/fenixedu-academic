@@ -153,12 +153,12 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getStudentCurricularPlan().getIdInternal();
+    public String getExternalId() {
+        return getStudentCurricularPlan().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

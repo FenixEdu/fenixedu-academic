@@ -119,10 +119,10 @@ public class GenerateFilesAction extends FenixDispatchAction {
             // Create respective file
             if (fileType.equals("sibs")) {
                 generatedFile =
-                        GenerateOutgoingSibsPaymentFileByExecutionYearID.run(infoExecutionYear.getIdInternal(), paymentEndDate);
+                        GenerateOutgoingSibsPaymentFileByExecutionYearID.run(infoExecutionYear.getExternalId(), paymentEndDate);
             } else if (fileType.equals("letters")) {
                 generatedFile =
-                        GeneratePaymentLettersFileByExecutionYearID.run(infoExecutionYear.getIdInternal(), paymentEndDate);
+                        GeneratePaymentLettersFileByExecutionYearID.run(infoExecutionYear.getExternalId(), paymentEndDate);
             }
         } catch (InsufficientSibsPaymentPhaseCodesServiceException exception) {
             addErrorMessage(request, "noList", "error.generateFiles.invalidBind", exception.getMessage());

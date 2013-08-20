@@ -42,13 +42,7 @@ public class ShowCandidacyDetails extends FenixAction {
             throws FenixActionException {
         IUserView userView = getUserView(request);
         String candidacyIDString = request.getParameter("objectCode");
-        Integer candidacyID;
         if (candidacyIDString == null) {
-            throw new FenixActionException(mapping.findForward("invalidQueryString"));
-        }
-        try {
-            candidacyID = new Integer(candidacyIDString);
-        } catch (Exception ex) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }
         InfoCandidacy candidacy = null;
@@ -63,7 +57,7 @@ public class ShowCandidacyDetails extends FenixAction {
 
         ActionForward destiny = null;
         try {
-            candidacy = GetCandidacyById.runGetCandidacyById(candidacyID);
+            candidacy = GetCandidacyById.runGetCandidacyById(candidacyIDString);
 
             student = candidacy.getInfoStudent();
             curricularCourse = candidacy.getCurricularCourse();

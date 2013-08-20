@@ -58,9 +58,9 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
         IUserView userView = getUserView(request);
 
-        Integer studentCurricularPlanID = (Integer) request.getAttribute("studentCurricularPlanID");
+        String studentCurricularPlanID = (String) request.getAttribute("studentCurricularPlanID");
         if (studentCurricularPlanID == null) {
-            studentCurricularPlanID = Integer.valueOf(request.getParameter("studentCurricularPlanID"));
+            studentCurricularPlanID = request.getParameter("studentCurricularPlanID");
         }
 
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
@@ -84,7 +84,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
             throw new FinalResulUnreachedActionException("");
         }
 
-        enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal(), EnrollmentState.APROVED);
+        enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getExternalId(), EnrollmentState.APROVED);
 
         if (enrolmentList.size() == 0) {
             throw new NonExistingActionException("Inscrição em Disciplinas");

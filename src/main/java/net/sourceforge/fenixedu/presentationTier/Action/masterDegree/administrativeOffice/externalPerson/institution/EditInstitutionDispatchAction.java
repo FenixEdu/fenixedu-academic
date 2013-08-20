@@ -72,7 +72,7 @@ public class EditInstitutionDispatchAction extends FenixDispatchAction {
                     while (it.hasNext()) {
                         infoInstitution = (Unit) it.next();
                         infoInstitutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution
-                                .getIdInternal().toString()));
+                                .getExternalId().toString()));
                     }
 
                     request.setAttribute(PresentationConstants.WORK_LOCATIONS_LIST, infoInstitutionsValueBeanList);
@@ -99,7 +99,7 @@ public class EditInstitutionDispatchAction extends FenixDispatchAction {
 
         DynaActionForm editInstitutionForm = (DynaActionForm) form;
 
-        Integer oldInstitutionId = (Integer) editInstitutionForm.get("institutionId");
+        String oldInstitutionId = (String) editInstitutionForm.get("institutionId");
         String newInstitutionName = (String) editInstitutionForm.get("name");
 
         try {

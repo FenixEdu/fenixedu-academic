@@ -30,7 +30,7 @@
 
 <ul class="mtop1">
 	<li>
-		<html:link page="<%= "/vigilancy/unavailablePeriodManagement.do?method=prepareAddPeriodToVigilant&gid=" + vigilantGroup.getIdInternal() %>">
+		<html:link page="<%= "/vigilancy/unavailablePeriodManagement.do?method=prepareAddPeriodToVigilant&gid=" + vigilantGroup.getExternalId() %>">
 			<bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addAnUnavailablePeriodOfVigilant"/>
 		</html:link>
 	</li>
@@ -52,12 +52,12 @@
 		<fr:property name="columnClasses" value="nowrap smalltxt color888,nowrap smalltxt color888,,,nowrap" />
 		<fr:property name="key(edit)" value="label.edit"/>
 		<fr:property name="bundle(edit)" value="VIGILANCY_RESOURCES"/>
-		<fr:property name="link(edit)" value="<%= "/vigilancy/unavailablePeriodManagement.do?method=editUnavailablePeriodOfVigilant&gid=" + vigilantGroup.getIdInternal() %>"/>
-		<fr:property name="param(edit)" value="idInternal/oid" />
+		<fr:property name="link(edit)" value="<%= "/vigilancy/unavailablePeriodManagement.do?method=editUnavailablePeriodOfVigilant&gid=" + vigilantGroup.getExternalId() %>"/>
+		<fr:property name="param(edit)" value="externalId/oid" />
 		<fr:property name="key(delete)" value="label.delete"/>
 		<fr:property name="bundle(delete)" value="VIGILANCY_RESOURCES"/>
-		<fr:property name="link(delete)" value="<%= "/vigilancy/unavailablePeriodManagement.do?method=deleteUnavailablePeriodOfVigilant&gid=" + vigilantGroup.getIdInternal() %>"/>
-		<fr:property name="param(delete)" value="idInternal/oid" />
+		<fr:property name="link(delete)" value="<%= "/vigilancy/unavailablePeriodManagement.do?method=deleteUnavailablePeriodOfVigilant&gid=" + vigilantGroup.getExternalId() %>"/>
+		<fr:property name="param(delete)" value="externalId/oid" />
 
 	</fr:layout>
 	</fr:view>

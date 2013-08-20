@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.WrittenEvaluationVigilancyView;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
@@ -19,6 +18,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -29,8 +29,7 @@ public class VigilantGroupExportReport extends VigilantGroupManagement {
             HttpServletResponse response) throws Exception {
 
         String vigilantGroupId = request.getParameter("oid");
-        VigilantGroup group =
-                (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(vigilantGroupId));
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(vigilantGroupId);
 
         response.setContentType("text/plain");
         response.setHeader("Content-disposition", "attachment; filename=\"" + group.getName() + ".xls\"");

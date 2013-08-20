@@ -9,20 +9,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author naat
  */
 public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType {
 
-    public List<ExecutionCourse> run(Integer teacherID, Integer executionYearID, DegreeType degreeType)
+    public List<ExecutionCourse> run(String teacherID, String executionYearID, DegreeType degreeType)
             throws FenixServiceException {
 
-        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherID);
+        Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
 
         List<ExecutionCourse> lecturedExecutionCourses;
 
@@ -30,7 +30,7 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
             lecturedExecutionCourses = teacher.getAllLecturedExecutionCourses();
 
         } else {
-            ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+            ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
             lecturedExecutionCourses = teacher.getLecturedExecutionCoursesByExecutionYear(executionYear);
         }
 
@@ -66,8 +66,7 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
 
     @Service
     public static List<ExecutionCourse> runReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType(
-            Integer teacherID, Integer executionYearID, DegreeType degreeType) throws FenixServiceException,
-            NotAuthorizedException {
+            String teacherID, String executionYearID, DegreeType degreeType) throws FenixServiceException, NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             return serviceInstance.run(teacherID, executionYearID, degreeType);

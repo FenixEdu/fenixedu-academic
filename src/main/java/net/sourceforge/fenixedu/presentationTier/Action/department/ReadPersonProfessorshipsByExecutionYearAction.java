@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -50,6 +49,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "departmentAdmOffice", path = "/showTeacherProfessorshipsForManagement",
         input = "show-teacher-professorships-for-management", attribute = "teacherExecutionCourseResponsabilities",
@@ -113,7 +113,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 
         InfoPerson infoPerson = getInfoPerson(request, dynaForm);
 
-        List detailedInfoProfessorshipList = getDetailedProfessorships(userView, infoPerson.getIdInternal(), dynaForm, request);
+        List detailedInfoProfessorshipList = getDetailedProfessorships(userView, infoPerson.getExternalId(), dynaForm, request);
 
         ComparatorChain chain = new ComparatorChain();
 
@@ -135,21 +135,19 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         InfoPerson infoPerson = (InfoPerson) request.getAttribute("infoPerson");
         if (infoPerson == null) {
             final IUserView userView = UserView.getUser();
-            infoPerson = ReadPersonByID.run((Integer) dynaForm.get("idInternal"));
+            infoPerson = ReadPersonByID.run((String) dynaForm.get("externalId"));
             request.setAttribute("infoPerson", infoPerson);
 
         }
         return infoPerson;
     }
 
-    List getDetailedProfessorships(IUserView userView, Integer personId, DynaActionForm actionForm, HttpServletRequest request)
+    List getDetailedProfessorships(IUserView userView, String personId, DynaActionForm actionForm, HttpServletRequest request)
             throws FenixServiceException {
 
-        List<Professorship> professorshipList =
-                ((Person) RootDomainObject.getInstance().readPartyByOID(personId)).getProfessorships();
+        List<Professorship> professorshipList = ((Person) AbstractDomainObject.fromExternalId(personId)).getProfessorships();
 
-        ExecutionYear executionYear =
-                RootDomainObject.getInstance().readExecutionYearByOID(((Integer) actionForm.get("executionYearId")));
+        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(((String) actionForm.get("executionYearId")));
         if (executionYear == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         }
@@ -177,11 +175,11 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     private void prepareForm(DynaActionForm dynaForm, HttpServletRequest request) {
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
         InfoPerson infoPerson = (InfoPerson) request.getAttribute("infoPerson");
-        dynaForm.set("idInternal", infoPerson.getIdInternal());
+        dynaForm.set("externalId", infoPerson.getExternalId());
         dynaForm.set("teacherId", infoPerson.getIstUsername());
         dynaForm.set("teacherName", infoPerson.getIstUsername());
         if (dynaForm.get("executionYearId") == null) {
-            dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
+            dynaForm.set("executionYearId", infoExecutionYear.getExternalId());
         }
 
         List detailedProfessorshipList = (List) request.getAttribute("detailedProfessorshipList");
@@ -191,7 +189,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         for (int i = 0; i < detailedProfessorshipList.size(); i++) {
             DetailedProfessorship dps = (DetailedProfessorship) detailedProfessorshipList.get(i);
 
-            Integer executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getIdInternal();
+            String executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getExternalId();
             if (dps.getResponsibleFor().booleanValue()) {
                 executionCourseIds.add(executionCourseId);
             }
@@ -202,7 +200,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
             }
         }
 
-        dynaForm.set("executionCourseResponsability", executionCourseIds.toArray(new Integer[] {}));
+        dynaForm.set("executionCourseResponsability", executionCourseIds.toArray(new String[] {}));
         dynaForm.set("hours", hours);
 
     }
@@ -222,7 +220,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
                 return false;
             }
         });
-        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoPerson.getIdInternal());
+        Person person = (Person) AbstractDomainObject.fromExternalId(infoPerson.getExternalId());
         InfoDepartment teacherDepartment = null;
         if (person.getTeacher() != null) {
             Department department = person.getTeacher().getCurrentWorkingDepartment();

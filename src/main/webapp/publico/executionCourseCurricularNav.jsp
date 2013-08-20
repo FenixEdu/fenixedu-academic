@@ -12,9 +12,9 @@
 <h2 class="brown"><bean:message key="label.curricular.information"/></h2>
 <ul>
 	<logic:iterate id="curricularCourse" name="curricularCourses">
-		<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal" />
-		<bean:define id="degreeID" name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.idInternal" />
-		<bean:define id="degreeCurricularPlanID" name="curricularCourse" property="infoDegreeCurricularPlan.idInternal" />
+		<bean:define id="curricularCourseId" name="curricularCourse" property="externalId" />
+		<bean:define id="degreeID" name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.externalId" />
+		<bean:define id="degreeCurricularPlanID" name="curricularCourse" property="infoDegreeCurricularPlan.externalId" />
 
 		<bean:define id="initialDate" name="curricularCourse" property="infoDegreeCurricularPlan.initialDate" />
 		

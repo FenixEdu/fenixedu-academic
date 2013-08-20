@@ -6,8 +6,8 @@
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.payments.annulTransaction" /></h2>
 
-<bean:define id="personId" name="annulAccountingTransactionBean" property="person.idInternal" />
-<bean:define id="eventId" name="annulAccountingTransactionBean" property="transaction.event.idInternal" />
+<bean:define id="personId" name="annulAccountingTransactionBean" property="person.externalId" />
+<bean:define id="eventId" name="annulAccountingTransactionBean" property="transaction.event.externalId" />
 
 <logic:messagesPresent message="true">
 	<ul class="nobullet list6">

@@ -18,7 +18,7 @@ public class InfoStudentTestQuestionMark extends InfoObject {
 
     private Integer studentNumber;
 
-    private Integer studentIdInternal;
+    private String studentExternalId;
 
     private String studentDegree;
 
@@ -40,12 +40,12 @@ public class InfoStudentTestQuestionMark extends InfoObject {
         this.maximumMark = maximumMark;
     }
 
-    public Integer getStudentIdInternal() {
-        return studentIdInternal;
+    public String getStudentExternalId() {
+        return studentExternalId;
     }
 
-    public void setStudentIdInternal(Integer studentIdInternal) {
-        this.studentIdInternal = studentIdInternal;
+    public void setStudentExternalId(String studentExternalId) {
+        this.studentExternalId = studentExternalId;
     }
 
     public String getStudentName() {
@@ -87,7 +87,7 @@ public class InfoStudentTestQuestionMark extends InfoObject {
         super.copyFromDomain(studentTestQuestion);
         if (studentTestQuestion != null) {
             if (studentTestQuestion.getStudent() != null) {
-                setStudentIdInternal(studentTestQuestion.getStudent().getIdInternal());
+                setStudentExternalId(studentTestQuestion.getStudent().getExternalId());
                 setStudentNumber(studentTestQuestion.getStudent().getNumber());
                 setStudentDegree(studentTestQuestion.getStudent().getDegree() != null ? studentTestQuestion.getStudent()
                         .getDegree().getSigla() : "-");

@@ -11,7 +11,7 @@
 	<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
 	<bean:define id="extraParameters" name="extraParameters" />
 	<bean:define id="announcementBoard" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
-	<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>		
+	<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>		
 	<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
 
 	<h2>
@@ -24,7 +24,7 @@
 		 <%
 			java.util.Map parameters = new java.util.HashMap();
 			parameters.put("method","simple");
-			parameters.put("announcementBoardId",announcementBoard.getIdInternal());
+			parameters.put("announcementBoardId",announcementBoard.getExternalId());
 			request.setAttribute("parameters",parameters);
 			%>
 			<logic:notPresent name="announcementBoard" property="readers">

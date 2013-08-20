@@ -6,8 +6,8 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -16,9 +16,9 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID {
 
     @Service
-    public static Set<DegreeModuleScope> run(Integer degreeCurricularPlanId, Integer executionYearID) {
-        final ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
-        final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+    public static Set<DegreeModuleScope> run(String degreeCurricularPlanId, String executionYearID) {
+        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         final Set<DegreeModuleScope> degreeModuleScopes = degreeCurricularPlan.getDegreeModuleScopes();
         final Set<DegreeModuleScope> result =
                 new TreeSet<DegreeModuleScope>(

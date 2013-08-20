@@ -38,7 +38,7 @@
 	<logic:present name="roomsReserveRequest">
 	<logic:notEmpty name="roomsReserveRequest">
 		<logic:present name="roomsReserveRequest" property="firstComment">
-		<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&amp;punctualReserveID=<bean:write name="roomsReserveRequest" property="idInternal"/></bean:define>
+		<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&amp;punctualReserveID=<bean:write name="roomsReserveRequest" property="externalId"/></bean:define>
 		<fr:edit id="roomsReserveEdit" name="roomsReserveRequest" property="firstComment" schema="EditRoomsPunctualOccupationRequestFirstComment"
 			action="<%= seeReserveURL %>" >
 			<fr:layout name="tabular">

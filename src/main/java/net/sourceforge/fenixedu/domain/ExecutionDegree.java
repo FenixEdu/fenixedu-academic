@@ -376,7 +376,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
                 @Override
                 public int compare(ExecutionDegree o1, ExecutionDegree o2) {
-                    return o2.getDegreeCurricularPlan().getIdInternal().compareTo(o1.getDegreeCurricularPlan().getIdInternal());
+                    return o2.getDegreeCurricularPlan().getExternalId().compareTo(o1.getDegreeCurricularPlan().getExternalId());
                 }
             };
 

@@ -27,7 +27,7 @@ public class CreateUnitSite {
 
     private static void createBoard(CreateUnitAnnouncementBoard service, Unit unit, String name) throws FenixServiceException {
         if (!hasBoard(unit, name)) {
-            service.run(new UnitAnnouncementBoardParameters(unit.getIdInternal(), name, false,
+            service.run(new UnitAnnouncementBoardParameters(unit.getExternalId(), name, false,
                     UnitBoardPermittedGroupType.UB_PUBLIC, UnitBoardPermittedGroupType.UB_UNITSITE_MANAGERS,
                     UnitBoardPermittedGroupType.UB_MANAGER));
         }

@@ -56,6 +56,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
@@ -63,10 +64,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle domainResources = getResourceBundle("resources/DomainExceptionResources");
     private final Integer NO_SELECTION = 0;
 
-    private Integer selectedDepartmentUnitID = null;
-    private Integer competenceCourseID = null;
-    private Integer executionYearID = null;
-    private Integer executionSemesterID = null;
+    private String selectedDepartmentUnitID = null;
+    private String competenceCourseID = null;
+    private String executionYearID = null;
+    private String executionSemesterID = null;
     private Unit competenceCourseGroupUnit = null;
     private CompetenceCourse competenceCourse = null;
 
@@ -138,7 +139,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public DepartmentUnit getSelectedDepartmentUnit() {
         if (this.getSelectedDepartmentUnitID() != null) {
-            return (DepartmentUnit) rootDomainObject.readPartyByOID(this.getSelectedDepartmentUnitID());
+            return (DepartmentUnit) AbstractDomainObject.fromExternalId(this.getSelectedDepartmentUnitID());
         } else {
             return null;
         }
@@ -198,13 +199,13 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public Integer getCompetenceCourseGroupUnitID() {
-        return getAndHoldIntegerParameter("competenceCourseGroupUnitID");
+    public String getCompetenceCourseGroupUnitID() {
+        return getAndHoldStringParameter("competenceCourseGroupUnitID");
     }
 
     public Unit getCompetenceCourseGroupUnit() {
         if (competenceCourseGroupUnit == null && getCompetenceCourseGroupUnitID() != null) {
-            competenceCourseGroupUnit = (Unit) rootDomainObject.readPartyByOID(getCompetenceCourseGroupUnitID());
+            competenceCourseGroupUnit = (Unit) AbstractDomainObject.fromExternalId(getCompetenceCourseGroupUnitID());
         }
         return competenceCourseGroupUnit;
     }
@@ -413,35 +414,35 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public Integer getSelectedDepartmentUnitID() {
+    public String getSelectedDepartmentUnitID() {
         if (selectedDepartmentUnitID == null) {
             Container site = AbstractFunctionalityContext.getCurrentContext(getRequest()).getSelectedContainer();
             if (site != null && site instanceof DepartmentSite) {
-                selectedDepartmentUnitID = ((DepartmentSite) site).getDepartment().getDepartmentUnit().getIdInternal();
-            } else if (getAndHoldIntegerParameter("selectedDepartmentUnitID") != null) {
-                selectedDepartmentUnitID = getAndHoldIntegerParameter("selectedDepartmentUnitID");
+                selectedDepartmentUnitID = ((DepartmentSite) site).getDepartment().getDepartmentUnit().getExternalId();
+            } else if (getAndHoldStringParameter("selectedDepartmentUnitID") != null) {
+                selectedDepartmentUnitID = getAndHoldStringParameter("selectedDepartmentUnitID");
             } else if (getPersonDepartment() != null) {
-                selectedDepartmentUnitID = getPersonDepartment().getDepartmentUnit().getIdInternal();
+                selectedDepartmentUnitID = getPersonDepartment().getDepartmentUnit().getExternalId();
             }
         }
         return selectedDepartmentUnitID;
     }
 
-    public void setSelectedDepartmentUnitID(Integer selectedDepartmentUnitID) {
+    public void setSelectedDepartmentUnitID(String selectedDepartmentUnitID) {
         this.selectedDepartmentUnitID = selectedDepartmentUnitID;
     }
 
-    public Integer getCompetenceCourseID() {
-        return (competenceCourseID == null) ? (competenceCourseID = getAndHoldIntegerParameter("competenceCourseID")) : competenceCourseID;
+    public String getCompetenceCourseID() {
+        return (competenceCourseID == null) ? (competenceCourseID = getAndHoldStringParameter("competenceCourseID")) : competenceCourseID;
     }
 
-    public void setCompetenceCourseID(Integer competenceCourseID) {
+    public void setCompetenceCourseID(String competenceCourseID) {
         this.competenceCourseID = competenceCourseID;
     }
 
     public CompetenceCourse getCompetenceCourse() {
         if (competenceCourse == null && getCompetenceCourseID() != null) {
-            competenceCourse = rootDomainObject.readCompetenceCourseByOID(getCompetenceCourseID());
+            competenceCourse = AbstractDomainObject.fromExternalId(getCompetenceCourseID());
         }
         return competenceCourse;
     }
@@ -916,8 +917,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public void onChangeDepartmentUnit(ValueChangeEvent event) {
-        setTransferToDepartmentUnitID((Integer) event.getNewValue());
-        getScientificAreaUnitItems().setValue(readScientificAreaUnitLabels((Integer) event.getNewValue()));
+        setTransferToDepartmentUnitID((String) event.getNewValue());
+        getScientificAreaUnitItems().setValue(readScientificAreaUnitLabels((String) event.getNewValue()));
         getCompetenceCourseGroupUnitItems().setValue(readCompetenceCourseGroupUnitLabels(null));
     }
 
@@ -926,7 +927,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         for (final Object departmentObject : RootDomainObject.readAllDomainObjects(Department.class)) {
             DepartmentUnit departmentUnit = ((Department) departmentObject).getDepartmentUnit();
             if (departmentUnit.isActive(getExecutionSemester().getBeginDateYearMonthDay())) {
-                result.add(new SelectItem(departmentUnit.getIdInternal(), departmentUnit.getName()));
+                result.add(new SelectItem(departmentUnit.getExternalId(), departmentUnit.getName()));
             }
         }
         Collections.sort(result, new BeanComparator("label"));
@@ -947,16 +948,16 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public void onChangeScientificAreaUnit(ValueChangeEvent event) {
-        setTransferToScientificAreaUnitID((Integer) event.getNewValue());
-        getCompetenceCourseGroupUnitItems().setValue(readCompetenceCourseGroupUnitLabels((Integer) event.getNewValue()));
+        setTransferToScientificAreaUnitID((String) event.getNewValue());
+        getCompetenceCourseGroupUnitItems().setValue(readCompetenceCourseGroupUnitLabels((String) event.getNewValue()));
     }
 
-    private List<SelectItem> readScientificAreaUnitLabels(Integer transferToDepartmentUnitID) {
+    private List<SelectItem> readScientificAreaUnitLabels(String transferToDepartmentUnitID) {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        if (transferToDepartmentUnitID != null && transferToDepartmentUnitID != 0) {
+        if (transferToDepartmentUnitID != null) {
             for (final ScientificAreaUnit unit : readDepartmentUnitToTransferTo(transferToDepartmentUnitID)
                     .getScientificAreaUnits()) {
-                result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
+                result.add(new SelectItem(unit.getExternalId(), unit.getName()));
             }
         }
         Collections.sort(result, new BeanComparator("label"));
@@ -964,19 +965,19 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public Integer getTransferToDepartmentUnitID() {
+    public String getTransferToDepartmentUnitID() {
         if (getViewState().getAttribute("transferToDepartmentUnitID") != null) {
-            return (Integer) getViewState().getAttribute("transferToDepartmentUnitID");
+            return (String) getViewState().getAttribute("transferToDepartmentUnitID");
         }
-        return 0;
+        return null;
     }
 
-    public void setTransferToDepartmentUnitID(Integer transferToDepartmentUnitID) {
+    public void setTransferToDepartmentUnitID(String transferToDepartmentUnitID) {
         this.getViewState().setAttribute("transferToDepartmentUnitID", transferToDepartmentUnitID);
     }
 
-    private DepartmentUnit readDepartmentUnitToTransferTo(Integer transferToDepartmentUnitID) {
-        return (DepartmentUnit) rootDomainObject.readPartyByOID(transferToDepartmentUnitID);
+    private DepartmentUnit readDepartmentUnitToTransferTo(String transferToDepartmentUnitID) {
+        return (DepartmentUnit) AbstractDomainObject.fromExternalId(transferToDepartmentUnitID);
     }
 
     public UISelectItems getCompetenceCourseGroupUnitItems() {
@@ -991,12 +992,12 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.competenceCourseGroupUnitItems = competenceCourseGroupUnitItems;
     }
 
-    private List<SelectItem> readCompetenceCourseGroupUnitLabels(Integer transferToScientificAreaUnitID) {
+    private List<SelectItem> readCompetenceCourseGroupUnitLabels(String transferToScientificAreaUnitID) {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        if (transferToScientificAreaUnitID != null && transferToScientificAreaUnitID != 0) {
+        if (transferToScientificAreaUnitID != null) {
             for (final Unit unit : readScientificAreaUnitToTransferTo(transferToScientificAreaUnitID)
                     .getCompetenceCourseGroupUnits()) {
-                result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
+                result.add(new SelectItem(unit.getExternalId(), unit.getName()));
             }
         }
         Collections.sort(result, new BeanComparator("label"));
@@ -1004,19 +1005,19 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public Integer getTransferToScientificAreaUnitID() {
+    public String getTransferToScientificAreaUnitID() {
         if (getViewState().getAttribute("transferToScientificAreaUnitID") != null) {
-            return (Integer) getViewState().getAttribute("transferToScientificAreaUnitID");
+            return (String) getViewState().getAttribute("transferToScientificAreaUnitID");
         }
-        return 0;
+        return null;
     }
 
-    public void setTransferToScientificAreaUnitID(Integer transferToScientificAreaUnitID) {
+    public void setTransferToScientificAreaUnitID(String transferToScientificAreaUnitID) {
         this.getViewState().setAttribute("transferToScientificAreaUnitID", transferToScientificAreaUnitID);
     }
 
-    private ScientificAreaUnit readScientificAreaUnitToTransferTo(Integer transferToScientificAreaUnitID) {
-        return (ScientificAreaUnit) rootDomainObject.readPartyByOID(transferToScientificAreaUnitID);
+    private ScientificAreaUnit readScientificAreaUnitToTransferTo(String transferToScientificAreaUnitID) {
+        return (ScientificAreaUnit) AbstractDomainObject.fromExternalId(transferToScientificAreaUnitID);
     }
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
@@ -1043,16 +1044,16 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private Unit readCompetenceCourseGroupUnitToTransferTo() {
         if (getTransferToCompetenceCourseGroupUnitID() != null) {
-            return (Unit) rootDomainObject.readPartyByOID(getTransferToCompetenceCourseGroupUnitID());
+            return (Unit) AbstractDomainObject.fromExternalId(getTransferToCompetenceCourseGroupUnitID());
         }
         return null;
     }
 
-    public Integer getTransferToCompetenceCourseGroupUnitID() {
+    public String getTransferToCompetenceCourseGroupUnitID() {
         if (getViewState().getAttribute("transferToCompetenceCourseGroupUnitID") != null) {
-            return (Integer) getViewState().getAttribute("transferToCompetenceCourseGroupUnitID");
+            return (String) getViewState().getAttribute("transferToCompetenceCourseGroupUnitID");
         }
-        return 0;
+        return null;
     }
 
     public void setTransferToCompetenceCourseGroupUnitID(Integer transferToCompetenceCourseGroupUnitID) {
@@ -1060,47 +1061,47 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     private ExecutionSemester getExecutionSemester() {
-        return rootDomainObject.readExecutionSemesterByOID(getExecutionSemesterID());
+        return AbstractDomainObject.fromExternalId(getExecutionSemesterID());
     }
 
-    public Integer getExecutionSemesterID() {
+    public String getExecutionSemesterID() {
         if (executionSemesterID == null) {
-            executionSemesterID = (Integer) getViewState().getAttribute("executionSemesterID");
+            executionSemesterID = (String) getViewState().getAttribute("executionSemesterID");
         }
         ExecutionSemester currentSemester = ExecutionSemester.readActualExecutionSemester();
         if ((executionSemesterID == null) && (getCompetenceCourse() != null)) {
             if (getCompetenceCourse().getCompetenceCourseInformationsCount() == 1) {
                 executionSemesterID =
                         getCompetenceCourse().getCompetenceCourseInformationsSet().iterator().next().getExecutionPeriod()
-                                .getIdInternal();
+                                .getExternalId();
             }
         }
         if (executionSemesterID == null) {
-            executionSemesterID = currentSemester.getIdInternal();
+            executionSemesterID = currentSemester.getExternalId();
         }
         return executionSemesterID;
     }
 
-    public void setExecutionSemesterID(Integer executionSemesterID) {
+    public void setExecutionSemesterID(String executionSemesterID) {
         this.executionSemesterID = executionSemesterID;
         reset();
     }
 
     public ExecutionYear getExecutionYear() {
-        return rootDomainObject.readExecutionYearByOID(getExecutionYearID());
+        return AbstractDomainObject.fromExternalId(getExecutionYearID());
     }
 
-    public Integer getExecutionYearID() {
+    public String getExecutionYearID() {
         if (executionYearID == null) {
-            executionYearID = getAndHoldIntegerParameter("executionYearID");
+            executionYearID = getAndHoldStringParameter("executionYearID");
         }
         if (executionYearID == null) {
-            executionYearID = ExecutionYear.readCurrentExecutionYear().getIdInternal();
+            executionYearID = ExecutionYear.readCurrentExecutionYear().getExternalId();
         }
         return executionYearID;
     }
 
-    public void setExecutionYearID(Integer executionYearID) {
+    public void setExecutionYearID(String executionYearID) {
         this.executionYearID = executionYearID;
         reset();
     }
@@ -1120,7 +1121,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readExecutionSemesterLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (ExecutionSemester semester : getOrderedCompetenceCourseExecutionSemesters()) {
-            result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
+            result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
         }
         return result;
     }
@@ -1141,7 +1142,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
         while (semester != null) {
-            result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
+            result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
             semester = semester.getNextExecutionPeriod();
         }
         return result;
@@ -1162,7 +1163,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readCompetenceCourseExecutionSemesterLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (ExecutionSemester semester : getOrderedCompetenceCourseExecutionSemesters()) {
-            result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
+            result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
         }
         return result;
     }
@@ -1205,7 +1206,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             selectedYears = new ArrayList<SelectItem>();
             for (ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
                 if (year == null || executionYear.isAfterOrEquals(year)) {
-                    selectedYears.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+                    selectedYears.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
                 }
             }
             Collections.sort(selectedYears, new ReverseComparator(new BeanComparator("label")));

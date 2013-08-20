@@ -32,7 +32,7 @@ public class StudentTestLog extends StudentTestLog_Base {
     public static String getChecksum(DistributedTest distributedTest, Registration student, DateTime dateTime) {
         StringBuilder checksumCode = new StringBuilder();
         checksumCode.append(student.getNumber());
-        checksumCode.append(distributedTest.getIdInternal());
+        checksumCode.append(distributedTest.getExternalId());
         final DateTime thisDateTime =
                 new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay(),
                         dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute(), 0);

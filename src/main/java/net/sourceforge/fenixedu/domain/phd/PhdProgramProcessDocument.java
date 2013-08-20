@@ -26,7 +26,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         @Override
         public int compare(PhdProgramProcessDocument left, PhdProgramProcessDocument right) {
             int comparationResult = left.getUploadTime().compareTo(right.getUploadTime());
-            return (comparationResult == 0) ? left.getIdInternal().compareTo(right.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? left.getExternalId().compareTo(right.getExternalId()) : comparationResult;
         }
     };
 
@@ -112,8 +112,8 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
     protected VirtualPath getVirtualPath() {
         final VirtualPath filePath = new VirtualPath();
         filePath.addNode(new VirtualPathNode("PhdIndividualProgram", "PhdIndividualProgram"));
-        filePath.addNode(new VirtualPathNode(getPhdProgramProcess().getIndividualProgramProcess().getIdInternal().toString(),
-                getPhdProgramProcess().getIndividualProgramProcess().getIdInternal().toString()));
+        filePath.addNode(new VirtualPathNode(getPhdProgramProcess().getIndividualProgramProcess().getExternalId().toString(),
+                getPhdProgramProcess().getIndividualProgramProcess().getExternalId().toString()));
         return filePath;
     }
 

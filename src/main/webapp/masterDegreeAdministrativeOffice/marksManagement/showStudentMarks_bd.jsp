@@ -49,7 +49,7 @@
 		</tr>
 		<logic:iterate id="enrolment" name="studentmMarksListComponent" >	
 			<logic:iterate id="enrolmentEvaluation" name="enrolment" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation" indexId="evaluationId" >		
-    				 <bean:define id="enrolmentEvaluationCode" name="enrolmentEvaluation" property="idInternal"/>   		
+    				 <bean:define id="enrolmentEvaluationCode" name="enrolmentEvaluation" property="externalId"/>   		
     	  	   <logic:notEmpty name="enrolmentEvaluation" property="infoPersonResponsibleForGrade" >
     				 <bean:define id="teacherName" name="enrolmentEvaluation" property="infoPersonResponsibleForGrade" /> 
        		   </logic:notEmpty> 
@@ -57,7 +57,7 @@
     				 <bean:define id="teacherCode" value="&nbsp;"/> 
        		   </logic:empty> 
     
-       		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" /> 
+       		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.externalId" /> 
     			<tr>
 	    			<td class="listClasses" >	
 		    			<bean:write name="enrolmentEvaluation" property="gradeValue"/>
@@ -119,7 +119,7 @@
    	</table>    
 	<logic:notPresent name="showMarks" >
 		<html:form action="/changeMarkDispatchAction?method=studentMarkChanged" >
-	 		<bean:define id="teacherCode" name="lastEnrolmentEavluation" property="idInternal"/>
+	 		<bean:define id="teacherCode" name="lastEnrolmentEavluation" property="externalId"/>
 	 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber"/>	
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherCode" property="teacherCode" value="<%= pageContext.findAttribute("teacherCode").toString() %>" />
 	 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.courseId" property="courseId" value="<%= pageContext.findAttribute("courseId").toString() %>" />

@@ -37,50 +37,50 @@
 	<ul class="mvert1">
 		<academic:allowed operation="ENROLMENT_WITHOUT_RULES" program="<%= degree %>">
 			<li>
-				<bean:define id="url1">/bolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/>&amp;withRules=false</bean:define>
+				<bean:define id="url1">/bolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/>&amp;withRules=false</bean:define>
 				<html:link action='<%= url1 %>'><bean:message key="label.course.enrolmentWithoutRules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 			</li>
 		</academic:allowed>
 		<li>
-			<bean:define id="url2">/bolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/>&amp;withRules=true</bean:define>
+			<bean:define id="url2">/bolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/>&amp;withRules=true</bean:define>
 			<html:link action='<%= url2 %>'><bean:message key="label.course.enrolmentWithRules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
 		<br />
 		<li>
-			<bean:define id="url5">/improvementBolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
+			<bean:define id="url5">/improvementBolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
 			<html:link action='<%= url5 %>'><bean:message key="label.course.improvementEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>		
 		<li>
-			<bean:define id="url6">/specialSeasonBolonhaStudentEnrollment.do?method=checkPermission&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
+			<bean:define id="url6">/specialSeasonBolonhaStudentEnrollment.do?method=checkPermission&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
 			<html:link action='<%= url6 %>'><bean:message key="label.course.specialSeasonEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
 		<br />			
 		<li>
-			<bean:define id="url3">/studentPropaeudeuticEnrolments.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
+			<bean:define id="url3">/studentPropaeudeuticEnrolments.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
 			<html:link action='<%= url3 %>'><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="PROPAEDEUTICS" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
 		<li>
-			<bean:define id="url4">/studentExtraEnrolments.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
+			<bean:define id="url4">/studentExtraEnrolments.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
 			<html:link action='<%= url4 %>'><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="EXTRA_CURRICULAR" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
 		<li>
-			<bean:define id="url4">/studentStandaloneEnrolments.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
+			<bean:define id="url4">/studentStandaloneEnrolments.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
 			<html:link action='<%= url4 %>'><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="STANDALONE" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
 		<br />
 		<academic:allowed operation="MOVE_CURRICULUM_LINES_WITHOUT_RULES" program="<%= degree %>">
 			<li>
-				<bean:define id="url5">/curriculumLinesLocationManagement.do?method=prepareWithoutRules&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
+				<bean:define id="url5">/curriculumLinesLocationManagement.do?method=prepareWithoutRules&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
 				<html:link action='<%= url5 %>'><bean:message key="label.course.moveEnrolments.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 			</li>
 		</academic:allowed>
 		<li>
-			<bean:define id="url5">/curriculumLinesLocationManagement.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
+			<bean:define id="url5">/curriculumLinesLocationManagement.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
 			<html:link action='<%= url5 %>'><bean:message key="label.course.moveEnrolments.with.rules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
 		<logic:equal name="studentEnrolmentBean" property="studentCurricularPlan.bolonhaDegree" value="true">
 		<li>
-			<bean:define id="url6">/optionalCurricularCoursesLocation.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/></bean:define>
+			<bean:define id="url6">/optionalCurricularCoursesLocation.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/></bean:define>
 			<html:link action='<%= url6 %>'><bean:message key="label.optionalCurricularCourses.move" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
 		</logic:equal>

@@ -15,7 +15,7 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1"/>
 			<fr:property name="columnClasses" value=",acenter,"/>
-			<fr:property name="linkFormat(remove)" value="<%= "/scientificCouncilManageThesis.do?method=removeScientificCommission&commissionID=${idInternal}&degreeId=" + request.getParameter("degreeId") + "&executionYearId=" + request.getParameter("executionYearId") %>"/>
+			<fr:property name="linkFormat(remove)" value="<%= "/scientificCouncilManageThesis.do?method=removeScientificCommission&commissionID=${externalId}&degreeId=" + request.getParameter("degreeId") + "&executionYearId=" + request.getParameter("executionYearId") %>"/>
 			<fr:property name="key(remove)" value="link.remove"/>
 			<fr:property name="bundle(remove)" value="APPLICATION_RESOURCES"/>
 			<fr:property name="contextRelative(remove)" value="true"/>
@@ -24,7 +24,7 @@
 		</fr:layout>
 	</fr:view>
 
-	<bean:define id="executionDegreeID" name="executionDegree" property="idInternal" />
+	<bean:define id="executionDegreeID" name="executionDegree" property="externalId" />
 	<p class="mvert05">
 		<span class="color888"><bean:message key="message.add.scientific.member.to.council.by.username"/></span>
 	</p>

@@ -66,7 +66,7 @@
           
         <!-- Edit Candidate Link -->
 		<bean:define id="editCandidateLink">
-			/editCandidate.do?method=prepareEdit&candidateID=<bean:write name="newCandidate" property="idInternal"/>
+			/editCandidate.do?method=prepareEdit&candidateID=<bean:write name="newCandidate" property="externalId"/>
 		</bean:define>		
 		<tr>
 		  	<td><html:link page='<%= editCandidateLink %>'><bean:message key="link.masterDegree.administrativeOffice.editCandidate" /></html:link></td>
@@ -80,7 +80,7 @@
 			<td class="infoop" colspan="2"><bean:message key="label.candidate.changePasswordInfo"/></td>
 		</tr>
 		<bean:define id="changePasswordLink">
-			/editCandidate.do?method=changePassword&candidateID=<bean:write name="newCandidate" property="idInternal"/>
+			/editCandidate.do?method=changePassword&candidateID=<bean:write name="newCandidate" property="externalId"/>
 		</bean:define>
 		<tr>
 		  	<td><html:link page='<%= changePasswordLink %>' target="_blank"><bean:message key="link.masterDegree.administrativeOffice.changePassword" /></html:link></td>

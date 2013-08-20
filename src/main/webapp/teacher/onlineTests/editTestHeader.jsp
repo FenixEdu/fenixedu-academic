@@ -11,7 +11,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editTestHeader" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-	<bean:define id="testCode" name="test" property="idInternal" />
+	<bean:define id="testCode" name="test" property="externalId" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=testCode.toString()%>" />
 	<table>
 		<tr>

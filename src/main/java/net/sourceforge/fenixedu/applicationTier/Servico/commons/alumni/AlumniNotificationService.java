@@ -55,7 +55,7 @@ public class AlumniNotificationService {
     public static String getRegisterConclusionURL(final Alumni alumni) {
         final String fenixURL = getGlobalBundle().getString("fenix.url");
         return MessageFormat.format(getAlumniBundle().getString("alumni.public.registration.conclusion.url"), fenixURL, alumni
-                .getIdInternal().toString(), alumni.getUrlRequestToken());
+                .getExternalId().toString(), alumni.getUrlRequestToken());
     }
 
     protected static void sendIdentityCheckEmail(AlumniIdentityCheckRequest request, Boolean approval) {

@@ -64,8 +64,8 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
     protected VirtualPath getVirtualPath() {
         final VirtualPath filePath = new VirtualPath();
         filePath.addNode(new VirtualPathNode("PhdIndividualProgram", "PhdIndividualProgram"));
-        filePath.addNode(new VirtualPathNode(getJuryElement().getProcess().getIndividualProgramProcess().getIdInternal()
-                .toString(), getJuryElement().getProcess().getIndividualProgramProcess().getIdInternal().toString()));
+        filePath.addNode(new VirtualPathNode(getJuryElement().getProcess().getIndividualProgramProcess().getExternalId()
+                .toString(), getJuryElement().getProcess().getIndividualProgramProcess().getExternalId().toString()));
         return filePath;
     }
 

@@ -37,7 +37,7 @@
 		
 		<logic:iterate id="photo" name="userHistory" property="photographs">
 		
-			<bean:define id="photoId" name="photo" property="idInternal"/>
+			<bean:define id="photoId" name="photo" property="externalId"/>
 
             <table class="dinline">
 	            <tr>

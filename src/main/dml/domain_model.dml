@@ -981,6 +981,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         DateTime instant;
         Integer keyDomainObject;
         String personUsername;
+        String domainObjectExternalId;
     }
 
     class DomainObjectActionLogEntry  {
@@ -4140,8 +4141,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     }
 
     class onlineTests.TestScope  {
-        String className;
-        Integer keyClass;
     }
     
     class organizationalStructure.AccountabilityType  {     
@@ -16708,6 +16707,11 @@ relation TestScope {
         multiplicity *;
     }
     onlineTests.TestScope playsRole testScope;
+}
+
+relation TestScopeExecutionCourse {
+    onlineTests.TestScope playsRole testScope;
+    ExecutionCourse playsRole executionCourse;
 }
 
 relation ThemeCandidacy {

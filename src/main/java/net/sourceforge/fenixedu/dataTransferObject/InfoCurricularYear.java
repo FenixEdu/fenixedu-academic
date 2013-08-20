@@ -39,12 +39,12 @@ public class InfoCurricularYear extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return curricularYear == null ? null : curricularYear.getIdInternal();
+    public String getExternalId() {
+        return curricularYear == null ? null : curricularYear.getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

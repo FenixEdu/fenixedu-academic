@@ -21,7 +21,7 @@
 	</ul>
 </fr:hasMessages>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 
 <fr:form action='<%= "/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&processId=" + processId.toString() %>' id="erasmusCandidacyForm">
 

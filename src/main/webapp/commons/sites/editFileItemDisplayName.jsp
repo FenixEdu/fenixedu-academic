@@ -11,7 +11,7 @@
 <bean:define id="contextParamValue" name="siteContextParamValue" />
 <bean:define id="context"
 	value="<%= contextParam + "=" + contextParamValue %>" />
-<bean:define id="sectionID" name="section" property="idInternal" />
+<bean:define id="sectionID" name="section" property="externalId" />
 
 
 <h2>
@@ -26,7 +26,7 @@
 
 <bean:define id="url" value="<%=  actionName + "?method=section&sectionID=" + sectionID +"&" + context %>"/>
 <logic:present name="item">
-	<bean:define id="itemID" name="item" property="idInternal" />
+	<bean:define id="itemID" name="item" property="externalId" />
 	<bean:define id="url" value="<%= url +  "#item-" + itemID %>"/>
 </logic:present>
 

@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <logic:present name="selectedSpaceInformation">
-	<bean:define id="selectedSpaceInformationIDString" type="java.lang.String"><bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>
+	<bean:define id="selectedSpaceInformationIDString" type="java.lang.String"><bean:write name="selectedSpaceInformation" property="externalId"/></bean:define>
 
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
 	<jsp:include page="spaceCrumbs.jsp"/>

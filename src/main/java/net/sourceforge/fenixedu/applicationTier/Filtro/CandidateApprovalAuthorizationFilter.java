@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -48,8 +48,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 
             for (String id2 : ids) {
 
-                MasterDegreeCandidate masterDegreeCandidate =
-                        RootDomainObject.getInstance().readMasterDegreeCandidateByOID(new Integer(id2));
+                MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(id2);
 
                 // modified by Tânia Pousão
                 Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(person);

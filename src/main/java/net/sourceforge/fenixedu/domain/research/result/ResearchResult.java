@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
@@ -174,8 +175,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
         deleteDomainObject();
     }
 
-    public final static ResearchResult readByOid(Integer oid) {
-        final ResearchResult result = RootDomainObject.getInstance().readResearchResultByOID(oid);
+    public final static ResearchResult readByOid(String oid) {
+        final ResearchResult result = AbstractDomainObject.fromExternalId(oid);
 
         if (result == null) {
             throw new DomainException("error.researcher.Result.null");

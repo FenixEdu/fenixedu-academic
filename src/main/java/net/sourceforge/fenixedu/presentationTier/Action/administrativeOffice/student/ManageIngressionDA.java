@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ManageIngressionDA extends FenixDispatchAction {
 
     private Registration getRegistration(final HttpServletRequest request) {
-        return rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
+        return getDomainObject(request, "registrationId");
     }
 
     private RegistrationIngressionEditor getRegistrationIngressionEditor() {
@@ -59,7 +59,7 @@ public class ManageIngressionDA extends FenixDispatchAction {
     }
 
     public ActionForward editIngression(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeFactoryMethod();
         } catch (final DomainException e) {
@@ -70,7 +70,7 @@ public class ManageIngressionDA extends FenixDispatchAction {
         }
 
         addActionMessage(request, "message.registration.ingression.and.agreement.edit.success");
-        request.setAttribute("registrationId", getRegistrationIngressionEditor().getRegistration().getIdInternal());
+        request.setAttribute("registrationId", getRegistrationIngressionEditor().getRegistration().getExternalId());
 
         return prepare(mapping, actionForm, request, response);
     }

@@ -8,7 +8,7 @@
 <br />
 <h2><bean:message key="label.externalUnits.createExternalCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<bean:define id="unitId">&oid=<bean:write name="createExternalCurricularCourseBean" property="parentUnit.idInternal" /></bean:define>
+<bean:define id="unitId">&oid=<bean:write name="createExternalCurricularCourseBean" property="parentUnit.externalId" /></bean:define>
 
 <bean:define id="schemaName" value="" />
 <logic:equal name="createExternalCurricularCourseBean" property="enrolStudent" value="true">

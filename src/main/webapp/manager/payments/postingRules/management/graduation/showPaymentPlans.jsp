@@ -18,17 +18,17 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
 		<fr:property name="linkFormat(view)"
-			value="/postingRules.do?method=showPaymentPlans&amp;degreeCurricularPlanId=${idInternal}" />
+			value="/postingRules.do?method=showPaymentPlans&amp;degreeCurricularPlanId=${externalId}" />
 		<fr:property name="key(view)" value="label.view" />
 		<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
 	</fr:layout>
 </fr:view>
 
-<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan" property="idInternal" />
+<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan" property="externalId" />
 
 <html:form action="<%="/postingRules.do?method=changeExecutionYearForPaymentPlans&degreeCurricularPlanId=" + degreeCurricularPlanId  %>">
 	<html:select property="executionYearId" onchange="this.form.submit();">
-		<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
+		<html:options collection="executionYears" property="externalId" labelProperty="year"/>
 	</html:select>
 </html:form>
 
@@ -64,8 +64,8 @@
 			<fr:link name="edit" link="<%= "/postingRules.do?method=prepareEditInstallment&amp;installmentId=${externalId}&amp;paymentPlanId=" + paymentPlanId %>" label="link.edit,APPLICATION_RESOURCES" />
 		</fr:layout>
 	</fr:view>
-	<bean:define id="executionYearId" name="paymentPlan" property="executionYear.idInternal" />
-	<bean:define id="paymentPlanId" name="paymentPlan" property="idInternal" />
+	<bean:define id="executionYearId" name="paymentPlan" property="executionYear.externalId" />
+	<bean:define id="paymentPlanId" name="paymentPlan" property="externalId" />
 	<html:link
 		action="<%="/postingRules.do?method=deletePaymentPlan&amp;executionYearId=" + executionYearId + "&amp;degreeCurricularPlanId=" + degreeCurricularPlanId + "&amp;paymentPlanId=" + paymentPlanId.toString()  %>">
 		<bean:message key="label.delete" bundle="APPLICATION_RESOURCES" />

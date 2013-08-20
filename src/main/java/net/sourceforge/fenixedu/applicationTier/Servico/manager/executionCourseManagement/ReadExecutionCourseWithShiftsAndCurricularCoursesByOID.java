@@ -7,8 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourse
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -18,10 +19,10 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID {
 
     @Service
-    public static InfoExecutionCourse run(final Integer oid) {
+    public static InfoExecutionCourse run(final String oid) {
         InfoExecutionCourse infoExecutionCourse = null;
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(oid);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(oid);
         if (executionCourse != null) {
             infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
         }

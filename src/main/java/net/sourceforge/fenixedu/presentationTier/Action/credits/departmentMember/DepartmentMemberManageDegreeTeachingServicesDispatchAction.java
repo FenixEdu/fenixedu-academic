@@ -37,11 +37,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class DepartmentMemberManageDegreeTeachingServicesDispatchAction extends ManageDegreeTeachingServicesDispatchAction {
 
     public ActionForward showTeachingServiceDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer professorshipID = (Integer) dynaForm.get("professorshipID");
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+        Professorship professorship = getDomainObject(dynaForm, "professorshipID");
 
         if (professorship == null || professorship.getTeacher() != getLoggedTeacher(request)) {
             return mapping.findForward("teacher-not-found");
@@ -57,7 +56,7 @@ public class DepartmentMemberManageDegreeTeachingServicesDispatchAction extends 
     }
 
     public ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         return updateTeachingServices(mapping, form, request, RoleType.DEPARTMENT_MEMBER);
     }
 }

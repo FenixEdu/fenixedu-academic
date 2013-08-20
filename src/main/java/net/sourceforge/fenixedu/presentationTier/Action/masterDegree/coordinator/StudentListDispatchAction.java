@@ -38,9 +38,9 @@ public class StudentListDispatchAction extends FenixDispatchAction {
     public ActionForward getStudentsFromDCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
@@ -76,9 +76,9 @@ public class StudentListDispatchAction extends FenixDispatchAction {
 
         IUserView userView = getUserView(request);
 
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 

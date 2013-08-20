@@ -36,14 +36,14 @@
 				<f:param name="organizeBy" value="groups"/>
 				<f:param name="showRules" value="false"/>
 				<f:param name="hideCourses" value="false"/>
-				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.idInternal}"/>
+				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.externalId}"/>
 			</h:outputLink>
 			<h:outputText value=" > "/>
 			<h:outputLink value="../degreeCurricularPlan/viewCurricularCourse.faces" target="_blank">
 				<h:outputText value="#{curricularCourse.name}" escape="false"/>
 				<f:param name="action" value="close"/>
-				<f:param name="curricularCourseID" value="#{curricularCourse.idInternal}"/>
-				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.idInternal}"/>
+				<f:param name="curricularCourseID" value="#{curricularCourse.externalId}"/>
+				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.externalId}"/>
 			</h:outputLink>
 			<h:outputText value="</li>" escape="false"/>
 		</fc:dataRepeater>
@@ -205,7 +205,7 @@
 	<h:outputText value="</div>" escape="false"/>
 
 	<h:form>
-		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.externalId}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
 		
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.action}">

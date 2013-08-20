@@ -7,7 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
 <logic:present name="infoDegreeCurricularPlan">
-	<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
+	<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="externalId" />
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs mvert0"><a href="<%= institutionUrl %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>
@@ -289,7 +289,7 @@
 				<tr>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
 					<td class="<%= rowColor %>">
-						<bean:define id="curricularCourseID" name="curricularCourseScopeElem" property="infoCurricularCourse.idInternal"/>
+						<bean:define id="curricularCourseID" name="curricularCourseScopeElem" property="infoCurricularCourse.externalId"/>
 						<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseID") + "&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")%>" >
 							<bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name" />
 						</html:link>
@@ -305,7 +305,7 @@
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.ectsCredits"/></td>
 					<!-- this is only for 2006/2007 execution year -->
 					<bean:define id="execDegree" name="exeDegree" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree"/>
-					<% if(execDegree.getInfoExecutionYear().getIdInternal() < 45) { %>
+					<% if(execDegree.getInfoExecutionYear().getExternalId() < 45) { %>
 						<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.weigth"/></td>
 					<% } else { %>
 						<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.ectsCredits"/></td>

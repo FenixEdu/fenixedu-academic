@@ -25,6 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "researcher", path = "/interests/interestsManagement", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -44,10 +45,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Integer oid = Integer.parseInt(request.getParameter("oid"));
-        IUserView userView = getUserView(request);
-
-        DeleteResearchInterest.run(oid);
+        DeleteResearchInterest.run(request.getParameter("oid"));
 
         return prepare(mapping, form, request, response);
     }
@@ -102,21 +100,18 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditInterest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        Integer interestOid = Integer.parseInt(request.getParameter("oid"));
-        ResearchInterest researchInterest = rootDomainObject.readResearchInterestByOID(interestOid);
+        ResearchInterest researchInterest = AbstractDomainObject.fromExternalId(request.getParameter("oid"));
 
         request.setAttribute("interest", researchInterest);
 
         return mapping.findForward("EditInterest");
     }
 
-    private void changeOrder(HttpServletRequest request, int direction) throws  FenixServiceException {
-        Integer oid = Integer.parseInt(request.getParameter("oid"));
-
+    private void changeOrder(HttpServletRequest request, int direction) throws FenixServiceException {
         IUserView userView = getUserView(request);
         Person person = userView.getPerson();
 
-        ResearchInterest interest = rootDomainObject.readResearchInterestByOID(oid);
+        ResearchInterest interest = AbstractDomainObject.fromExternalId(request.getParameter("oid"));
         List<ResearchInterest> orderedInterests = getOrderedInterests(request);
 
         int index = orderedInterests.indexOf(interest);
@@ -169,8 +164,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
         }
     }
 
-    private List<ResearchInterest> getOrderedInterests(HttpServletRequest request) throws 
-            FenixServiceException {
+    private List<ResearchInterest> getOrderedInterests(HttpServletRequest request) throws FenixServiceException {
 
         List<ResearchInterest> researchInterests = getUserView(request).getPerson().getResearchInterests();
 

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -19,14 +18,16 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class AnnouncementsManagementDA extends AnnouncementManagement {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         CoordinatedDegreeInfo.setCoordinatorContext(request);
-        final Integer degreeCurricularPlanOID = (Integer) request.getAttribute("degreeCurricularPlanID");
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+        final String degreeCurricularPlanOID = (String) request.getAttribute("degreeCurricularPlanID");
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
         if (degreeCurricularPlan != null) {
             request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
         }
@@ -42,8 +43,7 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
         }
 
         try {
-            Integer oid = new Integer(parameter);
-            return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(oid);
+            return AbstractDomainObject.fromExternalId(parameter);
         } catch (NumberFormatException e) {
             return null;
         }
@@ -71,7 +71,7 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
                 ActionForward forward = new ActionForward(mapping.findForward("viewAnnouncementsRedirect"));
                 forward.setPath(forward.getPath()
                         + String.format("&degreeCurricularPlanID=%s&announcementBoardId=%s",
-                                degreeCurricularPlan.getIdInternal(), board.getIdInternal()));
+                                degreeCurricularPlan.getExternalId(), board.getExternalId()));
                 // forward.setRedirect(true);
 
                 return forward;

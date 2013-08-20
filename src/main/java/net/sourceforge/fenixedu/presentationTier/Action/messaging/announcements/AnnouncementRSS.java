@@ -24,6 +24,7 @@ import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
@@ -93,7 +94,7 @@ public class AnnouncementRSS extends RSSAction {
         stringBuilder.append("_");
         stringBuilder.append(request.getServerName());
         stringBuilder.append("_announcement_");
-        stringBuilder.append(announcement.getIdInternal());
+        stringBuilder.append(announcement.getExternalId());
         return stringBuilder.toString();
     }
 
@@ -163,14 +164,14 @@ public class AnnouncementRSS extends RSSAction {
         AnnouncementBoard board = this.getSelectedBoard(request);
         buffer.append(this.getAnnouncementBoardFeedServicePrefix(request)).append("?");
         if (board != null) {
-            buffer.append("announcementBoardId=").append(board.getIdInternal());
+            buffer.append("announcementBoardId=").append(board.getExternalId());
         }
         return buffer.toString();
     }
 
     protected final AnnouncementBoard getSelectedBoard(HttpServletRequest request) {
         final String id = request.getParameter("announcementBoardId");
-        Content content = rootDomainObject.readContentByOID(Integer.valueOf(id));
+        Content content = AbstractDomainObject.fromExternalId(id);
         return content instanceof AnnouncementBoard ? (AnnouncementBoard) content : null;
     }
 

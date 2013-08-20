@@ -115,7 +115,7 @@
 					<fr:property name="bundle(confirmar)" value="VIGILANCY_RESOURCES" />
 					<fr:property name="link(confirmar)"
 						value="/vigilancy/vigilantManagement.do?method=vigilantAcceptsConvoke" />
-					<fr:property name="param(confirmar)" value="idInternal/oid" />
+					<fr:property name="param(confirmar)" value="externalId/oid" />
 					<fr:property name="visibleIfNot(confirmar)" value="confirmed" />
 				</fr:layout>
 			</fr:view>
@@ -152,12 +152,12 @@
 						<fr:property name="bundle(edit)" value="VIGILANCY_RESOURCES" />
 						<fr:property name="link(edit)"
 							value="/vigilancy/unavailablePeriodManagement.do?method=editUnavailablePeriod" />
-						<fr:property name="param(edit)" value="idInternal/oid" />
+						<fr:property name="param(edit)" value="externalId/oid" />
 						<fr:property name="key(delete)" value="label.delete" />
 						<fr:property name="bundle(delete)" value="VIGILANCY_RESOURCES" />
 						<fr:property name="link(delete)"
 							value="/vigilancy/unavailablePeriodManagement.do?method=deleteUnavailablePeriod" />
-						<fr:property name="param(delete)" value="idInternal/oid" />
+						<fr:property name="param(delete)" value="externalId/oid" />
 					</fr:layout>
 				</fr:view>
 			</logic:equal>

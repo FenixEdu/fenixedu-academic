@@ -38,7 +38,7 @@
 
 	<p class="mtop2"><strong><bean:message bundle="STUDENT_RESOURCES"  key="confirm.cancel"/></strong></p>
 		<p class="mbottom025"><bean:message bundle="STUDENT_RESOURCES"  key="justification"/>:</p>
-		<html:form action="<%="/documentRequest.do?method=cancelAcademicServiceRequest&academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>" style="display: inline;">
+		<html:form action="<%="/documentRequest.do?method=cancelAcademicServiceRequest&academicServiceRequestId=" + academicServiceRequest.getExternalId().toString()%>" style="display: inline;">
 			<p class="mtop025">
 				<logic:present name="failingCondition" scope="request">
 					<bean:define id="failingCondition" name="failingCondition" scope="request"/>

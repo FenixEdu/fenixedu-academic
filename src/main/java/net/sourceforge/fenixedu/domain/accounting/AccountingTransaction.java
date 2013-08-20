@@ -33,8 +33,8 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         public int compare(AccountingTransaction leftAccountingTransaction, AccountingTransaction rightAccountingTransaction) {
             int comparationResult =
                     leftAccountingTransaction.getWhenRegistered().compareTo(rightAccountingTransaction.getWhenRegistered());
-            return (comparationResult == 0) ? leftAccountingTransaction.getIdInternal().compareTo(
-                    rightAccountingTransaction.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftAccountingTransaction.getExternalId().compareTo(
+                    rightAccountingTransaction.getExternalId()) : comparationResult;
         }
     };
 

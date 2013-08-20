@@ -12,15 +12,16 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/managePersonFunctions", module = "scientificCouncil")
 public class ManagePersonFunctions extends FenixDispatchAction {
 
     public ActionForward deletePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final Integer personFunctionId = new Integer(request.getParameter("personFunctionID"));
+        final String personFunctionId = request.getParameter("personFunctionID");
 
-        final PersonFunction personFunction = (PersonFunction) rootDomainObject.readAccountabilityByOID(personFunctionId);
+        final PersonFunction personFunction = AbstractDomainObject.fromExternalId(personFunctionId);
         final Person person = personFunction.getPerson();
 
         personFunction.delete();
@@ -28,7 +29,7 @@ public class ManagePersonFunctions extends FenixDispatchAction {
         final ActionForward actionForward =
                 new ActionForward(
                         "/functionsManagement/listPersonFunctions.faces?personID="
-                                + person.getIdInternal()
+                                + person.getExternalId()
                                 + "&"
                                 + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
                                 + "=/conselho-cientifico/conselho-cientifico");

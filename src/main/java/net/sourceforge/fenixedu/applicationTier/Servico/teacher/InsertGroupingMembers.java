@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -25,10 +25,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class InsertGroupingMembers {
 
-    protected Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final List studentCodes)
+    protected Boolean run(final String executionCourseCode, final String groupPropertiesCode, final List<String> studentCodes)
             throws FenixServiceException {
 
-        final Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        final Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
@@ -39,8 +39,8 @@ public class InsertGroupingMembers {
         // studentCodes list has +1 entry if "select all" was selected
         int totalStudentsProcessed = 0;
 
-        for (final Integer studentCode : (List<Integer>) studentCodes) {
-            final Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentCode);
+        for (final String studentCode : studentCodes) {
+            final Registration registration = AbstractDomainObject.fromExternalId(studentCode);
             if (!studentHasSomeAttendsInGrouping(registration, groupProperties)) {
                 final Attends attends = findAttends(registration, executionCourses);
                 if (attends != null) {
@@ -79,8 +79,8 @@ public class InsertGroupingMembers {
     private static final InsertGroupingMembers serviceInstance = new InsertGroupingMembers();
 
     @Service
-    public static Boolean runInsertGroupingMembers(Integer executionCourseCode, Integer groupPropertiesCode, List studentCodes)
-            throws FenixServiceException, NotAuthorizedException {
+    public static Boolean runInsertGroupingMembers(String executionCourseCode, String groupPropertiesCode,
+            List<String> studentCodes) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, groupPropertiesCode, studentCodes);
     }

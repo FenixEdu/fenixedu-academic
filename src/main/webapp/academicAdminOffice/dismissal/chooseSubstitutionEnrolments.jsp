@@ -30,7 +30,7 @@
 	<span><bean:message key="label.studentDismissal.step.three" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
 </p>
 
-<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.idInternal" />
+<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.externalId" />
 <fr:form action="<%= "/studentSubstitutions.do?scpID=" + scpID %>">
 	<html:hidden property="method" value="chooseEquivalents"/>
 	

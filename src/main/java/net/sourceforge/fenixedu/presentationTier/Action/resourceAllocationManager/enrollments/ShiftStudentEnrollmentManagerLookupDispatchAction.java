@@ -39,6 +39,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "resourceAllocationManager", path = "/studentShiftEnrollmentManagerLoockup",
         input = "/studentShiftEnrollmentManager.do?method=prepare", attribute = "studentShiftEnrollmentForm",
@@ -80,14 +81,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class ShiftStudentEnrollmentManagerLookupDispatchAction extends TransactionalLookupDispatchAction {
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
-        final Registration registration =
-                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
+        final Registration registration = AbstractDomainObject.fromExternalId(getStringFromRequest(request, "registrationOID"));
         if (!registration.getPerson().getStudent().getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
             return null;
         }
 
         request.setAttribute("registration", registration);
-        request.setAttribute("registrationOID", registration.getIdInternal().toString());
+        request.setAttribute("registrationOID", registration.getExternalId().toString());
         request.setAttribute("ram", Boolean.TRUE);
         return registration;
     }
@@ -107,7 +107,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
         final IUserView userView = getUserView(request);
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionCourseId = (Integer) form.get("wantedCourse");
+        final String executionCourseId = (String) form.get("wantedCourse");
 
         try {
             WriteStudentAttendingCourse.runWriteStudentAttendingCourse(registration, executionCourseId);
@@ -165,10 +165,10 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     }
 
     public ActionForward proceedToShiftEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         checkParameter(request);
-        final Integer classIdSelected = readClassSelected(request);
+        final String classIdSelected = readClassSelected(request);
 
         final Registration registration = getAndSetRegistration(request);
         if (registration == null) {
@@ -203,7 +203,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         return mapping.findForward("showShiftsToEnroll");
     }
 
-    private SchoolClass setSelectedSchoolClass(HttpServletRequest request, final Integer classIdSelected,
+    private SchoolClass setSelectedSchoolClass(HttpServletRequest request, final String classIdSelected,
             final List<SchoolClass> schoolClassesToEnrol) {
 
         final SchoolClass schoolClass =
@@ -214,11 +214,11 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         return schoolClass;
     }
 
-    private SchoolClass searchSchoolClassFrom(final List<SchoolClass> schoolClassesToEnrol, final Integer classId) {
+    private SchoolClass searchSchoolClassFrom(final List<SchoolClass> schoolClassesToEnrol, final String classId) {
         return (SchoolClass) CollectionUtils.find(schoolClassesToEnrol, new Predicate() {
             @Override
             public boolean evaluate(Object object) {
-                return ((SchoolClass) object).getIdInternal().equals(classId);
+                return ((SchoolClass) object).getExternalId().equals(classId);
             }
         });
     }
@@ -241,7 +241,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
     private ExecutionCourse getExecutionCourse(HttpServletRequest request) {
         if (!StringUtils.isEmpty(request.getParameter("executionCourseID"))) {
-            return rootDomainObject.readExecutionCourseByOID(Integer.valueOf(request.getParameter("executionCourseID")));
+            return AbstractDomainObject.fromExternalId(request.getParameter("executionCourseID"));
         } else {
             return null;
         }
@@ -268,13 +268,13 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         }
     }
 
-    private Integer readClassSelected(HttpServletRequest request) {
+    private String readClassSelected(HttpServletRequest request) {
         String classIdSelectedString = request.getParameter("classId");
-        Integer classIdSelected = null;
+        String classIdSelected = null;
         if (classIdSelectedString != null) {
-            classIdSelected = Integer.valueOf(classIdSelectedString);
+            classIdSelected = classIdSelectedString;
         } else {
-            classIdSelected = (Integer) request.getAttribute("classId");
+            classIdSelected = (String) request.getAttribute("classId");
         }
         return classIdSelected;
     }

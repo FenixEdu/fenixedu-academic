@@ -60,9 +60,8 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
         String degreeIdString = request.getParameter("index");
 
-        Integer degreeId = new Integer(degreeIdString);
         ISiteComponent component = new InfoSiteDegreeCurricularPlans();
-        readSiteView(request, userView, degreeId, null, null, component);
+        readSiteView(request, userView, degreeIdString, null, null, component);
         return mapping.findForward("showDegreeCurricularPlans");
     }
 
@@ -71,10 +70,9 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
         IUserView userView = getUserView(request);
 
         String degreeCurricularPlanIdString = request.getParameter("index");
-        Integer degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
 
         ISiteComponent component = new InfoSiteCurricularCourses();
-        readSiteView(request, userView, null, null, degreeCurricularPlanId, component);
+        readSiteView(request, userView, null, null, degreeCurricularPlanIdString, component);
         return mapping.findForward("showCurricularCourses");
     }
 
@@ -83,10 +81,9 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
         IUserView userView = getUserView(request);
 
         String degreeCurricularPlanIdString = request.getParameter("index");
-        Integer degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
 
         ISiteComponent component = new InfoSiteBasicCurricularCourses();
-        SiteView siteView = readSiteView(request, userView, null, null, degreeCurricularPlanId, component);
+        SiteView siteView = readSiteView(request, userView, null, null, degreeCurricularPlanIdString, component);
 
         DynaActionForm coursesForm = (DynaActionForm) form;
         List curricularCoursesIds = ((InfoSiteBasicCurricularCourses) siteView.getComponent()).getBasicCurricularCoursesIds();
@@ -111,15 +108,15 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
         DynaActionForm basicCoursesList = (DynaActionForm) form;
         String[] coursesIdsString = (String[]) basicCoursesList.get("basicCurricularCourses");
-        List coursesIds = new ArrayList();
+        List<String> coursesIds = new ArrayList<String>();
         for (String element : coursesIdsString) {
-            coursesIds.add(new Integer(element));
+            coursesIds.add(element);
         }
 
         String curricularPlanId = request.getParameter("curricularIndex");
 
         try {
-            SetBasicCurricularCoursesService.run(coursesIds, new Integer(curricularPlanId));
+            SetBasicCurricularCoursesService.run(coursesIds, curricularPlanId);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -136,8 +133,8 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
         SiteView siteView = null;
         try {
             siteView =
-                    ScientificCouncilCurricularCourseCurriculumComponentService.run(new InfoSiteCurriculum(), new Integer(
-                            curricularCourseIdString), null);
+                    ScientificCouncilCurricularCourseCurriculumComponentService.run(new InfoSiteCurriculum(),
+                            curricularCourseIdString, null);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -153,7 +150,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
         SiteView siteView = null;
         try {
-            siteView = ReadCurriculumByOIdService.run(new Integer(curriculumIdString));
+            siteView = ReadCurriculumByOIdService.run(curriculumIdString);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -176,8 +173,8 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
         Boolean result;
         try {
             result =
-                    EditCurriculum.run(new Integer(curriculumIdString), program, programEn, operacionalObjectives,
-                            operacionalObjectivesEn, generalObjectives, generalObjectivesEn, new Boolean(true));
+                    EditCurriculum.run(curriculumIdString, program, programEn, operacionalObjectives, operacionalObjectivesEn,
+                            generalObjectives, generalObjectivesEn, new Boolean(true));
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -196,7 +193,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
         SiteView siteView = null;
         try {
-            siteView = ReadCurricularCourseByOIdService.run(new Integer(curricularCourseIdString));
+            siteView = ReadCurricularCourseByOIdService.run(curricularCourseIdString);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -219,7 +216,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
         Boolean result;
         try {
             result =
-                    InsertCurriculum.run(new Integer(curricularCourseIdString), program, programEn, operacionalObjectives,
+                    InsertCurriculum.run(curricularCourseIdString, program, programEn, operacionalObjectives,
                             operacionalObjectivesEn, generalObjectives, generalObjectivesEn, new DateTime(), Boolean.TRUE);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -231,8 +228,8 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
         return null;
     }
 
-    private SiteView readSiteView(HttpServletRequest request, IUserView userView, Integer degreeId, Integer coursesIds,
-            Integer degreeCurricularPlanId, ISiteComponent component) throws FenixActionException {
+    private SiteView readSiteView(HttpServletRequest request, IUserView userView, String degreeId, Integer coursesIds,
+            String degreeCurricularPlanId, ISiteComponent component) throws FenixActionException {
 
         SiteView siteView = null;
         try {

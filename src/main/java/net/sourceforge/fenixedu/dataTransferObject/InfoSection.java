@@ -156,12 +156,12 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
     @Override
     public String toString() {
         String result = "\n[INFOSECTION";
-        result += ", internalCode=" + getIdInternal();
+        result += ", internalCode=" + getExternalId();
         result += ", name=" + getName();
         // result += ", sectionOrder=" + getSectionOrder();
         // result += ", sectionDepth=" + getSectionDepth();
         result += ", superiorInfoSection=" + getSuperiorInfoSection() + "\n";
-        result += ", infoSite=\n\t\t" + (getInfoSite() != null ? getInfoSite().getIdInternal().toString() : "null");
+        result += ", infoSite=\n\t\t" + (getInfoSite() != null ? getInfoSite().getExternalId().toString() : "null");
         result += "]";
         return result;
     }

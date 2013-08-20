@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class DepartmentManagementBackingBean extends FenixBackingBean {
 
     public static final Comparator<DepartmentUnit> COMPARATOR_BY_REAL_NAME = new Comparator<DepartmentUnit>() {
@@ -32,7 +34,7 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
 
     };
 
-    private Collection<ProfessionalCategory> sortedDepartmentCategories = new TreeSet<ProfessionalCategory>();
+    private final Collection<ProfessionalCategory> sortedDepartmentCategories = new TreeSet<ProfessionalCategory>();
 
     private Map<ProfessionalCategory, List<Teacher>> teachersByCategory;
 
@@ -53,9 +55,9 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
     }
 
     public Department getDepartment() {
-        Integer selectedDepartmentUnitID = getAndHoldIntegerParameter("selectedDepartmentUnitID");
+        String selectedDepartmentUnitID = getAndHoldStringParameter("selectedDepartmentUnitID");
         if (selectedDepartmentUnitID != null) {
-            Unit departmentUnit = (Unit) rootDomainObject.readPartyByOID(selectedDepartmentUnitID);
+            Unit departmentUnit = (Unit) AbstractDomainObject.fromExternalId(selectedDepartmentUnitID);
             return departmentUnit.getDepartment();
         } else {
             return null;

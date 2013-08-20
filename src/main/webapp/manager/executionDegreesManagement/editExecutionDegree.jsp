@@ -12,8 +12,8 @@
 
 <html:form action="/executionDegreesManagement">
 	<bean:define id="degreeType" name="executionDegree" property="degreeCurricularPlan.degree.degreeType.name" />
-	<bean:define id="degreeCurricularPlanID" name="executionDegree" property="degreeCurricularPlan.idInternal" />
-	<bean:define id="executionDegreeID" name="executionDegree" property="idInternal" />
+	<bean:define id="degreeCurricularPlanID" name="executionDegree" property="degreeCurricularPlan.externalId" />
+	<bean:define id="executionDegreeID" name="executionDegree" property="externalId" />
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editExecutionDegree"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" value="<%= degreeType.toString() %>"/>
@@ -27,7 +27,7 @@
 			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.executionYear"/>:</th>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearID" property="executionYearID">
-					<html:options collection="executionYears" property="idInternal" labelProperty="year" /> 
+					<html:options collection="executionYears" property="externalId" labelProperty="year" /> 
 				</html:select>
 			</td>
 		</tr>
@@ -35,7 +35,7 @@
 			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.campus"/>: </th>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.campusID" property="campusID">
-					<html:options collection="campus" property="idInternal" labelProperty="name" /> 
+					<html:options collection="campus" property="externalId" labelProperty="name" /> 
 				</html:select>
 			</td>
 		</tr>

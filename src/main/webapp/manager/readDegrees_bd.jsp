@@ -39,12 +39,12 @@
 			<td class="listClasses">
 			
 			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.internalIds" property="internalIds">
-			<bean:write name="degree" property="idInternal"/>
+			<bean:write name="degree" property="externalId"/>
 			</html:multibox>
 			</td>	
-			<td class="listClasses"><html:link module="/manager" page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="sigla"/></html:link>
+			<td class="listClasses"><html:link module="/manager" page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="externalId"><bean:write name="degree" property="sigla"/></html:link>
 			</td>			
-			<td class="listClasses"><p align="left"><html:link module="/manager" page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="presentationName"/></html:link></p>
+			<td class="listClasses"><p align="left"><html:link module="/manager" page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="externalId"><bean:write name="degree" property="presentationName"/></html:link></p>
 			</td>
 			<bean:define id="tipoCurso" name="degree" property="tipoCurso.name"/>
 			<td class="listClasses"><bean:message bundle="MANAGER_RESOURCES" name="tipoCurso" bundle="ENUMERATION_RESOURCES"/>

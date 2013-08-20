@@ -9,7 +9,7 @@
 
 <p><bean:message key="message.erasmus.insertVacancy.instructions" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 <bean:define id="processName" name="processName" />
 
 <p>

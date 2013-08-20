@@ -120,8 +120,8 @@
 
 </style>
 
-<bean:define id="dcpId" name="coordsBean" property="executionDegree.degreeCurricularPlan.idInternal"/>
-<bean:define id="edId" name="coordsBean" property="executionDegree.idInternal"/>
+<bean:define id="dcpId" name="coordsBean" property="executionDegree.degreeCurricularPlan.externalId"/>
+<bean:define id="edId" name="coordsBean" property="executionDegree.externalId"/>
 <bean:define id="path" name="coordsBean" property="backPath"/>
 <bean:define id="escapedPath" name="coordsBean" property="escapedBackPath"/>
 <bean:define id="personId" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person.externalId" />
@@ -152,18 +152,18 @@
 		</fr:slot>
 	</fr:schema>
 	<fr:layout name="tabular">
-		<fr:property name="sortBy" value="person.name,idInternal"/>
+		<fr:property name="sortBy" value="person.name,externalId"/>
 		<fr:property name="linkGroupSeparator" value="&nbsp&nbsp|&nbsp&nbsp" />
 		
 		<fr:property name="linkFormat(roleSwitcher)"
-			value="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=switchResponsability&coordinatorId=${idInternal}&executionDegreeId=" + edId.toString() + "&backPath=" + escapedPath.toString() +"&personId="+ personId.toString()%>"/>
+			value="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=switchResponsability&coordinatorId=${externalId}&executionDegreeId=" + edId.toString() + "&backPath=" + escapedPath.toString() +"&personId="+ personId.toString()%>"/>
 		<fr:property name="order(roleSwitcher)" value="1" />
 		<fr:property name="key(roleSwitcher)"
 			value="link.switch.role" />
 		<fr:property name="bundle(roleSwitcher)" value="SCIENTIFIC_COUNCIL_RESOURCES" />
 		
 		<fr:property name="linkFormat(delete)"
-			value="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=deleteCoordinator&coordinatorId=${idInternal}&executionDegreeId=" + edId.toString() + "&backPath=" + escapedPath.toString() +"&personId="+ personId.toString()%>" />
+			value="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=deleteCoordinator&coordinatorId=${externalId}&executionDegreeId=" + edId.toString() + "&backPath=" + escapedPath.toString() +"&personId="+ personId.toString()%>" />
 		<fr:property name="order(delete)" value="2" />
 		<fr:property name="key(delete)"
 			value="link.delete.coordinator" />

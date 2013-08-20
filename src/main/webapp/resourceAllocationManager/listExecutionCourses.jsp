@@ -99,7 +99,7 @@
 			</tr>
 			
 			<logic:iterate id="executionCourse" name="<%= PresentationConstants.LIST_INFOEXECUTIONCOURSE %>">
-				<bean:define id="executionCourseOID" name="executionCourse" property="idInternal"/>
+				<bean:define id="executionCourseOID" name="executionCourse" property="externalId"/>
 				<tr>
 					<td>
 						<html:link page="<%= "/manageExecutionCourse.do?method=prepare&amp;"

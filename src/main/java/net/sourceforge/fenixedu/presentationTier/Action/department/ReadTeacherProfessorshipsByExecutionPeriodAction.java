@@ -44,10 +44,9 @@ public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractRe
      * javax.servlet.http.HttpServletRequest)
      */
     @Override
-    List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm, HttpServletRequest request)
+    List getDetailedProfessorships(IUserView userView, String teacherId, DynaActionForm actionForm, HttpServletRequest request)
             throws FenixServiceException {
-        Integer executionPeriodId = (Integer) actionForm.get("executionPeriodId");
-        executionPeriodId = ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) ? null : executionPeriodId;
+        String executionPeriodId = (String) actionForm.get("executionPeriodId");
         List detailedInfoProfessorshipList =
                 ReadDetailedTeacherProfessorshipsByExecutionPeriod.runReadDetailedTeacherProfessorshipsByExecutionPeriod(
                         teacherId, executionPeriodId);

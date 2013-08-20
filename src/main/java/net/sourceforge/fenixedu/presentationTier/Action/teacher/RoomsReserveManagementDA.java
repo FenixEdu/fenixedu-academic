@@ -35,6 +35,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "teacher", path = "/roomsReserveManagement", scope = "request", parameter = "method")
@@ -97,7 +98,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createRoomsReserve(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("roomsReserveWithDescriptions");
         RoomsReserveBean bean = (RoomsReserveBean) viewState.getMetaObject().getObject();
@@ -120,7 +121,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward seeSpecifiedRoomsReserve(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
 
         Person loggedPerson = getLoggedPerson(request);
         PunctualRoomsOccupationRequest punctualRoomsReserve = getPunctualRoomsReserve(request);
@@ -135,19 +136,19 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createNewComment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         return createNewRoomsReserveComment(mapping, request, false, false);
     }
 
     public ActionForward createNewCommentAndReOpenRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         return createNewRoomsReserveComment(mapping, request, true, false);
     }
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         PunctualRoomsOccupationRequest punctualRoomsReserve = getPunctualRoomsReserve(request);
         request.setAttribute("roomsReserveRequest", punctualRoomsReserve);
@@ -205,13 +206,13 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
     }
 
     private ActionForward createNewRoomsReserveComment(ActionMapping mapping, HttpServletRequest request, boolean reOpen,
-            boolean resolveRequest) throws  FenixServiceException {
+            boolean resolveRequest) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("roomsReserveBeanWithNewComment");
         RoomsReserveBean bean = (RoomsReserveBean) viewState.getMetaObject().getObject();
 
         try {
-            CreateNewRoomsReserveComment.runCreateNewRoomsReserveComment( bean, reOpen, resolveRequest );
+            CreateNewRoomsReserveComment.runCreateNewRoomsReserveComment(bean, reOpen, resolveRequest);
         } catch (DomainException e) {
             saveMessages(request, e);
         }
@@ -224,9 +225,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
     }
 
     private PunctualRoomsOccupationRequest getPunctualRoomsReserve(final HttpServletRequest request) {
-        final String punctualReserveIDString = request.getParameter("punctualReserveID");
-        final Integer punctualReserveID = Integer.valueOf(punctualReserveIDString);
-        return rootDomainObject.readPunctualRoomsOccupationRequestByOID(punctualReserveID);
+        return AbstractDomainObject.fromExternalId(request.getParameter("punctualReserveID"));
     }
 
     private void saveMessages(HttpServletRequest request, DomainException e) {

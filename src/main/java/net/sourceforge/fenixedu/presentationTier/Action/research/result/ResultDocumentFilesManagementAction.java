@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "editDocumentFiles", path = "/researcher/result/documents/editResultDocumentFiles.jsp") })
 public class ResultDocumentFilesManagementAction extends ResultsManagementAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final ResearchResult result = getResultFromRequest(request);
         if (result == null) {
             return backToResultList(mapping, form, request, response);
@@ -37,7 +37,7 @@ public class ResultDocumentFilesManagementAction extends ResultsManagementAction
     }
 
     public ActionForward prepareAlter(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         request.setAttribute("editExisting", "editExisting");
         return prepareEdit(mapping, form, request, response);
     }
@@ -60,7 +60,7 @@ public class ResultDocumentFilesManagementAction extends ResultsManagementAction
 
     public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        final Integer documentFileId = getRequestParameterAsInteger(request, "documentFileId");
+        final String documentFileId = getRequestParameterAsString(request, "documentFileId");
 
         try {
 
@@ -73,8 +73,7 @@ public class ResultDocumentFilesManagementAction extends ResultsManagementAction
         return prepareEdit(mapping, form, request, response);
     }
 
-    private void setResDocFileRequestAttributes(HttpServletRequest request, ResearchResult result) throws 
-            FenixServiceException {
+    private void setResDocFileRequestAttributes(HttpServletRequest request, ResearchResult result) throws FenixServiceException {
         final ResultDocumentFileSubmissionBean bean = new ResultDocumentFileSubmissionBean(result);
         request.setAttribute("bean", bean);
         request.setAttribute("result", result);

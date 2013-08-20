@@ -8,7 +8,7 @@
 <br />
 <h2><bean:message key="label.externalUnits.country" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:write name="unitResultBean" property="unit.name"/> </h2>
 
-<bean:define id="unitId">&amp;oid=<bean:write name="unitResultBean" property="unit.idInternal"/></bean:define>
+<bean:define id="unitId">&amp;oid=<bean:write name="unitResultBean" property="unit.externalId"/></bean:define>
 
 <ul class="mtop15">
 	<li><html:link page="<%="/externalUnits.do?method=prepareCreateUniversity" + unitId %>"><bean:message key="label.externalUnits.createUniversity" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>

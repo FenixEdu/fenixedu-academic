@@ -67,7 +67,7 @@ public class ManageFAQDA extends FenixDispatchAction {
             InfoFAQEntry infoFAQEntry = (InfoFAQEntry) infoFAQEntries.get(i);
             InfoFAQSection infoFAQSection = infoFAQEntry.getParentSection();
             if (infoFAQSection != null) {
-                InfoFAQSection infoFAQParentSection = (InfoFAQSection) processedSection.get(infoFAQSection.getIdInternal());
+                InfoFAQSection infoFAQParentSection = (InfoFAQSection) processedSection.get(infoFAQSection.getExternalId());
                 if (infoFAQParentSection.getEntries() == null) {
                     infoFAQParentSection.setEntries(new ArrayList());
                 }
@@ -87,20 +87,20 @@ public class ManageFAQDA extends FenixDispatchAction {
         for (int i = 0; i < copyOfInfoFAQSections.size(); i++) {
             InfoFAQSection infoFAQSection = (InfoFAQSection) copyOfInfoFAQSections.get(i);
             if (sectionsInPreviousLevel == null && infoFAQSection.getParentSection() == null) {
-                nextSectionsInPreviousLevel.add(infoFAQSection.getIdInternal());
-                processedSection.put(infoFAQSection.getIdInternal(), infoFAQSection);
+                nextSectionsInPreviousLevel.add(infoFAQSection.getExternalId());
+                processedSection.put(infoFAQSection.getExternalId(), infoFAQSection);
             } else if (sectionsInPreviousLevel != null && infoFAQSection.getParentSection() != null
-                    && sectionsInPreviousLevel.contains(infoFAQSection.getParentSection().getIdInternal())) {
+                    && sectionsInPreviousLevel.contains(infoFAQSection.getParentSection().getExternalId())) {
                 InfoFAQSection infoFAQParentSection =
-                        (InfoFAQSection) processedSection.get(infoFAQSection.getParentSection().getIdInternal());
+                        (InfoFAQSection) processedSection.get(infoFAQSection.getParentSection().getExternalId());
                 if (infoFAQParentSection != null) {
                     if (infoFAQParentSection.getSubSections() == null) {
                         infoFAQParentSection.setSubSections(new ArrayList());
                     }
                     infoFAQParentSection.getSubSections().add(infoFAQSection);
                     sectionsToRemove.add(infoFAQSection);
-                    nextSectionsInPreviousLevel.add(infoFAQSection.getIdInternal());
-                    processedSection.put(infoFAQSection.getIdInternal(), infoFAQSection);
+                    nextSectionsInPreviousLevel.add(infoFAQSection.getExternalId());
+                    processedSection.put(infoFAQSection.getExternalId(), infoFAQSection);
                 }
             }
         }
@@ -122,7 +122,7 @@ public class ManageFAQDA extends FenixDispatchAction {
         InfoFAQSection infoFAQSection = new InfoFAQSection();
         if (parentSectionId != null && parentSectionId.length() > 0 && StringUtils.isNumeric(parentSectionId)) {
             infoFAQSection.setParentSection(new InfoFAQSection());
-            infoFAQSection.getParentSection().setIdInternal(new Integer(parentSectionId));
+            infoFAQSection.getParentSection().setExternalId(parentSectionId);
         }
         infoFAQSection.setSectionName(sectionName);
 
@@ -135,10 +135,8 @@ public class ManageFAQDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         String sectionIdString = request.getParameter("sectionId");
 
-        if (sectionIdString != null && StringUtils.isNumeric(sectionIdString)) {
-            Integer sectionId = new Integer(sectionIdString);
-
-            DeleteFAQSection.run(sectionId);
+        if (sectionIdString != null) {
+            DeleteFAQSection.run(sectionIdString);
         }
 
         return mapping.findForward("Manage");
@@ -154,7 +152,7 @@ public class ManageFAQDA extends FenixDispatchAction {
         InfoFAQSection infoFAQSection = null;
         if (parentSectionId != null && parentSectionId.length() > 0 && StringUtils.isNumeric(parentSectionId)) {
             infoFAQSection = new InfoFAQSection();
-            infoFAQSection.setIdInternal(new Integer(parentSectionId));
+            infoFAQSection.setExternalId(parentSectionId);
         }
 
         InfoFAQEntry infoFAQEntry = new InfoFAQEntry();
@@ -171,10 +169,8 @@ public class ManageFAQDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         String entryIdString = request.getParameter("entryId");
 
-        if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
-            Integer entryId = new Integer(entryIdString);
-
-            DeleteFAQEntry.run(entryId);
+        if (entryIdString != null) {
+            DeleteFAQEntry.run(entryIdString);
         }
 
         return mapping.getInputForward();

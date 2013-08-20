@@ -78,7 +78,7 @@
  -->
 
   <schema name="DomainObject.oid" type="pt.ist.fenixframework.DomainObject">
-    <slot name="idInternal"/>
+    <slot name="externalId"/>
   </schema>
   
   <!-- FIXME: remove schemas after this, they are used only as example -->

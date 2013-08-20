@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:define id="patentId" name="result" property="idInternal"/>
+<bean:define id="patentId" name="result" property="externalId"/>
 <bean:define id="patent" name="result"/>
 <bean:define id="parameters" value="<%="resultId=" + patentId + "&resultType=" + patent.getClass().getSimpleName()%>"/>
 
@@ -80,7 +80,7 @@
 	<fr:property name="classes" value="tstyle2 thleft thlight thtop"/>
 	<fr:property name="columnClasses" value="width10em, width50em"/>
 </fr:layout>
-		<fr:destination name="view.prize" path="/prizes/prizeManagement.do?method=showPrize&oid=${idInternal}"/>
+		<fr:destination name="view.prize" path="/prizes/prizeManagement.do?method=showPrize&oid=${externalId}"/>
 </fr:view>
 
 <%-- Documents --%>

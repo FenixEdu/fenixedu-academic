@@ -38,9 +38,9 @@
 	<td  class="listClasses">
 		<div class="gen-button">
 			<html:link page="/teachingCareer.do?method=prepareEdit&amp;page=0" 
-					   paramId="idInternal" 
+					   paramId="externalId" 
 					   paramName="infoTeachingCareer" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.edit" />
 			</html:link>
 		</div>
@@ -48,9 +48,9 @@
 	<td  class="listClasses">
 		<div class="gen-button">
 			<html:link page="/teachingCareer.do?method=delete&amp;page=0" 
-					   paramId="idInternal" 
+					   paramId="externalId" 
 					   paramName="infoTeachingCareer" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.delete" />
 			</html:link>
 		</div>
@@ -61,9 +61,9 @@
 
 <div class="gen-button">
 	<html:link page="<%= "/teachingCareer.do?method=prepareEdit&amp;page=0&amp;careerType=" + net.sourceforge.fenixedu.domain.CareerType.TEACHING.toString() %>" 
-			   paramId="infoTeacher#idInternal" 
+			   paramId="infoTeacher#externalId" 
 			   paramName="infoSiteCareers" 
-			   paramProperty="infoTeacher.idInternal" >
+			   paramProperty="infoTeacher.externalId" >
 		<bean:message key="message.teachingCareer.insert" />
 	</html:link>
 </div>

@@ -35,8 +35,7 @@ public class StudentCurricularPlanDA extends FenixDispatchAction {
     public ActionForward prepareCreateSCP(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final Registration registration =
-                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
+        final Registration registration = getDomainObject(request, "registrationId");
 
         request.setAttribute("studentCurricularPlanCreator",
                 new StudentCurricularPlanFactoryExecutor.StudentCurricularPlanCreator(registration));
@@ -46,7 +45,7 @@ public class StudentCurricularPlanDA extends FenixDispatchAction {
     }
 
     public ActionForward createSCP(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         executeFactoryMethod();
         addActionMessage(request, "message.registration.addNewSCP.success");

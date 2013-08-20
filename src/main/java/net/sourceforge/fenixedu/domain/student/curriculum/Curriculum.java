@@ -393,7 +393,7 @@ public class Curriculum implements Serializable, ICurriculum {
 
         result.append("\n[CURRICULUM]");
         if (hasCurriculumModule()) {
-            result.append("\n[CURRICULUM_MODULE][ID] " + getCurriculumModule().getIdInternal() + "\t[NAME]"
+            result.append("\n[CURRICULUM_MODULE][ID] " + getCurriculumModule().getExternalId() + "\t[NAME]"
                     + getCurriculumModule().getName().getContent());
             result.append("\n[BOLONHA] " + isBolonha().toString());
         } else {

@@ -57,8 +57,8 @@
 	</fr:edit>
 </fr:form>
 
-<bean:define id="url" type="java.lang.String">/manageCardGeneration.do?method=createCardGenerationBatch&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
-<bean:define id="urlEmpty" type="java.lang.String">/manageCardGeneration.do?method=createEmptyCardGenerationBatch&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
+<bean:define id="url" type="java.lang.String">/manageCardGeneration.do?method=createCardGenerationBatch&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.externalId"/></bean:define>
+<bean:define id="urlEmpty" type="java.lang.String">/manageCardGeneration.do?method=createEmptyCardGenerationBatch&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.externalId"/></bean:define>
 <p class="mvert05">
 	<logic:notEqual name="categoryCondesProblem" value="true">
 		<logic:notEqual name="professionalCategoryCondesProblem" value="true">
@@ -72,7 +72,7 @@
 			|
 		</logic:notEqual>
 	</logic:notEqual>
-	<bean:define id="sentButNotIssued" type="java.lang.String">/manageCardGeneration.do?method=downloadCardGenerationBatchSentButNotIssuedByYear&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
+	<bean:define id="sentButNotIssued" type="java.lang.String">/manageCardGeneration.do?method=downloadCardGenerationBatchSentButNotIssuedByYear&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.externalId"/></bean:define>
 	<html:link page="<%= sentButNotIssued %>">
 		<bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.sent.but.not.issued"/>
 	</html:link>
@@ -90,13 +90,13 @@
 		<tr>
 			<jsp:include page="cardGenerationBatchRow.jsp"></jsp:include>
 	   		<td>
-				<bean:define id="urlManage" type="java.lang.String">/manageCardGeneration.do?method=manageCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
+				<bean:define id="urlManage" type="java.lang.String">/manageCardGeneration.do?method=manageCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="externalId"/></bean:define>
 				<html:link page="<%= urlManage %>">
 					<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.manage"/>
 				</html:link>
 				<logic:present role="MANAGER">
 					| 
-					<bean:define id="urlDelete" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/>&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
+					<bean:define id="urlDelete" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="externalId"/>&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.externalId"/></bean:define>
 					<html:link page="<%= urlDelete %>" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 						<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.delete"/>
 					</html:link>

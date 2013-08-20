@@ -18,7 +18,7 @@ public class UnEnrollStudentInWrittenEvaluation extends EnrolStudentInWrittenEva
     private static final UnEnrollStudentInWrittenEvaluation serviceInstance = new UnEnrollStudentInWrittenEvaluation();
 
     @Service
-    public static void runUnEnrollStudentInWrittenEvaluation(String username, Integer writtenEvaluationOID)
+    public static void runUnEnrollStudentInWrittenEvaluation(String username, String writtenEvaluationOID)
             throws FenixServiceException {
         ExamStudentAuthorizationFilter.instance.execute();
         serviceInstance.run(username, writtenEvaluationOID);

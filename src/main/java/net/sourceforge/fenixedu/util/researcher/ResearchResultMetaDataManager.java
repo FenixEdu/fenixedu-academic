@@ -131,11 +131,11 @@ public class ResearchResultMetaDataManager {
 
         if (result instanceof ResearchResultPublication) {
             filePath.addNode(new VirtualPathNode("Publications", "Publications"));
-            filePath.addNode(new VirtualPathNode("pub" + result.getIdInternal(), "pub" + result.getIdInternal().toString()));
+            filePath.addNode(new VirtualPathNode("pub" + result.getExternalId(), "pub" + result.getExternalId().toString()));
         }
         if (result instanceof ResearchResultPatent) {
             filePath.addNode(new VirtualPathNode("Patents", "Patents"));
-            filePath.addNode(new VirtualPathNode("pat" + result.getIdInternal(), "pat" + result.getIdInternal().toString()));
+            filePath.addNode(new VirtualPathNode("pat" + result.getExternalId(), "pat" + result.getExternalId().toString()));
         }
 
         return filePath;

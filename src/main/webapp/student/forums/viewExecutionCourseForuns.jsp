@@ -25,7 +25,7 @@
 			<bean:size id="threadsCount" name="executionCourseForum" property="conversationThreads"/>
 			<tr>
 				<td>
-					<html:link action="/viewExecutionCourseForuns.do?method=viewForum" paramId="forumId" paramName="executionCourseForum" paramProperty="idInternal">
+					<html:link action="/viewExecutionCourseForuns.do?method=viewForum" paramId="forumId" paramName="executionCourseForum" paramProperty="externalId">
 						<bean:write name="executionCourseForum" property="name"/>
 					</html:link>
 				</td>

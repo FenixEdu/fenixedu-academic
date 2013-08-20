@@ -33,9 +33,9 @@
 		<div class="gen-button">
 		<%--					   paramId="externalActivityId" --%>
 			<html:link page="/externalActivity.do?method=prepareEdit&amp;page=0" 
-						paramId="idInternal"
+						paramId="externalId"
 					   paramName="infoExternalActivity" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.edit" />
 			</html:link>
 		</div>
@@ -43,9 +43,9 @@
 	<td class="listClasses">
 		<div class="gen-button">
 			<html:link page="/externalActivity.do?method=delete&amp;page=0" 
-					   paramId="idInternal" 
+					   paramId="externalId" 
 					   paramName="infoExternalActivity" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.delete" />
 			</html:link>
 		</div>
@@ -57,9 +57,9 @@
 
 <div class="gen-button">
 	<html:link page="/externalActivity.do?method=prepareEdit&amp;page=0" 
-			   paramId="infoTeacher#idInternal" 
+			   paramId="infoTeacher#externalId" 
 			   paramName="infoSiteExternalActivities" 
-			   paramProperty="infoTeacher.idInternal" >
+			   paramProperty="infoTeacher.externalId" >
 		<bean:message key="message.externalActivities.insert" />
 	</html:link>
 </div>

@@ -62,7 +62,7 @@ dia <bean:write name="<%=PresentationConstants.EXAM_DATEANDTIME_STR%>"/>
 		<bean:define id="availableRooms" name="<%=PresentationConstants.AVAILABLE_ROOMS%>"/>
 				<logic:iterate id ="infoRoom" name="availableRooms">
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.rooms" property="rooms">
-						<bean:write name="infoRoom" property="idInternal"/>
+						<bean:write name="infoRoom" property="externalId"/>
 					</html:multibox>
 					<bean:write name="infoRoom" property="nome"/>&nbsp;&nbsp;
 					( <bean:write name="infoRoom" property="capacidadeExame"/> lugares,

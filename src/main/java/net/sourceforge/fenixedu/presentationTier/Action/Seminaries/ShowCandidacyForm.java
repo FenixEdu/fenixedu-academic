@@ -31,19 +31,14 @@ public class ShowCandidacyForm extends FenixAction {
             throws FenixActionException {
         IUserView userView = getUserView(request);
         String equivalencyIDString = request.getParameter("objectCode");
-        Integer equivalencyID;
         if (equivalencyIDString == null) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }
-        try {
-            equivalencyID = new Integer(equivalencyIDString);
-        } catch (Exception ex) {
-            throw new FenixActionException(mapping.findForward("invalidQueryString"));
-        }
+
         InfoEquivalency equivalency = null;
         ActionForward destiny = null;
         try {
-            equivalency = GetEquivalency.runGetEquivalency(equivalencyID);
+            equivalency = GetEquivalency.runGetEquivalency(equivalencyIDString);
         } catch (Exception e) {
             throw new FenixActionException();
         }

@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -49,7 +48,7 @@ public class TeachingReportAction extends FenixDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         InfoCourseReport infoCourseReport = getInfoCourseReportFromForm(form);
-        EditCourseInformation.runEditCourseInformation(infoCourseReport.getIdInternal(), infoCourseReport,
+        EditCourseInformation.runEditCourseInformation(infoCourseReport.getExternalId(), infoCourseReport,
                 infoCourseReport.getReport());
         return read(mapping, form, request, response);
     }
@@ -60,8 +59,7 @@ public class TeachingReportAction extends FenixDispatchAction {
             InfoCourseReport infoCourseReport = new InfoCourseReport();
             BeanUtils.copyProperties(infoCourseReport, dynaForm);
 
-            Integer executionCourseId = (Integer) dynaForm.get("executionCourseId");
-            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+            final ExecutionCourse executionCourse = getDomainObject(dynaForm, "executionCourseId");
             infoCourseReport.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 
             return infoCourseReport;
@@ -82,9 +80,9 @@ public class TeachingReportAction extends FenixDispatchAction {
             BeanUtils.copyProperties(form, infoCourseReport);
 
             InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
-            dynaForm.set("executionCourseId", infoExecutionCourse.getIdInternal());
-            dynaForm.set("executionPeriodId", infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
-            dynaForm.set("executionYearId", infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getIdInternal());
+            dynaForm.set("executionCourseId", infoExecutionCourse.getExternalId());
+            dynaForm.set("executionPeriodId", infoExecutionCourse.getInfoExecutionPeriod().getExternalId());
+            dynaForm.set("executionYearId", infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getExternalId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,9 +107,9 @@ public class TeachingReportAction extends FenixDispatchAction {
         setSiteViewToRequest(request, siteView, mapping);
         List infoCoursesHistoric = readCoursesHistoric(mapping, form, request);
         setInfoCoursesHistoric(request, infoCoursesHistoric, mapping);
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
         return mapping.findForward("successfull-read");
@@ -127,7 +125,7 @@ public class TeachingReportAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         String executionCourseId = request.getParameter("executionCourseId");
 
-        return ReadCourseHistoric.runReadCourseHistoric(new Integer(executionCourseId));
+        return ReadCourseHistoric.runReadCourseHistoric(executionCourseId);
     }
 
     private SiteView readSiteView(ActionMapping mapping, ActionForm form, HttpServletRequest request)
@@ -135,7 +133,7 @@ public class TeachingReportAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         String executionCourseId = request.getParameter("executionCourseId");
 
-        return ReadCourseInformation.runReadCourseInformation(new Integer(executionCourseId));
+        return ReadCourseInformation.runReadCourseInformation(executionCourseId);
     }
 
     private void setSiteViewToRequest(HttpServletRequest request, SiteView siteView, ActionMapping mapping) {

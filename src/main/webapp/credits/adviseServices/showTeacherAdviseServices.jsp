@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal"/>
+<bean:define id="executionPeriodId" name="executionPeriod" property="externalId"/>
 
 <h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
 
@@ -16,7 +16,7 @@
 <bean:define id="teacherId" name="teacher" property="externalId"/>
 <ul>
 	<li>
-	<bean:define id="link">/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacherId"/></bean:define>
+	<bean:define id="link">/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="externalId"/>&amp;teacherId=<bean:write name="teacherId"/></bean:define>
 	<html:link page='<%= link %>'><bean:message key="link.return"/></html:link>
 	</li>
 </ul>
@@ -44,7 +44,7 @@
 <html:form action="/teacherAdviseServiceManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editAdviseService"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>						
@@ -118,7 +118,7 @@
 					</td>
 					
 					<td>
-						<html:link page='<%= "/teacherAdviseServiceManagement.do?method=deleteAdviseService&amp;page=0&amp;teacherId=" + teacherId +"&amp;executionPeriodId=" + executionPeriodId + "&amp;teacherId=" + teacherId %>' paramId="teacherAdviseServiceID" paramName="teacherAdviseService" paramProperty="idInternal">
+						<html:link page='<%= "/teacherAdviseServiceManagement.do?method=deleteAdviseService&amp;page=0&amp;teacherId=" + teacherId +"&amp;executionPeriodId=" + executionPeriodId + "&amp;teacherId=" + teacherId %>' paramId="teacherAdviseServiceID" paramName="teacherAdviseService" paramProperty="externalId">
 							<bean:message key="link.remove"/>
 						</html:link>
 					</td>

@@ -19,7 +19,7 @@
 			<jsp:include page="spaceCrumbs.jsp"/>
 		</div>		
 		
-		<bean:define id="backLink">/manageSpaces.do?method=prepareMergeRoom&amp;spaceInformationID=<bean:write name="spaceBean" property="space.spaceInformation.idInternal"/></bean:define>		
+		<bean:define id="backLink">/manageSpaces.do?method=prepareMergeRoom&amp;spaceInformationID=<bean:write name="spaceBean" property="space.spaceInformation.externalId"/></bean:define>		
 		<ul class="mvert15 list5">
 			<li>
 				<html:link page="<%= backLink %>">
@@ -58,7 +58,7 @@
 			</fr:layout>
 		</fr:view>
 						
-		<bean:define id="mergeLink">/manageSpaces.do?method=mergeRooms&fromRoomID=<bean:write name="spaceBean" property="space.idInternal"/>&destinationRoomID=<bean:write name="spaceBean" property="selectedParentSpace.idInternal"/></bean:define>				
+		<bean:define id="mergeLink">/manageSpaces.do?method=mergeRooms&fromRoomID=<bean:write name="spaceBean" property="space.externalId"/>&destinationRoomID=<bean:write name="spaceBean" property="selectedParentSpace.externalId"/></bean:define>				
 		<fr:form action="<%= mergeLink %>" >
 			<fr:edit id="mergeRoomsBean" visible="false" name="spaceBean" />
 			<html:submit><bean:message key="merge.space.title" bundle="SPACE_RESOURCES"/></html:submit>

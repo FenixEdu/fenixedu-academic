@@ -65,7 +65,7 @@
 				</td>
 				<td>
 					<% if(enrolmentEvaluation.getEnrolmentEvaluationState() == net.sourceforge.fenixedu.util.EnrolmentEvaluationState.RECTIFIED_OBJ) { %>
-						<html:link action='<%= "/oldMarkSheetManagement.do?method=prepareViewRectificationMarkSheet" + url %>' paramId="evaluationID" paramName="enrolmentEvaluation" paramProperty="idInternal">
+						<html:link action='<%= "/oldMarkSheetManagement.do?method=prepareViewRectificationMarkSheet" + url %>' paramId="evaluationID" paramName="enrolmentEvaluation" paramProperty="externalId">
 							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectified"/>
 						</html:link>
 					<% } %>

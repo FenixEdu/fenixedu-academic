@@ -142,7 +142,7 @@ public class Registration extends Registration_Base {
         @Override
         public int compare(Registration o1, Registration o2) {
             final int comparationResult = o1.getStartDate().compareTo(o2.getStartDate());
-            return comparationResult == 0 ? o1.getIdInternal().compareTo(o2.getIdInternal()) : comparationResult;
+            return comparationResult == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : comparationResult;
         }
     };
 
@@ -1620,7 +1620,7 @@ public class Registration extends Registration_Base {
         return readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear).isEmpty();
     }
 
-    final public Enrolment findEnrolmentByEnrolmentID(final Integer enrolmentID) {
+    final public Enrolment findEnrolmentByEnrolmentID(final String enrolmentID) {
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
             final Enrolment enrolment = studentCurricularPlan.findEnrolmentByEnrolmentID(enrolmentID);
             if (enrolment != null) {

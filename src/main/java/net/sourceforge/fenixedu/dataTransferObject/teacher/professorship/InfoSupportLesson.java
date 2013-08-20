@@ -125,7 +125,7 @@ public class InfoSupportLesson extends InfoObject {
         InfoProfessorship infoProfessorship = InfoProfessorship.newInfoFromDomain(supportLesson.getProfessorship());
 
         infoSupportLesson.setEndTime(supportLesson.getEndTime());
-        infoSupportLesson.setIdInternal(supportLesson.getIdInternal());
+        infoSupportLesson.setExternalId(supportLesson.getExternalId());
         infoSupportLesson.setPlace(supportLesson.getPlace());
         infoSupportLesson.setStartTime(supportLesson.getStartTime());
         infoSupportLesson.setWeekDay(supportLesson.getWeekDay());

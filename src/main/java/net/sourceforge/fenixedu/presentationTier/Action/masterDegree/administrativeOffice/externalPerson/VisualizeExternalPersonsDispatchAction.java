@@ -74,7 +74,7 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
                     while (it.hasNext()) {
                         infoInstitution = (Unit) it.next();
                         infoInstitutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution
-                                .getIdInternal().toString()));
+                                .getExternalId().toString()));
                     }
 
                     request.setAttribute(PresentationConstants.WORK_LOCATIONS_LIST, infoInstitutionsValueBeanList);
@@ -101,7 +101,7 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
         IUserView userView = UserView.getUser();
 
         DynaActionForm visualizeExternalPersonsForm = (DynaActionForm) form;
-        Integer institutionId = (Integer) visualizeExternalPersonsForm.get("institutionId");
+        String institutionId = (String) visualizeExternalPersonsForm.get("institutionId");
 
         List infoExternalPersons = null;
 

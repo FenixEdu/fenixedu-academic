@@ -37,6 +37,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DFACandidacyDispatchAction extends FenixDispatchAction {
 
@@ -197,7 +198,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward generatePass(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException,  FenixActionException {
+            HttpServletResponse response) throws FenixServiceException, FenixActionException {
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer candidacyNumber = (Integer) form.get("candidacyNumber");
         Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
@@ -265,7 +266,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward alterCandidacyData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IUserView userView = UserView.getUser();
 
@@ -276,24 +277,23 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
         EditPrecedentDegreeInformation.run(precedentDegreeInformation);
 
         request.setAttribute("candidacyID", precedentDegreeInformation.getPrecedentDegreeInformation().getStudentCandidacy()
-                .getIdInternal());
+                .getExternalId());
 
         return mapping.findForward("alterSuccess");
     }
 
     public ActionForward validateData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixActionException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         return goToNextState(mapping, actionForm, request, response, CandidacySituationType.STAND_BY_CONFIRMED_DATA.toString());
     }
 
     public ActionForward invalidateData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixActionException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         return goToNextState(mapping, actionForm, request, response, CandidacySituationType.STAND_BY.toString());
     }
 
     private ActionForward goToNextState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response, String nextState) throws FenixActionException, 
-            FenixServiceException {
+            HttpServletResponse response, String nextState) throws FenixActionException, FenixServiceException {
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer candidacyNumber = (Integer) form.get("candidacyNumber");
         Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
@@ -308,7 +308,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
             request.setAttribute("candidacy", candidacy);
             // return mapping.findForward("showCandidacyValidateData");
         }
-        request.setAttribute("candidacyID", candidacy.getIdInternal().toString());
+        request.setAttribute("candidacyID", candidacy.getExternalId().toString());
         return viewCandidacy(mapping, actionForm, request, response);
     }
 
@@ -332,7 +332,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         String candidacyID = (String) getFromRequest(request, "candidacyID");
 
-        Candidacy candidacy = rootDomainObject.readCandidacyByOID(Integer.valueOf(candidacyID));
+        Candidacy candidacy = AbstractDomainObject.fromExternalId(candidacyID);
         if (candidacy == null) {
             throw new FenixActionException("error.invalid.candidacy.number");
         }
@@ -358,7 +358,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward registerCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         RegisterCandidacyBean registerCandidacyBean =
                 (RegisterCandidacyBean) RenderUtils.getViewState().getMetaObject().getObject();
@@ -398,7 +398,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward cancelCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         return goToNextState(mapping, actionForm, request, response, CandidacySituationType.CANCELLED.toString());
     }

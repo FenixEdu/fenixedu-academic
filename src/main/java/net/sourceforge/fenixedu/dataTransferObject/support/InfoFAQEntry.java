@@ -58,7 +58,7 @@ public class InfoFAQEntry extends InfoObject implements Serializable {
             FAQSection parentSection = faqEntry.getParentSection();
             if (parentSection != null) {
                 setParentSection(new InfoFAQSection());
-                getParentSection().setIdInternal(parentSection.getIdInternal());
+                getParentSection().setExternalId(parentSection.getExternalId());
             }
         }
     }

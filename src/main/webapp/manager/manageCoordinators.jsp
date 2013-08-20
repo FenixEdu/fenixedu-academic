@@ -10,9 +10,9 @@
 </logic:notPresent>
 
 <logic:present name="infoExecutionDegree" >
-	<bean:define id="executionDegreeId" name="infoExecutionDegree" property="idInternal" />
-	<bean:define id="degreeId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.idInternal" />	
-	<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal" />
+	<bean:define id="executionDegreeId" name="infoExecutionDegree" property="externalId" />
+	<bean:define id="degreeId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.externalId" />	
+	<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.externalId" />
 	
 	<table>
 		<tr>
@@ -59,7 +59,7 @@
 				</tr>
 				<logic:iterate id="infoCoordinator" name="infoExecutionDegree" property="coordinatorsList">
 					<tr>
-						<bean:define id="coordinatorId" name="infoCoordinator" property="idInternal"/>	 			
+						<bean:define id="coordinatorId" name="infoCoordinator" property="externalId"/>	 			
 						<td class="listClasses"><bean:write name="infoCoordinator" property="infoPerson.nome"/>
 						</td>
 						<td class="listClasses"><bean:write name="infoCoordinator" property="infoPerson.username"/>

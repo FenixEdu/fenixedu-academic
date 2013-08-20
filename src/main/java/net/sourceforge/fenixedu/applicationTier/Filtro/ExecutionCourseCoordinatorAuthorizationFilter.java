@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author João Mota
@@ -24,13 +24,13 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends CoordinatorAu
     public static final ExecutionCourseCoordinatorAuthorizationFilter instance =
             new ExecutionCourseCoordinatorAuthorizationFilter();
 
-    protected ExecutionYear getSpecificExecutionYear(Integer executionCourseID) {
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+    protected ExecutionYear getSpecificExecutionYear(String executionCourseID) {
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
         return (executionCourse == null) ? null : executionCourse.getExecutionYear();
     }
 
-    public void execute(Integer executionCourseID) throws NotAuthorizedException {
+    public void execute(String executionCourseID) throws NotAuthorizedException {
         Person person = AccessControl.getUserView().getPerson();
 
         if (!person.hasRole(RoleType.COORDINATOR)) {

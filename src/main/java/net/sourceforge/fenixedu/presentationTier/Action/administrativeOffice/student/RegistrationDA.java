@@ -41,6 +41,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/registration", module = "academicAdministration")
 @Forwards({
@@ -67,7 +68,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         final RegistrationCurriculumBean registrationCurriculumBean = new RegistrationCurriculumBean(registration);
         request.setAttribute("registrationCurriculumBean", registrationCurriculumBean);
 
-        final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
+        final String degreeCurricularPlanID = getStringFromRequest(request, "degreeCurricularPlanID");
         if (degreeCurricularPlanID != null) {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
@@ -89,7 +90,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         final Registration registration = getAndSetRegistration(request);
 
         request.setAttribute("registrationCurriculumBean", getRegistrationCurriculumBeanFromViewState());
-        request.setAttribute("degreeCurricularPlanID", registration.getLastDegreeCurricularPlan().getIdInternal());
+        request.setAttribute("degreeCurricularPlanID", registration.getLastDegreeCurricularPlan().getExternalId());
 
         return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
     }
@@ -121,7 +122,7 @@ public class RegistrationDA extends StudentRegistrationDA {
             registrationCurriculumBean.setExecutionYear(currentExecutionYear);
         }
 
-        final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
+        final String degreeCurricularPlanID = getStringFromRequest(request, "degreeCurricularPlanID");
         if (degreeCurricularPlanID != null) {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
@@ -193,7 +194,7 @@ public class RegistrationDA extends StudentRegistrationDA {
             return mapping.findForward("registrationConclusion");
         }
 
-        request.setAttribute("registrationId", registrationConclusionBean.getRegistration().getIdInternal());
+        request.setAttribute("registrationId", registrationConclusionBean.getRegistration().getExternalId());
         return visualizeRegistration(mapping, form, request, response);
 
     }
@@ -215,9 +216,8 @@ public class RegistrationDA extends StudentRegistrationDA {
         final Registration registration = getAndSetRegistration(request);
         request.setAttribute("registration", registration);
 
-        final Integer cycleCurriculumGroupId = getIntegerFromRequest(request, "cycleCurriculumGroupId");
-        final CycleCurriculumGroup cycleCurriculumGroup =
-                (CycleCurriculumGroup) rootDomainObject.readCurriculumModuleByOID(cycleCurriculumGroupId);
+        final Object cycleCurriculumGroupId = getFromRequest(request, "cycleCurriculumGroupId");
+        final CycleCurriculumGroup cycleCurriculumGroup = getDomainObject(request, "cycleCurriculumGroupId");
         final RegistrationConclusionBean registrationConclusionBean;
         if (cycleCurriculumGroupId == null) {
             registrationConclusionBean = new RegistrationConclusionBean(registration);
@@ -297,7 +297,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         final AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
         final ExecutionCourse executionCourse = addAttendsBean.getExecutionCourse();
 
-        WriteStudentAttendingCourse.runWriteStudentAttendingCourse( registration, executionCourse.getIdInternal() );
+        WriteStudentAttendingCourse.runWriteStudentAttendingCourse(registration, executionCourse.getExternalId());
 
         return viewAttends(mapping, actionForm, request, response);
     }
@@ -308,9 +308,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         request.setAttribute("registration", registration);
 
         final String attendsIdString = request.getParameter("attendsId");
-        final Integer attendsId =
-                attendsIdString != null && attendsIdString.length() > 0 ? Integer.valueOf(attendsIdString) : null;
-        final Attends attends = attendsId == null ? null : rootDomainObject.readAttendsByOID(attendsId);
+        final Attends attends = AbstractDomainObject.fromExternalId(attendsIdString);
 
         try {
             registration.removeAttendFor(attends.getExecutionCourse());
@@ -327,9 +325,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         request.setAttribute("registration", registration);
 
         final String attendsIdString = request.getParameter("attendsId");
-        final Integer attendsId =
-                attendsIdString != null && attendsIdString.length() > 0 ? Integer.valueOf(attendsIdString) : null;
-        final Attends attends = attendsId == null ? null : rootDomainObject.readAttendsByOID(attendsId);
+        final Attends attends = AbstractDomainObject.fromExternalId(attendsIdString);
 
         if (attends != null) {
             attends.deleteShiftEnrolments();
@@ -368,6 +364,6 @@ public class RegistrationDA extends StudentRegistrationDA {
     }
 
     private RegistrationRegime getRegistrationRegime(HttpServletRequest request) {
-        return rootDomainObject.readRegistrationRegimeByOID(getIntegerFromRequest(request, "registrationRegimeId"));
+        return getDomainObject(request, "registrationRegimeId");
     }
 }

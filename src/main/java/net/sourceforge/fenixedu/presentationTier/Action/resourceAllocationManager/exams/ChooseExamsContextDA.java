@@ -50,14 +50,14 @@ public class ChooseExamsContextDA extends FenixContextDispatchAction {
         IUserView userView = UserView.getUser();
 
         /* Determine Selected Curricular Year */
-        Integer anoCurricular = new Integer((String) chooseExamsContextForm.get("curricularYear"));
+        String anoCurricular = (String) chooseExamsContextForm.get("curricularYear");
 
         InfoCurricularYear infoCurricularYear = ReadCurricularYearByOID.run(anoCurricular);
 
         request.setAttribute(PresentationConstants.CURRICULAR_YEAR, infoCurricularYear);
 
         /* Determine Selected Execution Degree */
-        Integer executionDegreeOID = new Integer((String) chooseExamsContextForm.get("executionDegreeOID"));
+        String executionDegreeOID = (String) chooseExamsContextForm.get("executionDegreeOID");
 
         InfoExecutionDegree infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegreeOID);
 

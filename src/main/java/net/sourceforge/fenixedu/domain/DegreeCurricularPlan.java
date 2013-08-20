@@ -114,7 +114,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                         finalCompare = o2.getName().compareTo(o1.getName());
                     }
                     if (finalCompare == 0) {
-                        finalCompare = o1.getIdInternal().compareTo(o2.getIdInternal());
+                        finalCompare = o1.getExternalId().compareTo(o2.getExternalId());
                     }
                     return finalCompare;
                 }
@@ -387,7 +387,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         if (hasRoot()) {
             StringBuilder dcp = new StringBuilder();
 
-            dcp.append("[DCP ").append(this.getIdInternal()).append("] ").append(this.getName()).append("\n");
+            dcp.append("[DCP ").append(this.getExternalId()).append("] ").append(this.getName()).append("\n");
             this.getRoot().print(dcp, "", null);
 
             return dcp.toString();

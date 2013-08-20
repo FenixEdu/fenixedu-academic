@@ -46,7 +46,7 @@ public class CreateUnitFile {
         final VirtualPath filePath = new VirtualPath();
 
         filePath.addNode(new VirtualPathNode("Research", "Research"));
-        filePath.addNode(new VirtualPathNode("ResearchUnit" + unit.getIdInternal(), unit.getName()));
+        filePath.addNode(new VirtualPathNode("ResearchUnit" + unit.getExternalId(), unit.getName()));
 
         return filePath;
     }

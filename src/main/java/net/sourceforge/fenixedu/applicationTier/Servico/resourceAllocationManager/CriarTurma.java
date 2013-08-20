@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CriarTurma {
 
@@ -24,7 +24,7 @@ public class CriarTurma {
     public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
             final AcademicInterval academicInterval) throws ExistingServiceException {
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
 
         final SchoolClass schoolClass = new SchoolClass(executionDegree, academicInterval, className, curricularYear);
         return InfoClass.newInfoFromDomain(schoolClass);
@@ -34,9 +34,9 @@ public class CriarTurma {
     public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
             final InfoExecutionPeriod infoExecutionPeriod) throws ExistingServiceException {
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
         final ExecutionSemester executionSemester =
-                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
 
         final SchoolClass schoolClass = new SchoolClass(executionDegree, executionSemester, className, curricularYear);
         return InfoClass.newInfoFromDomain(schoolClass);

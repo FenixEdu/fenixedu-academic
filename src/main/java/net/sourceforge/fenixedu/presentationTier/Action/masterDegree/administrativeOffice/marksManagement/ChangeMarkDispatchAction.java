@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -42,6 +41,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Angela 30/06/2003 Modified by Fernanda Quitério
@@ -61,7 +61,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         try {
             listEnrolmentEvaluation =
                     ReadStudentMarksListByCurricularCourse.runReadStudentMarksListByCurricularCourse(userView,
-                            Integer.valueOf(curricularCourseId), null);
+                            curricularCourseId, null);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         } catch (NonExistingServiceException e) {
@@ -104,8 +104,8 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         try {
 
             infoSiteEnrolmentEvaluations =
-                    ReadStudentMarksByCurricularCourse.run(Integer.valueOf(curricularCourseId), studentNumber, null,
-                            getIntegerFromRequest(request, "enrolmentId"));
+                    ReadStudentMarksByCurricularCourse.run(curricularCourseId, studentNumber, null,
+                            getStringFromRequest(request, "enrolmentId"));
         } catch (ExistingServiceException e) {
             // invalid student number
             addErrorMessage(request, "StudentNotExist", "error.student.notExist");
@@ -141,7 +141,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 
             newEnrolmentEvaluation =
                     ReadInfoEnrolmentEvaluationByEvaluationOID.run(userView, studentNumber, DegreeType.MASTER_DEGREE,
-                            infoEnrolmentTemp.getIdInternal());
+                            infoEnrolmentTemp.getExternalId());
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
@@ -259,7 +259,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 
         DynaActionForm studentNumberForm = (DynaActionForm) form;
         // get input
-        Integer enrolmentEvaluationCode = Integer.valueOf(MarksManagementDispatchAction.getFromRequest("teacherCode", request));
+        String enrolmentEvaluationCode = MarksManagementDispatchAction.getFromRequest("teacherCode", request);
         String grade = MarksManagementDispatchAction.getFromRequest("grade", request);
 
         String evaluation = MarksManagementDispatchAction.getFromRequest("enrolmentEvaluationType", request);
@@ -325,8 +325,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         infoEnrolmentEvaluation.setGradeAvailableDate(examDate.getTime());
 
         final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByIstId(teacherId));
-        final EnrolmentEvaluation enrolmentEvaluation =
-                RootDomainObject.getInstance().readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
+        final EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(enrolmentEvaluationCode);
         infoEnrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
 
         infoEnrolmentEvaluation.setGradeValue(grade);

@@ -56,16 +56,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class ShowCandidacies extends FenixAction {
 
     List doReadCandidacies(HttpServletRequest request) throws NotAuthorizedException, BDException {
-        Integer modalityID;
-        Integer themeID;
-        Integer case1Id;
-        Integer case2Id;
-        Integer case3Id;
-        Integer case4Id;
-        Integer case5Id;
-        Integer curricularCourseID;
-        Integer degreeID;
-        Integer seminaryID;
+        String modalityID;
+        String themeID;
+        String case1Id;
+        String case2Id;
+        String case3Id;
+        String case4Id;
+        String case5Id;
+        String curricularCourseID;
+        String degreeID;
+        String seminaryID;
         Boolean approved = null;
         //
         //
@@ -75,56 +75,26 @@ public class ShowCandidacies extends FenixAction {
         }
         //
         //
-        try {
-            themeID = new Integer(request.getParameter("themeID"));
-        } catch (NumberFormatException ex) {
-            themeID = new Integer(-1);
-        }
-        try {
-            modalityID = new Integer(request.getParameter("modalityID"));
-        } catch (NumberFormatException ex) {
-            modalityID = new Integer(-1);
-        }
-        try {
-            seminaryID = new Integer(request.getParameter("seminaryID"));
-        } catch (NumberFormatException ex) {
-            seminaryID = new Integer(-1);
-        }
-        try {
-            case1Id = new Integer(request.getParameter("case1ID"));
-        } catch (NumberFormatException ex) {
-            case1Id = new Integer(-1);
-        }
-        try {
-            case2Id = new Integer(request.getParameter("case2ID"));
-        } catch (NumberFormatException ex) {
-            case2Id = new Integer(-1);
-        }
-        try {
-            case3Id = new Integer(request.getParameter("case3ID"));
-        } catch (NumberFormatException ex) {
-            case3Id = new Integer(-1);
-        }
-        try {
-            case4Id = new Integer(request.getParameter("case4ID"));
-        } catch (NumberFormatException ex) {
-            case4Id = new Integer(-1);
-        }
-        try {
-            case5Id = new Integer(request.getParameter("case5ID"));
-        } catch (NumberFormatException ex) {
-            case5Id = new Integer(-1);
-        }
-        try {
-            curricularCourseID = new Integer(request.getParameter("courseID"));
-        } catch (NumberFormatException ex) {
-            curricularCourseID = new Integer(-1);
-        }
-        try {
-            degreeID = new Integer(request.getParameter("degreeID"));
-        } catch (NumberFormatException ex) {
-            degreeID = new Integer(-1);
-        }
+        themeID = request.getParameter("themeID");
+
+        modalityID = request.getParameter("modalityID");
+
+        seminaryID = request.getParameter("seminaryID");
+
+        case1Id = request.getParameter("case1ID");
+
+        case2Id = request.getParameter("case2ID");
+
+        case3Id = request.getParameter("case3ID");
+
+        case4Id = request.getParameter("case4ID");
+
+        case5Id = request.getParameter("case5ID");
+
+        curricularCourseID = request.getParameter("courseID");
+
+        degreeID = request.getParameter("degreeID");
+
         return ReadCandidacies.runReadCandidacies(modalityID, seminaryID, themeID, case1Id, case2Id, case3Id, case4Id, case5Id,
                 curricularCourseID, degreeID, approved);
 

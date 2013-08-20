@@ -83,7 +83,7 @@
 <ul>
 	<li class="navheader"><bean:message key="label.researchUnits" bundle="RESEARCHER_RESOURCES"/></li>
 	<logic:iterate id="unitIter" name="workingResearchUnits">
-		<bean:define id="unitID" name="unitIter" property="idInternal" type="java.lang.Integer"/>
+		<bean:define id="unitID" name="unitIter" property="externalId" type="java.lang.String"/>
 		<bean:define id="unitExternalId" name="unitIter" property="externalId"/>
 		<bean:define id="unitName" name="unitIter" property="name" type="java.lang.String"/>
 		<li> 
@@ -92,7 +92,7 @@
 			</html:link>
 
 			<logic:present name="unit">
-				<logic:equal name="unit" property="idInternal" value="<%= unitID.toString() %>">
+				<logic:equal name="unit" property="externalId" value="<%= unitID.toString() %>">
 			<ul>
 				<li>
 					<html:link page="<%= "/sendEmailToResearchUnitGroups.do?method=prepare&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging") + "&unitExternalId=" + unitExternalId %>">

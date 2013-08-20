@@ -164,7 +164,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     private Unit getUnit(final HttpServletRequest request) {
-        return (Unit) readDomainObject(request, Unit.class, getIntegerFromRequest(request, "oid"));
+        return getDomainObject(request, "oid");
     }
 
     public ActionForward prepareCreateCountry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -209,15 +209,15 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final CreateExternalUnitBean externalUnitBean = getRenderedObject();
 
         try {
             final Unit unit = CreateExternalUnit.run(externalUnitBean);
-            final Integer oid =
-                    (!externalUnitBean.getParentUnit().isPlanetUnit()) ? externalUnitBean.getParentUnit().getIdInternal() : unit
-                            .getIdInternal();
+            final String oid =
+                    (!externalUnitBean.getParentUnit().isPlanetUnit()) ? externalUnitBean.getParentUnit().getExternalId() : unit
+                            .getExternalId();
             request.setAttribute("oid", oid);
             return viewUnit(mapping, actionForm, request, response);
 
@@ -232,13 +232,13 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final EditExternalUnitBean externalUnitBean = getRenderedObject();
 
         try {
             EditExternalUnit.run(externalUnitBean);
-            request.setAttribute("oid", externalUnitBean.getExternalUnit().getIdInternal());
+            request.setAttribute("oid", externalUnitBean.getExternalUnit().getExternalId());
             return viewUnit(mapping, actionForm, request, response);
 
         } catch (final IllegalDataAccessException e) {
@@ -252,7 +252,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final Unit unit = getUnit(request);
         final Unit parent = getAnyParentUnit(unit);
@@ -310,14 +310,14 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createExternalCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final CreateExternalCurricularCourseBean externalCurricularCourseBean = getRenderedObject();
 
         try {
             CreateExternalCurricularCourse.run(externalCurricularCourseBean);
 
-            request.setAttribute("oid", externalCurricularCourseBean.getParentUnit().getIdInternal());
+            request.setAttribute("oid", externalCurricularCourseBean.getParentUnit().getExternalId());
             return viewUnit(mapping, actionForm, request, response);
 
         } catch (final NotAuthorizedException e) {
@@ -339,7 +339,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteExternalCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final ExternalCurricularCourse externalCurricularCourse = getExternalCurricularCourse(request);
         final Unit parent = externalCurricularCourse.getUnit();
@@ -363,14 +363,14 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editExternalCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final EditExternalCurricularCourseBean externalCurricularCourseBean = getRenderedObject();
 
         try {
             EditExternalCurricularCourse.run(externalCurricularCourseBean);
 
-            request.setAttribute("oid", externalCurricularCourseBean.getExternalCurricularCourse().getIdInternal());
+            request.setAttribute("oid", externalCurricularCourseBean.getExternalCurricularCourse().getExternalId());
             return viewExternalCurricularCourse(mapping, actionForm, request, response);
 
         } catch (final IllegalDataAccessException e) {
@@ -393,8 +393,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     private ExternalCurricularCourse getExternalCurricularCourse(final HttpServletRequest request) {
-        return (ExternalCurricularCourse) readDomainObject(request, ExternalCurricularCourse.class,
-                getIntegerFromRequest(request, "oid"));
+        return getDomainObject(request, "oid");
     }
 
     public ActionForward prepareEditExternalEnrolment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -405,17 +404,17 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     private ExternalEnrolment getExternalEnrolment(final HttpServletRequest request) {
-        return (ExternalEnrolment) readDomainObject(request, ExternalEnrolment.class, getIntegerFromRequest(request, "oid"));
+        return getDomainObject(request, "oid");
     }
 
     public ActionForward editExternalEnrolment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final EditExternalEnrolmentBean externalEnrolmentBean = getRenderedObject();
         try {
             EditExternalEnrolment.run(externalEnrolmentBean, externalEnrolmentBean.getExternalEnrolment().getRegistration());
 
-            request.setAttribute("oid", externalEnrolmentBean.getExternalCurricularCourse().getIdInternal());
+            request.setAttribute("oid", externalEnrolmentBean.getExternalCurricularCourse().getExternalId());
             return viewExternalCurricularCourse(mapping, actionForm, request, response);
 
         } catch (final IllegalDataAccessException e) {

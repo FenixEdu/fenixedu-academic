@@ -6,10 +6,10 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.ID
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -23,7 +23,7 @@ public class FinalResult {
         boolean result = false;
 
         StudentCurricularPlan studentCurricularPlan =
-                RootDomainObject.getInstance().readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
+                AbstractDomainObject.fromExternalId(infoStudentCurricularPlan.getExternalId());
 
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
                 DegreeCurricularPlanStrategyFactory.getInstance();

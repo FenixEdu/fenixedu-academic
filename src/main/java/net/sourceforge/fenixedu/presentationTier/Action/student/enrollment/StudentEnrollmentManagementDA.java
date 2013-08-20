@@ -219,7 +219,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward enrolInAffinityCycle(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
 
@@ -264,7 +264,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     }
 
     private Registration getRegistrationFrom(final HttpServletRequest request, final String parameterName) {
-        return rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request, parameterName));
+        return getDomainObject(request, parameterName);
     }
 
     public ActionForward choosePersonalDataAuthorizationChoice(ActionMapping mapping, ActionForm form,

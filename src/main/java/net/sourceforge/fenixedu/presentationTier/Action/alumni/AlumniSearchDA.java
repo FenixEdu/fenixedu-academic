@@ -80,7 +80,7 @@ public class AlumniSearchDA extends FenixDispatchAction {
     public ActionForward visualizeAlumni(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        request.setAttribute("alumniData", rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId")));
+        request.setAttribute("alumniData", getDomainObject(request, "studentId"));
         return mapping.findForward("viewAlumniDetails");
     }
 

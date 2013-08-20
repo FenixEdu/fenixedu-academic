@@ -14,9 +14,9 @@
 	<logic:iterate id="infoInquiryStatistic" name="infoInquiryStatisticsList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics" indexId="iterateIndex">
 		<bean:define id="testQuestion" name ="infoInquiryStatistic" property="infoStudentTestQuestion" type="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion"/>
 		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
-		<bean:define id="testCode" name="distributedTest" property="idInternal"/>
+		<bean:define id="testCode" name="distributedTest" property="externalId"/>
 		<bean:define id="student" name="testQuestion" property="student" type="net.sourceforge.fenixedu.domain.student.Registration"/>
-		<bean:define id="studentCode" name="student" property="idInternal"/>
+		<bean:define id="studentCode" name="student" property="externalId"/>
 		<logic:equal name="iterateIndex" value="0">
 			<center><h2><bean:write name="distributedTest" property="title"/></h2>
 			<b><bean:write name="distributedTest" property="testInformation"/></b></center>
@@ -27,7 +27,7 @@
 		<bean:define id="index" value="0"/>
 		<bean:define id="question" name="testQuestion" property="question" type="net.sourceforge.fenixedu.domain.onlineTests.Question"/>
 		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
-		<bean:define id="questionCode" name="question" property="idInternal"/>
+		<bean:define id="questionCode" name="question" property="externalId"/>
 		<bean:define id="questionOrder" name="testQuestion" property="testQuestionOrder"/>
 		<bean:define id="correction" name="testQuestion" property="distributedTest.correctionAvailability" type="net.sourceforge.fenixedu.util.tests.CorrectionAvailability"/>
 		<bean:define id="formula" name="testQuestion" property="correctionFormula.formula"/>

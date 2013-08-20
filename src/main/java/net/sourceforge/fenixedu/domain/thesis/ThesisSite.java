@@ -19,7 +19,7 @@ public class ThesisSite extends ThesisSite_Base {
 
     @Override
     public MultiLanguageString getName() {
-        return new MultiLanguageString().with(Language.pt, String.valueOf(getThesis().getIdInternal()));
+        return new MultiLanguageString().with(Language.pt, String.valueOf(getThesis().getExternalId()));
     }
 
     @Override

@@ -15,8 +15,8 @@
 	<bean:message key="title.item.edit" bundle="SITE_RESOURCES"/>
 </h2>
 
-<bean:define id="siteId" name="site" property="idInternal"/>
-<bean:define id="sectionId" name="item" property="section.idInternal"/>
+<bean:define id="siteId" name="site" property="externalId"/>
+<bean:define id="sectionId" name="item" property="section.externalId"/>
 
 <p class="mbottom05">
     <bean:message key="message.item.group.edit" bundle="SITE_RESOURCES"/>

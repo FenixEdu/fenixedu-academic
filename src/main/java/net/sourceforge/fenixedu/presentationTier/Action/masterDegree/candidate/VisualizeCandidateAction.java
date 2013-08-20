@@ -28,7 +28,7 @@ public class VisualizeCandidateAction extends FenixAction {
 
         IUserView userView = UserView.getUser();
 
-        Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
+        String candidateID = request.getParameter("candidateID");
         request.setAttribute("candidateID", candidateID);
 
         InfoMasterDegreeCandidate masterDegreeCandidate = ReadMasterDegreeCandidateByID.run(candidateID);

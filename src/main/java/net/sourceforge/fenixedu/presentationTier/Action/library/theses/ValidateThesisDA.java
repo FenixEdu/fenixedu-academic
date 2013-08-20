@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.thesis.ThesisSearchBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisLibraryOperation;
 
@@ -25,9 +24,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         parameter = "method")
 @Forwards(value = { @Forward(name = "view", path = "/library/theses/validate.jsp") })
 public class ValidateThesisDA extends ThesisLibraryDA {
+
     protected Thesis getThesis(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "thesisID");
-        return id != null ? (Thesis) RootDomainObject.getInstance().readThesisByOID(id) : null;
+        return getDomainObject(request, "thesisID");
     }
 
     @Override

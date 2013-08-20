@@ -36,7 +36,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="sortBy" value="startDate=desc"/>			
 				<fr:property name="classes" value="tstyle4 thlight mtop025"/>
-				<fr:property name="linkFormat(enrol)" value="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning&registrationOID=${idInternal}" />
+				<fr:property name="linkFormat(enrol)" value="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning&registrationOID=${externalId}" />
 				<fr:property name="key(enrol)" value="enrol.in.shift"/>
 				<fr:property name="bundle(enrol)" value="STUDENT_RESOURCES"/>
 				<fr:property name="contextRelative(enrol)" value="true"/>

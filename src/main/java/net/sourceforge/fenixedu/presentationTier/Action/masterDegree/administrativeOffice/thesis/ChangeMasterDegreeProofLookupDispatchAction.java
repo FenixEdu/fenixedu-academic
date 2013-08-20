@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeProof;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -34,6 +33,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.LookupDispatchAction;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -73,8 +73,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
         DynaActionForm changeMasterDegreeProofForm = (DynaActionForm) form;
 
-        Integer[] teachersNumbersList = (Integer[]) changeMasterDegreeProofForm.get("juriesNumbers");
-        Integer[] removedJuries = (Integer[]) changeMasterDegreeProofForm.get("removedJuriesNumbers");
+        String[] teachersNumbersList = (String[]) changeMasterDegreeProofForm.get("juriesNumbers");
+        String[] removedJuries = (String[]) changeMasterDegreeProofForm.get("removedJuriesNumbers");
 
         changeMasterDegreeProofForm.set("juriesNumbers", subtractArray(teachersNumbersList, removedJuries));
 
@@ -181,8 +181,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
         DynaActionForm masterDegreeProofForm = (DynaActionForm) form;
 
-        Integer[] externalPersonsIDsList = (Integer[]) masterDegreeProofForm.get("externalJuriesIDs");
-        Integer[] removedExternalJuries = (Integer[]) masterDegreeProofForm.get("removedExternalJuriesIDs");
+        String[] externalPersonsIDsList = (String[]) masterDegreeProofForm.get("externalJuriesIDs");
+        String[] removedExternalJuries = (String[]) masterDegreeProofForm.get("removedExternalJuriesIDs");
 
         masterDegreeProofForm.set("externalJuriesIDs", subtractArray(externalPersonsIDsList, removedExternalJuries));
 
@@ -215,7 +215,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
         DynaActionForm changeMasterDegreeProofForm = (DynaActionForm) form;
 
         String degreeType = (String) changeMasterDegreeProofForm.get("degreeType");
-        Integer scpID = (Integer) changeMasterDegreeProofForm.get("scpID");
+        String scpID = (String) changeMasterDegreeProofForm.get("scpID");
 
         String finalResultString = (String) changeMasterDegreeProofForm.get("finalResult");
         MasterDegreeClassification finalResult =
@@ -235,12 +235,12 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
         Date thesisDeliveryDate = buildThesisDeliveryDate(thesisDeliveryDateDay, thesisDeliveryDateMonth, thesisDeliveryDateYear);
 
-        StudentCurricularPlan studentCurricularPlan = RootDomainObject.getInstance().readStudentCurricularPlanByOID(scpID);
+        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
 
         MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
         ActionErrors actionErrors = new ActionErrors();
         List<String> juriesNumbers = null;
-        List<Integer> externalJuriesIDs = null;
+        List<String> externalJuriesIDs = null;
 
         try {
             operations.transportStudentCurricularPlan(form, request, actionErrors, studentCurricularPlan);
@@ -270,7 +270,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
     private void executeChangeMasterDegreeProofService(ActionMapping mapping, IUserView userView,
             MasterDegreeClassification finalResult, Integer attachedCopiesNumber, Date proofDate, Date thesisDeliveryDate,
-            Integer scpID, List<String> juriesNumbers, List<Integer> externalJuriesIDs) throws NonExistingActionException,
+            String scpID, List<String> juriesNumbers, List<String> externalJuriesIDs) throws NonExistingActionException,
             ScholarshipNotFinishedActionException, ExistingActionException {
 
         try {
@@ -336,18 +336,18 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
     }
 
-    private Integer[] subtractArray(Integer[] originalArray, Integer[] arrayToSubtract) {
+    private String[] subtractArray(String[] originalArray, String[] arrayToSubtract) {
         List tmp = new ArrayList();
 
-        for (Integer element : originalArray) {
+        for (String element : originalArray) {
             tmp.add(element);
         }
 
-        for (Integer element : arrayToSubtract) {
+        for (String element : arrayToSubtract) {
             tmp.remove(element);
         }
 
-        originalArray = (Integer[]) tmp.toArray(new Integer[] {});
+        originalArray = (String[]) tmp.toArray(new String[] {});
         return originalArray;
     }
 

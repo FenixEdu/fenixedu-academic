@@ -41,11 +41,11 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -104,7 +104,7 @@ public class ExecutionCourseSiteComponentBuilder {
         final ExecutionCourse executionCourse = site.getExecutionCourse();
         final List<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
         for (final Evaluation evaluation : evaluations) {
-            if (evaluationID.equals(evaluation.getIdInternal())) {
+            if (evaluationID.equals(evaluation.getExternalId())) {
                 component.setEvaluation(evaluation);
                 break;
             }
@@ -156,7 +156,7 @@ public class ExecutionCourseSiteComponentBuilder {
         final InfoSection infoSection = (InfoSection) commonComponent.getSections().get(sectionIndex.intValue());
         component.setSection(infoSection);
 
-        final Section section = (Section) RootDomainObject.getInstance().readContentByOID(infoSection.getIdInternal());
+        final Section section = (Section) AbstractDomainObject.fromExternalId(infoSection.getExternalId());
 
         final List<InfoItem> infoItemsList = new ArrayList<InfoItem>(section.getAssociatedItemsCount());
         for (final Item item : section.getAssociatedItems()) {
@@ -254,7 +254,7 @@ public class ExecutionCourseSiteComponentBuilder {
         component.setAlternativeSite(site.getAlternativeSite());
         component.setInitialStatement(site.getInitialStatement());
         component.setIntroduction(site.getIntroduction());
-        component.setSiteIdInternal(site.getIdInternal());
+        component.setSiteExternalId(site.getExternalId());
         if (!responsibleInfoTeachersList.isEmpty()) {
             component.setResponsibleTeachers(responsibleInfoTeachersList);
         } else {
@@ -418,7 +418,7 @@ public class ExecutionCourseSiteComponentBuilder {
         InfoSection infoSection = null;
         if (section != null) {
             infoSection = new InfoSection();
-            infoSection.setIdInternal(section.getIdInternal());
+            infoSection.setExternalId(section.getExternalId());
             infoSection.setName(section.getName().getContent(Language.pt));
             infoSection.setSectionOrder(section.getSectionOrder());
             infoSection.setSuperiorInfoSection(copyISection2InfoSection(section.getSuperiorSection()));

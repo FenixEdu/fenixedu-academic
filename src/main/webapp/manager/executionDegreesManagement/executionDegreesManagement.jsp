@@ -82,7 +82,7 @@
 				<tr>
 					<td class="listClasses">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.internalIds" property="internalIds">
-							<bean:write name="executionDegree" property="idInternal"/>
+							<bean:write name="executionDegree" property="externalId"/>
 						</html:multibox>
 					</td>
 					<td class='listClasses'>
@@ -197,11 +197,11 @@
 						</logic:empty>
 					</td>
 					<td class='listClasses'>
-						<html:link module="/manager" action="/executionDegreesManagement.do?method=prepareEditExecutionDegree" paramId="executionDegreeID" paramName="executionDegree" paramProperty="idInternal">
+						<html:link module="/manager" action="/executionDegreesManagement.do?method=prepareEditExecutionDegree" paramId="executionDegreeID" paramName="executionDegree" paramProperty="externalId">
 							<bean:message bundle="MANAGER_RESOURCES" key="link.edit"/>
 						</html:link>
 						, <br/>
-						<html:link module="/manager" action="/executionDegreesManagement.do?method=readCoordinators" paramId="executionDegreeID" paramName="executionDegree" paramProperty="idInternal">
+						<html:link module="/manager" action="/executionDegreesManagement.do?method=readCoordinators" paramId="executionDegreeID" paramName="executionDegree" paramProperty="externalId">
 							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.executionDegree.coordinators" />
 						</html:link>
 					</td>

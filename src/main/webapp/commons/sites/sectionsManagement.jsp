@@ -8,7 +8,7 @@
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
-<bean:define id="siteId" name="site" property="idInternal"/>
+<bean:define id="siteId" name="site" property="externalId"/>
 <bean:define id="actionName" name="siteActionName"/>
 <bean:define id="contextParam" name="siteContextParam"/>
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
@@ -97,9 +97,9 @@
 				<fr:property name="schemaFor(Forum)" value="content.in.tree"/>
                 <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>
-            <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${idInternal}&amp;" + context %>"/>
-			<fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.idInternal}&" + context  + "#item-${idInternal}"%>"/>
-			<fr:destination name="functionality.view" path="<%= actionName + "?method=functionality&siteID=" + siteId + "&functionalityID=${idInternal}&" + context  + "#content-${idInternal}"%>"/>
+            <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${externalId}&amp;" + context %>"/>
+			<fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.externalId}&" + context  + "#item-${externalId}"%>"/>
+			<fr:destination name="functionality.view" path="<%= actionName + "?method=functionality&siteID=" + siteId + "&functionalityID=${externalId}&" + context  + "#content-${externalId}"%>"/>
         </fr:view>
 	
 		<p class="mtop15">
@@ -138,9 +138,9 @@
 </logic:empty>
 
 <logic:notEmpty name="site" property="associatedFunctionalities">
-	<bean:define id="containerID" name="site" property="idInternal"/>
+	<bean:define id="containerID" name="site" property="externalId"/>
 	<logic:iterate id="functionality" name="site" property="associatedFunctionalities">
-			<bean:define id="contentID" name="functionality" property="idInternal"/>
+			<bean:define id="contentID" name="functionality" property="externalId"/>
 
 			<div id="content-<%= contentID%>" class="mtop15 mbottom0" style="background: #f5f5f5; padding: 0.5em;">
 			<strong><fr:view name="functionality" property="name"/></strong>

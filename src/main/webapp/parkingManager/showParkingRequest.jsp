@@ -42,7 +42,7 @@ function hideCardValidPeriod(toShow){
 			
 	<bean:define id="parkingRequest" name="parkingRequest" toScope="request"/>
 	<bean:define id="parkingParty" name="parkingRequest" property="parkingParty" toScope="request"/>	
-	<bean:define id="personID" name="parkingParty" property="party.idInternal" />
+	<bean:define id="personID" name="parkingParty" property="party.externalId" />
 	
 	
 	<h3><bean:message key="label.parkUserInfo" /></h3>
@@ -93,9 +93,9 @@ function hideCardValidPeriod(toShow){
 	<logic:notEqual name="parkingRequest" property="parkingRequestState" value="PENDING">		
 		<jsp:include page="viewParkingPartyAndRequest.jsp"/>
 	</logic:notEqual>
-	<bean:define id="parkingPartyIdint" name="parkingRequest" property="parkingParty.idInternal" />
+	<bean:define id="parkingPartyIdint" name="parkingRequest" property="parkingParty.externalId" />
 	<logic:equal name="parkingRequest" property="parkingRequestState" value="PENDING">
-		<bean:define id="parkingRequestID" name="parkingRequest" property="idInternal" />	
+		<bean:define id="parkingRequestID" name="parkingRequest" property="externalId" />	
 		<bean:define id="groupName" value="" type="java.lang.String"/>		
 		<html:form action="/parking">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.code" property="code" value="<%= parkingRequestID.toString()%>"/>
@@ -129,7 +129,7 @@ function hideCardValidPeriod(toShow){
 								<bean:message key="label.choose"/>
 							</html:option>
 							<logic:iterate id="groupIt" name="groups" type="net.sourceforge.fenixedu.domain.parking.ParkingGroup">
-								<bean:define id="groupId" name="groupIt" property="idInternal"/>					
+								<bean:define id="groupId" name="groupIt" property="externalId"/>					
 								<html:option value="<%=groupId.toString()%>">
 									<bean:write name="groupIt" property="groupName"/>
 								</html:option>

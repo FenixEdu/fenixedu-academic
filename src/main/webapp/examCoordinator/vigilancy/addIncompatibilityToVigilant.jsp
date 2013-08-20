@@ -12,7 +12,7 @@
 
 <ul>
 	<li>
-	<html:link page="<%= "/vigilancy/vigilantGroupManagement.do?method=prepareManageIncompatiblesOfVigilants&gid=" + bean.getSelectedVigilantGroup().getIdInternal() %>"><bean:message key="label.vigilancy.back" bundle="VIGILANCY_RESOURCES"/></html:link>
+	<html:link page="<%= "/vigilancy/vigilantGroupManagement.do?method=prepareManageIncompatiblesOfVigilants&gid=" + bean.getSelectedVigilantGroup().getExternalId() %>"><bean:message key="label.vigilancy.back" bundle="VIGILANCY_RESOURCES"/></html:link>
 	</li>
 </ul>
 
@@ -50,8 +50,8 @@ action="/vigilancy/vigilantGroupManagement.do?method=vigilantSelectedInIncompati
     <fr:layout name="tabular">
 		<fr:property name="key(Adicionar)" value="label.add"/>
 		<fr:property name="bundle(Adicionar)" value="VIGILANCY_RESOURCES"/>
- 		<fr:property name="link(Adicionar)" value="<%= "/vigilancy/vigilantGroupManagement.do?method=addIncompatibilityToVigilant&oid=" + bean.getSelectedVigilantWrapper().getIdInternal() + "&gid=" + bean.getSelectedVigilantGroup().getIdInternal() %>"/>
-		<fr:property name="param(Adicionar)" value="person.idInternal/pid" />
+ 		<fr:property name="link(Adicionar)" value="<%= "/vigilancy/vigilantGroupManagement.do?method=addIncompatibilityToVigilant&oid=" + bean.getSelectedVigilantWrapper().getExternalId() + "&gid=" + bean.getSelectedVigilantGroup().getExternalId() %>"/>
+		<fr:property name="param(Adicionar)" value="person.externalId/pid" />
 		<fr:property name="displayHeaders" value="false"/>
 		<fr:property name="sortBy" value="person.name"/>
 	</fr:layout>

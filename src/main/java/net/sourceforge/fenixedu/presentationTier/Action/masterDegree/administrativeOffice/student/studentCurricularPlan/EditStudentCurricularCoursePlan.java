@@ -27,6 +27,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * @author Angela Created on 8/Out/2003
  */
@@ -35,7 +37,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
-        Integer studentCurricularPlanId = new Integer(getFromRequest("studentCurricularPlanId", request));
+        String studentCurricularPlanId = getFromRequest("studentCurricularPlanId", request);
         IUserView userView = getUserView(request);
 
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
@@ -46,7 +48,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
         try {
             branchList =
                     ReadBranchesByDegreeCurricularPlan.run(infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
-                            .getIdInternal());
+                            .getExternalId());
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -61,7 +63,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
         editStudentCurricularPlanForm.set("specialization", infoStudentCurricularPlan.getSpecialization().toString());
 
         if (infoStudentCurricularPlan.getInfoBranch() != null) {
-            editStudentCurricularPlanForm.set("branch", infoStudentCurricularPlan.getInfoBranch().getIdInternal());
+            editStudentCurricularPlanForm.set("branch", infoStudentCurricularPlan.getInfoBranch().getExternalId());
         }
 
         editStudentCurricularPlanForm.set("currentState", infoStudentCurricularPlan.getCurrentState().toString());
@@ -75,7 +77,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
         for (Iterator iter = infoStudentCurricularPlan.getInfoEnrolments().iterator(); iter.hasNext();) {
             Object enrollment = iter.next();
             if (enrollment instanceof InfoEnrolmentInExtraCurricularCourse) {
-                Integer enrollmentId = ((InfoEnrolmentInExtraCurricularCourse) enrollment).getIdInternal();
+                String enrollmentId = ((InfoEnrolmentInExtraCurricularCourse) enrollment).getExternalId();
                 formValues[i] = enrollmentId.toString();
             }
             i++;
@@ -89,12 +91,12 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
             throws Exception {
         final IUserView userView = getUserView(request);
 
-        final Integer scpOID = getIntegerFromRequest(request, "studentCurricularPlanId");
+        final String scpOID = getStringFromRequest(request, "studentCurricularPlanId");
         request.setAttribute("studentCurricularPlanId", scpOID);
 
         final DynaActionForm editForm = (DynaActionForm) form;
         final String currentState = (String) editForm.get("currentState");
-        final Integer branchOID = (Integer) editForm.get("branch");
+        final String branchOID = (String) editForm.get("branch");
         final String specialization = (String) editForm.get("specialization");
         final String startDate = (String) editForm.get("startDate");
         final String observations = (String) editForm.get("observations");
@@ -103,9 +105,9 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
         final Double credits =
                 (creditsObj != null && ((String) creditsObj).length() > 0) ? (Double.valueOf((String) creditsObj)) : null;
 
-        final List<Integer> extraCurricularOIDs = new ArrayList<Integer>();
+        final List<String> extraCurricularOIDs = new ArrayList<String>();
         for (final String extraCurricular : Arrays.asList((String[]) editForm.get("extraCurricularCourses"))) {
-            extraCurricularOIDs.add(Integer.valueOf(extraCurricular));
+            extraCurricularOIDs.add(extraCurricular);
         }
 
         try {
@@ -121,11 +123,10 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
     public ActionForward enrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Enrolment enrolment =
-                (Enrolment) rootDomainObject.readCurriculumModuleByOID(getIntegerFromRequest(request, "enrolmentID"));
+        Enrolment enrolment = (Enrolment) AbstractDomainObject.fromExternalId(getStringFromRequest(request, "enrolmentID"));
         SetEnrolmentState.run(enrolment, EnrollmentState.ENROLLED);
 
-        request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getIdInternal());
+        request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getExternalId());
 
         return prepare(mapping, form, request, response);
     }

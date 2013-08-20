@@ -18,7 +18,7 @@
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<bean:define id="tsdProcessId" name="tsdProcess" property="idInternal"/>
+		<bean:define id="tsdProcessId" name="tsdProcess" property="externalId"/>
 		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + tsdProcessId %>'>
 			<bean:write name="tsdProcess" property="name"/>&nbsp;
 			<bean:write name="tsdProcess" property="executionYear.year"/>
@@ -41,7 +41,7 @@
 		</td>
 		<td>
 			<html:select property="tsdProcessPhase" onchange="this.form.method.value='loadTSDProcessPhase'; this.form.submit();">
-				<html:options collection="tsdProcessPhaseList" property="idInternal" labelProperty="name"/>
+				<html:options collection="tsdProcessPhaseList" property="externalId" labelProperty="name"/>
 			</html:select>
 		</td>
 	</tr>
@@ -51,7 +51,7 @@
 		</td>
 		<td>
 			<html:select property="tsd" onchange="this.form.method.value='loadTSDProcess'; this.form.submit();">
-				<html:options collection="tsdOptionEntryList" property="idInternal" labelProperty="name"/>
+				<html:options collection="tsdOptionEntryList" property="externalId" labelProperty="name"/>
 			</html:select>
 		</td>
 	</tr>
@@ -62,7 +62,7 @@
 		<td>
 			<html:select property="executionPeriod" onchange="this.form.method.value='loadTSDProcess'; this.form.submit();">
 				<html:option value="-1"><bean:message key="label.teacherServiceDistribution.both"/></html:option>
-				<html:options collection="executionPeriodList" property="idInternal" labelProperty="semester"/>
+				<html:options collection="executionPeriodList" property="externalId" labelProperty="semester"/>
 			</html:select>
 		</td>
 	</tr>

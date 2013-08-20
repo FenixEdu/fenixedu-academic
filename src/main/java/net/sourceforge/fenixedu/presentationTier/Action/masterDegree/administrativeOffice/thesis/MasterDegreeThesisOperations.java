@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -32,8 +35,12 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
         DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
 
-        Integer scpID = getIntegerFromRequestOrForm(request, getStudentByNumberAndDegreeTypeForm, "scpID");
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        String scpID = getStringFromRequest(request, "scpID");
+        if (scpID == null) {
+            scpID = ((DynaActionForm) form).get("scpID").equals("") ? null : (String) ((DynaActionForm) form).get("scpID");
+        }
+
+        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
 
         return transportStudentCurricularPlan(form, request, actionErrors, studentCurricularPlan);
     }
@@ -48,7 +55,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
             if (form != null) {
                 DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
                 getStudentByNumberAndDegreeTypeForm.set("degreeType", DegreeType.MASTER_DEGREE.name());
-                getStudentByNumberAndDegreeTypeForm.set("scpID", studentCurricularPlan.getIdInternal());
+                getStudentByNumberAndDegreeTypeForm.set("scpID", studentCurricularPlan.getExternalId());
             }
 
             return true;
@@ -77,7 +84,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
         String[] teachersNumbersArray = (String[]) masterDegreeThesisForm.get(teachersNumbersListField);
         List<String> teachersNumbersList = CollectionUtils.toList(teachersNumbersArray);
-        teachersNumbersList.remove(new Integer(0));
+        teachersNumbersList.remove(null);
         return teachersNumbersList;
 
     }
@@ -98,13 +105,13 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
     }
 
-    public List<Integer> getExternalPersonsIDs(ActionForm form, String externalPersonNameField) {
+    public List<String> getExternalPersonsIDs(ActionForm form, String externalPersonNameField) {
 
         DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
 
-        Integer[] externalPersonsIDsArray = (Integer[]) masterDegreeThesisForm.get(externalPersonNameField);
-        List<Integer> externalPersonsIDsList = CollectionUtils.toList(externalPersonsIDsArray);
-        externalPersonsIDsList.remove(new Integer(0));
+        String[] externalPersonsIDsArray = (String[]) masterDegreeThesisForm.get(externalPersonNameField);
+        List<String> externalPersonsIDsList = Arrays.asList(externalPersonsIDsArray);
+        externalPersonsIDsList.remove(null);
         return externalPersonsIDsList;
 
     }

@@ -59,11 +59,8 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
-        final Integer studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
 
-        final IUserView userView = UserView.getUser();
-
-        DeleteStudentCurricularPlan.run(studentCurricularPlanId);
+        DeleteStudentCurricularPlan.run(studentCurricularPlanIdString);
 
         return show(mapping, form, request, response);
     }
@@ -74,13 +71,12 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         final String enrollmentIdString = request.getParameter("enrollmentId");
         final String studentNumberString = request.getParameter("studentNumber");
         final String degreeTypeString = request.getParameter("degreeType");
-        final Integer enrollmentId = Integer.valueOf(enrollmentIdString);
         final Integer studentNumber = Integer.valueOf(studentNumberString);
         final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 
         final IUserView userView = UserView.getUser();
 
-        DeleteEnrollment.run(studentNumber, degreeType, enrollmentId);
+        DeleteEnrollment.run(studentNumber, degreeType, enrollmentIdString);
 
         return show(mapping, form, request, response);
     }
@@ -123,12 +119,11 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
             final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
             final StudentCurricularPlanState studentCurricularPlanState =
                     StudentCurricularPlanState.valueOf(studentCurricularPlanStateString);
-            final Integer degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
             final Date startDate = simpleDateFormat.parse(startDateString);
 
             final IUserView userView = UserView.getUser();
 
-            CreateStudentCurricularPlan.run(studentNumber, degreeType, studentCurricularPlanState, degreeCurricularPlanId,
+            CreateStudentCurricularPlan.run(studentNumber, degreeType, studentCurricularPlanState, degreeCurricularPlanIdString,
                     startDate);
         }
 
@@ -146,29 +141,23 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String selectedStudentCurricularPlanIdString = (String) dynaActionForm.get("selectedStudentCurricularPlanId");
-        final Integer selectedCurriculumGroupID = (Integer) dynaActionForm.get("selectedCurriculumGroupID");
+        final String selectedCurriculumGroupID = (String) dynaActionForm.get("selectedCurriculumGroupID");
         final String[] enrollmentStringIDsToTransfer = (String[]) dynaActionForm.get("enrollmentIDsToTransfer");
 
         if (isPresent(selectedStudentCurricularPlanIdString) && enrollmentStringIDsToTransfer != null
                 && enrollmentStringIDsToTransfer.length > 0) {
 
-            final Integer selectedStudentCurricularPlanId = new Integer(selectedStudentCurricularPlanIdString);
-            final Integer[] enrollmentIDsToTransfer = new Integer[enrollmentStringIDsToTransfer.length];
-            for (int i = 0; i < enrollmentStringIDsToTransfer.length; i++) {
-                final String enrollmentStringIDToTransfer = enrollmentStringIDsToTransfer[i];
-                enrollmentIDsToTransfer[i] = new Integer(enrollmentStringIDToTransfer);
-            }
-
             final IUserView userView = UserView.getUser();
 
-            TransferEnrollments.run(selectedStudentCurricularPlanId, enrollmentIDsToTransfer, selectedCurriculumGroupID);
+            TransferEnrollments.run(selectedStudentCurricularPlanIdString, enrollmentStringIDsToTransfer,
+                    selectedCurriculumGroupID);
         }
 
         return show(mapping, form, request, response);
     }
 
     protected void putStudentCurricularInformationInRequest(final HttpServletRequest request, final Integer studentNumber,
-            final DegreeType degreeType) throws  FenixServiceException {
+            final DegreeType degreeType) throws FenixServiceException {
         final IUserView userView = UserView.getUser();
 
         final List infoStudentCurricularPlans = ReadStudentCurricularInformation.run(studentNumber, degreeType);

@@ -23,7 +23,7 @@
 		<logic:iterate id="degreeCurricularPlanElem" name="degreeCurricularPlans" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan">
 			<tr>
 				<td>
-					<html:link page="<%= "/marksManagement.do?method=chooseCurricularCourses&amp;degreeId=" + degreeCurricularPlanElem.getInfoDegree().getIdInternal() + "&amp;objectCode=" + degreeCurricularPlanElem.getIdInternal()%>">
+					<html:link page="<%= "/marksManagement.do?method=chooseCurricularCourses&amp;degreeId=" + degreeCurricularPlanElem.getInfoDegree().getExternalId() + "&amp;objectCode=" + degreeCurricularPlanElem.getExternalId()%>">
 						<bean:write name="degreeCurricularPlanElem" property="infoDegree.nome"/>
 						&nbsp;-&nbsp;<bean:write name="degreeCurricularPlanElem" property="name"/>
 					</html:link>

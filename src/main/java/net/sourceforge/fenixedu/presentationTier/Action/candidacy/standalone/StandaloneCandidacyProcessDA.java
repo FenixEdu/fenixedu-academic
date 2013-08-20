@@ -50,13 +50,13 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class StandaloneCandidacyProcessForm extends CandidacyProcessForm {
-        private Integer selectedProcessId;
+        private String selectedProcessId;
 
-        public Integer getSelectedProcessId() {
+        public String getSelectedProcessId() {
             return selectedProcessId;
         }
 
-        public void setSelectedProcessId(Integer selectedProcessId) {
+        public void setSelectedProcessId(String selectedProcessId) {
             this.selectedProcessId = selectedProcessId;
         }
     }
@@ -139,17 +139,17 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
 
     private void setCandidacyProcessInformation(final ActionForm actionForm, final StandaloneCandidacyProcess process) {
         final StandaloneCandidacyProcessForm form = (StandaloneCandidacyProcessForm) actionForm;
-        form.setSelectedProcessId(process.getIdInternal());
-        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
+        form.setSelectedProcessId(process.getExternalId());
+        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getExternalId());
     }
 
     @Override
     protected StandaloneCandidacyProcess getCandidacyProcess(final HttpServletRequest request,
             final ExecutionInterval executionInterval) {
-        final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
+        final String selectedProcessId = getStringFromRequest(request, "selectedProcessId");
         if (selectedProcessId != null) {
             for (final StandaloneCandidacyPeriod candidacyPeriod : executionInterval.getStandaloneCandidacyPeriods()) {
-                if (candidacyPeriod.getStandaloneCandidacyProcess().getIdInternal().equals(selectedProcessId)) {
+                if (candidacyPeriod.getStandaloneCandidacyProcess().getExternalId().equals(selectedProcessId)) {
                     return candidacyPeriod.getStandaloneCandidacyProcess();
                 }
             }
@@ -184,7 +184,7 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "SendToCoordinator");
         } catch (DomainException e) {

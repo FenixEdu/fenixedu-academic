@@ -6,12 +6,12 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditTeacherMasterDegreeCredits {
 
@@ -22,13 +22,12 @@ public class EditTeacherMasterDegreeCredits {
         professorshipIDs.addAll(creditsMap.keySet());
 
         for (String stringID : professorshipIDs) {
-            Integer professorshipID = Integer.parseInt(stringID);
             String creditsString = creditsMap.get(stringID);
             String hoursString = hoursMap.get(stringID);
             if (hoursString.equals("") && creditsString.equals("")) {
                 continue;
             }
-            Professorship professorship = RootDomainObject.getInstance().readProfessorshipByOID(professorshipID);
+            Professorship professorship = AbstractDomainObject.fromExternalId(stringID);
             Teacher teacher = professorship.getTeacher();
             ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
 

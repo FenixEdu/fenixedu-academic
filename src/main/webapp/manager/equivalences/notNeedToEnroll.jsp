@@ -26,7 +26,7 @@
 	<br/><br/>
 	<logic:present name="infoStudentCurricularPlan">
 		<html:link page="/showNotNeedToEnroll.do?method=prepareNotNeedToEnroll&amp;insert=true" paramId="scpID" paramName="infoStudentCurricularPlan" 
-			paramProperty="idInternal"><bean:message bundle="DEGREE_ADM_OFFICE" key="link.notNeedToEnroll.insert"/></html:link>
+			paramProperty="externalId"><bean:message bundle="DEGREE_ADM_OFFICE" key="link.notNeedToEnroll.insert"/></html:link>
 		<br/><br/>
 		
 		<bean:define id="infoDegreeCurricularPlan" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan"/>
@@ -38,7 +38,7 @@
 				<td class="listClasses-header"></td>
 			</tr>
 		
-		<bean:define id="scpID" name="infoStudentCurricularPlan" property="idInternal" />
+		<bean:define id="scpID" name="infoStudentCurricularPlan" property="externalId" />
 		<logic:iterate id="infoNotNeedToEnroll" name="infoNotNeedToEnrollCurricularCourses">
 			<tr>
 				<td class="listClasses"><bean:write name="infoNotNeedToEnroll" property="infoCurricularCourse.infoDegreeCurricularPlan.name"/></td>
@@ -48,7 +48,7 @@
 				</td>
 				<td class="listClasses">
 					<html:link page="<%= "/showNotNeedToEnroll.do?method=deleteNotNeedToEnroll&amp;scpID=" + scpID %>"
-					paramId="notNeedToEnrollID" paramName="infoNotNeedToEnroll" paramProperty="idInternal">
+					paramId="notNeedToEnrollID" paramName="infoNotNeedToEnroll" paramProperty="externalId">
 					<bean:message bundle="DEGREE_ADM_OFFICE" key="link.notNeedToEnroll.delete"/></html:link>
 				</td>
 			</tr>
@@ -56,7 +56,7 @@
 		</table>
 		
 		<logic:present name="insert">
-			<bean:define id="infoStudentCurricularPlanID" name="infoStudentCurricularPlan" property="idInternal" type="java.lang.Integer"/>
+			<bean:define id="infoStudentCurricularPlanID" name="infoStudentCurricularPlan" property="externalId" type="java.lang.String"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCurricularPlanID" property="studentCurricularPlanID" value="<%= infoStudentCurricularPlanID.toString() %>"/>			
 
 			<h3><bean:message bundle="DEGREE_ADM_OFFICE" key="title.student.notNeedToEnroll.toInsert"/></h3>
@@ -74,7 +74,7 @@
 					</td>
 					<td class="listClasses">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularCoursesID" property="curricularCoursesID">
-							<bean:write name="infoCurricularCourse" property="idInternal"/> 
+							<bean:write name="infoCurricularCourse" property="externalId"/> 
 						</html:multibox>
 					</td>
 				</tr>

@@ -11,20 +11,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateTSDCurricularCourses {
-    protected void run(Integer tsdId, Integer competenceCourseId, Integer tsdProcessPhaseId, Integer executionPeriodId,
+    protected void run(String tsdId, String competenceCourseId, String tsdProcessPhaseId, String executionPeriodId,
             Boolean activateCourses) {
 
-        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
-        CompetenceCourse competenceCourse = RootDomainObject.getInstance().readCompetenceCourseByOID(competenceCourseId);
-        TSDProcessPhase tsdProcessPhase = RootDomainObject.getInstance().readTSDProcessPhaseByOID(tsdProcessPhaseId);
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseId);
+        TSDProcessPhase tsdProcessPhase = AbstractDomainObject.fromExternalId(tsdProcessPhaseId);
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         List<CurricularCourse> curricularCourseList =
                 competenceCourse.getCurricularCoursesWithActiveScopesInExecutionPeriod(executionSemester);
@@ -48,8 +48,8 @@ public class CreateTSDCurricularCourses {
     private static final CreateTSDCurricularCourses serviceInstance = new CreateTSDCurricularCourses();
 
     @Service
-    public static void runCreateTSDCurricularCourses(Integer tsdId, Integer competenceCourseId, Integer tsdProcessPhaseId,
-            Integer executionPeriodId, Boolean activateCourses) throws NotAuthorizedException {
+    public static void runCreateTSDCurricularCourses(String tsdId, String competenceCourseId, String tsdProcessPhaseId,
+            String executionPeriodId, Boolean activateCourses) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             serviceInstance.run(tsdId, competenceCourseId, tsdProcessPhaseId, executionPeriodId, activateCourses);

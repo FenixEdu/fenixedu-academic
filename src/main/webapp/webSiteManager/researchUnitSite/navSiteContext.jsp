@@ -5,7 +5,7 @@
 
 <bean:define id="siteActionName" value="/manageResearchUnitSite.do" toScope="request"/>
 <bean:define id="siteContextParam" value="oid" toScope="request"/>
-<bean:define id="siteContextParamValue" name="site" property="idInternal" toScope="request"/>
+<bean:define id="siteContextParamValue" name="site" property="externalId" toScope="request"/>
 
-<bean:define id="siteId" name="site" property="idInternal"/>
+<bean:define id="siteId" name="site" property="externalId"/>
 <bean:define id="announcementsActionName" value="/manageResearchUnitAnnouncements.do" toScope="request"/>

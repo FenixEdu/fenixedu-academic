@@ -8,7 +8,7 @@
 <logic:present name="selectedSpaceInformation">
 
 	<bean:define id="backLink">
-		/manageBlueprints.do?method=showBlueprintVersions&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>
+		/manageBlueprints.do?method=showBlueprintVersions&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="externalId"/>
 	</bean:define>		
 	
 	<logic:empty name="editBlueprint">	
@@ -21,7 +21,7 @@
 		</div>
 
 		<bean:define id="createLink">
-			/manageBlueprints.do?method=createBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>
+			/manageBlueprints.do?method=createBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="externalId"/>
 		</bean:define>	
 		
 		<fr:edit name="blueprintBean" id="spaceBlueprintVersion" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.CreateBlueprintSubmissionBean" 
@@ -44,7 +44,7 @@
 		</div>
 	
 		<bean:define id="editLink">
-			/manageBlueprints.do?method=editBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&spaceBlueprintID=<bean:write name="selectedSpaceBlueprint" property="idInternal"/>
+			/manageBlueprints.do?method=editBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="externalId"/>&spaceBlueprintID=<bean:write name="selectedSpaceBlueprint" property="externalId"/>
 		</bean:define>	
 		
 		<fr:edit name="blueprintBean" id="spaceBlueprintVersion" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.CreateBlueprintSubmissionBean" 
@@ -59,7 +59,7 @@
 
 <%--
 	<p>
-		<html:link page="/manageBlueprints.do?method=showBlueprintVersions&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+		<html:link page="/manageBlueprints.do?method=showBlueprintVersions&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="externalId">
 			<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
 		</html:link>	
 	</p>

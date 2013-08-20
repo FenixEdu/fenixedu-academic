@@ -217,10 +217,10 @@ public class UsernameUtils extends FenixUtil {
             return null;
 
         } else if (roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE) || roleType.equals(RoleType.CANDIDATE)) {
-            return "C" + person.getIdInternal();
+            return "C" + person.getExternalId();
 
         } else if (roleType.equals(RoleType.PERSON)) {
-            return "P" + person.getIdInternal();
+            return "P" + person.getExternalId();
         }
 
         return null;

@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.thesis;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * Library operation of marking a thesis pending with an optional code
@@ -20,9 +20,9 @@ public class ThesisLibraryPendingOperation extends ThesisLibraryPendingOperation
         setPendingComment(comment);
     }
 
-    public ThesisLibraryPendingOperation(Integer thesisId, Integer performerId, String comment) {
-        this(RootDomainObject.getInstance().readThesisByOID(thesisId), (Person) RootDomainObject.getInstance().readPartyByOID(
-                performerId), comment);
+    public ThesisLibraryPendingOperation(String thesisId, String performerId, String comment) {
+        this(AbstractDomainObject.<Thesis> fromExternalId(thesisId), AbstractDomainObject.<Person> fromExternalId(performerId),
+                comment);
     }
 
     @Override

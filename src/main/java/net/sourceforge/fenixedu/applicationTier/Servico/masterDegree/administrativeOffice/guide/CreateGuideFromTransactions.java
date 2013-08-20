@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
@@ -28,6 +27,7 @@ import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -39,7 +39,7 @@ public class CreateGuideFromTransactions {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide, List transactionsIDs)
+    public static InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide, List<String> transactionsIDs)
             throws FenixServiceException {
 
         GuideSituation guideSituation = null;
@@ -80,8 +80,7 @@ public class CreateGuideFromTransactions {
         }
 
         // Get the Execution Degree
-        ExecutionDegree executionDegree =
-                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoGuide.getInfoExecutionDegree().getExternalId());
 
         Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
@@ -93,15 +92,14 @@ public class CreateGuideFromTransactions {
         // Write the new Guide
 
         // Write the new Entries of the Guide
-        Iterator iterator = transactionsIDs.iterator();
+        Iterator<String> iterator = transactionsIDs.iterator();
         PaymentTransaction transaction = null;
-        Integer transactionId = null;
         GuideEntry guideEntry = null;
         double guideTotal = 0;
 
         while (iterator.hasNext()) {
-            transactionId = (Integer) iterator.next();
-            transaction = (PaymentTransaction) RootDomainObject.getInstance().readTransactionByOID(transactionId);
+            String transactionId = iterator.next();
+            transaction = (PaymentTransaction) AbstractDomainObject.fromExternalId(transactionId);
             if (transaction == null) {
                 throw new ExcepcaoInexistente();
             }

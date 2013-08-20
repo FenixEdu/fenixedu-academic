@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.Data;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -35,9 +36,9 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
 
     private String chosenDegreeType;
 
-    private Integer[] choosenDegreeCurricularPlansIDs;
+    private String[] choosenDegreeCurricularPlansIDs;
 
-    private Integer[] choosenBolonhaDegreeCurricularPlansIDs;
+    private String[] choosenBolonhaDegreeCurricularPlansIDs;
 
     private UISelectItems degreeCurricularPlansSelectItems;
 
@@ -148,7 +149,7 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
                                 DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
 
                 for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
-                    result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle.getString(degreeType
+                    result.add(new SelectItem(degreeCurricularPlan.getExternalId(), enumerationBundle.getString(degreeType
                             .getName())
                             + " "
                             + degreeCurricularPlan.getDegree().getName()
@@ -186,7 +187,7 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
 
             final List<SelectItem> result = new ArrayList<SelectItem>();
             for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
-                result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle.getString(bolonhaDegreeType
+                result.add(new SelectItem(degreeCurricularPlan.getExternalId(), enumerationBundle.getString(bolonhaDegreeType
                         .getName()) + " " + degreeCurricularPlan.getDegree().getName() + " - " + degreeCurricularPlan.getName()));
             }
 
@@ -207,17 +208,17 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
     public List getExecutionYears() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
-            result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+            result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
         }
         if (getChoosenExecutionYearID() == null && result.size() > 0) {
-            setChoosenExecutionYearID(ExecutionYear.readCurrentExecutionYear().getIdInternal());
+            setChoosenExecutionYearID(ExecutionYear.readCurrentExecutionYear().getExternalId());
             setYearsAccordingToChosenExecutionYear();
         }
         return result;
     }
 
     public void onChoosenExecutionYearChanged(ValueChangeEvent valueChangeEvent) {
-        setChoosenExecutionYearID((Integer) valueChangeEvent.getNewValue());
+        setChoosenExecutionYearID((String) valueChangeEvent.getNewValue());
 
         setYearsAccordingToChosenExecutionYear();
     }
@@ -340,31 +341,31 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
         return Data.getExpirationYearsSelectItems();
     }
 
-    public Integer[] getChoosenDegreeCurricularPlansIDs() {
+    public String[] getChoosenDegreeCurricularPlansIDs() {
         return choosenDegreeCurricularPlansIDs;
     }
 
-    public void setChoosenDegreeCurricularPlansIDs(Integer[] choosenDegreeCurricularPlansIDs) {
+    public void setChoosenDegreeCurricularPlansIDs(String[] choosenDegreeCurricularPlansIDs) {
         this.choosenDegreeCurricularPlansIDs = choosenDegreeCurricularPlansIDs;
     }
 
-    public Integer[] getChoosenBolonhaDegreeCurricularPlansIDs() {
+    public String[] getChoosenBolonhaDegreeCurricularPlansIDs() {
         return choosenBolonhaDegreeCurricularPlansIDs;
     }
 
-    public void setChoosenBolonhaDegreeCurricularPlansIDs(Integer[] choosenBolonhaDegreeCurricularPlansIDs) {
+    public void setChoosenBolonhaDegreeCurricularPlansIDs(String[] choosenBolonhaDegreeCurricularPlansIDs) {
         this.choosenBolonhaDegreeCurricularPlansIDs = choosenBolonhaDegreeCurricularPlansIDs;
     }
 
     public ExecutionYear getChoosenExecutionYear() {
-        return rootDomainObject.readExecutionYearByOID(getChoosenExecutionYearID());
+        return AbstractDomainObject.fromExternalId(getChoosenExecutionYearID());
     }
 
-    public Integer getChoosenExecutionYearID() {
-        return (Integer) this.getViewState().getAttribute("choosenExecutionYearID");
+    public String getChoosenExecutionYearID() {
+        return (String) this.getViewState().getAttribute("choosenExecutionYearID");
     }
 
-    public void setChoosenExecutionYearID(Integer choosenExecutionYearID) {
+    public void setChoosenExecutionYearID(String choosenExecutionYearID) {
         this.getViewState().setAttribute("choosenExecutionYearID", choosenExecutionYearID);
     }
 

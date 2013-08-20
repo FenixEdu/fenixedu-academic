@@ -34,9 +34,9 @@
 		  </bean:define>
 			<logic:iterate id="classView" name="classesList" scope="request">
 			<bean:define id="classOID"
-						 type="java.lang.Integer"
+						 type="java.lang.String"
 						 name="classView"
-						 property="idInternal"/>
+						 property="externalId"/>
 		<tr>
 		  <td nowrap="nowrap" class="listClasses">
 		   		<html:link page="<%= "/ClassManagerDA.do?method=viewClass&amp;"

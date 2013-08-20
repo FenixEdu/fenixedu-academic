@@ -14,7 +14,7 @@
 	</fr:layout>
 </fr:view>
 
-<bean:define id="personId" name="person" property="idInternal" />
+<bean:define id="personId" name="person" property="externalId" />
 
 <logic:notEmpty name="eventsWithPaymentCodes">
 	<fr:view name="eventsWithPaymentCodes" schema="AccountingEvent.view-with-amountToPay">
@@ -22,7 +22,7 @@
 			<fr:property name="classes" value="tstyle4 tdleftm mtop05" />
 			<fr:property name="columnClasses" value=",acenter,aright,aright" />
 			
-			<fr:property name="linkFormat(detail)" value="/payments.do?method=showPaymentCodesForEvent&eventId=${idInternal}&personId=${person.idInternal}"/>
+			<fr:property name="linkFormat(detail)" value="/payments.do?method=showPaymentCodesForEvent&eventId=${externalId}&personId=${person.externalId}"/>
 			<fr:property name="key(detail)" value="label.details"/>
 			<fr:property name="bundle(detail)" value="APPLICATION_RESOURCES"/>
 

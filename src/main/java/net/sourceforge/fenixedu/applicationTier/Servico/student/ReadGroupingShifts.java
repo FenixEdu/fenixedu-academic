@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -33,7 +33,7 @@ public class ReadGroupingShifts {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static InfoSiteShifts run(Integer groupingCode, Integer studentGroupCode) throws FenixServiceException {
+    public static InfoSiteShifts run(String groupingCode, String studentGroupCode) throws FenixServiceException {
 
         InfoSiteShifts infoSiteShifts = new InfoSiteShifts();
         List infoShifts = new ArrayList();
@@ -41,13 +41,13 @@ public class ReadGroupingShifts {
         boolean result = false;
 
         StudentGroup studentGroup = null;
-        grouping = RootDomainObject.getInstance().readGroupingByOID(groupingCode);
+        grouping = AbstractDomainObject.fromExternalId(groupingCode);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
         if (studentGroupCode != null) {
 
-            studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+            studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
 
             if (studentGroup == null) {
                 throw new InvalidSituationServiceException();

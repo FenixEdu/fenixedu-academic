@@ -18,6 +18,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * @author tfc130
  */
@@ -29,7 +31,7 @@ public class SelectRoomsFormAction extends FenixAction {
 
         DynaActionForm roomForm = (DynaActionForm) form;
 
-        Integer executionPeriodId = (Integer) roomForm.get("executionPeriodId");
+        String executionPeriodId = (String) roomForm.get("executionPeriodId");
         List infoRooms =
                 (List) SelectRooms.run(new InfoRoomEditor(readFormValue(roomForm, "name"), readFormValue(roomForm, "building"),
                         readIntegerFormValue(roomForm, "floor"), readTypeRoomFormValue(roomForm, "type"), readIntegerFormValue(
@@ -83,9 +85,9 @@ public class SelectRoomsFormAction extends FenixAction {
     }
 
     private RoomClassification readTypeRoomFormValue(DynaActionForm roomForm, String name) {
-        Integer obj = readIntegerFormValue(roomForm, name);
+        String obj = readFormValue(roomForm, name);
         if (obj != null) {
-            return rootDomainObject.readRoomClassificationByOID(obj);
+            return AbstractDomainObject.fromExternalId(obj);
         }
 
         return null;

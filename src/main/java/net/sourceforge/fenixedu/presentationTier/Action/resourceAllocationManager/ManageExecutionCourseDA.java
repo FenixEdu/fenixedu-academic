@@ -26,6 +26,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -115,10 +116,9 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     }
 
     private void readAndSetExecutionCourseClasses(HttpServletRequest request, ExecutionCourse executionCourse)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
-        List<InfoClass> infoClasses =
-                (List<InfoClass>) ReadClassesByExecutionCourse.runReadClassesByExecutionCourse( executionCourse );
+        List<InfoClass> infoClasses = ReadClassesByExecutionCourse.runReadClassesByExecutionCourse(executionCourse);
 
         if (infoClasses != null && !infoClasses.isEmpty()) {
             Collections.sort(infoClasses, new BeanComparator("nome"));
@@ -129,7 +129,6 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     private CourseLoad getCourseLoadFromParameter(final HttpServletRequest request) {
         final String idString =
                 request.getParameterMap().containsKey("courseLoadID") ? request.getParameter("courseLoadID") : null;
-        final Integer courseLoadID = idString != null ? Integer.valueOf(idString) : null;
-        return rootDomainObject.readCourseLoadByOID(courseLoadID);
+        return AbstractDomainObject.fromExternalId(idString);
     }
 }

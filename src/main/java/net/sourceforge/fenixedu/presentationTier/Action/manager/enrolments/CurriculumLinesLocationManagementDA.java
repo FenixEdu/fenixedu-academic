@@ -32,7 +32,7 @@ public class CurriculumLinesLocationManagementDA extends AbstractCurriculumLines
 
     public ActionForward backToStudentEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("studentId", getStudentCurricularPlan(request).getRegistration().getStudent().getIdInternal());
+        request.setAttribute("studentId", getStudentCurricularPlan(request).getRegistration().getStudent().getExternalId());
         return mapping.findForward("backToChooseStudentCurricularPlan");
     }
 

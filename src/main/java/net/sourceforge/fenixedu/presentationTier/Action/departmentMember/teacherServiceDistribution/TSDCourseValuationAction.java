@@ -30,11 +30,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class TSDCourseValuationAction extends FenixDispatchAction {
 
     public ActionForward prepareForTSDCourseValuation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -64,8 +65,8 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     }
 
     private void getFromRequestAndSetOnForm(HttpServletRequest request, DynaActionForm dynaForm) {
-        dynaForm.set("tsdCourse", new Integer(request.getParameter("tsdCourse")));
-        dynaForm.set("tsd", new Integer(request.getParameter("tsd")));
+        dynaForm.set("tsdCourse", request.getParameter("tsdCourse"));
+        dynaForm.set("tsd", request.getParameter("tsd"));
 
         String typeStr = (String) request.getAttribute("shiftType");
 
@@ -75,21 +76,21 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     }
 
     private TSDCourse getSelectedTSDCourse(DynaActionForm dynaForm) throws FenixServiceException {
-        return rootDomainObject.readTSDCourseByOID((Integer) dynaForm.get("tsdCourse"));
+        return AbstractDomainObject.fromExternalId((String) dynaForm.get("tsdCourse"));
     }
 
     private TeacherServiceDistribution getSelectedTSD(DynaActionForm dynaForm) throws FenixServiceException {
-        return rootDomainObject.readTeacherServiceDistributionByOID((Integer) dynaForm.get("tsd"));
+        return AbstractDomainObject.fromExternalId((String) dynaForm.get("tsd"));
     }
 
     public ActionForward loadTSDCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         return loadTSDCourses(mapping, form, request, response, (String) ((DynaActionForm) form).get("forward"));
     }
 
     @SuppressWarnings("unchecked")
     private ActionForward loadTSDCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String forward) throws  FenixServiceException {
+            HttpServletResponse response, String forward) throws FenixServiceException {
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDCourse selectedTSDCourse = getSelectedTSDCourse(dynaForm);
@@ -175,14 +176,14 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward setTSDCourseStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
         Map<String, Object> tsdCourseParameters = obtainStudentsParametersFromForm(dynaForm);
 
-        SetTSDCourse.runSetTSDCourse(tsdCourse.getIdInternal(), tsdCourseParameters);
+        SetTSDCourse.runSetTSDCourse(tsdCourse.getExternalId(), tsdCourseParameters);
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationStudents");
     }
@@ -210,7 +211,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
      * TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm); Map<String, Object>
      * tsdCourseParameters = obtainRemoveParametersFromForm(dynaForm);
      * 
-     * Object[] parameters = new Object[] { tsdCourse.getIdInternal(),
+     * Object[] parameters = new Object[] { tsdCourse.getExternalId(),
      * tsdCourseParameters }; ServiceUtils.executeService( "SetTSDCourse",
      * parameters);
      * 
@@ -230,14 +231,14 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
      */
 
     public ActionForward setTSDCourseWeights(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
         Map<String, Object> tsdCourseParameters = obtainWeightsParametersFromForm(dynaForm);
 
-        SetTSDCourse.runSetTSDCourse(tsdCourse.getIdInternal(), tsdCourseParameters);
+        SetTSDCourse.runSetTSDCourse(tsdCourse.getExternalId(), tsdCourseParameters);
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationWeights");
     }
@@ -259,14 +260,14 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward setTSDCourseHours(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
         Map<String, Object> tsdCourseParameters = obtainHoursParametersFromForm(dynaForm);
 
-        SetTSDCourse.runSetTSDCourse(tsdCourse.getIdInternal(), tsdCourseParameters);
+        SetTSDCourse.runSetTSDCourse(tsdCourse.getExternalId(), tsdCourseParameters);
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationHours");
     }
@@ -287,30 +288,29 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward loadTSDCurricularLoadForShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationShifts");
     }
 
     public ActionForward loadTSDCurricularLoadForWeights(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationWeights");
     }
 
     public ActionForward loadTSDCurricularLoadForHours(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationHours");
     }
 
     public ActionForward defineSchoolClassCalculationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
-        TeacherServiceDistribution tsd =
-                rootDomainObject.readTeacherServiceDistributionByOID(Integer.valueOf(request.getParameter("tsd")));
-        TSDCourse tsdCourse = rootDomainObject.readTSDCourseByOID(Integer.valueOf(request.getParameter("tsdCourse")));
-        TSDProcess process = rootDomainObject.readTSDProcessByOID(Integer.valueOf(request.getParameter("tsdProcessId")));
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(request.getParameter("tsd"));
+        TSDCourse tsdCourse = AbstractDomainObject.fromExternalId(request.getParameter("tsdCourse"));
+        TSDProcess process = AbstractDomainObject.fromExternalId(request.getParameter("tsdProcessId"));
         ShiftType type = ShiftType.valueOf(request.getParameter("shiftType"));
 
         request.setAttribute("curricularLoad", tsdCourse.getTSDCurricularLoadByShiftType(type));

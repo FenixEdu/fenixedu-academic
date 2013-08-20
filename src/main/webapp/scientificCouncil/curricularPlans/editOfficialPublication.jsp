@@ -111,6 +111,6 @@
 
 <html:link
 	page="<%= "/curricularPlans/editDegree.faces?degreeId="
-							+ officialPub.getDegree().getIdInternal() + "&amp;" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/scientificCouncil") %>">
+							+ officialPub.getDegree().getExternalId() + "&amp;" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/scientificCouncil") %>">
 	<bean:message key="back" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
 </html:link>

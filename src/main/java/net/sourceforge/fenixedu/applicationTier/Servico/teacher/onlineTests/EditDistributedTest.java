@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -22,18 +21,19 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditDistributedTest {
 
-    protected void run(Integer executionCourseId, final Integer distributedTestId, String testInformation,
-            String evaluationTitle, Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour,
-            TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback) throws FenixServiceException {
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+    protected void run(String executionCourseId, final String distributedTestId, String testInformation, String evaluationTitle,
+            Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
+            CorrectionAvailability correctionAvailability, Boolean imsFeedback) throws FenixServiceException {
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -74,7 +74,7 @@ public class EditDistributedTest {
             /*
              * persistentSupport.getIPersistentMark().deleteByEvaluation(onlineTest
              * ); persistentObject.deleteByOID(OnlineTest.class,
-             * onlineTest.getIdInternal());
+             * onlineTest.getExternalId());
              */
         } else if (change2EvaluationType) {
             // Change to evaluation test
@@ -112,7 +112,7 @@ public class EditDistributedTest {
     private static final EditDistributedTest serviceInstance = new EditDistributedTest();
 
     @Service
-    public static void runEditDistributedTest(Integer executionCourseId, Integer distributedTestId, String testInformation,
+    public static void runEditDistributedTest(String executionCourseId, String distributedTestId, String testInformation,
             String evaluationTitle, Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour,
             TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback) throws FenixServiceException,
             NotAuthorizedException {

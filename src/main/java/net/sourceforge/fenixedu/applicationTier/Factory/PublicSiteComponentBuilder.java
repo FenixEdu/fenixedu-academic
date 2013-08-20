@@ -114,7 +114,7 @@ public class PublicSiteComponentBuilder {
         InfoExecutionCourseEditor infoExecutionCourse = null;
         if (executionCourse != null) {
             infoExecutionCourse = new InfoExecutionCourseEditor();
-            infoExecutionCourse.setIdInternal(executionCourse.getIdInternal());
+            infoExecutionCourse.setExternalId(executionCourse.getExternalId());
             infoExecutionCourse.setNome(executionCourse.getNome());
             infoExecutionCourse.setSigla(executionCourse.getSigla());
             infoExecutionCourse.setInfoExecutionPeriod(copyIExecutionPeriod2InfoExecutionPeriod(executionCourse

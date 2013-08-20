@@ -62,7 +62,7 @@
 				<h:outputText value="<td>#{bundle['label.evaluation.shortname.test']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'WrittenTest'}"/>			
 				
 				<h:outputText value="<td class='el_courses'>" escape="false" />
-	 			<fc:dataRepeater value="#{displayEvaluationsToEnrol.executionCourses[evaluation.idInternal]}" var="executionCourse">
+	 			<fc:dataRepeater value="#{displayEvaluationsToEnrol.executionCourses[evaluation.externalId]}" var="executionCourse">
 					<h:outputText value="#{executionCourse.nome}" escape="false" />
 				</fc:dataRepeater>
 				<h:outputText value="</td>" escape="false" />
@@ -116,7 +116,7 @@
 				<h:outputText value="<td>#{bundle['label.evaluation.shortname.test']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'WrittenTest'}"/>			
 				
 				<h:outputText value="<td class='el_courses'>" escape="false" />
-	 			<fc:dataRepeater value="#{displayEvaluationsToEnrol.executionCourses[evaluation.idInternal]}" var="executionCourse">
+	 			<fc:dataRepeater value="#{displayEvaluationsToEnrol.executionCourses[evaluation.externalId]}" var="executionCourse">
 					<h:outputText value="#{executionCourse.nome}" escape="false" />
 				</fc:dataRepeater>
 				<h:outputText value="</td>" escape="false" />
@@ -168,7 +168,7 @@
 				<h:outputText value="<tr><td>#{bundle['label.evaluation.shortname.test']}</td>" escape="false" rendered="#{evaluation.class.simpleName == 'WrittenTest'}"/>			
 				
 				<h:outputText value="<td class='el_courses'>" escape="false" />
-	 			<fc:dataRepeater value="#{displayEvaluationsToEnrol.executionCourses[evaluation.idInternal]}" var="executionCourse">
+	 			<fc:dataRepeater value="#{displayEvaluationsToEnrol.executionCourses[evaluation.externalId]}" var="executionCourse">
 					<h:outputText value="#{executionCourse.nome}" escape="false" />
 				</fc:dataRepeater>
 				<h:outputText value="</td>" escape="false" />

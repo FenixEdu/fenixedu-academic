@@ -85,7 +85,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     }
 
     private Student getStudent(final HttpServletRequest request) {
-        return rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
+        return getDomainObject(request, "studentId");
     }
 
     private List<Registration> getAllRegistrations(final Student student) {
@@ -101,12 +101,12 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     }
 
     private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
-        return rootDomainObject.readStudentCurricularPlanByOID(getIntegerFromRequest(request, "scpId"));
+        return getDomainObject(request, "scpId");
     }
 
     public ActionForward prepareChooseExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        ((DynaActionForm) form).set("scpId", getStudentCurricularPlan(request).getIdInternal());
+        ((DynaActionForm) form).set("scpId", getStudentCurricularPlan(request).getExternalId());
         request.setAttribute("infoExecutionPeriod", new InfoExecutionPeriod(ExecutionSemester.readActualExecutionSemester()));
         return mapping.findForward("showExecutionPeriodToEnrol");
     }
@@ -126,7 +126,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
             HttpServletResponse response) {
 
         final BolonhaStudentEnrollmentBean bean = getRenderedObject("bolonhaStudentEnrolments");
-        request.setAttribute("studentId", bean.getStudentCurricularPlan().getRegistration().getStudent().getIdInternal());
+        request.setAttribute("studentId", bean.getStudentCurricularPlan().getRegistration().getStudent().getExternalId());
         return showAllStudentCurricularPlans(mapping, form, request, response);
     }
 
@@ -179,7 +179,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     }
 
     public ActionForward transitToBolonha(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final DateTime date;
@@ -214,7 +214,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
             addActionMessage(request, e.getMessage(), e.getArgs());
         }
 
-        request.setAttribute("studentId", scp.getRegistration().getStudent().getIdInternal());
+        request.setAttribute("studentId", scp.getRegistration().getStudent().getExternalId());
         return showAllStudentCurricularPlans(mapping, actionForm, request, response);
     }
 

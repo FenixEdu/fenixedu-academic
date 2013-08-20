@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -20,31 +19,25 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class TransferCurricularCourse {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Deprecated
     @Service
-    public static void run(String sourceExecutionCourseIdString, final String curricularCourseIdString,
-            String destinationExecutionCourseIdString) {
+    public static void run(String sourceExecutionCourseId, final String curricularCourseId, String destinationExecutionCourseId) {
 
-        if (StringUtils.isEmpty(destinationExecutionCourseIdString) || !StringUtils.isNumeric(destinationExecutionCourseIdString)) {
+        if (StringUtils.isEmpty(destinationExecutionCourseId) || !StringUtils.isNumeric(destinationExecutionCourseId)) {
             throw new DomainException("error.selection.noDestinationExecutionCourse");
         }
-
-        Integer sourceExecutionCourseId = Integer.valueOf(sourceExecutionCourseIdString);
-        Integer destinationExecutionCourseId = Integer.valueOf(destinationExecutionCourseIdString);
-        Integer curricularCourseId = Integer.valueOf(curricularCourseIdString);
 
         if (destinationExecutionCourseId.equals(sourceExecutionCourseId)) {
             throw new DomainException("error.selection.sameSourceDestinationCourse");
         }
 
-        final ExecutionCourse sourceExecutionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(sourceExecutionCourseId);
-        final ExecutionCourse destinationExecutionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(destinationExecutionCourseId);
+        final ExecutionCourse sourceExecutionCourse = AbstractDomainObject.fromExternalId(sourceExecutionCourseId);
+        final ExecutionCourse destinationExecutionCourse = AbstractDomainObject.fromExternalId(destinationExecutionCourseId);
 
         if (destinationExecutionCourse == null) {
             throw new DomainException("error.selection.noDestinationExecutionCourse");
@@ -52,14 +45,14 @@ public class TransferCurricularCourse {
 
         CurricularCourse curricularCourse = null;
         for (final CurricularCourse curricularCourseOther : sourceExecutionCourse.getAssociatedCurricularCoursesSet()) {
-            if (curricularCourseOther.getIdInternal().equals(curricularCourseId)) {
+            if (curricularCourseOther.getExternalId().equals(curricularCourseId)) {
                 curricularCourse = curricularCourseOther;
                 break;
             }
         }
 
         if (curricularCourse == null) {
-            curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+            curricularCourse = AbstractDomainObject.fromExternalId(curricularCourseId);
 
             StringBuilder curricularCourseNameSB = new StringBuilder();
             if (StringUtils.isEmpty(curricularCourse.getNameI18N().getContent())) {
@@ -80,7 +73,7 @@ public class TransferCurricularCourse {
 
         deleteShiftStudents(sourceExecutionCourse, curricularCourse);
 
-        Set<Integer> transferedStudents = new HashSet<Integer>();
+        Set<String> transferedStudents = new HashSet<String>();
         transferAttends(destinationExecutionCourseId, sourceExecutionCourse, destinationExecutionCourse, curricularCourse,
                 transferedStudents);
 
@@ -96,8 +89,8 @@ public class TransferCurricularCourse {
      * @param transferedStudents
      * @throws ExcepcaoPersistencia
      */
-    private static void transferAttends(Integer destinationExecutionCourseId, ExecutionCourse sourceExecutionCourse,
-            ExecutionCourse destinationExecutionCourse, CurricularCourse curricularCourse, Set<Integer> transferedStudents) {
+    private static void transferAttends(String destinationExecutionCourseId, ExecutionCourse sourceExecutionCourse,
+            ExecutionCourse destinationExecutionCourse, CurricularCourse curricularCourse, Set<String> transferedStudents) {
         for (Attends attend : sourceExecutionCourse.getAttends()) {
             Enrolment enrollment = attend.getEnrolment();
             final Registration registration = attend.getRegistration();
@@ -119,7 +112,7 @@ public class TransferCurricularCourse {
                         attend.setDisciplinaExecucao(destinationExecutionCourse);
                     }
 
-                    transferedStudents.add(registration.getIdInternal());
+                    transferedStudents.add(registration.getExternalId());
                 }
             }
         }

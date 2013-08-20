@@ -30,6 +30,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -42,8 +44,8 @@ public class ChangeMasterDegreeProofDispatchAction extends FenixDispatchAction {
     public ActionForward getStudentAndMasterDegreeProofVersion(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        final String scpID = request.getParameter("scpID");
+        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
 
         new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
                 studentCurricularPlan);
@@ -131,7 +133,7 @@ public class ChangeMasterDegreeProofDispatchAction extends FenixDispatchAction {
         }
     }
 
-    private void prepareFormForMasterDegreeProofEdition(ActionForm form, Integer scpID,
+    private void prepareFormForMasterDegreeProofEdition(ActionForm form, String scpID,
             MasterDegreeProofVersion masterDegreeProofVersion, MasterDegreeThesisDataVersion masterDegreeThesisDataVersion,
             String proofDateDay, String proofDateMonth, String proofDateYear, String thesisDeliveryDateDay,
             String thesisDeliveryDateMonth, String thesisDeliveryDateYear) {
@@ -150,7 +152,7 @@ public class ChangeMasterDegreeProofDispatchAction extends FenixDispatchAction {
         changeMasterDegreeThesisForm.set("thesisDeliveryDateYear", thesisDeliveryDateYear);
     }
 
-    private void prepareFormForNewMasterDegreeProofVersion(Integer scpID, MasterDegreeThesisDataVersion thesisDataVersion,
+    private void prepareFormForNewMasterDegreeProofVersion(String scpID, MasterDegreeThesisDataVersion thesisDataVersion,
             DynaActionForm changeMasterDegreeThesisForm) {
         changeMasterDegreeThesisForm.set("scpID", scpID);
         changeMasterDegreeThesisForm.set("degreeType", DegreeType.MASTER_DEGREE.name());

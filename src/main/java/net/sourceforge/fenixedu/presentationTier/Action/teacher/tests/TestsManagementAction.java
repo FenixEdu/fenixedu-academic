@@ -56,10 +56,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward manageTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Integer executionCourseId = getCodeFromRequest(request, "oid");
+            HttpServletResponse response) throws FenixServiceException {
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = getDomainObject(request, "oid");
 
         Teacher teacher = getPerson(request).getTeacher();
 
@@ -78,22 +77,20 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward viewTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Integer testGroupId = getCodeFromRequest(request, "oid");
+            HttpServletResponse response) throws FenixServiceException {
 
-        NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+        NewTestGroup testGroup = getDomainObject(request, "oid");
 
-        request.setAttribute("oid", testGroup.getOrderedTests().get(0).getIdInternal());
+        request.setAttribute("oid", testGroup.getOrderedTests().get(0).getExternalId());
         request.setAttribute("executionCourse", testGroup.getExecutionCourse());
 
         return this.viewTest(mapping, form, request, response);
     }
 
     public ActionForward viewTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
-        Integer testId = getCodeFromRequest(request, "oid");
+            throws FenixServiceException {
 
-        NewTest test = (NewTest) rootDomainObject.readNewTestElementByOID(testId);
+        NewTest test = getDomainObject(request, "oid");
 
         request.setAttribute("test", test);
         request.setAttribute("executionCourse", test.getTestGroup().getExecutionCourse());
@@ -102,36 +99,33 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward publishTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Integer testGroupId = getCodeFromRequest(request, "oid");
+            HttpServletResponse response) throws FenixServiceException {
 
-        NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+        NewTestGroup testGroup = getDomainObject(request, "oid");
 
         PublishTestGroup.run(testGroup);
 
-        request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+        request.setAttribute("oid", testGroup.getExecutionCourse().getExternalId());
 
         return this.manageTests(mapping, form, request, response);
     }
 
     public ActionForward unpublishTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Integer testGroupId = getCodeFromRequest(request, "oid");
+            HttpServletResponse response) throws FenixServiceException {
 
-        NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+        NewTestGroup testGroup = getDomainObject(request, "oid");
 
         UnpublishTestGroup.run(testGroup);
 
-        request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+        request.setAttribute("oid", testGroup.getExecutionCourse().getExternalId());
 
         return this.manageTests(mapping, form, request, response);
     }
 
     public ActionForward prepareDeleteTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Integer testGroupId = getCodeFromRequest(request, "oid");
+            HttpServletResponse response) throws FenixServiceException {
 
-        NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+        NewTestGroup testGroup = getDomainObject(request, "oid");
 
         request.setAttribute("testGroup", testGroup);
         request.setAttribute("executionCourse", testGroup.getExecutionCourse());
@@ -140,12 +134,11 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Integer testGroupId = getCodeFromRequest(request, "oid");
+            HttpServletResponse response) throws FenixServiceException {
 
-        NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+        NewTestGroup testGroup = getDomainObject(request, "oid");
 
-        request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+        request.setAttribute("oid", testGroup.getExecutionCourse().getExternalId());
 
         DeleteTestGroup.run(testGroup);
 
@@ -153,36 +146,33 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward finishTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Integer testGroupId = getCodeFromRequest(request, "oid");
+            HttpServletResponse response) throws FenixServiceException {
 
-        NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+        NewTestGroup testGroup = getDomainObject(request, "oid");
 
         FinishTestGroup.run(testGroup);
 
-        request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+        request.setAttribute("oid", testGroup.getExecutionCourse().getExternalId());
 
         return this.manageTests(mapping, form, request, response);
     }
 
     public ActionForward publishGrades(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Integer testGroupId = getCodeFromRequest(request, "oid");
+            HttpServletResponse response) throws FenixServiceException {
 
-        NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+        NewTestGroup testGroup = getDomainObject(request, "oid");
 
         PublishGrades.run(testGroup);
 
-        request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+        request.setAttribute("oid", testGroup.getExecutionCourse().getExternalId());
 
         return this.manageTests(mapping, form, request, response);
     }
 
     public ActionForward correctTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Integer testGroupId = getCodeFromRequest(request, "oid");
+            HttpServletResponse response) throws FenixServiceException {
 
-        NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+        NewTestGroup testGroup = getDomainObject(request, "oid");
 
         CorrectTestGroup.run(testGroup);
 
@@ -208,12 +198,12 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward correctByPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         Integer personId = getCodeFromRequest(request, "personId");
         Integer testGroupId = getCodeFromRequest(request, "testGroupId");
 
-        NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
-        Person person = (Person) rootDomainObject.readPartyByOID(personId);
+        NewTestGroup testGroup = getDomainObject(request, "testGroupId");
+        Person person = getDomainObject(request, "personId");
 
         NewTest test = testGroup.getTest(person);
 

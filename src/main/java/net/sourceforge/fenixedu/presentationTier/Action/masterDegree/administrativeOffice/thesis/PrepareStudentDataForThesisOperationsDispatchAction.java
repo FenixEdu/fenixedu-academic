@@ -14,6 +14,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * 
  * @author Shezad Anavarali (sana@mega.ist.utl.pt) -
@@ -35,10 +37,10 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends FenixDi
             HttpServletResponse response) throws Exception {
 
         StudentCurricularPlan studentCurricularPlan =
-                rootDomainObject.readStudentCurricularPlanByOID((Integer) ((DynaActionForm) form).get("scpID"));
+                AbstractDomainObject.fromExternalId((String) ((DynaActionForm) form).get("scpID"));
 
         request.setAttribute(PresentationConstants.STUDENT, studentCurricularPlan.getRegistration());
-        request.setAttribute("scpID", studentCurricularPlan.getIdInternal());
+        request.setAttribute("scpID", studentCurricularPlan.getExternalId());
         request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 
         return studentCurricularPlan.getMasterDegreeThesis() != null ? mapping.findForward("success") : mapping

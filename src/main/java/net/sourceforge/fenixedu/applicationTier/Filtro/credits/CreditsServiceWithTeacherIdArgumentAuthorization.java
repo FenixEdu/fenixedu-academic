@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 /**
  * @author jpvl
  */
-public class CreditsServiceWithTeacherIdArgumentAuthorization extends AbstractTeacherDepartmentAuthorization<Integer> {
+public class CreditsServiceWithTeacherIdArgumentAuthorization extends AbstractTeacherDepartmentAuthorization<String> {
 
     public static final CreditsServiceWithTeacherIdArgumentAuthorization instance =
             new CreditsServiceWithTeacherIdArgumentAuthorization();
@@ -26,7 +26,7 @@ public class CreditsServiceWithTeacherIdArgumentAuthorization extends AbstractTe
      * #getTeacherId(java.lang.Object[])
      */
     @Override
-    protected Integer getTeacherId(Integer teacherId) {
+    protected String getTeacherId(String teacherId) {
         return teacherId;
     }
 

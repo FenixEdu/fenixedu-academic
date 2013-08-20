@@ -99,7 +99,7 @@
 <br />
 <bean:define id="infoAula_oid"
 			 name="infoAula"
-			 property="idInternal"/>
+			 property="externalId"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoAula_oid" property="infoAula_oid"
 			 value="<%= pageContext.findAttribute("infoAula_oid").toString() %>"/>
 

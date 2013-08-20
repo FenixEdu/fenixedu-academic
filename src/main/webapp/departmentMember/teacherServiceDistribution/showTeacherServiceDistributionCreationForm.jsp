@@ -35,7 +35,7 @@
 	</th>
 	<td>
 		<html:select property="executionYear" onchange="this.form.method.value='prepareForEmptyTSDProcessCreation'; this.form.submit();">
-			<html:options collection="executionYearList" property="idInternal" labelProperty="year"/>
+			<html:options collection="executionYearList" property="externalId" labelProperty="year"/>
 		</html:select>
 	</td>
 </tr>
@@ -46,7 +46,7 @@
 	<td>
 		<html:select property="executionPeriod">
 			<html:option value="-1"><bean:message key="label.teacherServiceDistribution.both"/></html:option>
-			<html:options collection="executionPeriodsList" property="idInternal" labelProperty="semester"/>
+			<html:options collection="executionPeriodsList" property="externalId" labelProperty="semester"/>
 		</html:select>
 	</td>
 </tr>

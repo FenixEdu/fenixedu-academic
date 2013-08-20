@@ -52,7 +52,7 @@
 						</table>
 					</td>
 					<td class="listClasses">
-						<bean:define id="precedenceID" name="precedence" property="idInternal"/>
+						<bean:define id="precedenceID" name="precedence" property="externalId"/>
 						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.secondPrecedence" property="secondPrecedence" value="<%= precedenceID.toString() %>" onclick="form.submit()"/>
 					</td>
 				</tr>

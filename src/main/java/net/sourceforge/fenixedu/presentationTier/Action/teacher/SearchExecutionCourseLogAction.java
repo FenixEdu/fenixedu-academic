@@ -28,6 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
@@ -70,10 +71,9 @@ public class SearchExecutionCourseLogAction extends FenixDispatchAction {
 
     private SearchExecutionCourseLogBean readSearchBean(HttpServletRequest request, ExecutionCourse executionCourse) {
         String executionCourseID = request.getParameter("executionCourse");
-        Integer executionCourseIDInteger = (executionCourseID == null) ? null : Integer.parseInt(executionCourseID);
-        if (executionCourseIDInteger != null) {
+        if (executionCourseID != null) {
             SearchExecutionCourseLogBean seclb =
-                    new SearchExecutionCourseLogBean(rootDomainObject.readExecutionCourseByOID(executionCourseIDInteger));
+                    new SearchExecutionCourseLogBean(AbstractDomainObject.<ExecutionCourse> fromExternalId(executionCourseID));
 
             String viewPhoto = request.getParameter("viewPhoto");
             if (viewPhoto != null && viewPhoto.equalsIgnoreCase("true")) {
@@ -95,7 +95,7 @@ public class SearchExecutionCourseLogAction extends FenixDispatchAction {
             if (professorships != null) {
                 List<Professorship> list = new ArrayList<Professorship>();
                 for (String professorship : professorships.split(":")) {
-                    list.add(rootDomainObject.readProfessorshipByOID(Integer.parseInt(professorship)));
+                    list.add(AbstractDomainObject.<Professorship> fromExternalId(professorship));
                 }
                 seclb.setProfessorships(list);
             }

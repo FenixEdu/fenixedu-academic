@@ -21,7 +21,7 @@
 			<fr:property name="classes" value="tstyle1 thlight tdleft mtop025" />
 			<fr:property name="columnClasses" value="acenter,," />
 			<fr:property name="sortBy" value="whenOccured=asc"/>
-			<fr:property name="linkFormat(view)" value="/payments.do?eventId=${idInternal}&amp;method=showEventDetails"/>
+			<fr:property name="linkFormat(view)" value="/payments.do?eventId=${externalId}&amp;method=showEventDetails"/>
 			<fr:property name="key(view)" value="label.payments.viewDetails"/>
 			<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
 		</fr:layout>

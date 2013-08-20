@@ -56,12 +56,10 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 
         DynaActionForm readDegreeForm = (DynaActionForm) form;
 
-        Integer degreeId = new Integer(request.getParameter("degreeId"));
-
         InfoDegree oldInfoDegree = null;
 
         try {
-            oldInfoDegree = ReadDegree.run(degreeId);
+            oldInfoDegree = ReadDegree.run(request.getParameter("degreeId"));
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegree", mapping.findForward("readDegrees"));
@@ -85,7 +83,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
             throws FenixActionException {
 
         DynaActionForm editDegreeForm = (DynaActionForm) form;
-        Integer oldDegreeId = new Integer(request.getParameter("degreeId"));
+        String oldDegreeId = request.getParameter("degreeId");
         String code = (String) editDegreeForm.get("code");
         String name = (String) editDegreeForm.get("name");
         String nameEn = (String) editDegreeForm.get("nameEn");

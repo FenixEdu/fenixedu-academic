@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
@@ -22,17 +21,18 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertTestQuestion {
 
     private String path = new String();
 
-    protected void run(Integer executionCourseId, Integer testId, String[] metadataId, Integer questionOrder,
-            Double questionValue, CorrectionFormula formula, String path) throws FenixServiceException {
+    protected void run(String executionCourseId, String testId, String[] metadataId, Integer questionOrder, Double questionValue,
+            CorrectionFormula formula, String path) throws FenixServiceException {
         this.path = path.replace('\\', '/');
 
         for (String element : metadataId) {
-            Metadata metadata = RootDomainObject.getInstance().readMetadataByOID(new Integer(element));
+            Metadata metadata = AbstractDomainObject.fromExternalId(element);
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -45,7 +45,7 @@ public class InsertTestQuestion {
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            Test test = RootDomainObject.getInstance().readTestByOID(testId);
+            Test test = AbstractDomainObject.fromExternalId(testId);
             if (test == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -104,9 +104,8 @@ public class InsertTestQuestion {
     private static final InsertTestQuestion serviceInstance = new InsertTestQuestion();
 
     @Service
-    public static void runInsertTestQuestion(Integer executionCourseId, Integer testId, String[] metadataId,
-            Integer questionOrder, Double questionValue, CorrectionFormula formula, String path) throws FenixServiceException,
-            NotAuthorizedException {
+    public static void runInsertTestQuestion(String executionCourseId, String testId, String[] metadataId, Integer questionOrder,
+            Double questionValue, CorrectionFormula formula, String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, testId, metadataId, questionOrder, questionValue, formula, path);
     }

@@ -129,7 +129,7 @@
 				<h:dataTable value="#{writtenEvaluationsByRoom.rooms}" var="room" styleClass="tstyle4 tdcenter">
 					<h:column>
 						<f:facet name="header"></f:facet>
-						<h:outputText escape="false" value="<input alt='input.selectedRoomIDs' id='selectedRoomIDs' name='selectedRoomIDs' type='checkbox' value='#{room.idInternal}'/>"/>
+						<h:outputText escape="false" value="<input alt='input.selectedRoomIDs' id='selectedRoomIDs' name='selectedRoomIDs' type='checkbox' value='#{room.externalId}'/>"/>
 					</h:column>
 					<h:column>
 						<f:facet name="header">

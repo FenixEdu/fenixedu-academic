@@ -8,7 +8,7 @@
 <h2><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -45,7 +45,7 @@
 <br/>
 
 
-<bean:define id="registrationId" name="registrationCurriculumBean" property="registration.idInternal" />
+<bean:define id="registrationId" name="registrationCurriculumBean" property="registration.externalId" />
 <fr:form action="/registration.do?method=chooseCycleForViewRegistrationCurriculum">
 	<html:hidden property="degreeCurricularPlanID" value="<%= "" + request.getAttribute("degreeCurricularPlanID") %>"/>
 	<fr:edit id="registrationCurriculumBean"

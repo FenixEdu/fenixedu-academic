@@ -65,11 +65,10 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
         InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
 
         try {
-            oldInfoCurricularCourseScope = ReadCurricularCourseScope.run(curricularCourseScopeId);
+            oldInfoCurricularCourseScope = ReadCurricularCourseScope.run(request.getParameter("curricularCourseScopeId"));
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException("message.nonExistingCurricularCourseScope",
                     mapping.findForward("readCurricularCourse"));
@@ -91,10 +90,10 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
-        Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
+        String oldCurricularCourseScopeId = request.getParameter("curricularCourseScopeId");
 
         InfoCurricularCourseScopeEditor newInfoCurricularCourseScope = new InfoCurricularCourseScopeEditor();
-        newInfoCurricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
+        newInfoCurricularCourseScope.setExternalId(oldCurricularCourseScopeId);
 
         String beginDateString = (String) dynaForm.get("beginDate");
         String endDateString = (String) dynaForm.get("endDate");

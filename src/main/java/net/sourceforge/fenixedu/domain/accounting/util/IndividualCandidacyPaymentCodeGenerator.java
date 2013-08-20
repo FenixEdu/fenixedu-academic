@@ -31,7 +31,7 @@ public class IndividualCandidacyPaymentCodeGenerator extends PaymentCodeGenerato
 
             int comparationResult = leftSequentialNumber.compareTo(rightSequentialNumber);
 
-            return (comparationResult == 0) ? leftPaymentCode.getIdInternal().compareTo(rightPaymentCode.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftPaymentCode.getExternalId().compareTo(rightPaymentCode.getExternalId()) : comparationResult;
         }
     };
 

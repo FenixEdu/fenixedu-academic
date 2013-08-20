@@ -21,7 +21,7 @@
 		<th></th>
 	</tr>
 	<logic:iterate id="evaluation" name="evaluations">
-		<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
+		<bean:define id="evaluationOID" name="evaluation" property="externalId"/>
 		<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest">
 			<tr>
 				<td>
@@ -45,7 +45,7 @@
 		<th></th>
 	</tr>
 	<logic:iterate id="evaluation" name="evaluations">
-		<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
+		<bean:define id="evaluationOID" name="evaluation" property="externalId"/>
 		<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Project">
 			<tr>
 				<td>
@@ -78,7 +78,7 @@
 		<th></th>
 	</tr>	
 	<logic:iterate id="evaluation" name="component" property="sortedWrittenEvaluations">
-		<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
+		<bean:define id="evaluationOID" name="evaluation" property="externalId"/>
 		<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Exam">
 		<logic:equal name="evaluation" property="isExamsMapPublished" value="true">
 			<tr>
@@ -168,7 +168,7 @@
 </table>
 
 <logic:iterate id="evaluation" name="evaluations">
-	<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
+	<bean:define id="evaluationOID" name="evaluation" property="externalId"/>
 	<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.FinalEvaluation">
 		<table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
 			<tr>

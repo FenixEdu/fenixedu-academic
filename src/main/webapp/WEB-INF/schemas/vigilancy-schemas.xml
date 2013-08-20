@@ -248,7 +248,7 @@
 
 <schema name="present.convokes" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">	
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
-			<property name="linkFormat" value="/departmentMember/vigilancy/vigilantManagement.do?writtenEvaluationId=${idInternal}&amp;method=showWrittenEvaluationReport"/>
+			<property name="linkFormat" value="/departmentMember/vigilancy/vigilantManagement.do?writtenEvaluationId=${externalId}&amp;method=showWrittenEvaluationReport"/>
 			<property name="subLayout" value="values-comma"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
 			<property name="contextRelative" value="true"/>
@@ -261,7 +261,7 @@
 
 <schema name="presentSimpleConvokesWithLink" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">	
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
-			<property name="linkFormat" value="/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=showReport"/>
+			<property name="linkFormat" value="/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=${externalId}&amp;method=showReport"/>
 			<property name="subLayout" value="values-comma"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
 			<property name="indentation" value="true"/>
@@ -280,7 +280,7 @@
 
 <schema name="presentSimpleConvokesForVigilant" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">	
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
-			<property name="linkFormat" value="/departmentMember/vigilancy/vigilantManagement.do?writtenEvaluationId=${idInternal}&amp;method=showWrittenEvaluationReport"/>
+			<property name="linkFormat" value="/departmentMember/vigilancy/vigilantManagement.do?writtenEvaluationId=${externalId}&amp;method=showWrittenEvaluationReport"/>
 			<property name="subLayout" value="values-comma"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
 			<property name="contextRelative" value="true"/>
@@ -422,7 +422,7 @@ extends="presentSimpleConvokesWithoutLink">
 		<slot name="vigilant.person.name" key="label.vigilancy.vigilant"/>
 		<slot name="vigilant.points" key="label.vigilancy.totalPoints.header"/>
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
-			<property name="linkFormat" value="/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
+			<property name="linkFormat" value="/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=${externalId}&amp;method=prepareAddMoreVigilants"/>
 			<property name="subLayout" value="values-comma"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
 			<property name="contextRelative" value="true"/>

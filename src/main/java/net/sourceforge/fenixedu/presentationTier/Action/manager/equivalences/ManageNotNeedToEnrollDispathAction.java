@@ -26,6 +26,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
 
     private static final ComparatorChain curricularCourseComparator = new ComparatorChain();
@@ -93,12 +95,14 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
         Integer studentNumber = null;
         DynaActionForm notNeedToEnrollForm = (DynaActionForm) form;
 
-        Integer scpID = getIntegerFromRequest(request, "scpID");
+        String scpID = getStringFromRequest(request, "scpID");
         if (scpID == null) {
-            scpID = (Integer) notNeedToEnrollForm.get("studentCurricularPlanID");
+            scpID =
+                    notNeedToEnrollForm.get("studentCurricularPlanID").equals("") ? null : (String) notNeedToEnrollForm
+                            .get("studentCurricularPlanID");
         }
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
         InfoStudentCurricularPlan infoSCP = InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
 
         final List<InfoNotNeedToEnrollInCurricularCourse> infoNotNeedToEnrollCurricularCourses =
@@ -143,8 +147,8 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         DynaActionForm notNeedToEnrollForm = (DynaActionForm) form;
-        Integer[] curricularCoursesID = (Integer[]) notNeedToEnrollForm.get("curricularCoursesID");
-        Integer studentCurricularPlanID = (Integer) notNeedToEnrollForm.get("studentCurricularPlanID");
+        String[] curricularCoursesID = (String[]) notNeedToEnrollForm.get("curricularCoursesID");
+        String studentCurricularPlanID = (String) notNeedToEnrollForm.get("studentCurricularPlanID");
 
         InsertNotNeedToEnrollInCurricularCourses.runInsertNotNeedToEnrollInCurricularCourses(studentCurricularPlanID,
                 curricularCoursesID);
@@ -158,8 +162,8 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
     public ActionForward deleteNotNeedToEnroll(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        DeleteNotNeedToEnrollInCurricularCourse.runDeleteNotNeedToEnrollInCurricularCourse(Integer.valueOf(request
-                .getParameter("notNeedToEnrollID")));
+        DeleteNotNeedToEnrollInCurricularCourse.runDeleteNotNeedToEnrollInCurricularCourse(request
+                .getParameter("notNeedToEnrollID"));
 
         return prepareNotNeedToEnroll(mapping, form, request, response);
     }

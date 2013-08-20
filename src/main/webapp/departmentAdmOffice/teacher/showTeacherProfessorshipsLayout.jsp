@@ -34,7 +34,7 @@
 				<bean:define id="infoExecutionCourse" name="professorship" property="infoExecutionCourse"/>
 				<tr>
 					<td class="listClasses" style="text-align:left">
-						<html:link page="<%= executionCourseLink %>" paramId="<%= paramId %>" paramName="infoExecutionCourse" paramProperty="idInternal">
+						<html:link page="<%= executionCourseLink %>" paramId="<%= paramId %>" paramName="infoExecutionCourse" paramProperty="externalId">
 							<bean:write name="infoExecutionCourse" property="nome"/>
 						</html:link>
 					</td>

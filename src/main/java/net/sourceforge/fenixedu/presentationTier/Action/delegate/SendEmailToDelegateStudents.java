@@ -166,8 +166,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
         final List<String> selectedCurricularCourses = Arrays.asList(request.getParameterValues("selectedCurricularCourses"));
         List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
         for (String curricularCourseId : selectedCurricularCourses) {
-            Integer curricularId = Integer.parseInt(curricularCourseId);
-            CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularId);
+            CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
             curricularCourses.add(curricularCourse);
         }
 

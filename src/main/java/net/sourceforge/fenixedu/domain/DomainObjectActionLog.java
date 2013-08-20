@@ -30,8 +30,8 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
         setRootDomainObject(RootDomainObject.getInstance());
         setPerson(person);
         setPersonUsername(person.getUsername());
-        setKeyDomainObject(domainObject.getIdInternal());
         setDomainObjectClassName(domainObject.getClass().getName());
+        setDomainObjectExternalId(domainObject.getExternalId());
         setAction(action);
         setInstant(new DateTime());
         fillDomainObjectAtionLogEntries(parameters);
@@ -47,10 +47,23 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
 
     @Override
     public void setKeyDomainObject(Integer keyDomainObject) {
-        if (keyDomainObject == null) {
-            throw new DomainException("error.domainObjectActionLog.empty.keyDomainObject");
+        throw new UnsupportedOperationException("Logs can no longer be created using Id Internals.");
+    }
+
+    @Override
+    public void setDomainObjectExternalId(String domainObjectExternalId) {
+        if (domainObjectExternalId == null || StringUtils.isEmpty(domainObjectExternalId.trim())) {
+            throw new DomainException("error.domainObjectActionLog.empty.externalId");
         }
-        super.setKeyDomainObject(keyDomainObject);
+        super.setDomainObjectExternalId(domainObjectExternalId);
+    }
+
+    @Override
+    public String getDomainObjectExternalId() {
+        if (super.getDomainObjectExternalId() == null) {
+            return "IdInternal: " + getKeyDomainObject();
+        }
+        return super.getDomainObjectExternalId();
     }
 
     @Override
@@ -77,7 +90,7 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
     }
 
     public String getChangedDomainObject() {
-        return getDomainObjectClassName() + "(" + getKeyDomainObject() + ")";
+        return getDomainObjectClassName() + "(" + getDomainObjectExternalId() + ")";
     }
 
     public String getPersonName() {

@@ -5,15 +5,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AddContextToCourseGroup {
 
     @Service
-    public static void run(CourseGroup courseGroup, CourseGroup parentCourseGroup, Integer beginExecutionPeriodID,
-            Integer endExecutionPeriodID) throws FenixServiceException {
+    public static void run(CourseGroup courseGroup, CourseGroup parentCourseGroup, String beginExecutionPeriodID,
+            String endExecutionPeriodID) throws FenixServiceException {
 
         if (courseGroup == null || parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
@@ -25,16 +25,15 @@ public class AddContextToCourseGroup {
                 getEndExecutionPeriod(endExecutionPeriodID));
     }
 
-    private static ExecutionSemester getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
+    private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {
         if (beginExecutionPeriodID == null) {
             return ExecutionSemester.readActualExecutionSemester();
         } else {
-            return RootDomainObject.getInstance().readExecutionSemesterByOID(beginExecutionPeriodID);
+            return AbstractDomainObject.fromExternalId(beginExecutionPeriodID);
         }
     }
 
-    private static ExecutionSemester getEndExecutionPeriod(Integer endExecutionPeriodID) {
-        return (endExecutionPeriodID == null) ? null : RootDomainObject.getInstance().readExecutionSemesterByOID(
-                endExecutionPeriodID);
+    private static ExecutionSemester getEndExecutionPeriod(String endExecutionPeriodID) {
+        return AbstractDomainObject.fromExternalId(endExecutionPeriodID);
     }
 }

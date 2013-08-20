@@ -143,13 +143,13 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 
                 if (user.equals("public")) {
                     strBuffer.append("<a href='executionCourse.do?method=firstPage&amp;executionCourseID="
-                            + infoExecutionCourse.getIdInternal() + "'>");
+                            + infoExecutionCourse.getExternalId() + "'>");
                 } else if (showCreateExamLink && user.equals("sop")) {
                     strBuffer.append("<a href='viewExamsMap.do?method=create&amp;indexExecutionCourse=" + i + "&amp;"
                             + PresentationConstants.EXECUTION_PERIOD_OID + "="
-                            + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
+                            + infoExecutionCourse.getInfoExecutionPeriod().getExternalId() + "&amp;"
                             + PresentationConstants.EXECUTION_DEGREE_OID + "="
-                            + examsMap.getInfoExecutionDegree().getIdInternal() + getCurricularYearsArgs() + "'>");
+                            + examsMap.getInfoExecutionDegree().getExternalId() + getCurricularYearsArgs() + "'>");
                 }
 
                 strBuffer.append(infoExecutionCourse.getSigla());
@@ -173,9 +173,9 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                         strBuffer.append("&amp;method=prepare");
                         strBuffer.append("&amp;indexExecutionCourse=" + i);
                         strBuffer.append("&amp;" + PresentationConstants.EXECUTION_PERIOD_OID + "="
-                                + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
+                                + infoExecutionCourse.getInfoExecutionPeriod().getExternalId() + "&amp;"
                                 + PresentationConstants.EXECUTION_DEGREE_OID + "="
-                                + examsMap.getInfoExecutionDegree().getIdInternal() + getCurricularYearsArgs());
+                                + examsMap.getInfoExecutionDegree().getExternalId() + getCurricularYearsArgs());
                         strBuffer.append("'>");
                     }
 
@@ -196,9 +196,9 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                         strBuffer.append("&amp;method=prepare");
                         strBuffer.append("&amp;indexExecutionCourse=" + i);
                         strBuffer.append("&amp;" + PresentationConstants.EXECUTION_PERIOD_OID + "="
-                                + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
+                                + infoExecutionCourse.getInfoExecutionPeriod().getExternalId() + "&amp;"
                                 + PresentationConstants.EXECUTION_DEGREE_OID + "="
-                                + examsMap.getInfoExecutionDegree().getIdInternal() + getCurricularYearsArgs());
+                                + examsMap.getInfoExecutionDegree().getExternalId() + getCurricularYearsArgs());
                         strBuffer.append("'>");
                         strBuffer.append("Definir comentário");
                         strBuffer.append("</a>");

@@ -298,7 +298,7 @@ extends="eventCreation">
 	<slot name="name" layout="link">
 		<property name="classes" value="bold" />
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareEvent&amp;activityId=${idInternal}"/>
+		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareEvent&amp;activityId=${externalId}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="hasContext" value="false"/>
@@ -318,7 +318,7 @@ extends="eventCreation">
 	<slot name="fullName" layout="link">
 		<property name="classes" value="bold" />
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareEventEdition&amp;activityId=${idInternal}"/>
+		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareEventEdition&amp;activityId=${externalId}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="hasContext" value="false"/>
@@ -341,7 +341,7 @@ extends="eventCreation">
 	<slot name="name" layout="link">
 		<property name="classes" value="bold" />
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareScientificJournal&amp;activityId=${idInternal}"/>
+		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareScientificJournal&amp;activityId=${externalId}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="hasContext" value="false"/>
@@ -362,7 +362,7 @@ extends="eventCreation">
 	<slot name="nameWithScientificJournal" layout="link">
 		<property name="classes" value="bold" />
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareJournalIssue&amp;activityId=${idInternal}"/>
+		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareJournalIssue&amp;activityId=${externalId}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="hasContext" value="false"/>
@@ -383,7 +383,7 @@ extends="eventCreation">
 	<slot name="name" layout="link">
 		<property name="classes" value="bold" />
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareCooperation&amp;activityId=${idInternal}"/>
+		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareCooperation&amp;activityId=${externalId}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="hasContext" value="false"/>
@@ -405,7 +405,7 @@ extends="eventCreation">
 
 <schema name="Event.view-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent">
 	<slot name="name" key="label.event.name" layout="link">
-		<property name="linkFormat" value="/showEvents.do?method=showEvent&amp;eventId=${idInternal}"/>
+		<property name="linkFormat" value="/showEvents.do?method=showEvent&amp;eventId=${externalId}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="useParent" value="true"/>
@@ -429,7 +429,7 @@ extends="eventCreation">
 <schema name="EventEdition.view-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	<slot name="edition" key="label.edition"/>
 	<slot name="event" key="label.event" layout="link">
-		<property name="linkFormat" value="/showEvents.do?method=showEvent&amp;eventId=${idInternal}"/>
+		<property name="linkFormat" value="/showEvents.do?method=showEvent&amp;eventId=${externalId}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="subLayout" value="values"/>
@@ -451,7 +451,7 @@ extends="eventCreation">
 
 <schema name="ScientificJournal.view-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal">
 	<slot name="name" key="label.scientificJournal.name" layout="link">
-		<property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${idInternal}"/>
+		<property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${externalId}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="useParent" value="true"/>
@@ -473,7 +473,7 @@ extends="eventCreation">
 	<slot name="volume"/>
 	<slot name="number"/>
 	<slot name="scientificJournal" layout="link">
- 	    <property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${idInternal}"/>
+ 	    <property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${externalId}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="subLayout" value="values"/>
@@ -808,7 +808,7 @@ extends="eventCreation">
 <schema name="result.simple.detail.publication" type="net.sourceforge.fenixedu.domain.research.result.ResearchResult">
 	<slot name="title" layout="link">
 		<property name="useParent" value="true"/>
- 		<property name="linkFormat" value="/researcher/resultPublications/showPublication.do?resultId=${idInternal}"/>
+ 		<property name="linkFormat" value="/researcher/resultPublications/showPublication.do?resultId=${externalId}"/>
 		<property name="contextRelative" value="true"/>
 		<property name="classes" value="bold"/>
 	</slot>
@@ -817,7 +817,7 @@ extends="eventCreation">
 <schema name="result.simple.detail.patent" type="net.sourceforge.fenixedu.domain.research.result.ResearchResult">	
 	<slot name="title" layout="link">
 		<property name="useParent" value="true"/>
- 		<property name="linkFormat" value="/researcher/resultPatents/showPatent.do?resultId=${idInternal}"/>
+ 		<property name="linkFormat" value="/researcher/resultPatents/showPatent.do?resultId=${externalId}"/>
 		<property name="contextRelative" value="true"/>
 		<property name="classes" value="bold"/>
 	</slot>
@@ -957,7 +957,7 @@ extends="eventCreation">
 </schema>
 <schema name="result.patentShortList" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent">
 	<slot name="title" layout="link">
-        <property name="linkFormat"><![CDATA[/resultPatents/prepareDetails.do?resultId=${idInternal}]]></property>
+        <property name="linkFormat"><![CDATA[/resultPatents/prepareDetails.do?resultId=${externalId}]]></property>
         <property name="useParent" value="true"/>
 	</slot>
 	<slot name="registrationDate"/>
@@ -2467,7 +2467,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	<slot name="journalIssue" key="label.journal">
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
- 	    <property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${scientificJournal.idInternal}"/>
+ 	    <property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${scientificJournal.externalId}"/>
 	</slot>
 	<slot name="journalIssue.specialIssueComment" key="label.specialIssueComment"/>
 	<slot name="journalIssue.publisher" label="label.publisher"/>
@@ -2483,7 +2483,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	<slot name="journalIssue" >
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
- 	    <property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${scientificJournal.idInternal}"/>
+ 	    <property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${scientificJournal.externalId}"/>
 	</slot>
 	<slot name="journalIssue.publisher"/>
 	<slot name="url">
@@ -2498,7 +2498,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="useParent" value="true"/>
- 	    <property name="linkFormat" value="/showEvents.do?method=showEvent&amp;eventId=${event.idInternal}"/>
+ 	    <property name="linkFormat" value="/showEvents.do?method=showEvent&amp;eventId=${event.externalId}"/>
 	</slot>
 </schema>
 
@@ -2680,7 +2680,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/showResearchResult.do?method=showPublication&amp;resultId=${idInternal}"/>
+		<property name="linkFormat" value="/showResearchResult.do?method=showPublication&amp;resultId=${externalId}"/>
 	</slot>
 </schema>
 
@@ -2703,7 +2703,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/showResearchResult.do?method=showPublication&amp;resultId=${idInternal}"/>
+		<property name="linkFormat" value="/showResearchResult.do?method=showPublication&amp;resultId=${externalId}"/>
 	</slot>
 	<slot name="firstPage"/>
 	<slot name="lastPage"/>	
@@ -2718,7 +2718,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	<slot name="event" key="label.event" layout="link">
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
-		<property name="linkFormat" value="/showEvents.do?method=showEvent&amp;eventId=${idInternal}"/>
+		<property name="linkFormat" value="/showEvents.do?method=showEvent&amp;eventId=${externalId}"/>
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="presentEventName"/>
 	</slot>
@@ -2735,7 +2735,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/showResearchResult.do?method=showPublication&amp;resultId=${idInternal}"/>
+		<property name="linkFormat" value="/showResearchResult.do?method=showPublication&amp;resultId=${externalId}"/>
 	</slot>
 </schema>
 
@@ -2756,7 +2756,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/activities/editResearchActivity.do?activityId=${eventEdition.idInternal}&amp;method=prepareEventEdition"/>
+		<property name="linkFormat" value="/activities/editResearchActivity.do?activityId=${eventEdition.externalId}&amp;method=prepareEventEdition"/>
 	</slot>
 	<slot name="eventEdition.url" layout="null-as-label" key="label.eventUrl">
 		<property name="label" value="-"/>
@@ -2774,7 +2774,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/showResearchResult.do?method=showPublication&amp;resultId=${idInternal}"/>
+		<property name="linkFormat" value="/showResearchResult.do?method=showPublication&amp;resultId=${externalId}"/>
 	</slot>
 	<slot name="firstPage"/>
 	<slot name="lastPage"/>

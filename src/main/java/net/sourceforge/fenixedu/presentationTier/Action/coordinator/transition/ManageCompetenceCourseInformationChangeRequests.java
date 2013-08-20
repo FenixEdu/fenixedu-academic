@@ -26,6 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "scientificCouncil", path = "/competenceCourses/manageVersions", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -50,8 +51,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
             HttpServletResponse response) {
 
         String departmentID = request.getParameter("departmentID");
-        Department department =
-                (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer.valueOf(departmentID));
+        Department department = (Department) AbstractDomainObject.fromExternalId(departmentID);
         putChangeRequestInRequest(request, department);
 
         return mapping.findForward("listRequests");
@@ -59,7 +59,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     }
 
     public ActionForward viewVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
         if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
@@ -69,7 +69,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     }
 
     public ActionForward approveRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
         if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
@@ -84,7 +84,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     }
 
     public ActionForward rejectRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
         if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
@@ -101,17 +101,14 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     private CompetenceCourseInformationChangeRequest getChangeRequest(HttpServletRequest request) {
         String competenceCourseInformationChangeRequestId = request.getParameter("changeRequestID");
         CompetenceCourseInformationChangeRequest changeRequest =
-                (CompetenceCourseInformationChangeRequest) RootDomainObject.readDomainObjectByOID(
-                        CompetenceCourseInformationChangeRequest.class,
-                        Integer.valueOf(competenceCourseInformationChangeRequestId));
+                (CompetenceCourseInformationChangeRequest) AbstractDomainObject
+                        .fromExternalId(competenceCourseInformationChangeRequestId);
         return changeRequest;
     }
 
     private CompetenceCourse getCompetenceCourse(HttpServletRequest request) {
         String competenceCourseID = request.getParameter("competenceCourseID");
-        CompetenceCourse course =
-                (CompetenceCourse) RootDomainObject.readDomainObjectByOID(CompetenceCourse.class,
-                        Integer.valueOf(competenceCourseID));
+        CompetenceCourse course = (CompetenceCourse) AbstractDomainObject.fromExternalId(competenceCourseID);
         return course;
     }
 

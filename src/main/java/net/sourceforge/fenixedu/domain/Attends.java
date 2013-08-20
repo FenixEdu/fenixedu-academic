@@ -64,7 +64,7 @@ public class Attends extends Attends_Base {
 
                             grouping.setGroupMaximumNumber(grouping.getStudentGroupsCount() + 1);
                             try {
-                                GroupEnrolment.enrole(grouping.getIdInternal(), null, groupNumber, new ArrayList<String>(),
+                                GroupEnrolment.enrole(grouping.getExternalId(), null, groupNumber, new ArrayList<String>(),
                                         attends.getRegistration().getStudent().getPerson().getUsername());
                             } catch (FenixServiceException e) {
                                 throw new Error(e);

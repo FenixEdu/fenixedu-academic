@@ -1379,7 +1379,7 @@
 <schema name="diplomasList.view" 
 	type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="registration.number" key="label.number" read-only="true" layout="link">
-		<property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
+		<property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.externalId}"/>
 		<property name="contextRelative" value="true"/>
         <property name="useParent" value="true"/>
 	</slot>
@@ -1967,6 +1967,6 @@
 	<slot name="personalPhoto" layout="view-as-image">
 		<property name="classes" value="column3"/>
 		<property name="contextRelative" value="true"/>
-		<property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${person.idInternal}"/>	
+		<property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${person.externalId}"/>	
 	</slot>		
 </schema>

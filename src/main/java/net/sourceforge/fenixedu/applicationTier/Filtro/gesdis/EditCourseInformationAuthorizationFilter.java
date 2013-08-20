@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Leonor Almeida
@@ -32,8 +32,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport)
-            throws NotAuthorizedException {
+    public void execute(String courseReportID, InfoCourseReport infoCourseReport, String newReport) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         try {
@@ -50,8 +49,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
         final Person person = id.getPerson();
 
         InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
-        ExecutionCourse executionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourse.getExternalId());
 
         List<Professorship> responsiblesFor = executionCourse.responsibleFors();
 

@@ -25,7 +25,7 @@
 	</script>
 		
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
-	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
+	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="externalId" />
 	<jsp:include page="spaceCrumbs.jsp"/>
 	<bean:define id="space" name="selectedSpaceInformation" property="space"/>
 		
@@ -61,13 +61,13 @@
    			<fr:property name="columnClasses" value="aleft,,,,"/>
    
    			<fr:property name="link(edit)" value="<%="/manageUnitSpaceOccupations.do?method=prepareEditUnitSpaceOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(edit)" value="idInternal/unitSpaceOccupationID"/>
+            <fr:property name="param(edit)" value="externalId/unitSpaceOccupationID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>
             <fr:property name="bundle(edit)" value="SPACE_RESOURCES"/>
             <fr:property name="order(edit)" value="0"/>
             
             <fr:property name="link(delete)" value="<%="/manageUnitSpaceOccupations.do?method=deleteUnitSpaceOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(delete)" value="idInternal/unitSpaceOccupationID"/>
+            <fr:property name="param(delete)" value="externalId/unitSpaceOccupationID"/>
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
             <fr:property name="order(delete)" value="0"/>              
@@ -108,13 +108,13 @@
    			<fr:property name="columnClasses" value="aleft,,,,"/>
    			   			
    			<fr:property name="link(edit)" value="<%="/manageUnitSpaceOccupations.do?method=prepareEditUnitSpaceOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(edit)" value="idInternal/unitSpaceOccupationID"/>
+            <fr:property name="param(edit)" value="externalId/unitSpaceOccupationID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>
             <fr:property name="bundle(edit)" value="SPACE_RESOURCES"/>
             <fr:property name="order(edit)" value="0"/>
             
             <fr:property name="link(delete)" value="<%="/manageUnitSpaceOccupations.do?method=deleteUnitSpaceOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(delete)" value="idInternal/unitSpaceOccupationID"/>
+            <fr:property name="param(delete)" value="externalId/unitSpaceOccupationID"/>
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
             <fr:property name="order(delete)" value="0"/>      

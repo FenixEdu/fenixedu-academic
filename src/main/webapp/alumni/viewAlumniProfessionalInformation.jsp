@@ -45,7 +45,7 @@
 
 <logic:notEmpty name="alumni" property="jobs">
 	<logic:iterate id="eachJob" indexId="jobIndex" name="alumni" property="jobs">
-		<bean:define id="jobID" name="eachJob" property="idInternal" />
+		<bean:define id="jobID" name="eachJob" property="externalId" />
 		<fr:view name="eachJob" layout="tabular" schema="alumni.professional.information.job">
 			<fr:layout>
 				<fr:property name="subLayout" value="values"/>

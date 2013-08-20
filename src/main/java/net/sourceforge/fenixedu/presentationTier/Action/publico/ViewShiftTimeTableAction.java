@@ -25,6 +25,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * @author João Mota
  * 
@@ -45,7 +47,7 @@ public class ViewShiftTimeTableAction extends FenixContextAction {
             return mapping.getInputForward();
         }
         final InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseFromRequest(request);
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourse.getExternalId());
         Shift shift = null;
         for (final Shift shift2 : executionCourse.getAssociatedShifts()) {
             if (shift2.getNome().equals(shiftName)) {

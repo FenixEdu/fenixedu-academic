@@ -34,13 +34,13 @@
 					
 					<h:outputText value="<br/><ul class=\"links\"><li><b>#{bundle['label.students.listMarks']}:</b> " escape="false"/>
 					<h:commandLink action="enterShowMarksListOptions">
-						<f:param name="evaluationID" value="#{onlineTest.idInternal}" />
+						<f:param name="evaluationID" value="#{onlineTest.externalId}" />
 						<h:outputFormat value="#{bundle['link.teacher.evaluation.grades']}" />
 					</h:commandLink>
 
 					<h:outputText value="<b> | </b>" escape="false"/>
 					<h:commandLink action="enterPublishMarks">
-						<f:param name="evaluationID" value="#{onlineTest.idInternal}" />
+						<f:param name="evaluationID" value="#{onlineTest.externalId}" />
 						<h:outputFormat value="#{bundle['link.publishMarks']}" />
 					</h:commandLink>
 

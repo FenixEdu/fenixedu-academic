@@ -14,11 +14,11 @@ public class InsuranceSituationDTO extends InfoObject {
 
     private Double anualValue;
 
-    private Integer insuranceTransactionID;
+    private String insuranceTransactionID;
 
     private InfoExecutionYear infoExecutionYear;
 
-    private Integer executionYearID;
+    private String executionYearID;
 
     /**
      *  
@@ -28,10 +28,10 @@ public class InsuranceSituationDTO extends InfoObject {
     }
 
     /**
-     * @param idInternal
+     * @param externalId
      */
-    public InsuranceSituationDTO(Integer idInternal) {
-        super(idInternal);
+    public InsuranceSituationDTO(String externalId) {
+        super(externalId);
 
     }
 
@@ -51,11 +51,11 @@ public class InsuranceSituationDTO extends InfoObject {
         this.infoExecutionYear = infoExecutionYear;
     }
 
-    public Integer getInsuranceTransactionID() {
+    public String getInsuranceTransactionID() {
         return insuranceTransactionID;
     }
 
-    public void setInsuranceTransactionID(Integer insuranceTransactionID) {
+    public void setInsuranceTransactionID(String insuranceTransactionID) {
         this.insuranceTransactionID = insuranceTransactionID;
     }
 
@@ -67,11 +67,11 @@ public class InsuranceSituationDTO extends InfoObject {
         this.payedValue = payedValue;
     }
 
-    public Integer getExecutionYearID() {
+    public String getExecutionYearID() {
         return executionYearID;
     }
 
-    public void setExecutionYearID(Integer executionYearID) {
+    public void setExecutionYearID(String executionYearID) {
         this.executionYearID = executionYearID;
     }
 

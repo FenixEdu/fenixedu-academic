@@ -22,7 +22,7 @@
 	</table>
 	<br />
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
-	<bean:define id="courseId" name="oneInfoEnrollment" property="infoCurricularCourse.idInternal"/>
+	<bean:define id="courseId" name="oneInfoEnrollment" property="infoCurricularCourse.externalId"/>
 	<ul>
 	    <li>
 			<html:link page="<%= "/showMarkDispatchAction.do?method=prepareShowMark&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + courseId + "&amp;objectCode=" + pageContext.findAttribute("objectCode")%>">

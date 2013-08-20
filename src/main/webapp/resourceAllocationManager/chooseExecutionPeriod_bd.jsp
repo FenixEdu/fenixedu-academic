@@ -80,7 +80,7 @@
 	</logic:empty>
 	<logic:notEmpty name="toEditScheduleRegistrations">
 		<logic:iterate id="registration" name="toEditScheduleRegistrations">
-			<html:link page="/studentShiftEnrollmentManager.do?method=prepare" paramId="registrationOID" paramName="registration" paramProperty="idInternal">
+			<html:link page="/studentShiftEnrollmentManager.do?method=prepare" paramId="registrationOID" paramName="registration" paramProperty="externalId">
 				<bean:write name="registration" property="student.person.name"/> - <bean:write name="registration" property="degreeNameWithDegreeCurricularPlanName"/>
 			</html:link>
 			<br/>

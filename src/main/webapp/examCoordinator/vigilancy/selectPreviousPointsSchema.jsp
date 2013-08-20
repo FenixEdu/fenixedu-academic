@@ -22,7 +22,7 @@
 </fr:form>
 
 <logic:present name="group">
-	<bean:define id="groupID" name="group" property="idInternal"/>
+	<bean:define id="groupID" name="group" property="externalId"/>
 	<fr:form action="<%= "/vigilancy/vigilantGroupManagement.do?method=copySchemaPoints&show=groups&oid=" + request.getParameter("oid") + "&selectedGroupID=" + groupID %>">
 		<fr:view name="group" schema="previousPointsForGroup">
 			<fr:layout name="tabular">

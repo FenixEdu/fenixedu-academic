@@ -10,8 +10,7 @@ public class DeleteExternalEnrolments {
     @Service
     public static void run(final Registration registration, String[] externalEnrolmentIDs) throws FenixServiceException {
         for (final String externalEnrolmentID : externalEnrolmentIDs) {
-            final ExternalEnrolment externalEnrolment =
-                    getExternalEnrolmentByID(registration, Integer.valueOf(externalEnrolmentID));
+            final ExternalEnrolment externalEnrolment = getExternalEnrolmentByID(registration, externalEnrolmentID);
             if (externalEnrolment == null) {
                 throw new FenixServiceException("error.DeleteExternalEnrolments.externalEnrolmentID.doesnot.belong.to.student");
             }
@@ -19,9 +18,9 @@ public class DeleteExternalEnrolments {
         }
     }
 
-    private static ExternalEnrolment getExternalEnrolmentByID(final Registration registration, final Integer externalEnrolmentID) {
+    private static ExternalEnrolment getExternalEnrolmentByID(final Registration registration, final String externalEnrolmentID) {
         for (final ExternalEnrolment externalEnrolment : registration.getExternalEnrolmentsSet()) {
-            if (externalEnrolment.getIdInternal().equals(externalEnrolmentID)) {
+            if (externalEnrolment.getExternalId().equals(externalEnrolmentID)) {
                 return externalEnrolment;
             }
         }

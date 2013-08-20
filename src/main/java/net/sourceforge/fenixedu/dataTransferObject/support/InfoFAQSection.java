@@ -30,8 +30,8 @@ public class InfoFAQSection extends InfoObject implements Serializable {
 
     @Override
     public int hashCode() {
-        if (this.getIdInternal() != null) {
-            return this.getIdInternal().intValue();
+        if (this.getExternalId() != null) {
+            return this.getExternalId().hashCode();
         }
 
         return 0;
@@ -76,7 +76,7 @@ public class InfoFAQSection extends InfoObject implements Serializable {
             FAQSection parentSection = faqSection.getParentSection();
             if (parentSection != null) {
                 setParentSection(new InfoFAQSection());
-                getParentSection().setIdInternal(parentSection.getIdInternal());
+                getParentSection().setExternalId(parentSection.getExternalId());
             }
         }
     }

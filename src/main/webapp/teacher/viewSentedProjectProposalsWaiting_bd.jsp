@@ -53,10 +53,10 @@
 			</th>
 		</tr>
 	<logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
-		<bean:define id="groupPropertiesCode" name="infoGroupProperties" property="idInternal"/>
+		<bean:define id="groupPropertiesCode" name="infoGroupProperties" property="externalId"/>
 		<logic:iterate id="infoGroupPropertiesExecutionCourseElement" name="infoGroupProperties" property="infoExportGroupings">
 	       <bean:define id="infoExecutionCourse" name="infoGroupPropertiesExecutionCourseElement" property="infoExecutionCourse" />
-	       <bean:define id="executionCourseCode" name="infoExecutionCourse" property="idInternal"/>
+	       <bean:define id="executionCourseCode" name="infoExecutionCourse" property="externalId"/>
 			<tr>
 				
 				<td class="listClasses" align="left">
@@ -64,7 +64,7 @@
                 </td>
                     
 				<td class="listClasses" align="left">
-					<bean:define id="executionCourseCode" name="infoExecutionCourse" property="idInternal"/>
+					<bean:define id="executionCourseCode" name="infoExecutionCourse" property="externalId"/>
     			  	<bean:write name="infoExecutionCourse" property="nome"/>
     			</td>
 		

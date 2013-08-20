@@ -46,8 +46,8 @@
 	</fr:view>
 </logic:present>
 
-<bean:define id="registrationID" name="academicServiceRequest" property="registration.idInternal" />
-<bean:define id="academicServiceRequestId" name="academicServiceRequest" property="idInternal" />
+<bean:define id="registrationID" name="academicServiceRequest" property="registration.externalId" />
+<bean:define id="academicServiceRequestId" name="academicServiceRequest" property="externalId" />
 
 <html:form action="<%= "/academicServiceRequestsManagement.do?registrationID=" + registrationID.toString() + "&amp;academicServiceRequestId=" + academicServiceRequestId.toString() %>">
 	<html:hidden property="method" value="concludeAcademicServiceRequest" />

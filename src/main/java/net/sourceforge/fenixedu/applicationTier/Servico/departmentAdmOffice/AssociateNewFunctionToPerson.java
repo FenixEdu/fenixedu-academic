@@ -4,32 +4,31 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AssociateNewFunctionToPerson {
 
-    protected void run(Integer functionID, Integer personID, Double credits, YearMonthDay begin, YearMonthDay end)
+    protected void run(String functionID, String personID, Double credits, YearMonthDay begin, YearMonthDay end)
             throws FenixServiceException, DomainException {
 
-        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
+        Person person = (Person) AbstractDomainObject.fromExternalId(personID);
         if (person == null) {
             throw new FenixServiceException("error.noPerson");
         }
 
-        Function function = (Function) RootDomainObject.getInstance().readAccountabilityTypeByOID(functionID);
+        Function function = (Function) AbstractDomainObject.fromExternalId(functionID);
         if (function == null) {
             throw new FenixServiceException("error.noFunction");
         }
@@ -42,7 +41,7 @@ public class AssociateNewFunctionToPerson {
     private static final AssociateNewFunctionToPerson serviceInstance = new AssociateNewFunctionToPerson();
 
     @Service
-    public static void runAssociateNewFunctionToPerson(Integer functionID, Integer personID, Double credits, YearMonthDay begin,
+    public static void runAssociateNewFunctionToPerson(String functionID, String personID, Double credits, YearMonthDay begin,
             YearMonthDay end) throws FenixServiceException, DomainException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

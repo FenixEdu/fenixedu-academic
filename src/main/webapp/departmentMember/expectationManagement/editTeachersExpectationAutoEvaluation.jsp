@@ -14,7 +14,7 @@
 		
 		<p><em><bean:message key="label.common.executionYear" bundle="DEPARTMENT_MEMBER_RESOURCES"/>: <bean:write name="expectation" property="executionYear.year"/></em></p>
 				
-		<bean:define id="executionYearId" name="expectation" property="executionYear.idInternal"/>
+		<bean:define id="executionYearId" name="expectation" property="executionYear.externalId"/>
 		<fr:edit name="expectation" slot="autoEvaluation" layout="rich-text">
 			<fr:layout name="rich-text">
 				<fr:property name="config" value="intermediateWithBreakLineInsteadOfParagraph"/>

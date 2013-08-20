@@ -48,6 +48,7 @@ import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
@@ -360,8 +361,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     protected Degree getDegree(final HttpServletRequest request) {
         final String degreeIdParam = request.getParameter("degreeID");
-        final Integer degreeID = degreeIdParam == null || degreeIdParam.length() == 0 ? null : Integer.valueOf(degreeIdParam);
-        return degreeIdParam == null ? null : rootDomainObject.readDegreeByOID(degreeID);
+        return AbstractDomainObject.fromExternalId(degreeIdParam);
     }
 
     protected Set<Degree> getDegrees(final DegreeType degreeType) {
@@ -445,34 +445,19 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     }
 
     private ExecutionYear getExecutionYear(final HttpServletRequest request) {
-        final String executionYearParam = request.getParameter("executionYearID");
-        final Integer executionYearID =
-                executionYearParam == null || executionYearParam.length() == 0 ? null : Integer.valueOf(executionYearParam);
-        return executionYearID == null ? null : rootDomainObject.readExecutionYearByOID(executionYearID);
+        return getDomainObject(request, "executionYearID");
     }
 
     protected CardGenerationBatch getCardGenerationBatch(final HttpServletRequest request) {
-        final String cardGenerationBatchParam = request.getParameter("cardGenerationBatchID");
-        final Integer cardGenerationBatchID =
-                cardGenerationBatchParam == null || cardGenerationBatchParam.length() == 0 ? null : Integer
-                        .valueOf(cardGenerationBatchParam);
-        return cardGenerationBatchID == null ? null : rootDomainObject.readCardGenerationBatchByOID(cardGenerationBatchID);
+        return getDomainObject(request, "cardGenerationBatchID");
     }
 
     private CardGenerationEntry getCardGenerationEntry(HttpServletRequest request) {
-        final String cardGenerationEntryParam = request.getParameter("cardGenerationEntryID");
-        final Integer cardGenerationEntryID =
-                cardGenerationEntryParam == null || cardGenerationEntryParam.length() == 0 ? null : Integer
-                        .valueOf(cardGenerationEntryParam);
-        return cardGenerationEntryID == null ? null : rootDomainObject.readCardGenerationEntryByOID(cardGenerationEntryID);
+        return getDomainObject(request, "cardGenerationEntryID");
     }
 
     protected CardGenerationProblem getCardGenerationProblem(final HttpServletRequest request) {
-        final String cardGenerationProblemParam = request.getParameter("cardGenerationProblemID");
-        final Integer cardGenerationProblemID =
-                cardGenerationProblemParam == null || cardGenerationProblemParam.length() == 0 ? null : Integer
-                        .valueOf(cardGenerationProblemParam);
-        return cardGenerationProblemID == null ? null : rootDomainObject.readCardGenerationProblemByOID(cardGenerationProblemID);
+        return getDomainObject(request, "cardGenerationProblemID");
     }
 
     public ActionForward createNewEntry(final ActionMapping mapping, final ActionForm actionForm,
@@ -496,7 +481,6 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
             final HttpServletResponse response) {
         UploadBean bean = getRenderedObject("uploadBean");
         RenderUtils.invalidateViewState("uploadBean");
-        fixBadData();
         try {
             process(request, FileUtils.copyToTemporaryFile(bean.getInputStream()));
         } catch (FileNotFoundException e) {
@@ -506,19 +490,6 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
         }
         request.setAttribute("readingComplete", true);
         return mapping.findForward("uploadCardInfo");
-    }
-
-    private void fixBadData() {
-        switchPerson(395374, 82254);
-        switchPerson(1728, 8336);
-    }
-
-    @Service
-    private void switchPerson(final int personId, final int cardGenerationEntryId) {
-        final Person person = (Person) rootDomainObject.readPartyByOID(new Integer(personId));
-        final CardGenerationEntry cardGenerationEntry =
-                rootDomainObject.readCardGenerationEntryByOID(new Integer(cardGenerationEntryId));
-        cardGenerationEntry.setPerson(person);
     }
 
     @Service
@@ -571,8 +542,8 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
                         System.out.println("identifier: " + identifier);
                         for (final CardGenerationEntry cge : cardGenerationEntries) {
                             final Person p = cge.getPerson();
-                            System.out.println("CGE.id: " + cge.getIdInternal() + " " + "P.id: "
-                                    + (p == null ? "" : p.getIdInternal() + " (" + p.getUsername() + ")"));
+                            System.out.println("CGE.id: " + cge.getExternalId() + " " + "P.id: "
+                                    + (p == null ? "" : p.getExternalId() + " (" + p.getUsername() + ")"));
                             System.out.println(cge.getLine());
                         }
                         throw new Error("Card emitted matches multiple people! " + line);

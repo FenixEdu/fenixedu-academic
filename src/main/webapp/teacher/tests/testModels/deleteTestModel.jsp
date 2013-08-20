@@ -24,7 +24,7 @@
 	<li>
 		<html:link page="/tests/testModels.do?method=deleteTestModel"
 		           paramId="oid" paramName="testModel"
-		           paramProperty="idInternal">
+		           paramProperty="externalId">
 			<bean:message key="message.delete" bundle="TESTS_RESOURCES" />
 		</html:link>
 	</li>

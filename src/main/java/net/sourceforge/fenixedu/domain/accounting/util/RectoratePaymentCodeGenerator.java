@@ -25,7 +25,7 @@ public class RectoratePaymentCodeGenerator extends PaymentCodeGenerator {
             System.out.println(String.format("left [%s], right [%s], result [%s]", leftSequentialNumber, rightSequentialNumber,
                     comparationResult));
 
-            return (comparationResult == 0) ? leftPaymentCode.getIdInternal().compareTo(rightPaymentCode.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftPaymentCode.getExternalId().compareTo(rightPaymentCode.getExternalId()) : comparationResult;
         }
     };
 

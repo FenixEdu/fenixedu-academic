@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
  */
 public class InfoExternalPerson extends InfoObject {
 
-    private ExternalContract externalPersonDomainReference;
+    private final ExternalContract externalPersonDomainReference;
 
     public InfoExternalPerson(final ExternalContract externalPerson) {
         externalPersonDomainReference = externalPerson;
@@ -33,12 +33,12 @@ public class InfoExternalPerson extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getExternalPerson().getIdInternal();
+    public String getExternalId() {
+        return getExternalPerson().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

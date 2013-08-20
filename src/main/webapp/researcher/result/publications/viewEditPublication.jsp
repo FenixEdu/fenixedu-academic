@@ -6,12 +6,12 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <bean:define id="resultPublicationType" name="resultPublicationType"/>
-<bean:define id="resultId" name="result" property="idInternal"/>
+<bean:define id="resultId" name="result" property="externalId"/>
 <bean:define id="resultType" name="result" property="class.simpleName"/>
 <bean:define id="result" name="result" type="net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication"/>	
 <bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>"/>
 <logic:present name="unit">
-	<bean:define id="unitID" name="unit" property="idInternal"/>
+	<bean:define id="unitID" name="unit" property="externalId"/>
 	<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
 </logic:present>
 
@@ -110,7 +110,7 @@
 	<fr:property name="columnClasses" value="width10em, width50em"/>
 	<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 </fr:layout>
-		<fr:destination name="view.prize" path="/prizes/prizeManagement.do?method=showPrize&oid=${idInternal}"/>
+		<fr:destination name="view.prize" path="/prizes/prizeManagement.do?method=showPrize&oid=${externalId}"/>
 </fr:view>
 
 

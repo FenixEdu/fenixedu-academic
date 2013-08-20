@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
@@ -62,6 +61,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz
@@ -252,9 +252,9 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         final String executionYearOID = (String) dynaActionForm.get("executionYearOID");
         if (executionYearOID == null || executionYearOID.equals("")) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
-            dynaActionForm.set("executionYearOID", executionYear.getIdInternal().toString());
+            dynaActionForm.set("executionYearOID", executionYear.getExternalId().toString());
         } else {
-            executionYear = rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearOID));
+            executionYear = AbstractDomainObject.fromExternalId(executionYearOID);
         }
 
         final Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
@@ -271,8 +271,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
         if (executionDegreeOID != null && executionDegreeOID.length() > 0) {
-            ExecutionDegree executionDegree =
-                    RootDomainObject.getInstance().readExecutionDegreeByOID(Integer.valueOf(executionDegreeOID));
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOID);
             Scheduleing scheduling = executionDegree.getScheduling();
             request.setAttribute("executionDegree", executionDegree);
             request.setAttribute("scheduling", scheduling);
@@ -285,8 +284,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String executionYearOID = (String) dynaActionForm.get("executionYearOID");
         if (executionYearOID != null && executionYearOID.length() > 0) {
-            ExecutionYear executionYear =
-                    RootDomainObject.getInstance().readExecutionYearByOID(Integer.valueOf(executionYearOID));
+            ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearOID);
             placeListOfExecutionDegreesInRequest(request, executionYear);
         }
         return dissertations(mapping, form, request, response);
@@ -301,9 +299,9 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         final String executionYearOID = (String) dynaActionForm.get("executionYearOID");
         if (executionYearOID == null || executionYearOID.equals("")) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
-            dynaActionForm.set("executionYearOID", executionYear.getIdInternal().toString());
+            dynaActionForm.set("executionYearOID", executionYear.getExternalId().toString());
         } else {
-            executionYear = rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearOID));
+            executionYear = AbstractDomainObject.fromExternalId(executionYearOID);
         }
 
         final Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
@@ -326,8 +324,8 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
         // request.setAttribute("infoGroup", infoGroup);
 
-        // String idInternal = (String) dynaActionForm.get("idInternal");
-        // if ((idInternal == null || idInternal.equals("")) &&
+        // String externalId = (String) dynaActionForm.get("externalId");
+        // if ((externalId == null || externalId.equals("")) &&
         // request.getAttribute("CalledFromSelect") == null) {
         // selectExecutionDegree(mapping, form, request, response);
         // }
@@ -379,16 +377,16 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     public ActionForward addStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
-        String idInternal = (String) dynaActionForm.get("idInternal");
+        String externalId = (String) dynaActionForm.get("externalId");
         String studentUsernameToAdd = (String) dynaActionForm.get("studentUsernameToAdd");
 
         IUserView userView = UserView.getUser();
         if (studentUsernameToAdd != null && !studentUsernameToAdd.equals("")
-                && !studentUsernameToAdd.equalsIgnoreCase(userView.getUtilizador()) && idInternal != null
-                && !idInternal.equals("") && StringUtils.isNumeric(idInternal)) {
+                && !studentUsernameToAdd.equalsIgnoreCase(userView.getUtilizador()) && externalId != null
+                && !externalId.equals("")) {
 
             try {
-                AddStudentToFinalDegreeWorkStudentGroup.run(new Integer(idInternal), studentUsernameToAdd);
+                AddStudentToFinalDegreeWorkStudentGroup.run(externalId, studentUsernameToAdd);
             } catch (FenixServiceException ex) {
                 prepareCandidacy(mapping, form, request, response);
                 throw ex;
@@ -403,16 +401,14 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     public ActionForward removeStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
-        String idInternal = (String) dynaActionForm.get("idInternal");
+        String externalId = (String) dynaActionForm.get("externalId");
         String studentToRemove = (String) dynaActionForm.get("studentToRemove");
 
         IUserView userView = UserView.getUser();
-        if (studentToRemove != null && !studentToRemove.equals("") && StringUtils.isNumeric(studentToRemove)
-                && idInternal != null && !idInternal.equals("") && StringUtils.isNumeric(idInternal)) {
+        if (studentToRemove != null && !studentToRemove.equals("") && externalId != null && !externalId.equals("")) {
 
             try {
-                RemoveStudentFromFinalDegreeWorkStudentGroup.run(userView.getUtilizador(), new Integer(idInternal), new Integer(
-                        studentToRemove));
+                RemoveStudentFromFinalDegreeWorkStudentGroup.run(userView.getUtilizador(), externalId, studentToRemove);
             } catch (FenixServiceException ex) {
                 prepareCandidacy(mapping, form, request, response);
                 throw ex;
@@ -427,12 +423,12 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     public ActionForward selectProposals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
-        String groupOID = (String) dynaActionForm.get("idInternal");
+        String groupOID = (String) dynaActionForm.get("externalId");
 
         if (groupOID != null && !groupOID.equals("") && StringUtils.isNumeric(groupOID)) {
             IUserView userView = UserView.getUser();
 
-            List finalDegreeWorkProposalHeaders = ReadAvailableFinalDegreeWorkProposalHeadersForGroup.run(new Integer(groupOID));
+            List finalDegreeWorkProposalHeaders = ReadAvailableFinalDegreeWorkProposalHeadersForGroup.run(groupOID);
             request.setAttribute("finalDegreeWorkProposalHeaders", finalDegreeWorkProposalHeaders);
         }
 
@@ -442,15 +438,15 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     public ActionForward addProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
-        String groupOID = (String) dynaActionForm.get("idInternal");
+        String groupOID = (String) dynaActionForm.get("externalId");
         String selectedProposal = (String) dynaActionForm.get("selectedProposal");
 
         if (groupOID != null && !groupOID.equals("") && StringUtils.isNumeric(groupOID) && selectedProposal != null
                 && !selectedProposal.equals("") && StringUtils.isNumeric(selectedProposal)) {
             try {
-                final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(new Integer(groupOID));
+                final FinalDegreeWorkGroup group = AbstractDomainObject.fromExternalId(groupOID);
                 request.setAttribute("infoGroup", InfoGroup.newInfoFromDomain(group));
-                AddFinalDegreeWorkProposalCandidacyForGroup.run(group, new Integer(selectedProposal));
+                AddFinalDegreeWorkProposalCandidacyForGroup.run(group, selectedProposal);
                 return mapping.findForward("showCandidacyForm");
             } catch (FenixServiceException ex) {
                 prepareCandidacy(mapping, form, request, response);
@@ -464,15 +460,15 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     public ActionForward removeProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
-        String idInternal = (String) dynaActionForm.get("idInternal");
+        String externalId = (String) dynaActionForm.get("externalId");
         String selectedGroupProposal = (String) dynaActionForm.get("selectedGroupProposal");
 
         IUserView userView = UserView.getUser();
         if (selectedGroupProposal != null && !selectedGroupProposal.equals("") && StringUtils.isNumeric(selectedGroupProposal)
-                && idInternal != null && !idInternal.equals("") && StringUtils.isNumeric(idInternal)) {
+                && externalId != null && !externalId.equals("") && StringUtils.isNumeric(externalId)) {
             try {
-                final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(new Integer(idInternal));
-                RemoveProposalFromFinalDegreeWorkStudentGroup.run(group, new Integer(selectedGroupProposal));
+                final FinalDegreeWorkGroup group = AbstractDomainObject.fromExternalId(externalId);
+                RemoveProposalFromFinalDegreeWorkStudentGroup.run(group, selectedGroupProposal);
                 request.setAttribute("infoGroup", InfoGroup.newInfoFromDomain(group));
                 return mapping.findForward("showCandidacyForm");
             } catch (FenixServiceException ex) {
@@ -489,20 +485,20 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     public ActionForward changePreferenceOrder(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
-        String idInternal = (String) dynaActionForm.get("idInternal");
+        String externalId = (String) dynaActionForm.get("externalId");
         String selectedGroupProposal = (String) dynaActionForm.get("selectedGroupProposal");
         String orderOfProposalPreference = request.getParameter("orderOfProposalPreference" + selectedGroupProposal);
 
         IUserView userView = UserView.getUser();
         if (selectedGroupProposal != null && !selectedGroupProposal.equals("") && StringUtils.isNumeric(selectedGroupProposal)
-                && idInternal != null && !idInternal.equals("") && StringUtils.isNumeric(idInternal)
+                && externalId != null && !externalId.equals("") && StringUtils.isNumeric(externalId)
                 && orderOfProposalPreference != null && !orderOfProposalPreference.equals("")
                 && StringUtils.isNumeric(orderOfProposalPreference)) {
 
-            final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(new Integer(idInternal));
+            final FinalDegreeWorkGroup group = AbstractDomainObject.fromExternalId(externalId);
             request.setAttribute("infoGroup", InfoGroup.newInfoFromDomain(group));
-            ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy.run(group, new Integer(selectedGroupProposal),
-                    new Integer(orderOfProposalPreference));
+            ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy.run(group, selectedGroupProposal, new Integer(
+                    orderOfProposalPreference));
         }
 
         dynaActionForm.set("selectedGroupProposal", null);
@@ -524,20 +520,20 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         InfoGroup infoGroup = ReadFinalDegreeWorkStudentGroupByUsername.run(userView.getPerson(), executionDegree);
 
         if (infoGroup != null) {
-            if (infoGroup.getExecutionDegree() != null && infoGroup.getExecutionDegree().getIdInternal() != null) {
-                String executionDegreeOID = infoGroup.getExecutionDegree().getIdInternal().toString();
+            if (infoGroup.getExecutionDegree() != null && infoGroup.getExecutionDegree().getExternalId() != null) {
+                String executionDegreeOID = infoGroup.getExecutionDegree().getExternalId().toString();
                 dynaActionForm.set("executionDegreeOID", executionDegreeOID);
             }
             if (infoGroup.getGroupStudents() != null && !infoGroup.getGroupStudents().isEmpty()) {
                 String[] students = new String[infoGroup.getGroupStudents().size()];
                 for (int i = 0; i < infoGroup.getGroupStudents().size(); i++) {
                     InfoGroupStudent infoGroupStudent = infoGroup.getGroupStudents().get(i);
-                    students[i] = infoGroupStudent.getStudent().getIdInternal().toString();
+                    students[i] = infoGroupStudent.getStudent().getExternalId().toString();
                 }
                 dynaActionForm.set("students", students);
             }
-            if (infoGroup.getIdInternal() != null) {
-                dynaActionForm.set("idInternal", infoGroup.getIdInternal().toString());
+            if (infoGroup.getExternalId() != null) {
+                dynaActionForm.set("externalId", infoGroup.getExternalId().toString());
             }
             Collections.sort(infoGroup.getGroupProposals(), new BeanComparator("orderOfPreference"));
             request.setAttribute("finalDegreeWorkCandidacyForm", dynaActionForm);
@@ -562,10 +558,10 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
             InfoExecutionDegree infoExecutionDegree =
                     (InfoExecutionDegree) CollectionUtils.find(infoExecutionDegrees,
                             new PREDICATE_FIND_EXECUTION_DEGREE_BY_DEGREE_CURRICULAR_PLAB(infoStudentCurricularPlan
-                                    .getInfoDegreeCurricularPlan().getIdInternal()));
+                                    .getInfoDegreeCurricularPlan().getExternalId()));
 
-            if (infoExecutionDegree != null && infoExecutionDegree.getIdInternal() != null) {
-                executionDegreeOID = infoExecutionDegree.getIdInternal().toString();
+            if (infoExecutionDegree != null && infoExecutionDegree.getExternalId() != null) {
+                executionDegreeOID = infoExecutionDegree.getExternalId().toString();
                 dynaActionForm.set("executionDegreeOID", executionDegreeOID);
                 request.setAttribute("finalDegreeWorkCandidacyForm", dynaActionForm);
             }
@@ -610,7 +606,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
 
         List infoExecutionDegrees =
-                ReadExecutionDegreesByExecutionYearAndType.run(infoExecutionYear.getIdInternal(), degreeTypes);
+                ReadExecutionDegreesByExecutionYearAndType.run(infoExecutionYear.getExternalId(), degreeTypes);
         filterExecutionDegreesForUser(infoExecutionDegrees);
         Collections.sort(infoExecutionDegrees, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
@@ -652,14 +648,14 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
     private class PREDICATE_FIND_EXECUTION_DEGREE_BY_DEGREE_CURRICULAR_PLAB implements Predicate {
 
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
 
         @Override
         public boolean evaluate(Object arg0) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arg0;
             if (degreeCurricularPlanID != null && infoExecutionDegree != null
                     && infoExecutionDegree.getInfoDegreeCurricularPlan() != null
-                    && degreeCurricularPlanID.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal())) {
+                    && degreeCurricularPlanID.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId())) {
                 return true;
             }
 
@@ -667,7 +663,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
         }
 
-        public PREDICATE_FIND_EXECUTION_DEGREE_BY_DEGREE_CURRICULAR_PLAB(Integer degreeCurricularPlanID) {
+        public PREDICATE_FIND_EXECUTION_DEGREE_BY_DEGREE_CURRICULAR_PLAB(String degreeCurricularPlanID) {
             super();
             this.degreeCurricularPlanID = degreeCurricularPlanID;
         }

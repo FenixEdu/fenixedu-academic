@@ -167,7 +167,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     protected DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        return rootDomainObject.readDegreeCurricularPlanByOID(getIntegerFromRequest(request, "degreeCurricularPlanID"));
+        return getDomainObject(request, "degreeCurricularPlanID");
     }
 
     // Alerts Management

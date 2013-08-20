@@ -74,7 +74,7 @@ public abstract class CreateThesisFile {
 
         VirtualPathNode[] nodes =
                 { new VirtualPathNode("Thesis", "Thesis"),
-                        new VirtualPathNode("Student" + thesis.getStudent().getIdInternal(), "Student") };
+                        new VirtualPathNode("Student" + thesis.getStudent().getExternalId(), "Student") };
 
         VirtualPath path = new VirtualPath();
         for (VirtualPathNode node : nodes) {

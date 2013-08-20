@@ -23,7 +23,7 @@ public class LoginRequest extends LoginRequest_Base {
     }
 
     private String generateHash() {
-        String seed = System.currentTimeMillis() + " " + this.getUser().getIdInternal();
+        String seed = System.currentTimeMillis() + " " + this.getUser().getExternalId();
         return DigestUtils.md5Hex(seed);
     }
 

@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -100,9 +101,9 @@ public class ParkingRequest extends ParkingRequest_Base {
     public static abstract class ParkingRequestFactory implements Serializable, FactoryExecutor {
         private ParkingParty parkingParty;
 
-        private Integer firstVechicleID;
+        private String firstVechicleID;
 
-        private Integer secondVechicleID;
+        private String secondVechicleID;
 
         private String firstCarPlateNumber;
 
@@ -507,13 +508,13 @@ public class ParkingRequest extends ParkingRequest_Base {
             return new GroupUnion(personGroup, roleGroup);
         }
 
-        protected VirtualPath getFilePath(final Integer requestID) {
+        protected VirtualPath getFilePath(final String requestID) {
             Party party = getParkingParty().getParty();
             final VirtualPath filePath = new VirtualPath();
 
             filePath.addNode(new VirtualPathNode("ParkingFiles", "Parking Files"));
 
-            filePath.addNode(new VirtualPathNode("Party" + party.getIdInternal(), party.getName()));
+            filePath.addNode(new VirtualPathNode("Party" + party.getExternalId(), party.getName()));
             filePath.addNode(new VirtualPathNode("PR" + requestID, "Parking Request ID"));
 
             return filePath;
@@ -607,19 +608,19 @@ public class ParkingRequest extends ParkingRequest_Base {
             this.limitlessAccessCard = limitlessAccessCard;
         }
 
-        public Integer getFirstVechicleID() {
+        public String getFirstVechicleID() {
             return firstVechicleID;
         }
 
-        public void setFirstVechicleID(Integer firstVechicleID) {
+        public void setFirstVechicleID(String firstVechicleID) {
             this.firstVechicleID = firstVechicleID;
         }
 
-        public Integer getSecondVechicleID() {
+        public String getSecondVechicleID() {
             return secondVechicleID;
         }
 
-        public void setSecondVechicleID(Integer secondVechicleID) {
+        public void setSecondVechicleID(String secondVechicleID) {
             this.secondVechicleID = secondVechicleID;
         }
 
@@ -728,7 +729,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             if (!getParkingParty().hasFirstTimeRequest()) {
                 try {
                     ParkingRequest parkingRequest = new ParkingRequest(this);
-                    VirtualPath filePath = getFilePath(parkingRequest.getIdInternal());
+                    VirtualPath filePath = getFilePath(parkingRequest.getExternalId());
 
                     writeDriverLicenseFile(parkingRequest, filePath);
 
@@ -782,7 +783,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
             if (!parkingRequest.getVehicles().isEmpty()) {
                 Vehicle firstVehicle = parkingRequest.getVehicles().get(0);
-                setFirstVechicleID(firstVehicle.getIdInternal());
+                setFirstVechicleID(firstVehicle.getExternalId());
                 setFirstCarMake(firstVehicle.getVehicleMake());
                 setFirstCarPlateNumber(firstVehicle.getPlateNumber());
                 setFirstCarPropertyRegistryFileName(firstVehicle.getPropertyRegistryFileName());
@@ -797,7 +798,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
             if (parkingRequest.getVehicles().size() > 1) {
                 Vehicle secondVehicle = parkingRequest.getVehicles().get(1);
-                setSecondVechicleID(secondVehicle.getIdInternal());
+                setSecondVechicleID(secondVehicle.getExternalId());
                 setSecondCarMake(secondVehicle.getVehicleMake());
                 setSecondCarPlateNumber(secondVehicle.getPlateNumber());
                 setSecondCarPropertyRegistryFileName(secondVehicle.getPropertyRegistryFileName());
@@ -829,9 +830,9 @@ public class ParkingRequest extends ParkingRequest_Base {
             try {
                 ParkingRequest parkingRequest = getParkingRequest();
                 parkingRequest.edit(this);
-                VirtualPath filePath = getFilePath(parkingRequest.getIdInternal());
+                VirtualPath filePath = getFilePath(parkingRequest.getExternalId());
                 writeDriverLicenseFile(parkingRequest, filePath);
-                Vehicle firstVehicle = (Vehicle) RootDomainObject.readDomainObjectByOID(Vehicle.class, getFirstVechicleID());
+                Vehicle firstVehicle = AbstractDomainObject.fromExternalId(getFirstVechicleID());
                 if (firstVehicle != null) {
                     firstVehicle.setPlateNumber(getFirstCarPlateNumber());
                     firstVehicle.setVehicleMake(getFirstCarMake());
@@ -842,8 +843,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                     writeFirstVehicleDocuments(firstVehicle, filePath);
                 }
                 if (getSecondVechicleID() != null) {
-                    Vehicle secondVehicle =
-                            (Vehicle) RootDomainObject.readDomainObjectByOID(Vehicle.class, getSecondVechicleID());
+                    Vehicle secondVehicle = AbstractDomainObject.fromExternalId(getSecondVechicleID());
 
                     if (getSecondCarMake() == null) {
                         secondVehicle.delete();

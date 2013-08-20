@@ -50,7 +50,7 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends CreateOrEditMa
         DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
 
-        Integer scpID = (Integer) createMasterDegreeForm.get("scpID");
+        String scpID = (String) createMasterDegreeForm.get("scpID");
         String dissertationTitle = (String) createMasterDegreeForm.get("dissertationTitle");
 
         MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();

@@ -29,7 +29,7 @@
 </logic:messagesPresent>
 
 <fr:edit name="creator" schema="net.sourceforge.fenixedu.domain.ItemCreator" 
-    action="<%= String.format("%s?method=section&amp;%s&amp;sectionID=%s", actionName, context, section.getIdInternal()) %>">
+    action="<%= String.format("%s?method=section&amp;%s&amp;sectionID=%s", actionName, context, section.getExternalId()) %>">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>

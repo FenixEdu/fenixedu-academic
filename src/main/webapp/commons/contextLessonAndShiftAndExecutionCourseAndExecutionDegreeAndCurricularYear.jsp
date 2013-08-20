@@ -13,9 +13,9 @@
 				 toScope="request"
 				 scope="request"/>
 	<bean:define id="lessonOID"
-				 type="java.lang.Integer"
+				 type="java.lang.String"
 				 name="lesson"
-				 property="idInternal"
+				 property="externalId"
 				 toScope="request"
 				 scope="request"/>
 </logic:present>

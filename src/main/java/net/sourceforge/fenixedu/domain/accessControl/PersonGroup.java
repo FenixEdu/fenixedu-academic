@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
@@ -86,15 +85,8 @@ public class PersonGroup extends DomainBackedGroup<Person> {
 
                 if (argument instanceof String) {
                     person = AbstractDomainObject.fromExternalId((String) argument);
-                } else if (argument instanceof Integer) {
-                    try {
-                        person = (Person) RootDomainObject.readDomainObjectByOID(Person.class, (Integer) argument);
-                    } catch (ClassCastException e) {
-                        throw new GroupDynamicExpressionException(e, "accessControl.group.builder.person.id.notValid",
-                                String.valueOf(argument));
-                    }
                 } else {
-                    throw new WrongTypeOfArgumentException(1, Integer.class, argument.getClass());
+                    throw new WrongTypeOfArgumentException(1, String.class, argument.getClass());
                 }
 
             }

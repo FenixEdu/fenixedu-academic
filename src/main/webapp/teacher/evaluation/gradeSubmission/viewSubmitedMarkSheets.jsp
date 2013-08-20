@@ -22,7 +22,7 @@
 				    <fr:property name="columnClasses" value="listClasses,,"/>
 				    <fr:property name="link(viewMarkSheet)" value='<%= "/markSheetManagement.do?method=viewMarkSheet&amp;executionCourseID=" + executionCourseID %>'/>
 					<fr:property name="key(viewMarkSheet)" value="label.view.markSheet"/>
-					<fr:property name="param(viewMarkSheet)" value="idInternal/msID"/>				
+					<fr:property name="param(viewMarkSheet)" value="externalId/msID"/>				
 					<fr:property name="bundle(viewMarkSheet)" value="APPLICATION_RESOURCES" />				    
 				</fr:layout>
 		</fr:view>

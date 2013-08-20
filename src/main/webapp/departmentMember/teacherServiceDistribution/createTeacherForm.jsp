@@ -15,12 +15,12 @@
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:write name="tsdProcess" property="name"/>&nbsp;
 			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getExternalId().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.manageRootGrouping"/>
 		</html:link>
 		>
@@ -51,7 +51,7 @@
 			</th>
 			<td>
 				<html:select property="category">
-					<html:options collection="categoriesList" property="idInternal" labelProperty="shortName"/>
+					<html:options collection="categoriesList" property="externalId" labelProperty="shortName"/>
 				</html:select>
 			</td>
 		</tr>
@@ -79,6 +79,6 @@
 <br/>
 <br/>
 
-<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getIdInternal().toString() %>'>
+<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getExternalId().toString() %>'>
 	<bean:message key="link.back"/>
 </html:link>

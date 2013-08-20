@@ -10,7 +10,7 @@
 
 <ul style="width: 600px;">
 	<logic:iterate id="result" name="results" scope="request">
-		<bean:define id="resultId" name="result" property="idInternal" />
+		<bean:define id="resultId" name="result" property="externalId" />
 		<li>
 			<fr:view name="result" layout="nonNullValues" schema="<%=currentSchema%>">
 				<fr:layout>

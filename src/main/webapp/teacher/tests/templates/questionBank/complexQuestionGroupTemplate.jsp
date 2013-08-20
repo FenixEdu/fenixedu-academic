@@ -13,19 +13,19 @@
 
 <ft:define id="questionGroup" type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup" />
 <bean:define id="questionGroup" name="questionGroup" type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup" toScope="request" />
-<bean:define id="modelSelectDivId">testModelDiv<bean:write name="questionGroup" property="idInternal" /></bean:define>
-<bean:define id="modelSelectId">testModel<bean:write name="questionGroup" property="idInternal" /></bean:define>
-<bean:define id="questionId"><bean:write name="questionGroup" property="idInternal" /></bean:define>
+<bean:define id="modelSelectDivId">testModelDiv<bean:write name="questionGroup" property="externalId" /></bean:define>
+<bean:define id="modelSelectId">testModel<bean:write name="questionGroup" property="externalId" /></bean:define>
+<bean:define id="questionId"><bean:write name="questionGroup" property="externalId" /></bean:define>
 <bean:define id="modelSelectPath">/tests/questionBank.do?method=selectForModel#<bean:write name="modelSelectDivId" /></bean:define>
 
 <ul>
-<li><html:link page="/tests/questionBank.do?method=prepareCreateQuestionGroup" paramId="oid" paramName="questionGroup" paramProperty="idInternal">Criar grupo</html:link></li>
-<li><html:link page="/tests/questionBank.do?method=prepareDeleteQuestion" paramId="oid" paramName="questionGroup" paramProperty="idInternal">Apagar grupo</html:link></li>
-<li><html:link page="/tests/questionBank.do?method=prepareAssociateParent" paramId="oid" paramName="questionGroup" paramProperty="idInternal">Associar a outro grupo</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=prepareCreateQuestionGroup" paramId="oid" paramName="questionGroup" paramProperty="externalId">Criar grupo</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=prepareDeleteQuestion" paramId="oid" paramName="questionGroup" paramProperty="externalId">Apagar grupo</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=prepareAssociateParent" paramId="oid" paramName="questionGroup" paramProperty="externalId">Associar a outro grupo</html:link></li>
 <logic:notEqual name="questionGroup" property="parentQuestionGroupsCount" value="1">
-<li><html:link page="/tests/questionBank.do?method=prepareDisassociateParent" paramId="oid" paramName="questionGroup" paramProperty="idInternal">Disassociar de grupo</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=prepareDisassociateParent" paramId="oid" paramName="questionGroup" paramProperty="externalId">Disassociar de grupo</html:link></li>
 </logic:notEqual>
-<li><html:link page="/tests/questionBank.do?method=prepareCreateAtomicQuestion" paramId="oid" paramName="questionGroup" paramProperty="idInternal">Criar pergunta</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=prepareCreateAtomicQuestion" paramId="oid" paramName="questionGroup" paramProperty="externalId">Criar pergunta</html:link></li>
 <li><a href="javascript:switchDisplay('<%= modelSelectDivId %>')">Seleccionar</a></li>
 </ul>
 
@@ -63,7 +63,7 @@
 
 <div id="editNameDiv" class="switchNone">
 	<fr:form action="/tests/questionBank.do?method=editTestElement">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= questionGroup.getIdInternal().toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= questionGroup.getExternalId().toString() %>" />
 		<ft:edit schema="tests.questionGroup.edit.name"
 		         nested="true"
 		         id="editName">

@@ -19,12 +19,12 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa and rmalo
@@ -35,15 +35,14 @@ public class UnEnrollGroupShift {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(Integer studentGroupCode, Integer groupPropertiesCode, String username)
-            throws FenixServiceException {
-        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+    public static Boolean run(String studentGroupCode, String groupPropertiesCode, String username) throws FenixServiceException {
+        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
 
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();

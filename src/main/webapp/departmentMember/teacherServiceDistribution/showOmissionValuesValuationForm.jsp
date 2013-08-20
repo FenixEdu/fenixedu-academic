@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<bean:define id="selectedId" name="tsdProcess" property="idInternal"/>
+<bean:define id="selectedId" name="tsdProcess" property="externalId"/>
 
 <em><bean:message key="link.teacherServiceDistribution"/></em>
 <h2><bean:message key="link.teacherServiceDistribution.omissionValuesValuation"/></h2>

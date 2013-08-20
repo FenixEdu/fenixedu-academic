@@ -47,6 +47,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -247,7 +248,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
@@ -275,7 +276,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSummaryAndNew(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
@@ -297,7 +298,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSummaryAndSame(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
@@ -318,7 +319,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
         Professorship loggedProfessorship = (Professorship) request.getAttribute("loggedTeacherProfessorship");
         ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
+        dynaActionForm.set("teacher", loggedProfessorship.getExternalId().toString());
 
         SummariesManagementBean newBean =
                 new SummariesManagementBean(SummariesManagementBean.SummaryType.NORMAL_SUMMARY, executionCourse,
@@ -331,7 +332,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Professorship teacherLogged = ((Professorship) request.getAttribute("loggedTeacherProfessorship"));
         DynaActionForm dynaActionForm = (DynaActionForm) form;
@@ -360,7 +361,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Summary summary = getSummaryFromParameter(request);
         Professorship professorshipLogged = (Professorship) request.getAttribute("loggedTeacherProfessorship");
@@ -465,7 +466,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         }
 
         request.setAttribute("summariesManagementBean", bean);
-        dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
+        dynaActionForm.set("teacher", loggedProfessorship.getExternalId().toString());
         return mapping.findForward("prepareInsertComplexSummary");
     }
 
@@ -543,7 +544,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
             }
 
             request.setAttribute("summariesManagementBean", bean);
-            dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
+            dynaActionForm.set("teacher", loggedProfessorship.getExternalId().toString());
             return mapping.findForward("prepareInsertComplexSummary");
         }
 
@@ -551,7 +552,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createComplexSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SummariesManagementBean summaryBean = getSummariesManagementBean();
         readAndSaveTeacher(summaryBean, (DynaActionForm) form, request, mapping);
@@ -734,7 +735,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         Professorship loggedProfessorship = (Professorship) request.getAttribute("loggedTeacherProfessorship");
         ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
+        dynaActionForm.set("teacher", loggedProfessorship.getExternalId().toString());
         request.setAttribute("summariesManagementBean", new SummariesManagementBean(summaryType, executionCourse,
                 loggedProfessorship, null));
     }
@@ -837,16 +838,14 @@ public class SummariesManagementDA extends FenixDispatchAction {
         final String executionCourseIDString =
                 request.getParameterMap().containsKey("executionCourseID") ? request.getParameter("executionCourseID") : (String) request
                         .getAttribute("executionCourseID");
-        final Integer executionCourseID = executionCourseIDString != null ? Integer.valueOf(executionCourseIDString) : null;
-        return rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        return AbstractDomainObject.fromExternalId(executionCourseIDString);
     }
 
     private Summary getSummaryFromParameter(final HttpServletRequest request) {
         final String summaryIDString =
                 request.getParameterMap().containsKey("summaryID") ? request.getParameter("summaryID") : (String) request
                         .getAttribute("summaryID");
-        final Integer summaryID = summaryIDString != null ? Integer.valueOf(summaryIDString) : null;
-        return rootDomainObject.readSummaryByOID(summaryID);
+        return AbstractDomainObject.fromExternalId(summaryIDString);
     }
 
     private NextPossibleSummaryLessonsAndDatesBean getNextSummaryDateBeanFromParameter(final HttpServletRequest request) {
@@ -863,8 +862,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
                         .getAttribute("teacher");
         if (!StringUtils.isEmpty(professorshipIDString)
                 && !(professorshipIDString.equals("0") || professorshipIDString.equals("-1"))) {
-            final Integer professorshipID = professorshipIDString != null ? Integer.valueOf(professorshipIDString) : null;
-            return rootDomainObject.readProfessorshipByOID(professorshipID);
+            return AbstractDomainObject.fromExternalId(professorshipIDString);
         }
         return null;
     }

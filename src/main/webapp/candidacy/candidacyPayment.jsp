@@ -9,13 +9,13 @@
 <h2 class="mtop15 mbottom025"><bean:message key="label.payments.management" bundle="APPLICATION_RESOURCES"/></h2>
 
 <bean:define id="processName" name="processName"/>
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 
 <br/>
 
 <academic:allowed operation="MANAGE_STUDENT_PAYMENTS">
 <logic:equal name="process" property="isCandidacyInternal" value="true">
-	<bean:define id="personId" name="process" property="candidacy.personalDetails.person.idInternal" />
+	<bean:define id="personId" name="process" property="candidacy.personalDetails.person.externalId" />
 	<html:link action='<%= "payments.do?method=showOperations&amp;personId=" + personId.toString() %>' target="_blank">
 		<bean:message key="label.payments.management" bundle="APPLICATION_RESOURCES"/>	
 	</html:link>

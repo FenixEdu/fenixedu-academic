@@ -43,7 +43,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
-        Integer executionDegreeId = getFromRequest("executionDegreeId", request);
+        String executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
 
         IUserView userView = UserView.getUser();
@@ -63,12 +63,12 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
             saveErrors(request, errors);
         }
 
-        Integer[] responsibleCoordinatorsIds = findResponsibleCoodinators(infoExecutionDegree.getCoordinatorsList());
+        String[] responsibleCoordinatorsIds = findResponsibleCoodinators(infoExecutionDegree.getCoordinatorsList());
         DynaActionForm coordinatorsForm = (DynaActionForm) actionForm;
         coordinatorsForm.set("responsibleCoordinatorsIds", responsibleCoordinatorsIds);
         request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-        request.setAttribute("degreeId", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal());
-        request.setAttribute("degreeCurricularPlanId", infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+        request.setAttribute("degreeId", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getExternalId());
+        request.setAttribute("degreeCurricularPlanId", infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 
         return mapping.findForward("manageCoordinators");
     }
@@ -79,7 +79,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
      * @param list
      * @return Integer[]
      */
-    private Integer[] findResponsibleCoodinators(List coordinatorsList) {
+    private String[] findResponsibleCoodinators(List coordinatorsList) {
         List responsibleCoordinatorsList = (List) CollectionUtils.select(coordinatorsList, new Predicate() {
             @Override
             public boolean evaluate(Object obj) {
@@ -89,22 +89,22 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         });
 
         ListIterator listIterator = responsibleCoordinatorsList.listIterator();
-        List responsibleCoordinatorsIdsList = new ArrayList();
+        List<String> responsibleCoordinatorsIdsList = new ArrayList<String>();
 
         while (listIterator.hasNext()) {
             InfoCoordinator infoCoordinator = (InfoCoordinator) listIterator.next();
 
-            responsibleCoordinatorsIdsList.add(infoCoordinator.getIdInternal());
+            responsibleCoordinatorsIdsList.add(infoCoordinator.getExternalId());
         }
 
-        return (Integer[]) responsibleCoordinatorsIdsList.toArray(new Integer[] {});
+        return responsibleCoordinatorsIdsList.toArray(new String[] {});
     }
 
     public ActionForward prepareInsert(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
-        Integer executionDegreeId = getFromRequest("executionDegreeId", request);
+        String executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
 
         IUserView userView = UserView.getUser();
@@ -125,8 +125,8 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         }
 
         request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-        request.setAttribute("degreeId", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal());
-        request.setAttribute("degreeCurricularPlanId", infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+        request.setAttribute("degreeId", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getExternalId());
+        request.setAttribute("degreeCurricularPlanId", infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 
         return mapping.findForward("insertCoordinator");
     }
@@ -136,10 +136,10 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         ActionErrors errors = new ActionErrors();
         IUserView userView = UserView.getUser();
 
-        Integer executionDegreeId = getFromRequest("executionDegreeId", request);
+        String executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
 
-        Integer degreeId = getFromRequest("degreeId", request);
+        String degreeId = getFromRequest("degreeId", request);
         request.setAttribute("degreeId", degreeId);
 
         getFromRequest("degreeCurricularPlanId", request);
@@ -170,21 +170,21 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
 
-        Integer executionDegreeId = getFromRequest("executionDegreeId", request);
+        String executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
 
-        Integer degreeId = getFromRequest("degreeId", request);
+        String degreeId = getFromRequest("degreeId", request);
         request.setAttribute("degreeId", degreeId);
 
         getFromRequest("degreeCurricularPlanId", request);
         request.setAttribute("degreeCurricularPlanId", executionDegreeId);
 
         DynaActionForm coordinatorsForm = (DynaActionForm) actionForm;
-        Integer[] responsibleCoordinatorsIds = (Integer[]) coordinatorsForm.get("responsibleCoordinatorsIds");
-        Integer[] deletedCoordinatorsIds = (Integer[]) coordinatorsForm.get("deletedCoordinatorsIds");
+        String[] responsibleCoordinatorsIds = (String[]) coordinatorsForm.get("responsibleCoordinatorsIds");
+        String[] deletedCoordinatorsIds = (String[]) coordinatorsForm.get("deletedCoordinatorsIds");
 
         if (responsibleCoordinatorsIds != null) {
-            List responsibleCoordinatorsIdsList = Arrays.asList(responsibleCoordinatorsIds);
+            List<String> responsibleCoordinatorsIdsList = Arrays.asList(responsibleCoordinatorsIds);
 
             try {
                 ResponsibleCoordinators.run(executionDegreeId, responsibleCoordinatorsIdsList);
@@ -198,7 +198,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         }
 
         if (deletedCoordinatorsIds != null) {
-            List deletedCoordinatorsIdsList = Arrays.asList(deletedCoordinatorsIds);
+            List<String> deletedCoordinatorsIdsList = Arrays.asList(deletedCoordinatorsIds);
 
             RemoveCoordinators.run(executionDegreeId, deletedCoordinatorsIdsList);
             if (!errors.isEmpty()) {
@@ -209,15 +209,11 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         return mapping.findForward("viewCoordinators");
     }
 
-    private Integer getFromRequest(String parameter, HttpServletRequest request) {
-        Integer parameterCode = null;
+    private String getFromRequest(String parameter, HttpServletRequest request) {
         String parameterCodeString = request.getParameter(parameter);
         if (parameterCodeString == null) {
             parameterCodeString = (String) request.getAttribute(parameter);
         }
-        if (parameterCodeString != null) {
-            parameterCode = new Integer(parameterCodeString);
-        }
-        return parameterCode;
+        return parameterCodeString;
     }
 }

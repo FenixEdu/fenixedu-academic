@@ -129,7 +129,7 @@
 			</td>
 			<td>
 				<% if (thesisPresentationState == ThesisPresentationState.UNEXISTING) { %>
-	    			<bean:define id="url">/scientificCouncilManageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=<bean:write name="enrolment" property="degreeCurricularPlanOfStudent.externalId"/>&amp;executionYearId=<bean:write name="enrolment" property="executionYear.idInternal"/>&amp;studentID=<bean:write name="enrolment" property="student.externalId"/></bean:define>
+	    			<bean:define id="url">/scientificCouncilManageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=<bean:write name="enrolment" property="degreeCurricularPlanOfStudent.externalId"/>&amp;executionYearId=<bean:write name="enrolment" property="executionYear.externalId"/>&amp;studentID=<bean:write name="enrolment" property="student.externalId"/></bean:define>
 					<html:link page="<%= url %>" titleKey="title.student.thesis.submission"
 							paramId="enrolmentOID" paramName="enrolment" paramProperty="externalId">
 						<bean:message key="button.coordinator.thesis.proposal.create"/>

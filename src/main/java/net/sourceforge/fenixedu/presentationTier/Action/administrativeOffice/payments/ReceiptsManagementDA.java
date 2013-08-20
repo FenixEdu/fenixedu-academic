@@ -171,7 +171,7 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
         if (createReceiptBean.getSelectedEntries().isEmpty()) {
             addActionMessage("context", request, "error.payments.receipt.entries.selection.is.required");
 
-            request.setAttribute("personId", createReceiptBean.getPerson().getIdInternal());
+            request.setAttribute("personId", createReceiptBean.getPerson().getExternalId());
             return showPaymentsWithoutReceipt(mapping, actionForm, request, response);
         }
 
@@ -191,8 +191,8 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
                             createReceiptBean.getContributorParty(), createReceiptBean.getContributorName(),
                             createReceiptBean.getYear(), createReceiptBean.getSelectedEntries());
 
-            request.setAttribute("personId", receipt.getPerson().getIdInternal());
-            request.setAttribute("receiptID", receipt.getIdInternal());
+            request.setAttribute("personId", receipt.getPerson().getExternalId());
+            request.setAttribute("receiptID", receipt.getExternalId());
 
             return prepareShowReceipt(mapping, form, request, response);
 
@@ -247,8 +247,8 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
 
-            request.setAttribute("personId", receipt.getPerson().getIdInternal());
-            request.setAttribute("receiptID", receipt.getIdInternal());
+            request.setAttribute("personId", receipt.getPerson().getExternalId());
+            request.setAttribute("receiptID", receipt.getExternalId());
 
             return prepareShowReceipt(mapping, actionForm, request, response);
         }
@@ -306,13 +306,13 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
             return mapping.findForward("editReceipt");
         }
 
-        request.setAttribute("personId", editReceiptBean.getReceipt().getPerson().getIdInternal());
+        request.setAttribute("personId", editReceiptBean.getReceipt().getPerson().getExternalId());
 
         return showReceipts(mapping, form, request, response);
     }
 
     protected Receipt getReceipt(final HttpServletRequest request) {
-        return rootDomainObject.readReceiptByOID(getIntegerFromRequest(request, "receiptID"));
+        return getDomainObject(request, "receiptID");
     }
 
     protected Receipt getReceiptFromViewState(String viewStateName) {

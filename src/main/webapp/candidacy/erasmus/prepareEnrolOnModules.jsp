@@ -6,7 +6,7 @@
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="title.erasmus.candidacy.enrol.on.modules" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 
 <p><strong><bean:message key="message.erasmus.candidacy.enrol.on.modules" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 

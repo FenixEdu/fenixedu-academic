@@ -27,8 +27,8 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
         public int compare(CandidacySituation leftCandidacySituation, CandidacySituation rightCandidacySituation) {
             int comparationResult =
                     leftCandidacySituation.getSituationDate().compareTo(rightCandidacySituation.getSituationDate());
-            return (comparationResult == 0) ? leftCandidacySituation.getIdInternal().compareTo(
-                    rightCandidacySituation.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftCandidacySituation.getExternalId().compareTo(
+                    rightCandidacySituation.getExternalId()) : comparationResult;
         }
     };
 

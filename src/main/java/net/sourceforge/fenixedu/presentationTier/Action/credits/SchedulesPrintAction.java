@@ -24,8 +24,8 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
     public ActionForward showSchedulesPrint(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer executionPeriodId = Integer.valueOf(request.getParameter("executionPeriodId"));
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        String executionPeriodId = request.getParameter("executionPeriodId");
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
         Teacher teacher = AbstractDomainObject.fromExternalId(request.getParameter("teacherId"));
 
         getAllTeacherCredits(request, executionSemester, teacher);

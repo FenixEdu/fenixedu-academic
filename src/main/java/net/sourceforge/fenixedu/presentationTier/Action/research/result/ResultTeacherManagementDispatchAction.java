@@ -86,7 +86,7 @@ public class ResultTeacherManagementDispatchAction extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
         String type = request.getParameter("typeResult");
-        Integer resultId = getRequestParameterAsInteger(request, "resultId");
+        String resultId = getRequestParameterAsString(request, "resultId");
 
         try {
 
@@ -102,7 +102,7 @@ public class ResultTeacherManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         IUserView userView = UserView.getUser();
-        Integer resultId = getRequestParameterAsInteger(request, "resultId");
+        String resultId = getRequestParameterAsString(request, "resultId");
 
         try {
 

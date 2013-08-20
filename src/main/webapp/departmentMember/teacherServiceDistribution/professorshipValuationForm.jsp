@@ -26,7 +26,7 @@
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:write name="tsdProcess" property="name"/>&nbsp;
 			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
@@ -57,7 +57,7 @@
 	</th>
 	<td>
 		<html:select property="tsd" onchange="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit();">
-			<html:options collection="tsdOptionEntryList" property="idInternal" labelProperty="name"/>
+			<html:options collection="tsdOptionEntryList" property="externalId" labelProperty="name"/>
 		</html:select>
 	</td>
 </tr>
@@ -67,7 +67,7 @@
 	</th>
 	<td>
 		<html:select property="executionPeriod" onchange="this.form.method.value='loadExecutionPeriod'; this.form.submit();">
-			<html:options collection="executionPeriodList" property="idInternal" labelProperty="semester"/>
+			<html:options collection="executionPeriodList" property="externalId" labelProperty="semester"/>
 		</html:select>
 	</td>
 </tr>
@@ -77,7 +77,7 @@
 	<th><bean:message key="label.teacherServiceDistribution.competenceCourse"/>:</th>
 	<td>
 		<html:select property="competenceCourse" onchange="this.form.method.value='loadCompetenceCourse'; this.form.submit();">
-			<html:options collection="competenceCourseList" property="idInternal" labelProperty="name"/>
+			<html:options collection="competenceCourseList" property="externalId" labelProperty="name"/>
 		</html:select>							
 
 	</td>
@@ -87,7 +87,7 @@
 	<th><bean:message key="label.teacherServiceDistribution.course"/>:</th>
 	<td>
 		<html:select property="tsdCurricularCourse" onchange="this.form.method.value='loadTSDProfessorships'; this.form.submit();">
-			<html:options collection="tsdCurricularCourseList" property="idInternal" labelProperty="degreeName"/>
+			<html:options collection="tsdCurricularCourseList" property="externalId" labelProperty="degreeName"/>
 		</html:select>
 	</td>
 	</logic:equal>
@@ -96,7 +96,7 @@
 	<th><bean:message key="label.teacherServiceDistribution.tsdCurricularCourseGroup"/>:</th>
 	<td>
 		<html:select property="tsdCurricularCourseGroup" onchange="this.form.method.value='loadTSDProfessorships'; this.form.submit();">
-			<html:options collection="tsdCurricularCourseGroupList" property="idInternal" labelProperty="name"/>
+			<html:options collection="tsdCurricularCourseGroupList" property="externalId" labelProperty="name"/>
 		</html:select>
 	</td>
 	</logic:equal>
@@ -166,7 +166,7 @@
 		</td>
 		<td class="aright">
 			<% if(tsdProfessorship != null) { %>
-			<html:link href="javascript:void(0)" onclick='<%= "document.forms[0].method.value='removeTSDProfessorships'; document.forms[0].tsdProfessorship.value=" + tsdProfessorship.getIdInternal().toString() + ";document.forms[0].submit();" %>' >
+			<html:link href="javascript:void(0)" onclick='<%= "document.forms[0].method.value='removeTSDProfessorships'; document.forms[0].tsdProfessorship.value=" + tsdProfessorship.getExternalId().toString() + ";document.forms[0].submit();" %>' >
 				<bean:message key="label.teacherServiceDistribution.delete"/>
 			</html:link>
 			<% } %>
@@ -243,7 +243,7 @@
 		</th>
 		<td>
 			<html:select property="tsdTeacher" onchange="this.form.method.value='loadTSDProfessorships'; this.form.submit();">
-				<html:options collection="tsdTeacherList" property="idInternal" labelProperty="name"/>
+				<html:options collection="tsdTeacherList" property="externalId" labelProperty="name"/>
 			</html:select>
 		</td>
 		<td style="background-color: white;">
@@ -372,13 +372,13 @@
 
 <logic:notEqual name="tsdProfessorshipForm" property="distributionViewAnchor" value="0">
 	<bean:define id="tsdCourseID" name="tsdProfessorshipForm" property="distributionViewAnchor"/>
-	<html:link page='<%= "/tsdProcessValuation.do?method=prepareForTSDProcessValuation&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() 
+	<html:link page='<%= "/tsdProcessValuation.do?method=prepareForTSDProcessValuation&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() 
 	+ "#" + tsdCourseID %>'>
 		<bean:message key="link.teacherServiceDistribution.backTotsdProcessVisualization"/>
 	</html:link>
 </logic:notEqual>
 <logic:equal name="tsdProfessorshipForm" property="distributionViewAnchor" value="0">
-	<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+	<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 		<bean:message key="link.back"/>
 	</html:link>
 </logic:equal>

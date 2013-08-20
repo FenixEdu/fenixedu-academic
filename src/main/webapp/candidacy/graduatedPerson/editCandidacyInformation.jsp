@@ -20,7 +20,7 @@
 	</ul>
 </fr:hasMessages>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 
 <fr:form action='<%="/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess.do?userAction=editCandidacyQualifications&processId=" + processId.toString() %>' id="candidacyForm">
 

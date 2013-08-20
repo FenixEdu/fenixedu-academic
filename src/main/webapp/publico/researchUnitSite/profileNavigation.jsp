@@ -17,7 +17,7 @@
 
 		<ul>
 			<li id="firstItem">
-				<bean:define id="siteId" name="site" property="idInternal"/>
+				<bean:define id="siteId" name="site" property="externalId"/>
 				<html:link page="<%= "/researchSite/viewResearchUnitSite.do?method=frontPage&amp;siteID=" + siteId %>">
 					<bean:message key="label.siteUnit.section.start" bundle="MESSAGING_RESOURCES"/>
 				</html:link>

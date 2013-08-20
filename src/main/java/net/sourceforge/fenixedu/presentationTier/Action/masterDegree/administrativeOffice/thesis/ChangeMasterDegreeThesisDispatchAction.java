@@ -15,6 +15,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -27,8 +29,8 @@ public class ChangeMasterDegreeThesisDispatchAction extends FenixDispatchAction 
     public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        final String scpID = request.getParameter("scpID");
+        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
 
         new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
                 studentCurricularPlan);

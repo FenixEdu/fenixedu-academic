@@ -8,14 +8,14 @@
 
 
 <p>
-	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="externalId">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 </p>
 
 
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -56,7 +56,7 @@
 	<br />
 </html:messages>
 
-<bean:define id="registrationID" name="registration" property="idInternal" />
+<bean:define id="registrationID" name="registration" property="externalId" />
 <fr:edit name="registration" schema="student.manageRegistrationStartDates" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright mtop15 thmiddle" />

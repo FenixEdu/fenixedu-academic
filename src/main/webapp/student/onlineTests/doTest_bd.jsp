@@ -22,13 +22,13 @@ response.setDateHeader ("Expires", 0);
 	
 	<logic:iterate id="testQuestion" name="studentTestQuestionList" type="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion"/>
 	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
-	<bean:define id="testCode" name="distributedTest" property="idInternal"/>
+	<bean:define id="testCode" name="distributedTest" property="externalId"/>
 	<bean:define id="testScope" name="distributedTest" property="testScope"/>
 	<bean:define id="domainObject" name="testScope" property="domainObject"/>
-	<bean:define id="objectCode" name="domainObject" property="idInternal"/>
+	<bean:define id="objectCode" name="domainObject" property="externalId"/>
 	<bean:define id="student" name="testQuestion" property="student"/>
 	<bean:define id="studentCode" name="student" property="number"/>
-	<bean:define id="registration" name="testQuestion" property="student.idInternal"/>
+	<bean:define id="registration" name="testQuestion" property="student.externalId"/>
 	
 	<html:form action="/studentTests">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="doTest"/>

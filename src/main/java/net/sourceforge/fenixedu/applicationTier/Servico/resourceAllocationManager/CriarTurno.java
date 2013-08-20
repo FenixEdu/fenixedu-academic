@@ -8,10 +8,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CriarTurno {
 
@@ -19,7 +19,7 @@ public class CriarTurno {
     @Service
     public static InfoShift run(InfoShiftEditor infoTurno) {
         final ExecutionCourse executionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao().getIdInternal());
+                AbstractDomainObject.fromExternalId(infoTurno.getInfoDisciplinaExecucao().getExternalId());
         final Shift newShift = new Shift(executionCourse, infoTurno.getTipos(), infoTurno.getLotacao());
         return InfoShift.newInfoFromDomain(newShift);
     }

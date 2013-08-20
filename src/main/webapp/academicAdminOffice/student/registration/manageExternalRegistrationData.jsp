@@ -14,13 +14,13 @@
 </html:messages>
 
 <p class="mtop2">
-	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="externalId">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </ul>
 
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -72,7 +72,7 @@
 <!--			<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>-->
 <!--			-->
 <!--			<fr:property name="customLink(delete)">-->
-<!--		        <a href="manageRegistrationState.do?method=deleteState&registrationId=${registration.idInternal}&amp;registrationStateId=${idInternal}" onclick="<%= deleteConfirm %>" >-->
+<!--		        <a href="manageRegistrationState.do?method=deleteState&registrationId=${registration.externalId}&amp;registrationStateId=${externalId}" onclick="<%= deleteConfirm %>" >-->
 <!--		        	<bean:message key="link.student.deleteRegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/>-->
 <!--		        </a>-->
 <!--			</fr:property>			-->

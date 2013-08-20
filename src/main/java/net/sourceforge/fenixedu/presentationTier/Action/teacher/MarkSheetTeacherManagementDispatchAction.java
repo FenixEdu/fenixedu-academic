@@ -39,6 +39,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCourseDA {
 
@@ -98,7 +99,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward gradeSubmissionStepTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IUserView userView = getUserView(request);
         MarkSheetTeacherGradeSubmissionBean submissionBean =
@@ -124,7 +125,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward backToMainPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         return mapping.findForward("mainPage");
     }
@@ -249,18 +250,17 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         Collection<MarkSheet> associatedMarkSheets = executionCourse.getAssociatedMarkSheets();
 
         request.setAttribute("markSheets", associatedMarkSheets);
-        request.setAttribute("executionCourseID", executionCourse.getIdInternal());
+        request.setAttribute("executionCourseID", executionCourse.getExternalId());
         return mapping.findForward("viewSubmitedMarkSheets");
     }
 
     public ActionForward viewMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        Integer markSheetID = Integer.valueOf(request.getParameter("msID"));
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+        String markSheetID = request.getParameter("msID");
+        MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
         request.setAttribute("markSheet", markSheet);
-        request.setAttribute("executionCourseID", executionCourse.getIdInternal());
+        request.setAttribute("executionCourseID", executionCourse.getExternalId());
         return mapping.findForward("viewMarkSheet");
     }
-
 }

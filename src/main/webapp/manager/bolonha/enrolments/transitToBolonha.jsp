@@ -18,8 +18,8 @@
 	</html:messages>
 	
 
-	<bean:define id="scpId" name="studentCurricularPlan" property="idInternal" />
-	<bean:define id="studentId" name="studentCurricularPlan" property="registration.student.idInternal" />
+	<bean:define id="scpId" name="studentCurricularPlan" property="externalId" />
+	<bean:define id="studentId" name="studentCurricularPlan" property="registration.student.externalId" />
 	<html:form action="<%= "/bolonhaStudentEnrolment.do?scpId=" + scpId.toString() + "&amp;studentId=" + studentId.toString() %>">
 		<html:hidden property="method" value="transitToBolonha" />
 		<strong><bean:message bundle="MANAGER_RESOURCES"  key="message.registration.transitToBolonha" /> (<bean:write name="studentCurricularPlan" property="name" /> )?</strong>

@@ -23,7 +23,7 @@
 			<bean:message key="message.inquiry.report.filledState" bundle="INQUIRIES_RESOURCES" arg0="<%= completionState %>"/>
 			<logic:present name="teacherCompletionState">
 				<bean:message key="message.inquiry.report.shouldFillIn" bundle="INQUIRIES_RESOURCES"/> 
-				<html:link page="/teachingInquiry.do?method=showInquiriesPrePage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<html:link page="/teachingInquiry.do?method=showInquiriesPrePage" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 					<bean:message key="label.inquiry.teaching" bundle="INQUIRIES_RESOURCES"/>
 				</html:link> (<bean:write name="teacherCompletionState"/>).
 			</logic:present>
@@ -47,7 +47,7 @@
 		(<bean:write name="completionState"/>)
 		<logic:present name="teacherCompletionState">
 			. <bean:message key="message.inquiry.report.shouldFillIn" bundle="INQUIRIES_RESOURCES"/> 
-			<html:link page="/teachingInquiry.do?method=showInquiriesPrePage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/teachingInquiry.do?method=showInquiriesPrePage" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 				<bean:message key="label.inquiry.teaching" bundle="INQUIRIES_RESOURCES"/>
 			</html:link> (<bean:write name="teacherCompletionState"/>).
 		</logic:present>

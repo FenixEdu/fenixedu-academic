@@ -46,7 +46,7 @@
      			<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation" >
 	        		<tr>
 			        	<td class="listClasses">
-				      		<html:link page="<%="/changeMarkDispatchAction.do?method=chooseStudentMarks&amp;page=0&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + pageContext.findAttribute("courseId") + "&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;showMarks=" + pageContext.findAttribute("showMarks") + "&amp;studentNumber="+ enrolment.getInfoStudentCurricularPlan().getInfoStudent().getNumber() + "&amp;enrolmentId=" + enrolment.getIdInternal()%>">	
+				      		<html:link page="<%="/changeMarkDispatchAction.do?method=chooseStudentMarks&amp;page=0&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + pageContext.findAttribute("courseId") + "&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;showMarks=" + pageContext.findAttribute("showMarks") + "&amp;studentNumber="+ enrolment.getInfoStudentCurricularPlan().getInfoStudent().getNumber() + "&amp;enrolmentId=" + enrolment.getExternalId()%>">	
 				      			<bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.number"/>
 				    		</html:link>
 			            </td>

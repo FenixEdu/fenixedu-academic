@@ -12,9 +12,9 @@
 <br />
 
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan"
-	property="idInternal" />
+	property="externalId" />
 <bean:define id="postingRuleId" name="postingRuleEditor"
-	property="dfaGratuityPR.idInternal" />
+	property="dfaGratuityPR.externalId" />
 
 <fr:hasMessages type="conversion" for="postingRuleEditor">
 	<ul class="nobullet list6">

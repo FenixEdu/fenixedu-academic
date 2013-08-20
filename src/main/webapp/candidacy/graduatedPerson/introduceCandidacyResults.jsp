@@ -22,9 +22,9 @@
 	</ul>
 </fr:hasMessages>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 <bean:define id="processName" name="processName" />
-<bean:define id="degreeId" name="degree" property="idInternal" />
+<bean:define id="degreeId" name="degree" property="externalId" />
 
 <fr:form action='<%= "/caseHandling" + processName + ".do?processId=" + processId.toString() + "&amp;degreeId=" + degreeId.toString() %>'>
  	<html:hidden property="method" value="executeIntroduceCandidacyResults" />

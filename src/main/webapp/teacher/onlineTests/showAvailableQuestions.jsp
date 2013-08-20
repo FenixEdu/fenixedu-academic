@@ -259,7 +259,7 @@ function invertSelect(){
 			<logic:iterate id="metadata" name="metadataList" type="net.sourceforge.fenixedu.domain.onlineTests.Metadata">
 			
 				<tr>
-					<bean:define id="metadataId" name="metadata" property="idInternal" />
+					<bean:define id="metadataId" name="metadata" property="externalId" />
 						
 					<td class="listClasses">
 					

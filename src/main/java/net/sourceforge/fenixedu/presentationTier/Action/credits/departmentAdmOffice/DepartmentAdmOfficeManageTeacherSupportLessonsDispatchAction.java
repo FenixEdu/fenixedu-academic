@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherSupportLessonsDispatchAction;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -28,6 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "departmentAdmOffice", path = "/supportLessonsManagement",
         input = "/supportLessonsManagement.do?method=prepareEdit&page=0", attribute = "supportLessonForm",
@@ -50,13 +52,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extends ManageTeacherSupportLessonsDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         DynaActionForm supportLessonForm = (DynaActionForm) form;
-        Integer supportLesssonID = (Integer) supportLessonForm.get("supportLessonID");
-        Integer professorshipID = (Integer) supportLessonForm.get("professorshipID");
+        String supportLesssonID = (String) supportLessonForm.get("supportLessonID");
 
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+        Professorship professorship = getDomainObject(supportLessonForm, "professorshipID");
 
         if (professorship == null
                 || professorship.getTeacher() == null
@@ -67,8 +68,8 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
         }
 
         SupportLesson supportLesson = null;
-        if (supportLesssonID != null && supportLesssonID != 0) {
-            supportLesson = rootDomainObject.readSupportLessonByOID(supportLesssonID);
+        if (!StringUtils.isEmpty(supportLesssonID)) {
+            supportLesson = AbstractDomainObject.fromExternalId(supportLesssonID);
             if (!professorship.getSupportLessons().contains(supportLesson)) {
                 return mapping.findForward("teacher-not-found");
             }
@@ -96,15 +97,14 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
     }
 
     public ActionForward editSupportLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException,
-            InvalidPeriodException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException, InvalidPeriodException {
 
         editSupportLesson(form, request, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
         return mapping.findForward("successfull-edit");
     }
 
     public ActionForward deleteSupportLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         deleteSupportLesson(request, form, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
         return mapping.findForward("successfull-delete");

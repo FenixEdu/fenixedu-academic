@@ -16,7 +16,7 @@ public class GeneratePasswordsForCandidacies {
 
     @Checked("RolePredicates.OPERATOR_PREDICATE")
     @Service
-    public static List<PasswordBean> run(final List<Integer> studentCandidacyIds) {
+    public static List<PasswordBean> run(final List<String> studentCandidacyIds) {
 
         final Set<StudentCandidacy> studentCandidacies = StudentCandidacy.readByIds(studentCandidacyIds);
         final List<PasswordBean> result = new ArrayList<PasswordBean>();

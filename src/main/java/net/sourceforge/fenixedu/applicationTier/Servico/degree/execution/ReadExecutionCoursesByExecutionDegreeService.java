@@ -8,12 +8,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadExecutionCoursesByExecutionDegreeService {
 
@@ -24,16 +25,16 @@ public class ReadExecutionCoursesByExecutionDegreeService {
     }
 
     @Service
-    public static List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException {
+    public static List run(String executionDegreeId, String executionPeriodId) throws FenixServiceException {
 
         final ExecutionSemester executionSemester;
-        if (executionPeriodId == null) {
+        if (StringUtils.isEmpty(executionPeriodId)) {
             executionSemester = ExecutionSemester.readActualExecutionSemester();
         } else {
-            executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+            executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
         }
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
         if (executionDegree == null) {
             throw new NonExistingExecutionDegree();
         }

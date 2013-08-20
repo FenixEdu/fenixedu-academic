@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -32,8 +31,7 @@ public class DepartmentShowThesesDA extends PublicShowThesesDA {
         Unit unit = site.getUnit();
 
         if (unit == null) {
-            Integer id = getIntegerFromRequest(request, "selectedDepartmentUnitID");
-            unit = (Unit) RootDomainObject.getInstance().readPartyByOID(id);
+            unit = getDomainObject(request, "selectedDepartmentUnitID");
         }
 
         return unit;

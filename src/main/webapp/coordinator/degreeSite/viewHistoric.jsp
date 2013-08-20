@@ -16,7 +16,7 @@
 			<app:defineContentPath id="contextPathForUrl" name="executionDegree" property="degreeCurricularPlan.degree.site" toScope="request"/>
 			<bean:define id="contextPathForUrl" name="contextPathForUrl" type="java.lang.String"/>
 
-			<bean:define id="executionDegreeID" name="executionDegree" property="idInternal" />
+			<bean:define id="executionDegreeID" name="executionDegree" property="externalId" />
 			
 			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %>
 			<html:link href="<%= request.getContextPath() + "/publico/showDegreeSite.do?method=showDescription&amp;executionDegreeID=" + executionDegreeID + "&amp;" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + contextPathForUrl%>" target="_blank">

@@ -54,7 +54,7 @@
 
 	<bean:define id="isInputForm" name="currentForm" property="input" />
 	<bean:define id="schemaName" name="currentForm" property="schemaName" type="java.lang.String" />
-	<bean:define id="candidacyID" name="candidacy" property="idInternal" />
+	<bean:define id="candidacyID" name="candidacy" property="externalId" />
 	<bean:define id="schemaSuffix" name="schemaSuffix" />
 	
 	<input alt="input.candidacyID" type="hidden" name="candidacyID" value="<%=candidacyID%>" />

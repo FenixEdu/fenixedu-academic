@@ -6,13 +6,13 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 
-		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="unitID" name="unit" property="externalId"/>
 
 		<bean:define id="currentSchema" name="currentSchema" scope="request" type="java.lang.String"/>
 
 		<ul>
 		<logic:iterate id="result" name="results" scope="request">
- 			<bean:define id="resultId" name="result" property="idInternal"/>
+ 			<bean:define id="resultId" name="result" property="externalId"/>
 				<li>
 		 			<fr:view name="result" layout="nonNullValues" schema="<%=currentSchema%>">
 		 				<fr:layout>

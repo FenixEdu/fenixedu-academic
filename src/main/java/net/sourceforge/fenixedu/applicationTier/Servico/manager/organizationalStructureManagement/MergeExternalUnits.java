@@ -27,7 +27,7 @@ public class MergeExternalUnits {
         if (fromUnit != null && destinationUnit != null) {
 
             String fromUnitName = fromUnit.getName();
-            Integer fromUnitID = fromUnit.getIdInternal();
+            String fromUnitID = fromUnit.getExternalId();
 
             Unit.mergeExternalUnits(fromUnit, destinationUnit);
 
@@ -50,8 +50,8 @@ public class MergeExternalUnits {
                                     "mergeExternalUnits.email.subject");
                     final String body =
                             BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExternalUnits.email.body",
-                                    new String[] { person.getName(), person.getUsername(), fromUnitName, fromUnitID.toString(),
-                                            destinationUnit.getName(), destinationUnit.getIdInternal().toString() });
+                                    new String[] { person.getName(), person.getUsername(), fromUnitName, fromUnitID,
+                                            destinationUnit.getName(), destinationUnit.getExternalId().toString() });
 
                     SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
                     new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body,

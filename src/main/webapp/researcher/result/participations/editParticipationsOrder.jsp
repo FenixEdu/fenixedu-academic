@@ -8,11 +8,11 @@
 
 <bean:define id="result" name="result"/>
 <bean:define id="participations" name="result" property="orderedResultParticipations"/>
-<bean:define id="resultId" name="result" property="idInternal"/>
+<bean:define id="resultId" name="result" property="externalId"/>
 <bean:define id="listSchema" name="listSchema" type="java.lang.String"/>
 <bean:define id="parameters" value="<%="resultId=" + resultId + "&amp;resultType=" + result.getClass().getSimpleName()%>"/>
 	<logic:present name="unit">
-	<bean:define id="unitID" name="unit" property="idInternal"/>
+	<bean:define id="unitID" name="unit" property="externalId"/>
 	<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
 </logic:present>
 <bean:define id="prepareEdit" value="<%="/resultParticipations/prepareEdit.do?" + parameters%>"/>
@@ -42,16 +42,16 @@
         <fr:property name="includeImage" value="false"/>
         
         <fr:property name="hiddenLinks">
-            <html:link page="<%= moveUp + "&amp;participationId=${idInternal}"%>">
+            <html:link page="<%= moveUp + "&amp;participationId=${externalId}"%>">
                 <bean:message key="link.moveUp" bundle="RESEARCHER_RESOURCES"/>
             </html:link>,
-            <html:link page="<%= moveDown + "&amp;participationId=${idInternal}"%>">
+            <html:link page="<%= moveDown + "&amp;participationId=${externalId}"%>">
                 <bean:message key="link.moveDown" bundle="RESEARCHER_RESOURCES"/>
             </html:link>,
-            <html:link page="<%= moveTop + "&amp;participationId=${idInternal}"%>">
+            <html:link page="<%= moveTop + "&amp;participationId=${externalId}"%>">
                 <bean:message key="link.moveTop" bundle="RESEARCHER_RESOURCES"/>
             </html:link>,
-            <html:link page="<%= moveBottom + "&amp;participationId=${idInternal}"%>">
+            <html:link page="<%= moveBottom + "&amp;participationId=${externalId}"%>">
                 <bean:message key="link.moveBottom" bundle="RESEARCHER_RESOURCES"/>
             </html:link>
         </fr:property>

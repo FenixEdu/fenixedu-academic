@@ -35,7 +35,7 @@
 				</tiles:insert>
 			</td>
 			<td class="listClasses" >
-				<html:link page='<%= "/showTeacherCreditsSheet.do?teacherId=" + teacherId %>' paramId="executionPeriodId" paramName="infoCredits" paramProperty="infoExecutionPeriod.idInternal">
+				<html:link page='<%= "/showTeacherCreditsSheet.do?teacherId=" + teacherId %>' paramId="executionPeriodId" paramName="infoCredits" paramProperty="infoExecutionPeriod.externalId">
 					<bean:message key="link.teacherCreditsDetails"/>
 				</html:link>
 			</td>

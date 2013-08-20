@@ -42,7 +42,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         @Override
         public int compare(CurriculumGroup o1, CurriculumGroup o2) {
             int result = o1.getChildOrder().compareTo(o2.getChildOrder());
-            return (result != 0) ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
+            return (result != 0) ? result : o1.getExternalId().compareTo(o2.getExternalId());
         }
     };
 

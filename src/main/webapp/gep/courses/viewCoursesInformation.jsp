@@ -17,7 +17,7 @@
 		</dt:format>)
 </h2>
 <logic:present name="infoExecutionDegree">
-	<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
+	<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.externalId"/>
 	<table width="90%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="center" class="infoselected">
@@ -54,7 +54,7 @@
 			<html:link page="<%="/listCoursesInformation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 					   paramId="executionDegreeId" 
 					   paramName="infoExecutionDegree" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.list.ects" bundle="GEP_RESOURCES" />
 			</html:link>
 		</div>
@@ -62,7 +62,7 @@
 			<html:link page="<%="/listCoursesInformationEnglish.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 					   paramId="executionDegreeId" 
 					   paramName="infoExecutionDegree" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.list.ectsEnglish" bundle="GEP_RESOURCES" />
 			</html:link>
 		</div>
@@ -70,7 +70,7 @@
 			<html:link page="<%="/listCoursesAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 					   paramId="executionDegreeId" 
 					   paramName="infoExecutionDegree" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.list.acred" bundle="GEP_RESOURCES"/>
 			</html:link>
 		</div>
@@ -80,7 +80,7 @@
 			<html:link page="<%="/listCoursesInformation.do?method=doSearch&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 					   paramId="executionDegreeId" 
 					   paramName="infoExecutionDegree" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.list.ects" bundle="GEP_RESOURCES"/>
 			</html:link>
 		</div>
@@ -88,7 +88,7 @@
 			<html:link page="<%="/listCoursesInformationEnglish.do?method=doSearch&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 					   paramId="executionDegreeId" 
 					   paramName="infoExecutionDegree" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.list.ectsEnglish" bundle="GEP_RESOURCES" />
 			</html:link>
 		</div>
@@ -96,7 +96,7 @@
 			<html:link page="<%="/listCoursesAcreditation.do?method=doSearch&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 					   paramId="executionDegreeId" 
 					   paramName="infoExecutionDegree" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.list.acred" bundle="GEP_RESOURCES"/>
 			</html:link>
 		</div>
@@ -180,8 +180,8 @@
 			</td>
 			<td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberTeachers") %>">&nbsp;
 				<logic:present name="infoExecutionDegree">
-					<bean:define id="idInternal" name="infoExecutionDegree" property="idInternal"/>
-					<html:link page='<%= "/readCourseInformation.do?executionDegreeId=" + idInternal %>'
+					<bean:define id="externalId" name="infoExecutionDegree" property="externalId"/>
+					<html:link page='<%= "/readCourseInformation.do?executionDegreeId=" + externalId %>'
 						paramId="executionCourseId" 
 						paramName="infoCourse"
 						paramProperty="executionCourseID">
@@ -391,7 +391,7 @@
 			<html:link page="<%="/listCoursesInformation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic")%>" target="_blank"
 					   paramId="executionDegreeId" 
 					   paramName="infoExecutionDegree" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.list.ects" bundle="GEP_RESOURCES" />
 			</html:link>
 		</div>
@@ -399,7 +399,7 @@
 			<html:link page="<%="/listCoursesInformationEnglish.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic")%>" target="_blank"
 					   paramId="executionDegreeId" 
 					   paramName="infoExecutionDegree" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.list.ectsEnglish" bundle="GEP_RESOURCES" />
 			</html:link>
 		</div>
@@ -407,7 +407,7 @@
 			<html:link page="<%="/listCoursesAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic")%>" target="_blank"
 					   paramId="executionDegreeId" 
 					   paramName="infoExecutionDegree" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.list.acred" bundle="GEP_RESOURCES"/>
 			</html:link>
 		</div>
@@ -417,7 +417,7 @@
 			<html:link page="/listCoursesInformation.do?method=doSearch" target="_blank"
 					   paramId="executionDegreeId" 
 					   paramName="infoExecutionDegree" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.list.ects" bundle="GEP_RESOURCES"/>
 			</html:link>
 		</div>
@@ -425,7 +425,7 @@
 			<html:link page="/listCoursesInformationEnglish.do?method=doSearch" target="_blank"
 					   paramId="executionDegreeId" 
 					   paramName="infoExecutionDegree" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.list.ectsEnglish" bundle="GEP_RESOURCES"/>
 			</html:link>
 		</div>
@@ -433,7 +433,7 @@
 			<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;" target="_blank"
 					   paramId="executionDegreeId" 
 					   paramName="infoExecutionDegree" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.list.acred" bundle="GEP_RESOURCES"/>
 			</html:link>
 		</div>

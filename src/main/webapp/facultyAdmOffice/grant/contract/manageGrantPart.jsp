@@ -64,14 +64,14 @@
             <%--
             <td class="listClasses">
 	            <%-- Edit a Grant Part 
-                <bean:define id="idGrantPart" name="infoGrantPart" property="idInternal"/>
+                <bean:define id="idGrantPart" name="infoGrantPart" property="externalId"/>
                 <html:link page='<%= "/editGrantPart.do?method=prepareEditGrantPartForm&amp;idGrantPart=" + idGrantPart.toString() + "&amp;loaddb=" + 1 %>' > 
                 	<bean:message key="link.edit" />
                 </html:link>
             </td>       
             <td class="listClasses">
 	            <%-- Delete a Grant Part 
-                <bean:define id="idGrantPart" name="infoGrantPart" property="idInternal"/>
+                <bean:define id="idGrantPart" name="infoGrantPart" property="externalId"/>
                 <html:link page='<%= "/editGrantPart.do?method=doDelete&amp;idGrantPart=" + idGrantPart.toString() + "&amp;idSubsidy=" + request.getAttribute("idSubsidy").toString() %>' > 
                 	<bean:message key="link.delete"/>
                 </html:link>

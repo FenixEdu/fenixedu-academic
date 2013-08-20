@@ -17,6 +17,6 @@
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
 <bean:define id="siteActionName" value="/unitSiteManagement.do" toScope="request"/>
 <bean:define id="siteContextParam" value="oid" toScope="request"/>
-<bean:define id="siteContextParamValue" value="<%= site.getIdInternal().toString() %>" toScope="request"/>
+<bean:define id="siteContextParamValue" value="<%= site.getExternalId().toString() %>" toScope="request"/>
 
 <jsp:include page="/webSiteManager/commons/chooseManagers.jsp"/>

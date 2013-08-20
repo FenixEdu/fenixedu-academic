@@ -86,7 +86,7 @@
 		<h:dataTable value="#{functionsManagementBackingBean.personsList}" var="person">		
 			<h:column>
 				<h:outputText value="<li>" escape="false" />				
-					<h:outputLink value="#{functionsManagementBackingBean.contextPath}/departmentAdmOffice/teacher/functionsManagement/unitChoose.faces?personID=#{person.idInternal}">
+					<h:outputLink value="#{functionsManagementBackingBean.contextPath}/departmentAdmOffice/teacher/functionsManagement/unitChoose.faces?personID=#{person.externalId}">
 						<h:outputText value="#{person.name}"/>
 					</h:outputLink>		
 				<h:outputText value="</li>" escape="false"/>
@@ -99,7 +99,7 @@
 	<c:if test="${functionsManagementBackingBean.personsNumber > 0}">
 		<c:out value="<ul>" escapeXml="false"/>	
 		<c:forEach items="${functionsManagementBackingBean.personsList}" var="person">
-			<c:url var="url" value="/departmentAdmOffice/functionsManagement/listPersonFunctions.faces?personID=${person.idInternal}" />
+			<c:url var="url" value="/departmentAdmOffice/functionsManagement/listPersonFunctions.faces?personID=${person.externalId}" />
 			<c:out value="<li>" escapeXml="false"/>
 			<a href="<c:out value="${url}"/>">
 				<c:out value="${person.name}" />

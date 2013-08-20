@@ -17,7 +17,7 @@
 		<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:write name="tsdProcess" property="name"/>&nbsp;
 			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
@@ -108,7 +108,7 @@
 		<td class='acenter'>
 			<bean:write name="tsdProcessPhase" property="numberOfTeacherServiceDistributions"/>
 		</td>
-		<bean:define id="tsdProcessPhaseId" name="tsdProcessPhase" property="idInternal" />
+		<bean:define id="tsdProcessPhaseId" name="tsdProcessPhase" property="externalId" />
 		<td class='acenter'>
 			<logic:equal name="tsdProcessPhase" property="status.name" value="<%=TSDProcessPhaseStatus.OPEN.name()%>">
 				<%-- <html:link href="<%= request.getContextPath() + "/departmentMember/tsdProcessPhasesManagement.do?&method=setCurrentTSDProcessPhase&tsdProcessPhase=" + tsdProcessPhaseId + "&tsdProcess=" + tsdProcess %>">--%>
@@ -171,6 +171,6 @@
 switchGlobal();
 </script>
 
-<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 	<bean:message key="link.back"/>
 </html:link>

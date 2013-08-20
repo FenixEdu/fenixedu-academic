@@ -20,9 +20,9 @@ public class StudentsByEntryYearBean implements Serializable {
 
     private Teacher teacher;
 
-    private Integer executionDegreeID;
+    private String executionDegreeID;
 
-    private Integer degreeCurricularPlanID;
+    private String degreeCurricularPlanID;
 
     private Month tutorshipEndMonth;
 
@@ -87,19 +87,19 @@ public class StudentsByEntryYearBean implements Serializable {
         return studentsList.size();
     }
 
-    public Integer getDegreeCurricularPlanID() {
+    public String getDegreeCurricularPlanID() {
         return degreeCurricularPlanID;
     }
 
-    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+    public void setDegreeCurricularPlanID(String degreeCurricularPlanID) {
         this.degreeCurricularPlanID = degreeCurricularPlanID;
     }
 
-    public Integer getExecutionDegreeID() {
+    public String getExecutionDegreeID() {
         return executionDegreeID;
     }
 
-    public void setExecutionDegreeID(Integer executionDegreeID) {
+    public void setExecutionDegreeID(String executionDegreeID) {
         this.executionDegreeID = executionDegreeID;
     }
 

@@ -4,24 +4,24 @@ import java.io.Serializable;
 
 public class LinkObject implements Serializable {
 
-    private Integer id;
+    private String id;
     private String method;
     private String label;
 
     public LinkObject() {
     }
 
-    public LinkObject(Integer id, String method, String label) {
+    public LinkObject(String id, String method, String label) {
         this.id = id;
         this.method = method;
         this.label = label;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

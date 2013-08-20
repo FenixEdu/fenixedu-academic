@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadNotClosedPublicExecutionPeriodsByExecutionYear {
 
@@ -20,7 +20,7 @@ public class ReadNotClosedPublicExecutionPeriodsByExecutionYear {
         if (infoExecutionYear == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         } else {
-            executionYear = RootDomainObject.getInstance().readExecutionYearByOID(infoExecutionYear.getIdInternal());
+            executionYear = AbstractDomainObject.fromExternalId(infoExecutionYear.getExternalId());
         }
 
         final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();

@@ -69,7 +69,7 @@
 					actionListener="#{courseStatistics.onCompetenceCourseSelect}">
 
 					<f:param id="competenceCourseId" name="competenceCourseId"
-						value="#{competenceCourse.idInternal}" />
+						value="#{competenceCourse.externalId}" />
 				</fc:commandLink>
 				
 				<h:outputText value="</td><td class='aright'>#{competenceCourse.firstEnrolledCount}</td>" escape="false"/>

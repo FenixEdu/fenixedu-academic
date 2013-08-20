@@ -37,8 +37,8 @@
 
 <br />
 
-<bean:define id="eventId" name="createAdministrativeOfficeFeeAndInsuranceExemptionBean" property="administrativeOfficeFeeAndInsuranceEvent.idInternal" />
-<bean:define id="personId" name="createAdministrativeOfficeFeeAndInsuranceExemptionBean" property="administrativeOfficeFeeAndInsuranceEvent.person.idInternal" />
+<bean:define id="eventId" name="createAdministrativeOfficeFeeAndInsuranceExemptionBean" property="administrativeOfficeFeeAndInsuranceEvent.externalId" />
+<bean:define id="personId" name="createAdministrativeOfficeFeeAndInsuranceExemptionBean" property="administrativeOfficeFeeAndInsuranceEvent.person.externalId" />
 <fr:form action="<%="/exemptionsManagement.do?personId=" + personId + "&amp;eventId=" + eventId%>">
 
 	<input alt="input.method" type="hidden" name="method" value="" />
