@@ -30,7 +30,7 @@
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle1 thlight mtop2"/>
 	        	<fr:property name="columnClasses" value="acenter,,"/>
-				<fr:property name="linkFormat(view)" value="/student.do?method=visualizeStudent&studentID=${idInternal}" />
+				<fr:property name="linkFormat(view)" value="/student.do?method=visualizeStudent&studentID=${externalId}" />
 				<fr:property name="key(view)" value="link.student.visualizeStudent"/>
 				<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
 				<fr:property name="contextRelative(view)" value="true"/>	

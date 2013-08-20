@@ -20,7 +20,7 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
     @Override
     abstract protected RoleType getRoleType();
 
-    public void execute(Integer idInternal) throws NotAuthorizedException {
+    public void execute(String externalId) throws NotAuthorizedException {
         try {
             IUserView id = AccessControl.getUserView();
 
@@ -31,10 +31,10 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
              * NotAuthorizedException
              */
 
-            boolean isNew = ((idInternal == null) || idInternal.equals(Integer.valueOf(0)));
+            boolean isNew = externalId == null;
 
             if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                    || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, idInternal)))) {
+                    || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, externalId)))) {
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
@@ -43,5 +43,5 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
         }
     }
 
-    abstract protected boolean verifyCondition(IUserView id, Integer objectId);
+    abstract protected boolean verifyCondition(IUserView id, String objectId);
 }

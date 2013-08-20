@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteE
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
@@ -25,6 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "departmentAdmOffice", path = "/vigilancy/examCoordinatorManagement", scope = "request", parameter = "method")
 @Forwards(
@@ -77,17 +77,15 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String oid = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(oid);
         String departmentId = request.getParameter("deparmentId");
         String unitId = request.getParameter("unitId");
 
-        ExamCoordinator coordinator = (ExamCoordinator) RootDomainObject.readDomainObjectByOID(ExamCoordinator.class, idInternal);
+        ExamCoordinator coordinator = (ExamCoordinator) AbstractDomainObject.fromExternalId(oid);
 
         DeleteExamCoordinator.run(coordinator);
 
-        Department deparment =
-                (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer.valueOf(departmentId));
-        Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitId));
+        Department deparment = (Department) AbstractDomainObject.fromExternalId(departmentId);
+        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitId);
 
         VigilantGroupBean bean = new VigilantGroupBean();
         bean.setSelectedDepartment(deparment);
@@ -104,9 +102,8 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         String departmentId = request.getParameter("deparmentId");
         String unitId = request.getParameter("unitId");
 
-        Department deparment =
-                (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer.valueOf(departmentId));
-        Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitId));
+        Department deparment = AbstractDomainObject.fromExternalId(departmentId);
+        Unit unit = AbstractDomainObject.fromExternalId(unitId);
 
         VigilantGroupBean bean = new VigilantGroupBean();
         bean.setSelectedDepartment(deparment);
@@ -123,9 +120,8 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         String departmentId = request.getParameter("deparmentId");
         String unitId = request.getParameter("unitId");
 
-        Department deparment =
-                (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer.valueOf(departmentId));
-        Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitId));
+        Department deparment = (Department) AbstractDomainObject.fromExternalId(departmentId);
+        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitId);
 
         VigilantGroupBean bean = new VigilantGroupBean();
         bean.setSelectedDepartment(deparment);
@@ -146,7 +142,7 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         return mapping.findForward("prepareExamCoordinator");
     }
 
-    private void prepareManagementBean(HttpServletRequest request) throws  FenixServiceException {
+    private void prepareManagementBean(HttpServletRequest request) throws FenixServiceException {
 
         VigilantGroupBean bean = new VigilantGroupBean();
         ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();

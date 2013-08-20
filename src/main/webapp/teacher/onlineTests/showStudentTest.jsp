@@ -20,11 +20,11 @@
 	<logic:equal name="correctionType" value="studentCorrection">
 			<bean:define id="student" name="testQuestion" property="student" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 			<bean:define id="person" name="student" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
-			<bean:define id="studentId" name="student" property="idInternal"/>
+			<bean:define id="studentId" name="student" property="externalId"/>
 	</logic:equal>
 	<bean:define id="question" name="testQuestion" property="question" type="net.sourceforge.fenixedu.domain.onlineTests.Question"/>
 	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
-	<bean:define id="questionCode" name="question" property="idInternal"/>
+	<bean:define id="questionCode" name="question" property="externalId"/>
 	<bean:define id="questionOrder" name="testQuestion" property="testQuestionOrder"/>
 	<bean:define id="correction" name="testQuestion" property="distributedTest.correctionAvailability" type="net.sourceforge.fenixedu.util.tests.CorrectionAvailability"/>
 	<bean:define id="formula" name="testQuestion" property="correctionFormula.formula"/>

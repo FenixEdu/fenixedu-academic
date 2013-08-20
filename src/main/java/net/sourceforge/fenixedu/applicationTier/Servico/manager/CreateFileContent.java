@@ -80,22 +80,22 @@ public class CreateFileContent extends FileContentService {
         final VirtualPath filePath = new VirtualPath();
 
         for (Content content : contents.subList(1, contents.size())) {
-            filePath.addNode(0, new VirtualPathNode(content.getClass().getSimpleName().substring(0, 1) + content.getIdInternal(),
+            filePath.addNode(0, new VirtualPathNode(content.getClass().getSimpleName().substring(0, 1) + content.getExternalId(),
                     content.getName().getContent()));
         }
 
         String authorName = site.getAuthorName();
-        filePath.addNode(0, new VirtualPathNode("Site" + site.getIdInternal(),
-                authorName == null ? "Site" + site.getIdInternal() : authorName));
+        filePath.addNode(0, new VirtualPathNode("Site" + site.getExternalId(),
+                authorName == null ? "Site" + site.getExternalId() : authorName));
 
         ExecutionSemester executionSemester = site.getExecutionPeriod();
         if (executionSemester == null) {
             filePath.addNode(0, new VirtualPathNode("Intemporal", "Intemporal"));
         } else {
-            filePath.addNode(0, new VirtualPathNode("EP" + executionSemester.getIdInternal(), executionSemester.getName()));
+            filePath.addNode(0, new VirtualPathNode("EP" + executionSemester.getExternalId(), executionSemester.getName()));
 
             ExecutionYear executionYear = executionSemester.getExecutionYear();
-            filePath.addNode(0, new VirtualPathNode("EY" + executionYear.getIdInternal(), executionYear.getYear()));
+            filePath.addNode(0, new VirtualPathNode("EY" + executionYear.getExternalId(), executionYear.getYear()));
         }
 
         filePath.addNode(0, new VirtualPathNode("Courses", "Courses"));

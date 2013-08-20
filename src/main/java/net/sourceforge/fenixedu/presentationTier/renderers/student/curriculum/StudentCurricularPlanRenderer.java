@@ -1117,10 +1117,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 result.setParameter("degreeInitials", degreeCurricularPlan.getDegree().getSigla());
             }
 
-            result.setParameter("degreeID", degreeCurricularPlan.getDegree().getIdInternal().toString());
-            result.setParameter("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal().toString());
+            result.setParameter("degreeID", degreeCurricularPlan.getDegree().getExternalId().toString());
+            result.setParameter("degreeCurricularPlanID", degreeCurricularPlan.getExternalId().toString());
 
-            result.setParameter("executionPeriodOID", executionSemester.getIdInternal().toString());
+            result.setParameter("executionPeriodOID", executionSemester.getExternalId().toString());
 
             return result;
         }
@@ -1169,9 +1169,9 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             result.setModuleRelative(false);
             result.setTarget(HtmlLink.Target.BLANK);
 
-            result.setParameter("degreeID", curricularCourse.getDegreeCurricularPlan().getDegree().getIdInternal());
-            result.setParameter("curricularCourseID", curricularCourse.getIdInternal());
-            result.setParameter("degreeCurricularPlanID", curricularCourse.getDegreeCurricularPlan().getIdInternal());
+            result.setParameter("degreeID", curricularCourse.getDegreeCurricularPlan().getDegree().getExternalId());
+            result.setParameter("curricularCourseID", curricularCourse.getExternalId());
+            result.setParameter("degreeCurricularPlanID", curricularCourse.getDegreeCurricularPlan().getExternalId());
             result.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, "cursos/"
                     + curricularCourse.getDegree().getSigla() + "/plano-curricular");
 

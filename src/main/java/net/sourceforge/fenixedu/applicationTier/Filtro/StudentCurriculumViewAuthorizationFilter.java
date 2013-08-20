@@ -8,7 +8,7 @@ public class StudentCurriculumViewAuthorizationFilter {
 
     public final static StudentCurriculumViewAuthorizationFilter instance = new StudentCurriculumViewAuthorizationFilter();
 
-    final public void execute(Integer executionDegreeCode, Integer studentCurricularPlanID) throws NotAuthorizedException {
+    final public void execute() throws NotAuthorizedException {
         if (!AcademicPredicates.VIEW_FULL_STUDENT_CURRICULUM.evaluate(AccessControl.getUserView().getPerson())) {
             throw new NotAuthorizedException();
         }

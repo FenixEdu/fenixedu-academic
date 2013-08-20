@@ -40,7 +40,7 @@
 		</td>
 		<td>
 			<html:select property="tsdProcessPhase" onchange="this.form.method.value='viewGlobalTSDProcessValuation'; this.form.submit();">
-				<html:options collection="tsdProcessPhaseList" property="idInternal" labelProperty="name"/>
+				<html:options collection="tsdProcessPhaseList" property="externalId" labelProperty="name"/>
 			</html:select>
 		</td>
 	</tr>
@@ -50,7 +50,7 @@
 		</td>
 		<td>
 			<html:select property="tsd" onchange="this.form.method.value='viewGlobalTSDProcessValuation'; this.form.submit();">
-				<html:options collection="tsdOptionEntryList" property="idInternal" labelProperty="name"/>
+				<html:options collection="tsdOptionEntryList" property="externalId" labelProperty="name"/>
 			</html:select>
 		</td>
 	</tr>
@@ -61,7 +61,7 @@
 		<td>
  			<html:select property="executionPeriod" onchange="this.form.method.value='viewGlobalTSDProcessValuation'; this.form.submit();">
 				<html:option value="-1"><bean:message key="label.teacherServiceDistribution.both"/></html:option>
-				<html:options collection="executionPeriodList" property="idInternal" labelProperty="semester"/>
+				<html:options collection="executionPeriodList" property="externalId" labelProperty="semester"/>
 			</html:select>
 		</td>
 	</tr>
@@ -173,7 +173,7 @@
 	<ul>
 	<logic:iterate name="tsdTeacherDTOEntry" property="TSDProfessorshipDTOEntries" id="tsdProfessorshipDTOEntry">
 		<li>
-			<bean:define id="tsdCourseId" name="tsdProfessorshipDTOEntry" property="TSDCourseDTOEntry.TSDCourse.idInternal"/>
+			<bean:define id="tsdCourseId" name="tsdProfessorshipDTOEntry" property="TSDCourseDTOEntry.TSDCourse.externalId"/>
 			<bean:write name="tsdProfessorshipDTOEntry" property="TSDCourseDTOEntry.TSDCourse.name"/>
 			&nbsp;-&nbsp;
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="tsdProfessorshipDTOEntry" property="totalHours"/></fmt:formatNumber>

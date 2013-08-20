@@ -23,13 +23,13 @@
 	</html:messages>
 	
 	<p class="mtop2">
-		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="documentRequestCreateBean" paramProperty="registration.idInternal">
+		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="documentRequestCreateBean" paramProperty="registration.externalId">
 			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</p>
 		
 	<div style="float: right;">
-		<bean:define id="personID" name="documentRequestCreateBean" property="registration.student.person.idInternal"/>
+		<bean:define id="personID" name="documentRequestCreateBean" property="registration.student.person.externalId"/>
 		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 	</div>
 	

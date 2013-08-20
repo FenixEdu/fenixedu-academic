@@ -36,7 +36,7 @@
 				<em><bean:message key="label.student.elections.noCandidacyOrVotePeriods" bundle="APPLICATION_RESOURCES"/>.</em>
 			</p>
 				<logic:present name="yearDelegateResultsElection" >
-					<bean:define id="electionOID" name="yearDelegateElection" property="idInternal" />
+					<bean:define id="electionOID" name="yearDelegateElection" property="externalId" />
 					<p class="mtop1 mbottom05">
 						<b><bean:message key="title.student.elections.results.elections" bundle="APPLICATION_RESOURCES"/></b>
 					</p>

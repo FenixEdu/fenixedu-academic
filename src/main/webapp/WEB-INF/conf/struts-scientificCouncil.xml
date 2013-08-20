@@ -18,27 +18,27 @@
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="creditsReportForm">
                   <form-property type="java.lang.String" name="fromExecutionYearID"></form-property>
                   <form-property type="java.lang.String" name="untilExecutionYearID"></form-property>
-                  <form-property type="java.lang.Integer" name="departmentID"></form-property>
+                  <form-property type="java.lang.String" name="departmentID"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="masterDegreeCreditsForm">
-                  <form-property type="java.lang.Integer" name="executionYearID"></form-property>
-                  <form-property type="java.lang.Integer" name="executionDegreeID"></form-property>
-                  <form-property type="java.lang.Integer" name="curricularCourseID"></form-property>
+                  <form-property type="java.lang.String" name="executionYearID"></form-property>
+                  <form-property type="java.lang.String" name="executionDegreeID"></form-property>
+                  <form-property type="java.lang.String" name="curricularCourseID"></form-property>
                   <form-property type="java.lang.Integer" name="masterDegreeCurricularPlanID"></form-property>
                   <form-property type="java.util.HashMap" name="hoursMap"></form-property>
                   <form-property type="java.util.HashMap" name="creditsMap"></form-property>
                   <!-- for the edition of professorships -->
-                  <form-property type="java.lang.Integer[]" name="professorShipTeachersIds"></form-property>
-                  <form-property type="java.lang.Integer[]" name="nonAffiliatedTeachersIds"></form-property>
-                  <form-property type="java.lang.Integer[]" name="responsibleTeachersIds"></form-property>
+                  <form-property type="java.lang.String[]" name="professorShipTeachersIds"></form-property>
+                  <form-property type="java.lang.String[]" name="nonAffiliatedTeachersIds"></form-property>
+                  <form-property type="java.lang.String[]" name="responsibleTeachersIds"></form-property>
                   <form-property type="java.lang.String" name="number"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="otherTypeCreditLineForm">
                   <form-property type="java.lang.String" name="method"></form-property>
                   <form-property type="java.lang.String" name="teacherId"></form-property>
-                  <form-property type="java.lang.Integer" name="idInternal"></form-property>
+                  <form-property type="java.lang.Integer" name="externalId"></form-property>
                   <form-property type="java.lang.Integer" name="otherServiceID"></form-property>
                   <form-property type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="executionPeriodId"></form-property>
@@ -46,7 +46,7 @@
                   <form-property type="java.lang.String" name="credits"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teacherCreditsSheetForm">
-                  <form-property type="java.lang.Integer" name="executionPeriodId"></form-property>
+                  <form-property type="java.lang.String" name="executionPeriodId"></form-property>
                   <form-property type="java.lang.String" name="teacherId"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
             </form-bean>
@@ -54,7 +54,7 @@
                   <form-property type="java.lang.String" name="method"></form-property>
                   <form-property type="java.lang.String" name="teacherId"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.Integer" name="idInternal"></form-property>
+                  <form-property type="java.lang.Integer" name="externalId"></form-property>
                   <form-property type="java.lang.Integer" name="institutionWorkTimeID"></form-property>
                   <form-property type="java.lang.Integer" name="teacherServiceID"></form-property>
                   <form-property type="java.lang.String" name="executionPeriodId"></form-property>
@@ -67,11 +67,11 @@
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teacherDegreeFinalProjectStudentForm">
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
-                  <form-property type="java.lang.Integer" name="idInternal"></form-property>
+                  <form-property type="java.lang.Integer" name="externalId"></form-property>
                   <form-property type="java.lang.Integer" name="teacherAdviseServiceID"></form-property>
                   <form-property type="java.lang.String" name="teacherId"></form-property>
                   <form-property type="java.lang.Integer" name="studentId"></form-property>
-                  <form-property type="java.lang.Integer" name="executionPeriodId"></form-property>
+                  <form-property type="java.lang.String" name="executionPeriodId"></form-property>
                   <form-property type="java.lang.String" name="studentNumber"></form-property>
                   <form-property initial="100" type="java.lang.String" name="percentage"></form-property>
             </form-bean>
@@ -81,10 +81,10 @@
                   <form-property type="java.lang.String" name="teacherId"></form-property>
                   <form-property type="java.lang.Integer" name="executionCourseId"></form-property>
                   <form-property type="java.lang.Integer" name="executionPeriodId"></form-property>
-                  <form-property type="java.lang.Integer" name="idInternal"></form-property>
-                  <form-property type="java.lang.Integer" name="supportLessonID"></form-property>
+                  <form-property type="java.lang.Integer" name="externalId"></form-property>
+                  <form-property type="java.lang.String" name="supportLessonID"></form-property>
                   <form-property type="java.lang.Integer" name="infoProfessorshipId"></form-property>
-                  <form-property type="java.lang.Integer" name="professorshipID"></form-property>
+                  <form-property type="java.lang.String" name="professorshipID"></form-property>
                   <form-property type="java.lang.String" name="weekDay"></form-property>
                   <form-property type="java.lang.String" name="startTimeHour"></form-property>
                   <form-property type="java.lang.String" name="startTimeMinutes"></form-property>
@@ -96,7 +96,7 @@
                   <form-property type="java.lang.String" name="teacherId"></form-property>
                   <form-property type="java.lang.Integer" name="executionCourseId"></form-property>
                   <form-property type="java.lang.Integer" name="executionPeriodId"></form-property>
-                  <form-property type="java.lang.Integer" name="professorshipID"></form-property>
+                  <form-property type="java.lang.String" name="professorshipID"></form-property>
                   <form-property type="java.util.HashMap" name="teacherPercentageMap"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>

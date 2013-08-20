@@ -83,7 +83,7 @@
 	<c:if test="${managerFunctionsManagementBackingBean.personsNumber > 0}">
 	<c:out value="<ul>" escapeXml="false"/>	
 	<c:forEach items="${managerFunctionsManagementBackingBean.personsList}" var="person">
-	<c:url var="url" value="/facultyAdmOffice/functionsManagement/listPersonFunctions.faces?personID=${person.idInternal}" />
+	<c:url var="url" value="/facultyAdmOffice/functionsManagement/listPersonFunctions.faces?personID=${person.externalId}" />
 	<c:out value="<li>" escapeXml="false"/>
 	<a href="<c:out value="${url}"/>">
 	<c:out value="${person.name}" />

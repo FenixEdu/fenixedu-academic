@@ -19,7 +19,7 @@
 	
 <logic:iterate id="candidacy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.candidacies">
 	<logic:notEmpty name="candidacy" property="candidacySituations">
-	<bean:define id="idInternal" name="candidacy" property="idInternal" />
+	<bean:define id="externalId" name="candidacy" property="externalId" />
 	<tr>
 		<td class="acenter">
 			<bean:write name="candidacy" property="number" />
@@ -35,17 +35,17 @@
 		</td>
 		<td>
 			<logic:equal name="candidacy" property="class.name" value="net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy">
-				<html:link action="<%="/degreeCandidacyManagement.do?method=showCandidacyDetails&amp;candidacyID=" + idInternal%>">
+				<html:link action="<%="/degreeCandidacyManagement.do?method=showCandidacyDetails&amp;candidacyID=" + externalId%>">
 					<bean:message key="link.viewCandidacyDetails"/>
 				</html:link>
 			</logic:equal>
 			<logic:equal name="candidacy" property="class.name" value="net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy">
-				<html:link action="<%="/degreeCandidacyManagement.do?method=showCandidacyDetails&amp;candidacyID=" + idInternal%>">
+				<html:link action="<%="/degreeCandidacyManagement.do?method=showCandidacyDetails&amp;candidacyID=" + externalId%>">
 					<bean:message key="link.viewCandidacyDetails"/>
 				</html:link>
 			</logic:equal>
 			<logic:equal name="candidacy" property="class.name" value="net.sourceforge.fenixedu.domain.candidacy.DFACandidacy">
-				<html:link action="<%="/viewCandidacies.do?method=viewDetail&amp;candidacyID=" + idInternal%>">
+				<html:link action="<%="/viewCandidacies.do?method=viewDetail&amp;candidacyID=" + externalId%>">
 					<bean:message key="link.viewCandidacyDetails"/>
 				</html:link>
 			</logic:equal>

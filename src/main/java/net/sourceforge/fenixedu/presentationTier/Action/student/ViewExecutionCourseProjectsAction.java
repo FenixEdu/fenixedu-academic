@@ -46,7 +46,7 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException,  FenixServiceException {
+            throws FenixActionException, FenixServiceException {
 
         IUserView userView = getUserView(request);
 
@@ -61,11 +61,11 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
             saveErrors(request, actionErrors1);
             return mapping.findForward("insucess");
         }
-        Integer executionCourseCode = new Integer(executionCourseCodeString);
 
-        ISiteComponent viewProjectsComponent = ReadExecutionCourseProjects.run(executionCourseCode, userView.getUtilizador());
+        ISiteComponent viewProjectsComponent =
+                ReadExecutionCourseProjects.run(executionCourseCodeString, userView.getUtilizador());
 
-        InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourseCode);
+        InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourseCodeString);
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
         InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;

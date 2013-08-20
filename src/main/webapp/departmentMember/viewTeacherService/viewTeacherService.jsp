@@ -71,7 +71,7 @@
 		<h:outputText value="</tr>" escape="false" />
 		<f:verbatim>
 			<fc:dataRepeater value="#{viewTeacherService.teacherServiceDTO}" var="teacher">
-				<h:outputText value="<tr id=#{teacher.teacherIdInternal}>" escape="false" />
+				<h:outputText value="<tr id=#{teacher.teacherExternalId}>" escape="false" />
 				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.number']}\">#{teacher.teacherId}</td>" escape="false" />					
 				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.category']}\">#{teacher.teacherCategory}</td>" escape="false" />	
 				<h:outputText value="<td class='highlight1' title=\"#{bundle['label.teacherService.teacher.name']}\">#{teacher.teacherName}</td>" escape="false" />	
@@ -87,7 +87,7 @@
 					<h:outputText value="<td colspan=8 class='backwhite' style='background-color: #fff; padding-bottom: 1em;'>" escape="false" />
 						<h:outputText value="<ul class='smalltxt mbottom2'>" escape="false" />
 							<fc:dataRepeater value="#{teacher.executionCourseTeacherServiceList}" var="coursesList">
-								<h:outputText value="<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{coursesList.executionCourseIdInternal}'>" escape="false"/>
+								<h:outputText value="<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{coursesList.executionCourseExternalId}'>" escape="false"/>
 								<h:outputText value="#{coursesList.description} " escape="false" />	
 							 	<h:outputText value="#{bundle['label.teacherService.hours']}" escape="false" />
 							 	<h:outputText value="</a></li>" escape="false"/>

@@ -106,7 +106,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         ContextUtils.setCurricularYearContext(request);
 
         request.setAttribute(PresentationConstants.EXECUTION_COURSE_KEY, infoExecutionCourse);
-        request.setAttribute(PresentationConstants.EXECUTION_COURSE_OID, infoExecutionCourse.getIdInternal().toString());
+        request.setAttribute(PresentationConstants.EXECUTION_COURSE_OID, infoExecutionCourse.getExternalId().toString());
 
         ContextUtils.setExecutionDegreeContext(request);
 
@@ -140,11 +140,11 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         ContextUtils.setExecutionDegreeContext(request);
         ContextUtils.setExecutionPeriodContext(request);
 
-        Integer examID = new Integer(request.getParameter(PresentationConstants.EXAM_OID));
+        String examID = request.getParameter(PresentationConstants.EXAM_OID);
 
         InfoExam infoExam = ReadExamByOID.run(examID);
         request.setAttribute(PresentationConstants.EXAM, infoExam);
-        request.setAttribute(PresentationConstants.EXAM_OID, infoExam.getIdInternal());
+        request.setAttribute(PresentationConstants.EXAM_OID, infoExam.getExternalId());
         return mapping.findForward("editExam");
     }
 
@@ -160,7 +160,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         ContextUtils.setExecutionDegreeContext(request);
         ContextUtils.setExecutionPeriodContext(request);
 
-        Integer examID = new Integer(request.getParameter(PresentationConstants.EXAM_OID));
+        String examID = request.getParameter(PresentationConstants.EXAM_OID);
 
         try {
             DeleteWrittenEvaluation.runDeleteWrittenEvaluation(null, examID);

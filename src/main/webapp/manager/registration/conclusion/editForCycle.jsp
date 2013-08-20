@@ -10,9 +10,9 @@
 		bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 
 	<bean:define id="cycleCurriculumGroupId" name="cycleCurriculumGroup"
-		property="idInternal" />
+		property="externalId" />
 		
-	<bean:define id="registrationId" name="cycleCurriculumGroup" property="studentCurricularPlan.registration.idInternal" />
+	<bean:define id="registrationId" name="cycleCurriculumGroup" property="studentCurricularPlan.registration.externalId" />
 
 	<fr:edit name="cycleCurriculumGroup"
 		schema="CycleCurriculumGroup.editConclusionInformation">

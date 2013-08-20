@@ -31,7 +31,7 @@
 			<fr:property name="classes" value="tstyle1 tdtop thleft mtop2"/>
 	
 			<fr:property name="link(manage)" value="<%= String.format("%s?method=managePersonFunctions&amp;%s", actionName, context) %>"/>
-			<fr:property name="param(manage)" value="person.idInternal/personID"/>
+			<fr:property name="param(manage)" value="person.externalId/personID"/>
 			<fr:property name="key(manage)" value="site.functions.person.edit"/>
 			<fr:property name="bundle(manage)" value="SITE_RESOURCES"/>
 		</fr:layout>

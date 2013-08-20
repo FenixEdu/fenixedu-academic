@@ -4,23 +4,21 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadDistributedTest {
 
-    protected InfoDistributedTest run(Integer executionCourseId, Integer distributedTestId)
-            throws InvalidArgumentsServiceException {
-        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+    protected InfoDistributedTest run(String executionCourseId, String distributedTestId) throws InvalidArgumentsServiceException {
+        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -33,7 +31,7 @@ public class ReadDistributedTest {
     private static final ReadDistributedTest serviceInstance = new ReadDistributedTest();
 
     @Service
-    public static InfoDistributedTest runReadDistributedTest(Integer executionCourseId, Integer distributedTestId)
+    public static InfoDistributedTest runReadDistributedTest(String executionCourseId, String distributedTestId)
             throws InvalidArgumentsServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId);

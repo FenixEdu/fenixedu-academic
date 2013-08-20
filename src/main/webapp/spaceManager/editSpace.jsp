@@ -29,8 +29,8 @@
 	
 	<p class="mtop15 mbottom05"><strong><bean:message bundle="SPACE_RESOURCES" key="link.edit.space.information"/></strong></p>
 	
-	<bean:define id="invalidLink">/manageSpaces.do?method=prepareEditSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>
-	<bean:define id="url" type="java.lang.String">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>
+	<bean:define id="invalidLink">/manageSpaces.do?method=prepareEditSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="externalId"/></bean:define>
+	<bean:define id="url" type="java.lang.String">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="externalId"/></bean:define>
 
 	<fr:hasMessages type="conversion" for="editCampus">
 		<p>

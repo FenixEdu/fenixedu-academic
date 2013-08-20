@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
  */
 public class CandidacyDTO extends DataTranferObject {
 
-    private Integer candidacyId;
+    private String candidacyId;
 
     private Integer number;
 
@@ -81,7 +81,7 @@ public class CandidacyDTO extends DataTranferObject {
     /**
      * @return Returns the objectCode.
      */
-    public Integer getCandidacyId() {
+    public String getCandidacyId() {
         return candidacyId;
     }
 
@@ -89,7 +89,7 @@ public class CandidacyDTO extends DataTranferObject {
      * @param objectCode
      *            The objectCode to set.
      */
-    public void setCandidacyId(Integer objectCode) {
+    public void setCandidacyId(String objectCode) {
         this.candidacyId = objectCode;
     }
 

@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class DegreeModuleScope {
@@ -32,7 +33,7 @@ public abstract class DegreeModuleScope {
                     if (cn != 0) {
                         return cn;
                     }
-                    return o1.getIdInternal().compareTo(o2.getIdInternal());
+                    return o1.getExternalId().compareTo(o2.getExternalId());
                 }
 
             };
@@ -64,7 +65,7 @@ public abstract class DegreeModuleScope {
                     if (cc == 0) {
                         return cc;
                     }
-                    return o1.getIdInternal().compareTo(o2.getIdInternal());
+                    return o1.getExternalId().compareTo(o2.getExternalId());
                 }
 
             };
@@ -74,14 +75,14 @@ public abstract class DegreeModuleScope {
         @Override
         public int compare(DegreeModuleScope o1, DegreeModuleScope o2) {
             final int c = o1.getCurricularCourse().getName().compareTo(o2.getCurricularCourse().getName());
-            return c == 0 ? o1.getIdInternal().compareTo(o2.getIdInternal()) : c;
+            return c == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : c;
         }
 
     };
 
     public abstract String getClassName();
 
-    public abstract Integer getIdInternal();
+    public abstract String getExternalId();
 
     public abstract Integer getCurricularSemester();
 
@@ -145,22 +146,21 @@ public abstract class DegreeModuleScope {
     }
 
     public String getKey() {
-        return getIdInternal() + KEY_SEPARATOR + getClassName();
+        return getExternalId() + KEY_SEPARATOR + getClassName();
     }
 
-    public static String getKey(Integer idInternal, String className) {
-        return idInternal + KEY_SEPARATOR + className;
+    public static String getKey(String externalId, String className) {
+        return externalId + KEY_SEPARATOR + className;
     }
 
     public static DegreeModuleScope getDegreeModuleScopeByKey(String key) {
         String[] split = key.split(KEY_SEPARATOR);
         if (split.length == 2) {
-            String idInternal = split[0];
+            String externalId = split[0];
             String className = split[1];
             try {
                 Class clazz = Class.forName(className);
-                DomainObject domainObject =
-                        RootDomainObject.getInstance().readDomainObjectByOID(clazz, Integer.valueOf(idInternal));
+                DomainObject domainObject = AbstractDomainObject.fromExternalId(externalId);
                 if (domainObject != null && domainObject instanceof CurricularCourseScope) {
                     return ((CurricularCourseScope) domainObject).getDegreeModuleScopeCurricularCourseScope();
                 }
@@ -168,8 +168,6 @@ public abstract class DegreeModuleScope {
                     return ((Context) domainObject).getDegreeModuleScopeContext();
                 }
             } catch (ClassNotFoundException e) {
-                return null;
-            } catch (NumberFormatException exception) {
                 return null;
             }
         }

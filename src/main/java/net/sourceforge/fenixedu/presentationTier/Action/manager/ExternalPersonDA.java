@@ -18,6 +18,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ExternalPersonDA extends FenixDispatchAction {
 
@@ -92,10 +93,9 @@ public class ExternalPersonDA extends FenixDispatchAction {
     public ActionForward createParkingParty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String personIDString = request.getParameter("personID");
-        final Integer personID = personIDString == null ? null : Integer.valueOf(personIDString);
         final Person person;
-        if (personID != null) {
-            person = (Person) rootDomainObject.readPartyByOID(personID);
+        if (personIDString != null) {
+            person = (Person) AbstractDomainObject.fromExternalId(personIDString);
         } else {
             person = (Person) request.getAttribute("person");
         }
@@ -103,7 +103,7 @@ public class ExternalPersonDA extends FenixDispatchAction {
 
             CreateParkingParty.run(person);
             final ActionForward actionForward =
-                    new ActionForward("/parking.do?plateNumber=&partyID=" + person.getIdInternal()
+                    new ActionForward("/parking.do?plateNumber=&partyID=" + person.getExternalId()
                             + "&method=showParkingPartyRequests");
             return actionForward;
         } else {

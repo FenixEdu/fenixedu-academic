@@ -18,7 +18,7 @@
 	</strong>
 </p>
 
-<fr:form action="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=prepareAddEquivalency&amp;selectedDegreeCurricularPlanID=" + selectedDegreeCurricularPlan.getIdInternal()  
+<fr:form action="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=prepareAddEquivalency&amp;selectedDegreeCurricularPlanID=" + selectedDegreeCurricularPlan.getExternalId()  
 			+ "&amp;studentNumber=" + student.getNumber() %>">
 	<p class="mtop2"><bean:message key="message.set.non.list.fields" bundle="APPLICATION_RESOURCES"/>:</p>
 
@@ -108,7 +108,7 @@
 		</span>
 	</div>
 
-	<fr:form action="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&amp;selectedDegreeCurricularPlanID=" + selectedDegreeCurricularPlan.getIdInternal() 
+	<fr:form action="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&amp;selectedDegreeCurricularPlanID=" + selectedDegreeCurricularPlan.getExternalId() 
 			+ "&amp;studentNumber=" + student.getNumber() %>">
 		<fr:edit id="StudentEquivalencyPlanEntryCreator.create"
 				name="studentEquivalencyPlanEntryCreator"

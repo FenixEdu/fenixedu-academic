@@ -21,6 +21,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "identificationCardManager", path = "/searchPeople", scope = "session", parameter = "method")
@@ -81,9 +82,8 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
     public ActionForward viewPersonCards(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final String personIdString = request.getParameter("personId");
-        final Integer personId = personIdString != null && personIdString.length() > 0 ? Integer.valueOf(personIdString) : null;
-        if (personId != null) {
-            final Person person = (Person) rootDomainObject.readPartyByOID(personId);
+        if (personIdString != null) {
+            final Person person = (Person) AbstractDomainObject.fromExternalId(personIdString);
             request.setAttribute("person", person);
         }
         return mapping.findForward("viewPersonCards");
@@ -92,11 +92,8 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
     public ActionForward viewPersonCard(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final String cardGenerationEntryIdString = request.getParameter("cardGenerationEntryId");
-        final Integer cardGenerationEntryId =
-                cardGenerationEntryIdString != null && cardGenerationEntryIdString.length() > 0 ? Integer
-                        .valueOf(cardGenerationEntryIdString) : null;
-        if (cardGenerationEntryId != null) {
-            final CardGenerationEntry cardGenerationEntry = rootDomainObject.readCardGenerationEntryByOID(cardGenerationEntryId);
+        if (cardGenerationEntryIdString != null) {
+            final CardGenerationEntry cardGenerationEntry = AbstractDomainObject.fromExternalId(cardGenerationEntryIdString);
             request.setAttribute("cardGenerationEntry", cardGenerationEntry);
             final Person person = cardGenerationEntry.getPerson();
             request.setAttribute("person", person);

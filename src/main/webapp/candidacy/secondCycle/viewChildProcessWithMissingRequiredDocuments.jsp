@@ -8,7 +8,7 @@
 <h2><bean:write name="process" property="displayName" /></h2>
 
 <bean:define id="process" name="process" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess" />
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 <bean:define id="childProcessName" name="childProcessName" />
 <bean:define id="processName" name="processName" />
 
@@ -19,7 +19,7 @@
 			<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
 			<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
 
-			<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${idInternal}"%>' />
+			<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${externalId}"%>' />
 			<fr:property name="key(viewProcess)" value="label.candidacy.show.candidate"/>
 			<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
 						

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
@@ -28,6 +27,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -40,22 +40,22 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "listAnnouncements", path = "public-list-announcements") })
 public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncementDispatchAction {
 
-    protected Integer getRequestedExecutionCourseId(HttpServletRequest request) {
+    protected String getRequestedExecutionCourseId(HttpServletRequest request) {
 
         final String executionCourseIDString = request.getParameter("executionCourseID");
 
         if (executionCourseIDString == null) {
             ExecutionCourseSite site =
                     (ExecutionCourseSite) AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
-            return site.getSiteExecutionCourse().getIdInternal();
+            return site.getSiteExecutionCourse().getExternalId();
         }
 
-        return Integer.valueOf(executionCourseIDString);
+        return executionCourseIDString;
     }
 
     protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
-        Integer id = this.getRequestedExecutionCourseId(request);
-        return RootDomainObject.getInstance().readExecutionCourseByOID(id);
+        String id = this.getRequestedExecutionCourseId(request);
+        return AbstractDomainObject.fromExternalId(id);
     }
 
     @Override

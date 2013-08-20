@@ -46,23 +46,21 @@ public class ViewShiftsAndGroupsAction extends FenixContextAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException,  FenixServiceException {
+            throws FenixActionException, FenixServiceException {
 
         IUserView userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
-        Integer groupPropertiesCode = Integer.valueOf(groupPropertiesCodeString);
-
         String username = userView.getUtilizador();
 
-        List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCode);
+        List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCodeString);
         request.setAttribute("infoExportGroupings", infoExportGroupings);
 
         InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
 
         try {
-            infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ReadShiftsAndGroups.run(groupPropertiesCode, username);
+            infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ReadShiftsAndGroups.run(groupPropertiesCodeString, username);
 
         } catch (InvalidSituationServiceException e) {
             ActionErrors actionErrors2 = new ActionErrors();

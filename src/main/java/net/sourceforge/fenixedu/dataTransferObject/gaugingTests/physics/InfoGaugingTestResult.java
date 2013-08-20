@@ -597,7 +597,7 @@ public class InfoGaugingTestResult extends InfoObject {
         InfoGaugingTestResult infoGaugingTestResult = new InfoGaugingTestResult();
         infoGaugingTestResult.setCf(gaugingTestsResult.getCf());
         infoGaugingTestResult.setCorrect(gaugingTestsResult.getCorrect());
-        infoGaugingTestResult.setIdInternal(gaugingTestsResult.getIdInternal());
+        infoGaugingTestResult.setExternalId(gaugingTestsResult.getExternalId());
         infoGaugingTestResult.setP1(gaugingTestsResult.getP1());
         infoGaugingTestResult.setP10(gaugingTestsResult.getP10());
         infoGaugingTestResult.setP11(gaugingTestsResult.getP11());

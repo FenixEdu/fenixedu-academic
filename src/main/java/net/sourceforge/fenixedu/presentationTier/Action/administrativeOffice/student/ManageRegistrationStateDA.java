@@ -41,7 +41,7 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
     }
 
     public ActionForward createNewState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         try {
             final RegistrationStateCreator creator = (RegistrationStateCreator) getFactoryObject();
@@ -62,7 +62,7 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         try {
             executeFactoryMethod(new RegistrationStateDeleter(Integer.valueOf(request.getParameter("registrationStateId"))));
@@ -75,8 +75,7 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
     }
 
     private Registration getAndTransportRegistration(final HttpServletRequest request) {
-        final Registration registration =
-                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
+        final Registration registration = getDomainObject(request, "registrationId");
         request.setAttribute("registration", registration);
         return registration;
     }

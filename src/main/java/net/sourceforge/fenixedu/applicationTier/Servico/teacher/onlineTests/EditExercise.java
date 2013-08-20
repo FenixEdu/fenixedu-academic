@@ -6,15 +6,15 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditExercise {
 
-    protected Boolean run(Integer executionCourseId, Integer metadataId, String author, String description, String difficulty,
+    protected Boolean run(String executionCourseId, String metadataId, String author, String description, String difficulty,
             Calendar learningTime, String level, String mainSubject, String secondarySubject) throws FenixServiceException {
-        Metadata metadata = RootDomainObject.getInstance().readMetadataByOID(metadataId);
+        Metadata metadata = AbstractDomainObject.fromExternalId(metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -39,7 +39,7 @@ public class EditExercise {
     private static final EditExercise serviceInstance = new EditExercise();
 
     @Service
-    public static Boolean runEditExercise(Integer executionCourseId, Integer metadataId, String author, String description,
+    public static Boolean runEditExercise(String executionCourseId, String metadataId, String author, String description,
             String difficulty, Calendar learningTime, String level, String mainSubject, String secondarySubject)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

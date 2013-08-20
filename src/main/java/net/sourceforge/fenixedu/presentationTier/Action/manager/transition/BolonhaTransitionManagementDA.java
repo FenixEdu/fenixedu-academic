@@ -37,7 +37,7 @@ public class BolonhaTransitionManagementDA extends AbstractBolonhaTransitionMana
             HttpServletResponse response) {
 
         final StudentNumberBean studentNumberBean = (StudentNumberBean) getObjectFromViewState("student-number-bean");
-        request.setAttribute("studentId", Student.readStudentByNumber(studentNumberBean.getNumber()).getIdInternal());
+        request.setAttribute("studentId", Student.readStudentByNumber(studentNumberBean.getNumber()).getExternalId());
 
         return prepare(mapping, form, request, response);
     }
@@ -49,7 +49,7 @@ public class BolonhaTransitionManagementDA extends AbstractBolonhaTransitionMana
     }
 
     private Student getStudent(final HttpServletRequest request) {
-        return rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
+        return getDomainObject(request, "studentId");
     }
 
 }

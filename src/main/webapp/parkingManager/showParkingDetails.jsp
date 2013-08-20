@@ -7,7 +7,7 @@
 <em><bean:message key="label.parking" /></em>
 
 <bean:define id="parkingParty" name="parkingParty" type="net.sourceforge.fenixedu.domain.parking.ParkingParty"/>
-<bean:define id="personID" name="parkingParty" property="party.idInternal" />
+<bean:define id="personID" name="parkingParty" property="party.externalId" />
 
 <h3 class="separator2 mtop2"><bean:message key="label.parkUserInfo"/></h3>
 <p>
@@ -23,7 +23,7 @@
 	<bean:define id="query" value="<%="&parkingCardUserState="+ parkingCardUserState.toString()%>"/>
 </logic:notEmpty>
 <logic:notEmpty name="parkingCardSearchBean" property="parkingGroup">
-	<bean:define id="parkingGroupID" name="parkingCardSearchBean" property="parkingGroup.idInternal"/>
+	<bean:define id="parkingGroupID" name="parkingCardSearchBean" property="parkingGroup.externalId"/>
 	<bean:define id="query" value="<%=query+"&parkingGroupID="+ parkingGroupID.toString()%>"/>
 </logic:notEmpty>
 <logic:notEmpty name="parkingCardSearchBean" property="actualEndDate">

@@ -7,7 +7,7 @@
 <logic:present name="content">
 
 
-<bean:define id="contentId" name="content" property="idInternal"/>
+<bean:define id="contentId" name="content" property="externalId"/>
 
 	<fr:edit name="content" schema="edit.contents.Section.add.InitialContent"
 	action="<%="/contentManagement.do?method=viewContainer&amp;contentId=" + contentId%>">

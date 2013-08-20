@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 
 /**
@@ -15,25 +14,23 @@ import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
  * 
  */
 public class InfoTestScope extends InfoObject {
-    private InfoObject infoObject;
+    private InfoExecutionCourse infoObject;
 
     public InfoTestScope() {
     }
 
-    public InfoObject getInfoObject() {
+    public InfoExecutionCourse getInfoObject() {
         return infoObject;
     }
 
-    public void setInfoObject(InfoObject object) {
+    private void setInfoExecutionCourse(InfoExecutionCourse object) {
         infoObject = object;
     }
 
     public void copyFromDomain(TestScope testScope) {
         super.copyFromDomain(testScope);
         if (testScope != null) {
-            if (testScope.getClassName().equals(ExecutionCourse.class.getName())) {
-                setInfoObject(InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) testScope.getDomainObject()));
-            }
+            setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(testScope.getExecutionCourse()));
         }
     }
 

@@ -106,9 +106,9 @@
 				<%-- Person is a Grant Owner already --%>
 				<logic:present name="infoGrantOwner" property="grantOwnerNumber">
 					<html:link page="/manageGrantOwner.do?method=prepareManageGrantOwnerForm"
-						       paramId="idInternal"
+						       paramId="externalId"
 						       paramName="infoGrantOwner"
-						       paramProperty="idInternal"> 
+						       paramProperty="externalId"> 
 						<bean:message key="link.manage.grant.owner" />
 					</html:link>
 				</logic:present>

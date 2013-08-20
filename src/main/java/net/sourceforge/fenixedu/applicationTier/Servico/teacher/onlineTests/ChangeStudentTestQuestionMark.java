@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
@@ -31,24 +30,25 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestionMark {
-    protected void run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId,
-            Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
+    protected void run(String executionCourseId, String distributedTestId, Double newMark, String questionId, String studentId,
+            TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
         path = path.replace('\\', '/');
 
-        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         Question question = distributedTest.findQuestionByOID(questionId);
 
         List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-            final Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentId);
+            final Registration registration = AbstractDomainObject.fromExternalId(studentId);
             studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(question, registration, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST_VARIATION) {
             studentsTestQuestionList.addAll(StudentTestQuestion.findStudentTestQuestions(question, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-            final Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentId);
+            final Registration registration = AbstractDomainObject.fromExternalId(studentId);
             final StudentTestQuestion studentTestQuestion =
                     StudentTestQuestion.findStudentTestQuestion(question, registration, distributedTest);
             studentsTestQuestionList.addAll(distributedTest.findStudentTestQuestionsByTestQuestionOrder(studentTestQuestion
@@ -85,7 +85,7 @@ public class ChangeStudentTestQuestionMark {
                     studentTestQuestion.setResponse(response);
                 }
                 OnlineTest onlineTest = studentTestQuestion.getDistributedTest().getOnlineTest();
-                ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+                ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
                 Attends attend = studentTestQuestion.getStudent().readAttendByExecutionCourse(executionCourse);
                 Mark mark = onlineTest.getMarkByAttend(attend);
                 final String markValue =
@@ -125,8 +125,8 @@ public class ChangeStudentTestQuestionMark {
     private static final ChangeStudentTestQuestionMark serviceInstance = new ChangeStudentTestQuestionMark();
 
     @Service
-    public static void runChangeStudentTestQuestionMark(Integer executionCourseId, Integer distributedTestId, Double newMark,
-            Integer questionId, Integer studentId, TestQuestionStudentsChangesType studentsType, String path)
+    public static void runChangeStudentTestQuestionMark(String executionCourseId, String distributedTestId, Double newMark,
+            String questionId, String studentId, TestQuestionStudentsChangesType studentsType, String path)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, distributedTestId, newMark, questionId, studentId, studentsType, path);

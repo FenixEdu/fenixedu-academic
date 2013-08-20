@@ -75,7 +75,7 @@ function invertSelect(){
 				<logic:iterate id="distributedTest" name="distributedTests" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
 					<tr>
 						<bean:define id="testType" name="distributedTest" property="testType.type" />
-						<bean:define id="distributedTestCode" name="distributedTest" property="idInternal" />
+						<bean:define id="distributedTestCode" name="distributedTest" property="externalId" />
 						<td class="listClasses"><%if (((Integer) testType).intValue() != 3) {
 
         %> <html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.distributedTestCodes" property="distributedTestCodes">

@@ -134,7 +134,7 @@ public class InfoQuestion extends InfoObject {
         boolean result = false;
         if (obj instanceof InfoQuestion) {
             InfoQuestion infoQuestion = (InfoQuestion) obj;
-            result = getIdInternal().equals(infoQuestion.getIdInternal());
+            result = getExternalId().equals(infoQuestion.getExternalId());
             result =
                     result
                             || (getXmlFile().equals(infoQuestion.getXmlFile())

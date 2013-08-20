@@ -53,7 +53,7 @@
 			</tr>
 			<logic:iterate id="infoTeacher" name="infoTeachersList">
 				<tr>
-					<bean:define id="teacherId" name="infoTeacher" property="idInternal"/>	
+					<bean:define id="teacherId" name="infoTeacher" property="externalId"/>	
 					<td class="listClasses"><bean:write name="infoTeacher" property="infoPerson.nome"/>
 					</td>
 					<td class="listClasses"><bean:write name="infoTeacher" property="teacherId"/>
@@ -73,7 +73,7 @@
 			<logic:present name="infoNonAffiliatedTeachers">
 				<logic:iterate id="infoNonAffiliatedTeacher" name="infoNonAffiliatedTeachers">
 					<tr>
-						<bean:define id="nonAffiliatedTeacherId" name="infoNonAffiliatedTeacher" property="idInternal"/>	
+						<bean:define id="nonAffiliatedTeacherId" name="infoNonAffiliatedTeacher" property="externalId"/>	
 						<td class="listClasses">
 							<bean:write name="infoNonAffiliatedTeacher" property="name"/>
 						</td>

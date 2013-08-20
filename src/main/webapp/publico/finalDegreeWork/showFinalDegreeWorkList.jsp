@@ -23,7 +23,7 @@
 					<html:select bundle="HTMLALT_RESOURCES" property="executionYearOID"
 								 size="1"
 								 onchange="this.form.submit();">
-						<html:options property="idInternal" 
+						<html:options property="externalId" 
 									  labelProperty="nextExecutionYearYear" 
 									  collection="infoExecutionYears" />
 					</html:select>
@@ -46,7 +46,7 @@
 					<html:select bundle="HTMLALT_RESOURCES" property="executionDegreeOID" size="1"
 								 onchange="this.form.submit();">
 						<html:option value=""> <!-- w3c complient --> </html:option>
-						<html:options property="idInternal"
+						<html:options property="externalId"
 									  labelProperty="infoDegreeCurricularPlan.name"
 									  collection="infoExecutionDegrees" />
 					</html:select>
@@ -83,7 +83,7 @@
 						<html:select bundle="HTMLALT_RESOURCES" property="branchOID" size="1"
 									 onchange="this.form.submit();">
 							<html:option value=""><!-- w3c complient--> </html:option>
-							<html:options property="idInternal"
+							<html:options property="externalId"
 										  labelProperty="name"
 										  collection="branches" />
 						</html:select>
@@ -142,7 +142,7 @@
 						<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/>
 					</td>
 					<td rowspan="2">
-			        	<html:link page="<%= "/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
+			        	<html:link page="<%= "/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId().toString() %>">
 							<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
 				        </html:link>
 					</td>

@@ -35,7 +35,7 @@
 			(<bean:write name="professorship" property="degreeSiglas"/>)
 		</strong></p>
 		
-		<bean:define id="professorshipID" name="professorship" property="idInternal"/>
+		<bean:define id="professorshipID" name="professorship" property="externalId"/>
 		<bean:define id="degreeTeachingServices" name="professorship" property="degreeTeachingServicesOrderedByShift" type="java.util.SortedSet"/>		
 						
 		<logic:notEmpty name="degreeTeachingServices">			

@@ -1,18 +1,18 @@
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
-<%@page import="net.sourceforge.fenixedu.domain.RootDomainObject"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@page import="pt.ist.fenixframework.pstm.AbstractDomainObject"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 <ul>
 	<logic:present name="executionCourse">
-		<bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
+		<bean:define id="executionCourseID" name="executionCourse" property="externalId" />
 	</logic:present>
 	<logic:notPresent name="executionCourse">
 		<bean:define id="executionCourseID" name="executionCourseID"/>
 		<%
-			final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseID.toString()));
+			final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 			request.setAttribute("executionCourse", executionCourse);
 		%>
 	</logic:notPresent>

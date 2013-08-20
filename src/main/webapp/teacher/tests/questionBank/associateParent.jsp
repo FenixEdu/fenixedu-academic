@@ -13,7 +13,7 @@
 		<html:link page="/tests/questionBank.do?method=editTestElement"
 		           paramId="oid"
 		           paramName="bean"
-		           paramProperty="child.idInternal">
+		           paramProperty="child.externalId">
 			<bean:message key="message.back" bundle="TESTS_RESOURCES" />
 		</html:link>
 	</li>

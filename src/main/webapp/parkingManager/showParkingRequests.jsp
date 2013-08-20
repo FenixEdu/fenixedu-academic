@@ -71,15 +71,15 @@ $(function () { $("th a label").map(function(i,e) { var el = $(e); var p = el.pa
 					<fr:property name="columnClasses" value="acenter,,,," />
 					<fr:property name="link(viewUser)" value="/parking.do?method=showParkingPartyRequests" />
 					<fr:property name="key(viewUser)" value="link.viewUser" />
-					<fr:property name="param(viewUser)" value="parkingParty.party.idInternal/partyID" />
+					<fr:property name="param(viewUser)" value="parkingParty.party.externalId/partyID" />
 					<fr:property name="bundle(viewUser)" value="PARKING_RESOURCES" />
 					<fr:property name="link(viewRequest)" value="<%="/parking.do?method=showRequest"+query.toString()%>" />
 					<fr:property name="key(viewRequest)" value="link.viewRequest" />
-					<fr:property name="param(viewRequest)" value="idInternal" />
+					<fr:property name="param(viewRequest)" value="externalId" />
 					<fr:property name="bundle(viewRequest)" value="PARKING_RESOURCES" />
 					<fr:property name="link(viewHistory)" value="<%="/parking.do?method=showHistory"+query.toString()%>" />
 					<fr:property name="key(viewHistory)" value="link.viewHistory" />
-					<fr:property name="param(viewHistory)" value="idInternal" />
+					<fr:property name="param(viewHistory)" value="externalId" />
 					<fr:property name="bundle(viewHistory)" value="PARKING_RESOURCES" />
 					<fr:property name="visibleIf(viewHistory)" value="hasHistory" />
 					<fr:property name="sortUrl" value="<%= "/parking.do?method=showParkingRequests"+query.toString()%>"/>

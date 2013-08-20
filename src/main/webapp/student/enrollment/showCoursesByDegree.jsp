@@ -43,11 +43,11 @@
 	</ul>
 
 
-<bean:define id="registrationToEnrol" name="registration" property="idInternal" />
+<bean:define id="registrationToEnrol" name="registration" property="externalId" />
 
 <logic:present name="selectedExecutionDegree">
 
-	<bean:define id="degreeSelected" name="selectedExecutionDegree" property="idInternal" />
+	<bean:define id="degreeSelected" name="selectedExecutionDegree" property="externalId" />
 	<logic:present name="executionDegrees">	
 
 		<table class="width100">
@@ -96,7 +96,7 @@
 					<bean:define id="executionCourses" name="executionCoursesFromExecutionDegree" />
 					
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.wantedCourse" property="wantedCourse" size="10" styleClass="courseEnroll">
-						<html:options collection="executionCourses" labelProperty="nome" property="idInternal"/>
+						<html:options collection="executionCourses" labelProperty="nome" property="externalId"/>
 					</html:select>
 					
 					<p style="text-align:center;margin-top:5px">
@@ -118,7 +118,7 @@
 							<p style="text-align:left; margin-bottom:0px"><b><bean:message key="label.attendCourses" />:</b></p>
 							<logic:present name="attendingCourses">
 								<html:select bundle="HTMLALT_RESOURCES" altKey="select.removedCourse" property="removedCourse" size="10" styleClass="courseEnroll">
-									<html:options collection="attendingCourses" labelProperty="nome"  property="idInternal"/>
+									<html:options collection="attendingCourses" labelProperty="nome"  property="externalId"/>
 								</html:select>
 								<logic:notEqual name="wantedCoursesSize" value="0">
 									<p style="text-align:center;margin-top:5px"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton" style="width:13em" ><bean:message key="button.removeCourse"/></html:submit></p>

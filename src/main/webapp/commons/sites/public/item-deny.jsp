@@ -28,14 +28,14 @@
 		        <fr:property name="eachLayout" value="values"/>
 		        <fr:property name="eachSchema" value="site.section.name"/>
 		    </fr:layout>
-		    <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${idInternal}&amp;" + context %>"/>
+		    <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${externalId}&amp;" + context %>"/>
 		</fr:view>
     </logic:notEmpty>
     
     <bean:define id="item" name="item" type="net.sourceforge.fenixedu.domain.Item"/>
             
 	<h3 class="mtop2">
-        <a name="<%= "item" + item.getIdInternal() %>"></a>
+        <a name="<%= "item" + item.getExternalId() %>"></a>
         <fr:view name="item" property="name"/>
         <span class="permalink1">(<app:contentLink name="item"><bean:message key="label.link" bundle="SITE_RESOURCES"/></app:contentLink>)</span>
     </h3>

@@ -145,7 +145,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
             // MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"),
             // alumni.getStudent()
             // .getPerson().getFirstAndLastName(),
-            // alumni.getIdInternal().toString(), alumni.getUrlRequestToken(),
+            // alumni.getExternalId().toString(), alumni.getUrlRequestToken(),
             // ResourceBundle.getBundle("resources.GlobalResources").getString("fenix.url"));
             String url = AlumniNotificationService.getRegisterConclusionURL(alumni);
             request.setAttribute("alumniEmailSuccessMessage", "http" + url.split("http")[1]);
@@ -225,7 +225,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 
         String alumniId = RESOURCES.getString("alumni.public.registration.first.argument");
         String urlToken = RESOURCES.getString("alumni.public.registration.second.argument");
-        final Alumni alumni = rootDomainObject.readAlumniByOID(getIntegerFromRequest(request, alumniId));
+        final Alumni alumni = getDomainObject(request, alumniId);
 
         if (StringUtils.isEmpty(alumniId) || StringUtils.isEmpty(urlToken) || alumni == null) {
             request.setAttribute("alumniPublicAccessTitle", "registration.error.old.request.link.title");
@@ -246,7 +246,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
         }
 
         request.setAttribute("alumniBean", new AlumniLinkRequestBean(alumni));
-        request.setAttribute("alumniId", getIntegerFromRequest(request, alumniId).toString());
+        request.setAttribute("alumniId", getFromRequest(request, alumniId));
         request.setAttribute("urlToken", request.getParameter(urlToken));
         return mapping.findForward("alumniPublicAccessInner");
     }

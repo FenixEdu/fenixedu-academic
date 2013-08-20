@@ -6,7 +6,7 @@
 <bean:define id="sectionsList" name="infoWebSite" property="sections" />
 <logic:notEmpty name="sectionsList" >
 	<logic:iterate id="sectionElem" name="sectionsList">
-		<logic:equal name="sectionElem" property="idInternal" value="<%=pageContext.findAttribute("objectCode").toString()%>">
+		<logic:equal name="sectionElem" property="externalId" value="<%=pageContext.findAttribute("objectCode").toString()%>">
 			<h2><bean:message key="label.add"/>&nbsp;<bean:write name="sectionElem" property="name"/></h2>
 			<bean:define id="section" name="sectionElem"/>
 		</logic:equal>

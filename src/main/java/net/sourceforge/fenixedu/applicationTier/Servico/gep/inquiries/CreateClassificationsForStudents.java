@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -32,6 +31,7 @@ import org.apache.commons.collections.Closure;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -91,14 +91,14 @@ public class CreateClassificationsForStudents {
     };
 
     protected ByteArrayOutputStream run(Integer[] entryGradeLimits, Integer[] approvationRatioLimits,
-            Integer[] arithmeticMeanLimits, Integer degreeCurricularPlanID) throws FileNotFoundException {
+            Integer[] arithmeticMeanLimits, String degreeCurricularPlanID) {
 
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         List<Registration> otherYearsStudents = new ArrayList<Registration>();
         List<Registration> firstYearStudents = new ArrayList<Registration>();
 
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         for (Registration registration : degreeCurricularPlan.getRegistrations()) {
             if (registration.isInRegisteredState() && registration.getRegistrationAgreement().isNormal()) {
                 if (registration.getRegistrationYear() == currentExecutionYear) {
@@ -270,7 +270,7 @@ public class CreateClassificationsForStudents {
 
     @Service
     public static ByteArrayOutputStream runCreateClassificationsForStudents(Integer[] entryGradeLimits,
-            Integer[] approvationRatioLimits, Integer[] arithmeticMeanLimits, Integer degreeCurricularPlanID)
+            Integer[] approvationRatioLimits, Integer[] arithmeticMeanLimits, String degreeCurricularPlanID)
             throws FileNotFoundException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

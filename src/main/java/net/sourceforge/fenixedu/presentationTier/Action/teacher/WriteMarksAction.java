@@ -47,8 +47,8 @@ public class WriteMarksAction extends FenixDispatchAction {
 
         String lineReader = null;
 
-        Integer objectCode = getObjectCode(request);
-        Integer evaluationCode = getEvaluationCode(request);
+        String objectCode = getObjectCode(request);
+        String evaluationCode = getEvaluationCode(request);
         request.setAttribute("objectCode", objectCode);
         request.setAttribute("evaluationCode", evaluationCode);
 
@@ -121,7 +121,6 @@ public class WriteMarksAction extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
 
-        Object[] args = { objectCode, evaluationCode, hashMarks };
         TeacherAdministrationSiteView siteView = null;
 
         try {
@@ -165,20 +164,19 @@ public class WriteMarksAction extends FenixDispatchAction {
         return mapping.findForward("viewMarksOptions");
     }
 
-    private void prepareInputForward(HttpServletRequest request, Integer objectCode, Integer evaluationCode)
+    private void prepareInputForward(HttpServletRequest request, String objectCode, String evaluationCode)
             throws FenixActionException {
         IUserView userView = getUserView(request);
         ISiteComponent commonComponent = new InfoSiteCommon();
-        Object[] args = { objectCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
 
         try {
             TeacherAdministrationSiteView siteView =
                     TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(objectCode,
-                            commonComponent, new InfoEvaluation(), null, evaluationCode, null);
+                            commonComponent, new InfoEvaluation(), evaluationCode, null);
 
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getIdInternal());
+                    .getExternalId());
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -194,8 +192,8 @@ public class WriteMarksAction extends FenixDispatchAction {
 
         HashMap hashMarks = (HashMap) marksForm.get("hashMarks");
 
-        Integer objectCode = getObjectCode(request);
-        Integer evaluationCode = getEvaluationCode(request);
+        String objectCode = getObjectCode(request);
+        String evaluationCode = getEvaluationCode(request);
         request.setAttribute("objectCode", objectCode);
         request.setAttribute("evaluationCode", evaluationCode);
 
@@ -247,24 +245,19 @@ public class WriteMarksAction extends FenixDispatchAction {
         return mapping.findForward("viewMarksOptions");
     }
 
-    private Integer getEvaluationCode(HttpServletRequest request) {
+    private String getEvaluationCode(HttpServletRequest request) {
         String evaluationCodeString = (String) request.getAttribute("evaluationCode");
         if (evaluationCodeString == null) {
             evaluationCodeString = request.getParameter("evaluationCode");
         }
-        Integer evaluationCode = new Integer(evaluationCodeString);
-        return evaluationCode;
+        return evaluationCodeString;
     }
 
-    private Integer getObjectCode(HttpServletRequest request) {
-        Integer objectCode = null;
+    private String getObjectCode(HttpServletRequest request) {
         String objectCodeString = (String) request.getAttribute("objectCode");
         if (objectCodeString == null) {
             objectCodeString = request.getParameter("objectCode");
         }
-        if (objectCodeString != null) {
-            objectCode = new Integer(objectCodeString);
-        }
-        return objectCode;
+        return objectCodeString;
     }
 }

@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 /**
@@ -25,8 +25,8 @@ import pt.utl.ist.fenix.tools.util.Pair;
 public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
 
     @Service
-    public static HashMap<Integer, Pair<Integer, String>> run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) {
-        final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
+    public static HashMap<String, Pair<Integer, String>> run(String[] degreeCurricularPlansIDs, String executionPeriodID) {
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
         if (executionSemester == null) {
             throw new DomainException("error.selection.noPeriod");
         }
@@ -36,12 +36,11 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
             throw new DomainException("error.selection.noDegree");
         }
 
-        HashMap<Integer, Pair<Integer, String>> numberExecutionCoursesPerDCP = new HashMap<Integer, Pair<Integer, String>>();
-        for (final Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
+        HashMap<String, Pair<Integer, String>> numberExecutionCoursesPerDCP = new HashMap<String, Pair<Integer, String>>();
+        for (final String degreeCurricularPlanID : degreeCurricularPlansIDs) {
             int numberExecutionCourses = 0;
             StringBuilder curricularCodes = new StringBuilder();
-            final DegreeCurricularPlan degreeCurricularPlan =
-                    RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
             final List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
             for (final CurricularCourse curricularCourse : curricularCourses) {
 

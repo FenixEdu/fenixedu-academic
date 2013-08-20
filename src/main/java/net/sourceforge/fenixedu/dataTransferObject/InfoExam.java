@@ -182,7 +182,7 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         if (obj instanceof InfoExam) {
             InfoExam infoExam = (InfoExam) obj;
             result =
-                    getIdInternal().equals(infoExam.getIdInternal()) && getDate().equals(infoExam.getDate())
+                    getExternalId().equals(infoExam.getExternalId()) && getDate().equals(infoExam.getDate())
                             && getEnrollmentBeginDayFormatted().equals(infoExam.getEnrollmentBeginDayFormatted())
                             && getEnrollmentBeginTimeFormatted().equals(infoExam.getEnrollmentBeginTimeFormatted())
                             && getEnrollmentEndDayFormatted().equals(infoExam.getEnrollmentEndDayFormatted())

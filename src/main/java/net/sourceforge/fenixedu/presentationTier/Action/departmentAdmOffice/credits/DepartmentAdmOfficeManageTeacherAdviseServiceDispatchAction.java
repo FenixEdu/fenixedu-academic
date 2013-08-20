@@ -54,13 +54,12 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends ManageTeacherAdviseServiceDispatchAction {
 
     public ActionForward showTeacherAdvises(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
 
-        final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
-        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        final ExecutionSemester executionSemester = getDomainObject(dynaForm, "executionPeriodId");
 
         Teacher teacher = AbstractDomainObject.fromExternalId(dynaForm.getString("teacherId"));
         List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
@@ -76,13 +75,13 @@ public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends
     }
 
     public ActionForward editAdviseService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         return editAdviseService(form, request, mapping, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
     }
 
     public ActionForward deleteAdviseService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         deleteAdviseService(request, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
         return mapping.findForward("successfull-delete");

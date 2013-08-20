@@ -10,7 +10,7 @@
 <logic:present role="MANAGER">
 	<br/>
 	<bean:define id="studentCurricularPlanId" name="studentCurricularPlan"
-		property="idInternal" />
+		property="externalId" />
 	<fr:form
 		action="<%="/curriculumLinesLocationManagement.do?scpID=" + studentCurricularPlanId.toString() %>">
 		

@@ -96,7 +96,7 @@
 			%>
 			<logic:iterate id="transaction" name="transactionList" >
 				
-				<bean:define id="transactionIdStr" name="transaction" property="idInternal" />
+				<bean:define id="transactionIdStr" name="transaction" property="externalId" />
 						 
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.transactionsWithoutGuide" property="transactionsWithoutGuide" value="<%= transactionIdStr.toString() %>"/>				
 				<tr>

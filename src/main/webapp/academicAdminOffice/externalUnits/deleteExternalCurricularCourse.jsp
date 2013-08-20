@@ -8,7 +8,7 @@
 <br />
 <h2><bean:message key="label.delete" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:write name="externalCurricularCourse" property="name" /></h2>
 
-<bean:define id="eccId">oid=<bean:write name="externalCurricularCourse" property="idInternal" /></bean:define>
+<bean:define id="eccId">oid=<bean:write name="externalCurricularCourse" property="externalId" /></bean:define>
 
 <html:messages property="error" message="true" id="errMsg" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>

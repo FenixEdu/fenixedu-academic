@@ -38,7 +38,7 @@ public class ShowAllTeacherCreditsResumeAction extends FenixAction {
         Teacher teacher = userView.getPerson().getTeacher();
         request.setAttribute("teacher", teacher);
 
-        List<CreditLine> creditsLines = (List) ReadAllTeacherCredits.run(teacher.getIdInternal());
+        List<CreditLine> creditsLines = (List) ReadAllTeacherCredits.run(teacher.getExternalId());
         request.setAttribute("creditsLinesSize", creditsLines.size());
 
         BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");

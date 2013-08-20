@@ -13,18 +13,18 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadStudentMarksListByCurricularCourse {
 
-    protected List run(IUserView userView, Integer curricularCourseID, String executionYear) throws ExcepcaoInexistente,
+    protected List run(IUserView userView, String curricularCourseID, String executionYear) throws ExcepcaoInexistente,
             FenixServiceException {
 
-        final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
+        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
 
         final List<Enrolment> enrolmentList =
                 (executionYear != null) ? curricularCourse.getEnrolmentsByYear(executionYear) : curricularCourse.getEnrolments();
@@ -48,14 +48,15 @@ public class ReadStudentMarksListByCurricularCourse {
         Collections.sort(result, new BeanComparator("infoStudentCurricularPlan.infoStudent.number"));
         return result;
     }
+
     // Service Invokers migrated from Berserk
 
     private static final ReadStudentMarksListByCurricularCourse serviceInstance = new ReadStudentMarksListByCurricularCourse();
 
     @Service
-    public static List runReadStudentMarksListByCurricularCourse(IUserView userView, Integer curricularCourseID, String executionYear) throws ExcepcaoInexistente,
-            FenixServiceException  , NotAuthorizedException {
-        StudentListByCurricularCourseAuthorizationFilter.instance.execute(userView, curricularCourseID, executionYear);
+    public static List runReadStudentMarksListByCurricularCourse(IUserView userView, String curricularCourseID,
+            String executionYear) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
+        StudentListByCurricularCourseAuthorizationFilter.instance.execute(curricularCourseID);
         return serviceInstance.run(userView, curricularCourseID, executionYear);
     }
 

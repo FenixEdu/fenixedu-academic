@@ -49,7 +49,7 @@
 	<br />
 	<h2>
 	
-	<bean:define id="personID" name="infoPerson" property="idInternal" />
+	<bean:define id="personID" name="infoPerson" property="externalId" />
 	<bean:define id="username" name="infoPerson" property="username" />
 	<bean:define id="link">/generateNewPassword.do?method=generatePassword&page=0&personID=<%= pageContext.findAttribute("personID") %>&amp;username=<%= pageContext.findAttribute("username") %></bean:define>
 	<html:link module="/manager" page="<%= link %>" target="_blank">

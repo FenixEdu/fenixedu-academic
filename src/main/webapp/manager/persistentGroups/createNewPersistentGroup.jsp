@@ -48,8 +48,8 @@
 			   		<fr:property name="classes" value="tstyle4 thlight mtop05"/>
 			   		<fr:property name="columnClasses" value="aleft,,,,"/>
 			   		
-			   		<fr:property name="link(delete)" value="<%= "/accessControlPersistentGroupsManagement.do?method=removePersistentGroupMember&persistentGroupID=" + persistentGroup.getIdInternal() %>"/>
-		            <fr:property name="param(delete)" value="idInternal/personID"/>
+			   		<fr:property name="link(delete)" value="<%= "/accessControlPersistentGroupsManagement.do?method=removePersistentGroupMember&persistentGroupID=" + persistentGroup.getExternalId() %>"/>
+		            <fr:property name="param(delete)" value="externalId/personID"/>
 			        <fr:property name="key(delete)" value="link.remove"/>
 		            <fr:property name="bundle(delete)" value="MANAGER_RESOURCES"/>
 		            <fr:property name="order(delete)" value="0"/>  
@@ -57,7 +57,7 @@
 			</fr:view>		
 		</logic:notEmpty>
 		
-		<bean:define id="prepareEditURL">/accessControlPersistentGroupsManagement.do?method=prepareEditPersistentGroup&persistentGroupID=<bean:write name="persistentGroup" property="idInternal"/></bean:define>
+		<bean:define id="prepareEditURL">/accessControlPersistentGroupsManagement.do?method=prepareEditPersistentGroup&persistentGroupID=<bean:write name="persistentGroup" property="externalId"/></bean:define>
 		
 		<p><strong><bean:message key="label.edit.persistent.group" bundle="MANAGER_RESOURCES"/></strong></p>			
 		<fr:form action="<%= prepareEditURL %>">

@@ -11,20 +11,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.SituationName;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class ReadCandidatesForSelection {
 
-    protected List run(Integer executionDegreeID, List<SituationName> situationNames) throws FenixServiceException {
+    protected List run(String executionDegreeID, List<SituationName> situationNames) throws FenixServiceException {
 
         // Read the candidates
 
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
         List<CandidateSituation> resultTemp = executionDegree.getCandidateSituationsInSituation(situationNames);
 
@@ -48,7 +48,8 @@ public class ReadCandidatesForSelection {
     private static final ReadCandidatesForSelection serviceInstance = new ReadCandidatesForSelection();
 
     @Service
-    public static List runReadCandidatesForSelection(Integer executionDegreeID, List<SituationName> situationNames) throws FenixServiceException  , NotAuthorizedException {
+    public static List runReadCandidatesForSelection(String executionDegreeID, List<SituationName> situationNames)
+            throws FenixServiceException, NotAuthorizedException {
         ReadCandidatesForSelectionAuthorizationFilter.instance.execute(executionDegreeID, situationNames);
         return serviceInstance.run(executionDegreeID, situationNames);
     }

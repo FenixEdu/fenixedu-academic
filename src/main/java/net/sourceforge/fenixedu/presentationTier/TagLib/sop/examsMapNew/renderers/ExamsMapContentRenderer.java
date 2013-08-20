@@ -44,9 +44,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
         if (examsMap.getInfoExecutionDegree() != null && typeUser.equals("sop")) {
             strBuffer.append("<a href='showExamsManagement.do?method=createByDay" + "&amp;"
-                    + PresentationConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getIdInternal()
+                    + PresentationConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getExternalId()
                     + "&amp;" + PresentationConstants.EXECUTION_PERIOD_OID + "="
-                    + examsMap.getInfoExecutionPeriod().getIdInternal() + "&amp;" + PresentationConstants.CURRICULAR_YEAR_OID
+                    + examsMap.getInfoExecutionPeriod().getExternalId() + "&amp;" + PresentationConstants.CURRICULAR_YEAR_OID
                     + "=" + examsMap.getCurricularYears().get(0) + "&amp;" + PresentationConstants.DAY + "="
                     + examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) + "&amp;" + PresentationConstants.MONTH + "="
                     + (examsMapSlot.getDay().get(Calendar.MONTH) + 1) + "&amp;" + PresentationConstants.YEAR + "="
@@ -100,13 +100,13 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
                 if (typeUser.equals("sop")) {
                     strBuffer.append("<a href='showExamsManagement.do?method=edit&amp;"
-                            + PresentationConstants.EXECUTION_COURSE_OID + "=" + infoExecutionCourse.getIdInternal() + "&amp;"
+                            + PresentationConstants.EXECUTION_COURSE_OID + "=" + infoExecutionCourse.getExternalId() + "&amp;"
                             + PresentationConstants.EXECUTION_PERIOD_OID + "="
-                            + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
+                            + infoExecutionCourse.getInfoExecutionPeriod().getExternalId() + "&amp;"
                             + PresentationConstants.EXECUTION_DEGREE_OID + "="
-                            + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
+                            + examsMap.getInfoExecutionDegree().getExternalId() + "&amp;"
                             + PresentationConstants.CURRICULAR_YEAR_OID + "=" + curicularYear.toString() + "&amp;"
-                            + PresentationConstants.EXAM_OID + "=" + infoExam.getIdInternal() + "'>");
+                            + PresentationConstants.EXAM_OID + "=" + infoExam.getExternalId() + "'>");
                     if (isOnValidWeekDay) {
                         strBuffer.append(courseInitials);
                     } else {

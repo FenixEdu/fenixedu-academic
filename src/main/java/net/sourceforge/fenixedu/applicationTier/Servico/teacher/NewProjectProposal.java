@@ -21,10 +21,10 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -32,8 +32,8 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class NewProjectProposal {
 
-    protected Boolean run(Integer objectCode, Integer goalExecutionCourseId, Integer groupPropertiesId,
-            String senderPersonUsername) throws FenixServiceException {
+    protected Boolean run(String objectCode, String goalExecutionCourseId, String groupPropertiesId, String senderPersonUsername)
+            throws FenixServiceException {
 
         Boolean result = Boolean.FALSE;
 
@@ -41,9 +41,9 @@ public class NewProjectProposal {
             return result;
         }
 
-        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesId);
-        ExecutionCourse goalExecutionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(goalExecutionCourseId);
-        ExecutionCourse startExecutionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(objectCode);
+        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesId);
+        ExecutionCourse goalExecutionCourse = AbstractDomainObject.fromExternalId(goalExecutionCourseId);
+        ExecutionCourse startExecutionCourse = AbstractDomainObject.fromExternalId(objectCode);
         Person senderPerson = Teacher.readTeacherByUsername(senderPersonUsername).getPerson();
 
         if (groupProperties == null) {
@@ -155,7 +155,7 @@ public class NewProjectProposal {
     private static final NewProjectProposal serviceInstance = new NewProjectProposal();
 
     @Service
-    public static Boolean runNewProjectProposal(Integer objectCode, Integer goalExecutionCourseId, Integer groupPropertiesId,
+    public static Boolean runNewProjectProposal(String objectCode, String goalExecutionCourseId, String groupPropertiesId,
             String senderPersonUsername) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(objectCode);
         return serviceInstance.run(objectCode, goalExecutionCourseId, groupPropertiesId, senderPersonUsername);

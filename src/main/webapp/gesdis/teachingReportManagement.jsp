@@ -50,7 +50,7 @@
 		<tr>
 			<td><bean:message key="message.teachingReport.courseURL"/></td>
 			<td>
-				<bean:define id="objectCode" name="siteCourseInformation" property="infoExecutionCourse.idInternal"/>
+				<bean:define id="objectCode" name="siteCourseInformation" property="infoExecutionCourse.externalId"/>
 				<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/>publico/executionCourse.do?method=firstPage&amp;executionCourseID=<%= objectCode %>
 			</td>
 		</tr>
@@ -125,8 +125,8 @@
 				<bean:define id="curricularCourse" name="siteEvaluationInformation" property="infoCurricularCourse"/>
 				<logic:iterate id="siteCourseHistoric" name="infoCoursesHistoric">
 					<logic:iterate id="courseHistoric" name="siteCourseHistoric" property="infoCourseHistorics">
-						<bean:define id="curricularCourseId" name="courseHistoric" property="infoCurricularCourse.idInternal"/>
-						<logic:equal name="curricularCourse" property="idInternal" value="<%= curricularCourseId.toString() %>">
+						<bean:define id="curricularCourseId" name="courseHistoric" property="infoCurricularCourse.externalId"/>
+						<logic:equal name="curricularCourse" property="externalId" value="<%= curricularCourseId.toString() %>">
 							<bean:define id="evaluated" name="courseHistoric" property="evaluated" type="java.lang.Integer"/>
 							<bean:define id="enrolled" name="courseHistoric" property="enrolled" type="java.lang.Integer"/>
 							<bean:define id="approved" name="courseHistoric" property="approved" type="java.lang.Integer"/>
@@ -172,7 +172,7 @@
 	</p>
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId"/>
     <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId"/>
     <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>
     <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearId" property="executionYearId"/>

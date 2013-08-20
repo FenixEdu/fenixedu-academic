@@ -5,7 +5,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -16,12 +15,12 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -30,10 +29,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class VerifyStudentGroupAtributes {
 
-    private static boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username) throws FenixServiceException {
+    private static boolean checkGroupStudentEnrolment(String studentGroupCode, String username) throws FenixServiceException {
         boolean result = false;
 
-        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
         if (studentGroup == null) {
             throw new FenixServiceException();
         }
@@ -60,10 +59,10 @@ public class VerifyStudentGroupAtributes {
         return true;
     }
 
-    private static boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
+    private static boolean checkGroupEnrolment(String groupPropertiesCode, String shiftCode, String username)
             throws FenixServiceException {
         boolean result = false;
-        final Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        final Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
         if (groupProperties == null) {
             throw new InvalidChangeServiceException();
         }
@@ -75,7 +74,7 @@ public class VerifyStudentGroupAtributes {
             throw new NotAuthorizedException();
         }
 
-        Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
+        Shift shift = AbstractDomainObject.fromExternalId(shiftCode);
         result = strategy.checkNumberOfGroups(groupProperties, shift);
 
         if (!result) {
@@ -91,11 +90,11 @@ public class VerifyStudentGroupAtributes {
         return true;
     }
 
-    private static boolean checkUnEnrollStudentInGroup(Integer studentGroupCode, String username) throws FenixServiceException {
+    private static boolean checkUnEnrollStudentInGroup(String studentGroupCode, String username) throws FenixServiceException {
 
         boolean result = false;
 
-        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
         if (studentGroup == null) {
             throw new FenixServiceException();
         }
@@ -121,16 +120,16 @@ public class VerifyStudentGroupAtributes {
         return true;
     }
 
-    private static boolean checkEditStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
+    private static boolean checkEditStudentGroupShift(String studentGroupCode, String groupPropertiesCode, String username)
             throws FenixServiceException {
         boolean result = false;
 
-        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
         if (studentGroup == null) {
             throw new FenixServiceException();
         }
@@ -154,15 +153,15 @@ public class VerifyStudentGroupAtributes {
         return true;
     }
 
-    private static boolean checkEnrollStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
+    private static boolean checkEnrollStudentGroupShift(String studentGroupCode, String groupPropertiesCode, String username)
             throws FenixServiceException {
         boolean result = false;
-        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
         if (studentGroup == null) {
             throw new FenixServiceException();
         }
@@ -194,7 +193,7 @@ public class VerifyStudentGroupAtributes {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(Integer groupPropertiesCode, Integer shiftCode, Integer studentGroupCode, String username,
+    public static Boolean run(String groupPropertiesCode, String shiftCode, String studentGroupCode, String username,
             Integer option) throws FenixServiceException {
 
         boolean result = false;

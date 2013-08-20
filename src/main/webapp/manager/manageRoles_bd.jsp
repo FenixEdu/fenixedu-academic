@@ -79,7 +79,7 @@
 			<tr>
 				<td class="listClasses">
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.roleOIDs" property="roleOIDs">
-						<bean:write name="role" property="idInternal"/>
+						<bean:write name="role" property="externalId"/>
 					</html:multibox>
 				</td>
 				<td class="listClasses">

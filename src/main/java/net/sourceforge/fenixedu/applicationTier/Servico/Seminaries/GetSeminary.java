@@ -5,15 +5,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalenciesWithAll;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -24,10 +22,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class GetSeminary {
 
-    protected InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException {
+    protected InfoSeminaryWithEquivalencies run(String seminaryID) {
         InfoSeminaryWithEquivalencies infoSeminary = null;
 
-        Seminary seminary = RootDomainObject.getInstance().readSeminaryByOID(seminaryID);
+        Seminary seminary = AbstractDomainObject.fromExternalId(seminaryID);
         if (seminary != null) {
 
             infoSeminary = InfoSeminaryWithEquivalenciesWithAll.newInfoFromDomain(seminary);
@@ -41,7 +39,7 @@ public class GetSeminary {
     private static final GetSeminary serviceInstance = new GetSeminary();
 
     @Service
-    public static InfoSeminaryWithEquivalencies runGetSeminary(Integer seminaryID) throws BDException, NotAuthorizedException {
+    public static InfoSeminaryWithEquivalencies runGetSeminary(String seminaryID) throws NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run(seminaryID);
     }

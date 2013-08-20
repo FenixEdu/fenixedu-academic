@@ -24,7 +24,7 @@ public class ViewQucAuditProcessCoordinatorDA extends ViewQucAuditProcessDA {
     public ActionForward viewProcessDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         DegreeCurricularPlan dcp = AbstractDomainObject.fromExternalId(request.getParameter("degreeCurricularPlanOID"));
-        request.setAttribute("degreeCurricularPlanID", dcp.getIdInternal().toString());
+        request.setAttribute("degreeCurricularPlanID", dcp.getExternalId().toString());
         CoordinatedDegreeInfo.setCoordinatorContext(request);
         return super.viewProcessDetails(mapping, form, request, response);
     }

@@ -12,7 +12,7 @@
 	<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
 	<bean:define id="extraParameters" name="extraParameters" />
 	<bean:define id="announcementBoard" name="bean" property="fileHolder" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
-	<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>		
+	<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>		
 
 <h2>
 	<fr:view name="announcementBoard" property="name" />
@@ -124,12 +124,12 @@ switchGlobal();
 		<fr:property name="classes" value="tstyle2"/>
 		<fr:property name="order(edit)" value="1"/>
 		<fr:property name="link(edit)" value="<%= contextPrefix + "method=editFile&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters %>"/>
-		<fr:property name="param(edit)" value="idInternal/fileId"/>
+		<fr:property name="param(edit)" value="externalId/fileId"/>
 		<fr:property name="key(edit)" value="link.edit"/>
 		<fr:property name="bundle(edit)" value="SITE_RESOURCES"/>
 		<fr:property name="order(remove)" value="2"/>
 		<fr:property name="link(remove)" value="<%= contextPrefix + "method=deleteFile&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters %>"/>
-		<fr:property name="param(remove)" value="idInternal/fileId"/>
+		<fr:property name="param(remove)" value="externalId/fileId"/>
 		<fr:property name="key(remove)" value="link.delete"/>
 		<fr:property name="bundle(remove)" value="SITE_RESOURCES"/> 
 	</fr:layout>

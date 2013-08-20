@@ -144,8 +144,8 @@
 		       </th>
 		</tr>
 		<logic:iterate id="infoShift" name="<%= PresentationConstants.SHIFTS %>">
-			<bean:define id="infoShiftOID" name="infoShift" property="idInternal"/>
-			<bean:define id="infoExecutionCourseOID" name="infoShift" property="infoDisciplinaExecucao.idInternal"/>
+			<bean:define id="infoShiftOID" name="infoShift" property="externalId"/>
+			<bean:define id="infoExecutionCourseOID" name="infoShift" property="infoDisciplinaExecucao.externalId"/>
 			<bean:define id="infoShiftLessonList" name="infoShift" property="infoLessons"/>
 			<bean:define id="numberOfLessons"><%= ((List) pageContext.findAttribute("infoShiftLessonList")).size() %></bean:define>
 		<tr align="center">
@@ -156,7 +156,7 @@
 	        	<td class="listClasses" rowspan="<%= pageContext.findAttribute("numberOfLessons") %>">
 			</logic:notEqual>
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
-					<bean:write name="infoShift" property="idInternal"/>
+					<bean:write name="infoShift" property="externalId"/>
 				</html:multibox>
 			</td>
 			<logic:equal name="numberOfLessons" value="0">

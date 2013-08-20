@@ -35,7 +35,7 @@
 		<li class="navheader">
 			<bean:message key="title.unit.communication.section" bundle="RESEARCHER_RESOURCES"/>
 		</li>
-		<bean:define id="unitId" name="unit" property="idInternal"/>
+		<bean:define id="unitId" name="unit" property="externalId"/>
 		<li>
 			<html:link page="<%= "/sendEmailRedirect.do?method=prepare&unitId=" + unitId %>">
 				<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>

@@ -28,7 +28,7 @@
 	</fr:create>
 	<html:submit><bean:message key="label.button.add" bundle="TESTS_RESOURCES" /></html:submit>
 	<f:parameterLink page="/tests/questionBank/presentationMaterial.do?method=prepareEditPresentationMaterials">
-		<f:parameter id="oid" name="bean" property="testElement.idInternal" />
+		<f:parameter id="oid" name="bean" property="testElement.externalId" />
 		<f:parameter id="returnPath" name="bean" property="returnPath" />
 		<f:parameter id="returnId" name="bean" property="returnId" />
 		<f:parameter id="contextKey" name="bean" property="contextKey" />

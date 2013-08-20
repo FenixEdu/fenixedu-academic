@@ -19,13 +19,13 @@
 		<fr:property name="sortBy" value="degree.name=asc" />
 		
 		<fr:property name="linkFormat(showPostingRules)"
-			value="/postingRules.do?method=showGraduationDegreeCurricularPlanPostingRules&amp;degreeCurricularPlanId=${idInternal}" />
+			value="/postingRules.do?method=showGraduationDegreeCurricularPlanPostingRules&amp;degreeCurricularPlanId=${externalId}" />
 		<fr:property name="key(showPostingRules)" value="label.payments.postingRules" />
 		<fr:property name="bundle(showPostingRules)" value="MANAGER_RESOURCES" />
 		
 		
 		<fr:property name="linkFormat(showPaymentPlans)"
-			value="/postingRules.do?method=showPaymentPlans&amp;degreeCurricularPlanId=${idInternal}" />
+			value="/postingRules.do?method=showPaymentPlans&amp;degreeCurricularPlanId=${externalId}" />
 		<fr:property name="key(showPaymentPlans)" value="label.payments.postingRules.gratuityPaymentPlans" />
 		<fr:property name="bundle(showPaymentPlans)" value="MANAGER_RESOURCES" />
 					

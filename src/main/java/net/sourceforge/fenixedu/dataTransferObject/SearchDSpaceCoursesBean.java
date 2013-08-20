@@ -56,10 +56,10 @@ public class SearchDSpaceCoursesBean extends SearchDSpaceBean {
         ExecutionYear executionYear = getExecutionYear();
         ExecutionSemester period = getExecutionPeriod();
         if (executionYear != null) {
-            parameters += "&amp;executionYearId=" + getExecutionYear().getIdInternal();
+            parameters += "&amp;executionYearId=" + getExecutionYear().getExternalId();
         }
         if (period != null) {
-            parameters += "&amp;executionPeriodId=" + getExecutionPeriod().getIdInternal();
+            parameters += "&amp;executionPeriodId=" + getExecutionPeriod().getExternalId();
         }
         return parameters;
     }

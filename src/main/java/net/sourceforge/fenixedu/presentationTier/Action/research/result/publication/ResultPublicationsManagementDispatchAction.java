@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -203,7 +202,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
             return listPublications(mapping, form, request, response);
         }
 
-        request.setAttribute("resultId", publication.getIdInternal());
+        request.setAttribute("resultId", publication.getExternalId());
         setRequestAttributes(request, publication);
         request.setAttribute("publicationCreated", true);
         return mapping.findForward("forwardToUnitAssociation");
@@ -250,7 +249,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
                     request.setAttribute("publicationBean", bean);
                     return mapping.findForward(forwardOnError);
                 }
-                request.setAttribute("resultId", publication.getIdInternal());
+                request.setAttribute("resultId", publication.getExternalId());
                 setRequestAttributes(request, publication);
                 return mapping.findForward(forwardOnFinish);
             }
@@ -328,14 +327,10 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
         ResearchResultPublication result;
         String resultId = request.getParameter("resultId");
         if (resultId != null) {
-            result =
-                    (ResearchResultPublication) RootDomainObject.readDomainObjectByOID(ResearchResult.class,
-                            Integer.valueOf(resultId));
-            request.setAttribute("resultId", result.getIdInternal());
+            result = (ResearchResultPublication) AbstractDomainObject.fromExternalId(resultId);
+            request.setAttribute("resultId", result.getExternalId());
         } else {
-            result =
-                    (ResearchResultPublication) RootDomainObject.readDomainObjectByOID(ResearchResult.class,
-                            (Integer) request.getAttribute("resultId"));
+            result = (ResearchResultPublication) AbstractDomainObject.fromExternalId((String) request.getAttribute("resultId"));
         }
         return result;
     }
@@ -357,7 +352,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward editData(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         final ResultPublicationBean bean = getRenderedObject(null);
-        ResearchResult publicationChanged = ResearchResult.readByOid(bean.getIdInternal());
+        ResearchResult publicationChanged = ResearchResult.readByOid(bean.getExternalId());
 
         if (getFromRequest(request, "confirm") != null) {
 
@@ -381,8 +376,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
             }
         }
 
-        request.setAttribute("resultId", publicationChanged.getIdInternal());
-        bean.setIdInternal(publicationChanged.getIdInternal());
+        request.setAttribute("resultId", publicationChanged.getExternalId());
+        bean.setExternalId(publicationChanged.getExternalId());
         return showPublication(mapping, form, request, response);
     }
 
@@ -396,7 +391,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        final Integer resultId = getRequestParameterAsInteger(request, "resultId");
+        final String resultId = getRequestParameterAsString(request, "resultId");
 
         if (getFromRequest(request, "cancel") != null) {
             final ResearchResultPublication publication = (ResearchResultPublication) getResultFromRequest(request);
@@ -428,9 +423,9 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
             ResultPublicationType type = bean.getPublicationType();
             if (type != null) {
                 bean = bean.convertTo(type);
-                if (bean.getIdInternal() != null) {
+                if (bean.getExternalId() != null) {
                     final ResearchResultPublication result =
-                            (ResearchResultPublication) ResearchResult.readByOid(bean.getIdInternal());
+                            (ResearchResultPublication) ResearchResult.readByOid(bean.getExternalId());
                     if (result != null) {
                         if (!(ResultPublicationType.getTypeFromPublication(result) == type)) {
                             if (result.hasAnyResultDocumentFiles()) {
@@ -449,7 +444,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
         RenderUtils.invalidateViewState();
 
         request.setAttribute("publicationBean", bean);
-        if (bean != null && bean.getIdInternal() != null) {
+        if (bean != null && bean.getExternalId() != null) {
             return mapping.findForward("PreparedToEdit");
         }
         return mapping.findForward("PreparedToCreate");
@@ -534,7 +529,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
             return listPublications(mapping, form, request, response);
         }
 
-        request.setAttribute("resultId", publication.getIdInternal());
+        request.setAttribute("resultId", publication.getExternalId());
         setRequestAttributes(request, publication);
         return mapping.findForward(forwardOnFinish);
     }
@@ -612,7 +607,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     public ActionForward setUnitToAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Person person = getLoggedPerson(request);
-        request.setAttribute("personId", getLoggedPerson(request).getIdInternal());
+        request.setAttribute("personId", getLoggedPerson(request).getExternalId());
         request.setAttribute("units", getUnits(person));
         return mapping.findForward("setUnitToAll");
     }
@@ -653,7 +648,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     public ActionForward addUnitToAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Person person = getLoggedPerson(request);
-        Unit unit = (Unit) rootDomainObject.readPartyByOID(Integer.parseInt(request.getParameter("unitID")));
+        Unit unit = (Unit) AbstractDomainObject.fromExternalId(request.getParameter("unitID"));
         for (ResearchResultPublication publication : getLoggedPerson(request).getResearchResultPublications()) {
             if (publication.getClass().getSimpleName().equalsIgnoreCase("unstructured") == false) {
                 ResultUnitAssociationCreationBean bean = new ResultUnitAssociationCreationBean(publication);
@@ -670,7 +665,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
             }
         }
         addActionMessage(request, "message.confirm.add.unit.to.all.publications.successful");
-        request.setAttribute("personId", person.getIdInternal());
+        request.setAttribute("personId", person.getExternalId());
         request.setAttribute("units", getUnits(person));
         return mapping.findForward("setUnitToAll");
     }

@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.masterDegree.DocumentReason;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -86,15 +87,13 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
         // Get the Information
         String certificateString = (String) chooseDeclaration.get("certificateList");
         String[] destination = (String[]) chooseDeclaration.get("destination");
-        Integer studentCurricularPlanID = (Integer) chooseDeclaration.get("studentCurricularPlanID");
+        StudentCurricularPlan studentCurricularPlan = getDomainObject(chooseDeclaration, "studentCurricularPlanID");
 
         if (destination.length != 0) {
             request.setAttribute(PresentationConstants.DOCUMENT_REASON_LIST, destination);
         }
 
-        InfoStudentCurricularPlan infoStudentCurricularPlan =
-                InfoStudentCurricularPlan.newInfoFromDomain(rootDomainObject
-                        .readStudentCurricularPlanByOID(studentCurricularPlanID));
+        InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
 
         int initialYear = infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInitialDate().getYear() + 1900;
         String initialExecutionYear = initialYear + "/" + ++initialYear;
@@ -120,7 +119,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 
                 try {
                     infoMasterDegreeProofVersion =
-                            ReadActiveMasterDegreeProofVersionByStudentCurricularPlan.run(studentCurricularPlanID);
+                            ReadActiveMasterDegreeProofVersionByStudentCurricularPlan.run(studentCurricularPlan);
                 } catch (NonExistingServiceException e) {
                     throw new NonExistingActionException("O registo da tese ", e);
                 } catch (ScholarshipNotFinishedServiceException e) {

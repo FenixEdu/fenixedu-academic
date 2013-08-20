@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -45,6 +44,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ManageThesisDA extends AbstractManageThesisDA {
 
@@ -70,7 +70,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
     private void setFilterContext(HttpServletRequest request, ExecutionYear executionYear) {
         request.setAttribute("executionYear", executionYear);
-        request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getIdInternal());
+        request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getExternalId());
     }
 
     @Override
@@ -99,9 +99,9 @@ public class ManageThesisDA extends AbstractManageThesisDA {
     }
 
     private ExecutionYear getExecutionYear(HttpServletRequest request) {
-        Integer id = getId(request.getParameter("executionYearId"));
+        String id = request.getParameter("executionYearId");
         if (id == null) {
-            id = getId(request.getParameter("executionYear"));
+            id = request.getParameter("executionYear");
         }
         if (id == null) {
             TreeSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(new ReverseComparator());
@@ -113,7 +113,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
                 return executionYears.first();
             }
         } else {
-            return RootDomainObject.getInstance().readExecutionYearByOID(id);
+            return AbstractDomainObject.fromExternalId(id);
         }
     }
 
@@ -134,20 +134,6 @@ public class ManageThesisDA extends AbstractManageThesisDA {
             executionYears.addAll(getDegreeCurricularPlan(request).getExecutionYears());
 
             return new ThesisContextBean(executionYears, executionYear);
-        }
-    }
-
-    @Override
-    protected Integer getId(String id) {
-        if (id == null) {
-            return null;
-        }
-
-        try {
-            return new Integer(id);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -548,11 +534,11 @@ public class ManageThesisDA extends AbstractManageThesisDA {
             return null;
         }
 
-        Integer id = Integer.valueOf(parameter);
+        String id = parameter;
 
         Thesis thesis = getThesis(request);
         for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
-            if (participant.getIdInternal().equals(id)) {
+            if (participant.getExternalId().equals(id)) {
                 return participant;
             }
         }

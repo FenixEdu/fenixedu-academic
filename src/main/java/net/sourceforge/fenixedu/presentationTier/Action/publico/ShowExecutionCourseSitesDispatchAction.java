@@ -28,6 +28,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "publico", path = "/showExecutionCourseSites", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "show-exeution-course-site-list", path = "df.page.showDegreeCurricularPlanSites") })
@@ -45,7 +46,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction 
         final Degree degree = ShowDegreeSiteAction.getDegree(request);
 
         // degreeID
-        final Integer degreeOID = FenixContextDispatchAction.getFromRequest("degreeID", request);
+        final String degreeOID = FenixContextDispatchAction.getFromRequest("degreeID", request);
         getDegreeAndSetInfoDegree(request, degreeOID);
         final List<ExecutionCourseView> executionCourseViews = getExecutionCourseViews(request, degree);
         final InfoExecutionPeriod infoExecutionPeriod = getPreviousExecutionPeriod(request);
@@ -55,8 +56,8 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction 
         return mapping.findForward("show-exeution-course-site-list");
     }
 
-    private Degree getDegreeAndSetInfoDegree(HttpServletRequest request, Integer degreeOID) {
-        final Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
+    private Degree getDegreeAndSetInfoDegree(HttpServletRequest request, String degreeOID) {
+        final Degree degree = AbstractDomainObject.fromExternalId(degreeOID);
 
         final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
         request.setAttribute("infoDegree", infoDegree);
@@ -103,7 +104,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction 
             int curricularYear = executionCourseView.getCurricularYear();
             boolean previousExecPeriod =
                     previousExecutionPeriod != null
-                            && executionCourseView.getExecutionPeriodOID().equals(previousExecutionPeriod.getIdInternal());
+                            && executionCourseView.getExecutionPeriodOID().equals(previousExecutionPeriod.getExternalId());
 
             switch (curricularYear) {
             case 1:

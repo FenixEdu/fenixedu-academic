@@ -61,6 +61,7 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -77,7 +78,7 @@ public class MergeExecutionCourses {
         private static final long serialVersionUID = 3761968254943244338L;
     }
 
-    protected void run(Integer executionCourseDestinationId, Integer executionCourseSourceId) throws FenixServiceException {
+    protected void run(String executionCourseDestinationId, String executionCourseSourceId) throws FenixServiceException {
 
         ServiceMonitoring.logService(this.getClass(), executionCourseDestinationId, executionCourseSourceId);
 
@@ -85,15 +86,13 @@ public class MergeExecutionCourses {
             throw new SourceAndDestinationAreTheSameException();
         }
 
-        final ExecutionCourse executionCourseFrom =
-                RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseSourceId);
+        final ExecutionCourse executionCourseFrom = AbstractDomainObject.fromExternalId(executionCourseSourceId);
 
         if (executionCourseFrom == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ExecutionCourse executionCourseTo =
-                RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseDestinationId);
+        final ExecutionCourse executionCourseTo = AbstractDomainObject.fromExternalId(executionCourseDestinationId);
 
         if (executionCourseTo == null) {
             throw new InvalidArgumentsServiceException();
@@ -144,17 +143,14 @@ public class MergeExecutionCourses {
         }
     }
 
-    private void copyDistributedTestStuff(final ExecutionCourse executionCourseFrom,
-            final ExecutionCourse executionCourseTo) {
+    private void copyDistributedTestStuff(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (final Metadata metadata : executionCourseFrom.getMetadatasSet()) {
             metadata.setExecutionCourse(executionCourseTo);
         }
-        List<DistributedTest> distributedTests =
-                TestScope.readDistributedTestsByTestScope(executionCourseFrom.getClass(), executionCourseFrom.getIdInternal());
+        List<DistributedTest> distributedTests = TestScope.readDistributedTestsByTestScope(executionCourseFrom);
         for (final DistributedTest distributedTest : distributedTests) {
             final TestScope testScope = distributedTest.getTestScope();
-            testScope.setDomainObject(executionCourseTo);
-            testScope.setKeyClass(executionCourseTo.getIdInternal());
+            testScope.setExecutionCourse(executionCourseTo);
         }
     }
 
@@ -195,8 +191,7 @@ public class MergeExecutionCourses {
         executionCourseAnnouncementBoardFrom.delete();
     }
 
-    private boolean haveShiftsWithSameName(final ExecutionCourse executionCourseFrom,
-            final ExecutionCourse executionCourseTo) {
+    private boolean haveShiftsWithSameName(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         final Set<String> shiftNames = new HashSet<String>();
         for (final Shift shift : executionCourseFrom.getAssociatedShifts()) {
             shiftNames.add(shift.getNome());
@@ -255,8 +250,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private void copyBibliographicReference(final ExecutionCourse executionCourseFrom,
-            final ExecutionCourse executionCourseTo) {
+    private void copyBibliographicReference(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (; !executionCourseFrom.getAssociatedBibliographicReferences().isEmpty(); executionCourseTo
                 .getAssociatedBibliographicReferences().add(executionCourseFrom.getAssociatedBibliographicReferences().get(0))) {
             ;
@@ -357,8 +351,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private void copyContents(final ExecutionCourse executionCourseTo, final Container parentTo,
-            final Collection<Node> nodes) {
+    private void copyContents(final ExecutionCourse executionCourseTo, final Container parentTo, final Collection<Node> nodes) {
         final Set<Content> transferedContents = new HashSet<Content>();
 
         for (final Node node : nodes) {
@@ -558,7 +551,7 @@ public class MergeExecutionCourses {
     private static final MergeExecutionCourses serviceInstance = new MergeExecutionCourses();
 
     @Service
-    public static void runMergeExecutionCourses(Integer executionCourseDestinationId, Integer executionCourseSourceId)
+    public static void runMergeExecutionCourses(String executionCourseDestinationId, String executionCourseSourceId)
             throws FenixServiceException {
         serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
     }

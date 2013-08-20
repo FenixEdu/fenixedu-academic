@@ -21,9 +21,9 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEvaluationManagementBackingBean {
 
-    private Map<Integer, List<WrittenTest>> writtenTests = new HashMap();
-    private Map<Integer, Integer> writtenTestsFreeSpace = new HashMap();
-    private Map<Integer, String> writtenTestsRooms = new HashMap();
+    private final Map<String, List<WrittenTest>> writtenTests = new HashMap();
+    private final Map<String, Integer> writtenTestsFreeSpace = new HashMap();
+    private final Map<String, String> writtenTestsRooms = new HashMap();
     private List<ExecutionCourse> executionCoursesWithWrittenTests;
     private List<ExecutionCourse> executionCoursesWithoutWrittenTests;
     private List<CalendarLink> writtenTestCalendarLinks;
@@ -39,7 +39,7 @@ public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEv
                 final List<WrittenTest> associatedWrittenTests = executionCourse.getAssociatedWrittenTests();
                 if (!associatedWrittenTests.isEmpty()) {
                     Collections.sort(associatedWrittenTests, new BeanComparator("dayDate"));
-                    writtenTests.put(executionCourse.getIdInternal(), associatedWrittenTests);
+                    writtenTests.put(executionCourse.getExternalId(), associatedWrittenTests);
                     processWrittenTestAdditionalValues(associatedWrittenTests);
                     this.executionCoursesWithWrittenTests.add(executionCourse);
                 }
@@ -60,8 +60,8 @@ public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEv
             if (buffer.length() > 0) {
                 buffer.deleteCharAt(buffer.length() - 1);
             }
-            writtenTestsRooms.put(writtenTest.getIdInternal(), buffer.toString());
-            writtenTestsFreeSpace.put(writtenTest.getIdInternal(),
+            writtenTestsRooms.put(writtenTest.getExternalId(), buffer.toString());
+            writtenTestsFreeSpace.put(writtenTest.getExternalId(),
                     Integer.valueOf(totalCapacity - writtenTest.getWrittenEvaluationEnrolmentsCount()));
         }
     }
@@ -99,9 +99,9 @@ public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEv
                     final Map<String, String> linkParameters = new HashMap<String, String>();
                     linkParameters.put("degreeCurricularPlanID", getDegreeCurricularPlanID().toString());
                     linkParameters.put("executionPeriodID", getExecutionPeriodID().toString());
-                    linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
+                    linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
                     linkParameters.put("curricularYearID", getCurricularYearID().toString());
-                    linkParameters.put("evaluationID", writtenTestToDisplay.getIdInternal().toString());
+                    linkParameters.put("evaluationID", writtenTestToDisplay.getExternalId().toString());
                     calendarLink.setLinkParameters(linkParameters);
                     writtenTestCalendarLinks.add(calendarLink);
                 }
@@ -118,15 +118,15 @@ public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEv
         this.writtenTestCalendarLinks = null;
     }
 
-    public Map<Integer, List<WrittenTest>> getWrittenTests() {
+    public Map<String, List<WrittenTest>> getWrittenTests() {
         return writtenTests;
     }
 
-    public Map<Integer, Integer> getWrittenTestsFreeSpace() {
+    public Map<String, Integer> getWrittenTestsFreeSpace() {
         return writtenTestsFreeSpace;
     }
 
-    public Map<Integer, String> getWrittenTestsRooms() {
+    public Map<String, String> getWrittenTestsRooms() {
         return writtenTestsRooms;
     }
 }

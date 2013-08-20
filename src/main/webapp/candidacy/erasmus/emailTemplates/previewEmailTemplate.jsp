@@ -7,7 +7,7 @@
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <h2>Preview Email Templates</h2>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 
 <fr:form action="<%= "/caseHandlingMobilityApplicationProcess.do?method=editEmailTemplate&processId=" + processId %>">
 	<fr:edit id="mobilityEmailTemplateBean" name="mobilityEmailTemplateBean" visible="false" />

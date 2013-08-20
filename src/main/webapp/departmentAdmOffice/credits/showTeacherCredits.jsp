@@ -12,7 +12,7 @@
 
 <h2><bean:message key="label.teacherService.credits"/></h2>
 
-<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal" />
+<bean:define id="executionPeriodId" name="executionPeriod" property="externalId" />
 <bean:define id="teacherId" name="teacher" property="externalId" />
 
 <bean:define id="link">
@@ -67,7 +67,7 @@
 		</p>		
 		
 <%-- ========================= DEGREE TEACHING SERVICES ========================== --%>
-		<bean:define id="professorshipID" name="professorship" property="idInternal"/>
+		<bean:define id="professorshipID" name="professorship" property="externalId"/>
 		
 		<bean:define id="degreeTeachingServices" name="professorship" property="degreeTeachingServicesOrderedByShift"/>
 		

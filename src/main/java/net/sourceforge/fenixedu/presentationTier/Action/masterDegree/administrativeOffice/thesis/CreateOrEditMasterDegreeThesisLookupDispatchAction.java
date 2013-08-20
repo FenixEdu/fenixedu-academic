@@ -77,8 +77,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
         DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
 
-        Integer[] teachersNumbersList = (Integer[]) createMasterDegreeForm.get("guidersNumbers");
-        Integer[] removedGuiders = (Integer[]) createMasterDegreeForm.get("removedGuidersNumbers");
+        String[] teachersNumbersList = (String[]) createMasterDegreeForm.get("guidersNumbers");
+        String[] removedGuiders = (String[]) createMasterDegreeForm.get("removedGuidersNumbers");
 
         createMasterDegreeForm.set("guidersNumbers", subtractArray(teachersNumbersList, removedGuiders));
 
@@ -274,8 +274,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
         DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
 
-        Integer[] teachersNumbersList = (Integer[]) createMasterDegreeForm.get("assistentGuidersNumbers");
-        Integer[] removedAssistentGuiders = (Integer[]) createMasterDegreeForm.get("removedAssistentGuidersNumbers");
+        String[] teachersNumbersList = (String[]) createMasterDegreeForm.get("assistentGuidersNumbers");
+        String[] removedAssistentGuiders = (String[]) createMasterDegreeForm.get("removedAssistentGuidersNumbers");
 
         createMasterDegreeForm.set("assistentGuidersNumbers", subtractArray(teachersNumbersList, removedAssistentGuiders));
 
@@ -307,8 +307,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
         DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
 
-        Integer[] externalPersonsIDsList = (Integer[]) createMasterDegreeForm.get("externalAssistentGuidersIDs");
-        Integer[] removedExternalAssistentGuiders = (Integer[]) createMasterDegreeForm.get("removedExternalAssistentGuidersIDs");
+        String[] externalPersonsIDsList = (String[]) createMasterDegreeForm.get("externalAssistentGuidersIDs");
+        String[] removedExternalAssistentGuiders = (String[]) createMasterDegreeForm.get("removedExternalAssistentGuidersIDs");
 
         createMasterDegreeForm.set("externalAssistentGuidersIDs",
                 subtractArray(externalPersonsIDsList, removedExternalAssistentGuiders));
@@ -341,8 +341,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
         DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
 
-        Integer[] externalPersonsIDsList = (Integer[]) createMasterDegreeForm.get("externalGuidersIDs");
-        Integer[] removedExternalGuiders = (Integer[]) createMasterDegreeForm.get("removedExternalGuidersIDs");
+        String[] externalPersonsIDsList = (String[]) createMasterDegreeForm.get("externalGuidersIDs");
+        String[] removedExternalGuiders = (String[]) createMasterDegreeForm.get("removedExternalGuidersIDs");
 
         createMasterDegreeForm.set("externalGuidersIDs", subtractArray(externalPersonsIDsList, removedExternalGuiders));
 
@@ -369,18 +369,18 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
     }
 
-    private Integer[] subtractArray(Integer[] originalArray, Integer[] arrayToSubtract) {
+    private String[] subtractArray(String[] originalArray, String[] arrayToSubtract) {
         List tmp = new ArrayList();
 
-        for (Integer element : originalArray) {
+        for (String element : originalArray) {
             tmp.add(element);
         }
 
-        for (Integer element : arrayToSubtract) {
+        for (String element : arrayToSubtract) {
             tmp.remove(element);
         }
 
-        originalArray = (Integer[]) tmp.toArray(new Integer[] {});
+        originalArray = (String[]) tmp.toArray(new String[] {});
         return originalArray;
     }
 

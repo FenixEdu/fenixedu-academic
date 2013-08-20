@@ -8,19 +8,19 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author jpvl
  */
 public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilter {
 
-    final public void execute(Integer testId) throws NotAuthorizedException {
+    final public void execute(String testId) throws NotAuthorizedException {
         super.execute();
 
-        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(testId);
+        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testId);
 
         if (distributedTest != null) {
             Calendar now = Calendar.getInstance();

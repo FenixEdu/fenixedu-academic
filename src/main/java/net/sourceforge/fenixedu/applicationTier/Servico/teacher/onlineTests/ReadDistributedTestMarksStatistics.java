@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarksStatistics;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -28,11 +28,11 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadDistributedTestMarksStatistics {
 
-    protected SiteView run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+    protected SiteView run(String executionCourseId, String distributedTestId) throws FenixServiceException {
 
         InfoSiteStudentsTestMarksStatistics infoSiteStudentsTestMarksStatistics = new InfoSiteStudentsTestMarksStatistics();
 
-        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -88,7 +88,7 @@ public class ReadDistributedTestMarksStatistics {
     private static final ReadDistributedTestMarksStatistics serviceInstance = new ReadDistributedTestMarksStatistics();
 
     @Service
-    public static SiteView runReadDistributedTestMarksStatistics(Integer executionCourseId, Integer distributedTestId)
+    public static SiteView runReadDistributedTestMarksStatistics(String executionCourseId, String distributedTestId)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId);

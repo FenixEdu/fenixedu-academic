@@ -1,18 +1,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
-
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class WriteStudentAttendingCourse {
 
-    protected void run(Registration registration, Integer executionCourseId) throws FenixServiceException {
+    protected void run(Registration registration, String executionCourseId) throws FenixServiceException {
 
         ServiceMonitoring.logService(this.getClass(), registration, executionCourseId);
 
@@ -22,8 +21,8 @@ public class WriteStudentAttendingCourse {
         registration.addAttendsTo(readExecutionCourse(executionCourseId));
     }
 
-    private ExecutionCourse readExecutionCourse(Integer executionCourseId) throws FenixServiceException {
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+    private ExecutionCourse readExecutionCourse(String executionCourseId) throws FenixServiceException {
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("noExecutionCourse");
         }
@@ -35,7 +34,7 @@ public class WriteStudentAttendingCourse {
     private static final WriteStudentAttendingCourse serviceInstance = new WriteStudentAttendingCourse();
 
     @Service
-    public static void runWriteStudentAttendingCourse(Registration registration, Integer executionCourseId)
+    public static void runWriteStudentAttendingCourse(Registration registration, String executionCourseId)
             throws FenixServiceException, NotAuthorizedException {
         ClassEnrollmentAuthorizationFilter.instance.execute(registration);
         serviceInstance.run(registration, executionCourseId);

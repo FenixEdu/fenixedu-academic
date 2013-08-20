@@ -19,6 +19,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "coordinator", path = "/viewStudentCurriculumSearch", attribute = "viewStudentCurriculumForm",
         formBean = "viewStudentCurriculumForm", scope = "request", parameter = "method")
@@ -69,7 +70,7 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     private ActionForward getBolonhaTransitionRedirect(final ActionForm actionForm, final Student student) {
         final ActionForward actionForward = new ActionForward();
-        actionForward.setPath("/bolonhaTransitionManagement.do?method=prepare&studentId=" + student.getIdInternal());
+        actionForward.setPath("/bolonhaTransitionManagement.do?method=prepare&studentId=" + student.getExternalId());
 
         return actionForward;
 
@@ -85,32 +86,32 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     }
 
-    private Integer getExecutionDegreeId(final HttpServletRequest request) {
-        return getRequestParameterAsInteger(request, "executionDegreeId");
+    private String getExecutionDegreeId(final HttpServletRequest request) {
+        return request.getParameter("executionDegreeId");
     }
 
-    private Integer getExecutionDegreeId(final ActionForm actionForm) {
-        return (Integer) ((DynaActionForm) actionForm).get("executionDegreeId");
+    private String getExecutionDegreeId(final ActionForm actionForm) {
+        return (String) ((DynaActionForm) actionForm).get("executionDegreeId");
     }
 
-    private void setExecutionDegreeId(final ActionForm actionForm, final Integer id) {
+    private void setExecutionDegreeId(final ActionForm actionForm, final String id) {
         ((DynaActionForm) actionForm).set("executionDegreeId", id);
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final ActionForm form) {
-        return rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanId(form));
+        return AbstractDomainObject.fromExternalId(getDegreeCurricularPlanId(form));
     }
 
-    private Integer getDegreeCurricularPlanId(final HttpServletRequest request) {
-        return getRequestParameterAsInteger(request, "degreeCurricularPlanID");
+    private String getDegreeCurricularPlanId(final HttpServletRequest request) {
+        return request.getParameter("degreeCurricularPlanID");
     }
 
-    private void setDegreeCurricularPlanId(final ActionForm actionForm, final Integer id) {
+    private void setDegreeCurricularPlanId(final ActionForm actionForm, final String id) {
         ((DynaActionForm) actionForm).set("degreeCurricularPlanId", id);
     }
 
-    private Integer getDegreeCurricularPlanId(final ActionForm actionForm) {
-        return (Integer) ((DynaActionForm) actionForm).get("degreeCurricularPlanId");
+    private String getDegreeCurricularPlanId(final ActionForm actionForm) {
+        return (String) ((DynaActionForm) actionForm).get("degreeCurricularPlanId");
     }
 
     private Student getStudent(final ActionForm actionForm) {

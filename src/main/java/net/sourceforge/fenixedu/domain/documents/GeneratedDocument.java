@@ -74,7 +74,7 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
         final VirtualPath filePath = new VirtualPath();
         filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
         if (getAddressee() != null) {
-            filePath.addNode(new VirtualPathNode(getAddressee().getIdInternal().toString(), getAddressee().getName()));
+            filePath.addNode(new VirtualPathNode(getAddressee().getExternalId().toString(), getAddressee().getName()));
         } else {
             filePath.addNode(new VirtualPathNode(NO_ADDRESSEE_NODE, NO_ADDRESSEE_NODE_DESCRIPTION));
         }

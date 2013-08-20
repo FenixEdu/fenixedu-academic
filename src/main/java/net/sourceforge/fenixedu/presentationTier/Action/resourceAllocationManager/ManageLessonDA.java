@@ -46,6 +46,8 @@ import org.apache.struts.util.LabelValueBean;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
@@ -162,7 +164,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
         DynaActionForm manageLessonForm = (DynaActionForm) form;
 
         InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
-        Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
+        Shift shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
         GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
 
         if (maxLessonsPeriod != null) {
@@ -213,7 +215,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
         manageLessonForm.set("createLessonInstances", Boolean.TRUE);
 
-        Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getIdInternal());
+        Lesson lesson = AbstractDomainObject.fromExternalId(infoLesson.getExternalId());
         GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = lesson.getShift().getExecutionCourse().getMaxLessonsPeriod();
         if (maxLessonsPeriod != null) {
             request.setAttribute("executionDegreeLessonsStartDate", maxLessonsPeriod.getLeft().toString("dd/MM/yyyy"));
@@ -295,10 +297,10 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
             final Shift shift;
             if (action != null && action.equals("edit")) {
-                final Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getIdInternal());
+                final Lesson lesson = AbstractDomainObject.fromExternalId(infoLesson.getExternalId());
                 shift = lesson.getShift();
             } else {
-                shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
+                shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
             }
             final GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
 
@@ -479,8 +481,8 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
     public ActionForward deleteLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        List<Integer> lessons = new ArrayList<Integer>();
-        lessons.add(Integer.valueOf(request.getParameter(PresentationConstants.LESSON_OID)));
+        List<String> lessons = new ArrayList<String>();
+        lessons.add(request.getParameter(PresentationConstants.LESSON_OID));
 
         try {
             DeleteLessons.run(lessons);

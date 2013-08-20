@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourse
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /*
  * 
@@ -14,13 +15,13 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadInfoExecutionCourseByOID {
 
     @Service
-    public static InfoExecutionCourse run(Integer executionCourseOID) throws FenixServiceException {
+    public static InfoExecutionCourse run(String executionCourseOID) throws FenixServiceException {
 
         if (executionCourseOID == null) {
             throw new FenixServiceException("nullId");
         }
 
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseOID);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseOID);
         return InfoExecutionCourse.newInfoFromDomain(executionCourse);
     }
 

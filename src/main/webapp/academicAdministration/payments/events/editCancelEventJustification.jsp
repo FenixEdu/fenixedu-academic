@@ -10,7 +10,7 @@ MANAGER_PAYMENTS_EVENTS_ editCancelEventJustification
 	bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
 <bean:define id="personId" name="cancelEventBean"
-	property="event.person.idInternal" />
+	property="event.person.externalId" />
 
 <logic:messagesPresent message="true">
 	<ul class="nobullet list6">

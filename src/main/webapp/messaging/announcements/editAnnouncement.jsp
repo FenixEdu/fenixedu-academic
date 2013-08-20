@@ -32,7 +32,7 @@
 
 <bean:define id="contextPrefix" name="contextPrefix" />
 <bean:define id="extraParameters" name="extraParameters" />
-<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
+<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>
 
 <logic:notPresent name="returnMethod">
 	<bean:define id="formAction" toScope="request"><%= "method=prepareEditAnnouncementBoard&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>

@@ -59,8 +59,8 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         String studentGroupCodeString = request.getParameter("studentGroupCode");
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+        String studentGroupCode = studentGroupCodeString;
+        String groupPropertiesCode = groupPropertiesCodeString;
 
         try {
             VerifyStudentGroupAtributes
@@ -150,12 +150,12 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
             List shiftValues = new ArrayList();
             while (iter.hasNext()) {
                 infoShift = (InfoShift) iter.next();
-                value = infoShift.getIdInternal().toString();
+                value = infoShift.getExternalId().toString();
                 shiftValues.add(value);
                 label = infoShift.getNome();
                 shiftsList.add(new LabelValueBean(label, value));
             }
-            if (shiftsList.size() == 1 && shiftValues.contains(oldInfoShift.getIdInternal().toString())) {
+            if (shiftsList.size() == 1 && shiftValues.contains(oldInfoShift.getExternalId().toString())) {
                 ActionErrors actionErrors4 = new ActionErrors();
                 ActionError error4 = null;
                 error4 = new ActionError("errors.editStudentGroupShift.allShiftsFull");
@@ -180,8 +180,8 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
+        String groupPropertiesCode = groupPropertiesCodeString;
+        String studentGroupCode = studentGroupCodeString;
         String newShiftString = (String) editStudentGroupForm.get("shift");
 
         if (newShiftString.equals("")) {
@@ -193,7 +193,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
             return prepareEdit(mapping, form, request, response);
 
         }
-        Integer newShiftCode = new Integer(newShiftString);
+        String newShiftCode = newShiftString;
 
         try {
             EditGroupShift.run(studentGroupCode, groupPropertiesCode, newShiftCode, userView.getUtilizador());

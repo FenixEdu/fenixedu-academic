@@ -17,7 +17,7 @@
 
 	<logic:notEmpty name="senior">
 		
-		<bean:define id="personID" name="senior" property="student.person.idInternal"/>
+		<bean:define id="personID" name="senior" property="student.person.externalId"/>
 		<fr:form action="/seniorInformation.do?method=change">
 
 		<div class="infoop2">

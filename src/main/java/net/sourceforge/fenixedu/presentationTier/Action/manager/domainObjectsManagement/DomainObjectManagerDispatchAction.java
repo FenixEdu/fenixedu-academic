@@ -58,7 +58,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteObject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, ClassNotFoundException {
+            HttpServletResponse response) throws FenixServiceException, ClassNotFoundException {
 
         Person person = checkUser();
 
@@ -77,10 +77,10 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
                 && documentIdNumber.charAt(idPos3Index - 1) == idPos3Value.charValue()) {
 
             String classToDelete = (String) actionForm.get("classToManage");
-            Integer classToDeleteId = (Integer) actionForm.get("classToManageId");
+            String classToDeleteId = (String) actionForm.get("classToManageId");
 
             try {
-                DeleteObjectByOID.run(Class.forName(classToDelete), classToDeleteId);
+                DeleteObjectByOID.run(classToDeleteId);
                 request.setAttribute("message", "Object " + classToDelete + " with ID:" + classToDeleteId
                         + " Deleted. God have mercy of your soul...");
 
@@ -99,7 +99,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditObject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, ClassNotFoundException {
+            HttpServletResponse response) throws FenixServiceException, ClassNotFoundException {
 
         Person person = checkUser();
 
@@ -116,10 +116,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
                 && documentIdNumber.charAt(idPos2Index - 1) == idPos2Value.charValue()
                 && documentIdNumber.charAt(idPos3Index - 1) == idPos3Value.charValue()) {
 
-            String className = (String) actionForm.get("classToManage");
-            Integer classToEditId = (Integer) actionForm.get("classToManageId");
-
-            DomainObject object = rootDomainObject.readDomainObjectByOID(Class.forName(className), classToEditId);
+            DomainObject object = getDomainObject(actionForm, "classToManageId");
 
             if (object != null) {
                 request.setAttribute("objectToEdit", object);

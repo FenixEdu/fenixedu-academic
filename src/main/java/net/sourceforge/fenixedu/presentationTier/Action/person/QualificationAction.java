@@ -64,7 +64,7 @@ public class QualificationAction extends CRUDActionByOID {
             dynaForm.set("tempEquivalenceDate", sdf.format(infoQualification.getEquivalenceDate()));
         }
         if (infoQualification.getInfoCountry() != null) {
-            dynaForm.set("countryIdInternal", infoQualification.getInfoCountry().getIdInternal());
+            dynaForm.set("countryExternalId", infoQualification.getInfoCountry().getExternalId());
         }
     }
 
@@ -89,9 +89,9 @@ public class QualificationAction extends CRUDActionByOID {
                 Date equivalenceDate = sdf.parse((String) dynaForm.get("tempEquivalenceDate"));
                 infoQualification.setEquivalenceDate(equivalenceDate);
             }
-            if (dynaForm.get("countryIdInternal") != null && !dynaForm.get("countryIdInternal").equals("")) {
+            if (dynaForm.get("countryExternalId") != null && !dynaForm.get("countryExternalId").equals("")) {
                 InfoCountryEditor infoCountry = new InfoCountryEditor();
-                infoCountry.setIdInternal((Integer) dynaForm.get("countryIdInternal"));
+                infoCountry.setExternalId((String) dynaForm.get("countryExternalId"));
                 infoQualification.setInfoCountry(infoCountry);
             }
             return infoQualification;
@@ -101,8 +101,8 @@ public class QualificationAction extends CRUDActionByOID {
     }
 
     @Override
-    protected InfoObject readIt(Integer idInternal) throws NotAuthorizedException {
-        return ReadQualification.runReadQualification(idInternal);
+    protected InfoObject readIt(String externalId) throws NotAuthorizedException {
+        return ReadQualification.runReadQualification(externalId);
     }
 
     @Override
@@ -111,13 +111,13 @@ public class QualificationAction extends CRUDActionByOID {
     }
 
     @Override
-    protected void deleteIt(Integer idInternal) throws NotAuthorizedException {
-        DeleteQualification.runDeleteQualification(idInternal);
+    protected void deleteIt(String externalId) throws NotAuthorizedException {
+        DeleteQualification.runDeleteQualification(externalId);
     }
 
     @Override
-    protected void editIt(Integer idInternal, InfoObject object) throws NotAuthorizedException, FenixServiceException {
-        EditQualification.runEditQualification(idInternal, (InfoQualification) object);
+    protected void editIt(String externalId, InfoObject object) throws NotAuthorizedException, FenixServiceException {
+        EditQualification.runEditQualification(externalId, (InfoQualification) object);
     }
 
     @Override

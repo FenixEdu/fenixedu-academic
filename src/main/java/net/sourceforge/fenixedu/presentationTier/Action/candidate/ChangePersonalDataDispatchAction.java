@@ -55,7 +55,7 @@ public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
         IUserView userView = UserView.getUser();
 
@@ -80,10 +80,10 @@ public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
     }
 
     private Candidacy getCandidacy(HttpServletRequest request) {
-        final Integer candidacyId = getRequestParameterAsInteger(request, "candidacyID");
+        final String candidacyId = request.getParameter("candidacyID");
 
         for (final Candidacy candidacy : getUserView(request).getPerson().getCandidaciesSet()) {
-            if (candidacy.getIdInternal().equals(candidacyId)) {
+            if (candidacy.getExternalId().equals(candidacyId)) {
                 return candidacy;
             }
         }

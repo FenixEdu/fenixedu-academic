@@ -41,10 +41,7 @@ public class ProjectsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        final IUserView userView = getUserView(request);
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
-
-        DeleteResearchProject.run(oid);
+        DeleteResearchProject.run(request.getParameter("projectId"));
 
         return listProjects(mapping, form, request, response);
     }

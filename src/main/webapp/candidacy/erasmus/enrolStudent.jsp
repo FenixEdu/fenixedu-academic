@@ -19,7 +19,7 @@
 		<html:form action="<%= action.toString() %>" method="POST">
 			<html:hidden property="withRules" value="false"/>
 			<html:hidden property="method" value="doEnrol"/>
-			<html:hidden property="processId" value="<%= ((MobilityIndividualApplicationProcess) process).getIdInternal().toString() %>"/>
+			<html:hidden property="processId" value="<%= ((MobilityIndividualApplicationProcess) process).getExternalId().toString() %>"/>
 			<p class="mtop025 mbottom1">		
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value = 'listProcessAllowedActivities'"><bean:message bundle="APPLICATION_RESOURCES"  key="label.back"/></html:submit>			
 			</p>
@@ -39,7 +39,7 @@
 		<bean:define id="process" name="process" />
 	
 	
-	<fr:form action="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=enrolStudent&processId=" + ((MobilityIndividualApplicationProcess) process).getIdInternal() %>">
+	<fr:form action="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=enrolStudent&processId=" + ((MobilityIndividualApplicationProcess) process).getExternalId() %>">
 		
 	
 		<fr:edit id="studentEnrolment"
@@ -93,7 +93,7 @@
 		<html:form action="<%= action.toString() %>" method="POST">
 			<html:hidden property="withRules" value="false"/>
 			<html:hidden property="method" value="doEnrol"/>
-			<html:hidden property="processId" value="<%= ((MobilityIndividualApplicationProcess) process).getIdInternal().toString() %>"/>
+			<html:hidden property="processId" value="<%= ((MobilityIndividualApplicationProcess) process).getExternalId().toString() %>"/>
 			
 			<p class="mtop15 mbottom025">
 				<bean:message bundle="APPLICATION_RESOURCES"  key="label.saveChanges.message"/>:

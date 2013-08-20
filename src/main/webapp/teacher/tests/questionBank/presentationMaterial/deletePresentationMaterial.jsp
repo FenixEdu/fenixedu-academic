@@ -11,7 +11,7 @@
 
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PresentationMaterialBean" />
 <bean:define id="presentationMaterial" name="presentationMaterial" type="net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial" />
-<bean:define id="presentationMaterialId"><bean:write name="presentationMaterial" property="idInternal" /></bean:define>
+<bean:define id="presentationMaterialId"><bean:write name="presentationMaterial" property="externalId" /></bean:define>
 
 <h4>Vai apagar</h4>
 <html:form action="/tests/questionBank/presentationMaterial.do?method=deletePresentationMaterial">
@@ -22,7 +22,7 @@
 	</div>
 	<html:submit>Apagar</html:submit>
 	<f:parameterLink page="/tests/questionBank/presentationMaterial.do?method=prepareEditPresentationMaterials">
-		<f:parameter id="oid" name="bean" property="testElement.idInternal" />
+		<f:parameter id="oid" name="bean" property="testElement.externalId" />
 		<f:parameter id="returnPath" name="bean" property="returnPath" />
 		<f:parameter id="returnId" name="bean" property="returnId" />
 		<f:parameter id="contextKey" name="bean" property="contextKey" />

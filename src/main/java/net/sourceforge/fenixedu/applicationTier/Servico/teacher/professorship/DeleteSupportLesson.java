@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
@@ -11,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -20,6 +18,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Ricardo Rodrigues
@@ -28,8 +27,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteSupportLesson {
 
-    protected void run(Integer supportLessonID, RoleType roleType) {
-        SupportLesson supportLesson = RootDomainObject.getInstance().readSupportLessonByOID(supportLessonID);
+    protected void run(String supportLessonID, RoleType roleType) {
+        SupportLesson supportLesson = AbstractDomainObject.fromExternalId(supportLessonID);
         log(supportLesson);
         supportLesson.delete(roleType);
     }
@@ -66,7 +65,7 @@ public class DeleteSupportLesson {
     private static final DeleteSupportLesson serviceInstance = new DeleteSupportLesson();
 
     @Service
-    public static void runDeleteSupportLesson(Integer supportLessonID, RoleType roleType) throws NotAuthorizedException {
+    public static void runDeleteSupportLesson(String supportLessonID, RoleType roleType) throws NotAuthorizedException {
         try {
             ScientificCouncilAuthorizationFilter.instance.execute();
             serviceInstance.run(supportLessonID, roleType);

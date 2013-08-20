@@ -27,7 +27,7 @@
 				<fr:property name="columnClasses" value=",,smalltxt color888,,,aleft"/>
 				<fr:property name="checkable" value="true"/>
 				<fr:property name="checkboxName" value="parkingCardsToRemove" />
-				<fr:property name="checkboxValue" value="idInternal"/>
+				<fr:property name="checkboxValue" value="externalId"/>
 			</fr:layout>
 		</fr:view>
 		<html:submit property="remove"><bean:message key="button.remove" bundle="PARKING_RESOURCES"/></html:submit>

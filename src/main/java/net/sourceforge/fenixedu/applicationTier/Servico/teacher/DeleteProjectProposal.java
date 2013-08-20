@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -29,13 +29,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteProjectProposal {
 
-    protected Boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
+    protected Boolean run(String objectCode, String groupPropertiesCode, String executionCourseCode,
             String withdrawalPersonUsername) throws FenixServiceException {
 
         Person withdrawalPerson = Teacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
-        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
-        ExecutionCourse startExecutionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(objectCode);
+        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        ExecutionCourse startExecutionCourse = AbstractDomainObject.fromExternalId(objectCode);
 
         if (groupProperties == null) {
             throw new InvalidArgumentsServiceException("error.noGroupProperties");
@@ -117,7 +117,7 @@ public class DeleteProjectProposal {
     private static final DeleteProjectProposal serviceInstance = new DeleteProjectProposal();
 
     @Service
-    public static Boolean runDeleteProjectProposal(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
+    public static Boolean runDeleteProjectProposal(String objectCode, String groupPropertiesCode, String executionCourseCode,
             String withdrawalPersonUsername) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(objectCode);
         return serviceInstance.run(objectCode, groupPropertiesCode, executionCourseCode, withdrawalPersonUsername);

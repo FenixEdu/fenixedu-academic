@@ -12,8 +12,8 @@ public class AlumniEducationArea implements Serializable {
         public int compare(AlumniEducationArea leftEducationArea, AlumniEducationArea rightEducationArea) {
             int comparationResult =
                     leftEducationArea.getEducationArea().getCode().compareTo(rightEducationArea.getEducationArea().getCode());
-            return (comparationResult == 0) ? leftEducationArea.getEducationArea().getIdInternal()
-                    .compareTo(rightEducationArea.getEducationArea().getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftEducationArea.getEducationArea().getExternalId()
+                    .compareTo(rightEducationArea.getEducationArea().getExternalId()) : comparationResult;
         }
     };
 

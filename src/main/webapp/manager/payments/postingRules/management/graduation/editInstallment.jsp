@@ -19,7 +19,7 @@
 
 <bean:define id="paymentPlanId" name="paymentPlan" property="externalId" />
 <bean:define id="installmentId" name="installment" property="externalId" />
-<bean:define id="degreeCurricularPlanId" name="paymentPlan" property="serviceAgreementTemplate.degreeCurricularPlan.idInternal" />
+<bean:define id="degreeCurricularPlanId" name="paymentPlan" property="serviceAgreementTemplate.degreeCurricularPlan.externalId" />
 
 <fr:form action="<%= String.format("/postingRules.do?method=editInstallment&amp;installmentId=%s&amp;paymentPlanId=%s&amp;degreeCurricularPlanId=%s", installmentId, paymentPlanId, degreeCurricularPlanId) %>" >
 	<fr:edit id="installmentBean" name="installmentBean" visible="false" />

@@ -24,7 +24,7 @@
 <%-- person --%>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.personUsername" property="personUsername"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.password" property="password"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternalPerson" property="idInternalPerson"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalIdPerson" property="externalIdPerson"/>
 
 
 <p class="mtop2 mbottom05"><b><bean:message key="label.grant.owner.information"/></b></p>
@@ -189,7 +189,7 @@
 		</td>
 		<td>
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.country" property="country">				
-				<html:options collection="countryList" property="idInternal" labelProperty="nameAndNationality"/>
+				<html:options collection="countryList" property="externalId" labelProperty="nameAndNationality"/>
 			</html:select>																	
 		</td>
 	</tr>
@@ -329,11 +329,11 @@
 		</html:form>		
 		</td>
 		<td>
-			<logic:present name="idInternal">
+			<logic:present name="externalId">
 				<html:form action="/manageGrantOwner" style="display:inline">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantOwnerForm"/>
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value='<%= request.getAttribute("idInternal").toString() %>'/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId" value='<%= request.getAttribute("externalId").toString() %>'/>
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 						<bean:message key="button.cancel"/>
 					</html:submit>

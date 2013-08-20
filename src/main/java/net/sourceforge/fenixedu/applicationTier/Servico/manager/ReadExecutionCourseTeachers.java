@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -30,17 +30,17 @@ public class ReadExecutionCourseTeachers {
      * @throws ExcepcaoPersistencia
      */
 
-    protected List run(Integer executionCourseId) throws FenixServiceException {
+    protected List<InfoTeacher> run(String executionCourseId) throws FenixServiceException {
 
         List professorShips = null;
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         professorShips = executionCourse.getProfessorships();
 
         if (professorShips == null || professorShips.isEmpty()) {
             return null;
         }
 
-        List infoTeachers = new ArrayList();
+        List<InfoTeacher> infoTeachers = new ArrayList<InfoTeacher>();
         Iterator iter = professorShips.iterator();
         Teacher teacher = null;
 
@@ -57,7 +57,7 @@ public class ReadExecutionCourseTeachers {
     private static final ReadExecutionCourseTeachers serviceInstance = new ReadExecutionCourseTeachers();
 
     @Service
-    public static List runReadExecutionCourseTeachers(Integer executionCourseId) throws FenixServiceException,
+    public static List<InfoTeacher> runReadExecutionCourseTeachers(String executionCourseId) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

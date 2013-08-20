@@ -44,10 +44,10 @@ public class LoadTestingAction extends FenixDispatchAction {
 
         ExecutionSemester lastSemester = ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod();
 
-        request.setAttribute("degreeID", randomDegree.getIdInternal());
+        request.setAttribute("degreeID", randomDegree.getExternalId());
         request.setAttribute("degreeOID", randomDegree.getExternalId());
-        request.setAttribute("degreeCurricularPlanID", randomDegree.getActiveDegreeCurricularPlans().get(0).getIdInternal());
-        request.setAttribute("executionPeriodOID", lastSemester.getIdInternal());
+        request.setAttribute("degreeCurricularPlanID", randomDegree.getActiveDegreeCurricularPlans().get(0).getExternalId());
+        request.setAttribute("executionPeriodOID", lastSemester.getExternalId());
 
         return mapping.findForward("loadTesting");
     }

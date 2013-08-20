@@ -51,7 +51,7 @@ public class FenixPropertyUtils extends PropertyUtils {
     }
 
     public static boolean canBeCopied(String name) {
-        if (name == null || name.equals("idInternal") || name.equals("ackOptLock") || name.startsWith("key")) {
+        if (name == null || name.equals("externalId") || name.equals("ackOptLock") || name.startsWith("key")) {
             return false;
         }
         return true;

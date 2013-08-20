@@ -15,6 +15,6 @@
 		<fr:property name="columnClasses" value="width10em, width50em"/>
 		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 	</fr:layout>
-	<fr:destination name="view.publication" path="/showResearchResult.do?method=showPublication&resultId=${idInternal}"/> 
-	<fr:destination name="view.patent" path="/showResearchResult.do?method=showPatent&resultId=${idInternal}"/> 
+	<fr:destination name="view.publication" path="/showResearchResult.do?method=showPublication&resultId=${externalId}"/> 
+	<fr:destination name="view.patent" path="/showResearchResult.do?method=showPatent&resultId=${externalId}"/> 
 </fr:view>

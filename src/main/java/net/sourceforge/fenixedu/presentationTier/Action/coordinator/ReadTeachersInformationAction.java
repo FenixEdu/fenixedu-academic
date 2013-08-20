@@ -48,9 +48,9 @@ public class ReadTeachersInformationAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         CoordinatedDegreeInfo.setCoordinatorContext(request);
-        Integer degreeCurricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanID");
+        String degreeCurricularPlanID = (String) request.getAttribute("degreeCurricularPlanID");
 
-        Integer executionDegreeID = new Integer(request.getParameter("executionDegreeId"));
+        String executionDegreeID = request.getParameter("executionDegreeId");
         request.setAttribute("executionDegreeId", executionDegreeID);
 
         // Lists all years attatched to the degree curricular plan

@@ -57,7 +57,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
     private VirtualPath getfilePath(String filename) {
         final VirtualPath filePath = new VirtualPath();
         filePath.addNode(new VirtualPathNode("TeacherCreditsDocuments", "TeacherCredits Documents"));
-        filePath.addNode(new VirtualPathNode("TeacherCreditsDocument" + getIdInternal(), filename));
+        filePath.addNode(new VirtualPathNode("TeacherCreditsDocument" + getExternalId(), filename));
         return filePath;
     }
 

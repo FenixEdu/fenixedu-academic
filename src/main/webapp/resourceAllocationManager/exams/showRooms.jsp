@@ -7,7 +7,7 @@
 <html:form action="/roomSearch">
 		
 	<logic:iterate indexId="i" id="room" name="availableRooms" type="net.sourceforge.fenixedu.dataTransferObject.InfoRoom">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.availableRoomsId" property="availableRoomsId" value="<%= room.getIdInternal().toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.availableRoomsId" property="availableRoomsId" value="<%= room.getExternalId().toString() %>" />
 	</logic:iterate>
 
 	<em class="printhidden"><bean:message key="link.writtenEvaluationManagement"/></em>

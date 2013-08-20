@@ -77,8 +77,8 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
         IUserView userView = UserView.getUser();
 
         Integer contributorNumber = (Integer) createGuideFromTransactionsForm.get("contributorNumber");
-        Integer gratuitySituationId = (Integer) createGuideFromTransactionsForm.get("gratuitySituationId");
-        Integer studentId = (Integer) createGuideFromTransactionsForm.get("studentId");
+        String gratuitySituationId = (String) createGuideFromTransactionsForm.get("gratuitySituationId");
+        String studentId = (String) createGuideFromTransactionsForm.get("studentId");
         // Read Contributor
         InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
         request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
@@ -124,11 +124,11 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
         IUserView userView = UserView.getUser();
 
         Integer contributorNumber = (Integer) createGuideFromTransactionsForm.get("contributorNumber");
-        Integer gratuitySituationId = (Integer) createGuideFromTransactionsForm.get("gratuitySituationId");
-        Integer studentId = (Integer) createGuideFromTransactionsForm.get("studentId");
-        Integer[] transactionsWithoutGuide = (Integer[]) createGuideFromTransactionsForm.get("transactionsWithoutGuide");
+        String gratuitySituationId = (String) createGuideFromTransactionsForm.get("gratuitySituationId");
+        String studentId = (String) createGuideFromTransactionsForm.get("studentId");
+        String[] transactionsWithoutGuide = (String[]) createGuideFromTransactionsForm.get("transactionsWithoutGuide");
 
-        // Read Contributor
+        // Read Contributors
         InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
 
         // Read Registration
@@ -190,7 +190,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @return
      * @throws FenixActionException
      */
-    private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
+    private InfoGratuitySituation readGratuitySituation(IUserView userView, String gratuitySituationId)
             throws FenixActionException {
         InfoGratuitySituation infoGratuitySituation = null;
 
@@ -213,7 +213,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @throws FenixActionException
      * @throws NonExistingActionException
      */
-    private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId) throws FenixActionException,
+    private InfoStudent readStudent(ActionMapping mapping, IUserView userView, String studentId) throws FenixActionException,
             NonExistingActionException {
         InfoStudent infoStudent = null;
 

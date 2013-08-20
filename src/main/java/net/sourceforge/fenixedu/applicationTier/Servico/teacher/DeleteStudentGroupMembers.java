@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -28,10 +28,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteStudentGroupMembers {
 
-    protected Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID, List studentUsernames)
+    protected Boolean run(String executionCourseID, String studentGroupID, Integer groupPropertiesID, List studentUsernames)
             throws FenixServiceException {
 
-        final StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupID);
+        final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -77,7 +77,7 @@ public class DeleteStudentGroupMembers {
     private static final DeleteStudentGroupMembers serviceInstance = new DeleteStudentGroupMembers();
 
     @Service
-    public static Boolean runDeleteStudentGroupMembers(Integer executionCourseID, Integer studentGroupID,
+    public static Boolean runDeleteStudentGroupMembers(String executionCourseID, String studentGroupID,
             Integer groupPropertiesID, List studentUsernames) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID, studentGroupID, groupPropertiesID, studentUsernames);

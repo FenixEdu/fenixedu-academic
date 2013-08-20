@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadQualificationAuthorizationFilter {
 
@@ -22,10 +22,10 @@ public class ReadQualificationAuthorizationFilter {
         return RoleType.ALUMNI;
     }
 
-    public void execute(Integer objectId) throws NotAuthorizedException {
+    public void execute(String objectId) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         try {
-            boolean isNew = (objectId == null) || objectId.equals(Integer.valueOf(0));
+            boolean isNew = objectId == null;
 
             // Verify if needed fields are null
             if ((id == null) || (id.getRoleTypes() == null)) {
@@ -56,8 +56,8 @@ public class ReadQualificationAuthorizationFilter {
         }
     }
 
-    private boolean isOwnQualification(IUserView userView, Integer objectId) {
-        final Qualification qualification = RootDomainObject.getInstance().readQualificationByOID(objectId);
+    private boolean isOwnQualification(IUserView userView, String objectId) {
+        final Qualification qualification = AbstractDomainObject.fromExternalId(objectId);
         return qualification.getPerson() == userView.getPerson();
     }
 }

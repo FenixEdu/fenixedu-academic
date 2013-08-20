@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -28,7 +28,7 @@ public class SelectExportExecutionCourse {
                         infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
         if (degreeCurricularPlan != null) {
             ExecutionSemester executionSemester =
-                    RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                    AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
             List<ExecutionCourse> executionCourseList =
                     degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester,
                             curricularYear, infoExecutionPeriod.getSemester());

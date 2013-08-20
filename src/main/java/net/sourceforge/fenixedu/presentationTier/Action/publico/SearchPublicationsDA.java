@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean.SearchElement;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpacePublicationBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
@@ -17,13 +16,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileSearchCriteria.SearchField;
 
 public class SearchPublicationsDA extends SearchPublicationsAction {
 
     @Override
     public ActionForward prepareSearchPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SearchDSpaceBean bean = createNewBean();
         bean.addSearchElement();
@@ -53,7 +53,7 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
             site = (Site) context.getLastContentInPath(Site.class);
         } else {
             String siteID = request.getParameter("siteID");
-            site = (Site) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(siteID));
+            site = (Site) AbstractDomainObject.fromExternalId(siteID);
         }
         request.setAttribute("site", site);
     }

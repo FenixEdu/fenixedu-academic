@@ -408,7 +408,7 @@ public class CompetenceCourseVersionList extends OutputRenderer {
      * Example 1:
      * 
      * <pre>
-     *              someAction.do?method=viewDetails&amp;idInternal=${idInternal}
+     *              someAction.do?method=viewDetails&amp;externalId=${externalId}
      * </pre>
      * 
      * <p>

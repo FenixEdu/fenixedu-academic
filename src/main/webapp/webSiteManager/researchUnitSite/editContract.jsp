@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <html:xhtml/>
 
-<bean:define id="siteID" name="contract" property="unit.site.idInternal"/>
+<bean:define id="siteID" name="contract" property="unit.site.externalId"/>
 <h2><bean:message key="label.editContract" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
 
 <fr:edit name="contract" schema="edit.contract">

@@ -37,7 +37,7 @@ public class CreateSiteInExecutionCourseAction extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
-        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+        String executionCourseId = request.getParameter("executionCourseId");
 
         try {
 

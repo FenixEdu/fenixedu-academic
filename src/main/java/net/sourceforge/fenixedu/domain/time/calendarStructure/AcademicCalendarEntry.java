@@ -671,7 +671,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     @Override
     public String getGanttDiagramEventIdentifier() {
-        return getIdInternal().toString();
+        return getExternalId().toString();
     }
 
     @Override

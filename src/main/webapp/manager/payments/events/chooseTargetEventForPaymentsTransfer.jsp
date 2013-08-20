@@ -30,7 +30,7 @@
 </fr:view>
 
 <bean:define id="personId" name="transferPaymentsBean"
-	property="sourceEvent.person.idInternal" />
+	property="sourceEvent.person.externalId" />
 
 <fr:form action="<%="/paymentsManagement.do?personId=" + personId.toString() %>">
 	<input type="hidden" name="method" value="" />

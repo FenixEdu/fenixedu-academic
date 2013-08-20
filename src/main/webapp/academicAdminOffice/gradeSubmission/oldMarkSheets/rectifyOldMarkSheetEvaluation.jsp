@@ -39,7 +39,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mss" name="markSheetManagementForm" property="mss" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" name="markSheetManagementForm" property="mst" />
 	
-	<bean:define id="evaluationID" name="rectifyBean" property="enrolmentEvaluation.idInternal" />
+	<bean:define id="evaluationID" name="rectifyBean" property="enrolmentEvaluation.externalId" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.evaluationID" name="markSheetManagementForm" property="evaluationID" value="<%= evaluationID.toString() %>"  />
 
 	<fr:edit id="step2" nested="true" name="rectifyBean" schema="markSheet.rectify.two">

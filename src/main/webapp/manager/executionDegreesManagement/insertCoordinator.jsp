@@ -10,7 +10,7 @@
 
 <html:form action="/executionDegreesManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertCoordinator"/>
-	<bean:define id="executionDegreeID" name="executionDegree" property="idInternal" />
+	<bean:define id="executionDegreeID" name="executionDegree" property="externalId" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeID" property="executionDegreeID" value="<%= executionDegreeID.toString() %>"/>
 	
 	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.associate.teachers.in.charge"/></h3>

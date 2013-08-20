@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gr
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetRectifyBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
@@ -89,10 +91,10 @@ public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatc
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("&epID=").append(createBean.getExecutionPeriod().getIdInternal());
-        stringBuilder.append("&dID=").append(createBean.getDegree().getIdInternal());
-        stringBuilder.append("&dcpID=").append(createBean.getDegreeCurricularPlan().getIdInternal());
-        stringBuilder.append("&ccID=").append(createBean.getCurricularCourse().getIdInternal());
+        stringBuilder.append("&epID=").append(createBean.getExecutionPeriod().getExternalId());
+        stringBuilder.append("&dID=").append(createBean.getDegree().getExternalId());
+        stringBuilder.append("&dcpID=").append(createBean.getDegreeCurricularPlan().getExternalId());
+        stringBuilder.append("&ccID=").append(createBean.getCurricularCourse().getExternalId());
 
         if (createBean.getTeacherId() != null) {
             stringBuilder.append("&tn=").append(createBean.getTeacherId());
@@ -109,8 +111,7 @@ public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatc
     public ActionForward rectifyMarkSheetStepOneByEvaluation(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) actionForm;
-        Integer evaluationID = (Integer) form.get("evaluationID");
-        EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(evaluationID);
+        EnrolmentEvaluation enrolmentEvaluation = getDomainObject(form, "evaluationID");
         MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
         rectifyBean.setEnrolmentEvaluation(enrolmentEvaluation);
         fillMarkSheetRectifyBean(actionForm, request, rectifyBean);
@@ -123,25 +124,21 @@ public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatc
     private void fillMarkSheetRectifyBean(ActionForm actionForm, HttpServletRequest request, MarkSheetRectifyBean markSheetBean) {
         DynaActionForm form = (DynaActionForm) actionForm;
 
-        Integer executionPeriodID = (Integer) form.get("epID");
-        Integer degreeID = (Integer) form.get("dID");
-        Integer degreeCurricularPlanID = (Integer) form.get("dcpID");
-        Integer curricularCourseID = (Integer) form.get("ccID");
         String markSheetType = form.getString("mst");
 
-        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
-        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+        final ExecutionSemester executionSemester = getDomainObject(form, "epID");
+        final CurricularCourse curricularCourse = getDomainObject(form, "ccID");
 
         markSheetBean.setExecutionPeriod(executionSemester);
-        markSheetBean.setDegree(rootDomainObject.readDegreeByOID(degreeID));
-        markSheetBean.setDegreeCurricularPlan(rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID));
+        markSheetBean.setDegree(this.<Degree> getDomainObject(form, "dID"));
+        markSheetBean.setDegreeCurricularPlan(this.<DegreeCurricularPlan> getDomainObject(form, "dcpID"));
         markSheetBean.setCurricularCourseBean(new CurricularCourseMarksheetManagementBean(curricularCourse, executionSemester));
         markSheetBean.setMarkSheetType(MarkSheetType.valueOf(markSheetType));
 
     }
 
     public ActionForward rectifyMarkSheetStepTwoByEvaluation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         MarkSheetRectifyBean rectifyBean = (MarkSheetRectifyBean) RenderUtils.getViewState().getMetaObject().getObject();
 
         ActionMessages actionMessages = new ActionMessages();

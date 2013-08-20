@@ -111,7 +111,7 @@
 						<bean:write name="punctualRequest" property="presentationInstant"/>						
 					</td>
 					<td>
-						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&amp;punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&amp;punctualReserveID=<bean:write name="punctualRequest" property="externalId"/></bean:define>
 						<html:link page="<%= seeReserveURL %>">
 							<bean:write name="punctualRequest" property="subject"/>
 						</html:link>										

@@ -37,13 +37,13 @@
 					<fr:property name="rowClasses" value="listClasses"/>					
 																
 		   			<fr:property name="link(aliasManagement)" value="/loginsManagement.do?method=prepareManageAlias"/>
-		            <fr:property name="param(aliasManagement)" value="idInternal/personID"/>
+		            <fr:property name="param(aliasManagement)" value="externalId/personID"/>
 			        <fr:property name="key(aliasManagement)" value="link.manage.login.alias"/>
 		            <fr:property name="bundle(aliasManagement)" value="MANAGER_RESOURCES"/>
 		            <fr:property name="order(aliasManagement)" value="0"/>		     
 		            
 		            <fr:property name="link(loginTimeIntervalsManagement)" value="/loginsManagement.do?method=prepareManageLoginTimeIntervals"/>
-		            <fr:property name="param(loginTimeIntervalsManagement)" value="idInternal/personID"/>
+		            <fr:property name="param(loginTimeIntervalsManagement)" value="externalId/personID"/>
 			        <fr:property name="key(loginTimeIntervalsManagement)" value="link.manage.login.time.intervals"/>
 		            <fr:property name="bundle(loginTimeIntervalsManagement)" value="MANAGER_RESOURCES"/>
 		            <fr:property name="order(loginTimeIntervalsManagement)" value="1"/>		     

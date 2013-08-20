@@ -22,6 +22,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "manager", path = "/cron", input = "/cron.do?method=showScripts&page=0", scope = "request",
@@ -54,10 +55,9 @@ public class CronDA extends FenixDispatchAction {
     }
 
     public ActionForward runNow(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         final String cronScriptStateIDString = request.getParameter("cronScriptStateID");
-        final CronScriptState cronScriptState =
-                rootDomainObject.readCronScriptStateByOID(Integer.valueOf(cronScriptStateIDString));
+        final CronScriptState cronScriptState = AbstractDomainObject.fromExternalId(cronScriptStateIDString);
 
         executeFactoryMethod(new RunNowExecutor(cronScriptState));
 
@@ -67,8 +67,7 @@ public class CronDA extends FenixDispatchAction {
     public ActionForward showScript(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final String cronScriptStateIDString = request.getParameter("cronScriptStateID");
-        final CronScriptState cronScriptState =
-                rootDomainObject.readCronScriptStateByOID(Integer.valueOf(cronScriptStateIDString));
+        final CronScriptState cronScriptState = AbstractDomainObject.fromExternalId(cronScriptStateIDString);
         request.setAttribute("cronScriptState", cronScriptState);
 
         final String pageNumberString = request.getParameter("pageNumber");
@@ -90,8 +89,7 @@ public class CronDA extends FenixDispatchAction {
     public ActionForward showScriptInvocationLog(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final String cronScriptInvocationIDString = request.getParameter("cronScriptInvocationID");
-        final CronScriptInvocation cronScriptInvocation =
-                rootDomainObject.readCronScriptInvocationByOID(Integer.valueOf(cronScriptInvocationIDString));
+        final CronScriptInvocation cronScriptInvocation = AbstractDomainObject.fromExternalId(cronScriptInvocationIDString);
         request.setAttribute("cronScriptInvocation", cronScriptInvocation);
         return mapping.findForward("showCronScriptInvocationLog");
     }

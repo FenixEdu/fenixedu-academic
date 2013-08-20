@@ -44,7 +44,7 @@ public class EditStudentInfoDispatchAction extends FenixDispatchAction {
         DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
         IUserView userView = getUserView(request);
 
-        Integer personCode = Integer.valueOf(getFromRequest("idInternal", request));
+        String personCode = getFromRequest("externalId", request);
         Integer number = Integer.valueOf(getFromRequest("number", request));
         // Create Dates
 
@@ -53,7 +53,7 @@ public class EditStudentInfoDispatchAction extends FenixDispatchAction {
         Calendar idDocumentExpirationDate = Calendar.getInstance();
 
         InfoPersonEditor infoPerson = new InfoPersonEditor();
-        infoPerson.setIdInternal(personCode);
+        infoPerson.setExternalId(personCode);
         String dayString = (String) changeApplicationInfoForm.get("birthDay");
         String monthString = (String) changeApplicationInfoForm.get("birthMonth");
         String yearString = (String) changeApplicationInfoForm.get("birthYear");
@@ -158,7 +158,7 @@ public class EditStudentInfoDispatchAction extends FenixDispatchAction {
             return mapping.getInputForward();
         }
 
-        request.removeAttribute("idInternal");
+        request.removeAttribute("externalId");
         request.setAttribute("studentNumber", number);
         request.setAttribute("infoPerson", newInfoPerson);
         populateForm(changeApplicationInfoForm, newInfoPerson);

@@ -39,7 +39,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
         @Override
         public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
             int comparationResult = leftPaymentCode.getEndDate().compareTo(rightPaymentCode.getEndDate());
-            return (comparationResult == 0) ? leftPaymentCode.getIdInternal().compareTo(rightPaymentCode.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftPaymentCode.getExternalId().compareTo(rightPaymentCode.getExternalId()) : comparationResult;
         }
     };
 

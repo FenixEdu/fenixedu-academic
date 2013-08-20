@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Jo�o Mota
@@ -29,10 +29,10 @@ import pt.ist.fenixWebFramework.services.Service;
 public class RoomSiteComponentServiceByExecutionPeriodID {
 
     @Service
-    public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, Integer executionPeriodID)
+    public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, String executionPeriodID)
             throws Exception {
         final Calendar day = findMonday(someDay);
-        final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
         return (executionSemester != null) ? runService(bodyComponent, roomKey, day, executionSemester) : RoomSiteComponentService
                 .run(bodyComponent, roomKey, day);
     }

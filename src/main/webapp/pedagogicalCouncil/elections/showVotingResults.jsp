@@ -6,8 +6,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <bean:define id="forwardTo" value="showVotingResults" />
-<bean:define id="degreeOID" name="electionPeriodBean" property="degree.idInternal" />
-<bean:define id="electionOID" name="electionPeriodBean" property="election.idInternal" />
+<bean:define id="degreeOID" name="electionPeriodBean" property="degree.externalId" />
+<bean:define id="electionOID" name="electionPeriodBean" property="election.externalId" />
 
 <h2><bean:message key="label.showVotingResults" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 

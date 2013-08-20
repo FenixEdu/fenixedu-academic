@@ -28,11 +28,11 @@
 </logic:notEmpty>
 
 
-<bean:define id="personId"><bean:write name="person" property="idInternal" /></bean:define>
-<bean:define id="testGroupId"><bean:write name="atomicQuestion" property="test.testGroup.idInternal" /></bean:define>
-<bean:define id="correctId">correct-id-<bean:write name="atomicQuestion" property="idInternal" /></bean:define>
-<bean:define id="correctDiv">correct-div-<bean:write name="atomicQuestion" property="idInternal" /></bean:define>
-<bean:define id="correctControlDiv">correct-control-div-<bean:write name="atomicQuestion" property="idInternal" /></bean:define>
+<bean:define id="personId"><bean:write name="person" property="externalId" /></bean:define>
+<bean:define id="testGroupId"><bean:write name="atomicQuestion" property="test.testGroup.externalId" /></bean:define>
+<bean:define id="correctId">correct-id-<bean:write name="atomicQuestion" property="externalId" /></bean:define>
+<bean:define id="correctDiv">correct-div-<bean:write name="atomicQuestion" property="externalId" /></bean:define>
+<bean:define id="correctControlDiv">correct-control-div-<bean:write name="atomicQuestion" property="externalId" /></bean:define>
 <bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person" />
 <bean:define id="editLink">/tests/tests.do?method=correctByPerson#<bean:write name="correctDiv" /></bean:define>
 <bean:define id="schema">tests.answer.view.<bean:write name="atomicQuestion" property="class.simpleName" /></bean:define>

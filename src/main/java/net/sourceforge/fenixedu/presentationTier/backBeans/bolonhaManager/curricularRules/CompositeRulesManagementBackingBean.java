@@ -23,11 +23,11 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
     private UISelectItems beginExecutionPeriodItemsForCompositeRule;
     private UISelectItems endExecutionPeriodItemsForCompositeRule;
 
-    public Integer[] getSelectedCurricularRuleIDs() {
-        return (Integer[]) getViewState().getAttribute("selectedCurricularRuleIDs");
+    public String[] getSelectedCurricularRuleIDs() {
+        return (String[]) getViewState().getAttribute("selectedCurricularRuleIDs");
     }
 
-    public void setSelectedCurricularRuleIDs(Integer[] selectedCurricularRuleIDs) {
+    public void setSelectedCurricularRuleIDs(String[] selectedCurricularRuleIDs) {
         getViewState().setAttribute("selectedCurricularRuleIDs", selectedCurricularRuleIDs);
     }
 
@@ -61,7 +61,7 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
     private List<SelectItem> readCurricularRulesLabels() throws FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final CurricularRule curricularRule : getDegreeModule().getCurricularRules()) {
-            result.add(new SelectItem(curricularRule.getIdInternal(), CurricularRuleLabelFormatter.getLabel(curricularRule)));
+            result.add(new SelectItem(curricularRule.getExternalId(), CurricularRuleLabelFormatter.getLabel(curricularRule)));
         }
         return result;
     }
@@ -82,7 +82,7 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
         if (endExecutionPeriodItemsForCompositeRule == null) {
             endExecutionPeriodItemsForCompositeRule = new UISelectItems();
             final List<SelectItem> values = new ArrayList<SelectItem>(readExecutionPeriodItems());
-            values.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources.getString("opened")));
+            values.add(0, new SelectItem(NO_SELECTION_STRING, bolonhaResources.getString("opened")));
             endExecutionPeriodItemsForCompositeRule.setValue(values);
         }
         return endExecutionPeriodItemsForCompositeRule;

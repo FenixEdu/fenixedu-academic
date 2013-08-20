@@ -37,6 +37,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz
@@ -66,7 +67,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
     public ActionForward prepare(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final ExecutionYear executionYear) throws Exception {
         final DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;
-        finalDegreeWorkAttributionForm.set("executionYearOID", executionYear.getIdInternal().toString());
+        finalDegreeWorkAttributionForm.set("executionYearOID", executionYear.getExternalId().toString());
 
         final Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
         executionYears.addAll(rootDomainObject.getExecutionYearsSet());
@@ -87,18 +88,18 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
             InfoGroupProposal infoGroupProposal =
                     (InfoGroupProposal) CollectionUtils.find(infoGroup.getGroupProposals(),
-                            new PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(infoGroup.getIdInternal()));
+                            new PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(infoGroup.getExternalId()));
             if (infoGroupProposal != null) {
                 finalDegreeWorkAttributionForm.set("attributedByTeacher", infoGroupProposal.getFinalDegreeWorkProposal()
-                        .getIdInternal().toString());
+                        .getExternalId().toString());
             }
 
             String confirmAttributions[] = new String[infoGroup.getGroupStudents().size()];
             for (int i = 0; i < infoGroup.getGroupStudents().size(); i++) {
                 InfoGroupStudent infoGroupStudent = infoGroup.getGroupStudents().get(i);
                 if (infoGroupStudent != null && infoGroupStudent.getFinalDegreeWorkProposalConfirmation() != null) {
-                    confirmAttributions[i] = infoGroupStudent.getFinalDegreeWorkProposalConfirmation().getIdInternal().toString();
-                    confirmAttributions[i] += infoGroupStudent.getStudent().getIdInternal();
+                    confirmAttributions[i] = infoGroupStudent.getFinalDegreeWorkProposalConfirmation().getExternalId().toString();
+                    confirmAttributions[i] += infoGroupStudent.getStudent().getExternalId();
                 }
             }
             finalDegreeWorkAttributionForm.set("confirmAttributions", confirmAttributions);
@@ -122,8 +123,8 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
         final ExecutionYear executionYear;
         final String executionYearOID = (String) finalDegreeWorkAttributionForm.get("executionYearOID");
         executionYear =
-                executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear() : rootDomainObject
-                        .readExecutionYearByOID(Integer.valueOf(executionYearOID));
+                executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear() : AbstractDomainObject
+                        .<ExecutionYear> fromExternalId(executionYearOID);
         return prepare(mapping, finalDegreeWorkAttributionForm, request, executionYear);
     }
 
@@ -153,7 +154,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
         if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
 
-            ConfirmAttributionOfFinalDegreeWork.run(userView.getUtilizador(), new Integer(selectedGroupProposalOID));
+            ConfirmAttributionOfFinalDegreeWork.run(userView.getUtilizador(), selectedGroupProposalOID);
         }
 
         return mapping.findForward("prepareShowFinalDegreeWorkList");
@@ -161,17 +162,17 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
     private class PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER implements Predicate {
 
-        Integer groupID = null;
+        String groupID = null;
 
         @Override
         public boolean evaluate(Object arg0) {
             InfoGroupProposal infoGroupProposal = (InfoGroupProposal) arg0;
             return (infoGroupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher() != null)
                     && (groupID.equals(infoGroupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher()
-                            .getIdInternal()));
+                            .getExternalId()));
         }
 
-        public PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(Integer groupID) {
+        public PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(String groupID) {
             super();
             this.groupID = groupID;
         }

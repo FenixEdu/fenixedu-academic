@@ -8,7 +8,7 @@
 <br />
 <h2><bean:message key="label.delete" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message name="unit" property="partyType.type.name" bundle="ENUMERATION_RESOURCES" /> <bean:write name="unit" property="name" /></h2>
 
-<bean:define id="unitId">oid=<bean:write name="unit" property="idInternal" /></bean:define>
+<bean:define id="unitId">oid=<bean:write name="unit" property="externalId" /></bean:define>
 
 <html:messages property="error" message="true" id="errMsg" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>

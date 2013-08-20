@@ -44,7 +44,7 @@ public class TutorInfoDispatchAction extends FenixDispatchAction {
                 for (Tutorship tutorship : studentCurricularPlan.getTutorships()) {
                     if (tutorship.isActive()) {
                         request.setAttribute("actualTutor", tutorship);
-                        request.setAttribute("personID", tutorship.getTeacher().getPerson().getIdInternal());
+                        request.setAttribute("personID", tutorship.getTeacher().getPerson().getExternalId());
                     } else {
                         pastTutors.add(tutorship);
                     }

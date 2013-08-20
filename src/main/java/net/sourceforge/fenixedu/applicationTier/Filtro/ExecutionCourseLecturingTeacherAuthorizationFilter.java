@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author João Mota
@@ -34,7 +34,7 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer executionCourseCode) throws NotAuthorizedException {
+    public void execute(String executionCourseCode) throws NotAuthorizedException {
         execute(getExecutionCourse(executionCourseCode));
     }
 
@@ -80,11 +80,11 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
 
         } else if (argument instanceof InfoExecutionCourse) {
             final InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argument;
-            return RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+            return AbstractDomainObject.fromExternalId(infoExecutionCourse.getExternalId());
 
-        } else if (argument instanceof Integer) {
-            final Integer executionCourseID = (Integer) argument;
-            return RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+        } else if (argument instanceof String) {
+            final String executionCourseID = (String) argument;
+            return AbstractDomainObject.fromExternalId(executionCourseID);
 
         } else if (argument instanceof SummariesManagementBean) {
             return ((SummariesManagementBean) argument).getExecutionCourse();

@@ -70,7 +70,7 @@ public class EditExamRoomsDA extends
         if (examRooms != null) {
             String[] rooms = new String[examRooms.size()];
             for (int i = 0; i < examRooms.size(); i++) {
-                rooms[i] = ((InfoRoom) examRooms.get(i)).getIdInternal().toString();
+                rooms[i] = ((InfoRoom) examRooms.get(i)).getExternalId().toString();
             }
             editExamRoomsForm.set("selectedRooms", rooms);
         } else {

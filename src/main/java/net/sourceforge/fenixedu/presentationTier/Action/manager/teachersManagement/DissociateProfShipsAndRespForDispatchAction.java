@@ -66,9 +66,9 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
         Integer responsibleForListSize = (Integer) teacherForm.get("responsibleForListSize");
 
         List professorshipsToDelete =
-                getInformationToDissociate(request, professorshipsListSize, "professorship", "idInternal", "toDelete");
+                getInformationToDissociate(request, professorshipsListSize, "professorship", "externalId", "toDelete");
         List responsibleForsToDelete =
-                getInformationToDissociate(request, responsibleForListSize, "responsibleFor", "idInternal", "toDelete");
+                getInformationToDissociate(request, responsibleForListSize, "responsibleFor", "externalId", "toDelete");
 
         ActionErrors errors = new ActionErrors();
         HashMap professorshipsNotRemoved = null;

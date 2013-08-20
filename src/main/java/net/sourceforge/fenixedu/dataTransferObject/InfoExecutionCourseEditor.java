@@ -49,8 +49,8 @@ public class InfoExecutionCourseEditor extends InfoObject {
         if (obj instanceof InfoExecutionCourseEditor) {
             InfoExecutionCourseEditor infoExecutionCourse = (InfoExecutionCourseEditor) obj;
             resultado =
-                    (getIdInternal() != null && infoExecutionCourse.getIdInternal() != null && getIdInternal().equals(
-                            infoExecutionCourse.getIdInternal()))
+                    (getExternalId() != null && infoExecutionCourse.getExternalId() != null && getExternalId().equals(
+                            infoExecutionCourse.getExternalId()))
                             || (getSigla().equals(infoExecutionCourse.getSigla()) && getInfoExecutionPeriod().equals(
                                     infoExecutionCourse.getInfoExecutionPeriod()));
         }

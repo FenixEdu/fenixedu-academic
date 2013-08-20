@@ -40,12 +40,12 @@
     		</tr>
      	<logic:iterate id="studentCP" name="studentList">
         	<bean:define id="studentLink">
-        		<bean:write name="link"/><bean:write name="studentCP" property="idInternal"/>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID%>
+        		<bean:write name="link"/><bean:write name="studentCP" property="externalId"/>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID%>
         	</bean:define>
         <tr>
 	        <logic:equal name="viewPhoto" value="true">
 				<th>
-					<bean:define id="personID" name="studentCP" property="infoStudent.infoPerson.idInternal"/>
+					<bean:define id="personID" name="studentCP" property="infoStudent.infoPerson.externalId"/>
 					<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 			   </th>
 			</logic:equal> 

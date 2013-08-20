@@ -33,7 +33,7 @@
                             <bean:write name="executionPeriod" property="semester" />
                             <bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
                             <bean:write name="executionPeriod" property="executionYear.year" />             
-                            <html:link page="<%="/coordinator/viewInquiriesResults.do?method=prepare&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/coordinator")%>" paramId="degreeCurricularPlanID" paramName="executionDegree" paramProperty="degreeCurricularPlan.idInternal">
+                            <html:link page="<%="/coordinator/viewInquiriesResults.do?method=prepare&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/coordinator")%>" paramId="degreeCurricularPlanID" paramName="executionDegree" paramProperty="degreeCurricularPlan.externalId">
                                 <strong>
                                     <bean:write name="executionDegree" property="degree.sigla" /> - <bean:write name="executionDegree" property="degree.name" />
                                     »

@@ -63,7 +63,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
     }
 
     public ActionForward searchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final SimpleSearchPersonWithStudentBean searchPersonBean =
                 (SimpleSearchPersonWithStudentBean) getObjectFromViewState("searchPersonBean");
         request.setAttribute("searchPersonBean", searchPersonBean);
@@ -75,7 +75,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 
     @SuppressWarnings("unchecked")
     private Collection<Person> searchPerson(HttpServletRequest request, SimpleSearchPersonWithStudentBean searchPersonBean)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         final SearchParameters searchParameters =
                 new SearchPerson.SearchParameters(searchPersonBean.getName(), null, searchPersonBean.getUsername(),
                         searchPersonBean.getDocumentIdNumber(), searchPersonBean.getIdDocumentType() != null ? searchPersonBean
@@ -99,7 +99,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
     }
 
     private Person getPerson(HttpServletRequest request) {
-        return (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
+        return getDomainObject(request, "personId");
     }
 
     public ActionForward showAnnualIRSDocumentsInPayments(ActionMapping mapping, ActionForm actionForm,
@@ -152,7 +152,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 
         try {
             final AnnualIRSDeclarationDocument document = getDomainObject(request, "annualIRSDocumentOid");
-            request.setAttribute("personId", document.getAddressee().getIdInternal());
+            request.setAttribute("personId", document.getAddressee().getExternalId());
 
             final IRSDeclarationDTO declarationDTO =
                     new IRSDeclarationDTO(document.getYear().intValue(), document.getAddressee());

@@ -14,7 +14,7 @@
 	<logic:notEmpty name="patents">
 		<ul style="width: 600px;">
 		<logic:iterate id="patent" name="patents">
-			<bean:define id="patentId" name="patent" property="idInternal"/>
+			<bean:define id="patentId" name="patent" property="externalId"/>
 			<li>
 				<p class="mvert0">
 		 			<strong>

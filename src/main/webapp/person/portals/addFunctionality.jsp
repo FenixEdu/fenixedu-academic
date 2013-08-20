@@ -7,7 +7,7 @@
 <em><bean:message key="label.manage.content" bundle="CONTENT_RESOURCES"/></em>
 <h2><bean:message key="add.functionality" bundle="CONTENT_RESOURCES"/></h2>
 
-<bean:define id="cid" name="container" property="idInternal"/>
+<bean:define id="cid" name="container" property="externalId"/>
 
 <p>
 <fr:view name="rootModule">
@@ -20,8 +20,8 @@
 	        <fr:property name="childrenFor(Module)" value="childrenAsContent"/>
 	        <fr:property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>	   			
 
-			<fr:destination name="functionality.view" path="<%= "/contentManagement.do?method=addFunctionality&contentId=${idInternal}&contentParentId=" + cid%>"/>
-			<fr:destination name="module.view" path="<%= "/contentManagement.do?method=addModule&contentId=${idInternal}&contentParentId=" + cid%>"/>
+			<fr:destination name="functionality.view" path="<%= "/contentManagement.do?method=addFunctionality&contentId=${externalId}&contentParentId=" + cid%>"/>
+			<fr:destination name="module.view" path="<%= "/contentManagement.do?method=addModule&contentId=${externalId}&contentParentId=" + cid%>"/>
 	</fr:layout>
 </fr:view>
 </p>

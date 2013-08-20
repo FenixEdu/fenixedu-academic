@@ -5,12 +5,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -22,10 +21,10 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadStudentById {
 
     @Service
-    public static Object run(Integer id) throws FenixServiceException {
+    public static Object run(String id) throws FenixServiceException {
         InfoStudent infoStudent = null;
 
-        Registration registration = RootDomainObject.getInstance().readRegistrationByOID(id);
+        Registration registration = AbstractDomainObject.fromExternalId(id);
         if (registration != null) {
             infoStudent = InfoStudent.newInfoFromDomain(registration);
         }

@@ -23,7 +23,7 @@ public class Announcement extends Announcement_Base {
         @Override
         public int compare(Announcement o1, Announcement o2) {
             int result = o2.getBeginComparationDate().compareTo(o1.getBeginComparationDate());
-            return result != 0 ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
+            return result != 0 ? result : o1.getExternalId().compareTo(o2.getExternalId());
         }
     };
 
@@ -59,7 +59,7 @@ public class Announcement extends Announcement_Base {
                 result = 1;
             }
 
-            return result != 0 ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
+            return result != 0 ? result : o1.getExternalId().compareTo(o2.getExternalId());
         }
     };
 

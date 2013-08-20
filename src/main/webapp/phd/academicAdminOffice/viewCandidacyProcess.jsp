@@ -93,7 +93,7 @@
 		
 		<logic:notEmpty name="process" property="student"> 
 		<li style="display: inline;">
-			<html:link action="/student.do?method=visualizeStudent" paramId="studentID" paramName="process" paramProperty="student.idInternal" target="_blank">
+			<html:link action="/student.do?method=visualizeStudent" paramId="studentID" paramName="process" paramProperty="student.externalId" target="_blank">
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.edit.candidacy.information"/>
 			</html:link>
 		</li>

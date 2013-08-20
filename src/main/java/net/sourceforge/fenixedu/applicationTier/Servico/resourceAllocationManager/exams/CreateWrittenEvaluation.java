@@ -14,16 +14,16 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.Season;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateWrittenEvaluation {
 
-    protected void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
+    protected void run(String executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
             Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
             List<String> roomIDs, GradeScale gradeScale, Season examSeason, String writtenTestDescription)
             throws FenixServiceException {
@@ -59,7 +59,7 @@ public class CreateWrittenEvaluation {
 
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final String executionCourseID : executionCourseIDs) {
-            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseID));
+            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
             if (executionCourse == null) {
                 throw new FenixServiceException("error.invalidExecutionCourse");
             }
@@ -89,7 +89,7 @@ public class CreateWrittenEvaluation {
     private List<AllocatableSpace> readRooms(final List<String> roomIDs) throws FenixServiceException {
         final List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
         for (final String roomID : roomIDs) {
-            final AllocatableSpace room = (AllocatableSpace) RootDomainObject.getInstance().readResourceByOID(Integer.valueOf(roomID));
+            final AllocatableSpace room = (AllocatableSpace) AbstractDomainObject.fromExternalId(roomID);
             if (room == null) {
                 throw new FenixServiceException("error.noRoom");
             }
@@ -103,7 +103,7 @@ public class CreateWrittenEvaluation {
     private static final CreateWrittenEvaluation serviceInstance = new CreateWrittenEvaluation();
 
     @Service
-    public static void runCreateWrittenEvaluation(Integer executionCourseID, Date writtenEvaluationDate,
+    public static void runCreateWrittenEvaluation(String executionCourseID, Date writtenEvaluationDate,
             Date writtenEvaluationStartTime, Date writtenEvaluationEndTime, List<String> executionCourseIDs,
             List<String> degreeModuleScopeIDs, List<String> roomIDs, GradeScale gradeScale, Season examSeason,
             String writtenTestDescription) throws FenixServiceException, NotAuthorizedException {

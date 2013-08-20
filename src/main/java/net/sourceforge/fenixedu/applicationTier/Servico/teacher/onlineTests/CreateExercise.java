@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
@@ -22,19 +21,20 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 import net.sourceforge.fenixedu.util.tests.XMLQuestion;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
  */
 public class CreateExercise {
 
-    protected Boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
+    protected Boolean run(String executionCourseId, String metadataId, String author, String description,
             QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
             String level, SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options,
             String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,
             Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox, String path) throws FenixServiceException {
 
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -44,7 +44,7 @@ public class CreateExercise {
                     new Metadata(executionCourse, author, description, questionDifficultyType.getTypeString(), learningTime,
                             mainSubject, secondarySubject, level);
         } else {
-            metadata = RootDomainObject.getInstance().readMetadataByOID(metadataId);
+            metadata = AbstractDomainObject.fromExternalId(metadataId);
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -92,7 +92,7 @@ public class CreateExercise {
     private static final CreateExercise serviceInstance = new CreateExercise();
 
     @Service
-    public static Boolean runCreateExercise(Integer executionCourseId, Integer metadataId, String author, String description,
+    public static Boolean runCreateExercise(String executionCourseId, String metadataId, String author, String description,
             QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
             String level, SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options,
             String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,

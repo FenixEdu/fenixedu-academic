@@ -22,8 +22,8 @@
 	</fr:layout>
 </fr:view>
 
-<bean:define id="attendsId" name="attends" property="idInternal" />
-<bean:define id="projectId" name="project" property="idInternal" />
+<bean:define id="attendsId" name="attends" property="externalId" />
+<bean:define id="projectId" name="project" property="externalId" />
 
 <fr:edit id="createProjectSubmission" name="projectSubmission" action="<%="/projectSubmission.do?method=submitProject&amp;attendsId=" + attendsId + "&amp;projectId=" + projectId%>">
 	<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean" bundle="STUDENT_RESOURCES">

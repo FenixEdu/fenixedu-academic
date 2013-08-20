@@ -9,14 +9,14 @@
 <bean:define id="datePattern" value="dd-MM-yyyy"/>
 
 <h2><bean:message key="label.teacherService.credits"/></h2>
-<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal" />
+<bean:define id="executionPeriodId" name="executionPeriod" property="externalId" />
 
 <bean:define id="link">
 	/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;teacherId=<bean:write name="teacher" property="teacherId"/>
 </bean:define>
 
 <bean:define id="linkToPrintSchedules">
-	<%= request.getContextPath() %>/departmentMember/schedulesPrint.do?method=showSchedulesPrint&amp;teacherId=<bean:write name="teacher" property="idInternal"/>&amp;executionPeriodId=<bean:write name="executionPeriodId"/>
+	<%= request.getContextPath() %>/departmentMember/schedulesPrint.do?method=showSchedulesPrint&amp;teacherId=<bean:write name="teacher" property="externalId"/>&amp;executionPeriodId=<bean:write name="executionPeriodId"/>
 </bean:define>
 
 <div class="infoop">
@@ -53,7 +53,7 @@
 			</span>
 		</h4>
 <%-- ========================= DEGREE TEACHING SERVICES ========================== --%>
-		<bean:define id="professorshipID" name="professorship" property="idInternal"/>
+		<bean:define id="professorshipID" name="professorship" property="externalId"/>
 
 		<bean:define id="degreeTeachingServices" name="professorship" property="degreeTeachingServicesOrderedByShift"/>
 		

@@ -7,8 +7,8 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <bean:define id="forwardTo" value="showCandidates" />
-<bean:define id="degreeOID" name="electionPeriodBean" property="degree.idInternal" />
-<bean:define id="electionOID" name="electionPeriodBean" property="election.idInternal" />
+<bean:define id="degreeOID" name="electionPeriodBean" property="degree.externalId" />
+<bean:define id="electionOID" name="electionPeriodBean" property="election.externalId" />
 
 <em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 <h2><bean:message key="label.showCandidates" bundle="PEDAGOGICAL_COUNCIL" /></h2>
@@ -40,7 +40,7 @@
 	</fr:view>
 </logic:present>
 
-<bean:define id="electionID" name="electionPeriodBean" property="election.idInternal" />
+<bean:define id="electionID" name="electionPeriodBean" property="election.externalId" />
 
 <logic:present name="candidatesWithoutPhotos" >
 	<logic:empty name="candidatesWithoutPhotos" >

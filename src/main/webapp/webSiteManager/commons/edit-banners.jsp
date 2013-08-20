@@ -27,7 +27,7 @@
 
 <logic:notEmpty name="banners">
     <logic:iterate id="banner" name="banners">
-        <bean:define id="bannerId" name="banner" property="idInternal"/>
+        <bean:define id="bannerId" name="banner" property="externalId"/>
  
         <div id="banner<%= bannerId %>">
             <logic:notPresent name="<%= "editBanner" + bannerId %>">

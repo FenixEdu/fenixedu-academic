@@ -26,12 +26,12 @@
 	<logic:equal name="professorshipPermissions" property="evaluationMethod" value="true">
 	<ul class="mvert1">
 		<li>
-			<html:link page="/editEvaluationMethod.do?method=prepareEditEvaluationMethod" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/editEvaluationMethod.do?method=prepareEditEvaluationMethod" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 				<bean:message key="button.edit"/>
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/manageExecutionCourse.do?method=prepareImportEvaluationMethod&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/manageExecutionCourse.do?method=prepareImportEvaluationMethod&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 				<bean:message key="link.import.evaluationMethod"/>
 			</html:link>
 		</li>

@@ -13,7 +13,7 @@
 <ul>
 	<li>
 		<html:link page="/tests/questionBank.do?method=manageQuestionBank&amp;view=tree"
-		           paramId="oid" paramName="questionBank" paramProperty="idInternal">
+		           paramId="oid" paramName="questionBank" paramProperty="externalId">
 			<bean:message key="message.back" bundle="TESTS_RESOURCES" />
 		</html:link>
 	</li>

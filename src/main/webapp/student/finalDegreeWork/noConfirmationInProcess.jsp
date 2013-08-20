@@ -16,7 +16,7 @@
 	<html:select bundle="HTMLALT_RESOURCES" property="executionYearOID" size="1"
 				 onchange='this.form.method.value=\'prepare\';this.form.page.value=\'0\';this.form.submit();'>
 		<html:option value=""><!-- w3c complient--></html:option>
-		<html:options property="idInternal"
+		<html:options property="externalId"
 					  labelProperty="nextYearsYearString"
 					  collection="executionYears" />
 	</html:select>

@@ -61,7 +61,7 @@
 			<logic:equal name="teacherPersonalExpectation" property="allowedToEditExpectation" value="true">
 				<ul class="list5">
 					<li>
-						<html:link page="/personalExpectationManagement.do?method=prepareEditEducationExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
+						<html:link page="/personalExpectationManagement.do?method=prepareEditEducationExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="externalId">
 							<bean:message key="link.edit" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
 						</html:link>
 					</li>
@@ -114,7 +114,7 @@
 			<logic:equal name="teacherPersonalExpectation" property="allowedToEditExpectation" value="true">
 				<ul class="list5">
 					<li>
-						<html:link page="/personalExpectationManagement.do?method=prepareEditResearchAndDevelopmentExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
+						<html:link page="/personalExpectationManagement.do?method=prepareEditResearchAndDevelopmentExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="externalId">
 							<bean:message key="link.edit" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
 						</html:link>
 					</li>
@@ -144,7 +144,7 @@
 			<logic:equal name="teacherPersonalExpectation" property="allowedToEditExpectation" value="true">
 				<ul class="list5">
 					<li>
-						<html:link page="/personalExpectationManagement.do?method=prepareEditUniversityServicesExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
+						<html:link page="/personalExpectationManagement.do?method=prepareEditUniversityServicesExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="externalId">
 							<bean:message key="link.edit" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
 						</html:link>
 					</li>
@@ -173,7 +173,7 @@
 			<logic:equal name="teacherPersonalExpectation" property="allowedToEditExpectation" value="true">
 				<ul class="list5">
 					<li>
-						<html:link page="/personalExpectationManagement.do?method=prepareEditProfessionalActivitiesExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
+						<html:link page="/personalExpectationManagement.do?method=prepareEditProfessionalActivitiesExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="externalId">
 							<bean:message key="link.edit" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
 						</html:link>
 					</li>

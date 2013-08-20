@@ -51,7 +51,7 @@
                 <tr>
                     <td>
 						<div class="gen-button">
-							<bean:define id="announcementCode" name="announcement" property="idInternal" />
+							<bean:define id="announcementCode" name="announcement" property="externalId" />
 							<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 							<html:link page="<%= "/announcementManagementAction.do?method=prepareEditAnnouncement&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;announcementCode=" + announcementCode %>">
 								<bean:message key="button.edit" /> 

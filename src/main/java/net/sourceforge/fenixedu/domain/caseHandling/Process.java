@@ -112,7 +112,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
 
     @Override
     public int compareTo(Process process) {
-        return getIdInternal().compareTo(process.getIdInternal());
+        return getExternalId().compareTo(process.getExternalId());
     }
 
     public List<Activity> getAllowedActivities(final IUserView userView) {

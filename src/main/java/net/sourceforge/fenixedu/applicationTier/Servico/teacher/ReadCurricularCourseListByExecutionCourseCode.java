@@ -19,12 +19,12 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Tânia Pousão
@@ -33,11 +33,11 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCurricularCourseListByExecutionCourseCode {
 
-    protected TeacherAdministrationSiteView run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
+    protected TeacherAdministrationSiteView run(String executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
 
         List infoCurricularCourseList = new ArrayList();
         ExecutionCourseSite site = null;
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
 
         if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
             for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
@@ -87,7 +87,7 @@ public class ReadCurricularCourseListByExecutionCourseCode {
             new ReadCurricularCourseListByExecutionCourseCode();
 
     @Service
-    public static TeacherAdministrationSiteView runReadCurricularCourseListByExecutionCourseCode(Integer executionCourseCode)
+    public static TeacherAdministrationSiteView runReadCurricularCourseListByExecutionCourseCode(String executionCourseCode)
             throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode);

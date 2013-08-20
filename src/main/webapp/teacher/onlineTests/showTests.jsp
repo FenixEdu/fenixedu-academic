@@ -39,7 +39,7 @@
 					<td class="listClasses"><bean:write name="test" property="lastModifiedDateFormatted" /></td>
 					<bean:size id="numberOfQuestions" name="test" property="testQuestions"/>
 					<td class="listClasses"><bean:write name="numberOfQuestions" /></td>
-					<bean:define id="testCode" name="test" property="idInternal" />
+					<bean:define id="testCode" name="test" property="externalId" />
 					<td>
 					<div class="gen-button"><html:link
 						page="<%= "/testEdition.do?method=editTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + testCode %>">

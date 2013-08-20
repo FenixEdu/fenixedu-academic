@@ -21,7 +21,7 @@
 
 <bean:define id="studentCurricularPlan" name="studentCurricularPlan" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan"/>
 <bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="externalId"/>
-<bean:define id="registrationId" name="studentCurricularPlan" property="registration.idInternal" />
+<bean:define id="registrationId" name="studentCurricularPlan" property="registration.externalId" />
 
 
 <html:link page="<%= "/student.do?method=visualizeRegistration&amp;registrationId=" + registrationId %>" >

@@ -12,7 +12,7 @@
 	</h:outputFormat>
 	<h:messages layout="table" errorClass="error"/>
 	<h:form>
-		<h:outputText value="<input type=hidden name='executionCourseID' value='#{evaluationManagementBackingBean.executionCourse.idInternal}'/>" escape="false"/>
+		<h:outputText value="<input type=hidden name='executionCourseID' value='#{evaluationManagementBackingBean.executionCourse.externalId}'/>" escape="false"/>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 
@@ -81,10 +81,10 @@
 
 				<h:outputText value="<p>" escape="false"/>
 					<h:commandLink action="enterLoadMarks">
-						<f:param name="evaluationIDHidden" value="#{evaluationManagementBackingBean.evaluation.idInternal}" />
-						<f:param name="executionCourseIDHidden" value="#{evaluationManagementBackingBean.executionCourse.idInternal}" />
-						<f:param name="evaluationID" value="#{evaluationManagementBackingBean.evaluation.idInternal}" />
-						<f:param name="executionCourseID" value="#{evaluationManagementBackingBean.executionCourse.idInternal}" />
+						<f:param name="evaluationIDHidden" value="#{evaluationManagementBackingBean.evaluation.externalId}" />
+						<f:param name="executionCourseIDHidden" value="#{evaluationManagementBackingBean.executionCourse.externalId}" />
+						<f:param name="evaluationID" value="#{evaluationManagementBackingBean.evaluation.externalId}" />
+						<f:param name="executionCourseID" value="#{evaluationManagementBackingBean.executionCourse.externalId}" />
 						<h:outputFormat value="#{bundle['label.load.marks']}" />
 					</h:commandLink>
 				<h:outputText value="</p>" escape="false"/>
@@ -130,7 +130,7 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.mark']}"/></f:facet>
-					<h:inputText alt="#{htmlAltBundle['inputText.number']}" size="3" maxlength="4" value="#{evaluationManagementBackingBean.marks[attends.idInternal]}"/>
+					<h:inputText alt="#{htmlAltBundle['inputText.number']}" size="3" maxlength="4" value="#{evaluationManagementBackingBean.marks[attends.externalId]}"/>
 				</h:column>
 			</h:dataTable>
 			

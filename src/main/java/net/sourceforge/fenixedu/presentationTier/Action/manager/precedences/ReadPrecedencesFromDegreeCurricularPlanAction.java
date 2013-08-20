@@ -36,8 +36,8 @@ public class ReadPrecedencesFromDegreeCurricularPlanAction extends FenixAction {
 
         IUserView userView = UserView.getUser();
 
-        Integer degreeID = new Integer(request.getParameter("degreeId"));
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+        String degreeID = request.getParameter("degreeId");
+        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanId");
 
         try {
             Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);

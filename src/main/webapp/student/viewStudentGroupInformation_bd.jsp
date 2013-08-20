@@ -9,10 +9,10 @@
 <logic:present name="infoSiteStudentGroup">
 
 	<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>
-	<bean:define id="studentGroupCode" name="infoStudentGroup" property="idInternal"/>
+	<bean:define id="studentGroupCode" name="infoStudentGroup" property="externalId"/>
 	<bean:define id="infoAttends" name="infoStudentGroup" property="infoAttends"/>
 	<bean:define id="infoGrouping" name="infoStudentGroup" property="infoGrouping"/>
-	<bean:define id="groupPropertiesCode" name="infoGrouping" property="idInternal"/>
+	<bean:define id="groupPropertiesCode" name="infoGrouping" property="externalId"/>
 
 	<em><bean:message key="title.student.portalTitle"/></em>
 	<h2><bean:message key="title.StudentGroupInformation"/> <bean:write name="infoStudentGroup" property="groupNumber"/></h2>
@@ -46,14 +46,14 @@
 		<b><bean:message key="label.groupOption"/></b>&nbsp;
 		
 		<logic:lessEqual name="ShiftType" value="2">
-		<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
-		<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode") +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString() +"&amp;shiftCode=" +shiftCode.toString()%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+		<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.externalId"/>
+		<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode") +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString() +"&amp;shiftCode=" +shiftCode.toString()%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 	    	<bean:message key="link.enrolment"/>
 	    </html:link>
 		</logic:lessEqual>
 			
 		<logic:greaterEqual name="ShiftType" value="3">
-		<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode") +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+		<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode") +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 	    	<bean:message key="link.enrolment"/>
 	    </html:link>
 		</logic:greaterEqual>
@@ -82,49 +82,49 @@
 		<b><bean:message key="label.groupOperations"/></b>&nbsp;
 		
 		<logic:lessEqual name="ShiftType" value="2">
-		<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
-		<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+"&amp;shiftCode=" + request.getParameter("shiftCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+		<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.externalId"/>
+		<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+"&amp;shiftCode=" + request.getParameter("shiftCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 		<bean:message key="link.enrolment"/>
 		</html:link> &nbsp;|&nbsp;
 		</logic:lessEqual>	
 		
 		<logic:greaterEqual name="ShiftType" value="3">
-		<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+		<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 	    <bean:message key="link.enrolment"/>
 		</html:link> &nbsp;|&nbsp;
 		</logic:greaterEqual>	
 	
 	
 		<logic:lessEqual name="ShiftType" value="2">
-		<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
-		<html:link page="<%="/removeGroupEnrolment.do?method=prepareRemove&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+"&amp;shiftCode=" + request.getParameter("shiftCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+		<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.externalId"/>
+		<html:link page="<%="/removeGroupEnrolment.do?method=prepareRemove&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+"&amp;shiftCode=" + request.getParameter("shiftCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 		<bean:message key="link.removeEnrolment"/>
 		</html:link> &nbsp;|&nbsp;
 		</logic:lessEqual>
 			    
 		<logic:greaterEqual name="ShiftType" value="3">
-		<html:link page="<%="/removeGroupEnrolment.do?method=prepareRemove&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+		<html:link page="<%="/removeGroupEnrolment.do?method=prepareRemove&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 	   	<bean:message key="link.removeEnrolment"/>
 		</html:link> &nbsp;|&nbsp;
 		</logic:greaterEqual>	    
 	  
 	
 		<logic:equal name="ShiftType" value="1">
-	    <bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
-		<html:link page="<%="/editStudentGroupShift.do?method=prepareEdit&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")%>"  paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+	    <bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.externalId"/>
+		<html:link page="<%="/editStudentGroupShift.do?method=prepareEdit&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")%>"  paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 	    <bean:message key="link.editStudentGroupShift"/>
 		</html:link>
 		</logic:equal>
 	
 	
 		<logic:equal name="ShiftType" value="3">
-		<html:link page="<%="/enrollStudentGroupShift.do?method=prepareEnrollStudentGroupShift&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>"  paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+		<html:link page="<%="/enrollStudentGroupShift.do?method=prepareEnrollStudentGroupShift&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>"  paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 	    <bean:message key="link.enrollStudentGroupInShift"/>
 	    </html:link>
 		</logic:equal>
 	
 	  	<logic:equal name="ShiftType" value="2">
-	    <html:link page="<%="/unEnrollStudentGroupShift.do?method=unEnrollStudentGroupShift&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")%>"  paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+	    <html:link page="<%="/unEnrollStudentGroupShift.do?method=unEnrollStudentGroupShift&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")%>"  paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 	    <bean:message key="link.unEnrollStudentGroupShift"/>
 	    </html:link>
 		</logic:equal>

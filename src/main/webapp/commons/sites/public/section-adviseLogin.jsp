@@ -27,7 +27,7 @@
         <span class="permalink1">(<app:contentLink name="section"><bean:message key="label.link" bundle="SITE_RESOURCES"/></app:contentLink>)</span>
     </h2>
 
-    <bean:define id="sectionId" name="section" property="idInternal"/>
+    <bean:define id="sectionId" name="section" property="externalId"/>
     <p>
        <em><bean:message key="message.section.view.mustLogin" bundle="SITE_RESOURCES"/></em>
 		<%

@@ -50,7 +50,7 @@
 		    <logic:iterate id="enrolment" name="enrolmentList">
 		     	<logic:notEqual name="enrolment" property="enrollmentState" value="<%= EnrollmentState.ANNULED.toString() %>">
 		        	<bean:define id="studentLink">
-		        		<bean:write name="link"/><bean:write name="enrolment" property="infoStudentCurricularPlan.idInternal"/>
+		        		<bean:write name="link"/><bean:write name="enrolment" property="infoStudentCurricularPlan.externalId"/>
 		        	</bean:define>
 			        <tr>
 			        	<td class="listClasses">

@@ -56,6 +56,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/postingRules", module = "manager", formBeanClass = PostingRulesManagementDA.PostingRulesManagementForm.class)
 @Forwards({
@@ -102,13 +103,13 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
         static private final long serialVersionUID = 1L;
 
-        private Integer executionYearId;
+        private String executionYearId;
 
-        public Integer getExecutionYearId() {
+        public String getExecutionYearId() {
             return executionYearId;
         }
 
-        public void setExecutionYearId(Integer executionYearId) {
+        public void setExecutionYearId(String executionYearId) {
             this.executionYearId = executionYearId;
         }
 
@@ -144,11 +145,11 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     protected PostingRule getPostingRule(HttpServletRequest request) {
-        return rootDomainObject.readPostingRuleByOID(getIntegerFromRequest(request, "postingRuleId"));
+        return getDomainObject(request, "postingRuleId");
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request) {
-        return rootDomainObject.readDegreeCurricularPlanByOID(getIntegerFromRequest(request, "degreeCurricularPlanId"));
+        return getDomainObject(request, "degreeCurricularPlanId");
     }
 
     public ActionForward prepareEditDegreeCurricularPlanPostingRule(ActionMapping mapping, ActionForm form,
@@ -205,12 +206,12 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward editDFAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         try {
 
             executeFactoryMethod((FactoryExecutor) getRenderedObject("postingRuleEditor"));
-            request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getIdInternal());
+            request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getExternalId());
 
             return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
 
@@ -242,12 +243,12 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward editSpecializationDegreeGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         try {
 
             executeFactoryMethod((FactoryExecutor) getRenderedObject("postingRuleEditor"));
-            request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getIdInternal());
+            request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getExternalId());
 
             return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
 
@@ -259,7 +260,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteDegreeCurricularPlanPostingRule(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         try {
             PostingRulesManager.deletePostingRule(getPostingRule(request));
@@ -319,7 +320,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         final PostingRulesManagementForm postingRulesManagementForm = (PostingRulesManagementForm) form;
 
         if (postingRulesManagementForm.getExecutionYearId() == null) {
-            postingRulesManagementForm.setExecutionYearId(ExecutionYear.readCurrentExecutionYear().getIdInternal());
+            postingRulesManagementForm.setExecutionYearId(ExecutionYear.readCurrentExecutionYear().getExternalId());
         }
 
         setRequestAttributesToShowPaymentPlans(request, postingRulesManagementForm);
@@ -337,7 +338,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
     private void setRequestAttributesToShowPaymentPlans(HttpServletRequest request, final PostingRulesManagementForm form) {
 
-        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(form.getExecutionYearId());
+        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(form.getExecutionYearId());
 
         request.setAttribute("executionYears", new ArrayList<ExecutionYear>(rootDomainObject.getExecutionYears()));
         request.setAttribute("paymentPlans", getDegreeCurricularPlan(request).getServiceAgreementTemplate()
@@ -427,7 +428,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createPaymentPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         try {
             GratuityPaymentPlanManager.create(getPaymentPlanBean());
@@ -448,7 +449,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     private PaymentPlan getPaymentPlan(final HttpServletRequest request) {
-        return rootDomainObject.readPaymentPlanByOID(getIntegerFromRequest(request, "paymentPlanId"));
+        return getDomainObject(request, "paymentPlanId");
     }
 
     public ActionForward deletePaymentPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -599,7 +600,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
         }
 
-        request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getIdInternal());
+        request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getExternalId());
 
         return showGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
     }
@@ -637,7 +638,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createDFAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         try {
             PostingRulesManager.createDFAGratuityPostingRule(getCreateDFAGratuityPostingRuleBeanFromRequest());
@@ -650,7 +651,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         }
 
         request.setAttribute("degreeCurricularPlanId", getCreateDFAGratuityPostingRuleBeanFromRequest().getDegreeCurricularPlan()
-                .getIdInternal());
+                .getExternalId());
 
         return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
     }
@@ -689,7 +690,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSpecializationDegreeGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         try {
             PostingRulesManager
@@ -704,7 +705,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         }
 
         request.setAttribute("degreeCurricularPlanId", getCreateSpecializationDegreeGratuityPostingRuleBeanFromRequest()
-                .getDegreeCurricularPlan().getIdInternal());
+                .getDegreeCurricularPlan().getExternalId());
 
         return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
     }
@@ -733,7 +734,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createDEAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 
         InstallmentBean installment = getInstallment();

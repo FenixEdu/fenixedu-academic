@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
@@ -55,6 +54,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class CustomUnitSiteManagementDA extends SiteManagementDA {
@@ -79,14 +79,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     @Override
     protected UnitSite getSite(HttpServletRequest request) {
-
-        Integer oid = getId(request.getParameter("oid"));
-
-        if (oid == null) {
-            return null;
-        }
-
-        return (UnitSite) RootDomainObject.getInstance().readContentByOID(oid);
+        return getDomainObject(request, "oid");
     }
 
     protected Unit getUnit(HttpServletRequest request) {
@@ -217,7 +210,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         UnitSiteBanner banner = getBanner(request);
 
         if (banner != null) {
-            request.setAttribute("editBanner" + banner.getIdInternal(), true);
+            request.setAttribute("editBanner" + banner.getExternalId(), true);
             request.setAttribute("editBannerBean", new BannerBean(banner));
         }
 
@@ -226,10 +219,10 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     private UnitSiteBanner getBanner(HttpServletRequest request) {
         UnitSite site = getSite(request);
-        Integer bannerId = getId(request.getParameter("bannerID"));
+        String bannerId = request.getParameter("bannerID");
 
         for (UnitSiteBanner banner : site.getBanners()) {
-            if (banner.getIdInternal().equals(bannerId)) {
+            if (banner.getExternalId().equals(bannerId)) {
                 return banner;
             }
         }
@@ -273,10 +266,10 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward removeBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         UnitSite site = getSite(request);
-        Integer bannerId = getId(request.getParameter("bannerID"));
+        String bannerId = request.getParameter("bannerID");
 
         for (UnitSiteBanner banner : site.getBanners()) {
-            if (banner.getIdInternal().equals(bannerId)) {
+            if (banner.getExternalId().equals(bannerId)) {
                 DeleteUnitSiteBanner.runDeleteUnitSiteBanner(site, banner);
                 break;
             }
@@ -332,10 +325,10 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward removeTopLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         UnitSite site = getSite(request);
-        Integer linkId = getId(request.getParameter("linkID"));
+        String linkId = request.getParameter("linkID");
 
         for (UnitSiteLink link : site.getTopLinks()) {
-            if (link.getIdInternal().equals(linkId)) {
+            if (link.getExternalId().equals(linkId)) {
                 DeleteUnitSiteLink.runDeleteUnitSiteLink(site, link);
                 break;
             }
@@ -367,10 +360,10 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward removeFooterLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         UnitSite site = getSite(request);
-        Integer linkId = getId(request.getParameter("linkID"));
+        String linkId = request.getParameter("linkID");
 
         for (UnitSiteLink link : site.getFooterLinks()) {
-            if (link.getIdInternal().equals(linkId)) {
+            if (link.getExternalId().equals(linkId)) {
                 DeleteUnitSiteLink.runDeleteUnitSiteLink(site, link);
                 break;
             }
@@ -415,7 +408,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         return footerNavigation(mapping, actionForm, request, response);
     }
 
-    protected void saveLinksOrder(HttpServletRequest request, boolean top) throws  FenixServiceException {
+    protected void saveLinksOrder(HttpServletRequest request, boolean top) throws FenixServiceException {
         UnitSite site = getSite(request);
         String orderString = request.getParameter("linksOrder");
 
@@ -493,9 +486,9 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     private Person getSelectedPerson(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "personID");
+        String id = request.getParameter("personID");
         if (id != null) {
-            return (Person) RootDomainObject.getInstance().readPartyByOID(id);
+            return (Person) AbstractDomainObject.fromExternalId(id);
         }
 
         VariantBean bean = getRenderedObject("addUserBean");
@@ -580,8 +573,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     private Unit getTargetUnit(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "unitID");
-        return (Unit) RootDomainObject.getInstance().readPartyByOID(id);
+        return getDomainObject(request, "unitID");
     }
 
     public ActionForward prepareEditFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -627,8 +619,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     private Function getTargetFunction(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "functionID");
-        return (Function) RootDomainObject.getInstance().readAccountabilityTypeByOID(id);
+        return getDomainObject(request, "functionID");
     }
 
     public ActionForward organizeFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -685,8 +676,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     private PersonFunction getPersonFunction(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "personFunctionID");
-        return (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(id);
+        return getDomainObject(request, "personFunctionID");
     }
 
     public ActionForward removePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -715,9 +705,9 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
             HttpServletResponse response) throws Exception {
         UnitSite site = getSite(request);
 
-        Integer managerId = getId(request.getParameter("managerID"));
+        String managerId = request.getParameter("managerID");
         for (Person manager : site.getManagers()) {
-            if (manager.getIdInternal().equals(managerId)) {
+            if (manager.getExternalId().equals(managerId)) {
                 try {
                     removeUnitSiteManager(site, manager);
                 } catch (DomainException e) {
@@ -784,11 +774,11 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         return chooseManagers(mapping, actionForm, request, response);
     }
 
-    protected void removeUnitSiteManager(UnitSite site, Person person) throws  FenixServiceException {
+    protected void removeUnitSiteManager(UnitSite site, Person person) throws FenixServiceException {
         RemoveUnitSiteManager.runRemoveUnitSiteManager(site, person);
     }
 
-    protected void addUnitSiteManager(UnitSite site, Person person) throws  FenixServiceException {
+    protected void addUnitSiteManager(UnitSite site, Person person) throws FenixServiceException {
         AddUnitSiteManager.runAddUnitSiteManager(site, person);
     }
 

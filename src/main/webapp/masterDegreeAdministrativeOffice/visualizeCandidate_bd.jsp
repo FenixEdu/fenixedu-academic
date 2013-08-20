@@ -396,7 +396,7 @@
 	    <em><bean:message key="label.masterDegree.studyPlan.NoAdvisorOrCoordinatorTitle"/></em>
     </p>
 </logic:empty>
-<bean:define id="candidateID" name="masterDegreeCandidate" property="idInternal" />
+<bean:define id="candidateID" name="masterDegreeCandidate" property="externalId" />
 	
 
 

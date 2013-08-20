@@ -44,6 +44,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -126,7 +127,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
         InfoExecutionCourse infoExecutionCourseNew =
                 RequestUtils.getExecutionCourseBySigla(request, (String) editShiftForm.get("courseInitials"));
         InfoShiftEditor infoShiftNew = new InfoShiftEditor();
-        infoShiftNew.setIdInternal(infoShiftOld.getIdInternal());
+        infoShiftNew.setExternalId(infoShiftOld.getExternalId());
         infoShiftNew.setInfoDisciplinaExecucao(infoExecutionCourseNew);
         infoShiftNew.setInfoLessons(infoShiftOld.getInfoLessons());
         infoShiftNew.setLotacao((Integer) editShiftForm.get("lotacao"));
@@ -194,9 +195,9 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
             return mapping.getInputForward();
         }
 
-        List<Integer> classOIDs = new ArrayList<Integer>();
+        List<String> classOIDs = new ArrayList<String>();
         for (String selectedClasse : selectedClasses) {
-            classOIDs.add(Integer.valueOf(selectedClasse));
+            classOIDs.add(selectedClasse);
         }
 
         InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
@@ -221,9 +222,9 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
         }
 
-        final List<Integer> lessonOIDs = new ArrayList<Integer>();
+        final List<String> lessonOIDs = new ArrayList<String>();
         for (String selectedLesson : selectedLessons) {
-            lessonOIDs.add(Integer.valueOf(selectedLesson));
+            lessonOIDs.add(selectedLesson);
         }
 
         try {
@@ -275,22 +276,18 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        Integer oldShiftId = new Integer((String) dynaActionForm.get("oldShiftId"));
+        String oldShiftId = (String) dynaActionForm.get("oldShiftId");
         final String newShiftIdString = (String) dynaActionForm.get("newShiftId");
-        Integer newShiftId =
-                newShiftIdString == null || newShiftIdString.length() == 0 ? null : Integer.valueOf(newShiftIdString);
-
         final String[] studentIDs = (String[]) dynaActionForm.get("studentIDs");
         final Set<Registration> registrations = new HashSet<Registration>();
         if (studentIDs != null) {
             for (final String studentID : studentIDs) {
-                final Integer id = Integer.valueOf(studentID);
-                final Registration registration = rootDomainObject.readRegistrationByOID(id);
+                final Registration registration = AbstractDomainObject.fromExternalId(studentID);
                 registrations.add(registration);
             }
         }
 
-        ChangeStudentsShift.run(userView, oldShiftId, newShiftId, registrations);
+        ChangeStudentsShift.run(userView, oldShiftId, newShiftIdString, registrations);
 
         return mapping.findForward("Continue");
     }

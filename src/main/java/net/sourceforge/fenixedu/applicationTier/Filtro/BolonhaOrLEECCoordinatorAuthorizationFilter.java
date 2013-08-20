@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -20,7 +20,7 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
         return RoleType.COORDINATOR;
     }
 
-    public void execute(Integer executionDegreeID) throws NotAuthorizedException {
+    public void execute(String executionDegreeID) throws NotAuthorizedException {
         Person person = AccessControl.getUserView().getPerson();
 
         if (!person.hasRole(getRoleType())) {
@@ -32,12 +32,12 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
         }
     }
 
-    private boolean executionDegreeIsBolonhaOrLEEC(Integer executionDegreeID) {
+    private boolean executionDegreeIsBolonhaOrLEEC(String executionDegreeID) {
         if (executionDegreeID == null) {
             return false;
         }
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
         if (executionDegree.isBolonhaDegree() && executionDegree.getDegree().getSigla().equals("LEEC-pB")) {
             return true;
@@ -46,12 +46,12 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
         return false;
     }
 
-    private boolean isCoordinatorOfExecutionDegree(Person person, Integer executionDegreeID) {
+    private boolean isCoordinatorOfExecutionDegree(Person person, String executionDegreeID) {
         if (executionDegreeID == null) {
             return false;
         }
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
         List<Coordinator> coordinators = new ArrayList<Coordinator>();
         coordinators.addAll(person.getCoordinators());

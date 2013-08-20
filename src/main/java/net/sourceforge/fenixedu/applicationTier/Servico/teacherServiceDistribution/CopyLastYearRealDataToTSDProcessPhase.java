@@ -1,18 +1,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.CopyLastYearRealDataService;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CopyLastYearRealDataToTSDProcessPhase {
-    protected void run(Integer tsdProcessPhaseId) {
-        TSDProcessPhase tsdProcessPhase = RootDomainObject.getInstance().readTSDProcessPhaseByOID(tsdProcessPhaseId);
+    protected void run(String tsdProcessPhaseId) {
+        TSDProcessPhase tsdProcessPhase = AbstractDomainObject.fromExternalId(tsdProcessPhaseId);
 
         CopyLastYearRealDataService service = CopyLastYearRealDataService.getInstance();
 
@@ -24,7 +23,7 @@ public class CopyLastYearRealDataToTSDProcessPhase {
     private static final CopyLastYearRealDataToTSDProcessPhase serviceInstance = new CopyLastYearRealDataToTSDProcessPhase();
 
     @Service
-    public static void runCopyLastYearRealDataToTSDProcessPhase(Integer tsdProcessPhaseId) throws NotAuthorizedException {
+    public static void runCopyLastYearRealDataToTSDProcessPhase(String tsdProcessPhaseId) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             serviceInstance.run(tsdProcessPhaseId);

@@ -63,14 +63,14 @@
             </td>
             <td class="listClasses">
 	            <%-- Edit a Grant Movement --%>
-                <bean:define id="idGrantMovement" name="infoGrantMovement" property="idInternal"/>
+                <bean:define id="idGrantMovement" name="infoGrantMovement" property="externalId"/>
                 <html:link page='<%= "/editGrantContractMovement.do?method=prepareEditGrantContractMovementForm&amp;idGrantMovement=" + idGrantMovement.toString() + "&amp;loaddb=" + 1 %>' > 
                 	<bean:message key="link.edit" />
                 </html:link>
             </td>       
             <td class="listClasses">
 	            <%-- Delete a Grant Movement --%>
-                <bean:define id="idGrantMovement" name="infoGrantMovement" property="idInternal"/>
+                <bean:define id="idGrantMovement" name="infoGrantMovement" property="externalId"/>
                 <html:link page='<%= "/editGrantContractMovement.do?method=doDelete&amp;idGrantMovement=" + idGrantMovement.toString() + "&amp;idContract=" + request.getAttribute("idContract").toString() %>' > 
                 	<bean:message key="link.delete"/>
                 </html:link>

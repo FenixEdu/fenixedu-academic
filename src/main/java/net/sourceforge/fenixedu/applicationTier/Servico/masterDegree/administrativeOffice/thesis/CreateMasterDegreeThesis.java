@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlready
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
@@ -21,6 +20,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -32,9 +32,9 @@ public class CreateMasterDegreeThesis {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle,
-            List<String> guidersNumbers, List<String> assistentGuidersNumbers, List<Integer> externalGuidersIDs,
-            List<Integer> externalAssistentGuidersIDs) throws FenixServiceException {
+    public static void run(IUserView userView, String studentCurricularPlanID, String dissertationTitle,
+            List<String> guidersNumbers, List<String> assistentGuidersNumbers, List<String> externalGuidersIDs,
+            List<String> externalAssistentGuidersIDs) throws FenixServiceException {
 
         // check duplicate guiders and assistent guiders
         if (CollectionUtils.intersection(guidersNumbers, assistentGuidersNumbers).size() > 0) {
@@ -46,7 +46,7 @@ public class CreateMasterDegreeThesis {
             throw new GuiderAlreadyChosenServiceException("error.exception.masterDegree.externalGuiderAlreadyChosen");
         }
 
-        StudentCurricularPlan studentCurricularPlan = RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
+        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
         MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
         if (storedMasterDegreeThesis != null) {
             throw new ExistingServiceException("error.exception.masterDegree.existingMasterDegreeThesis");
@@ -55,7 +55,7 @@ public class CreateMasterDegreeThesis {
         MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion =
                 MasterDegreeThesisDataVersion.readActiveByDissertationTitle(dissertationTitle);
         if ((storedMasterDegreeThesisDataVersion != null)
-                && (!storedMasterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan().getIdInternal()
+                && (!storedMasterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan().getExternalId()
                         .equals(studentCurricularPlanID))) {
             throw new ExistingServiceException("error.exception.masterDegree.dissertationTitleAlreadyChosen");
         }

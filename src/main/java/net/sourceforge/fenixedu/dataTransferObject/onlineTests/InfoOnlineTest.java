@@ -61,7 +61,7 @@ public class InfoOnlineTest extends InfoEvaluation implements ISiteComponent {
             InfoOnlineTest infoOnlineTest = (InfoOnlineTest) obj;
 
             result =
-                    getIdInternal().equals(infoOnlineTest.getIdInternal())
+                    getExternalId().equals(infoOnlineTest.getExternalId())
                             && getInfoDistributedTest().equals(infoOnlineTest.getInfoDistributedTest())
                             && getPublishmentMessage().equals(infoOnlineTest.getPublishmentMessage())
                             && getAssociatedExecutionCourse().containsAll(infoOnlineTest.getAssociatedExecutionCourse())

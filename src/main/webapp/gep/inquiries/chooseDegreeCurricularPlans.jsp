@@ -96,7 +96,7 @@
 						</td>
 						<td>
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.degreeCurricularPlanIds" property="degreeCurricularPlanIds">
-								<bean:write name="degreeCurricularPlan" property="idInternal" />
+								<bean:write name="degreeCurricularPlan" property="externalId" />
 							</html:multibox>
 						</td>
 					</tr>

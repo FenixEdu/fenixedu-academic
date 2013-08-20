@@ -12,7 +12,7 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-<bean:define id="siteId" name="site" property="idInternal"/>
+<bean:define id="siteId" name="site" property="externalId"/>
 <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 <bean:define id="item" name="item" type="net.sourceforge.fenixedu.domain.Item"/>
 
@@ -33,12 +33,12 @@
             </fr:layout>
         </fr:view>
 
-	    <fr:form action="<%= actionName + "?method=saveFilesOrder&amp;" + context + "&amp;sectionID=" + section.getIdInternal() + "&amp;itemID=" + item.getIdInternal() %>">
+	    <fr:form action="<%= actionName + "?method=saveFilesOrder&amp;" + context + "&amp;sectionID=" + section.getExternalId() + "&amp;itemID=" + item.getExternalId() %>">
 	        <input alt="input.filesOrder" id="files-order" type="hidden" name="filesOrder" value=""/>
 	    </fr:form>
 
 		<p class="mtop15">
-		    <fr:form action="<%= actionName + "?method=section&amp;" + context + "&amp;sectionID=" + section.getIdInternal() %>">
+		    <fr:form action="<%= actionName + "?method=section&amp;" + context + "&amp;sectionID=" + section.getExternalId() %>">
 		        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="<%= "treeRenderer_saveTree('filesOrder');" %>">
 		            <bean:message key="button.item.files.order.save" bundle="SITE_RESOURCES"/>
 		        </html:button>

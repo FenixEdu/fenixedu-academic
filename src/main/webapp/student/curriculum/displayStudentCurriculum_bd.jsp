@@ -16,7 +16,7 @@
 
 <academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM" program="<%= registration.getDegree() %>">
 	<p class="printhidden">
-		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="externalId">
 			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</p>
@@ -26,7 +26,7 @@
 
 <%-- Foto --%>
 <div style="float: right;" class="printhidden">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -67,7 +67,7 @@
 
 	<p class="mtop1 mbottom1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<bean:define id="url" value="<%="/registration.do?method=prepareViewRegistrationCurriculum&amp;registrationID=" + registration.getIdInternal()%>"/>
+		<bean:define id="url" value="<%="/registration.do?method=prepareViewRegistrationCurriculum&amp;registrationID=" + registration.getExternalId()%>"/>
 		<logic:present name="degreeCurricularPlanID">
 				<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
 				<bean:define id="url" value="<%= url + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID%>"/>
@@ -79,7 +79,7 @@
 	</p>
 
 <%-- Choose Student Curricular Plan form --%>
-<html:form action="<%="/viewStudentCurriculum.do?method=prepare&registrationOID=" + registration.getIdInternal()%>">
+<html:form action="<%="/viewStudentCurriculum.do?method=prepare&registrationOID=" + registration.getExternalId()%>">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
 	<logic:present property="studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm" property="studentNumber"/>
@@ -222,7 +222,7 @@
 <div class="cboth"></div>
 
 <div class="mtop15">
-	<bean:define id="graph" type="java.lang.String"><%= request.getContextPath() %>/student/viewCurriculumGraph.do?method=createAreaXYChart&registrationOID=<%= registration.getIdInternal() %></bean:define>
+	<bean:define id="graph" type="java.lang.String"><%= request.getContextPath() %>/student/viewCurriculumGraph.do?method=createAreaXYChart&registrationOID=<%= registration.getExternalId() %></bean:define>
 	<html:img align="middle" src="<%= graph %>"/>
 </div>
 

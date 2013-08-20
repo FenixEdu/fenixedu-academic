@@ -44,6 +44,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -76,12 +77,11 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-
         InfoDegreeCurricularPlan oldInfoDegreeCP = null;
 
         try {
-            oldInfoDegreeCP = ReadDegreeCurricularPlan.runReadDegreeCurricularPlan(degreeCurricularPlanId);
+            oldInfoDegreeCP =
+                    ReadDegreeCurricularPlan.runReadDegreeCurricularPlan(request.getParameter("degreeCurricularPlanId"));
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
@@ -139,12 +139,11 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
-        Integer oldDegreeCPId = new Integer(request.getParameter("degreeCurricularPlanId"));
-        Integer degreeId = new Integer(request.getParameter("degreeId"));
-        final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+        String oldDegreeCPId = request.getParameter("degreeCurricularPlanId");
+        final Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("degreeId"));
 
         InfoDegreeCurricularPlanEditor newInfoDegreeCP = new InfoDegreeCurricularPlanEditor();
-        newInfoDegreeCP.setIdInternal(oldDegreeCPId);
+        newInfoDegreeCP.setExternalId(oldDegreeCPId);
         InfoDegree infoDegree = new InfoDegree(degree);
 
         String name = (String) dynaForm.get("name");
@@ -213,7 +212,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         newInfoDegreeCP.setState(state);
         newInfoDegreeCP.setDegreeDuration(degreeDuration);
         newInfoDegreeCP.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
-        newInfoDegreeCP.setIdInternal(oldDegreeCPId);
+        newInfoDegreeCP.setExternalId(oldDegreeCPId);
         newInfoDegreeCP.setAnotation(anotationtring);
         newInfoDegreeCP.setGradeScale(gradeScale);
         newInfoDegreeCP.setInfoDegree(infoDegree);

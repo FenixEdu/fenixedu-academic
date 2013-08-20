@@ -68,7 +68,7 @@ public class AnnouncementDTO {
         setPlace(announcement.getPlace());
 
         setVisible(announcement.getVisible().toString());
-        setId(announcement.getIdInternal().toString());
+        setId(announcement.getExternalId().toString());
         setPhotoUrl(announcement.getPhotoUrl());
         setCampus(announcement.getCampusCode());
         setCategoriesFromAnnouncement(announcement, language);

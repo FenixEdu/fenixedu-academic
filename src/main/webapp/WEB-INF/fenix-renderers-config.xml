@@ -314,7 +314,7 @@ Documentation:
     <!--@ The default presentation for a domain object consist of a link for it's details. The is the top level 
           version of the <tt>link</tt> layout. -->
     <renderer type="pt.ist.fenixframework.DomainObject" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
-        <property name="format" value="${class.simpleName}:${idInternal}"/>
+        <property name="format" value="${class.simpleName}:${externalId}"/>
     </renderer>
     
     <!--@ Tag Renderers -->
@@ -957,7 +957,7 @@ Documentation:
               layout="short">
         <property name="subLayout" value="values"/>
         <property name="subSchema" value="tests.choice.position"/>
-        <property name="linkFormat" value="/tests/questionBank.do?method=editTestElement&amp;oid=${idInternal}"/>
+        <property name="linkFormat" value="/tests/questionBank.do?method=editTestElement&amp;oid=${externalId}"/>
     </renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup"

@@ -46,22 +46,20 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException,  FenixServiceException {
+            throws FenixActionException, FenixServiceException {
 
         IUserView userView = getUserView(request);
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
         String shiftCodeString = request.getParameter("shiftCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
         ISiteComponent viewStudentGroup;
         try {
             Integer type =
-                    VerifyGroupingAndStudentGroupWithoutShift.run(studentGroupCode, groupPropertiesCode, shiftCodeString,
-                            userView.getUtilizador());
-            viewStudentGroup = ReadStudentGroupInformation.run(studentGroupCode);
+                    VerifyGroupingAndStudentGroupWithoutShift.run(studentGroupCodeString, groupPropertiesCodeString,
+                            shiftCodeString, userView.getUtilizador());
+            viewStudentGroup = ReadStudentGroupInformation.run(studentGroupCodeString);
             request.setAttribute("ShiftType", type);
         } catch (ExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
@@ -91,7 +89,7 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
         InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
         request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
 
-        List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCode);
+        List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCodeString);
         request.setAttribute("infoExportGroupings", infoExportGroupings);
 
         return mapping.findForward("sucess");

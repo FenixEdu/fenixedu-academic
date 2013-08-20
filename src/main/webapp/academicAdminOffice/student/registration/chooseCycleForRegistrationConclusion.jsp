@@ -6,7 +6,7 @@
 <html:xhtml/>
 
 	<h2><bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
-	<bean:define id="registrationId" name="registration" property="idInternal" />
+	<bean:define id="registrationId" name="registration" property="externalId" />
 	
 	<ul class="mtop2 list5">
 		<li>
@@ -17,7 +17,7 @@
 	</ul>
 	
 	<div style="float: right;">
-		<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+		<bean:define id="personID" name="registration" property="student.person.externalId"/>
 		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 	</div>
 	

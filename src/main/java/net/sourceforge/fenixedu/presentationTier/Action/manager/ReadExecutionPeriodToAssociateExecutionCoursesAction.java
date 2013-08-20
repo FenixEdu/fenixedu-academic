@@ -54,11 +54,10 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
             throws FenixActionException {
 
         IUserView userView = UserView.getUser();
-        Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
         List executionCoursesList = null;
         try {
-            executionCoursesList = ReadExecutionCoursesByCurricularCourse.run(curricularCourseId);
+            executionCoursesList = ReadExecutionCoursesByCurricularCourse.run(request.getParameter("curricularCourseId"));
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e.getMessage(), "");
@@ -73,7 +72,7 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
         while (iter.hasNext()) {
             InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) iter.next();
 
-            unavailableExecutionPeriodsIds.add(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+            unavailableExecutionPeriodsIds.add(infoExecutionCourse.getInfoExecutionPeriod().getExternalId());
         }
 
         try {

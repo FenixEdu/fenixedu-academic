@@ -11,20 +11,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CreateTSDProcess {
-    protected TSDProcess run(List<Integer> executionPeriodIdList, Integer departmentId, Integer creatorId, String name) {
-        Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
+    protected TSDProcess run(List<String> executionPeriodIdList, String departmentId, String creatorId, String name) {
+        Department department = AbstractDomainObject.fromExternalId(departmentId);
 
         List<ExecutionSemester> executionPeriodList = getExecutionPeriods(executionPeriodIdList);
 
         ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
 
-        Person creator = (Person) RootDomainObject.getInstance().readPartyByOID(creatorId);
+        Person creator = (Person) AbstractDomainObject.fromExternalId(creatorId);
 
         TSDProcess tsdProcess =
                 new TSDProcess(department, executionPeriodList, creator, name,
@@ -33,11 +33,11 @@ public class CreateTSDProcess {
         return tsdProcess;
     }
 
-    private List<ExecutionSemester> getExecutionPeriods(List<Integer> executionPeriodIdList) {
+    private List<ExecutionSemester> getExecutionPeriods(List<String> executionPeriodIdList) {
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 
-        for (Integer executionPeriodId : executionPeriodIdList) {
-            executionPeriodList.add(RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId));
+        for (String executionPeriodId : executionPeriodIdList) {
+            executionPeriodList.add(AbstractDomainObject.<ExecutionSemester> fromExternalId(executionPeriodId));
         }
         return executionPeriodList;
     }
@@ -47,7 +47,7 @@ public class CreateTSDProcess {
     private static final CreateTSDProcess serviceInstance = new CreateTSDProcess();
 
     @Service
-    public static TSDProcess runCreateTSDProcess(List<Integer> executionPeriodIdList, Integer departmentId, Integer creatorId,
+    public static TSDProcess runCreateTSDProcess(List<String> executionPeriodIdList, String departmentId, String creatorId,
             String name) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

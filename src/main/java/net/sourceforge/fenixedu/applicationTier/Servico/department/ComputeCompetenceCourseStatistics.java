@@ -16,20 +16,20 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author pcma
  */
 public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
-    public List<CompetenceCourseStatisticsDTO> run(Integer departementID, Integer executionPeriodID) throws FenixServiceException {
+    public List<CompetenceCourseStatisticsDTO> run(String departementID, String executionPeriodID) throws FenixServiceException {
         final List<CompetenceCourseStatisticsDTO> results = new ArrayList<CompetenceCourseStatisticsDTO>();
 
-        final Department department = RootDomainObject.getInstance().readDepartmentByOID(departementID);
+        final Department department = AbstractDomainObject.fromExternalId(departementID);
 
-        final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
 
         final Set<CompetenceCourse> competenceCourses = new HashSet<CompetenceCourse>();
         department.addAllCompetenceCoursesByExecutionPeriod(competenceCourses, executionSemester);
@@ -39,7 +39,7 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
             final List<Enrolment> enrollments = competenceCourse.getActiveEnrollments(executionSemester);
             if (enrollments.size() > 0) {
                 CompetenceCourseStatisticsDTO competenceCourseStatistics = new CompetenceCourseStatisticsDTO();
-                competenceCourseStatistics.setIdInternal(competenceCourse.getIdInternal());
+                competenceCourseStatistics.setExternalId(competenceCourse.getExternalId());
                 competenceCourseStatistics.setName(competenceCourse.getName());
                 createCourseStatistics(competenceCourseStatistics, enrollments);
                 results.add(competenceCourseStatistics);
@@ -50,12 +50,14 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
         return results;
     }
+
     // Service Invokers migrated from Berserk
 
     private static final ComputeCompetenceCourseStatistics serviceInstance = new ComputeCompetenceCourseStatistics();
 
     @Service
-    public static List<CompetenceCourseStatisticsDTO> runComputeCompetenceCourseStatistics(Integer departementID, Integer executionPeriodID) throws FenixServiceException  {
+    public static List<CompetenceCourseStatisticsDTO> runComputeCompetenceCourseStatistics(String departementID,
+            String executionPeriodID) throws FenixServiceException {
         return serviceInstance.run(departementID, executionPeriodID);
     }
 

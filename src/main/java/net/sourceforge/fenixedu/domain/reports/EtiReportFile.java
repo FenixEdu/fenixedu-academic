@@ -131,7 +131,7 @@ public class EtiReportFile extends EtiReportFile_Base {
             row.setCell("");
         } else {
             final ExecutionCourse executionCourse = attends.getExecutionCourse();
-            row.setCell(executionCourse.getIdInternal());
+            row.setCell(executionCourse.getExternalId());
             if (executionCourse.getAvailableForInquiries() != null && executionCourse.getAvailableForInquiries().booleanValue()) {
                 row.setCell("sim");
             } else {

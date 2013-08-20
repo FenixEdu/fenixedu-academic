@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
  */
 public class InfoGroup extends InfoObject {
 
-    private FinalDegreeWorkGroup groupDomainReference;
+    private final FinalDegreeWorkGroup groupDomainReference;
 
     public InfoGroup(final FinalDegreeWorkGroup group) {
         groupDomainReference = group;
@@ -44,12 +44,12 @@ public class InfoGroup extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getGroup().getIdInternal();
+    public String getExternalId() {
+        return getGroup().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

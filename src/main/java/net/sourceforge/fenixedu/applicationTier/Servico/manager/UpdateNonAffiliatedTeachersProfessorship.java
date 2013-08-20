@@ -10,21 +10,21 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UpdateNonAffiliatedTeachersProfessorship {
 
-    protected void run(List<Integer> nonAffiliatedTeachersIds, Integer executionCourseId) throws FenixServiceException {
+    protected void run(List<String> nonAffiliatedTeachersIds, String executionCourseId) throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }
 
         List<NonAffiliatedTeacher> nonAffiliatedTeachersToRemove = new ArrayList<NonAffiliatedTeacher>();
         for (NonAffiliatedTeacher nonAffiliatedTeacher : executionCourse.getNonAffiliatedTeachers()) {
-            if (!nonAffiliatedTeachersIds.contains(nonAffiliatedTeacher.getIdInternal())) {
+            if (!nonAffiliatedTeachersIds.contains(nonAffiliatedTeacher.getExternalId())) {
                 nonAffiliatedTeachersToRemove.add(nonAffiliatedTeacher);
             }
         }
@@ -40,8 +40,8 @@ public class UpdateNonAffiliatedTeachersProfessorship {
             new UpdateNonAffiliatedTeachersProfessorship();
 
     @Service
-    public static void runUpdateNonAffiliatedTeachersProfessorship(List<Integer> nonAffiliatedTeachersIds,
-            Integer executionCourseId) throws FenixServiceException, NotAuthorizedException {
+    public static void runUpdateNonAffiliatedTeachersProfessorship(List<String> nonAffiliatedTeachersIds, String executionCourseId)
+            throws FenixServiceException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
             serviceInstance.run(nonAffiliatedTeachersIds, executionCourseId);

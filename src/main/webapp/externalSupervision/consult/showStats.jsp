@@ -9,7 +9,7 @@
 <h2><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="title.section.viewStudent"/></h2>
 
 <div style="float: right;" class="printhidden">
-	<bean:define id="personID" name="sessionBean" property="student.idInternal"/>
+	<bean:define id="personID" name="sessionBean" property="student.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -20,7 +20,7 @@
 		<td>
 			<fr:view name="sessionBean" property="student" schema="view-student-info">
 				<fr:layout name="tabular">
-					<fr:property name="sortBy" value="name,idInternal"/>				
+					<fr:property name="sortBy" value="name,externalId"/>				
 					<fr:property name="classes" value="tstyle1 thleft thlight" />
 					<fr:property name="columnClasses" value=",,,,,tdclear tderror1" />
 				</fr:layout>

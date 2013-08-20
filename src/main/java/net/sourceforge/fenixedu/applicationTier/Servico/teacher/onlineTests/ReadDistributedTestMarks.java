@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarks;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionMark;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -27,6 +25,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -34,12 +33,12 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadDistributedTestMarks {
 
-    protected InfoSiteStudentsTestMarks run(Integer executionCourseId, Integer distributedTestId, String path)
+    protected InfoSiteStudentsTestMarks run(String executionCourseId, String distributedTestId, String path)
             throws FenixServiceException {
 
         InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
 
-        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -47,12 +46,12 @@ public class ReadDistributedTestMarks {
         List<StudentTestQuestion> studentTestQuestionList =
                 distributedTest.getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder();
 
-        HashMap<Integer, InfoStudentTestQuestionMark> infoStudentTestQuestionMarkList =
-                new HashMap<Integer, InfoStudentTestQuestionMark>();
+        HashMap<String, InfoStudentTestQuestionMark> infoStudentTestQuestionMarkList =
+                new HashMap<String, InfoStudentTestQuestionMark>();
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-            if (infoStudentTestQuestionMarkList.containsKey(studentTestQuestion.getStudent().getIdInternal())) {
+            if (infoStudentTestQuestionMarkList.containsKey(studentTestQuestion.getStudent().getExternalId())) {
                 InfoStudentTestQuestionMark infoStudentTestQuestionMark =
-                        infoStudentTestQuestionMarkList.get(studentTestQuestion.getStudent().getIdInternal());
+                        infoStudentTestQuestionMarkList.get(studentTestQuestion.getStudent().getExternalId());
                 ParseSubQuestion parse = new ParseSubQuestion();
                 Question question = studentTestQuestion.getQuestion();
                 try {
@@ -70,7 +69,7 @@ public class ReadDistributedTestMarks {
                 }
                 infoStudentTestQuestionMark.addToMaximumMark(studentTestQuestion.getTestQuestionValue());
             } else {
-                infoStudentTestQuestionMarkList.put(studentTestQuestion.getStudent().getIdInternal(),
+                infoStudentTestQuestionMarkList.put(studentTestQuestion.getStudent().getExternalId(),
                         InfoStudentTestQuestionMark.newInfoFromDomain(studentTestQuestion));
             }
         }
@@ -79,8 +78,8 @@ public class ReadDistributedTestMarks {
                 new ArrayList<InfoStudentTestQuestionMark>(infoStudentTestQuestionMarkList.values());
         Collections.sort(infoStudentTestQuestionList, new BeanComparator("studentNumber"));
         infoSiteStudentsTestMarks.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
-        infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) distributedTest
-                .getTestScope().getDomainObject()));
+        infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(distributedTest.getTestScope()
+                .getExecutionCourse()));
         infoSiteStudentsTestMarks.setInfoDistributedTest(InfoDistributedTest.newInfoFromDomain(distributedTest));
 
         return infoSiteStudentsTestMarks;
@@ -91,7 +90,7 @@ public class ReadDistributedTestMarks {
     private static final ReadDistributedTestMarks serviceInstance = new ReadDistributedTestMarks();
 
     @Service
-    public static InfoSiteStudentsTestMarks runReadDistributedTestMarks(Integer executionCourseId, Integer distributedTestId,
+    public static InfoSiteStudentsTestMarks runReadDistributedTestMarks(String executionCourseId, String distributedTestId,
             String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId, path);

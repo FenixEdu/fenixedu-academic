@@ -36,7 +36,7 @@ table = document.getElementById(t);
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:write name="tsdProcess" property="name"/>&nbsp;
 			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
@@ -61,7 +61,7 @@ table = document.getElementById(t);
 		</td>
 		<td>
 			<html:select property="tsd" onchange="this.form.method.value='loadTeacherServiceDistributions'; this.form.page.value=0; this.form.submit();">
-				<html:options collection="tsdOptionEntryList" property="idInternal" labelProperty="name"/>
+				<html:options collection="tsdOptionEntryList" property="externalId" labelProperty="name"/>
 			</html:select>			
 		</td>
 		<logic:present name="parentGroupingName">
@@ -96,7 +96,7 @@ table = document.getElementById(t);
 			<logic:notEmpty name="tsdTeacherList">
 			<td>
 				<html:select property="tsdTeacher">
-					<html:options collection="tsdTeacherList" property="idInternal" labelProperty="name"/>
+					<html:options collection="tsdTeacherList" property="externalId" labelProperty="name"/>
 				</html:select>
 			</logic:notEmpty>
 			</td>
@@ -126,7 +126,7 @@ table = document.getElementById(t);
 			<logic:notEmpty name="tsdCourseList">
 			<td>
 				<html:select property="tsdCourse">
-					<html:options collection="tsdCourseList" property="idInternal" labelProperty="name"/>
+					<html:options collection="tsdCourseList" property="externalId" labelProperty="name"/>
 				</html:select>		
 			</logic:notEmpty>							
 			</td>
@@ -226,7 +226,7 @@ table = document.getElementById(t);
 			</th>
 			<td>
 				<html:select property="otherGrouping">
-					<html:options collection="mergeGroupingOptionEntryList" property="idInternal" labelProperty="name"/>
+					<html:options collection="mergeGroupingOptionEntryList" property="externalId" labelProperty="name"/>
 				</html:select>			
 			</td>
 			<td align="center">
@@ -273,7 +273,7 @@ table = document.getElementById(t);
 	</tr>	
 </logic:empty>		
 <logic:iterate name="tsdTeacherListBelongToGrouping" id="tsdTeacher">
-	<bean:define id="tsdTeacherId" name="tsdTeacher" property="idInternal"/>
+	<bean:define id="tsdTeacherId" name="tsdTeacher" property="externalId"/>
 	<tr>
 		<td>
 			<bean:write name="tsdTeacher" property="name"/>
@@ -312,7 +312,7 @@ table = document.getElementById(t);
 	</tr>	
 </logic:empty>
 <logic:iterate name="tsdCourseListBelongToGrouping" id="tsdCourse">
-	<bean:define id="tsdCourseId" name="tsdCourse" property="idInternal"/>
+	<bean:define id="tsdCourseId" name="tsdCourse" property="externalId"/>
 	<tr>
 		<td>
 			<bean:write name="tsdCourse" property="name"/>
@@ -335,6 +335,6 @@ table = document.getElementById(t);
 </html:form>
 <br/>
 
-<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 	<bean:message key="link.back"/>
 </html:link>

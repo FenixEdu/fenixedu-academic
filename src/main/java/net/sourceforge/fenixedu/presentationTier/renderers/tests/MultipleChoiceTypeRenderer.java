@@ -34,7 +34,7 @@ public class MultipleChoiceTypeRenderer extends AnswerTypeRenderer {
      * StringBuilder stringBuffer = new StringBuilder();
      * 
      * for (NewChoice choice : choices) {
-     * stringBuffer.append(choice.getIdInternal()); stringBuffer.append(" "); }
+     * stringBuffer.append(choice.getExternalId()); stringBuffer.append(" "); }
      * 
      * return stringBuffer.toString(); } }
      * 
@@ -89,7 +89,7 @@ public class MultipleChoiceTypeRenderer extends AnswerTypeRenderer {
      * String[] choiceIds = composedAnswer.split(" ");
      * 
      * for (String choiceId : choiceIds) { NewChoice choice =
-     * RootDomainObject.getInstance().readNewChoiceByOID(
+     * AbstractDomainObject.fromExternalId(
      * Integer.parseInt(choiceId)); choices.add(choice); }
      * 
      * return choices; }

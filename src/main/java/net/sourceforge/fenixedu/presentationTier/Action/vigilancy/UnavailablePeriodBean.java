@@ -77,8 +77,8 @@ public class UnavailablePeriodBean implements Serializable {
         this.coordinator = coordinator;
     }
 
-    public Integer getIdInternal() {
-        return getUnavailablePeriod() != null ? getUnavailablePeriod().getIdInternal() : null;
+    public String getExternalId() {
+        return getUnavailablePeriod() != null ? getUnavailablePeriod().getExternalId() : null;
     }
 
     public Collection getUnavailablePeriods() {

@@ -23,6 +23,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/student", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({ @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
@@ -33,7 +34,7 @@ public class StudentDA extends StudentRegistrationDA {
 
     private Student getAndSetStudent(final HttpServletRequest request) {
         final String studentID = getFromRequest(request, "studentID").toString();
-        final Student student = rootDomainObject.readStudentByOID(Integer.valueOf(studentID));
+        final Student student = AbstractDomainObject.fromExternalId(studentID);
         request.setAttribute("student", student);
         request.setAttribute("choosePhdOrRegistration", new ChooseRegistrationOrPhd(student));
         return student;
@@ -54,7 +55,7 @@ public class StudentDA extends StudentRegistrationDA {
     }
 
     public ActionForward editPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         getAndSetStudent(request);
         try {
             executeFactoryMethod();

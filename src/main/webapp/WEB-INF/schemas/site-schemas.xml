@@ -43,7 +43,7 @@
 <schema name="websiteManagement.site.choose" type="net.sourceforge.fenixedu.domain.UnitSite">
     <slot name="unit.nameWithAcronym" layout="link" key="label.site.name">
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/manage${class.simpleName}.do?method=prepare&amp;oid=${idInternal}"/>
+		<property name="linkFormat" value="/manage${class.simpleName}.do?method=prepare&amp;oid=${externalId}"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="contextRelative" value="true"/>
     </slot>

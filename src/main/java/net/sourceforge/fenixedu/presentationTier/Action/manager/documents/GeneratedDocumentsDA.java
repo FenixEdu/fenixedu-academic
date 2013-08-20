@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -122,8 +121,6 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
     }
 
     private Person getPersonFromParameter(HttpServletRequest request) {
-        String personIDString = request.getParameter("personID");
-        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.readPartyByOID(Integer
-                .valueOf(personIDString)));
+        return getDomainObject(request, "personID");
     }
 }

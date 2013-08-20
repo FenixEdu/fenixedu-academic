@@ -210,7 +210,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
         net.sourceforge.fenixedu.domain.ExecutionYear executionYear = executionDegree.getExecutionYear().getNextExecutionYear();
         if (executionYear != null) {
-            request.setAttribute("executionYearId", executionYear.getIdInternal());
+            request.setAttribute("executionYearId", executionYear.getExternalId());
         }
         request.setAttribute("summary", new AllSummaryBean(executionDegree, degreeCurricularPlan));
         return mapping.findForward("show-final-degree-work-info");
@@ -506,13 +506,13 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                                 (FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeaders.get(i);
                         InfoGroup infoGroup = finalDegreeWorkProposalHeader.getGroupAttributedByTeacher();
                         if (infoGroup != null) {
-                            attributedByTeacherList.add(finalDegreeWorkProposalHeader.getIdInternal().toString()
-                                    + infoGroup.getIdInternal().toString());
+                            attributedByTeacherList.add(finalDegreeWorkProposalHeader.getExternalId().toString()
+                                    + infoGroup.getExternalId().toString());
                         }
                         infoGroup = finalDegreeWorkProposalHeader.getGroupAttributed();
                         if (infoGroup != null) {
-                            attributionsList.add(finalDegreeWorkProposalHeader.getIdInternal().toString()
-                                    + infoGroup.getIdInternal().toString());
+                            attributionsList.add(finalDegreeWorkProposalHeader.getExternalId().toString()
+                                    + infoGroup.getExternalId().toString());
                         }
                     }
 
@@ -610,7 +610,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         final String proposalOID = keepInRequest(request, "proposalOID");
         final Proposal proposal = AbstractDomainObject.fromExternalId(proposalOID);
-        final String finalDegreeWorkProposalOIDString = Integer.toString(proposal.getIdInternal());
+        final String finalDegreeWorkProposalOIDString = proposal.getExternalId();
         String executionDegreeOID = (String) getFromRequest(request, "executionDegreeOID");
         request.setAttribute("executionDegree", getDomainObject(request, "executionDegreeOID"));
 
@@ -619,14 +619,13 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
             try {
                 InfoProposal infoProposal =
-                        ReadFinalDegreeWorkProposal.runReadFinalDegreeWorkProposal(Integer
-                                .valueOf(finalDegreeWorkProposalOIDString));
+                        ReadFinalDegreeWorkProposal.runReadFinalDegreeWorkProposal(finalDegreeWorkProposalOIDString);
 
                 if (infoProposal != null) {
                     DynaActionForm finalWorkForm = (DynaActionForm) form;
 
-                    if (infoProposal.getIdInternal() != null) {
-                        finalWorkForm.set("idInternal", infoProposal.getIdInternal().toString());
+                    if (infoProposal.getExternalId() != null) {
+                        finalWorkForm.set("externalId", infoProposal.getExternalId().toString());
                     }
                     finalWorkForm.set("title", infoProposal.getTitle());
                     if (infoProposal.getOrientatorsCreditsPercentage() != null) {
@@ -664,18 +663,18 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
                     finalWorkForm.set("companyAdress", infoProposal.getCompanyAdress());
                     finalWorkForm.set("companyName", infoProposal.getCompanyName());
-                    if (infoProposal.getOrientator() != null && infoProposal.getOrientator().getIdInternal() != null) {
-                        finalWorkForm.set("orientatorOID", infoProposal.getOrientator().getIdInternal().toString());
+                    if (infoProposal.getOrientator() != null && infoProposal.getOrientator().getExternalId() != null) {
+                        finalWorkForm.set("orientatorOID", infoProposal.getOrientator().getExternalId().toString());
                         finalWorkForm.set("responsableTeacherId", infoProposal.getOrientator().getPerson().getIstUsername());
                         finalWorkForm.set("responsableTeacherName", infoProposal.getOrientator().getNome());
                     }
-                    if (infoProposal.getCoorientator() != null && infoProposal.getCoorientator().getIdInternal() != null) {
-                        finalWorkForm.set("coorientatorOID", infoProposal.getCoorientator().getIdInternal().toString());
+                    if (infoProposal.getCoorientator() != null && infoProposal.getCoorientator().getExternalId() != null) {
+                        finalWorkForm.set("coorientatorOID", infoProposal.getCoorientator().getExternalId().toString());
                         finalWorkForm.set("coResponsableTeacherId", infoProposal.getCoorientator().getPerson().getIstUsername());
                         finalWorkForm.set("coResponsableTeacherName", infoProposal.getCoorientator().getNome());
                     }
-                    if (infoProposal.getExecutionDegree() != null && infoProposal.getExecutionDegree().getIdInternal() != null) {
-                        finalWorkForm.set("degree", infoProposal.getExecutionDegree().getIdInternal().toString());
+                    if (infoProposal.getExecutionDegree() != null && infoProposal.getExecutionDegree().getExternalId() != null) {
+                        finalWorkForm.set("degree", infoProposal.getExecutionDegree().getExternalId().toString());
                     }
                     if (infoProposal.getStatus() != null && infoProposal.getStatus().getStatus() != null) {
                         finalWorkForm.set("status", infoProposal.getStatus().getStatus().toString());
@@ -685,8 +684,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                         String[] branchList = new String[infoProposal.getBranches().size()];
                         for (int i = 0; i < infoProposal.getBranches().size(); i++) {
                             InfoBranch infoBranch = (infoProposal.getBranches().get(i));
-                            if (infoBranch != null && infoBranch.getIdInternal() != null) {
-                                String brachOIDString = infoBranch.getIdInternal().toString();
+                            if (infoBranch != null && infoBranch.getExternalId() != null) {
+                                String brachOIDString = infoBranch.getExternalId().toString();
                                 if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
                                     branchList[i] = brachOIDString;
                                 }
@@ -701,18 +700,18 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                     for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
                         final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
                         branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
-                                degreeCurricularPlan.getIdInternal()));
+                                degreeCurricularPlan.getExternalId()));
                     }
                     // InfoExecutionDegree infoExecutionDegree =
                     // CommonServiceRequests
                     // .getInfoExecutionDegree(userView,
                     // infoProposal.getExecutionDegree()
-                    // .getIdInternal());
+                    // .getExternalId());
                     // List branches =
                     // CommonServiceRequests.getBranchesByDegreeCurricularPlan
                     // (userView,
                     // infoExecutionDegree.getInfoDegreeCurricularPlan().
-                    // getIdInternal());
+                    // getExternalId());
                     request.setAttribute("branches", branches);
 
                     request.setAttribute("finalDegreeWorkProposalStatusList", FinalDegreeWorkProposalStatus.getLabelValueList());
@@ -745,11 +744,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
             final DegreeCurricularPlan degreeCurricularPlanIter = ed.getDegreeCurricularPlan();
             branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
-                    degreeCurricularPlanIter.getIdInternal()));
+                    degreeCurricularPlanIter.getExternalId()));
         }
         // List branches =
         // CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
-        // infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+        // infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
         request.setAttribute("branches", branches);
 
         request.setAttribute("finalDegreeWorkProposalStatusList", FinalDegreeWorkProposalStatus.getLabelValueList());
@@ -791,7 +790,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         keepInRequest(request, "proposalOID");
 
-        String idInternal = (String) finalWorkForm.get("idInternal");
+        String externalId = (String) finalWorkForm.get("externalId");
         String title = (String) finalWorkForm.get("title");
         String responsibleCreditsPercentage = (String) finalWorkForm.get("responsibleCreditsPercentage");
         String coResponsibleCreditsPercentage = (String) finalWorkForm.get("coResponsibleCreditsPercentage");
@@ -844,8 +843,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         }
 
         final InfoProposalEditor infoFinalWorkProposal = new InfoProposalEditor();
-        if (!StringUtils.isEmpty(idInternal) && StringUtils.isNumeric(idInternal)) {
-            infoFinalWorkProposal.setIdInternal(Integer.valueOf(idInternal));
+        if (!StringUtils.isEmpty(externalId) && StringUtils.isNumeric(externalId)) {
+            infoFinalWorkProposal.setExternalId(externalId);
         }
         infoFinalWorkProposal.setTitle(title);
         infoFinalWorkProposal.setOrientatorsCreditsPercentage(Integer.valueOf(responsibleCreditsPercentage));
@@ -863,14 +862,12 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         final DegreeType dt = (degreeType != null && degreeType.length() > 0) ? DegreeType.valueOf(degreeType) : null;
         infoFinalWorkProposal.setDegreeType(dt);
 
-        infoFinalWorkProposal.setOrientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer
-                .valueOf(orientatorOID))));
+        infoFinalWorkProposal.setOrientator(new InfoPerson((Person) AbstractDomainObject.fromExternalId(orientatorOID)));
         if (coorientatorOID != null && !coorientatorOID.equals("")) {
-            infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer
-                    .valueOf(coorientatorOID))));
+            infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) AbstractDomainObject.fromExternalId(coorientatorOID)));
         }
         // final ExecutionDegree executionDegree =
-        // rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(degree));
+        // AbstractDomainObject.fromExternalId(Integer.valueOf(degree));
         final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOID);
         if (!(coorientatorOID != null && !coorientatorOID.equals(""))
                 || executionDegree.getScheduling().getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
@@ -888,7 +885,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             infoFinalWorkProposal.setBranches(new ArrayList());
             for (String brachOIDString : branchList) {
                 if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
-                    InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(Integer.valueOf(brachOIDString)));
+                    InfoBranch infoBranch = new InfoBranch(AbstractDomainObject.<Branch> fromExternalId(brachOIDString));
                     infoFinalWorkProposal.getBranches().add(infoBranch);
                 }
             }
@@ -971,12 +968,12 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         }
 
         if ("orientator".equals(alteredField)) {
-            finalWorkForm.set("orientatorOID", person.getIdInternal().toString());
+            finalWorkForm.set("orientatorOID", person.getExternalId().toString());
             finalWorkForm.set("responsableTeacherName", person.getName());
             request.setAttribute("orientator", person);
         }
         if ("coorientator".equals(alteredField)) {
-            finalWorkForm.set("coorientatorOID", person.getIdInternal().toString());
+            finalWorkForm.set("coorientatorOID", person.getExternalId().toString());
             finalWorkForm.set("coResponsableTeacherName", person.getName());
             request.setAttribute("coorientator", person);
             if (!scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
@@ -996,7 +993,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
-        String degreeId = (String) finalWorkForm.get("degree");
         finalWorkForm.set("degreeType", DegreeType.DEGREE.toString());
 
         /*
@@ -1015,21 +1011,21 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         // final ExecutionDegree executionDegree = (ExecutionDegree)
         // readDomainObject(request, ExecutionDegree.class,
-        // infoExecutionDegree.getIdInternal());
+        // infoExecutionDegree.getExternalId());
         request.setAttribute("executionDegree", executionDegree);
         // request.setAttribute("executionDegreeOID",
-        // executionDegree.getIdInternal());
+        // executionDegree.getExternalId());
         request.setAttribute("executionDegreeOID", executionDegree.getExternalId());
         final Scheduleing scheduleing = executionDegree.getScheduling();
         final List branches = new ArrayList();
         for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
             final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
             branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
-                    degreeCurricularPlan.getIdInternal()));
+                    degreeCurricularPlan.getExternalId()));
         }
         // List branches =
         // CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
-        // infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+        // infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
         request.setAttribute("branches", branches);
 
         request.setAttribute("finalDegreeWorkProposalStatusList", FinalDegreeWorkProposalStatus.getLabelValueList());
@@ -1151,7 +1147,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             final Student student = Student.readStudentByNumber(Integer.valueOf(studentNumber));
             final Registration registration = student.getLastActiveRegistration();
             if (registration != null) {
-                request.setAttribute("registrationOID", registration.getIdInternal().toString());
+                request.setAttribute("registrationOID", registration.getExternalId().toString());
             }
         }
         // String degreeCurrucularPlanID =
@@ -1166,13 +1162,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String executionDegreeOIDString = dynaActionForm.getString("executionDegreeOID");
-        final ExecutionDegree executionDegree =
-                (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, Integer.valueOf(executionDegreeOIDString));
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOIDString);
         final String otherExecutionDegreeIDString = dynaActionForm.getString("otherExecutionDegreeID");
         if (otherExecutionDegreeIDString != null && otherExecutionDegreeIDString.length() > 0) {
-            final ExecutionDegree otherExecutionDegree =
-                    (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
-                            Integer.valueOf(otherExecutionDegreeIDString));
+            final ExecutionDegree otherExecutionDegree = AbstractDomainObject.fromExternalId(otherExecutionDegreeIDString);
             AddExecutionDegreeToScheduling.runAddExecutionDegreeToScheduling(executionDegree.getScheduling(),
                     otherExecutionDegree);
         }
@@ -1184,11 +1177,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String executionDegreeOIDString = dynaActionForm.getString("executionDegreeOID");
-        final ExecutionDegree executionDegree =
-                (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, Integer.valueOf(executionDegreeOIDString));
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOIDString);
         final String otherExecutionDegreeIDString = dynaActionForm.getString("otherExecutionDegreeID");
-        final ExecutionDegree otherExecutionDegree =
-                (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, Integer.valueOf(otherExecutionDegreeIDString));
+        final ExecutionDegree otherExecutionDegree = AbstractDomainObject.fromExternalId(otherExecutionDegreeIDString);
 
         RemoveExecutionDegreeToScheduling.runRemoveExecutionDegreeToScheduling(executionDegree.getScheduling(),
                 otherExecutionDegree);

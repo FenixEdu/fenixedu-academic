@@ -57,11 +57,13 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 
         DynaActionForm editExternalPersonForm = (DynaActionForm) form;
 
-        Integer externalPersonId;
+        String externalPersonId;
         try {
-            externalPersonId = new Integer(this.getFromRequest("id", request));
-        } catch (NumberFormatException e1) {
-            externalPersonId = (Integer) editExternalPersonForm.get("externalPersonID");
+            externalPersonId = this.getFromRequest("id", request);
+        } catch (Exception e1) {
+            externalPersonId =
+                    editExternalPersonForm.get("externalPersonID").equals("") ? null : (String) editExternalPersonForm
+                            .get("externalPersonID");
         }
 
         InfoExternalPerson infoExternalPerson = null;
@@ -76,7 +78,7 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 
         editExternalPersonForm.set("externalPersonID", externalPersonId);
         editExternalPersonForm.set("name", infoExternalPerson.getInfoPerson().getNome());
-        editExternalPersonForm.set("institutionID", infoExternalPerson.getInfoInstitution().getIdInternal());
+        editExternalPersonForm.set("institutionID", infoExternalPerson.getInfoInstitution().getExternalId());
         editExternalPersonForm.set("address", infoExternalPerson.getInfoPerson().getMorada());
         editExternalPersonForm.set("phone", infoExternalPerson.getInfoPerson().getTelefone());
         editExternalPersonForm.set("mobile", infoExternalPerson.getInfoPerson().getTelemovel());
@@ -112,7 +114,7 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 
                 while (it.hasNext()) {
                     infoInstitution = (Unit) it.next();
-                    institutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution.getIdInternal()
+                    institutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution.getExternalId()
                             .toString()));
                 }
 
@@ -126,9 +128,9 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
             throws Exception {
         DynaActionForm editExternalPersonForm = (DynaActionForm) form;
 
-        Integer externalPersonId = (Integer) editExternalPersonForm.get("externalPersonID");
+        String externalPersonId = (String) editExternalPersonForm.get("externalPersonID");
         String name = (String) editExternalPersonForm.get("name");
-        Integer institutionID = (Integer) editExternalPersonForm.get("institutionID");
+        String institutionID = (String) editExternalPersonForm.get("institutionID");
         String address = (String) editExternalPersonForm.get("address");
         String phone = (String) editExternalPersonForm.get("phone");
         String mobile = (String) editExternalPersonForm.get("mobile");

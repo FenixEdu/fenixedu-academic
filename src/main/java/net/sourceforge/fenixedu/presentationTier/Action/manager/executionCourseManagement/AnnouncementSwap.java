@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -17,6 +16,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AnnouncementSwap extends FenixDispatchAction {
 
@@ -24,11 +24,11 @@ public class AnnouncementSwap extends FenixDispatchAction {
             HttpServletResponse response) {
 
         Boolean chooseNotLinked = Boolean.valueOf(request.getParameter("executionCoursesNotLinked"));
-        Integer executionCourseId = Integer.valueOf(request.getParameter("executionCourseId"));
-        Integer executionPeriodId = Integer.valueOf(request.getParameter("executionPeriodId"));
+        String executionCourseId = request.getParameter("executionCourseId");
+        String executionPeriodId = request.getParameter("executionPeriodId");
 
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
-        ExecutionSemester executionPeriod = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionSemester executionPeriod = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         ExecutionCourseBean sessionBean = new ExecutionCourseBean();
 
@@ -37,11 +37,11 @@ public class AnnouncementSwap extends FenixDispatchAction {
         sessionBean.setChooseNotLinked(chooseNotLinked);
 
         if (!chooseNotLinked) {
-            Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
-            Integer curricularYearId = Integer.valueOf(request.getParameter("curYearId"));
+            String executionDegreeId = request.getParameter("executionDegreeId");
+            String curricularYearId = request.getParameter("curYearId");
 
-            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
-            CurricularYear curYear = RootDomainObject.getInstance().readCurricularYearByOID(curricularYearId);
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+            CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
 
             sessionBean.setExecutionDegree(executionDegree);
             sessionBean.setCurricularYear(curYear);

@@ -17,13 +17,13 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Tânia Pousão
@@ -38,8 +38,7 @@ public class InsertGratuityData {
             throw new FenixServiceException("impossible.insertGratuityValues");
         }
         if (infoGratuityValues.getInfoExecutionDegree() == null
-                || infoGratuityValues.getInfoExecutionDegree().getIdInternal() == null
-                || infoGratuityValues.getInfoExecutionDegree().getIdInternal().intValue() <= 0) {
+                || infoGratuityValues.getInfoExecutionDegree().getExternalId() == null) {
             throw new FenixServiceException("impossible.insertGratuityValues");
         }
 
@@ -54,7 +53,7 @@ public class InsertGratuityData {
         validateGratuity(infoGratuityValues);
 
         ExecutionDegree executionDegree =
-                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGratuityValues.getInfoExecutionDegree().getIdInternal());
+                AbstractDomainObject.fromExternalId(infoGratuityValues.getInfoExecutionDegree().getExternalId());
         GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
         if (gratuityValues == null) // it doesn't exist in database, then

@@ -17,7 +17,7 @@
 	<p><strong><bean:message key="label.masterDegree.administrativeOffice.chooseExecutionYear" />:</strong></p>
 	<logic:iterate id="executionDegree" name="executionDegreeList">
 		<bean:define id="executionDegreeLink">
-			<bean:write name="link"/><bean:write name="executionDegree" property="idInternal"/>
+			<bean:write name="link"/><bean:write name="executionDegree" property="externalId"/>
  		</bean:define>
     	<html:link page='<%= pageContext.findAttribute("executionDegreeLink").toString() %>'>
 			<bean:write name="executionDegree" property="infoExecutionYear.year"/> <br/>

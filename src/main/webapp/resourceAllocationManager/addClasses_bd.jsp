@@ -43,12 +43,12 @@
 				</th>
 			</tr>
 			<logic:iterate id="infoClass" name="<%= PresentationConstants.CLASSES %>">
-				<bean:define id="infoClassOID" name="infoClass" property="idInternal"/>
-				<bean:define id="infoExecutionDegreeOID" name="infoClass" property="infoExecutionDegree.idInternal"/>
+				<bean:define id="infoClassOID" name="infoClass" property="externalId"/>
+				<bean:define id="infoExecutionDegreeOID" name="infoClass" property="infoExecutionDegree.externalId"/>
 				<tr>
 	              	<td>
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
-							<bean:write name="infoClass" property="idInternal"/>
+							<bean:write name="infoClass" property="externalId"/>
 						</html:multibox>
 					</td>
 					<td>

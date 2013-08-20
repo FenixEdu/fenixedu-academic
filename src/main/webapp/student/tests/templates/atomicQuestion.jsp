@@ -38,9 +38,9 @@
 </div>
 
 <bean:define id="schema">tests.answer.details-for.<bean:write name="atomicQuestion" property="class.simpleName" /></bean:define>
-<bean:define id="answer_div">answer_div<bean:write name="atomicQuestion" property="idInternal" /></bean:define>
-<bean:define id="answer_id">atomic_question_id<bean:write name="atomicQuestion" property="idInternal" /></bean:define>
-<bean:define id="testGroupId" type="java.lang.String"><bean:write name="atomicQuestion" property="test.testGroup.idInternal" /></bean:define>
+<bean:define id="answer_div">answer_div<bean:write name="atomicQuestion" property="externalId" /></bean:define>
+<bean:define id="answer_id">atomic_question_id<bean:write name="atomicQuestion" property="externalId" /></bean:define>
+<bean:define id="testGroupId" type="java.lang.String"><bean:write name="atomicQuestion" property="test.testGroup.externalId" /></bean:define>
 
 <span class="switchInline">
 <span class="qlinks">
@@ -54,14 +54,14 @@
 	</logic:equal>
 	<logic:equal name="atomicQuestion" property="answerDeletable" value="true">
 	, <f:parameterLink page="/tests/tests.do?method=deleteAnswer">
-		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
+		<f:parameter id="oid" name="atomicQuestion" property="externalId" />
 		Apagar
 	</f:parameterLink>
 	</logic:equal>
 	
 	<logic:equal name="atomicQuestion" property="canGiveUp" value="true">
 	, <f:parameterLink page="/tests/tests.do?method=giveUpQuestion">
-		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
+		<f:parameter id="oid" name="atomicQuestion" property="externalId" />
 		Desistir
 	</f:parameterLink>
 	</logic:equal>

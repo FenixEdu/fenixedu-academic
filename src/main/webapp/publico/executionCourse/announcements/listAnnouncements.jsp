@@ -35,8 +35,8 @@
 			type="net.sourceforge.fenixedu.domain.messaging.Announcement">
 
 
-			<bean:define id="announcementId" name="announcement" property="idInternal"/>
-			<bean:define id="announcementBoardId" name="announcement" property="announcementBoard.idInternal"/>
+			<bean:define id="announcementId" name="announcement" property="externalId"/>
+			<bean:define id="announcementBoardId" name="announcement" property="announcementBoard.externalId"/>
 			<bean:define id="announcementBoardClass" name="announcement" property="announcementBoard.class.simpleName"/>
 
 			<div class="announcement mtop15 mbottom25"><%-- Event Date OR Publication Date --%>
@@ -209,7 +209,7 @@
 		</logic:present>
 
 		<bean:define id="announcementBoardId" name="announcementBoard"
-			property="idInternal" />
+			property="externalId" />
 		<fr:view name="announcements"
 			schema="announcement.view-with-creationDate-subject-online">
 			<fr:layout name="tabular-sortable">
@@ -219,13 +219,13 @@
 				<fr:property name="link(edit)"
 					value="<%= contextPrefix + "method=editAnnouncement" + "&amp;"+extraParameters + "&amp;tabularVersion=true"%>" />
 				<fr:property name="param(edit)"
-					value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId" />
+					value="externalId/announcementId,announcementBoard.externalId/announcementBoardId" />
 				<fr:property name="key(edit)" value="messaging.edit.link" />
 				<fr:property name="bundle(edit)" value="MESSAGING_RESOURCES" />
 				<fr:property name="order(edit)" value="2" />
 				<fr:property name="link(view)"
 					value="<%= contextPrefix + "method=viewAnnouncement&amp;" + extraParameters %>" />
-				<fr:property name="param(view)" value="idInternal/announcementId" />
+				<fr:property name="param(view)" value="externalId/announcementId" />
 				<fr:property name="key(view)" value="messaging.view.link" />
 				<fr:property name="bundle(view)" value="MESSAGING_RESOURCES" />
 				<fr:property name="order(view)" value="1" />
@@ -233,7 +233,7 @@
 				<fr:property name="link(remove)"
 					value="<%= contextPrefix + "method=deleteAnnouncement" + "&amp;" + extraParameters + "&amp;tabularVersion=true"%>" />
 				<fr:property name="param(remove)"
-					value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId" />
+					value="externalId/announcementId,announcementBoard.externalId/announcementBoardId" />
 				<fr:property name="key(remove)" value="messaging.delete.label" />
 				<fr:property name="bundle(remove)" value="MESSAGING_RESOURCES" />
 				<fr:property name="order(remove)" value="3" />
@@ -266,7 +266,7 @@
 
 
 		<div class="aarchives"><messaging:archive name="archive"
-			targetUrl="<%= request.getContextPath() + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getIdInternal() + "&amp;" + extraParameters + "&amp;" %>" />
+			targetUrl="<%= request.getContextPath() + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getExternalId() + "&amp;" + extraParameters + "&amp;" %>" />
 		</div>
 
 	</logic:present>

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
@@ -53,6 +52,7 @@ import org.apache.struts.util.RequestUtils;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.image.TextPngCreator;
 
 public class ViewHomepageDA extends SiteVisualizationDA {
@@ -242,7 +242,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward emailPng(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String emailId = request.getParameter("email");
-        EmailAddress email = (EmailAddress) RootDomainObject.getInstance().readPartyContactByOID(Integer.parseInt(emailId));
+        EmailAddress email = (EmailAddress) AbstractDomainObject.fromExternalId(emailId);
         if (email != null && StringUtils.isNotEmpty(email.getValue())) {
             final byte[] pngFile = TextPngCreator.createPng("arial", 12, "000000", email.getValue());
             response.setContentType("image/png");
@@ -449,7 +449,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
             return (Homepage) container;
         } else {
             String homepageID = request.getParameter("homepageID");
-            return (Homepage) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(homepageID));
+            return (Homepage) AbstractDomainObject.fromExternalId(homepageID);
         }
 
     }

@@ -12,9 +12,9 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
-<bean:define id="tsdProcessId" name="tsdProcess" property="idInternal"/>
-<bean:define id="tsdCourseId" name="selectedTSDCourse" property="idInternal"/>
-<bean:define id="tsdId" name="selectedTSD" property="idInternal"/>
+<bean:define id="tsdProcessId" name="tsdProcess" property="externalId"/>
+<bean:define id="tsdCourseId" name="selectedTSDCourse" property="externalId"/>
+<bean:define id="tsdId" name="selectedTSD" property="externalId"/>
 
 <em><bean:message key="link.teacherServiceDistribution"/></em>
 <h2><bean:message key="link.teacherServiceDistribution.valuateWeights"/></h2>

@@ -11,7 +11,7 @@
 <logic:present name="materialSpaceOccupation">	
 	
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
-	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
+	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="externalId" />
 	<jsp:include page="spaceCrumbs.jsp"/>
 	
 	<bean:define id="space" name="selectedSpaceInformation" property="space"/>
@@ -32,7 +32,7 @@
 		</fr:layout>
 	</fr:view>
 		
-	<bean:define id="showMaterialSpaceOccupationLink">/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>	
+	<bean:define id="showMaterialSpaceOccupationLink">/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="externalId"/></bean:define>	
 	<bean:define id="schemaName">Edit<bean:write name="materialSpaceOccupation" property="material.class.simpleName"/>SpaceOccupation</bean:define>		
 	<bean:define id="type" name="materialSpaceOccupation" property="material.materialSpaceOccupationSubClass.name"/>		
 	<bean:define id="materialSlotName" name="materialSpaceOccupation" property="material.materialSpaceOccupationSlotName" />

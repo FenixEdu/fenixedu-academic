@@ -33,12 +33,12 @@
 
             <fr:property name="link(view)" value="/thesisDocumentConfirmation.do?method=viewThesis&amp;thesisID=%s"/>
             <fr:property name="key(view)" value="link.view"/>
-            <fr:property name="param(view)" value="thesis.idInternal/thesisID"/>
+            <fr:property name="param(view)" value="thesis.externalId/thesisID"/>
             <fr:property name="visibleIfNot(view)" value="documentsSubmitted"/>
 
             <fr:property name="link(confirm)" value="/thesisDocumentConfirmation.do?method=viewThesis&amp;thesisID=%s"/>
             <fr:property name="key(confirm)" value="link.thesis.confirm.documents"/>
-            <fr:property name="param(confirm)" value="thesis.idInternal/thesisID"/>
+            <fr:property name="param(confirm)" value="thesis.externalId/thesisID"/>
             <fr:property name="visibleIf(confirm)" value="documentsSubmitted"/>
 
             <fr:property name="sortParameter" value="sortBy"/>
@@ -56,7 +56,7 @@
 
             <fr:property name="link(view)" value="/thesisDocumentConfirmation.do?method=viewThesis&amp;thesisID=%s"/>
             <fr:property name="key(view)" value="link.view"/>
-            <fr:property name="param(view)" value="thesis.idInternal/thesisID"/>
+            <fr:property name="param(view)" value="thesis.externalId/thesisID"/>
 
             <fr:property name="sortParameter" value="sortBy"/>
             <fr:property name="sortUrl" value="/thesisDocumentConfirmation.do?method=showThesisList"/>

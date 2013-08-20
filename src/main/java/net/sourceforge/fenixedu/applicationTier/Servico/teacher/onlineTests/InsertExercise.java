@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
@@ -35,6 +34,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 import com.sun.faces.el.impl.parser.ParseException;
 
@@ -45,12 +45,12 @@ public class InsertExercise {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    public List<String> run(Integer executionCourseId, UploadedFile xmlZipFile, String path) throws FenixServiceException {
+    public List<String> run(String executionCourseId, UploadedFile xmlZipFile, String path) throws FenixServiceException {
 
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
         boolean createAny = false;
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -229,7 +229,7 @@ public class InsertExercise {
     private static final InsertExercise serviceInstance = new InsertExercise();
 
     @Service
-    public static List<String> runInsertExercise(Integer executionCourseId, UploadedFile xmlZipFile, String path)
+    public static List<String> runInsertExercise(String executionCourseId, UploadedFile xmlZipFile, String path)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, xmlZipFile, path);

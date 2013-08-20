@@ -139,37 +139,37 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 
     private Collection<AllocatableSpace> allRooms = null;
 
-    private Collection<AllocatableSpace> getAllRooms() throws  FenixServiceException {
+    private Collection<AllocatableSpace> getAllRooms() throws FenixServiceException {
         if (allRooms == null) {
             allRooms = AllocatableSpace.getAllActiveAllocatableSpacesForEducation();
         }
         return allRooms;
     }
 
-    private Set<Integer> selectedRoomIDs = null;
+    private Set<String> selectedRoomIDs = null;
 
-    public Set<Integer> getSelectedRoomIDs() {
+    public Set<String> getSelectedRoomIDs() {
         if (selectedRoomIDs == null) {
             final String[] selectedRoomIDStrings = getRequest().getParameterValues("selectedRoomIDs");
             if (selectedRoomIDStrings != null) {
-                selectedRoomIDs = new HashSet<Integer>(selectedRoomIDStrings.length);
+                selectedRoomIDs = new HashSet<String>(selectedRoomIDStrings.length);
                 for (final String roomIDString : selectedRoomIDStrings) {
-                    selectedRoomIDs.add(Integer.valueOf(roomIDString));
+                    selectedRoomIDs.add(roomIDString);
                 }
 
             } else if (getRequest().getParameter("selectedRoomID") != null) {
                 String roomID = getRequest().getParameter("selectedRoomID");
-                selectedRoomIDs = new HashSet<Integer>(1);
-                selectedRoomIDs.add(Integer.valueOf(roomID));
+                selectedRoomIDs = new HashSet<String>(1);
+                selectedRoomIDs.add(roomID);
             }
         }
         return selectedRoomIDs;
     }
 
-    private Collection<AllocatableSpace> searchRooms() throws  FenixServiceException {
+    private Collection<AllocatableSpace> searchRooms() throws FenixServiceException {
 
         final String name = getName();
-        final Integer building = (getBuilding() != null && getBuilding().length() > 0) ? Integer.valueOf(getBuilding()) : null;
+        final String building = (getBuilding() != null && getBuilding().length() > 0) ? getBuilding() : null;
         final Integer floor = (getFloor() != null && getFloor().length() > 0) ? Integer.valueOf(getFloor()) : null;
         final String type = getType();
         final Integer normalCapacity =
@@ -185,12 +185,12 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 
             if (name != null && name.length() > 0 && !room.getNome().equalsIgnoreCase(name)) {
                 matchesCriteria = false;
-            } else if (building != null && !room.getBuilding().getIdInternal().equals(building)) {
+            } else if (building != null && !room.getBuilding().getExternalId().equals(building)) {
                 matchesCriteria = false;
             } else if (floor != null && !room.getPiso().equals(floor)) {
                 matchesCriteria = false;
             } else if (type != null && type.length() > 0
-                    && (room.getTipo() == null || !room.getTipo().getIdInternal().toString().equals(type))) {
+                    && (room.getTipo() == null || !room.getTipo().getExternalId().toString().equals(type))) {
                 matchesCriteria = false;
             } else if (normalCapacity != null && room.getCapacidadeNormal().intValue() < normalCapacity.intValue()) {
                 matchesCriteria = false;
@@ -205,16 +205,16 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return selectedRooms;
     }
 
-    public Collection<AllocatableSpace> getRooms() throws  FenixServiceException {
+    public Collection<AllocatableSpace> getRooms() throws FenixServiceException {
         return getSubmittedForm() ? searchRooms() : null;
     }
 
-    public Collection<Building> getBuildings() throws  FenixServiceException {
+    public Collection<Building> getBuildings() throws FenixServiceException {
         return Space.getAllActiveBuildings();
     }
 
-    public Collection<AllocatableSpace> getRoomsToDisplayMap() throws  FenixServiceException {
-        final Set<Integer> selectedRoomIDs = getSelectedRoomIDs();
+    public Collection<AllocatableSpace> getRoomsToDisplayMap() throws FenixServiceException {
+        final Set<String> selectedRoomIDs = getSelectedRoomIDs();
         if (selectedRoomIDs != null) {
             return filterRooms(getAllRooms(), selectedRoomIDs);
         } else {
@@ -224,10 +224,10 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     private Collection<AllocatableSpace> filterRooms(final Collection<AllocatableSpace> allRooms,
-            final Set<Integer> selectedRoomIDs) {
+            final Set<String> selectedRoomIDs) {
         final Collection<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>(selectedRoomIDs.size());
         for (final AllocatableSpace room : allRooms) {
-            if (selectedRoomIDs.contains(room.getIdInternal())) {
+            if (selectedRoomIDs.contains(room.getExternalId())) {
                 rooms.add(room);
             }
         }
@@ -243,23 +243,23 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 
     };
 
-    public Collection<SelectItem> getBuildingSelectItems() throws  FenixServiceException {
+    public Collection<SelectItem> getBuildingSelectItems() throws FenixServiceException {
         final List<Building> buildings = (List<Building>) getBuildings();
         final List<SelectItem> buildingSelectItems = new ArrayList<SelectItem>();
         for (final Building building : buildings) {
-            buildingSelectItems.add(new SelectItem(building.getIdInternal().toString(), building.getName()));
+            buildingSelectItems.add(new SelectItem(building.getExternalId().toString(), building.getName()));
         }
         Collections.sort(buildingSelectItems, SELECT_ITEM_LABEL_COMPARATOR);
         return buildingSelectItems;
     }
 
-    public Collection<SelectItem> getRoomTypeSelectItems() throws  FenixServiceException {
+    public Collection<SelectItem> getRoomTypeSelectItems() throws FenixServiceException {
         List<RoomClassification> roomClassificationsForEducation = rootDomainObject.getRoomClassification();
         final List<SelectItem> roomTypeSelectItems = new ArrayList<SelectItem>();
         for (RoomClassification classification : RoomClassification
                 .sortByRoomClassificationAndCode(roomClassificationsForEducation)) {
             if (classification.hasParentRoomClassification()) {
-                roomTypeSelectItems.add(new SelectItem(String.valueOf(classification.getIdInternal()), classification
+                roomTypeSelectItems.add(new SelectItem(String.valueOf(classification.getExternalId()), classification
                         .getPresentationCode() + " - " + classification.getName().getContent(Language.getLanguage())));
             }
         }
@@ -267,27 +267,26 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     @Deprecated
-    public ExecutionSemester getExecutionPeriod() throws  FenixServiceException {
+    public ExecutionSemester getExecutionPeriod() throws FenixServiceException {
         return (ExecutionSemester) (getAcademicIntervalObject() != null ? ExecutionSemester
                 .getExecutionInterval(getAcademicIntervalObject()) : null);
     }
 
-    public Date getCalendarBegin() throws  FenixServiceException, ParseException {
+    public Date getCalendarBegin() throws FenixServiceException, ParseException {
         if (getStartDate() != null && getStartDate().length() > 0) {
             return DateFormatUtil.parse("dd/MM/yyyy", getStartDate());
         }
         return getAcademicIntervalObject().getStart().toDate();
     }
 
-    public Date getCalendarEnd() throws  FenixServiceException, ParseException {
+    public Date getCalendarEnd() throws FenixServiceException, ParseException {
         if (getEndDate() != null && getEndDate().length() > 0) {
             return DateFormatUtil.parse("dd/MM/yyyy", getEndDate());
         }
         return getAcademicIntervalObject().getEnd().toDate();
     }
 
-    public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws 
-            FenixServiceException {
+    public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixServiceException {
         final Collection<AllocatableSpace> rooms = getRoomsToDisplayMap();
         if (rooms != null) {
             AcademicInterval interval = getAcademicIntervalObject();
@@ -338,7 +337,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public List<Entry<AllocatableSpace, List<CalendarLink>>> getWrittenEvaluationCalendarLinksEntryList()
-            throws  FenixServiceException {
+            throws FenixServiceException {
         final Map<AllocatableSpace, List<CalendarLink>> calendarLinks = getWrittenEvaluationCalendarLinks();
         return (calendarLinks != null) ? new ArrayList<Entry<AllocatableSpace, List<CalendarLink>>>(calendarLinks.entrySet()) : null;
     }
@@ -351,12 +350,12 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         CurricularYear curricularYear = CurricularYear.readByYear(year);
 
         final Map<String, String> linkParameters = new HashMap<String, String>();
-        linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
-        linkParameters.put("evaluationID", writtenEvaluation.getIdInternal().toString());
-        linkParameters.put("executionPeriodID", executionSemester.getIdInternal().toString());
-        linkParameters.put("executionDegreeID", executionDegree.getIdInternal().toString());
+        linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
+        linkParameters.put("evaluationID", writtenEvaluation.getExternalId().toString());
+        linkParameters.put("executionPeriodID", executionSemester.getExternalId().toString());
+        linkParameters.put("executionDegreeID", executionDegree.getExternalId().toString());
         if (curricularYear != null) {
-            linkParameters.put("curricularYearID", curricularYear.getIdInternal().toString());
+            linkParameters.put("curricularYearID", curricularYear.getExternalId().toString());
         }
         linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
         linkParameters.put("academicInterval", getAcademicInterval());

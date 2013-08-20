@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author João Mota
@@ -35,7 +35,7 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer bibliographicReferenceID) throws NotAuthorizedException {
+    public void execute(String bibliographicReferenceID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                 || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, bibliographicReferenceID)) {
@@ -43,14 +43,13 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
         }
     }
 
-    private boolean bibliographicReferenceBelongsToTeacherExecutionCourse(IUserView id, Integer bibliographicReferenceID) {
+    private boolean bibliographicReferenceBelongsToTeacherExecutionCourse(IUserView id, String bibliographicReferenceID) {
         if (bibliographicReferenceID == null) {
             return false;
         }
 
         boolean result = false;
-        final BibliographicReference bibliographicReference =
-                RootDomainObject.getInstance().readBibliographicReferenceByOID(bibliographicReferenceID);
+        final BibliographicReference bibliographicReference = AbstractDomainObject.fromExternalId(bibliographicReferenceID);
         final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
         if (bibliographicReference != null && teacher != null) {

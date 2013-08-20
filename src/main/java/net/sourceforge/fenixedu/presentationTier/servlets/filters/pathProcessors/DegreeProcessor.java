@@ -124,7 +124,7 @@ public class DegreeProcessor extends PathProcessor {
 
         @Override
         public String getSiteBasePath() {
-            return String.format(this.contextURI, "%s", getDegree().getIdInternal());
+            return String.format(this.contextURI, "%s", getDegree().getExternalId());
         }
 
     }

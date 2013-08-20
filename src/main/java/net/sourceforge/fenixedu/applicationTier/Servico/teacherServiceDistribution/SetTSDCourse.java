@@ -6,17 +6,17 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthoriza
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SetTSDCourse {
-    protected void run(Integer tsdCourseId, Map<String, Object> tsdCourseParameters) {
+    protected void run(String tsdCourseId, Map<String, Object> tsdCourseParameters) {
 
-        TSDCourse tsdCourse = RootDomainObject.getInstance().readTSDCourseByOID(tsdCourseId);
+        TSDCourse tsdCourse = AbstractDomainObject.fromExternalId(tsdCourseId);
 
         String firstTimeEnrolledStudentsTypeStr = (String) tsdCourseParameters.get("firstTimeEnrolledStudentsType");
         // Object removeTSDLoad = tsdCourseParameters.get("removeTSDLoad");
@@ -133,8 +133,7 @@ public class SetTSDCourse {
     private static final SetTSDCourse serviceInstance = new SetTSDCourse();
 
     @Service
-    public static void runSetTSDCourse(Integer tsdCourseId, Map<String, Object> tsdCourseParameters)
-            throws NotAuthorizedException {
+    public static void runSetTSDCourse(String tsdCourseId, Map<String, Object> tsdCourseParameters) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             serviceInstance.run(tsdCourseId, tsdCourseParameters);

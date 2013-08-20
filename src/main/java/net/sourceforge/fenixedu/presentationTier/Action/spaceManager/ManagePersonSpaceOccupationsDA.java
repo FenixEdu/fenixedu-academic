@@ -22,6 +22,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "SpaceManager", path = "/managePersonSpaceOccupations", attribute = "managePersonSpaceOccupationsForm",
         formBean = "managePersonSpaceOccupationsForm", scope = "request", parameter = "method")
@@ -45,12 +46,12 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
             actionMessages.add("error", new ActionMessage("error.logged.person.not.authorized.to.make.operation"));
             saveMessages(request, actionMessages);
         }
-        request.setAttribute("spaceInformationID", spaceInformation.getIdInternal());
+        request.setAttribute("spaceInformationID", spaceInformation.getExternalId());
         return mapping.findForward("ManageSpace");
     }
 
     public ActionForward showSpaceOccupations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceAndSpaceInfo(request, spaceInformation);
@@ -58,7 +59,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditSpacePersonOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         final PersonSpaceOccupation personSpaceOccupation = getPersonSpaceOccupationFromParameter(request);
@@ -68,7 +69,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteSpacePersonOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         final PersonSpaceOccupation personSpaceOccupation = getPersonSpaceOccupationFromParameter(request);
@@ -92,16 +93,13 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
         final String spaceInformationIDString =
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
-        final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-        return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+        return AbstractDomainObject.fromExternalId(spaceInformationIDString);
     }
 
     private PersonSpaceOccupation getPersonSpaceOccupationFromParameter(final HttpServletRequest request) {
         final String personSpaceOccupationIDString =
                 request.getParameterMap().containsKey("spaceOccupationID") ? request.getParameter("spaceOccupationID") : (String) request
                         .getAttribute("spaceOccupationID");
-        final Integer personSpaceOccupationID =
-                personSpaceOccupationIDString != null ? Integer.valueOf(personSpaceOccupationIDString) : null;
-        return (PersonSpaceOccupation) rootDomainObject.readResourceAllocationByOID(personSpaceOccupationID);
+        return (PersonSpaceOccupation) AbstractDomainObject.fromExternalId(personSpaceOccupationIDString);
     }
 }

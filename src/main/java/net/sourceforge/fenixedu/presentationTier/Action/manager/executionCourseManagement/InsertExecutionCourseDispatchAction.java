@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertExecutionC
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.EntryPhase;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -32,6 +33,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério 17/Dez/2003
@@ -75,7 +78,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 
                     LabelValueBean executionPeriod =
                             new LabelValueBean(infoExecutionPeriod.getName() + " - "
-                                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getIdInternal()
+                                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getExternalId()
                                     .toString());
                     return executionPeriod;
                 }
@@ -138,8 +141,9 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
         InfoExecutionPeriod infoExecutionPeriod = null;
         if (!StringUtils.isEmpty(executionPeriodId) && StringUtils.isNumeric(executionPeriodId)) {
             infoExecutionPeriod =
-                    new InfoExecutionPeriod(rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId)));
+                    new InfoExecutionPeriod((ExecutionSemester) AbstractDomainObject.fromExternalId(executionPeriodId));
         }
+
         infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
         String comment = "";

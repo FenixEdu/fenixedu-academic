@@ -763,7 +763,7 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable {
         setGepCourseName(oldInquiresSummary.getGepCourseName());
         setGepDegreeName(oldInquiresSummary.getGepDegreeName());
         setGepExecutionYear(oldInquiresSummary.getGepExecutionYear());
-        setIdInternal(oldInquiresSummary.getIdInternal());
+        setExternalId(oldInquiresSummary.getExternalId());
         setInquiryId(oldInquiresSummary.getInquiryId());
         setNumberAnswers(oldInquiresSummary.getNumberAnswers());
         setNumberApproved(oldInquiresSummary.getNumberApproved());

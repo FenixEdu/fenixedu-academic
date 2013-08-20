@@ -100,7 +100,7 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
             if (workingUnit != null) {
                 workingUnits.add(workingUnit);
 
-                String areaKey = workingUnit.getIdInternal().toString();
+                String areaKey = workingUnit.getExternalId().toString();
                 SortedSet<Employee> employees = employeesMap.get(areaKey);
                 if (employees == null) {
                     employees = new TreeSet<Employee>(employeeComparator);
@@ -229,7 +229,7 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 
             if (area != null) {
                 areas.add(area);
-                addListTeacher(teachers, area.getIdInternal().toString(), teacher);
+                addListTeacher(teachers, area.getExternalId().toString(), teacher);
             } else {
                 teachersNoArea.add(teacher);
             }

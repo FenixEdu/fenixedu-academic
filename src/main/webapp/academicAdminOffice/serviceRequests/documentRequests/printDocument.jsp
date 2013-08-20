@@ -10,7 +10,7 @@
 <bean:define id="academicServiceRequest" name="academicServiceRequest" scope="request" type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest"/>
 
 <div style="float: right;">
-	<bean:define id="personID" name="academicServiceRequest" property="registration.student.person.idInternal"/>
+	<bean:define id="personID" name="academicServiceRequest" property="registration.student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -60,16 +60,16 @@
 <p>
 	<span class="gen-button">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link page="/documentRequestsManagement.do?method=printDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="idInternal">
+	<html:link page="/documentRequestsManagement.do?method=printDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="externalId">
 		<bean:message key="print" bundle="APPLICATION_RESOURCES"/>
 	</html:link>
 	</span>
 </p>
 </logic:equal>
 
-<bean:define id="registrationID" name="academicServiceRequest" property="registration.idInternal" />
+<bean:define id="registrationID" name="academicServiceRequest" property="registration.externalId" />
 
-<fr:form action="<%= "/academicServiceRequestsManagement.do?academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString() + "&amp;registrationID=" + registrationID.toString() %>">
+<fr:form action="<%= "/academicServiceRequestsManagement.do?academicServiceRequestId=" + academicServiceRequest.getExternalId().toString() + "&amp;registrationID=" + registrationID.toString() %>">
 	<html:hidden name="academicServiceRequestsManagementForm" property="method" value="concludeAcademicServiceRequest" />
 
 	<p class="mtop15 mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="documentRequest.confirmDocumentSuccessfulPrinting"/></strong></p>
@@ -79,7 +79,7 @@
 				<fr:property name="classes" value="tstyle5 thmiddle thright thlight mtop025 mbottom1"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path="<%="/documentRequestsManagement.do?method=prepareConcludeDocumentRequest&amp;academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString() %>"/>
+			<fr:destination name="invalid" path="<%="/documentRequestsManagement.do?method=prepareConcludeDocumentRequest&amp;academicServiceRequestId=" + academicServiceRequest.getExternalId().toString() %>"/>
 		</fr:edit>
 	</logic:equal>
 	

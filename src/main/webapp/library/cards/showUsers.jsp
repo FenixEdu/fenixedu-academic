@@ -99,7 +99,7 @@
 		        <fr:property name="sortBy" value="<%= sortedBy %>"/>
 		        
 		        <fr:property name="link(generate)" value="<%= "/cardManagement.do?method=prepareGenerateCard&name=" + searchName + "&number=" + searchNumber %>"/>
-				<fr:property name="param(generate)" value="person.idInternal/personID"/>
+				<fr:property name="param(generate)" value="person.externalId/personID"/>
 				<fr:property name="key(generate)" value="link.card.create"/>
 				<fr:property name="visibleIf(generate)" value="isToGenerate"/>
 				

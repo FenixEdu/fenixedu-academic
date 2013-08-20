@@ -27,8 +27,7 @@ public class ManageRegistrationStartDatesDA extends FenixDispatchAction {
     @Input
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        final Integer registrationId = getIntegerFromRequest(request, "registrationId");
-        request.setAttribute("registration", rootDomainObject.readRegistrationByOID(registrationId));
+        request.setAttribute("registration", getDomainObject(request, "registrationId"));
         return mapping.findForward("showEditStartDates");
     }
 

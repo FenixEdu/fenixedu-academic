@@ -36,6 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "resourceAllocationManager", path = "/studentShiftEnrollmentManager",
         input = "/studentShiftEnrollmentManager.do?method=prepare", attribute = "studentShiftEnrollmentForm",
@@ -69,8 +70,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        final Registration registration =
-                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
+        final Registration registration = getDomainObject(request, "registrationOID");
         final Student student = registration.getPerson().getStudent();
 
         if (student.hasInquiriesToRespond()) {
@@ -80,7 +80,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
         final List<Registration> toEnrol = student.getRegistrationsToEnrolInShiftByStudent();
         if (toEnrol.size() == 1) {
-            request.setAttribute("registrationOID", toEnrol.get(0).getIdInternal());
+            request.setAttribute("registrationOID", toEnrol.get(0).getExternalId());
             return prepareStartViewWarning(mapping, form, request, response);
         } else {
             request.setAttribute("toEnrol", toEnrol);
@@ -89,8 +89,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     }
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
-        final Registration registration =
-                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
+        final Registration registration = getDomainObject(request, "registrationOID");
         final Student student = registration.getPerson().getStudent();
 
         if (!student.getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
@@ -98,7 +97,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
         }
 
         request.setAttribute("registration", registration);
-        request.setAttribute("registrationOID", registration.getIdInternal().toString());
+        request.setAttribute("registrationOID", registration.getExternalId().toString());
         request.setAttribute("ram", Boolean.TRUE);
         return registration;
     }
@@ -132,7 +131,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
         final String classID = request.getParameter("classId");
         if (classID != null) {
-            request.setAttribute("classId", Integer.valueOf(classID));
+            request.setAttribute("classId", classID);
             return mapping.findForward("showEnrollmentPage");
         }
 
@@ -169,7 +168,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
         }
 
         request.setAttribute("selectedExecutionDegree", selectedExecutionDegree);
-        form.set("degree", selectedExecutionDegree.getIdInternal());
+        form.set("degree", selectedExecutionDegree.getExternalId());
 
         sortExecutionDegreesByDegreeName(executionDegrees);
         request.setAttribute(
@@ -233,8 +232,8 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     private ExecutionDegree getSelectedExecutionDegree(final DynaActionForm form, final Registration registration,
             final ExecutionSemester executionSemester, final List<ExecutionDegree> executionDegrees) {
 
-        final Integer executionDegreeIdChosen = (Integer) form.get("degree");
-        final ExecutionDegree executionDegreeChosen = rootDomainObject.readExecutionDegreeByOID(executionDegreeIdChosen);
+        final String executionDegreeIdChosen = (String) form.get("degree");
+        final ExecutionDegree executionDegreeChosen = AbstractDomainObject.fromExternalId(executionDegreeIdChosen);
         if (executionDegreeChosen != null && executionDegreeChosen.getExecutionYear() == executionSemester.getExecutionYear()) {
             return executionDegreeChosen;
         } else {
@@ -289,7 +288,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
             return mapping.getInputForward();
         }
 
-        final Integer shiftId = Integer.valueOf(request.getParameter("shiftId"));
+        final String shiftId = request.getParameter("shiftId");
         final String executionCourseID = request.getParameter("executionCourseID");
         if (!StringUtils.isEmpty(executionCourseID)) {
             request.setAttribute("executionCourseID", executionCourseID);

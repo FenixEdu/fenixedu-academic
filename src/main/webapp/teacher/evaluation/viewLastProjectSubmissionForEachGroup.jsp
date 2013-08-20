@@ -49,10 +49,10 @@
 		<fr:layout name="tabular">
 	        <fr:property name="classes" value="tstyle2 thlight"/>
 	        <fr:property name="columnClasses" value="acenter,acenter,nowrap,nowrap acenter,smalltxt,aright,nowrap"/>
-	        <fr:property name="linkFormat(viewProjectSubmissionsForGroup)" value="<%="/projectSubmissionsManagement.do?method=viewProjectSubmissionsByGroup&studentGroupID=${studentGroup.idInternal}&projectOID=${project.externalId}&executionCourseID=" + executionCourseID %>"/>
+	        <fr:property name="linkFormat(viewProjectSubmissionsForGroup)" value="<%="/projectSubmissionsManagement.do?method=viewProjectSubmissionsByGroup&studentGroupID=${studentGroup.externalId}&projectOID=${project.externalId}&executionCourseID=" + executionCourseID %>"/>
 			<fr:property name="key(viewProjectSubmissionsForGroup)" value="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.viewProjectSubmissionsByGroup"/>
 			<fr:property name="bundle(viewProjectSubmissionsForGroup)" value="APPLICATION_RESOURCES"/>
-			<fr:property name="linkFormat(groupComment)" value="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&studentGroupID=${studentGroup.idInternal}&projectOID=${project.externalId}&executionCourseID=" + executionCourseID  + "&edit=false" %>"/>
+			<fr:property name="linkFormat(groupComment)" value="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&studentGroupID=${studentGroup.externalId}&projectOID=${project.externalId}&executionCourseID=" + executionCourseID  + "&edit=false" %>"/>
 			<fr:property name="key(groupComment)" value="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.groupComment"/>
 			<fr:property name="bundle(groupComment)" value="APPLICATION_RESOURCES"/>
 			<fr:property name="visibleIfNot(groupComment)" value="project.submissionPeriodOpen"/>
@@ -69,13 +69,13 @@
 		<fr:layout name="tabular">
 	        <fr:property name="classes" value="tstyle2 thlight mtop05"/>
 	        <fr:property name="columnClasses" value="acenter,acenter,nowrap,nowrap acenter,smalltxt,aright,nowrap"/>
-	        <fr:property name="linkFormat(viewProjectSubmissionsForGroup)" value="<%="/projectSubmissionsManagement.do?method=viewProjectSubmissionsByGroup&studentGroupID=${studentGroup.idInternal}&projectOID=${project.externalId}&executionCourseID=" + executionCourseID %>"/>
+	        <fr:property name="linkFormat(viewProjectSubmissionsForGroup)" value="<%="/projectSubmissionsManagement.do?method=viewProjectSubmissionsByGroup&studentGroupID=${studentGroup.externalId}&projectOID=${project.externalId}&executionCourseID=" + executionCourseID %>"/>
 			<fr:property name="key(viewProjectSubmissionsForGroup)" value="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.viewProjectSubmissionsByGroup"/>
-			<fr:property name="linkFormat(groupComment)" value="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&studentGroupID=${studentGroup.idInternal}&projectOID=${project.externalId}&executionCourseID=" + executionCourseID  + "&edit=false" %>"/>
+			<fr:property name="linkFormat(groupComment)" value="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&studentGroupID=${studentGroup.externalId}&projectOID=${project.externalId}&executionCourseID=" + executionCourseID  + "&edit=false" %>"/>
 			<fr:property name="key(groupComment)" value="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.groupComment"/>
 			<fr:property name="visibleIfNot(groupComment)" value="project.submissionPeriodOpen"/>
 	    </fr:layout>
-		<fr:destination name="groupNumberLink" path="<%= "/viewStudentGroupInformation.do?method=viewDeletedStudentGroupInformation&amp;studentGroupId=${studentGroup.idInternal}&amp;executionCourseID=" + executionCourseID + "&amp;projectOID=${project.externalId}"  %>"/>
+		<fr:destination name="groupNumberLink" path="<%= "/viewStudentGroupInformation.do?method=viewDeletedStudentGroupInformation&amp;studentGroupId=${studentGroup.externalId}&amp;executionCourseID=" + executionCourseID + "&amp;projectOID=${project.externalId}"  %>"/>
 	</fr:view>
 
 </logic:notEmpty>

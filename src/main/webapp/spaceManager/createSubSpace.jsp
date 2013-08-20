@@ -9,8 +9,8 @@
 <h2><bean:message bundle="SPACE_RESOURCES" key="title.create.subspace"/></h2>
 
 <bean:define id="selectedSpace" name="selectedSpaceInformation" property="space"/>
-<bean:define id="suroundingSpaceID" type="java.lang.Integer" name="selectedSpace" property="idInternal"/>
-<bean:define id="suroundingSpaceInformationID" type="java.lang.Integer" name="selectedSpace" property="spaceInformation.idInternal"/>
+<bean:define id="suroundingSpaceID" type="java.lang.String" name="selectedSpace" property="externalId"/>
+<bean:define id="suroundingSpaceInformationID" type="java.lang.String" name="selectedSpace" property="spaceInformation.externalId"/>
 
 <logic:messagesPresent message="true">
 	<p>
@@ -22,7 +22,7 @@
 	</p>
 </logic:messagesPresent>	
 
-<bean:define id="backLink">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>		
+<bean:define id="backLink">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="externalId"/></bean:define>		
 <ul class="mvert15 list5">
 	<li>
 		<html:link page="<%= backLink %>">
@@ -49,8 +49,8 @@
 	</html:submit>
 </html:form>
 
-<bean:define id="cancelPath">/manageSpaces.do?method=manageSpace&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>	
-<bean:define id="invalidLink">/manageSpaces.do?method=showCreateSubSpaceForm&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>	
+<bean:define id="cancelPath">/manageSpaces.do?method=manageSpace&spaceInformationID=<bean:write name="selectedSpaceInformation" property="externalId"/></bean:define>	
+<bean:define id="invalidLink">/manageSpaces.do?method=showCreateSubSpaceForm&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="externalId"/></bean:define>	
 
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
     <p class="mtop15 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>

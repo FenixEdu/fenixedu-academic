@@ -14,7 +14,7 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
 <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
-<bean:define id="siteId" name="site" property="idInternal"/>
+<bean:define id="siteId" name="site" property="externalId"/>
 
 <h2>
 	<bean:message key="label.section"/>
@@ -39,7 +39,7 @@
     </p>
 </logic:notEmpty>
 
-<fr:form action="<%= String.format("%s?method=confirmSectionDelete&%s&sectionID=%s", actionName, context, section.getIdInternal()) %>">
+<fr:form action="<%= String.format("%s?method=confirmSectionDelete&%s&sectionID=%s", actionName, context, section.getExternalId()) %>">
     <p class="mtop15">
         <bean:message key="message.section.delete.confirm" bundle="SITE_RESOURCES"/>
     </p>

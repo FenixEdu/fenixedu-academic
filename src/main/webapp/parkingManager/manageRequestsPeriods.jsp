@@ -60,11 +60,11 @@
 				
 				<fr:property name="link(edit)" value="/manageParkingPeriods.do?method=editRequestPeriod" />
 				<fr:property name="key(edit)" value="label.edit" />
-				<fr:property name="param(edit)" value="idInternal" />
+				<fr:property name="param(edit)" value="externalId" />
 				<fr:property name="bundle(edit)" value="PARKING_RESOURCES" />
 				<fr:property name="link(delete)" value="/manageParkingPeriods.do?method=deleteRequestPeriod" />
 				<fr:property name="key(delete)" value="label.delete" />
-				<fr:property name="param(delete)" value="idInternal" />
+				<fr:property name="param(delete)" value="externalId" />
 				<fr:property name="bundle(delete)" value="PARKING_RESOURCES" />
 			</fr:layout>
 		</fr:view>	

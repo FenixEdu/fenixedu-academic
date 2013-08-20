@@ -89,7 +89,7 @@ public class RequestUtils {
                         infoExecutionDegree.getInfoDegreeCurricularPlan().getDegreeCurricularPlan()
                                 .getPresentationName(infoExecutionDegree.getInfoExecutionYear().getExecutionYear());
 
-                String value = infoExecutionDegree.getIdInternal().toString();
+                String value = infoExecutionDegree.getExternalId().toString();
 
                 return new LabelValueBean(label, value);
             }

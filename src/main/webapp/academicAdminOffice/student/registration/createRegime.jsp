@@ -9,7 +9,7 @@
 
 
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -31,7 +31,7 @@
 
 <h3 class="mbottom05"><bean:message key="registration.regimes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
-<bean:define id="registrationId" name="registration" property="idInternal" />
+<bean:define id="registrationId" name="registration" property="externalId" />
 
 <fr:create schema="RegistrationRegime.create" type="net.sourceforge.fenixedu.domain.student.RegistrationRegime"
 	action='<%= "/registration.do?method=showRegimes&amp;registrationId=" + registrationId.toString() %>'>

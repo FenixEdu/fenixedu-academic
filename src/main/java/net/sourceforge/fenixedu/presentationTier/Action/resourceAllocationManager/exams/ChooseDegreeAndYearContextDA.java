@@ -93,7 +93,7 @@ public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction {
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
+            licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getExternalId().toString()));
         }
 
         request.setAttribute(PresentationConstants.DEGREES, licenciaturas);

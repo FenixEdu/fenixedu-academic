@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:define id="resultId" name="result" property="idInternal"/>
+<bean:define id="resultId" name="result" property="externalId"/>
 <bean:define id="parameter" value="<%= "resultId=" + resultId %>"/>
 
 <%-- Title messages --%>

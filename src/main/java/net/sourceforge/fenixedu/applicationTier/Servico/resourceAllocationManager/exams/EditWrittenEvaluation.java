@@ -40,18 +40,18 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditWrittenEvaluation {
 
-    protected void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
+    protected void run(String executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
             Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
-            List<String> roomIDs, Integer writtenEvaluationOID, Season examSeason, String writtenTestDescription,
+            List<String> roomIDs, String writtenEvaluationOID, Season examSeason, String writtenTestDescription,
             GradeScale gradeScale) throws FenixServiceException {
 
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
-        final WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationOID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationOID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
@@ -135,7 +135,7 @@ public class EditWrittenEvaluation {
     private List<AllocatableSpace> readRooms(final List<String> roomIDs) throws FenixServiceException {
         final List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
         for (final String roomID : roomIDs) {
-            final AllocatableSpace room = (AllocatableSpace) RootDomainObject.getInstance().readResourceByOID(Integer.valueOf(roomID));
+            final AllocatableSpace room = (AllocatableSpace) AbstractDomainObject.fromExternalId(roomID);
             if (room == null) {
                 throw new FenixServiceException("error.noRoom");
             }
@@ -170,7 +170,7 @@ public class EditWrittenEvaluation {
 
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final String executionCourseID : executionCourseIDs) {
-            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseID));
+            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
             if (executionCourse == null) {
                 throw new FenixServiceException("error.invalidExecutionCourse");
             }
@@ -214,9 +214,9 @@ public class EditWrittenEvaluation {
     private static final EditWrittenEvaluation serviceInstance = new EditWrittenEvaluation();
 
     @Service
-    public static void runEditWrittenEvaluation(Integer executionCourseID, Date writtenEvaluationDate,
+    public static void runEditWrittenEvaluation(String executionCourseID, Date writtenEvaluationDate,
             Date writtenEvaluationStartTime, Date writtenEvaluationEndTime, List<String> executionCourseIDs,
-            List<String> degreeModuleScopeIDs, List<String> roomIDs, Integer writtenEvaluationOID, Season examSeason,
+            List<String> degreeModuleScopeIDs, List<String> roomIDs, String writtenEvaluationOID, Season examSeason,
             String writtenTestDescription, GradeScale gradeScale) throws FenixServiceException, NotAuthorizedException {
         EditWrittenEvaluationAuthorization.instance.execute(writtenEvaluationOID);
         try {

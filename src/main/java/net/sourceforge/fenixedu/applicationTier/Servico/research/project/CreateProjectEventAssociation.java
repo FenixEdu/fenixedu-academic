@@ -1,16 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectEventAssociationFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectEventAssociationSimpleCreationBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateProjectEventAssociation {
 
@@ -31,10 +30,10 @@ public class CreateProjectEventAssociation {
      */
     @Checked("ResultPredicates.author")
     @Service
-    public static ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, Integer projectId)
+    public static ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, String projectId)
             throws FenixServiceException {
         ProjectEventAssociation association = null;
-        final Project project = RootDomainObject.getInstance().readProjectByOID(projectId);
+        final Project project = AbstractDomainObject.fromExternalId(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }
@@ -63,11 +62,11 @@ public class CreateProjectEventAssociation {
      */
     @Checked("ResultPredicates.author")
     @Service
-    public static ProjectEventAssociation run(ProjectEventAssociationFullCreationBean bean, Integer projectId)
+    public static ProjectEventAssociation run(ProjectEventAssociationFullCreationBean bean, String projectId)
             throws FenixServiceException {
         final ProjectEventAssociation association;
 
-        final Project project = RootDomainObject.getInstance().readProjectByOID(projectId);
+        final Project project = AbstractDomainObject.fromExternalId(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }

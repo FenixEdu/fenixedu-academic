@@ -38,10 +38,10 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="addShiftToClasses"/>  	
 <bean:define id="classesList" name="component" property="infoClasses"/>
 <logic:iterate id="infoClass" name="component" property="infoClasses" type="net.sourceforge.fenixedu.dataTransferObject.InfoClass">
-<bean:define id="idInternal" name="infoClass" property="idInternal"/>
+<bean:define id="externalId" name="infoClass" property="externalId"/>
 <tr>
 	<td class="listClasses">
-			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.classesList"  property="classesList" value="<%= idInternal.toString() %>" />
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.classesList"  property="classesList" value="<%= externalId.toString() %>" />
 	</td>
 	<td class="listClasses">
 		<bean:write name="infoClass" property="nome"/>			

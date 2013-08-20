@@ -71,7 +71,7 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
 
         DynaActionForm editReimbursementGuideSituationForm = (DynaActionForm) form;
 
-        Integer reimbursementGuideId = new Integer(this.getFromRequest("id", request));
+        String reimbursementGuideId = this.getFromRequest("id", request);
 
         InfoReimbursementGuide infoReimbursementGuide = null;
 
@@ -101,7 +101,7 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
         DynaActionForm editReimbursementGuideSituationForm = (DynaActionForm) form;
 
         String remarks = (String) editReimbursementGuideSituationForm.get("remarks");
-        Integer reimbursementGuideID = (Integer) editReimbursementGuideSituationForm.get("id");
+        String reimbursementGuideID = (String) editReimbursementGuideSituationForm.get("id");
         String situation = (String) editReimbursementGuideSituationForm.get("situation");
         Integer officialDateDay = (Integer) editReimbursementGuideSituationForm.get("officialDateDay");
         Integer officialDateMonth = (Integer) editReimbursementGuideSituationForm.get("officialDateMonth");

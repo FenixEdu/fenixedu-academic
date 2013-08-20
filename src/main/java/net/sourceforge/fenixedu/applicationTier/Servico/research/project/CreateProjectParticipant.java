@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantSimpleCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantUnitCreationBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.project.Project;
@@ -14,6 +12,7 @@ import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateProjectParticipant {
 
@@ -33,10 +32,10 @@ public class CreateProjectParticipant {
      */
     @Checked("ResultPredicates.author")
     @Service
-    public static ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, Integer projectId)
+    public static ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, String projectId)
             throws FenixServiceException {
         ProjectParticipation participation = null;
-        final Project project = RootDomainObject.getInstance().readProjectByOID(projectId);
+        final Project project = AbstractDomainObject.fromExternalId(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }
@@ -64,12 +63,12 @@ public class CreateProjectParticipant {
      */
     @Checked("ResultPredicates.author")
     @Service
-    public static ProjectParticipation run(ProjectParticipantFullCreationBean bean, Integer projectId)
+    public static ProjectParticipation run(ProjectParticipantFullCreationBean bean, String projectId)
             throws FenixServiceException {
         final ProjectParticipation participation;
         final ExternalContract externalPerson;
 
-        final Project project = RootDomainObject.getInstance().readProjectByOID(projectId);
+        final Project project = AbstractDomainObject.fromExternalId(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }
@@ -98,12 +97,12 @@ public class CreateProjectParticipant {
 
     @Checked("ResultPredicates.author")
     @Service
-    public static ProjectParticipation run(ProjectParticipantUnitCreationBean bean, Integer projectId)
+    public static ProjectParticipation run(ProjectParticipantUnitCreationBean bean, String projectId)
             throws FenixServiceException {
         final ProjectParticipation participation;
         final Unit unit;
 
-        final Project project = RootDomainObject.getInstance().readProjectByOID(projectId);
+        final Project project = AbstractDomainObject.fromExternalId(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }

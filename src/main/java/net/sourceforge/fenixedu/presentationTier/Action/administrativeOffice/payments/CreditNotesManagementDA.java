@@ -77,7 +77,7 @@ public class CreditNotesManagementDA extends PaymentsManagementDispatchAction {
     }
 
     private CreditNote getCreditNote(HttpServletRequest request) {
-        return rootDomainObject.readCreditNoteByOID(getIntegerFromRequest(request, "creditNoteId"));
+        return getDomainObject(request, "creditNoteId");
     }
 
     public ActionForward prepareCreateCreditNote(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -165,7 +165,7 @@ public class CreditNotesManagementDA extends PaymentsManagementDispatchAction {
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
 
-            request.setAttribute("creditNoteId", creditNote.getIdInternal());
+            request.setAttribute("creditNoteId", creditNote.getExternalId());
 
             return showCreditNote(mapping, form, request, response);
         }

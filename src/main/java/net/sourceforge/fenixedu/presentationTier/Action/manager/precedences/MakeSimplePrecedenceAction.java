@@ -60,8 +60,8 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 
     public ActionForward showAllRestrictions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer degreeID = new Integer(request.getParameter("degreeId"));
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+        String degreeID = request.getParameter("degreeId");
+        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanId");
 
         request.setAttribute("degreeId", degreeID);
         request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
@@ -75,8 +75,8 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 
         ActionErrors errors = new ActionErrors();
 
-        Integer degreeID = new Integer(request.getParameter("degreeId"));
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+        String degreeID = request.getParameter("degreeId");
+        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanId");
 
         request.setAttribute("degreeId", degreeID);
         request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
@@ -131,8 +131,8 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 
         ActionErrors errors = new ActionErrors();
 
-        Integer degreeID = new Integer(request.getParameter("degreeId"));
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+        String degreeID = request.getParameter("degreeId");
+        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanId");
 
         request.setAttribute("degreeId", degreeID);
         request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
@@ -141,8 +141,8 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 
         String classeNameRestriction = (String) insertRestrictionForm.get("className");
         Integer number = (Integer) insertRestrictionForm.get("number");
-        Integer curricularCourseToAddPrecedenceID = (Integer) insertRestrictionForm.get("curricularCourseToAddPrecedenceID");
-        Integer precedentCurricularCourseID = (Integer) insertRestrictionForm.get("precedentCurricularCourseID");
+        String curricularCourseToAddPrecedenceID = (String) insertRestrictionForm.get("curricularCourseToAddPrecedenceID");
+        String precedentCurricularCourseID = (String) insertRestrictionForm.get("precedentCurricularCourseID");
 
         request.setAttribute("className", classeNameRestriction);
         request.setAttribute("number", number);

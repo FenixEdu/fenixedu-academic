@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /*
  * 
@@ -20,26 +20,26 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadExecutionDegreesByExecutionPeriodId {
 
     @Service
-    public static List<InfoExecutionDegree> run(Integer executionPeriodId) throws FenixServiceException {
+    public static List<InfoExecutionDegree> run(String executionPeriodId) throws FenixServiceException {
         return getExecutionDegreesByExecutionPeriodId(executionPeriodId, null);
     }
 
     @Service
-    public static List<InfoExecutionDegree> runForAcademicAdmin(Integer executionPeriodId) throws FenixServiceException {
+    public static List<InfoExecutionDegree> runForAcademicAdmin(String executionPeriodId) throws FenixServiceException {
         return getExecutionDegreesByExecutionPeriodId(executionPeriodId, AcademicPredicates.MANAGE_EXECUTION_COURSES);
     }
 
     @Service
-    public static List<InfoExecutionDegree> runForAcademicAdminAdv(Integer executionPeriodId) throws FenixServiceException {
+    public static List<InfoExecutionDegree> runForAcademicAdminAdv(String executionPeriodId) throws FenixServiceException {
         return getExecutionDegreesByExecutionPeriodId(executionPeriodId, AcademicPredicates.MANAGE_EXECUTION_COURSES_ADV);
     }
 
-    private static List<InfoExecutionDegree> getExecutionDegreesByExecutionPeriodId(Integer executionPeriodId,
+    private static List<InfoExecutionDegree> getExecutionDegreesByExecutionPeriodId(String executionPeriodId,
             AccessControlPredicate<Object> permission) throws FenixServiceException {
         if (executionPeriodId == null) {
             throw new FenixServiceException("executionPeriodId.should.not.be.null");
         }
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         List<ExecutionDegree> executionDegrees =
                 ExecutionDegree.getAllByExecutionYear(executionSemester.getExecutionYear().getYear());

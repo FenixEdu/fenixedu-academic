@@ -28,7 +28,7 @@
         <bean:message key="academic.units" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     </html:link>
     &nbsp;&gt;&nbsp;
-    <bean:define id="unitId" name="unit" property="idInternal"/>
+    <bean:define id="unitId" name="unit" property="externalId"/>
     <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>">
         <fr:view name="department" property="realName"/>
     </html:link>
@@ -103,8 +103,8 @@ if (month != null && year!=null)
 		<%-- Title --%>
 			<logic:equal name="announcement" property="visible" value="true">
 				<h3 class="mvert025">
-				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
-					<span id="<%="ID_" + announcement.getIdInternal().toString()%>">
+				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getExternalId()%>">
+					<span id="<%="ID_" + announcement.getExternalId().toString()%>">
 						<fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
 					</span>
 				</html:link> 	 	
@@ -114,8 +114,8 @@ if (month != null && year!=null)
 			<logic:equal name="announcement" property="visible" value="false">
 				<p class="mvert025">
 				<h3 class="mvert0 dinline">
-				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
-					<span id="<%="ID_" + announcement.getIdInternal().toString()%>">
+				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getExternalId()%>">
+					<span id="<%="ID_" + announcement.getExternalId().toString()%>">
 						<fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
 					</span>
 				</html:link> 	 	
@@ -131,7 +131,7 @@ if (month != null && year!=null)
 				 	{
 				 %>				 
 				 	<fr:view name="announcement" property="excerpt"/>
-				 	 <html:link action="<%=contextPrefix + "method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
+				 	 <html:link action="<%=contextPrefix + "method=viewAnnouncement&amp;announcementId=" + announcement.getExternalId()%>">
 				 	 	 <bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.more.information" /> 
 					 </html:link> 
 				 <%				 		
@@ -157,7 +157,7 @@ if (month != null && year!=null)
 
 		<%-- Board e RSS --%>
 				<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board" />: 
-				<html:link action="<%=contextPrefix + extraParameters +"&amp;method=viewAnnouncements&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "#" + announcement.getIdInternal()%>">
+				<html:link action="<%=contextPrefix + extraParameters +"&amp;method=viewAnnouncements&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getExternalId() + "#" + announcement.getExternalId()%>">
 					<fr:view name="announcement" property="announcementBoard.name" type="java.lang.String"/>
 				</html:link>
 				  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
@@ -222,23 +222,23 @@ if (month != null && year!=null)
 		{
 		%>
 			<bean:define id="sortCriteria" name="sortBy" type="java.lang.String" />
-			<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal" />
+			<bean:define id="announcementBoardId" name="announcementBoard" property="externalId" />
 			<fr:view name="announcements" schema="announcement.view-with-creationDate-subject-online">
 				<fr:layout name="tabular-sortable">
 					<fr:property name="classes" value="tstyle2"/>
 			     		<fr:property name="columnClasses" value=""/>
 						<fr:property name="link(edit)" value="<%= contextPrefix + "method=editAnnouncement" + "&amp;"+extraParameters + "&amp;tabularVersion=true"%>"/>
-						<fr:property name="param(edit)" value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId"/>
+						<fr:property name="param(edit)" value="externalId/announcementId,announcementBoard.externalId/announcementBoardId"/>
 						<fr:property name="key(edit)" value="messaging.edit.link"/>
 						<fr:property name="bundle(edit)" value="MESSAGING_RESOURCES"/>
 						<fr:property name="order(edit)" value="2"/>
 						<fr:property name="link(view)" value="<%= contextPrefix + "method=viewAnnouncement"%>"/>
-						<fr:property name="param(view)" value="idInternal/announcementId"/>
+						<fr:property name="param(view)" value="externalId/announcementId"/>
 						<fr:property name="key(view)" value="messaging.view.link"/>
 						<fr:property name="bundle(view)" value="MESSAGING_RESOURCES"/>						
 						<fr:property name="order(view)" value="1"/>
 						<fr:property name="link(remove)" value="<%= contextPrefix + "method=deleteAnnouncement" + "&amp;" + extraParameters + "&amp;tabularVersion=true"%>"/>
-						<fr:property name="param(remove)" value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId"/>
+						<fr:property name="param(remove)" value="externalId/announcementId,announcementBoard.externalId/announcementBoardId"/>
 						<fr:property name="key(remove)" value="messaging.delete.label"/>
 						<fr:property name="bundle(remove)" value="MESSAGING_RESOURCES"/>				
 						<fr:property name="order(remove)" value="3"/>
@@ -270,7 +270,7 @@ if (month != null && year!=null)
 		%>
 
 		<div class="aarchives">
-			<messaging:archive name="archive" targetUrl="<%=request.getScheme() + "://" + request.getServerName() +":"+ request.getServerPort() + context + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getIdInternal() + "&amp;" + extraParameters + "&amp;" %>"/>	
+			<messaging:archive name="archive" targetUrl="<%=request.getScheme() + "://" + request.getServerName() +":"+ request.getServerPort() + context + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getExternalId() + "&amp;" + extraParameters + "&amp;" %>"/>	
 		</div>
 
 	</logic:present>

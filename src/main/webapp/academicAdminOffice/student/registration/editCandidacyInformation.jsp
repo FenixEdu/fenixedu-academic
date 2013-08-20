@@ -28,7 +28,7 @@
 		</ul>
 	</logic:messagesPresent>
 
-	<bean:define id="studentID" name="personalInformationBean" property="student.idInternal" />
+	<bean:define id="studentID" name="personalInformationBean" property="student.externalId" />
 	
 	<fr:form action="/editCandidacyInformation.do#precedentDegree">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>

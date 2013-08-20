@@ -36,7 +36,7 @@ public class DepartmentAdmOfficeManageCreditsNotes extends ManageCreditsNotes {
         Teacher teacher = AbstractDomainObject.fromExternalId(request.getParameter("teacherId"));
         String executionPeriodId = request.getParameter("executionPeriodId");
         String noteType = request.getParameter("noteType");
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId));
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         if (getTeacherOfManageableDepartments(teacher, executionSemester, request) == null) {
             request.setAttribute("teacherNotFound", "teacherNotFound");
@@ -53,7 +53,7 @@ public class DepartmentAdmOfficeManageCreditsNotes extends ManageCreditsNotes {
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         Teacher teacher = AbstractDomainObject.fromExternalId((String) dynaActionForm.get("teacherId"));
-        Integer executionPeriodId = (Integer) dynaActionForm.get("executionPeriodId");
+        String executionPeriodId = (String) dynaActionForm.get("executionPeriodId");
         String noteType = dynaActionForm.getString("noteType");
 
         return editNote(request, dynaActionForm, teacher, executionPeriodId, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE, mapping,

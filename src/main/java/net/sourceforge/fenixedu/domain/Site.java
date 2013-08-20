@@ -316,7 +316,7 @@ public abstract class Site extends Site_Base {
 
     @Override
     public MultiLanguageString getName() {
-        return new MultiLanguageString().with(Language.pt, String.valueOf(getIdInternal()));
+        return new MultiLanguageString().with(Language.pt, String.valueOf(getExternalId()));
     }
 
     @Override

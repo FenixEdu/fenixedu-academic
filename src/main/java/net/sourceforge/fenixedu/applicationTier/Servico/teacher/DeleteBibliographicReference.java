@@ -1,13 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério
@@ -15,10 +14,9 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteBibliographicReference {
 
-    protected Boolean run(Integer bibliographicReferenceOID) throws FenixServiceException {
+    protected Boolean run(String bibliographicReferenceOID) throws FenixServiceException {
 
-        BibliographicReference bibliographicReference =
-                RootDomainObject.getInstance().readBibliographicReferenceByOID(bibliographicReferenceOID);
+        BibliographicReference bibliographicReference = AbstractDomainObject.fromExternalId(bibliographicReferenceOID);
         if (bibliographicReference == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -32,7 +30,8 @@ public class DeleteBibliographicReference {
     private static final DeleteBibliographicReference serviceInstance = new DeleteBibliographicReference();
 
     @Service
-    public static Boolean runDeleteBibliographicReference(Integer bibliographicReferenceOID) throws FenixServiceException  , NotAuthorizedException {
+    public static Boolean runDeleteBibliographicReference(String bibliographicReferenceOID) throws FenixServiceException,
+            NotAuthorizedException {
         ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter.instance.execute(bibliographicReferenceOID);
         return serviceInstance.run(bibliographicReferenceOID);
     }

@@ -35,7 +35,7 @@
 				<bean:message bundle="CARD_GENERATION_RESOURCES" name="cardGenerationBatchProblem" property="descriptionKey" arg0="<%= arg %>"/>
 			</td>
 	   		<td>
-				<bean:define id="urlMarkAsResolved" type="java.lang.String">/manageCardGeneration.do?method=showCardGenerationProblem&amp;cardGenerationProblemID=<bean:write name="cardGenerationBatchProblem" property="idInternal"/></bean:define>
+				<bean:define id="urlMarkAsResolved" type="java.lang.String">/manageCardGeneration.do?method=showCardGenerationProblem&amp;cardGenerationProblemID=<bean:write name="cardGenerationBatchProblem" property="externalId"/></bean:define>
 				<html:link page="<%= urlMarkAsResolved %>">
 					<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.problem.show"/>
 				</html:link>

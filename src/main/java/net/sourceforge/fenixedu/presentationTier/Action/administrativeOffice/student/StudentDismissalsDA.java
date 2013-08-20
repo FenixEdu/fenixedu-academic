@@ -48,8 +48,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class StudentDismissalsDA extends FenixDispatchAction {
 
     private StudentCurricularPlan getSCP(final HttpServletRequest request) {
-        final Integer scpID = getIntegerFromRequest(request, "scpID");
-        return rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        return getDomainObject(request, "scpID");
     }
 
     public ActionForward manage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -209,7 +208,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     }
 
     public ActionForward createDismissals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final DismissalBean dismissalBean = getRenderedObject();
 
@@ -234,7 +233,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final String[] creditsIDs = ((DynaActionForm) form).getStrings("creditsToDelete");
         final StudentCurricularPlan studentCurricularPlan = getSCP(request);
@@ -254,7 +253,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
     public ActionForward backViewRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("registrationId", getSCP(request).getRegistration().getIdInternal().toString());
+        request.setAttribute("registrationId", getSCP(request).getRegistration().getExternalId().toString());
         return mapping.findForward("visualizeRegistration");
     }
 

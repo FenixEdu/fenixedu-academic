@@ -14,12 +14,12 @@ import pt.ist.fenixWebFramework.services.Service;
 public class DeleteEnrollmentsList {
 
     // degreeType used by filter
-    protected void run(final Registration registration, final DegreeType degreeType, final List<Integer> enrolmentIDList) {
+    protected void run(final Registration registration, final DegreeType degreeType, final List<String> enrolmentIDList) {
 
         ServiceMonitoring.logService(this.getClass(), registration, degreeType, enrolmentIDList);
 
         if (registration != null && enrolmentIDList != null) {
-            for (final Integer enrolmentID : enrolmentIDList) {
+            for (final String enrolmentID : enrolmentIDList) {
 
                 final Enrolment enrolment = registration.findEnrolmentByEnrolmentID(enrolmentID);
                 if (enrolment != null) {
@@ -34,7 +34,7 @@ public class DeleteEnrollmentsList {
     private static final DeleteEnrollmentsList serviceInstance = new DeleteEnrollmentsList();
 
     @Service
-    public static void runDeleteEnrollmentsList(Registration registration, DegreeType degreeType, List<Integer> enrolmentIDList)
+    public static void runDeleteEnrollmentsList(Registration registration, DegreeType degreeType, List<String> enrolmentIDList)
             throws NotAuthorizedException {
         try {
             EnrollmentWithoutRulesAuthorizationFilter.instance.execute(registration, degreeType);

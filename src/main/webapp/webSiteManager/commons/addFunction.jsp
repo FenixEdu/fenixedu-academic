@@ -14,7 +14,7 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-<bean:define id="targetId" name="target" property="idInternal"/>
+<bean:define id="targetId" name="target" property="externalId"/>
 
 <h2>
     <bean:message key="title.site.manage.functions" bundle="SITE_RESOURCES"/>

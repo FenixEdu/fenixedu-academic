@@ -73,7 +73,7 @@
 					</td>
 					<td rowspan=<%=((InfoShiftWithAssociatedInfoClassesAndInfoLessons) infoShift).getInfoLessons().size() %>>
 						<logic:iterate id="infoClass" name="infoShift" property="infoClasses">
-							<bean:define id="classId" name="infoClass" property="idInternal" toScope="request"/>
+							<bean:define id="classId" name="infoClass" property="externalId" toScope="request"/>
 							<bean:define id="className" name="infoClass" property="nome" toScope="request"/>
 							<a href="viewClassTimeTableWithClassNameAndDegreeInitialsAction.do?classId=<%= request.getAttribute("classId").toString() %>&amp;className=<%= request.getAttribute("className").toString() %>">
 								<bean:write name="infoClass" property="nome" /><br/>

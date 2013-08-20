@@ -7,13 +7,13 @@
 
 <bean:define id="documents" name="result" property="resultDocumentFiles"/>
 
-<bean:define id="resultId" name="result" property="idInternal" />
+<bean:define id="resultId" name="result" property="externalId" />
 <bean:define id="resultType" name="result" property="class.simpleName"/>
 <bean:define id="parameters">
 	resultId=<bean:write name="resultId"/>&resultType=<bean:write name="result" property="class.simpleName"/>
 </bean:define>
 <logic:present name="unit">
-	<bean:define id="unitID" name="unit" property="idInternal"/>
+	<bean:define id="unitID" name="unit" property="externalId"/>
 	<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
 </logic:present>
 
@@ -64,7 +64,7 @@
 			<fr:property name="order(download)" value="1"/>
 			
 			<fr:property name="link(remove)" value="<%= removePath %>"/>
-			<fr:property name="param(remove)" value="idInternal/documentFileId"/>
+			<fr:property name="param(remove)" value="externalId/documentFileId"/>
 			<fr:property name="key(remove)" value="link.remove"/>
 			<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 			<fr:property name="order(remove)" value="2"/>

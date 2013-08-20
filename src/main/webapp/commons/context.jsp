@@ -11,9 +11,9 @@
 				 toScope="request"
 				 scope="request"/>
 	<bean:define id="executionPeriodOID"
-				 type="java.lang.Integer"
+				 type="java.lang.String"
 				 name="executionPeriod"
-				 property="idInternal"
+				 property="externalId"
 				 toScope="request"
 				 scope="request"/>
 </logic:present>

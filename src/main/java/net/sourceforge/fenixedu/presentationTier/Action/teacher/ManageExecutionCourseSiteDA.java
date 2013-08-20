@@ -38,12 +38,12 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
         }
 
         if (executionCourseIDString != null && executionCourseIDString.length() > 0) {
-            final ExecutionCourse executionCourse = findExecutionCourse(request, Integer.valueOf(executionCourseIDString));
+            final ExecutionCourse executionCourse = findExecutionCourse(request, executionCourseIDString);
             request.setAttribute("executionCourse", executionCourse);
         }
     }
 
-    private static ExecutionCourse findExecutionCourse(final HttpServletRequest request, final Integer executionCourseID) {
+    private static ExecutionCourse findExecutionCourse(final HttpServletRequest request, final String executionCourseID) {
         final IUserView userView = getUserView(request);
 
         if (userView != null) {
@@ -51,7 +51,7 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
             if (person != null) {
                 for (final Professorship professorship : person.getProfessorshipsSet()) {
                     final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-                    if (executionCourse.getIdInternal().equals(executionCourseID)) {
+                    if (executionCourse.getExternalId().equals(executionCourseID)) {
                         return executionCourse;
                     }
                 }

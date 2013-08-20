@@ -37,9 +37,9 @@ public class DeleteRestrictionFromDegreeCurricularPlanAction extends FenixAction
 
         IUserView userView = UserView.getUser();
 
-        Integer degreeID = new Integer(request.getParameter("degreeId"));
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
-        Integer restrictionID = new Integer(request.getParameter("restrictionId"));
+        String degreeID = request.getParameter("degreeId");
+        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanId");
+        String restrictionID = request.getParameter("restrictionId");
 
         try {
             DeleteRestrictionFromDegreeCurricularPlan.run(restrictionID);

@@ -21,9 +21,9 @@ public class ExecutionCourseWrittenEvaluationAgregationBean {
 
             };
 
-    private ExecutionCourse executionCourse;
-    private Integer curricularYear;
-    private Collection<WrittenEvaluation> writtenEvaluations;
+    private final ExecutionCourse executionCourse;
+    private final Integer curricularYear;
+    private final Collection<WrittenEvaluation> writtenEvaluations;
 
     public ExecutionCourseWrittenEvaluationAgregationBean(Integer curricularYear, ExecutionCourse executionCourse,
             Set<WrittenEvaluation> writtenEvaluations) {

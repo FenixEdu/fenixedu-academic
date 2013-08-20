@@ -37,7 +37,7 @@
 				<logic:equal name="board" property="reader" value="true">
 					<html:link title="<%= qualifiedName %>"
 							page="/announcements/announcementsStartPageHandler.do?method=viewAnnouncements"
-							paramId="announcementBoardId" paramName="board" paramProperty="idInternal">
+							paramId="announcementBoardId" paramName="board" paramProperty="externalId">
 						<bean:write name="board" property="name"/>
 					</html:link>
 				</logic:equal>
@@ -61,7 +61,7 @@
 					<bean:message key="label.yes" bundle="MESSAGING_RESOURCES"/>
 					(<html:link title="<%= qualifiedName %>"
 							page="/announcements/announcementsStartPageHandler.do?method=removeBookmark"
-							paramId="announcementBoardId" paramName="board" paramProperty="idInternal">
+							paramId="announcementBoardId" paramName="board" paramProperty="externalId">
 						<bean:message key="label.remove" bundle="MESSAGING_RESOURCES"/>
 					</html:link>)
 				</logic:equal>
@@ -69,7 +69,7 @@
 					<bean:message key="label.no" bundle="MESSAGING_RESOURCES"/>
 					(<html:link title="<%= qualifiedName %>"
 							page="/announcements/announcementsStartPageHandler.do?method=addBookmark"
-							paramId="announcementBoardId" paramName="board" paramProperty="idInternal">
+							paramId="announcementBoardId" paramName="board" paramProperty="externalId">
 						<bean:message key="label.add" bundle="MESSAGING_RESOURCES"/>
 					</html:link>)
 				</logic:notEqual>
@@ -78,14 +78,14 @@
 				<logic:equal name="board" property="manager" value="true">
 					<html:link title="<%= qualifiedName %>"
 							page="<%= "/announcements/manage" + board.getClass().getSimpleName() + ".do?method=prepareEditAnnouncementBoard&amp;tabularVersion=true" %>"
-							paramId="announcementBoardId" paramName="board" paramProperty="idInternal">
+							paramId="announcementBoardId" paramName="board" paramProperty="externalId">
 						<bean:message key="label.manage" bundle="MESSAGING_RESOURCES"/>
 					</html:link>
 				</logic:equal>
 			</td>
 			<td class="acenter">
 				<logic:empty name="board" property="readers">
-					<html:link module="" page="/external/announcementsRSS.do?method=simple" paramId="announcementBoardId" paramName="board" paramProperty="idInternal" styleClass="tdnone">
+					<html:link module="" page="/external/announcementsRSS.do?method=simple" paramId="announcementBoardId" paramName="board" paramProperty="externalId" styleClass="tdnone">
 						<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
 					</html:link>				
 				</logic:empty>

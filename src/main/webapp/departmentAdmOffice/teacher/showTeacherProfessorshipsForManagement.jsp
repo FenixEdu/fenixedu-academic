@@ -16,7 +16,7 @@
 </p>
 
 <html:form action="/showTeacherProfessorshipsForManagement">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId" />	
 	<table width="100%">
 		<tr>
 			<td class="infoop">
@@ -28,7 +28,7 @@
 			<td>
 				<bean:message key="label.executionYear"/>:
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearId" property="executionYearId" onchange="this.form.submit();">
-					<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
+					<html:options collection="executionYears" property="externalId" labelProperty="year"/>
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
@@ -51,7 +51,7 @@
 
 <logic:notEmpty name="detailedProfessorshipList" >	
 	<html:form action="/updateTeacherExecutionYearExecutionCourseResponsabilities">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" property="teacherName"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearId" property="executionYearId" />
@@ -89,7 +89,7 @@
 			<logic:iterate id="detailedProfessorship" name="detailedProfessorshipList">
 				<bean:define id="professorship" name="detailedProfessorship" property="infoProfessorship"/>
 				<bean:define id="infoExecutionCourse" name="professorship" property="infoExecutionCourse"/>
-				<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal" />
+				<bean:define id="executionCourseId" name="infoExecutionCourse" property="externalId" />
 
 				<tr>
 					<td class="listClasses" style="text-align:left">
@@ -116,7 +116,7 @@
 					<td class="listClasses">
 						<logic:present role="DEPARTMENT_CREDITS_MANAGER,CREDITS_MANAGER">
 							<logic:equal name="isDepartmentManager" value="true">
-								<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal" />
+								<bean:define id="executionCourseId" name="infoExecutionCourse" property="externalId" />
 									<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.executionCourseResponsability" property="executionCourseResponsability" value="<%= executionCourseId.toString() %>" />
 							</logic:equal>
 							<logic:equal name="isDepartmentManager" value="false">
@@ -144,7 +144,7 @@
 						<logic:equal name="isDepartmentManager" value="true">					
 							<td class="listClasses">
 								<bean:define id="removeLink">
-									 /removeProfessorship.do?teacherId=<bean:write name="infoPerson" property="istUsername"/>&amp;teacherId=<bean:write name="infoPerson" property="idInternal"/>&amp;idInternal=<bean:write name="infoPerson" property="idInternal"/>&amp;executionCourseId=<bean:write name="professorship" property="infoExecutionCourse.idInternal"/>&amp;executionYearId=<bean:write name="teacherExecutionCourseResponsabilities" property="executionYearId" />
+									 /removeProfessorship.do?teacherId=<bean:write name="infoPerson" property="istUsername"/>&amp;teacherId=<bean:write name="infoPerson" property="externalId"/>&amp;externalId=<bean:write name="infoPerson" property="externalId"/>&amp;executionCourseId=<bean:write name="professorship" property="infoExecutionCourse.externalId"/>&amp;executionYearId=<bean:write name="teacherExecutionCourseResponsabilities" property="executionYearId" />
 								</bean:define>
 								<html:link page='<%= removeLink.toString() %>'>
 									<bean:message key="link.remove" />

@@ -24,7 +24,7 @@ public class Country extends Country_Base {
         @Override
         public int compare(Country leftCountry, Country rightCountry) {
             int comparationResult = Collator.getInstance().compare(leftCountry.getName(), rightCountry.getName());
-            return (comparationResult == 0) ? leftCountry.getIdInternal().compareTo(rightCountry.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftCountry.getExternalId().compareTo(rightCountry.getExternalId()) : comparationResult;
         }
     };
 

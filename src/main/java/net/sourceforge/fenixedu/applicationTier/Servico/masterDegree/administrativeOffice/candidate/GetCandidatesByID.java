@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -27,14 +27,14 @@ import pt.ist.fenixWebFramework.services.Service;
 public class GetCandidatesByID {
 
     @Service
-    public static InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException {
+    public static InfoMasterDegreeCandidate run(String candidateID) throws FenixServiceException {
         MasterDegreeCandidate masterDegreeCandidate = null;
 
         if (candidateID == null) {
             throw new NonExistingServiceException();
         }
 
-        masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
+        masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
 
         InfoMasterDegreeCandidate infoMasterDegreeCandidate =
                 InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);

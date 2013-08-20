@@ -176,7 +176,7 @@
 			<html:hidden alt="<%= PresentationConstants.LESSON_OID %>" property="<%= PresentationConstants.LESSON_OID %>"
 			 			value="<%= pageContext.findAttribute("lessonOID").toString() %>"/>
 			<html:hidden alt="<%= PresentationConstants.SHIFT_OID %>" property="<%= PresentationConstants.SHIFT_OID %>"
-			 			value="<%= lesson.getShift().getIdInternal().toString() %>"/>
+			 			value="<%= lesson.getShift().getExternalId().toString() %>"/>
 
 			<select name="spaceOID">
 				<% for (final AllocatableSpace space : (List<AllocatableSpace>) request.getAttribute("emptySpaces")) { %>

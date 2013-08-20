@@ -11,25 +11,25 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class ReadTSDTeachersFromTSDProcesses {
-    public List<TSDTeacherDTOEntry> run(Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap) {
+    public List<TSDTeacherDTOEntry> run(Map<String, Pair<String, String>> tsdProcessIdMap) {
         List<TSDTeacherDTOEntry> tsdTeacherDTOEntryList = new ArrayList<TSDTeacherDTOEntry>();
         Map<Teacher, TSDTeacherDTOEntry> teacherDTOMap = new HashMap<Teacher, TSDTeacherDTOEntry>();
 
-        for (Integer tsdProcessPhaseId : tsdProcessIdMap.keySet()) {
-            TSDProcessPhase tsdProcessPhase = RootDomainObject.getInstance().readTSDProcessPhaseByOID(tsdProcessPhaseId);
+        for (String tsdProcessPhaseId : tsdProcessIdMap.keySet()) {
+            TSDProcessPhase tsdProcessPhase = AbstractDomainObject.fromExternalId(tsdProcessPhaseId);
             TeacherServiceDistribution tsd = null;
 
-            tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
+            tsd = AbstractDomainObject.fromExternalId(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
 
             List<ExecutionSemester> executionPeriodList =
                     getExecutionPeriodList(tsd, tsdProcessIdMap.get(tsdProcessPhaseId).getValue());
@@ -54,10 +54,10 @@ public class ReadTSDTeachersFromTSDProcesses {
         return tsdTeacherDTOEntryList;
     }
 
-    private List<ExecutionSemester> getExecutionPeriodList(TeacherServiceDistribution tsd, Integer executionPeriodId) {
+    private List<ExecutionSemester> getExecutionPeriodList(TeacherServiceDistribution tsd, String executionPeriodId) {
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         if (executionSemester != null) {
             executionPeriodList.add(executionSemester);
@@ -73,7 +73,7 @@ public class ReadTSDTeachersFromTSDProcesses {
     private static final ReadTSDTeachersFromTSDProcesses serviceInstance = new ReadTSDTeachersFromTSDProcesses();
 
     @Service
-    public static List<TSDTeacherDTOEntry> runReadTSDTeachersFromTSDProcesses(Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap)
+    public static List<TSDTeacherDTOEntry> runReadTSDTeachersFromTSDProcesses(Map<String, Pair<String, String>> tsdProcessIdMap)
             throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

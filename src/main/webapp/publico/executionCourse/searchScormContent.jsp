@@ -7,7 +7,7 @@
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
 <bean:define id="executionCourse" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer"/>
-<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>
+<bean:define id="executionCourseID" name="executionCourse" property="externalId"/>
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean"/>
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/checkall.js"></script>

@@ -13,8 +13,8 @@ public class ProjectSubmissionLog extends ProjectSubmissionLog_Base {
                     int comparationResult =
                             leftProjectSubmissionLog.getSubmissionDateTime().compareTo(
                                     rightProjectSubmissionLog.getSubmissionDateTime());
-                    return (comparationResult == 0) ? leftProjectSubmissionLog.getIdInternal().compareTo(
-                            rightProjectSubmissionLog.getIdInternal()) : -(comparationResult);
+                    return (comparationResult == 0) ? leftProjectSubmissionLog.getExternalId().compareTo(
+                            rightProjectSubmissionLog.getExternalId()) : -(comparationResult);
                 }
             };
 

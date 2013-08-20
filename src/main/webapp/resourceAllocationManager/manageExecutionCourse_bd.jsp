@@ -49,7 +49,7 @@
 					<fr:property name="columnClasses" value="acenter,acenter,acenter"/>
 					
 					<fr:property name="link(delete)" value="/manageExecutionCourse.do?method=deleteCourseLoad"/>
-		            <fr:property name="param(delete)" value="idInternal/courseLoadID"/>
+		            <fr:property name="param(delete)" value="externalId/courseLoadID"/>
 			        <fr:property name="key(delete)" value="link.delete"/>
 		            <fr:property name="bundle(delete)" value="SOP_RESOURCES"/>
 		            <fr:property name="order(delete)" value="0"/>	            				
@@ -85,9 +85,9 @@
 			</th>
 		</tr>
 		<logic:iterate id="infoClass" name="<%= PresentationConstants.LIST_INFOCLASS %>" scope="request">
-			<bean:define id="classOID" name="infoClass" property="idInternal"/>
+			<bean:define id="classOID" name="infoClass" property="externalId"/>
 			<bean:define id="curricularYearOID" name="infoClass" property="anoCurricular"/>
-			<bean:define id="executionDegreeOID" name="infoClass" property="infoExecutionDegree.idInternal"/>
+			<bean:define id="executionDegreeOID" name="infoClass" property="infoExecutionDegree.externalId"/>
 			<tr>
 				<td>
 					<bean:write name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla"/>

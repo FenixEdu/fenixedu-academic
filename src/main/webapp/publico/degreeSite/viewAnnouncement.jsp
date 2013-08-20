@@ -16,7 +16,7 @@
     &nbsp;&gt;&nbsp;
     <a href="<%=institutionUrlTeaching%>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/></a>
     <logic:present name="degree">
-        <bean:define id="degreeId" name="degree" property="idInternal"/>
+        <bean:define id="degreeId" name="degree" property="externalId"/>
         
         &nbsp;&gt;&nbsp;
         <html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + degreeId %>">
@@ -166,7 +166,7 @@
     %>
 
 <%-- Data de Criação --%>
-    <html:link linkName="<%=announcement.getIdInternal().toString()%>"/>
+    <html:link linkName="<%=announcement.getExternalId().toString()%>"/>
         Data de criação: 
         <fr:view name="announcement" property="creationDate" type="org.joda.time.DateTime" layout="no-time"/>
     </em>

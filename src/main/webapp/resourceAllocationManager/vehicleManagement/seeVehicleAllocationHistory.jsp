@@ -45,7 +45,7 @@
 				<fr:layout name="tabular">			      			
 		   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>	   			
 					<fr:property name="link(view)" value="/vehicleManagement.do?method=seeVehicleAllocation"/>
-		            <fr:property name="param(view)" value="idInternal/allocationID"/>
+		            <fr:property name="param(view)" value="externalId/allocationID"/>
 			        <fr:property name="key(view)" value="link.see"/>
 		            <fr:property name="bundle(view)" value="SOP_RESOURCES"/>
 		            <fr:property name="order(view)" value="0"/>	           	 	   				  

@@ -23,9 +23,9 @@
 		<logic:iterate id="grouping" name="groupings">
 		<tr>
 			<td>
-				<bean:define id="url" type="java.lang.String">/executionCourse.do?method=grouping&amp;groupingID=<bean:write name="grouping" property="idInternal"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/executionCourse.do?method=grouping&amp;groupingID=<bean:write name="grouping" property="externalId"/></bean:define>
 				<html:link page="<%= url %>"
-						paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+						paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 					<b><bean:write name="grouping" property="name"/></b>
 				</html:link>
 			</td>

@@ -426,7 +426,7 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
     @Override
     public String toString() {
         String result = "[INFOINQUIRIESCOURSE";
-        result += ", id=" + getIdInternal();
+        result += ", id=" + getExternalId();
         if (executionPeriod != null) {
             result += ", executionPeriod=" + executionPeriod.toString();
         }

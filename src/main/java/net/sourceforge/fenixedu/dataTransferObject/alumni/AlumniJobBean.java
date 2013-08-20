@@ -23,7 +23,7 @@ public class AlumniJobBean implements Serializable {
     private String position;
     private LocalDate beginDate;
     private LocalDate endDate;
-    private Integer jobId;
+    private String jobId;
     private String schema;
     private JobApplicationType applicationType;
     private ContractType contractType;
@@ -52,7 +52,7 @@ public class AlumniJobBean implements Serializable {
         setApplicationType(job.getJobApplicationType());
         setContractType(job.getContractType());
         setSalaryType(job.getSalaryType());
-        setJobId(job.getIdInternal());
+        setJobId(job.getExternalId());
         setSalary(job.getSalary());
     }
 
@@ -131,11 +131,11 @@ public class AlumniJobBean implements Serializable {
         this.endDate = endDate;
     }
 
-    public Integer getJobId() {
+    public String getJobId() {
         return jobId;
     }
 
-    public void setJobId(Integer jobId) {
+    public void setJobId(String jobId) {
         this.jobId = jobId;
     }
 

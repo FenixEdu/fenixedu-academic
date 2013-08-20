@@ -13,7 +13,7 @@
 	<html:errors />
 </logic:messagesPresent>
 <html:form action="/showTeacherProfessorshipsForSummariesManagement">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId" />	
 	<table width="100%">
 		<tr>
 			<td class="infoop">
@@ -25,7 +25,7 @@
 			<td>
 				<bean:message key="label.executionYear"/>:
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearId" property="executionYearId" onchange="this.form.submit();">
-					<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
+					<html:options collection="executionYears" property="externalId" labelProperty="year"/>
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
@@ -37,7 +37,7 @@
 <br />
 <logic:notEmpty name="detailedProfessorshipList" >	
 	<html:form action="/updateTeacherExecutionYearExecutionCourseResponsabilities">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />	
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId" />	
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearId" property="executionYearId" />
 
@@ -61,7 +61,7 @@
 			<logic:iterate id="detailedProfessorship" name="detailedProfessorshipList">
 				<bean:define id="professorship" name="detailedProfessorship" property="infoProfessorship"/>
 				<bean:define id="infoExecutionCourse" name="professorship" property="infoExecutionCourse"/>
-				<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal" />													
+				<bean:define id="executionCourseId" name="infoExecutionCourse" property="externalId" />													
 				<tr>
 					<td class="listClasses" style="text-align:left">
 						<logic:present role="DEPARTMENT_CREDITS_MANAGER">

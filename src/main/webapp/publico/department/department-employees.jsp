@@ -25,7 +25,7 @@
         <bean:message key="academic.units" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     </html:link>
     &nbsp;&gt;&nbsp;
-    <bean:define id="unitId" name="unit" property="idInternal"/>
+    <bean:define id="unitId" name="unit" property="externalId"/>
     <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>">
         <fr:view name="department" property="nameI18n"/>
     </html:link>
@@ -44,7 +44,7 @@
 		<fr:view name="area" property="nameI18n"/>
 	</h2>
 
-	<logic:iterate id="_e" name="employees" property="<%= area.getIdInternal().toString() %>" type="net.sourceforge.fenixedu.domain.Employee">
+	<logic:iterate id="_e" name="employees" property="<%= area.getExternalId().toString() %>" type="net.sourceforge.fenixedu.domain.Employee">
 		<bean:define id="employee" name="_e" toScope="request"/>
 		
 		<jsp:include page="department-employee-card.jsp"/>

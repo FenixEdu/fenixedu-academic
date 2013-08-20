@@ -63,7 +63,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWri
             executionCourseIDs.add(this.getExecutionCourseID().toString());
             final List<String> degreeModuleScopeIDs = getDegreeModuleScopeIDs(executionCourse);
 
-            EditWrittenEvaluation.runEditWrittenEvaluation(executionCourse.getIdInternal(), this.getBegin().getTime(), this
+            EditWrittenEvaluation.runEditWrittenEvaluation(executionCourse.getExternalId(), this.getBegin().getTime(), this
                     .getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, null, this
                     .getEvaluationID(), null, this.getDescription(), null);
 

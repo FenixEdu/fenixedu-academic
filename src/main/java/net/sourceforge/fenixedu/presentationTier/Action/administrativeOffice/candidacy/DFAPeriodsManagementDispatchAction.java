@@ -20,6 +20,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/dfaPeriodsManagement", attribute = "chooseExecutionYearForm",
         formBean = "chooseExecutionYearForm", scope = "request", parameter = "method")
@@ -30,7 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class DFAPeriodsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        ((DynaActionForm) form).set("executionYear", ExecutionYear.readCurrentExecutionYear().getIdInternal().toString());
+        ((DynaActionForm) form).set("executionYear", ExecutionYear.readCurrentExecutionYear().getExternalId().toString());
         request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
 
         return mapping.findForward("chooseExecutionYear");
@@ -49,9 +50,9 @@ public class DFAPeriodsManagementDispatchAction extends FenixDispatchAction {
 
     private ExecutionYear getExecutionYear(final HttpServletRequest request, final DynaActionForm dynaActionForm) {
         if (!StringUtils.isEmpty(dynaActionForm.getString("executionYear"))) {
-            return rootDomainObject.readExecutionYearByOID(Integer.valueOf(dynaActionForm.getString("executionYear")));
+            return AbstractDomainObject.fromExternalId(dynaActionForm.getString("executionYear"));
         } else if (request.getParameter("executionYearId") != null) {
-            return rootDomainObject.readExecutionYearByOID(getRequestParameterAsInteger(request, "executionYearId"));
+            return getDomainObject(request, "executionYearId");
         } else {
             return ExecutionYear.readCurrentExecutionYear();
         }
@@ -84,7 +85,7 @@ public class DFAPeriodsManagementDispatchAction extends FenixDispatchAction {
     }
 
     private ExecutionDegree getExecutionDegree(HttpServletRequest request) {
-        return rootDomainObject.readExecutionDegreeByOID(getRequestParameterAsInteger(request, "executionDegreeId"));
+        return getDomainObject(request, "executionDegreeId");
     }
 
 }

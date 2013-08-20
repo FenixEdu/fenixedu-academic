@@ -40,9 +40,9 @@
 
 	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion"/>
 	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
-	<bean:define id="testCode" name="distributedTest" property="idInternal"/>
+	<bean:define id="testCode" name="distributedTest" property="externalId"/>
 		
-	<bean:define id="objectCode" name="distributedTest" property="infoTestScope.infoObject.idInternal"/>
+	<bean:define id="objectCode" name="distributedTest" property="infoTestScope.infoObject.externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.distributedTestCode" property="distributedTestCode" value="<%= testCode.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testInformation" property="testInformation" name="distributedTest" property="testInformation"/>

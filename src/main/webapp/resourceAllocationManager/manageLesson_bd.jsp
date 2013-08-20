@@ -27,7 +27,7 @@
 <bean:message key="message.weekdays"/>
 
 <%
-	final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(new Integer(pageContext.findAttribute("executionCourseOID").toString()));
+	final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(pageContext.findAttribute("executionCourseOID").toString());
 	final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
 	final YearMonthDay lastPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getRight();
 %>

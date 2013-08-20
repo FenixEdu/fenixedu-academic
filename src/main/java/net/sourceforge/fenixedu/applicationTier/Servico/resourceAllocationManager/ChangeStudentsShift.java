@@ -18,20 +18,17 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ChangeStudentsShift {
 
-    static private RootDomainObject getRootDomainObject() {
-        return RootDomainObject.getInstance();
-    }
-
     @Service
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    public static void run(IUserView userView, Integer oldShiftId, Integer newShiftId, final Set<Registration> registrations)
+    public static void run(IUserView userView, String oldShiftId, String newShiftId, final Set<Registration> registrations)
             throws FenixServiceException {
 
-        final Shift oldShift = getRootDomainObject().readShiftByOID(oldShiftId);
-        final Shift newShift = getRootDomainObject().readShiftByOID(newShiftId);
+        final Shift oldShift = AbstractDomainObject.fromExternalId(oldShiftId);
+        final Shift newShift = AbstractDomainObject.fromExternalId(newShiftId);
 
         if (newShift != null) {
             if (oldShift == null || !oldShift.getTypes().containsAll(newShift.getTypes())
@@ -67,7 +64,7 @@ public class ChangeStudentsShift {
         final String message = messagePrefix + messagePosfix;
 
         Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
-        Sender sender = getRootDomainObject().getSystemSender();
+        Sender sender = RootDomainObject.getInstance().getSystemSender();
         new Message(sender, new ConcreteReplyTo("gop@ist.utl.pt").asCollection(), recipient.asCollection(), subject, message, "");
     }
 

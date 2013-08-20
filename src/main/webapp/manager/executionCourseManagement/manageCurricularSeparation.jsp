@@ -63,9 +63,9 @@
 
 <logic:present name="<%=PresentationConstants.EXECUTION_COURSE%>">
 	<bean:define id="executionCourseName" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="nome"/>
- 	<bean:define id="executionCourseId" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="idInternal"/>
+ 	<bean:define id="executionCourseId" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="externalId"/>
 	<bean:define id="executionPeriodName" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="infoExecutionPeriod.executionPeriod.qualifiedName"/>
-	<bean:define id="executionPeriodId" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="infoExecutionPeriod.idInternal"/>
+	<bean:define id="executionPeriodId" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="infoExecutionPeriod.externalId"/>
 	<bean:define id="courseAndPeriodParameter"
 		value="<%="&amp;executionCourseId=" + executionCourseId.toString()
 				+ "&amp;executionPeriodId=" + executionPeriodId.toString() %>" />
@@ -133,7 +133,7 @@
 							</tr>
 
 							<logic:iterate id="curricularCourse" name="curricularCourses" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse">
-								<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal"/>
+								<bean:define id="curricularCourseId" name="curricularCourse" property="externalId"/>
 								<tr>	 			
 									<td class="listClasses" style="text-align:left">
 										<bean:write name="curricularCourse" property="name"/>

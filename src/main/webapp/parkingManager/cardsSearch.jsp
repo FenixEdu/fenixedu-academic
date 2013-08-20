@@ -37,7 +37,7 @@ $(function () { $("th a label").map(function(i,e) { var el = $(e); var p = el.pa
 			<bean:define id="query" value="<%="&parkingCardUserState="+ parkingCardUserState.toString()%>"/>
 		</logic:notEmpty>
 		<logic:notEmpty name="parkingCardSearchBean" property="parkingGroup">
-			<bean:define id="parkingGroupID" name="parkingCardSearchBean" property="parkingGroup.idInternal"/>
+			<bean:define id="parkingGroupID" name="parkingCardSearchBean" property="parkingGroup.externalId"/>
 			<bean:define id="query" value="<%=query+"&parkingGroupID="+ parkingGroupID.toString()%>"/>
 		</logic:notEmpty>
 		<logic:notEmpty name="parkingCardSearchBean" property="actualEndDate">
@@ -72,11 +72,11 @@ $(function () { $("th a label").map(function(i,e) { var el = $(e); var p = el.pa
 				<fr:property name="sortBy" value="<%= sortCriteria %>"/>
 				<fr:property name="checkable" value="true"/>
 				<fr:property name="checkboxName" value="selectedParkingCards" />
-				<fr:property name="checkboxValue" value="idInternal"/>
+				<fr:property name="checkboxValue" value="externalId"/>
 				<fr:property name="selectAllShown" value="true"/>
 				<fr:property name="selectAllLocation" value="top,bottom"/>
 			</fr:layout>
-			<fr:destination name="parkingDetails" path="<%= "/manageParkingPeriods.do?method=showParkingDetails&parkingPartyID=${idInternal}"  + query.toString() %>"/>
+			<fr:destination name="parkingDetails" path="<%= "/manageParkingPeriods.do?method=showParkingDetails&parkingPartyID=${externalId}"  + query.toString() %>"/>
 		</fr:view>
 		<p><html:submit property="prepareRenewal"><bean:message key="button.renewCards" bundle="PARKING_RESOURCES"/></html:submit></p>
 	</logic:notEmpty>

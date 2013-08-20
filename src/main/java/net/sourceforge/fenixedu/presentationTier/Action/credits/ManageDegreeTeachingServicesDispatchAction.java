@@ -32,6 +32,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Ricardo Rodrigues
@@ -51,7 +52,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             };
 
     protected void teachingServiceDetailsProcess(Professorship professorship, HttpServletRequest request, DynaActionForm dynaForm)
-            throws NumberFormatException,  FenixServiceException {
+            throws NumberFormatException, FenixServiceException {
 
         List<TeachingServicePercentage> teachingServicePercentages = new ArrayList<TeachingServicePercentage>();
         HashMap<String, Double> teacherPercentageMap = new HashMap<String, Double>();
@@ -61,7 +62,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             teachingServicePercentages.add(new TeachingServicePercentage(shift, availablePercentage));
             for (DegreeTeachingService degreeTeachingService : shift.getDegreeTeachingServices()) {
                 if (professorship == degreeTeachingService.getProfessorship()) {
-                    teacherPercentageMap.put(shift.getIdInternal().toString(), round(degreeTeachingService.getPercentage()));
+                    teacherPercentageMap.put(shift.getExternalId().toString(), round(degreeTeachingService.getPercentage()));
                     break;
                 }
             }
@@ -77,13 +78,13 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
     }
 
     protected ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            RoleType roleType) throws NumberFormatException,  FenixServiceException {
+            RoleType roleType) throws NumberFormatException, FenixServiceException {
 
         DynaActionForm teachingServiceForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
         HashMap<String, String> teacherPercentageMap = (HashMap<String, String>) teachingServiceForm.get("teacherPercentageMap");
 
-        Integer professorshipID = (Integer) teachingServiceForm.get("professorshipID");
+        String professorshipID = (String) teachingServiceForm.get("professorshipID");
 
         List<ShiftIDTeachingPercentage> shiftIDPercentages = new ArrayList<ShiftIDTeachingPercentage>();
         Iterator<Map.Entry<String, String>> entryInterator = teacherPercentageMap.entrySet().iterator();
@@ -92,7 +93,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             String percentage = entry.getValue();
             if ((percentage != null) && (percentage.length() != 0)) {
                 percentage = percentage.replace(',', '.');
-                Integer shiftID = Integer.valueOf(entry.getKey());
+                String shiftID = entry.getKey();
                 ShiftIDTeachingPercentage shiftIDPercentage = new ShiftIDTeachingPercentage(shiftID, Double.valueOf(percentage));
                 shiftIDPercentages.add(shiftIDPercentage);
             }
@@ -104,7 +105,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException.getArgs()));
             saveMessages(request, actionMessages);
-            Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+            Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
             teachingServiceDetailsProcess(professorship, request, teachingServiceForm);
             return mapping.findForward("show-teaching-service-percentages");
         }
@@ -113,18 +114,18 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws NumberFormatException,  FenixServiceException {
+            throws NumberFormatException, FenixServiceException {
 
         return mapping.findForward("sucessfull-edit");
     }
 
     public class ShiftIDTeachingPercentage {
 
-        Integer shiftID;
+        String shiftID;
 
         Double percentage;
 
-        public ShiftIDTeachingPercentage(Integer shiftID, Double percentage) {
+        public ShiftIDTeachingPercentage(String shiftID, Double percentage) {
             setShiftID(shiftID);
             setPercentage(percentage);
         }
@@ -137,11 +138,11 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             this.percentage = percentage;
         }
 
-        public Integer getShiftID() {
+        public String getShiftID() {
             return shiftID;
         }
 
-        public void setShiftID(Integer shiftID) {
+        public void setShiftID(String shiftID) {
             this.shiftID = shiftID;
         }
 

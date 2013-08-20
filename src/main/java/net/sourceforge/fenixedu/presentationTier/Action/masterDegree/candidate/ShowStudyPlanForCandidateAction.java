@@ -31,7 +31,7 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         if (infoMasterDegreeCandidate != null) {
             request.setAttribute("masterDegreeCandidate", infoMasterDegreeCandidate);
             request.setAttribute("candidateStudyPlan",
-                    getCandidateStudyPlanByCandidateID(infoMasterDegreeCandidate.getIdInternal(), userView));
+                    getCandidateStudyPlanByCandidateID(infoMasterDegreeCandidate.getExternalId(), userView));
         }
 
         return mapping.findForward("Sucess");
@@ -54,7 +54,7 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         return (InfoMasterDegreeCandidate) candidates.get(0);
     }
 
-    private ArrayList getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
+    private ArrayList getCandidateStudyPlanByCandidateID(String candidateID, IUserView userView) {
         try {
             return (ArrayList) ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);
         } catch (Exception e) {

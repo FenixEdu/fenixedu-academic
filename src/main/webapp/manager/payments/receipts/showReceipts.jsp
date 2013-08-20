@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:define id="personId" name="person" property="idInternal" />
+<bean:define id="personId" name="person" property="externalId" />
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
 	key="label.payments.management" /></h2>
 
@@ -34,12 +34,12 @@
 			<fr:property name="sortBy" value="year=desc,numberWithSeries=desc" />
 
 			<fr:property name="linkFormat(view)"
-				value="<%="/paymentsManagement.do?method=showReceipt&amp;receiptId=${idInternal}&amp;personId=" + personId %>" />
+				value="<%="/paymentsManagement.do?method=showReceipt&amp;receiptId=${externalId}&amp;personId=" + personId %>" />
 			<fr:property name="key(view)" value="label.view" />
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
 
 			<fr:property name="linkFormat(annul)"
-				value="<%="/paymentsManagement.do?method=annulReceipt&amp;receiptId=${idInternal}&amp;personId=" + personId %>" />
+				value="<%="/paymentsManagement.do?method=annulReceipt&amp;receiptId=${externalId}&amp;personId=" + personId %>" />
 			<fr:property name="key(annul)" value="label.annul" />
 			<fr:property name="bundle(annul)" value="APPLICATION_RESOURCES" />
 			<fr:property name="visibleIf(annul)" value="active" />

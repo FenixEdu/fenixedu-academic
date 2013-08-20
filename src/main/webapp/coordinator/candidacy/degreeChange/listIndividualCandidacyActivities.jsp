@@ -5,7 +5,7 @@
 <html:xhtml/>
 
 <bean:define id="processName" name="processName" />
-<bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
+<bean:define id="parentProcessId" name="parentProcess" property="externalId" />
 <bean:define id="individualCandidacyProcess" name="process"/>v
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
 
@@ -20,7 +20,7 @@
 <br/>
 
 <logic:notEmpty name="process">
-	<bean:define id="processId" name="process" property="idInternal" />
+	<bean:define id="processId" name="process" property="externalId" />
 	
 	<logic:notEmpty name="activities">
 		<%-- list process activities --%>

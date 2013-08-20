@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <h1>Consulta de Corpo Docente</h1>
@@ -15,7 +16,7 @@
 					Ano Lectivo: 		
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearId" property="executionYearId" onchange="this.form.submit()">
 						<logic:iterate id="executionYear" name="executionYears" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear"> 
-							<bean:define    id="executionYearId"   name="executionYear" property="idInternal"/>
+							<bean:define    id="executionYearId"   name="executionYear" property="externalId"/>
 								<html:option value="<%= executionYearId.toString() %>">  
 									<bean:write name="executionYear" property="year"/>
 								</html:option>  
@@ -66,7 +67,7 @@
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.searchDetails" property="searchDetails" value='<%= request.getAttribute("searchDetails").toString() %>'/>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeId" property="executionDegreeId">
 					<logic:iterate id="executionDegree" name="executionDegrees" > 
-						<bean:define    id="executionDegreeId"   name="executionDegree" property="idInternal"/>
+						<bean:define    id="executionDegreeId"   name="executionDegree" property="externalId"/>
 						<bean:define id="degreeType"  name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.degreeType"/>
 						<html:option value="<%= executionDegreeId.toString() %>"> 
 						<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.degree.presentationName"/> </html:option>
@@ -94,7 +95,7 @@
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.searchDetails" property="searchDetails" value='<%= request.getAttribute("searchDetails").toString() %>'/>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.departmentId" property="departmentId">
 					<logic:iterate id="department" name="departments"> 
-						<bean:define id="departmentId" name="department" property="idInternal"/>
+						<bean:define id="departmentId" name="department" property="externalId"/>
 						<html:option value="<%= departmentId.toString() %>"> <bean:write name="department" property="name"/></html:option>
 					</logic:iterate>
 				</html:select>

@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -11,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -20,8 +19,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionDegree {
 
-    protected InfoExecutionDegree run(Integer idInternal) throws FenixServiceException {
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(idInternal);
+    protected InfoExecutionDegree run(String externalId) throws FenixServiceException {
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(externalId);
 
         if (executionDegree == null) {
             throw new NonExistingServiceException();
@@ -35,15 +34,15 @@ public class ReadExecutionDegree {
     private static final ReadExecutionDegree serviceInstance = new ReadExecutionDegree();
 
     @Service
-    public static InfoExecutionDegree runReadExecutionDegree(Integer idInternal) throws FenixServiceException,
+    public static InfoExecutionDegree runReadExecutionDegree(String externalId) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
-            return serviceInstance.run(idInternal);
+            return serviceInstance.run(externalId);
         } catch (NotAuthorizedException ex1) {
             try {
                 CoordinatorAuthorizationFilter.instance.execute();
-                return serviceInstance.run(idInternal);
+                return serviceInstance.run(externalId);
             } catch (NotAuthorizedException ex2) {
                 throw ex2;
             }

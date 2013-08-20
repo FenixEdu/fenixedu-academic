@@ -18,7 +18,7 @@
 <tr><th class="listClasses-header"><bean:message key="label.degree"/> </th></tr>
 <logic:iterate id="degree" name="degreeList">
 <tr>
-<bean:define id="degreeId" name="degree" property="idInternal"/>
+<bean:define id="degreeId" name="degree" property="externalId"/>
 <td class="listClasses" ><html:link page="<%= "/basicCurricularCourseManager.do?method=showDegreeCurricularPlans&index=" + degreeId %>"><bean:write name="degree" property="presentationName"/></html:link></td>
 </tr>
 </logic:iterate>

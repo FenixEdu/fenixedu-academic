@@ -28,7 +28,7 @@
 			<fr:property name="columnClasses"
 				value=",acenter,,aright,aright,aright,acenter" />
 			
-			<fr:property name="linkFormat(cancel)" value="/paymentsManagement.do?method=prepareCancelEvent&amp;eventId=${idInternal}" />
+			<fr:property name="linkFormat(cancel)" value="/paymentsManagement.do?method=prepareCancelEvent&amp;eventId=${externalId}" />
 			<fr:property name="key(cancel)" value="label.cancel" />
 			<fr:property name="bundle(cancel)" value="APPLICATION_RESOURCES" />
 			<fr:property name="order(cancel)" value="5" />
@@ -39,7 +39,7 @@
 </logic:notEmpty>
 
 
-<bean:define id="personId" name="person" property="idInternal" />
+<bean:define id="personId" name="person" property="externalId" />
 
 <fr:form
 	action="<%="/paymentsManagement.do?method=showOperations&amp;personId=" + personId%>">

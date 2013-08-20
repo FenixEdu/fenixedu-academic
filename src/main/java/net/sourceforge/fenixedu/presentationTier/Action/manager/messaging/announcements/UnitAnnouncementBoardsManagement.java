@@ -34,6 +34,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
  * <br>
@@ -152,7 +154,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         form.setReturnMethod(request.getParameter("returnMethod"));
         form.setName(board.getName().getContent());
         form.setMandatory(board.getMandatory());
-        form.setKeyUnit(board.getParty().getIdInternal());
+        form.setKeyUnit(board.getParty().getExternalId());
         form.setUnitBoardManagementPermittedGroupType(board.getUnitPermittedManagementGroupType() == null ? null : board
                 .getUnitPermittedManagementGroupType().name());
         form.setUnitBoardWritePermittedGroupType(board.getUnitPermittedWriteGroupType() == null ? null : board
@@ -188,7 +190,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         form.setReturnAction(request.getParameter("returnAction"));
         form.setReturnMethod(request.getParameter("returnMethod"));
         form.setName(board.getName().getContent());
-        form.setKeyUnit(board.getParty().getIdInternal());
+        form.setKeyUnit(board.getParty().getExternalId());
 
         Collection<AnnouncementBoardApproversBean> approvers = new ArrayList<AnnouncementBoardApproversBean>();
         for (Person person : board.getUnit().getSite().getManagers()) {
@@ -276,7 +278,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         Unit unit = this.getRequestedUnit(request);
         UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
         form.setName(unit.getName());
-        form.setKeyUnit(unit.getIdInternal());
+        form.setKeyUnit(unit.getExternalId());
         form.setMandatory(false);
 
         super.viewAllBoards(mapping, form, request, response);
@@ -298,13 +300,13 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
     }
 
     private Unit getRequestedUnit(HttpServletRequest request) {
-        return getRequestedUnitOID(request) == null ? null : (Unit) rootDomainObject.readPartyByOID(this
+        return getRequestedUnitOID(request) == null ? null : (Unit) AbstractDomainObject.fromExternalId(this
                 .getRequestedUnitOID(request));
     }
 
-    private Integer getRequestedUnitOID(HttpServletRequest request) {
-        return request.getParameter("keyUnit") == null || request.getParameter("keyUnit").equals("null") ? null : Integer
-                .valueOf(request.getParameter("keyUnit"));
+    private String getRequestedUnitOID(HttpServletRequest request) {
+        return request.getParameter("keyUnit") == null || request.getParameter("keyUnit").equals("null") ? null : request
+                .getParameter("keyUnit");
     }
 
     @Override

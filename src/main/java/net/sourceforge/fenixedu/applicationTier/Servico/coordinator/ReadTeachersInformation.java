@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadTeachersInformation {
 
     @Service
-    public static List run(Integer executionDegreeId, Boolean basic, String executionYearString) {
+    public static List run(String executionDegreeId, Boolean basic, String executionYearString) {
 
         List<Professorship> professorships = null;
         ExecutionYear executionYear = null;
@@ -49,7 +49,7 @@ public class ReadTeachersInformation {
                                 executionDegressExecutionYear, basic);
             }
         } else {
-            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
             if (basic == null) {
                 professorships =
@@ -104,7 +104,7 @@ public class ReadTeachersInformation {
     private static final ReadTeachersInformation serviceInstance = new ReadTeachersInformation();
 
     @Service
-    public static List runReadTeachersInformation(Integer executionDegreeId, Boolean basic, String executionYearString)
+    public static List runReadTeachersInformation(String executionDegreeId, Boolean basic, String executionYearString)
             throws NotAuthorizedException {
         try {
             CoordinatorAuthorizationFilter.instance.execute();

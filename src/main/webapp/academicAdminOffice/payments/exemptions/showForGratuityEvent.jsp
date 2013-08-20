@@ -31,8 +31,8 @@
 </h3>
 
 
-<bean:define id="personId" name="person" property="idInternal" />
-<bean:define id="gratuityEventId" name="event" property="idInternal" />
+<bean:define id="personId" name="person" property="externalId" />
+<bean:define id="gratuityEventId" name="event" property="externalId" />
 
 <p class="mtop2 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions"/></strong></p>
 <logic:notEmpty name="event" property="gratuityExemption">
@@ -43,7 +43,7 @@
 			<fr:property name="classes" value="tstyle4" />
 		</fr:layout>
 	</fr:view>
-	<bean:define id="gratuityExemptionId" name="gratuityExemption" property="idInternal" />
+	<bean:define id="gratuityExemptionId" name="gratuityExemption" property="externalId" />
 	<html:link action="<%="/exemptionsManagement.do?method=deleteExemption&amp;exemptionId=" + gratuityExemptionId %>">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.delete"/>
 	</html:link>
@@ -66,7 +66,7 @@
 		<fr:view name="event" property="installmentPenaltyExemptions" schema="InstallmentPenaltyExemption.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4" />
-				<fr:property name="linkFormat(deletePenaltyExemption)" value="<%="/exemptionsManagement.do?exemptionId=${idInternal}&amp;method=deleteExemption&amp;personId=" + personId%>" />
+				<fr:property name="linkFormat(deletePenaltyExemption)" value="<%="/exemptionsManagement.do?exemptionId=${externalId}&amp;method=deleteExemption&amp;personId=" + personId%>" />
 				<fr:property name="key(deletePenaltyExemption)" value="label.delete" />
 				<fr:property name="bundle(deletePenaltyExemption)" value="ACADEMIC_OFFICE_RESOURCES" />
 				<fr:property name="sortBy" value="installment.startDate=asc" />
@@ -85,7 +85,7 @@
 	</html:link>
 </logic:equal>
 
-<bean:define id="personId" name="person" property="idInternal" />
+<bean:define id="personId" name="person" property="externalId" />
 <fr:form action="<%="/exemptionsManagement.do?method=showEventsToApplyExemption&amp;personId=" + personId%>">
 	<p class="mtop2">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">

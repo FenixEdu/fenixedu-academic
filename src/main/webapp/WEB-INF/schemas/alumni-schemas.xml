@@ -80,7 +80,7 @@
 			<property name="useParent" value="true" />
 			<property name="contextRelative" value="true" />
 			<property name="moduleRelative" value="true" />
-			<property name="linkFormat" value="/searchAlumni.do?method=visualizeAlumni&amp;studentId=${student.idInternal}"/>
+			<property name="linkFormat" value="/searchAlumni.do?method=visualizeAlumni&amp;studentId=${student.externalId}"/>
 		</slot> 
 		<slot name="degree.presentationName" key="list.column.degree" />
 		<slot name="startExecutionYear.year" key="list.column.year" />

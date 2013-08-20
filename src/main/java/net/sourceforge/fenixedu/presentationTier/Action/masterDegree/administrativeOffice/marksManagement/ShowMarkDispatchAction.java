@@ -40,7 +40,7 @@ public class ShowMarkDispatchAction extends FenixDispatchAction {
         try {
             listEnrolmentEvaluation =
                     ReadStudentMarksListByCurricularCourse.runReadStudentMarksListByCurricularCourse(userView,
-                            Integer.valueOf(curricularCourseId), null);
+                            curricularCourseId, null);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         } catch (NonExistingServiceException e) {

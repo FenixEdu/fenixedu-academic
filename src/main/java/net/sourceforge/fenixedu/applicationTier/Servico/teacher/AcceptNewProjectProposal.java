@@ -20,10 +20,10 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -31,19 +31,19 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class AcceptNewProjectProposal {
 
-    protected Boolean run(Integer executionCourseId, Integer groupPropertiesId, String acceptancePersonUserName)
+    protected Boolean run(String executionCourseId, String groupPropertiesId, String acceptancePersonUserName)
             throws FenixServiceException {
 
         if (groupPropertiesId == null) {
             return Boolean.FALSE;
         }
 
-        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesId);
+        final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesId);
         if (grouping == null) {
             throw new NotAuthorizedException();
         }
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         final ExportGrouping groupPropertiesExecutionCourse = executionCourse.getExportGrouping(grouping);
 
         if (groupPropertiesExecutionCourse == null) {
@@ -129,7 +129,7 @@ public class AcceptNewProjectProposal {
     private static final AcceptNewProjectProposal serviceInstance = new AcceptNewProjectProposal();
 
     @Service
-    public static Boolean runAcceptNewProjectProposal(Integer executionCourseId, Integer groupPropertiesId,
+    public static Boolean runAcceptNewProjectProposal(String executionCourseId, String groupPropertiesId,
             String acceptancePersonUserName) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, groupPropertiesId, acceptancePersonUserName);

@@ -40,12 +40,13 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
-    public Integer choosenExecutionYearID;
+    public String choosenExecutionYearID;
 
     public Unit parentUnit;
 
@@ -64,13 +65,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
     }
 
-    public List<SelectItem> getExecutionYears() throws  FenixServiceException {
+    public List<SelectItem> getExecutionYears() throws FenixServiceException {
         final Set<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet();
 
         List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
         for (ExecutionYear executionYear : executionYears) {
             if (executionYear.getYear().compareTo("2005/2006") >= 0) {
-                result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear(), executionYear.getState()
+                result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear(), executionYear.getState()
                         .getStateCode()));
             }
         }
@@ -79,7 +80,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (getChoosenExecutionYearID() == null) {
             for (SelectItem selectExecutionYear : result) {
                 if (selectExecutionYear.getDescription().equals(PeriodState.CURRENT_CODE)) {
-                    setChoosenExecutionYearID((Integer) selectExecutionYear.getValue());
+                    setChoosenExecutionYearID((String) selectExecutionYear.getValue());
                 }
             }
         }
@@ -87,7 +88,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public String getUnits() throws  FenixServiceException {
+    public String getUnits() throws FenixServiceException {
         StringBuilder buffer = new StringBuilder();
         YearMonthDay currentDate = new YearMonthDay();
         String partyTypeOrClassificationName = null;
@@ -117,18 +118,18 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 if (!activeSubUnits.isEmpty()) {
 
                     buffer.append("\t<li><img ").append("src='").append(getContextPath())
-                            .append("/images/toggle_plus10.gif' id='img").append(unit.getIdInternal()).append("'")
-                            .append("onClick=\"check(document.getElementById('aa").append(unit.getIdInternal())
-                            .append("'),document.getElementById('").append(unit.getIdInternal()).append("'));return false;\"/> ");
+                            .append("/images/toggle_plus10.gif' id='img").append(unit.getExternalId()).append("'")
+                            .append("onClick=\"check(document.getElementById('aa").append(unit.getExternalId())
+                            .append("'),document.getElementById('").append(unit.getExternalId()).append("'));return false;\"/> ");
 
                     buffer.append("<a href='").append(getContextPath())
-                            .append("/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(unit.getIdInternal())
+                            .append("/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(unit.getExternalId())
                             .append("'>").append(unit.getNameWithAcronym()).append("</a></li>\r\n");
 
                 } else {
 
                     buffer.append("\t<li><a href='").append(getContextPath())
-                            .append("/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(unit.getIdInternal())
+                            .append("/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(unit.getExternalId())
                             .append("'>").append(unit.getNameWithAcronym()).append("</a></li>\r\n");
 
                 }
@@ -145,7 +146,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             YearMonthDay currentDate) {
 
         if (!activeSubUnits.isEmpty()) {
-            buffer.append("\t<li class='nobullet'><ul class='mvert0' id='aa").append(parentUnit.getIdInternal())
+            buffer.append("\t<li class='nobullet'><ul class='mvert0' id='aa").append(parentUnit.getExternalId())
                     .append("' style='display:none'>\r\n");
             for (Unit subUnit : activeSubUnits) {
                 getSubUnitsWithoutAggregatedUnitsList(buffer, currentDate, subUnit);
@@ -157,7 +158,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void getSubUnitsList(Unit parentUnit, StringBuilder buffer, YearMonthDay currentDate) {
 
         buffer.append("\t\t<li><a href='").append(getContextPath())
-                .append("/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(parentUnit.getIdInternal())
+                .append("/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(parentUnit.getExternalId())
                 .append("'>").append(parentUnit.getNameWithAcronym()).append("</a></li>\r\n");
 
         List<Unit> activeSubUnits = parentUnit.getActiveSubUnits(currentDate, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
@@ -189,7 +190,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
     }
 
-    public Map<String, Set<Unit>> getAllInstitutionSubUnits() throws  FenixServiceException {
+    public Map<String, Set<Unit>> getAllInstitutionSubUnits() throws FenixServiceException {
 
         YearMonthDay currentDate = new YearMonthDay();
 
@@ -258,7 +259,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return null;
     }
 
-    public String getTitle() throws  FenixServiceException {
+    public String getTitle() throws FenixServiceException {
         StringBuilder buffer = new StringBuilder();
         buffer.append("<p><em>");
         buffer.append(this.getUnit().getParentUnitsPresentationName());
@@ -267,7 +268,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    public String getFunctions() throws  FenixServiceException {
+    public String getFunctions() throws FenixServiceException {
 
         StringBuilder buffer = new StringBuilder();
         YearMonthDay currentDate = new YearMonthDay();
@@ -279,7 +280,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         // src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
         // .append(" ");
         buffer.append("<strong class='highlight6' id='aa");
-        buffer.append(chooseUnit.getIdInternal()).append("'>");
+        buffer.append(chooseUnit.getExternalId()).append("'>");
         buffer.append(chooseUnit.getName()).append("</strong>");
 
         if (StringUtils.isEmpty(getListType()) || getListType().equals("#") || getListType().equals("0")) {
@@ -314,7 +315,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         // buffer.append("<image
         // src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
         // .append(" ");
-        buffer.append("<strong id='aa").append(subUnit.getIdInternal()).append("' >").append(subUnit.getName())
+        buffer.append("<strong id='aa").append(subUnit.getExternalId()).append("' >").append(subUnit.getName())
                 .append("</strong>");
 
         if (StringUtils.isEmpty(getListType()) || getListType().equals("#") || getListType().equals("0")) {
@@ -460,7 +461,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return functions;
     }
 
-    public ExecutionYear getExecutionYear(Integer executionYear) throws  FenixServiceException {
+    public ExecutionYear getExecutionYear(String executionYear) throws FenixServiceException {
 
         ExecutionYear iExecutionYear = ReadExecutionYearsService.run(executionYear);
         return iExecutionYear;
@@ -504,9 +505,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         list.add(0, firstItem);
     }
 
-    public Unit getUnit() throws  FenixServiceException {
+    public Unit getUnit() throws FenixServiceException {
         if (parentUnit == null) {
-            this.parentUnit = (Unit) rootDomainObject.readPartyByOID(Integer.valueOf((String) getUnitIDHidden().getValue()));
+            this.parentUnit = (Unit) AbstractDomainObject.fromExternalId((String) getUnitIDHidden().getValue());
         }
         return parentUnit;
     }
@@ -555,11 +556,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         this.unitIDHidden = unitIDHidden;
     }
 
-    public Integer getChoosenExecutionYearID() {
+    public String getChoosenExecutionYearID() {
         return choosenExecutionYearID;
     }
 
-    public void setChoosenExecutionYearID(Integer choosenExecutionYearID) {
+    public void setChoosenExecutionYearID(String choosenExecutionYearID) {
         this.choosenExecutionYearID = choosenExecutionYearID;
     }
 

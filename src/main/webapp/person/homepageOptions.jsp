@@ -159,7 +159,7 @@
 					</logic:iterate>
 					<logic:iterate id="studentCurricularPlan" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
 						,
-						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.externalId"/></bean:define>
 						<html:link href="<%= url %>">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
 								<logic:equal name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
@@ -284,14 +284,14 @@
 					</td>
 					<td>
 						<logic:iterate id="executionCourse" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher.currentExecutionCourses" length="1">
-							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>
 							<html:link href="<%= url %>">
 								<bean:write name="executionCourse" property="nome"/>
 							</html:link>
 						</logic:iterate>
 						<logic:iterate id="executionCourse" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher.currentExecutionCourses" offset="1">
 							, 
-							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>
 							<html:link href="<%= url %>">
 								<bean:write name="executionCourse" property="nome"/>
 							</html:link>

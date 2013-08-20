@@ -52,6 +52,7 @@ import net.sourceforge.fenixedu.util.tests.ResponseLID;
 import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -63,6 +64,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -108,8 +110,8 @@ public class StudentTestsAction extends FenixDispatchAction {
     public ActionForward testsFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
-        final Integer objectCode = new Integer(request.getParameter("objectCode"));
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
+        final String objectCode = request.getParameter("objectCode");
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(objectCode);
 
         final Student student = userView.getPerson().getStudent();
         Map<Registration, Set<DistributedTest>> distributedTestList =
@@ -178,15 +180,9 @@ public class StudentTestsAction extends FenixDispatchAction {
 
     public ActionForward prepareToDoTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        Integer testCode = null;
+        String testCode = request.getParameter("testCode");
         request.setAttribute("date", getDate());
-        try {
-            testCode = new Integer(request.getParameter("testCode"));
-        } catch (NumberFormatException e) {
-            request.setAttribute("invalidTest", new Boolean(true));
-            return mapping.findForward("testError");
-        }
-        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(testCode);
+        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -260,14 +256,14 @@ public class StudentTestsAction extends FenixDispatchAction {
     public ActionForward showImage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final String testCode = request.getParameter("testCode");
-        final Integer exerciseId = getRequestParameterAsInteger(request, "exerciseCode");
+        final String exerciseId = request.getParameter("exerciseCode");
         final Integer imgCode = getRequestParameterAsInteger(request, "imgCode");
         final String imgTypeString = request.getParameter("imgType");
         final Integer feedbackId = getRequestParameterAsInteger(request, "feedbackCode");
         final Integer itemIndex = getRequestParameterAsInteger(request, "item");
         final String path = getServlet().getServletContext().getRealPath("/");
 
-        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(new Integer(testCode));
+        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -280,7 +276,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         String img = null;
         try {
             img =
-                    ReadStudentTestQuestionImage.run(registration.getIdInternal(), distributedTest.getIdInternal(), exerciseId,
+                    ReadStudentTestQuestionImage.run(registration.getExternalId(), distributedTest.getExternalId(), exerciseId,
                             imgCode, feedbackId, itemIndex, path);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -307,6 +303,16 @@ public class StudentTestsAction extends FenixDispatchAction {
         return null;
     }
 
+    protected Integer getRequestParameterAsInteger(HttpServletRequest request, String parameterName) {
+        final String requestParameter = request.getParameter(parameterName);
+
+        if (!StringUtils.isEmpty(requestParameter)) {
+            return Integer.valueOf(requestParameter);
+        } else {
+            return null;
+        }
+    }
+
     public ActionForward doTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
         final String objectCode = request.getParameter("objectCode");
@@ -315,15 +321,9 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         request.setAttribute("date", getDate());
 
-        Integer testCode = null;
-        try {
-            testCode = new Integer(request.getParameter("testCode"));
-        } catch (NumberFormatException e) {
-            request.setAttribute("invalidTest", new Boolean(true));
-            return mapping.findForward("testError");
-        }
+        String testCode = request.getParameter("testCode");
 
-        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(testCode);
+        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -448,7 +448,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         final String logId = request.getParameter("logId");
         final IUserView userView = getUserView(request);
         if (logId != null && logId.length() != 0) {
-            StudentTestLog studentTestLog = rootDomainObject.readStudentTestLogByOID(new Integer(logId));
+            StudentTestLog studentTestLog = AbstractDomainObject.fromExternalId(logId);
             if (studentTestLog.getStudent().getPerson().equals(userView.getPerson())) {
                 List<StudentTestLog> studentTestLogs = new ArrayList<StudentTestLog>();
                 studentTestLogs.add(studentTestLog);
@@ -486,18 +486,18 @@ public class StudentTestsAction extends FenixDispatchAction {
         request.setAttribute("item", request.getParameter("item"));
         final IUserView userView = getUserView(request);
 
-        Integer testCode = null;
-        Integer exerciseCode = null;
+        String testCode = null;
+        String exerciseCode = null;
         Integer itemCode = null;
         try {
-            testCode = new Integer(request.getParameter("testCode"));
-            exerciseCode = new Integer(request.getParameter("exerciseCode"));
+            testCode = request.getParameter("testCode");
+            exerciseCode = request.getParameter("exerciseCode");
             itemCode = new Integer(request.getParameter("item"));
         } catch (NumberFormatException e) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
         }
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(testCode);
+        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -525,18 +525,18 @@ public class StudentTestsAction extends FenixDispatchAction {
         request.setAttribute("exerciseCode", request.getParameter("exerciseCode"));
         request.setAttribute("item", request.getParameter("item"));
 
-        Integer testCode = null;
-        Integer exerciseCode = null;
+        String testCode = null;
+        String exerciseCode = null;
         Integer itemCode = null;
         try {
-            testCode = new Integer(request.getParameter("testCode"));
-            exerciseCode = new Integer(request.getParameter("exerciseCode"));
+            testCode = request.getParameter("testCode");
+            exerciseCode = request.getParameter("exerciseCode");
             itemCode = new Integer(request.getParameter("item"));
         } catch (NumberFormatException e) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
         }
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(testCode);
+        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -568,14 +568,8 @@ public class StudentTestsAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         final String path = getServlet().getServletContext().getRealPath("/");
 
-        Integer testCode = null;
-        try {
-            testCode = new Integer(request.getParameter("testCode"));
-        } catch (NumberFormatException e) {
-            request.setAttribute("invalidTest", new Boolean(true));
-            return mapping.findForward("testError");
-        }
-        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(new Integer(testCode));
+        String testCode = request.getParameter("testCode");
+        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -676,13 +670,9 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     private Registration getRegistration(HttpServletRequest request) {
-        Integer registrationCode = null;
-        try {
-            registrationCode = new Integer(request.getParameter("student"));
-        } catch (NumberFormatException e) {
-            return null;
-        }
-        final Registration registration = rootDomainObject.readRegistrationByOID(registrationCode);
+        String registrationCode = request.getParameter("student");
+
+        final Registration registration = AbstractDomainObject.fromExternalId(registrationCode);
         if (registration == null) {
             return null;
         }

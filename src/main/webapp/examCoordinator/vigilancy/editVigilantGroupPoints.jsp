@@ -9,7 +9,7 @@
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.vigilancyPoints"/></h2>
 
-<bean:define id="groupID" name="group" property="idInternal"/>
+<bean:define id="groupID" name="group" property="externalId"/>
 <ul>
 	<li>
 		<html:link page="/vigilancy/vigilantGroupManagement.do?method=selectPreviousPointsSchema" paramId="oid" paramName="groupID">

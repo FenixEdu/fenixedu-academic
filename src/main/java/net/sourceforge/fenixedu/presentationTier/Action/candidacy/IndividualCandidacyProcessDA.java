@@ -44,6 +44,7 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
 import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * INFO: when extending this class pay attention to the following aspects
@@ -83,9 +84,9 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     protected void setParentProcess(HttpServletRequest request) {
-        final Integer parentProcessId = getIntegerFromRequest(request, "parentProcessId");
+        final String parentProcessId = (String) getFromRequest(request, "parentProcessId");
         if (parentProcessId != null) {
-            request.setAttribute("parentProcess", rootDomainObject.readProcessByOID(parentProcessId));
+            request.setAttribute("parentProcess", AbstractDomainObject.fromExternalId(parentProcessId));
         } else {
             setProcess(request);
             if (hasProcess(request)) {
@@ -125,7 +126,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
         request.setAttribute("canCreateChildProcess", canCreateProcess(getProcessType().getName()));
         request.setAttribute("childProcessName", getProcessType().getSimpleName());
         request.setAttribute("childProcesses", process.getChildProcesses());
-        request.setAttribute("executionIntervalId", process.getCandidacyExecutionInterval().getIdInternal());
+        request.setAttribute("executionIntervalId", process.getCandidacyExecutionInterval().getExternalId());
         request.setAttribute("executionIntervals",
                 ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(process.getCandidacyPeriod().getClass()));
     }
@@ -433,7 +434,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 
     @Override
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             request.setAttribute("process", CreateNewProcess.run(getProcessType().getName(), getIndividualCandidacyProcessBean()));
         } catch (DomainException e) {
@@ -459,7 +460,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward executeCancelCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "CancelCandidacy", null);
         } catch (DomainException e) {
@@ -483,7 +484,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward uploadDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IOException {
+            HttpServletResponse response) throws FenixServiceException, IOException {
         CandidacyProcessDocumentUploadBean uploadBean =
                 (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document");
         try {
@@ -561,7 +562,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward bindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "BindPersonToCandidacy", getIndividualCandidacyProcessBean());
         } catch (DomainException e) {
@@ -579,7 +580,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward executeChangeProcessCheckedState(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "ChangeProcessCheckedState", getIndividualCandidacyProcessBean());
         } catch (DomainException e) {
@@ -592,7 +593,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward executeChangePaymentCheckedState(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "ChangePaymentCheckedState", getIndividualCandidacyProcessBean());
         } catch (DomainException e) {
@@ -605,7 +606,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward prepareExecuteRevertApplicationToStandBy(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "RevertApplicationToStandBy", null);
         } catch (DomainException e) {
@@ -668,7 +669,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward revokeDocumentFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         CandidacyProcessDocumentUploadBean uploadBean =
                 (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document");
         String documentExternalId = request.getParameter("documentFileOid");
@@ -681,14 +682,14 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward prepareExecuteRejectCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
         return mapping.findForward("reject-candidacy");
     }
 
     public ActionForward executeRejectCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "RejectCandidacy", null);
         } catch (DomainException e) {

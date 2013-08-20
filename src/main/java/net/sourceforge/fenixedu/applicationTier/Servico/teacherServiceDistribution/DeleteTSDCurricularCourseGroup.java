@@ -1,19 +1,18 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourseGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteTSDCurricularCourseGroup {
-    protected void run(Integer tsdCurricularCourseGroupId) {
+    protected void run(String tsdCurricularCourseGroupId) {
         TSDCurricularCourseGroup tsdCurricularCourseGroup =
-                (TSDCurricularCourseGroup) RootDomainObject.getInstance().readTSDCourseByOID(tsdCurricularCourseGroupId);
+                (TSDCurricularCourseGroup) AbstractDomainObject.fromExternalId(tsdCurricularCourseGroupId);
 
         for (TSDCurricularCourse tsdCurricularCourse : tsdCurricularCourseGroup.getTSDCurricularCourses()) {
             tsdCurricularCourse.setTSDCurricularCourseGroup(null);
@@ -27,7 +26,7 @@ public class DeleteTSDCurricularCourseGroup {
     private static final DeleteTSDCurricularCourseGroup serviceInstance = new DeleteTSDCurricularCourseGroup();
 
     @Service
-    public static void runDeleteTSDCurricularCourseGroup(Integer tsdCurricularCourseGroupId) throws NotAuthorizedException {
+    public static void runDeleteTSDCurricularCourseGroup(String tsdCurricularCourseGroupId) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             serviceInstance.run(tsdCurricularCourseGroupId);

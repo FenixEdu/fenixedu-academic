@@ -8,7 +8,7 @@
 
 
 <bean:define id="student" name="<%= PresentationConstants.STUDENT %>" scope="request"/>
-<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" scope="request" />
+<bean:define id="scpID" name="studentCurricularPlan" property="externalId" scope="request" />
 <bean:define id="attachedCopiesNumber" name="<%= PresentationConstants.ATTACHED_COPIES_NUMBER %>" />
 <bean:define id="responsibleEmployee" name="<%= PresentationConstants.RESPONSIBLE_EMPLOYEE %>" scope="request"/>
 <bean:define id="lastModification" name="<%= PresentationConstants.LAST_MODIFICATION %>" scope="request"/>

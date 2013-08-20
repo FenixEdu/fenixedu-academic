@@ -32,7 +32,7 @@
 </logic:notPresent>
 
 <logic:present name="section">
-    <bean:define id="sectionId" name="section" property="idInternal"/>
+    <bean:define id="sectionId" name="section" property="externalId"/>
 
     <bean:define id="formUrl" value="<%= actionName + "?method=functionalitySection&amp;" + context + "&amp;sectionID=" + sectionId %>" toScope="request"/>
 </logic:present>
@@ -64,8 +64,8 @@
             <fr:property name="labelExcluded" value="true"/>
             <fr:property name="hideValidators" value="true"/>
         </fr:layout>
-        <fr:destination name="module.view" path="/module/view.do?module=${idInternal}"/>
-        <fr:destination name="functionality.view" path="/functionality/view.do?functionality=${idInternal}"/>
+        <fr:destination name="module.view" path="/module/view.do?module=${externalId}"/>
+        <fr:destination name="functionality.view" path="/functionality/view.do?functionality=${externalId}"/>
     </fr:edit>
     
     <html:submit>

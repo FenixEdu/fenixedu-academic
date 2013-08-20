@@ -32,7 +32,7 @@
 	</h2>
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodId" property="executionPeriodId" onchange="this.form.page.value='1';this.form.method.value='showExecutionDegrees';this.form.submit();">
 		<option></option>
-		<html:options collection="executionPeriods" property="idInternal" labelProperty="description"/>
+		<html:options collection="executionPeriods" property="externalId" labelProperty="description"/>
 	</html:select>
 	<logic:present name="notAuth" >
 	<span class="error"><bean:message bundle="HTMLALT_RESOURCES" key="label.not.auth.for.execution.semester" /></span >
@@ -60,7 +60,7 @@
 		</h2>
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionCourseId" property="executionCourseId">
 			<option></option>		
-			<html:options collection="executionCourses" labelProperty="nome" property="idInternal"/>
+			<html:options collection="executionCourses" labelProperty="nome" property="externalId"/>
 		</html:select>
 		<br />
 		<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.responsibleFor" property="responsibleFor" value="true">

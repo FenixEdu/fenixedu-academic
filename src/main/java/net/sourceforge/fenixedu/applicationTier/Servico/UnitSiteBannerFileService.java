@@ -44,7 +44,7 @@ public class UnitSiteBannerFileService {
         VirtualPathNode[] nodes =
                 { new VirtualPathNode("Site", "Site"), new VirtualPathNode("Unit", "Unit"),
                         new VirtualPathNode(site.getUnit().getNameWithAcronym(), site.getUnit().getNameWithAcronym()),
-                        new VirtualPathNode("Banner" + site.getIdInternal(), "Banner") };
+                        new VirtualPathNode("Banner" + site.getExternalId(), "Banner") };
 
         VirtualPath path = new VirtualPath();
         for (VirtualPathNode node : nodes) {

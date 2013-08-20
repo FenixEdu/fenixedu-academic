@@ -57,6 +57,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -167,7 +168,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
         }
         if (result.size() == 1) {
             InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
-            request.setAttribute("candidateID", infoMasterDegreeCandidate.getIdInternal());
+            request.setAttribute("candidateID", infoMasterDegreeCandidate.getExternalId());
             request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
             return mapping.findForward("ActionReady");
         }
@@ -202,8 +203,8 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer personID = Integer.valueOf(request.getParameter("personID"));
-        request.setAttribute("candidateID", new Integer(request.getParameter("candidateID")));
+        String personID = request.getParameter("personID");
+        request.setAttribute("candidateID", request.getParameter("candidateID"));
 
         // Read the Candidates for This Person
 
@@ -224,10 +225,10 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         IUserView userView = getUserView(request);
-        Integer candidateID = (Integer) request.getAttribute("candidateID");
+        String candidateID = (String) request.getAttribute("candidateID");
 
         if (candidateID == null) {
-            candidateID = Integer.valueOf(request.getParameter("candidateID"));
+            candidateID = request.getParameter("candidateID");
         }
 
         // Read the Candidates for This Person
@@ -255,9 +256,9 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
         DynaActionForm editCandidateForm = (DynaActionForm) form;
 
-        Integer candidateID = (Integer) request.getAttribute("candidateID");
+        String candidateID = (String) request.getAttribute("candidateID");
         if (candidateID == null) {
-            candidateID = Integer.valueOf(request.getParameter("candidateID"));
+            candidateID = request.getParameter("candidateID");
         }
 
         // Read the Candidates for This Person
@@ -309,7 +310,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
         DynaActionForm editCandidateForm = (DynaActionForm) form;
 
-        Integer candidateID = (Integer) editCandidateForm.get("candidateID");
+        String candidateID = (String) editCandidateForm.get("candidateID");
 
         // FIXME: Check All if fields are empty
 
@@ -432,7 +433,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
         InfoMasterDegreeCandidate infoMasterDegreeCandidateChanged = null;
         try {
-            final MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+            final MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
 
             infoMasterDegreeCandidateChanged = EditMasterDegreeCandidate.run(masterDegreeCandidate, newCandidate, infoPerson);
         } catch (ExistingServiceException e) {
@@ -450,7 +451,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
         // Read the Candidate
 
-        final Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
+        final String candidateID = request.getParameter("candidateID");
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 
         try {
@@ -462,7 +463,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
         String pass = null;
         try {
             final Person person =
-                    (Person) rootDomainObject.readPartyByOID(infoMasterDegreeCandidate.getInfoPerson().getIdInternal());
+                    (Person) AbstractDomainObject.fromExternalId(infoMasterDegreeCandidate.getInfoPerson().getExternalId());
             pass = GenerateNewPasswordService.run(person);
         } catch (FenixServiceException e) {
             throw new FenixActionException();
@@ -560,7 +561,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
         editCandidateForm.set("majorDegree", infoMasterDegreeCandidate.getMajorDegree());
         editCandidateForm.set("majorDegreeSchool", infoMasterDegreeCandidate.getMajorDegreeSchool());
 
-        editCandidateForm.set("candidateID", infoMasterDegreeCandidate.getIdInternal());
+        editCandidateForm.set("candidateID", infoMasterDegreeCandidate.getExternalId());
 
         if ((infoPerson.getSexo() != null)) {
             editCandidateForm.set("sex", infoPerson.getSexo().toString());
@@ -614,7 +615,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
         return false;
     }
 
-    private List getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
+    private List getCandidateStudyPlanByCandidateID(String candidateID, IUserView userView) {
 
         try {
             return ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);

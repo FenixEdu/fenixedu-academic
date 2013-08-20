@@ -18,7 +18,7 @@
 	</tr>
 	<logic:iterate id="infoStudentCurricularPlan" name="studentCurricularPlansList" indexId="index">
 		<bean:define id="showStudentCurricularCoursePlanLink">
-			/showStudentCurricularCoursePlan.do?studentCurricularPlanId=<bean:write name="infoStudentCurricularPlan" property="idInternal"/>
+			/showStudentCurricularCoursePlan.do?studentCurricularPlanId=<bean:write name="infoStudentCurricularPlan" property="externalId"/>
 		</bean:define>
 		<tr>
 			<td align="left">

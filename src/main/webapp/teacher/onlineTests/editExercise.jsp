@@ -19,8 +19,8 @@ function back(){
 <h2><bean:message key="title.editTestQuestion" /></h2>
 <br />
 <logic:present name="metadata">
-	<bean:define id="objectCode" name="metadata" property="executionCourse.idInternal" />
-	<bean:define id="metadataId" name="metadata" property="idInternal" />
+	<bean:define id="objectCode" name="metadata" property="executionCourse.externalId" />
+	<bean:define id="metadataId" name="metadata" property="externalId" />
 	<bean:define id="variationCode" value="<%=(pageContext.findAttribute("variationCode")).toString()%>" />
 	<table>
 		<tr>
@@ -128,7 +128,7 @@ function back(){
 					<bean:message key="label.summaries.all" />
 				</html:option>
 				<logic:iterate id="iquestion" name="metadata" property="visibleQuestions">
-					<bean:define id="questionValue" name="iquestion" property="idInternal" />
+					<bean:define id="questionValue" name="iquestion" property="externalId" />
 					<html:option value="<%=questionValue.toString()%>">
 						<bean:write name="iquestion" property="xmlFileName" />
 					</html:option>
@@ -141,7 +141,7 @@ function back(){
 			<br />
 			<logic:equal name="variationCode" value="-2">
 				<logic:iterate id="iquestion" name="metadata" property="visibleQuestions">
-					<bean:define id="questionCode" name="iquestion" property="idInternal" />
+					<bean:define id="questionCode" name="iquestion" property="externalId" />
 					<bean:define id="index" value="0" />
 					<bean:define id="imageLabel" value="false" />
 					<h2><bean:message key="title.exercise" />:&nbsp;<bean:write name="iquestion" property="xmlFileName" /></h2>
@@ -162,8 +162,8 @@ function back(){
 			</logic:equal>
 			<logic:notEqual name="variationCode" value="-2">
 			<logic:iterate id="iquestion" name="metadata" property="visibleQuestions">
-				<logic:equal name="iquestion" property="idInternal" value="<%= variationCode.toString()%>">
-					<bean:define id="questionCode" name="iquestion" property="idInternal" />
+				<logic:equal name="iquestion" property="externalId" value="<%= variationCode.toString()%>">
+					<bean:define id="questionCode" name="iquestion" property="externalId" />
 					<bean:define id="index" value="0" />
 					<bean:define id="imageLabel" value="false" />
 					<h2><bean:message key="title.exercise" />:&nbsp;<bean:write name="iquestion" property="xmlFileName" /></h2>

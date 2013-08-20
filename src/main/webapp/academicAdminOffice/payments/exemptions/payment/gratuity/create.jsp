@@ -46,8 +46,8 @@
 
 <br />
 
-<bean:define id="eventId" name="createGratuityExemptionBean" property="gratuityEvent.idInternal" />
-<bean:define id="personId" name="createGratuityExemptionBean" property="gratuityEvent.person.idInternal" />
+<bean:define id="eventId" name="createGratuityExemptionBean" property="gratuityEvent.externalId" />
+<bean:define id="personId" name="createGratuityExemptionBean" property="gratuityEvent.person.externalId" />
 <fr:form action="<%="/exemptionsManagement.do?personId=" + personId + "&amp;eventId=" + eventId%>">
 
 	<input alt="input.method" type="hidden" name="method" value="" />

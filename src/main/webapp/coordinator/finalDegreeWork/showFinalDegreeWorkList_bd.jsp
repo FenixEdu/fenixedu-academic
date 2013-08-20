@@ -28,7 +28,7 @@
 
 	<table>
 		<logic:iterate id="currentExecutionDegree" name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName">
-			<logic:notEqual name="currentExecutionDegree" property="idInternal" value="<%= executionDegreeOID.toString() %>">
+			<logic:notEqual name="currentExecutionDegree" property="externalId" value="<%= executionDegreeOID.toString() %>">
 				<tr>
 					<td>
 						<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.presentationName"/>
@@ -40,7 +40,7 @@
 							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
-							<bean:define id="otherExecutionDegreeID" name="currentExecutionDegree" property="idInternal"/>
+							<bean:define id="otherExecutionDegreeID" name="currentExecutionDegree" property="externalId"/>
 							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.otherExecutionDegreeID" property="otherExecutionDegreeID" value="<%= otherExecutionDegreeID.toString() %>"/>
 							<html:submit><bean:message key="label.remove"/></html:submit>
 						</html:form>
@@ -62,7 +62,7 @@
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.otherExecutionDegreeID" property="otherExecutionDegreeID">
 						<html:option value=""/>
-						<html:options collection="executionDegrees" property="idInternal" labelProperty="degreeCurricularPlan.presentationName"/>
+						<html:options collection="executionDegrees" property="externalId" labelProperty="degreeCurricularPlan.presentationName"/>
 					</html:select>
 				</td>
 				<td>
@@ -398,13 +398,13 @@
 					</th>
 					<td rowspan="2">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedProposals" property="selectedProposals">
-							<bean:write name="finalDegreeWorkProposalHeader" property="idInternal"/>
+							<bean:write name="finalDegreeWorkProposalHeader" property="externalId"/>
 						</html:multibox>
 					</td>
 					<td rowspan="2">
 						<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/>
 						<bean:define id="deleteProposalLink">
-								/manageFinalDegreeWork.do?method=deleteProposal&amp;page=0&amp;finalDegreeWorkProposalOID=<%= ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString()
+								/manageFinalDegreeWork.do?method=deleteProposal&amp;page=0&amp;finalDegreeWorkProposalOID=<%= ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId().toString()
 										%>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID
 										%>&amp;executionDegreeOID=<%= executionDegreeOID.toString() %>
 						</bean:define>
@@ -413,7 +413,7 @@
 						</html:link>
 					</td>
 					<td rowspan="2">
-			        	<html:link page="<%= "/finalDegreeWorkProposal.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID 
+			        	<html:link page="<%= "/finalDegreeWorkProposal.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId().toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID 
 			        			+ "&amp;executionDegreeOID="
 								+ executionDegreeOID.toString()
 			        	%>">
@@ -517,10 +517,10 @@
 				<tr>
 					<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
 						<bean:define id="onChange">
-							this.form.method.value='attributeGroupProposal';this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="idInternal"/>';this.form.submit();
+							this.form.method.value='attributeGroupProposal';this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="externalId"/>';this.form.submit();
 						</bean:define>
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.attributions" property="attributions" onchange='<%= onChange.toString() %>'>
-							<bean:write name="finalDegreeWorkProposalHeader" property="idInternal"/><bean:write name="groupProposal" property="infoGroup.idInternal"/>
+							<bean:write name="finalDegreeWorkProposalHeader" property="externalId"/><bean:write name="groupProposal" property="infoGroup.externalId"/>
 						</html:multibox>
 					</td>
 					<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
@@ -538,10 +538,10 @@
 									<html:link page='<%= curriculumLink.toString() %>'>
 										<bean:write name="student" property="infoPerson.username"/>
 									</html:link>
-									<bean:define id="groupProposalId" name="groupProposal" property="idInternal"/>
+									<bean:define id="groupProposalId" name="groupProposal" property="externalId"/>
 									<bean:define id="deleteCandidacyLink">
 										/manageFinalDegreeWork.do?method=deleteCandidacy&amp;page=0&amp;groupProposal=<%= groupProposalId.toString()
-												%>&amp;finalDegreeWorkProposalOID=<%= ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString()
+												%>&amp;finalDegreeWorkProposalOID=<%= ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId().toString()
 												%>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID
 												%>&amp;executionDegreeOID=<%= executionDegreeOID.toString() %>
 									</bean:define>
@@ -550,7 +550,7 @@
 									</html:link>
 									<bean:define id="deleteAttributionLink">
 										/manageFinalDegreeWork.do?method=deleteAttributions&amp;page=0&amp;groupProposal=<%= groupProposalId.toString()
-												%>&amp;finalDegreeWorkProposalOID=<%= ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString()
+												%>&amp;finalDegreeWorkProposalOID=<%= ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId().toString()
 												%>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID
 												%>&amp;executionDegreeOID=<%= executionDegreeOID.toString() %>
 									</bean:define>
@@ -583,14 +583,14 @@
 					</logic:iterate>
 					<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.attributedByTeacher" property="attributedByTeacher" disabled="true">
-								<bean:write name="finalDegreeWorkProposalHeader" property="idInternal"/><bean:write name="groupProposal" property="infoGroup.idInternal"/>
+								<bean:write name="finalDegreeWorkProposalHeader" property="externalId"/><bean:write name="groupProposal" property="infoGroup.externalId"/>
 							</html:multibox>
 					</td>
 					<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
 						<logic:iterate id="groupStudent" name="groupProposal" property="infoGroup.groupStudents">
 							<logic:present name="groupStudent" property="finalDegreeWorkProposalConfirmation">
-								<bean:define id="proposalID" name="finalDegreeWorkProposalHeader" property="idInternal"/>
-								<logic:equal name="groupStudent" property="finalDegreeWorkProposalConfirmation.idInternal" value="<%= proposalID.toString() %>">
+								<bean:define id="proposalID" name="finalDegreeWorkProposalHeader" property="externalId"/>
+								<logic:equal name="groupStudent" property="finalDegreeWorkProposalConfirmation.externalId" value="<%= proposalID.toString() %>">
 									<bean:define id="student" name="groupStudent" property="student"/>
 									<bean:write name="student" property="infoPerson.username"/>
 								</logic:equal>

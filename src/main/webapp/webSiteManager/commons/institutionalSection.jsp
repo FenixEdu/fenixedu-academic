@@ -14,7 +14,7 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
-<bean:define id="sectionId" name="section" property="idInternal"/>
+<bean:define id="sectionId" name="section" property="externalId"/>
 
 <jsp:include page="/commons/sites/siteQuota.jsp"/>
 
@@ -29,7 +29,7 @@
     </html:link> &gt;
     
     <logic:iterate id="crumb" name="sectionBreadCrumbs">
-        <html:link page="<%= String.format("%s?method=section&amp;%s", actionName, context) %>" paramId="sectionID" paramName="crumb" paramProperty="idInternal">
+        <html:link page="<%= String.format("%s?method=section&amp;%s", actionName, context) %>" paramId="sectionID" paramName="crumb" paramProperty="externalId">
             <fr:view name="crumb" property="name"/>
         </html:link> &gt;
     </logic:iterate>

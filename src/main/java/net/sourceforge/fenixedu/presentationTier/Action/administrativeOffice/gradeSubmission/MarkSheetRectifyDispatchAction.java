@@ -28,6 +28,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/rectifyMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
         input = "/academicAdminOffice/gradeSubmission/createMarkSheetStep1.jsp")
@@ -41,7 +42,7 @@ public class MarkSheetRectifyDispatchAction extends MarkSheetDispatchAction {
             HttpServletResponse response) {
 
         DynaActionForm form = (DynaActionForm) actionForm;
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID((Integer) form.get("msID"));
+        MarkSheet markSheet = AbstractDomainObject.fromExternalId((String) form.get("msID"));
 
         MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
         fillMarkSheetBean(actionForm, request, rectifyBean);
@@ -60,8 +61,7 @@ public class MarkSheetRectifyDispatchAction extends MarkSheetDispatchAction {
     public ActionForward rectifyMarkSheetStepOneByEvaluation(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) actionForm;
-        Integer evaluationID = (Integer) form.get("evaluationID");
-        EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(evaluationID);
+        EnrolmentEvaluation enrolmentEvaluation = getDomainObject(form, "evaluationID");
         MarkSheet markSheet = enrolmentEvaluation.getMarkSheet();
         MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
         rectifyBean.setMarkSheet(markSheet);
@@ -107,7 +107,7 @@ public class MarkSheetRectifyDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward rectifyMarkSheetStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         MarkSheetRectifyBean rectifyBean = (MarkSheetRectifyBean) RenderUtils.getViewState().getMetaObject().getObject();
 
         ActionMessages actionMessages = new ActionMessages();
@@ -144,9 +144,7 @@ public class MarkSheetRectifyDispatchAction extends MarkSheetDispatchAction {
             HttpServletResponse response) {
 
         DynaActionForm form = (DynaActionForm) actionForm;
-        Integer evaluationID = (Integer) form.get("evaluationID");
-
-        EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(evaluationID);
+        EnrolmentEvaluation enrolmentEvaluation = getDomainObject(form, "evaluationID");
         Enrolment enrolment = enrolmentEvaluation.getEnrolment();
 
         List<EnrolmentEvaluation> rectifiedAndRectificationEvaluations =

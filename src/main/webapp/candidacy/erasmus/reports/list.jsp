@@ -10,7 +10,7 @@
 <h2><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES" /></h2>
 
 <bean:define id="erasmusCandidacyProcess" name="erasmusCandidacyProcess" />
-<bean:define id="parentProcessId" name="erasmusCandidacyProcess" property="idInternal" />
+<bean:define id="parentProcessId" name="erasmusCandidacyProcess" property="externalId" />
 
 <p>
 	<html:link action='<%= "/caseHandlingMobilityApplicationProcess.do?method=listProcesses&amp;parentProcessId=" + parentProcessId.toString() %>'>

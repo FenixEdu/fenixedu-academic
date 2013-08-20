@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 
@@ -15,6 +14,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério
@@ -22,10 +22,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteProfessorship {
 
-    protected Boolean run(Integer infoExecutionCourseCode, Integer teacherCode) throws FenixServiceException {
+    protected Boolean run(String infoExecutionCourseCode, String teacherCode) throws FenixServiceException {
 
-        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherCode);
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourseCode);
+        Teacher teacher = AbstractDomainObject.fromExternalId(teacherCode);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourseCode);
 
         Professorship professorshipToDelete = null;
         if (teacher != null) {
@@ -66,12 +66,14 @@ public class DeleteProfessorship {
             super(key);
         }
     }
+
     // Service Invokers migrated from Berserk
 
     private static final DeleteProfessorship serviceInstance = new DeleteProfessorship();
 
     @Service
-    public static Boolean runDeleteProfessorship(Integer infoExecutionCourseCode, Integer teacherCode) throws FenixServiceException  , NotAuthorizedException {
+    public static Boolean runDeleteProfessorship(String infoExecutionCourseCode, String teacherCode)
+            throws FenixServiceException, NotAuthorizedException {
         DeleteProfessorshipAuthorizationFilter.instance.execute(infoExecutionCourseCode, teacherCode);
         return serviceInstance.run(infoExecutionCourseCode, teacherCode);
     }

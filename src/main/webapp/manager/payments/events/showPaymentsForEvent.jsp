@@ -70,7 +70,7 @@
 			<fr:property name="columnClasses"
 				value=",,,aright,aright,aright,acenter" />
 				
-			<fr:property name="linkFormat(annul)" value="/paymentsManagement.do?method=prepareAnnulTransaction&amp;transactionId=${accountingTransaction.idInternal}&amp;eventId=${accountingTransaction.event.idInternal}" />
+			<fr:property name="linkFormat(annul)" value="/paymentsManagement.do?method=prepareAnnulTransaction&amp;transactionId=${accountingTransaction.externalId}&amp;eventId=${accountingTransaction.event.externalId}" />
 			<fr:property name="key(annul)" value="label.payments.annul" />
 			<fr:property name="bundle(annul)" value="MANAGER_RESOURCES" />
 			<fr:property name="order(annul)" value="0" />
@@ -183,7 +183,7 @@
 
 <br/><br/>
 
-<bean:define id="personId" name="event" property="person.idInternal" />
+<bean:define id="personId" name="event" property="person.externalId" />
 
 <fr:form
 	action="<%="/paymentsManagement.do?method=backToShowEvents&amp;personId=" + personId.toString()%>">

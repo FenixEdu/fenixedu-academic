@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
-<bean:define id="siteID" name="site" property="idInternal"/>
+<bean:define id="siteID" name="site" property="externalId"/>
 <bean:define id="actionName" name="siteActionName"/>
 <bean:define id="contextParam" name="siteContextParam"/>
 <bean:define id="contextParamValue" name="siteContextParamValue"/>

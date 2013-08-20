@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:define id="activityId" name="researchActivity" property="idInternal" toScope="request"/>
+<bean:define id="activityId" name="researchActivity" property="externalId" toScope="request"/>
 <bean:define id="activityType" name="researchActivity" property="class.simpleName" />
 <bean:define id="parameter" value="<%= "activityId=" +  activityId + "&amp;forwardTo=" + "prepareEdit" + activityType + "Participants" %>" toScope="request"/>
 
@@ -90,7 +90,7 @@
 				<fr:layout>
 					<logic:notEqual name="lastRole" value="yes">
 						<fr:property name="link(remove)" value="<%= "/activities/editResearchActivity.do?method=removeParticipation&amp;" + parameter %>"/>
-						<fr:property name="param(remove)" value="participation.idInternal/participationId"/>
+						<fr:property name="param(remove)" value="participation.externalId/participationId"/>
 						<fr:property name="key(remove)" value="researcher.activity.remove"/>
 						<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 					</logic:notEqual>

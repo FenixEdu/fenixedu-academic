@@ -44,7 +44,7 @@ public class DeleteCurricularCourseScopeAction extends FenixAction {
 
         IUserView userView = UserView.getUser();
 
-        Integer scopeId = new Integer(request.getParameter("curricularCourseScopeId"));
+        String scopeId = request.getParameter("curricularCourseScopeId");
 
         try {
             DeleteCurricularCourseScope.run(scopeId);

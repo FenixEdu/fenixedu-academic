@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -25,7 +25,7 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
     public ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter() {
     }
 
-    public void execute(Integer candidateID) throws NotAuthorizedException {
+    public void execute(String candidateID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, candidateID)) || (id == null)
@@ -50,7 +50,7 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Integer candidateID) {
+    private boolean hasPrivilege(IUserView id, String candidateID) {
         if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }
@@ -59,8 +59,7 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
             final Person person = id.getPerson();
             // Read The ExecutionDegree
 
-            MasterDegreeCandidate masterDegreeCandidate =
-                    RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
+            MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
 
             if (masterDegreeCandidate == null) {
                 return false;

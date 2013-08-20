@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.research.DeletePersisten
 import net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteUnitFile;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.EditPersistentGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.EditUnitFile;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
@@ -248,18 +247,15 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
     }
 
     protected UnitFile getUnitFile(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "fid");
-        return (UnitFile) RootDomainObject.getInstance().readFileByOID(id);
+        return getDomainObject(request, "fid");
     }
 
     protected Unit getUnit(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "unitId");
-        return (Unit) RootDomainObject.getInstance().readPartyByOID(id);
+        return getDomainObject(request, "unitId");
     }
 
     protected PersistentGroupMembers getGroup(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "groupId");
-        return RootDomainObject.getInstance().readPersistentGroupMembersByOID(id);
+        return getDomainObject(request, "groupId");
     }
 
     protected PersistentGroupMembersBean getNewPersistentGroupBean(HttpServletRequest request) {

@@ -49,9 +49,9 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
     }
 
     @Override
-    public Integer getIdInternal() {
+    public String getExternalId() {
         final GenericEvent genericEvent = getGenericEvent();
-        return genericEvent == null ? null : genericEvent.getIdInternal();
+        return genericEvent == null ? null : genericEvent.getExternalId();
     }
 
     public String getTitle() {
@@ -101,7 +101,7 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
         final GenericEvent genericEvent = getGenericEvent();
         final PunctualRoomsOccupationRequest punctualRoomsOccupationRequest =
                 genericEvent == null ? null : getGenericEvent().getPunctualRoomsOccupationRequest();
-        return punctualRoomsOccupationRequest == null ? null : punctualRoomsOccupationRequest.getIdInternal().toString();
+        return punctualRoomsOccupationRequest == null ? null : punctualRoomsOccupationRequest.getExternalId().toString();
     }
 
     @Override

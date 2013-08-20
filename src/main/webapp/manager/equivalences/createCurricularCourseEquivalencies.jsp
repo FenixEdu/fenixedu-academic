@@ -25,7 +25,7 @@
 			<td class="listClasses">
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.oldDegreeID" property="oldDegreeID" onchange="this.form.method.value='prepareCreate';this.form.submit();">
 					<html:option value=""/>
-					<html:options collection="infoDegrees" labelProperty="name" property="idInternal"/>
+					<html:options collection="infoDegrees" labelProperty="name" property="externalId"/>
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message bundle="DEGREE_ADM_OFFICE" key="button.submit"/>
@@ -40,7 +40,7 @@
 				<td class="listClasses">
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.oldDegreeCurricularPlanID" property="oldDegreeCurricularPlanID" onchange="this.form.method.value='prepareCreate';this.form.submit();">
 						<html:option value=""/>
-						<html:options collection="oldInfoDegreeCurricularPlans" labelProperty="name" property="idInternal"/>
+						<html:options collection="oldInfoDegreeCurricularPlans" labelProperty="name" property="externalId"/>
 					</html:select>
 					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message bundle="DEGREE_ADM_OFFICE" key="button.submit"/>
@@ -56,7 +56,7 @@
 				<td class="listClasses">
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.oldCurricularCourseID" property="oldCurricularCourseID">
 						<html:option value=""/>
-						<html:options collection="oldInfoCurricularCourses" labelProperty="name" property="idInternal"/>
+						<html:options collection="oldInfoCurricularCourses" labelProperty="name" property="externalId"/>
 					</html:select>
 				</td>
 			</tr>
@@ -73,7 +73,7 @@
 			<td class="listClasses">
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeID" property="degreeID" disabled="true">
 					<html:option value=""/>
-					<html:options collection="infoDegrees" labelProperty="name" property="idInternal"/>
+					<html:options collection="infoDegrees" labelProperty="name" property="externalId"/>
 				</html:select>
 			</td>
 		</tr>
@@ -85,7 +85,7 @@
 				<td class="listClasses">
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlanID" property="degreeCurricularPlanID" disabled="true">
 						<html:option value=""/>
-						<html:options collection="infoDegreeCurricularPlans" labelProperty="name" property="idInternal"/>
+						<html:options collection="infoDegreeCurricularPlans" labelProperty="name" property="externalId"/>
 					</html:select>
 				</td>
 			</tr>
@@ -98,7 +98,7 @@
 				<td class="listClasses">
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularCourseID" property="curricularCourseID">
 						<html:option value=""/>
-						<html:options collection="infoCurricularCourses" labelProperty="name" property="idInternal"/>
+						<html:options collection="infoCurricularCourses" labelProperty="name" property="externalId"/>
 					</html:select>
 				</td>
 			</tr>

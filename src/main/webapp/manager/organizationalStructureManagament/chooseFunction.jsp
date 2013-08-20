@@ -62,7 +62,7 @@
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
 				<h:commandLink action="#{organizationalStructureBackingBean.associateInherentParentFunction}" value="#{bundle['button.choose']}">
-					<f:param id="principalFunctionID" name="principalFunctionID" value="#{function.idInternal}"/>
+					<f:param id="principalFunctionID" name="principalFunctionID" value="#{function.externalId}"/>
 				</h:commandLink>				
 			</h:column>
 		</h:dataTable>		

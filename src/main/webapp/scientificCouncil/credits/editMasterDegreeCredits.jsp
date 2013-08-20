@@ -155,13 +155,13 @@
 					
 									<logic:notEmpty name="masterDegreeService">										
 										<%	
-											hoursMap.put(professorship.getIdInternal().toString(), masterDegreeService.getHours());
-											creditsMap.put(professorship.getIdInternal().toString(), masterDegreeService.getCredits()); 
+											hoursMap.put(professorship.getExternalId().toString(), masterDegreeService.getHours());
+											creditsMap.put(professorship.getExternalId().toString(), masterDegreeService.getCredits()); 
 										%>											
 									</logic:notEmpty>
 																
-									<bean:define id="hours">hoursMap(<bean:write name="professorship" property="idInternal"/>)</bean:define>
-									<bean:define id="credits">creditsMap(<bean:write name="professorship" property="idInternal"/>)</bean:define>
+									<bean:define id="hours">hoursMap(<bean:write name="professorship" property="externalId"/>)</bean:define>
+									<bean:define id="credits">creditsMap(<bean:write name="professorship" property="externalId"/>)</bean:define>
 				
 									<logic:equal name="executionCourseTrio" property="first.value" value="true">								
 										<td><html:text alt='<%= hours %>' property='<%= hours %>' size="4" /></td>
@@ -182,10 +182,10 @@
 								<logic:equal name="isLastCellDone" value="false">
 									<td rowspan="<%= numOfProfessorships %>">
 										<logic:equal name="executionCourseTrio" property="first.value" value="true">																			
-											<html:link page="<%= "/readTeacherInCharge.do?degreeCurricularPlanId=" + executionDegree.getDegreeCurricularPlan().getIdInternal().toString() 
-												+ "&amp;degreeId=" + executionDegree.getDegreeCurricularPlan().getDegree().getIdInternal().toString()
-												+ "&amp;executionCourseId=" + executionCourse.getIdInternal().toString() %>"
-												paramId="curricularCourseId" paramName="masterDegreeCreditsDTO" paramProperty="curricularCourse.idInternal">
+											<html:link page="<%= "/readTeacherInCharge.do?degreeCurricularPlanId=" + executionDegree.getDegreeCurricularPlan().getExternalId().toString() 
+												+ "&amp;degreeId=" + executionDegree.getDegreeCurricularPlan().getDegree().getExternalId().toString()
+												+ "&amp;executionCourseId=" + executionCourse.getExternalId().toString() %>"
+												paramId="curricularCourseId" paramName="masterDegreeCreditsDTO" paramProperty="curricularCourse.externalId">
 												<bean:message key="link.credits.masterDegree.edit.professorship"/>
 											</html:link>			
 										</logic:equal>	
@@ -208,10 +208,10 @@
 								<td></td>
 								<td>
 									<logic:equal name="executionCourseTrio" property="first.value" value="true">								
-										<html:link page="<%= "/readTeacherInCharge.do?degreeCurricularPlanId=" + executionDegree.getDegreeCurricularPlan().getIdInternal().toString() 
-												+ "&amp;degreeId=" + executionDegree.getDegreeCurricularPlan().getDegree().getIdInternal().toString()
-												+ "&amp;executionCourseId=" + executionCourse.getIdInternal().toString() %>"
-												paramId="curricularCourseId" paramName="masterDegreeCreditsDTO" paramProperty="curricularCourse.idInternal">
+										<html:link page="<%= "/readTeacherInCharge.do?degreeCurricularPlanId=" + executionDegree.getDegreeCurricularPlan().getExternalId().toString() 
+												+ "&amp;degreeId=" + executionDegree.getDegreeCurricularPlan().getDegree().getExternalId().toString()
+												+ "&amp;executionCourseId=" + executionCourse.getExternalId().toString() %>"
+												paramId="curricularCourseId" paramName="masterDegreeCreditsDTO" paramProperty="curricularCourse.externalId">
 												<bean:message key="link.credits.masterDegree.edit.professorship"/>
 										</html:link>
 									</logic:equal>

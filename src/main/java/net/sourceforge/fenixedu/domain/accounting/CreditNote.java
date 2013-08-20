@@ -27,7 +27,7 @@ public class CreditNote extends CreditNote_Base {
         @Override
         public int compare(CreditNote leftCreditNote, CreditNote rightCreditNote) {
             int comparationResult = leftCreditNote.getNumber().compareTo(rightCreditNote.getNumber());
-            return (comparationResult == 0) ? leftCreditNote.getIdInternal().compareTo(rightCreditNote.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftCreditNote.getExternalId().compareTo(rightCreditNote.getExternalId()) : comparationResult;
         }
     };
 

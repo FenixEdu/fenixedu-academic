@@ -31,7 +31,7 @@
 		<bean:message key="button.save"/>
 	</html:submit>
 	<bean:define id="link">
-		/executionCourseShiftsPercentageManager.do?method=show&amp;teacherOID=<bean:write name="infoCreditsTeacher" property="infoTeacher.idInternal"/>
+		/executionCourseShiftsPercentageManager.do?method=show&amp;teacherOID=<bean:write name="infoCreditsTeacher" property="infoTeacher.externalId"/>
 	</bean:define>
 	<tiles:insert definition="teacher-professor-ships">
 		<tiles:put name="title" value="label.professorships"/>

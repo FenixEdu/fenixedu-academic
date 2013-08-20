@@ -38,7 +38,7 @@
 		<ul>
 		<logic:iterate id="theses" name="theses">
 			<li>
-				<html:link page="/viewDissertation.do?method=viewThesisForSupervisor" paramName="theses" paramProperty="idInternal" paramId="thesisID">
+				<html:link page="/viewDissertation.do?method=viewThesisForSupervisor" paramName="theses" paramProperty="externalId" paramId="thesisID">
 					<bean:write name="theses" property="finalTitle"/>
 				</html:link>
 				&nbsp;<strong><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="label.chooseDissertation.state"/>:</strong> <em><fr:view name="theses" property="state"/></em>

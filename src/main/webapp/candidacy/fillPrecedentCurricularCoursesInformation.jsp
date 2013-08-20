@@ -20,7 +20,7 @@ This page must be included using <%@ include file="/candidacy/fillPrecedentCurri
 
 --%>
 
-<bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
+<bean:define id="parentProcessId" name="parentProcess" property="externalId" />
 <bean:define id="processName" name="processName" />
 
 <logic:notEmpty name="individualCandidacyProcessBean" property="precedentDegreeType">

@@ -49,9 +49,9 @@
 				type="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion" />
 			<bean:define id="distributedTest" name="testQuestion" property="distributedTest"
 				type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest" />
-			<bean:define id="testCode" name="distributedTest" property="idInternal" />
+			<bean:define id="testCode" name="distributedTest" property="externalId" />
 
-			<bean:define id="objectCode" name="distributedTest" property="testScope.domainObject.idInternal" />
+			<bean:define id="objectCode" name="distributedTest" property="testScope.domainObject.externalId" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.distributedTestCode" property="distributedTestCode" value="<%= testCode.toString() %>" />
 

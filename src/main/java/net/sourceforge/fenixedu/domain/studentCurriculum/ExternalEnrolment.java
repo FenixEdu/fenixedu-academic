@@ -35,7 +35,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         @Override
         public int compare(ExternalEnrolment o1, ExternalEnrolment o2) {
             int result = o1.getName().compareTo(o2.getName());
-            return (result != 0) ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
+            return (result != 0) ? result : o1.getExternalId().compareTo(o2.getExternalId());
         }
     };
 

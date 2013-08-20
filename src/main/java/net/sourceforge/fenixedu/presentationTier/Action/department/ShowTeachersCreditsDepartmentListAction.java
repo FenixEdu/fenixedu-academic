@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -38,6 +39,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Ricardo Rodrigues
@@ -51,21 +53,21 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws NumberFormatException,  FenixServiceException, ParseException {
+            throws NumberFormatException, FenixServiceException, ParseException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
 
-        Integer executionPeriodID = (Integer) dynaActionForm.get("executionPeriodId");
+        String executionPeriodID = (String) dynaActionForm.get("executionPeriodId");
 
         ExecutionSemester executionSemester = null;
-        if (executionPeriodID == null) {
+        if (StringUtils.isEmpty(executionPeriodID)) {
             executionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
         } else {
-            executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+            executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
         }
 
-        dynaActionForm.set("executionPeriodId", executionSemester.getIdInternal());
+        dynaActionForm.set("executionPeriodId", executionSemester.getExternalId());
 
         List<TeacherWithCreditsDTO> teachersCredits = new ArrayList<TeacherWithCreditsDTO>();
         for (Department department : userView.getPerson().getManageableDepartmentCredits()) {
@@ -118,7 +120,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
         return orderedIterator;
     }
 
-    private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws  FenixServiceException {
+    private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws FenixServiceException {
         List<InfoExecutionPeriod> notClosedExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
 
         notClosedExecutionPeriods = ReadNotClosedExecutionPeriods.run();
@@ -137,7 +139,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
                 LabelValueBean labelValueBean = new LabelValueBean();
                 labelValueBean.setLabel(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - "
                         + infoExecutionPeriod.getSemester() + "º Semestre");
-                labelValueBean.setValue(infoExecutionPeriod.getIdInternal().toString());
+                labelValueBean.setValue(infoExecutionPeriod.getExternalId().toString());
                 executionPeriods.add(labelValueBean);
             }
         }

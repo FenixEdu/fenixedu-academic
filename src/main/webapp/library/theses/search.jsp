@@ -89,7 +89,7 @@ function check(e,v){
 				<fr:property name="sortBy" value="<%=sortedBy%>" />
 
 				<fr:property name="link(verify)" value="<%="/theses/validate.do?method=view" + request.getAttribute("searchArgs") %>" />
-				<fr:property name="param(verify)" value="idInternal/thesisID" />
+				<fr:property name="param(verify)" value="externalId/thesisID" />
 				<fr:property name="key(verify)" value="link.verify" />
                 <fr:property name="bundle(verify)" value="COMMON_RESOURCES"/>
 			</fr:layout>

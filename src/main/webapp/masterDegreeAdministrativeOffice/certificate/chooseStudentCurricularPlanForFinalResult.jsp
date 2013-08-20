@@ -16,7 +16,7 @@
 		 (<bean:write name="registration" property="number"/>)
 		<br/>
 		<logic:iterate id="studentCurricularPlan" name="registration" property="studentCurricularPlans">
-			<bean:define id="studentCurricularPlanID" name="studentCurricularPlan" property="idInternal" />
+			<bean:define id="studentCurricularPlanID" name="studentCurricularPlan" property="externalId" />
 			- <html:link page="<%= "/chooseFinalResultInfoAction.do?method=chooseFinal&amp;studentCurricularPlanID=" + studentCurricularPlanID %>" ><bean:write name="studentCurricularPlan" property="name"/></html:link>
 			<br/>
 		</logic:iterate>

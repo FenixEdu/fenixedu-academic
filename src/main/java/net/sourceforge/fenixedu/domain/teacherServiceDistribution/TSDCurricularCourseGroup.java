@@ -84,7 +84,7 @@ public class TSDCurricularCourseGroup extends TSDCurricularCourseGroup_Base {
         try {
             return getGroupName();
         } catch (Throwable e) {
-            return getIdInternal().toString();
+            return getExternalId().toString();
         }
     }
 

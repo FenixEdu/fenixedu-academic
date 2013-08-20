@@ -18,7 +18,7 @@
 	<bean:write name="backLink" filter="false"/>
 </logic:present>
 
-<bean:define id="siteId" name="site" property="idInternal"/>
+<bean:define id="siteId" name="site" property="externalId"/>
 
 <div class="infoop2 mbottom15">
     <p class="mvert0">
@@ -47,7 +47,7 @@
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle1 thlight mtop05"/>
             <fr:property name="link(delete)" value="<%= String.format("%s?method=removeManager&amp;%s", actionName, context) %>"/>
-            <fr:property name="param(delete)" value="idInternal/managerID"/>
+            <fr:property name="param(delete)" value="externalId/managerID"/>
             <fr:property name="key(delete)" value="link.unitSite.managers.remove"/>
             <fr:property name="bundle(delete)" value="SITE_RESOURCES"/>
         </fr:layout>

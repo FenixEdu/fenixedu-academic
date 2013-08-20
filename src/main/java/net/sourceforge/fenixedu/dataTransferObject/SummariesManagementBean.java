@@ -237,7 +237,7 @@ public class SummariesManagementBean implements Serializable {
 
     public String getTeacherChoose() {
         if (getProfessorship() != null) {
-            return getProfessorship().getIdInternal().toString();
+            return getProfessorship().getExternalId().toString();
         } else if (!StringUtils.isEmpty(getTeacherName())) {
             return "-1";
         } else if (getTeacher() != null) {

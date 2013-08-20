@@ -32,11 +32,11 @@
 		<bean:define id="parameters">&amp;<bean:write name="parameters"/></bean:define>
 	</logic:notEmpty>
 
-	<bean:define id="registrationId" name="registration" property="idInternal" />
+	<bean:define id="registrationId" name="registration" property="externalId" />
 	<fr:form action="<%= contextInformation.toString() + "registrationId=" + registrationId + parameters %>">
 		<html:hidden property="method" value="createExternalEnrolments"/>
 		
-		<bean:define id="externalUnitId" name="externalUnit" property="idInternal" />
+		<bean:define id="externalUnitId" name="externalUnit" property="externalId" />
 		<html:hidden property="externalUnitId" value="<%= externalUnitId.toString() %>"/>
 		
 		<fr:hasMessages for="externalCurricularCourseEnrolmentBeans" type="validation">

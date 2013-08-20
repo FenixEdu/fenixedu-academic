@@ -26,7 +26,7 @@
    	     	<logic:iterate id="masterDegree" name="masterDegreeList">
    	     	<li>
         	<bean:define id="masterDegreeLink">
-        		<bean:write name="link"/><bean:write name="masterDegree" property="idInternal"/>
+        		<bean:write name="link"/><bean:write name="masterDegree" property="externalId"/>
         	</bean:define>
         	<html:link page='<%= pageContext.findAttribute("masterDegreeLink").toString() %>'>
 				<bean:write name="masterDegree" property="nome"/> - 

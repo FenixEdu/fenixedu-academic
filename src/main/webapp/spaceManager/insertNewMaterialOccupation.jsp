@@ -14,7 +14,7 @@
 	<bean:define id="selectedSpace" name="materialTypeBean" property="spaceInformation.space" toScope="request"/>
 	<jsp:include page="spaceCrumbs.jsp"/>	
 
-	<bean:define id="spaceInformationID" name="materialTypeBean" property="spaceInformation.idInternal"/>
+	<bean:define id="spaceInformationID" name="materialTypeBean" property="spaceInformation.externalId"/>
 	<bean:define id="showMaterialSpaceOccupationLink">/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0&spaceInformationID=<bean:write name="spaceInformationID"/></bean:define>
 	<bean:define id="prepareInsertMaterialOccupationLink">/manageMaterialSpaceOccupations.do?method=prepareInsertMaterialOccupation&page=0</bean:define>	
 

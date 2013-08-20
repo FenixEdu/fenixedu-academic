@@ -50,8 +50,7 @@ public class PricesManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
 
         request.setAttribute("executionYearBean", new ExecutionYearBean(ExecutionYear.readCurrentExecutionYear()));
-        request.setAttribute("postingRule",
-                rootDomainObject.readPostingRuleByOID(getRequestParameterAsInteger(request, "postingRuleId")));
+        request.setAttribute("postingRule", getDomainObject(request, "postingRuleId"));
         return mapping.findForward("editPrice");
     }
 

@@ -33,7 +33,7 @@
 	<logic:present name="infoStudentTestQuestionList">
 		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion"/>
 		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
-		<bean:define id="distributedTestCode" name="distributedTest" property="idInternal"/>
+		<bean:define id="distributedTestCode" name="distributedTest" property="externalId"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testInformation" property="testInformation" name="distributedTest" property="testInformation"/>
 		<bean:define id="testType" name="distributedTest" property="testType.type"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testType" property="testType" value="<%=testType.toString()%>"/>
@@ -59,7 +59,7 @@
 		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion" indexId="questionIndex">
 			<bean:define id="question" name="testQuestion" property="question" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion"/>
 			<bean:define id="questionType" name="question" property="questionType.type"/>
-			<bean:define id="questionCode" name="question" property="idInternal"/>
+			<bean:define id="questionCode" name="question" property="externalId"/>
 			<html:hidden alt='<%="questionCode"+questionIndex%>' property='<%="questionCode"+questionIndex%>' value="<%= questionCode.toString() %>"/>
 			<html:hidden alt='<%="questionType"+questionIndex%>' property='<%="questionType"+questionIndex%>' value="<%= questionType.toString() %>"/>
 			<%if(((Integer)questionType).intValue()==1 ){ %>
@@ -84,7 +84,7 @@
 			
 		</logic:iterate>
 		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
-		<bean:define id="distributedTestCode" name="distributedTest" property="idInternal"/>
+		<bean:define id="distributedTestCode" name="distributedTest" property="externalId"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testInformation" property="testInformation" name="distributedTest" property="testInformation"/>
 		<bean:define id="testType" name="distributedTest" property="testType.type"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testType" property="testType" value="<%=testType.toString()%>"/>

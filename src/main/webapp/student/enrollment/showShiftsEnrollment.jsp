@@ -28,7 +28,7 @@
 
 <logic:present name="registration">
 
-<bean:define id="registrationOID" name="registration" property="idInternal" />
+<bean:define id="registrationOID" name="registration" property="externalId" />
 
 <div>
 	<bean:define id="link"><bean:message bundle="STUDENT_RESOURCES" key="link.shift.enrolement.edit"/></bean:define>
@@ -91,7 +91,7 @@
 
 			</tr>			
 			<logic:iterate id="shiftToEnrol" name="shiftsToEnrolFromEnroledExecutionCourses" type="net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol">
-				<bean:define id="executionCourseID" name="shiftToEnrol" property="executionCourse.idInternal"/>
+				<bean:define id="executionCourseID" name="shiftToEnrol" property="executionCourse.externalId"/>
 				<tr>
 					<td class="disciplina">
 						<bean:write name="shiftToEnrol" property="executionCourse.nome"/> - <bean:write name="shiftToEnrol" property="executionCourse.sigla"/>
@@ -244,7 +244,7 @@
 				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.tutorialOrientation"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.tutorialOrientation"/></th>
 			</tr>			
 			<logic:iterate id="shiftToEnrol" name="shiftsToEnrolFromUnenroledExecutionCourses" type="net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol">
-				<bean:define id="executionCourseID" name="shiftToEnrol" property="executionCourse.idInternal"/>
+				<bean:define id="executionCourseID" name="shiftToEnrol" property="executionCourse.externalId"/>
 				<tr>
 					<td class="disciplina">
 						<bean:write name="shiftToEnrol" property="executionCourse.nome"/> - <bean:write name="shiftToEnrol" property="executionCourse.sigla"/>
@@ -409,7 +409,7 @@
 				<th class="listClasses-header" style="text-align:left" colspan='6'>
 					<bean:message bundle="STUDENT_RESOURCES" key="property.turno" />:</b>&nbsp;
 					<bean:write name="shift" property="nome" />
-					<bean:define id="shiftId" name="shift" property="idInternal" />
+					<bean:define id="shiftId" name="shift" property="externalId" />
 					-
 					<html:link page="<%= "/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&amp;registrationOID="
 												+ registrationOID.toString()

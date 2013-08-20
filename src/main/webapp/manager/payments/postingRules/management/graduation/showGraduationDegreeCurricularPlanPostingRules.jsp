@@ -16,7 +16,7 @@
 <bean:define id="className" name="degreeCurricularPlan"
 	property="class.simpleName" />
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan"
-	property="idInternal" />
+	property="externalId" />
 	
 <logic:messagesPresent message="true">
 	<ul class="nobullet list6">
@@ -34,7 +34,7 @@
 		<fr:property name="sortBy" value="eventType=asc,startDate=desc" />		
 		
 		<fr:property name="linkFormat(delete)"
-			value="<%="/postingRules.do?method=deleteGraduationDegreeCurricularPlanPostingRule&amp;postingRuleId=${idInternal}&amp;degreeCurricularPlanId=" + degreeCurricularPlanId%>" />
+			value="<%="/postingRules.do?method=deleteGraduationDegreeCurricularPlanPostingRule&amp;postingRuleId=${externalId}&amp;degreeCurricularPlanId=" + degreeCurricularPlanId%>" />
 		<fr:property name="key(delete)" value="label.delete" />
 		<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
 		<fr:property name="visibleIf(delete)" value="mostRecent" />

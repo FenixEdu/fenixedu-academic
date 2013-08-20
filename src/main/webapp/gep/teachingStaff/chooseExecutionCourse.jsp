@@ -29,7 +29,7 @@
 							<bean:write name="CurricularCourse" property="degreeCurricularPlan.name" />, 					
 						</logic:iterate>
 					</td>
-					<bean:define id="executionCourseID" name="executionCourse" property="idInternal" ></bean:define>
+					<bean:define id="executionCourseID" name="executionCourse" property="externalId" ></bean:define>
 					<td>
 						<html:link page='<%= "/teachingStaff.do?method=viewTeachingStaff&executionCourseID=" + executionCourseID %>'>
 							Editar Corpo Docente

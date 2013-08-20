@@ -8,7 +8,7 @@
 <em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em>
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.prizes"/></h2>
 
-<bean:define id="prizeID" name="prize" property="idInternal"/>
+<bean:define id="prizeID" name="prize" property="externalId"/>
 <ul>
 		<li>
 			<html:link page="/prizes/prizeManagement.do?method=listPrizes">
@@ -59,6 +59,6 @@
 		<fr:property name="columnClasses" value="width10em, width50em"/>
 		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 	</fr:layout>
-	<fr:destination name="view.publication" path="/showResearchResult.do?method=showPublication&resultId=${idInternal}"/> 
-	<fr:destination name="view.patent" path="/resultPatents/showPatent.do?resultId=${idInternal}"/> 
+	<fr:destination name="view.publication" path="/showResearchResult.do?method=showPublication&resultId=${externalId}"/> 
+	<fr:destination name="view.patent" path="/resultPatents/showPatent.do?resultId=${externalId}"/> 
 </fr:view>

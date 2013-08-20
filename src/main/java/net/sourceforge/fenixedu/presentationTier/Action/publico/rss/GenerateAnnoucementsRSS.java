@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "publico", path = "/announcementsRSS", scope = "session")
 public class GenerateAnnoucementsRSS extends FenixDispatchAction {
@@ -20,16 +21,15 @@ public class GenerateAnnoucementsRSS extends FenixDispatchAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         final String executionCourseIdString = request.getParameter("id");
-        final Integer executionCourseId = Integer.valueOf(executionCourseIdString);
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseIdString);
         if (executionCourse == null) {
             return forward("/publico/notFound.do");
         }
         final ExecutionCourseAnnouncementBoard announcementBoard = executionCourse.getBoard();
         if (announcementBoard == null) {
-            return forward("/publico/executionCourse.do?method=notFound&executionCourseID=" + executionCourse.getIdInternal());
+            return forward("/publico/executionCourse.do?method=notFound&executionCourseID=" + executionCourse.getExternalId());
         }
-        return forward("/external/announcementsRSS.do?announcementBoardId=" + announcementBoard.getIdInternal());
+        return forward("/external/announcementsRSS.do?announcementBoardId=" + announcementBoard.getExternalId());
     }
 
     private ActionForward forward(String purl) {

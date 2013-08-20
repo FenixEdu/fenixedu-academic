@@ -44,9 +44,9 @@
 		<tr>
 			<logic:empty name="shiftStudentGroupEntry" property="key">
 				<td  class="listClasses">
-					<bean:define id="url">/executionCourse.do?method=studentGroupsByShift&groupingID=<bean:write name="grouping" property="idInternal"/></bean:define>
+					<bean:define id="url">/executionCourse.do?method=studentGroupsByShift&groupingID=<bean:write name="grouping" property="externalId"/></bean:define>
 					<html:link page="<%= url %>"
-							paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+							paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 						<bean:message key="message.without.shift"/>
 					</html:link>	
 				</td>
@@ -67,9 +67,9 @@
 				<bean:define id="shift" type="net.sourceforge.fenixedu.domain.Shift" name="shiftStudentGroupEntry" property="key"/>
 				<bean:define id="studentGroups" name="shiftStudentGroupEntry" property="value"/>
 				<td  class="listClasses" rowspan="<%= shift.getAssociatedLessons().size() %>">
-					<bean:define id="url">/executionCourse.do?method=studentGroupsByShift&groupingID=<bean:write name="grouping" property="idInternal"/>&amp;shiftID=<bean:write name="shift" property="idInternal"/></bean:define>
+					<bean:define id="url">/executionCourse.do?method=studentGroupsByShift&groupingID=<bean:write name="grouping" property="externalId"/>&amp;shiftID=<bean:write name="shift" property="externalId"/></bean:define>
 					<html:link page="<%= url %>"
-							paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+							paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 						<bean:write name="shift" property="nome"/>
 					</html:link>
 				</td>
@@ -96,9 +96,9 @@
 			</logic:notEmpty>
 	 		<td class="listClasses">
 				<logic:iterate id="studentGroup" name="studentGroups">
-					<bean:define id="urlGroup">/executionCourse.do?method=studentGroup&studentGroupID=<bean:write name="studentGroup" property="idInternal"/></bean:define>
+					<bean:define id="urlGroup">/executionCourse.do?method=studentGroup&studentGroupID=<bean:write name="studentGroup" property="externalId"/></bean:define>
 					<html:link page="<%= urlGroup %>"
-							paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+							paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 						<bean:write name="studentGroup" property="groupNumber"/>
 					</html:link>
 				</logic:iterate>

@@ -18,8 +18,8 @@
 </table>
 
 <ul style="list-style-type: square;">
-	<li><html:link module="/manager" module="/manager" page="/createEditCompetenceCourse.do?method=prepareEdit" paramId="competenceCourse" paramName="competenceCourse" paramProperty="idInternal"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.competenceCourse"/></html:link></li>
-	<li><html:link module="/manager" module="/manager" page="/curricularCoursesCompetenceCourse.do?method=readDegrees" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="idInternal"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.associate.curricularCourses"/></html:link></li>
+	<li><html:link module="/manager" module="/manager" page="/createEditCompetenceCourse.do?method=prepareEdit" paramId="competenceCourse" paramName="competenceCourse" paramProperty="externalId"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.competenceCourse"/></html:link></li>
+	<li><html:link module="/manager" module="/manager" page="/curricularCoursesCompetenceCourse.do?method=readDegrees" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="externalId"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.associate.curricularCourses"/></html:link></li>
 </ul>
 
 <br/>
@@ -50,8 +50,8 @@
 <logic:notEmpty name="competenceCourse" property="associatedCurricularCourses">
 	<html:form action="/curricularCoursesCompetenceCourse">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="removeFromCompetenceCourse"/>
-		<bean:define id="idInternal" name="competenceCourse" property="idInternal"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.competenceCourseID" property="competenceCourseID" value='<%=idInternal.toString()%>'/>
+		<bean:define id="externalId" name="competenceCourse" property="externalId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.competenceCourseID" property="competenceCourseID" value='<%=externalId.toString()%>'/>
 		<table width="100%" cellpadding="0" border="0">
 			<tr>
 				<th class="listClasses-header">
@@ -68,7 +68,7 @@
 				<tr>
 					<td class="listClasses">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularCoursesIds" property="curricularCoursesIds">
-							<bean:write name="curricularCourse" property="idInternal"/>
+							<bean:write name="curricularCourse" property="externalId"/>
 						</html:multibox>
 					</td>		
 					<td class="listClasses"><bean:write name="curricularCourse" property="code"/>

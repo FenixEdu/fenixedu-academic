@@ -62,7 +62,7 @@
 		<logic:notEmpty name="lastFiveAnnouncements">		    	
 				<ul class="more-announc">
 				<logic:iterate id="announcement" name="lastFiveAnnouncements">
-					<bean:define id="announcementId" name ="announcement" property="idInternal" />
+					<bean:define id="announcementId" name ="announcement" property="externalId" />
 					<li class="more-announc"><span class="more-announc-date">
 						<fr:view name="announcement" property="lastModification"/> - </span>
 						<html:link page="<%="/announcementManagement.do?method=viewAnnouncement&amp;executionCourseID=" + request.getAttribute("executionCourseID") + "&amp;announcementId=" + announcementId %>">

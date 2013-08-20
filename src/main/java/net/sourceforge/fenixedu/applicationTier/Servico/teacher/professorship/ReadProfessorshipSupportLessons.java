@@ -15,22 +15,22 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSup
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipSupportLessonsDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author jpvl
  */
 public class ReadProfessorshipSupportLessons {
 
-    protected ProfessorshipSupportLessonsDTO run(Integer teacherId, Integer executionCourseId) throws FenixServiceException {
+    protected ProfessorshipSupportLessonsDTO run(String teacherId, String executionCourseId) throws FenixServiceException {
 
         final ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = new ProfessorshipSupportLessonsDTO();
 
-        final Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherId);
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        final Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         final Professorship professorship = (teacher != null) ? teacher.getProfessorshipByExecutionCourse(executionCourse) : null;
 
         professorshipSupportLessonsDTO.setInfoProfessorship(InfoProfessorship.newInfoFromDomain(professorship));
@@ -50,7 +50,7 @@ public class ReadProfessorshipSupportLessons {
     private static final ReadProfessorshipSupportLessons serviceInstance = new ReadProfessorshipSupportLessons();
 
     @Service
-    public static ProfessorshipSupportLessonsDTO runReadProfessorshipSupportLessons(Integer teacherId, Integer executionCourseId)
+    public static ProfessorshipSupportLessonsDTO runReadProfessorshipSupportLessons(String teacherId, String executionCourseId)
             throws FenixServiceException, NotAuthorizedException {
         CreditsServiceWithTeacherIdArgumentAuthorization.instance.execute(teacherId);
         return serviceInstance.run(teacherId, executionCourseId);

@@ -31,6 +31,7 @@ import org.apache.struts.util.LabelValueBean;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author João Mota
@@ -62,14 +63,14 @@ public class ViewClassesActionNew extends FenixContextAction {
         request.setAttribute("index", index);
 
         // degreeID
-        Integer degreeId = (Integer) request.getAttribute("degreeID");
+        String degreeId = (String) request.getAttribute("degreeID");
         request.setAttribute("degreeID", degreeId);
 
         // degreeCurricularPlanID
-        Integer degreeCurricularPlanId = (Integer) request.getAttribute("degreeCurricularPlanID");
+        String degreeCurricularPlanId = (String) request.getAttribute("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-        if (!degreeCurricularPlan.getDegree().getIdInternal().equals(degreeId)) {
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        if (!degreeCurricularPlan.getDegree().getExternalId().equals(degreeId)) {
             throw new FenixActionException();
         } else {
             request.setAttribute("degree", degreeCurricularPlan.getDegree());
@@ -85,17 +86,16 @@ public class ViewClassesActionNew extends FenixContextAction {
 
         // indice
         final DynaActionForm escolherContextoForm = (DynaActionForm) form;
-        Integer indice = (Integer) escolherContextoForm.get("indice");
+        String indice = (String) escolherContextoForm.get("indice");
         escolherContextoForm.set("indice", indice);
         request.setAttribute("indice", indice);
 
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
 
-        final ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
         ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionSemester.getExecutionYear());
         if (executionDegree != null) {
             // infoExecutionDegree

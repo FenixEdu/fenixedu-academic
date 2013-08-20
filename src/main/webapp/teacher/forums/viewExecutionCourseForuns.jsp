@@ -12,13 +12,13 @@
 </p>
 
 <logic:notEmpty name="foruns">
-	<bean:define id="executionCourseId" name="executionCourse" property="idInternal" />
+	<bean:define id="executionCourseId" name="executionCourse" property="externalId" />
 	
 	<logic:notEmpty name="executionCourse" property="foruns">
 		<logic:iterate id="executionCourseForum" name="executionCourse" property="foruns">
 			<bean:size id="threadsCount" name="executionCourseForum" property="conversationThreads"/>
 			<p>
-				<html:link action="<%="/executionCourseForumManagement.do?method=viewForum&executionCourseID=" + executionCourseId%>" paramId="forumId" paramName="executionCourseForum" paramProperty="idInternal">
+				<html:link action="<%="/executionCourseForumManagement.do?method=viewForum&executionCourseID=" + executionCourseId%>" paramId="forumId" paramName="executionCourseForum" paramProperty="externalId">
 					<bean:write name="executionCourseForum" property="name"/>
 				</html:link>
 				<span class="color888"> (<bean:write name="threadsCount"/> tópicos)</span>
@@ -33,7 +33,7 @@
 			<fr:property name="subSchema" value="executionCourseForum.view.nameOnly"/>
 			<fr:property name="link(view)" value="<%="/executionCourseForumManagement.do?method=viewForum&executionCourseID=" + executionCourseId%>"/>
 			<fr:property name="key(view)" value="link.teacher.executionCourseManagement.foruns.viewForum"/>
-			<fr:property name="param(view)" value="idInternal/forumId"/>
+			<fr:property name="param(view)" value="externalId/forumId"/>
 		</fr:layout>
 	</fr:view>
 	--%>

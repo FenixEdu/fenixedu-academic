@@ -41,12 +41,12 @@ public class ShowCandidacyOptions extends FenixAction {
             throws FenixActionException {
         IUserView userView = getUserView(request);
         String seminaryIDString = request.getParameter("objectCode");
-        Integer seminaryID;
+        String seminaryID;
         if (seminaryIDString == null) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }
         try {
-            seminaryID = new Integer(seminaryIDString);
+            seminaryID = seminaryIDString;
         } catch (Exception ex) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }
@@ -63,7 +63,7 @@ public class ShowCandidacyOptions extends FenixAction {
                 InfoCurricularCourse curricularCourse = (InfoCurricularCourse) iterator.next();
                 for (Iterator equivalencyIterator = seminary.getEquivalencies().iterator(); equivalencyIterator.hasNext();) {
                     InfoEquivalency equivalency = (InfoEquivalency) equivalencyIterator.next();
-                    if (equivalency.getCurricularCourse().getIdInternal().equals(curricularCourse.getIdInternal())) {
+                    if (equivalency.getCurricularCourse().getExternalId().equals(curricularCourse.getExternalId())) {
                         avaliableEquivalencies.add(equivalency);
                         break;
                     }
@@ -71,7 +71,7 @@ public class ShowCandidacyOptions extends FenixAction {
             }
             seminary.setEquivalencies(avaliableEquivalencies);
             List candidacies =
-                    GetCandidaciesByStudentIDAndSeminaryID.runGetCandidaciesByStudentIDAndSeminaryID(student.getIdInternal(),
+                    GetCandidaciesByStudentIDAndSeminaryID.runGetCandidaciesByStudentIDAndSeminaryID(student.getExternalId(),
                             seminaryID);
             if (candidacies.size() >= seminary.getAllowedCandidaciesPerStudent().intValue()) {
                 addErrorMessage(request, "error.seminaries.candidaciesLimitReached", "error.seminaries.candidaciesLimitReached",

@@ -122,7 +122,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            executionDegreeLabels.add(new LabelValueBean(name, name + "#" + infoExecutionDegree.getIdInternal().toString()));
+            executionDegreeLabels.add(new LabelValueBean(name, name + "#" + infoExecutionDegree.getExternalId().toString()));
         }
         return executionDegreeLabels;
     }
@@ -143,14 +143,14 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareInsertGratuityData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response)  {
+            HttpServletResponse response) {
         IUserView userView = UserView.getUser();
         DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
         ActionErrors errors = new ActionErrors();
 
         String executionYear = (String) gratuityForm.get("executionYear");
         String degree = (String) gratuityForm.get("degree");
-        Integer degreeId = Integer.valueOf(StringUtils.substringAfter(degree, "#"));
+        String degreeId = StringUtils.substringAfter(degree, "#");
         String degreeName = degree.substring(0, degree.indexOf("#"));
         gratuityForm.set("degreeName", degreeName);
         request.setAttribute("degreeName", degreeName);
@@ -180,8 +180,8 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
     }
 
     private void fillForm(DynaValidatorForm aForm, InfoGratuityValues infoGratuityValues) {
-        if (infoGratuityValues.getIdInternal() != null) {
-            aForm.set("gratuityId", infoGratuityValues.getIdInternal().toString());
+        if (infoGratuityValues.getExternalId() != null) {
+            aForm.set("gratuityId", infoGratuityValues.getExternalId().toString());
         }
         if (doubleFilled(infoGratuityValues.getAnualValue())) {
             aForm.set("annualValue", infoGratuityValues.getAnualValue().toString());

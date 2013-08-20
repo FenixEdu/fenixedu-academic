@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
@@ -26,29 +25,31 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class GenetareStudentTestForSimulation {
-    protected List run(Integer executionCourseId, Integer testId, String path, TestType testType,
+    protected List run(String executionCourseId, String testId, String path, TestType testType,
             CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation)
             throws FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
-        final Test test = RootDomainObject.getInstance().readTestByOID(testId);
+        final Test test = AbstractDomainObject.fromExternalId(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        if (executionCourse == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+
+        TestScope testScope = executionCourse.getTestScope();
         if (testScope == null) {
-            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
-            if (executionCourse == null) {
-                throw new InvalidArgumentsServiceException();
-            }
             testScope = new TestScope(executionCourse);
         }
 
         InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
-        infoDistributedTest.setIdInternal(testId);
+        infoDistributedTest.setExternalId(testId);
         infoDistributedTest.setInfoTestScope(InfoTestScope.newInfoFromDomain(testScope));
         infoDistributedTest.setTestType(testType);
         infoDistributedTest.setCorrectionAvailability(correctionAvailability);
@@ -109,7 +110,7 @@ public class GenetareStudentTestForSimulation {
     private static final GenetareStudentTestForSimulation serviceInstance = new GenetareStudentTestForSimulation();
 
     @Service
-    public static List runGenetareStudentTestForSimulation(Integer executionCourseId, Integer testId, String path,
+    public static List runGenetareStudentTestForSimulation(String executionCourseId, String testId, String path,
             TestType testType, CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan.ReadPosGradStudentCurricularPlans;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
@@ -36,19 +35,10 @@ public class SeeStudentCurricularPlansAction extends FenixAction {
             throws FenixActionException {
 
         String studentId1 = this.getFromRequest("studentId", request);
-        Integer studentId2 = null;
-
-        try {
-            studentId2 = new Integer(studentId1);
-        } catch (NumberFormatException e) {
-            throw new FenixActionException(e);
-        }
-
-        IUserView userView = getUserView(request);
 
         List studentCurricularPlansList = null;
         try {
-            studentCurricularPlansList = ReadPosGradStudentCurricularPlans.run(studentId2);
+            studentCurricularPlansList = ReadPosGradStudentCurricularPlans.run(studentId1);
             if (studentCurricularPlansList != null && !studentCurricularPlansList.isEmpty()) {
                 Collections.sort(studentCurricularPlansList);
             }

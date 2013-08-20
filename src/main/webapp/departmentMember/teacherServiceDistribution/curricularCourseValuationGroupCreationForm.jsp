@@ -15,12 +15,12 @@
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal() %>'>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId() %>'>
 			<bean:write name="tsdProcess" property="name"/>&nbsp;
 			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdCourse.do?method=prepareForTSDCourse&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdCourse.do?method=prepareForTSDCourse&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.tsdCourseService"/>
 		</html:link>
 		>
@@ -54,7 +54,7 @@
 				<td>
 					<logic:iterate name="availableTSDCurricularCourseToGroupList" id="tsdCurricularCourse">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.tsdCurricularCourseArray" property="tsdCurricularCourseArray">
-							<bean:write name="tsdCurricularCourse" property="idInternal"/>
+							<bean:write name="tsdCurricularCourse" property="externalId"/>
 						</html:multibox>
 						<bean:write name="tsdCurricularCourse" property="curricularCourse.degreeCurricularPlan.degree.sigla"/>		
 					</logic:iterate>
@@ -72,6 +72,6 @@
 </logic:notEmpty>
 <br/>
 <br/>
-<html:link page='<%= "/tsdCourse.do?method=prepareForTSDCourse&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+<html:link page='<%= "/tsdCourse.do?method=prepareForTSDCourse&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 	<bean:message key="link.back"/>
 </html:link>

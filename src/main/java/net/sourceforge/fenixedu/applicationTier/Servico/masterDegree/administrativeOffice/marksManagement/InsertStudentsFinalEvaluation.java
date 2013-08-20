@@ -5,9 +5,9 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertStudentsFinalEvaluation {
 
@@ -20,7 +20,7 @@ public class InsertStudentsFinalEvaluation {
         }
 
         final EnrolmentEvaluation enrolmentEvaluation =
-                RootDomainObject.getInstance().readEnrolmentEvaluationByOID(infoEnrolmentEvaluation.getIdInternal());
+                AbstractDomainObject.fromExternalId(infoEnrolmentEvaluation.getExternalId());
         enrolmentEvaluation.insertStudentFinalEvaluationForMasterDegree(infoEnrolmentEvaluation.getGradeValue(),
                 teacher.getPerson(), evaluationDate);
     }

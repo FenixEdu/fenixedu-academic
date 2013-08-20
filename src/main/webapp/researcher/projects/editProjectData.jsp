@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:define id="projectId" name="selectedProject" property="idInternal" />
+<bean:define id="projectId" name="selectedProject" property="externalId" />
 <em>Projectos</em> <!-- tobundle -->
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.data.useCaseTitle"/></h2>
 

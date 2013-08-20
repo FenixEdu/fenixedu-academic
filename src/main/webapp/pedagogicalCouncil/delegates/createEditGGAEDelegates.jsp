@@ -34,12 +34,12 @@
 			<fr:property name="classes" value="tstyle1 thlight tdcenter mtop0"/>
 			<fr:property name="columnClasses" value="aleft,,width200px nowrap aleft,width200px nowrap aleft,aleft"/>
 			<fr:property name="link(add)" value="/delegatesManagement.do?method=prepareAddGGAEDelegate" />
-			<fr:property name="param(add)" value="ggaeDelegateFunction.idInternal/selectedGgaeFunction"/>
+			<fr:property name="param(add)" value="ggaeDelegateFunction.externalId/selectedGgaeFunction"/>
 			<fr:property name="key(add)" value="link.delegates.addDelegate"/>
 			<fr:property name="bundle(add)" value="PEDAGOGICAL_COUNCIL"/>
 			<fr:property name="visibleIfNot(add)" value="hasGgaeDelegate"/>
 			<fr:property name="link(remove)" value="/delegatesManagement.do?method=removeGGAEDelegate" />
-			<fr:property name="param(remove)" value="ggaeDelegate.idInternal/selectedDelegate,ggaeDelegateFunction.idInternal/selectedGgaeFunction"/>
+			<fr:property name="param(remove)" value="ggaeDelegate.externalId/selectedDelegate,ggaeDelegateFunction.externalId/selectedGgaeFunction"/>
 			<fr:property name="key(remove)" value="link.delegates.removeDelegate"/>
 			<fr:property name="bundle(remove)" value="PEDAGOGICAL_COUNCIL"/>
 			<fr:property name="visibleIf(remove)" value="hasGgaeDelegate"/>

@@ -9,13 +9,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEditor;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -33,7 +33,7 @@ public class EditCurricularCourse {
         String newNameEn = null;
         String newCode = null;
 
-        oldCurricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(newInfoCurricularCourse.getIdInternal());
+        oldCurricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(newInfoCurricularCourse.getExternalId());
 
         newName = newInfoCurricularCourse.getName();
         newNameEn = newInfoCurricularCourse.getNameEn();

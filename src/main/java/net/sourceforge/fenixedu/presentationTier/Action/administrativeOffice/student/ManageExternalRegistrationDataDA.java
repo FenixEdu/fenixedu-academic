@@ -44,14 +44,13 @@ public class ManageExternalRegistrationDataDA extends FenixDispatchAction {
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         executeFactoryMethod();
         return prepare(mapping, actionForm, request, response);
     }
 
     private Registration getAndTransportRegistration(final HttpServletRequest request) {
-        final Registration registration =
-                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
+        final Registration registration = getDomainObject(request, "registrationId");
         request.setAttribute("registration", registration);
         return registration;
     }

@@ -21,22 +21,23 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class CourseGroupReportBackingBean extends FenixBackingBean {
     private final ResourceBundle enumerationResources = getResourceBundle("resources/EnumerationResources");
     private InfoToExport infoToExport;
-    private boolean rootWasClicked;
+    private final boolean rootWasClicked;
     private String name = null;
-    private Integer courseGroupID;
-    private Map<Context, String> contextPaths = new HashMap<Context, String>();
+    private String courseGroupID;
+    private final Map<Context, String> contextPaths = new HashMap<Context, String>();
 
     private enum InfoToExport {
         CURRICULAR_STRUCTURE, STUDIES_PLAN;
     }
 
-    public CourseGroupReportBackingBean() throws  FenixServiceException {
+    public CourseGroupReportBackingBean() throws FenixServiceException {
         super();
         rootWasClicked = this.getDegreeCurricularPlan().getRoot().equals(this.getCourseGroup());
     }
@@ -45,27 +46,27 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         return rootWasClicked;
     }
 
-    public Integer getDegreeCurricularPlanID() {
-        return getAndHoldIntegerParameter("degreeCurricularPlanID");
+    public String getDegreeCurricularPlanID() {
+        return getAndHoldStringParameter("degreeCurricularPlanID");
     }
 
-    public DegreeCurricularPlan getDegreeCurricularPlan() throws  FenixServiceException {
-        return rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanID());
+    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixServiceException {
+        return AbstractDomainObject.fromExternalId(getDegreeCurricularPlanID());
     }
 
-    public Integer getCourseGroupID() {
-        return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldIntegerParameter("courseGroupID");
+    public String getCourseGroupID() {
+        return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldStringParameter("courseGroupID");
     }
 
-    public void setCourseGroupID(Integer courseGroupID) {
+    public void setCourseGroupID(String courseGroupID) {
         this.courseGroupID = courseGroupID;
     }
 
     public CourseGroup getCourseGroup() {
-        return (CourseGroup) rootDomainObject.readDegreeModuleByOID(getCourseGroupID());
+        return (CourseGroup) AbstractDomainObject.fromExternalId(getCourseGroupID());
     }
 
-    public String getName() throws  FenixServiceException {
+    public String getName() throws FenixServiceException {
         return (name == null && getCourseGroupID() != null) ? this.getCourseGroup().getName() : name;
     }
 
@@ -73,12 +74,12 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         this.name = name;
     }
 
-    public void exportCourseGroupCurricularStructureToExcel() throws  FenixServiceException {
+    public void exportCourseGroupCurricularStructureToExcel() throws FenixServiceException {
         infoToExport = InfoToExport.CURRICULAR_STRUCTURE;
         exportToExcel();
     }
 
-    public void exportCourseGroupStudiesPlanToExcel() throws  FenixServiceException {
+    public void exportCourseGroupStudiesPlanToExcel() throws FenixServiceException {
         infoToExport = InfoToExport.STUDIES_PLAN;
         exportToExcel();
     }
@@ -87,7 +88,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         return contextPaths;
     }
 
-    public void exportToExcel() throws  FenixServiceException {
+    public void exportToExcel() throws FenixServiceException {
         String filename = this.getDegreeCurricularPlan().getName().replace(" ", "_") + "-";
         filename += (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) ? "Estrutura_Curricular" : "Plano_de_Estudos";
         if (!rootWasClicked) {
@@ -102,8 +103,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         }
     }
 
-    private List<Context> contextsWithCurricularCoursesToList(CourseGroup startingPoint) throws 
-            FenixServiceException {
+    private List<Context> contextsWithCurricularCoursesToList(CourseGroup startingPoint) throws FenixServiceException {
         List<Context> result = new ArrayList<Context>();
         getContextPaths().clear();
         collectChildDegreeModules(result, startingPoint, startingPoint.getName());
@@ -111,7 +111,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     }
 
     private void collectChildDegreeModules(final List<Context> result, CourseGroup courseGroup, String previousPath)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         for (final Context context : courseGroup.getSortedChildContextsWithCurricularCourses()) {
             result.add(context);
             getContextPaths().put(context, previousPath);
@@ -122,7 +122,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         }
     }
 
-    private String getFileName(Date date) throws  FenixServiceException {
+    private String getFileName(Date date) throws FenixServiceException {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -133,7 +133,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         return (day + "_" + month + "_" + year + "-" + hour + ":" + minutes);
     }
 
-    private void exportToXls(String filename) throws IOException,  FenixServiceException {
+    private void exportToXls(String filename) throws IOException, FenixServiceException {
         this.getResponse().setContentType("application/vnd.ms-excel");
         this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
         ServletOutputStream outputStream = this.getResponse().getOutputStream();
@@ -158,7 +158,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         this.getResponse().flushBuffer();
     }
 
-    private void reportInfo(Spreadsheet spreadsheet) throws  FenixServiceException {
+    private void reportInfo(Spreadsheet spreadsheet) throws FenixServiceException {
         List<Context> contextsWithCurricularCourses = null;
 
         contextsWithCurricularCourses = contextsWithCurricularCoursesToList(this.getCourseGroup());
@@ -183,7 +183,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     }
 
     private void fillCurricularStructure(String courseGroupBeingReported, List<Context> contextsWithCurricularCourses,
-            final Spreadsheet spreadsheet) throws  FenixServiceException {
+            final Spreadsheet spreadsheet) throws FenixServiceException {
         Set<Unit> scientificAreaUnits = new HashSet<Unit>();
 
         for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
@@ -229,7 +229,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     }
 
     private void fillStudiesPlan(List<Context> contextsWithCurricularCourses, final Spreadsheet spreadsheet)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
             CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getChildDegreeModule();
             CurricularPeriod curricularPeriod = contextWithCurricularCourse.getCurricularPeriod();

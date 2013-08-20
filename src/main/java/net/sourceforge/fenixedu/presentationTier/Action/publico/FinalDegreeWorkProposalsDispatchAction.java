@@ -39,6 +39,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz
@@ -67,7 +68,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
         if (StringUtils.isEmpty(executionYearOID)) {
             InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(ExecutionYear.readCurrentExecutionYear());
             if (infoExecutionYear != null) {
-                executionYearOID = infoExecutionYear.getIdInternal().toString();
+                executionYearOID = infoExecutionYear.getExternalId().toString();
                 finalWorkForm.set("executionYearOID", executionYearOID);
                 request.setAttribute("finalDegreeWorksForm", finalWorkForm);
             }
@@ -78,7 +79,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
         degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
         degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
 
-        List infoExecutionDegrees = ReadExecutionDegreesByExecutionYearAndType.run(new Integer(executionYearOID), degreeTypes);
+        List infoExecutionDegrees = ReadExecutionDegreesByExecutionYearAndType.run(executionYearOID, degreeTypes);
         Collections.sort(infoExecutionDegrees, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
         return mapping.findForward("show-final-degree-work-list");
@@ -111,7 +112,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
 
         if (branchOID != null && !branchOID.equals("") && StringUtils.isNumeric(branchOID)) {
             Collection headers = (Collection) request.getAttribute("publishedFinalDegreeWorkProposalHeaders");
-            CollectionUtils.filter(headers, new FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE(new Integer(branchOID)));
+            CollectionUtils.filter(headers, new FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE(branchOID));
         }
     }
 
@@ -145,14 +146,14 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
         if (finalDegreeWorkProposalOIDString != null && !finalDegreeWorkProposalOIDString.equals("")
                 && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
 
-            final Integer finalDegreeWorkProposalOID = Integer.valueOf(finalDegreeWorkProposalOIDString);
-            final Proposal proposal = rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID);
+            final Proposal proposal = AbstractDomainObject.fromExternalId(finalDegreeWorkProposalOIDString);
 
             if (!proposal.canBeReadBy(getUserView(request))) {
                 return mapping.findForward("show-final-degree-work-proposal-not-published-page");
             }
 
-            InfoProposal infoProposal = ReadFinalDegreeWorkProposal.runReadFinalDegreeWorkProposal(finalDegreeWorkProposalOID);
+            InfoProposal infoProposal =
+                    ReadFinalDegreeWorkProposal.runReadFinalDegreeWorkProposal(finalDegreeWorkProposalOIDString);
             infoProposal.getExecutionDegree().setGetNextExecutionYear(true);
             request.setAttribute("finalDegreeWorkProposal", infoProposal);
         }
@@ -208,8 +209,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
             String executionDegreeOID, String sortBy) throws Exception {
         if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
 
-            List publishedFinalDegreeWorkProposalHeaders =
-                    ReadPublishedFinalDegreeWorkProposalHeaders.run(new Integer(executionDegreeOID));
+            List publishedFinalDegreeWorkProposalHeaders = ReadPublishedFinalDegreeWorkProposalHeaders.run(executionDegreeOID);
             Collections.sort(publishedFinalDegreeWorkProposalHeaders, new BeanComparator(sortBy));
             request.setAttribute("publishedFinalDegreeWorkProposalHeaders", publishedFinalDegreeWorkProposalHeaders);
         }
@@ -217,9 +217,9 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
 
     public class FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE implements Predicate {
 
-        Integer branchOID = null;
+        String branchOID = null;
 
-        public FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE(Integer branchOID) {
+        public FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE(String branchOID) {
             this.branchOID = branchOID;
         }
 
@@ -230,7 +230,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
 
             for (int i = 0; i < branches.size(); i++) {
                 InfoBranch branch = (InfoBranch) branches.get(i);
-                if (branchOID.equals(branch.getIdInternal())) {
+                if (branchOID.equals(branch.getExternalId())) {
                     return true;
                 }
             }

@@ -29,7 +29,7 @@
 		</logic:equal>
 			
 		<logic:notEmpty name="selectedSpace" property="space.writtenEvaluationSpaceOccupations">
-			<bean:define id="viewWrittenEvaluationsLink">/spaces/writtenEvaluationsByRoom.faces?academicInterval=<bean:write name="selectedSpace" property="academicInterval.resumedRepresentationInStringFormat"/>&selectedRoomID=<bean:write name="selectedSpace" property="space.idInternal"/></bean:define>				
+			<bean:define id="viewWrittenEvaluationsLink">/spaces/writtenEvaluationsByRoom.faces?academicInterval=<bean:write name="selectedSpace" property="academicInterval.resumedRepresentationInStringFormat"/>&selectedRoomID=<bean:write name="selectedSpace" property="space.externalId"/></bean:define>				
 			<li><html:link target="_blank" page="<%= viewWrittenEvaluationsLink %>"><bean:message key="link.view.written.evaluations"/></html:link></li>
 		</logic:notEmpty>
 	</ul>
@@ -51,7 +51,7 @@
 
 		<p class="mtop2 mbottom05"><b><bean:message key="label.selected.space.blueprint" bundle="DEFAULT"/></b></p>
 
-		<bean:define id="urlToImage"><%= request.getContextPath() %>/publico/findSpaces.do?method=viewSpaceBlueprint&amp;blueprintId=<bean:write name="mostRecentBlueprint" property="idInternal"/>&amp;viewSpaceIdentifications=true&amp;suroundingSpaceBlueprint=<bean:write name="suroundingSpaceBlueprint"/>&amp;spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>			
+		<bean:define id="urlToImage"><%= request.getContextPath() %>/publico/findSpaces.do?method=viewSpaceBlueprint&amp;blueprintId=<bean:write name="mostRecentBlueprint" property="externalId"/>&amp;viewSpaceIdentifications=true&amp;suroundingSpaceBlueprint=<bean:write name="suroundingSpaceBlueprint"/>&amp;spaceInformationID=<bean:write name="selectedSpaceInformation" property="externalId"/></bean:define>			
 		<div style="width: 710px; height: 510px; border: 1px solid #ccc; padding: 10px 5px 5px 10px;">
 			<div style="width: 700px; height: 500px; overflow: scroll;">
 				<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap" style="border: 1px solid #ddd; padding: 10px;"/>
@@ -64,7 +64,7 @@
 							<bean:define id="p3" name="blueprintTextRectangle" property="p3" />				
 							<bean:define id="p4" name="blueprintTextRectangle" property="p4" />							
 							<bean:define id="coords"><bean:write name="p1" property="x"/>,<bean:write name="p1" property="y"/>,<bean:write name="p2" property="x"/>,<bean:write name="p2" property="y"/>,<bean:write name="p3" property="x"/>,<bean:write name="p3" property="y"/>,<bean:write name="p4" property="x"/>,<bean:write name="p4" property="y"/></bean:define>				 									
-							<bean:define id="urlToCoords"><%= request.getContextPath() %>/publico/findSpaces.do?method=viewSpace&amp;spaceID=<bean:write name="blueprintSpace" property="idInternal"/>&amp;viewSpaceIdentifications=true</bean:define>
+							<bean:define id="urlToCoords"><%= request.getContextPath() %>/publico/findSpaces.do?method=viewSpace&amp;spaceID=<bean:write name="blueprintSpace" property="externalId"/>&amp;viewSpaceIdentifications=true</bean:define>
 							<area shape="poly" coords="<%= coords %>" href="<%= urlToCoords %>"/>									
 						</logic:iterate>										
 					</logic:iterate>					
@@ -83,7 +83,7 @@
 				<fr:property name="classes" value="tstyle2 thlight mtop05" />
 				<fr:property name="columnClasses" value="acenter,acenter,acenter" />					
 				<fr:property name="link(view)" value="/findSpaces.do?method=viewSpace" />
-				<fr:property name="param(view)" value="idInternal/spaceID" />
+				<fr:property name="param(view)" value="externalId/spaceID" />
 				<fr:property name="key(view)" value="link.view.space" />
 				<fr:property name="bundle(view)" value="DEFAULT" />
 				<fr:property name="order(view)" value="0" />								

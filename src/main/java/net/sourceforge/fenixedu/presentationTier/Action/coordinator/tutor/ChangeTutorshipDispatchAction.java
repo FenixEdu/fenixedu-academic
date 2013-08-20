@@ -38,8 +38,8 @@ public class ChangeTutorshipDispatchAction extends TutorManagementDispatchAction
 
     public ActionForward prepareChangeTutorshipsEndDates(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final Integer executionDegreeId = new Integer(getFromRequest(request, "executionDegreeId"));
-        final Integer degreeCurricularPlanID = new Integer(getFromRequest(request, "degreeCurricularPlanID"));
+        final String executionDegreeId = getFromRequest(request, "executionDegreeId");
+        final String degreeCurricularPlanID = getFromRequest(request, "degreeCurricularPlanID");
         final String teacherId = getFromRequest(request, "teacherId");
         final Teacher teacher = User.readUserByUserUId(teacherId).getPerson().getTeacher();
 

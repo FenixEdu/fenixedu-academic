@@ -33,7 +33,7 @@ public class ReadEmptyRoomsForExam {
         // TODO : checkthis
         throw new NotImplementedException();
         // List availableRooms =
-        // persistentRoom.readAvailableRooms(infoExam.getIdInternal());
+        // persistentRoom.readAvailableRooms(infoExam.getExternalId());
         // availableInfoRooms = (List) CollectionUtils.collect(availableRooms,
         // TRANSFORM_TO_INFOROOM);
         // return availableInfoRooms;

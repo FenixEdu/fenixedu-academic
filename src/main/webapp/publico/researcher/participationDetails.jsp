@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-	<bean:define id="activityId" name="researchActivity" property="idInternal"/>
+	<bean:define id="activityId" name="researchActivity" property="externalId"/>
 	<bean:define id="parameter" value="<%= "activityId=" + activityId %>"/>
 	<bean:define id="activityType" name="researchActivity" property="class.simpleName" />
 	<bean:define id="schema" value="<%= activityType + ".view-defaults" %>" type="java.lang.String" scope="request" />

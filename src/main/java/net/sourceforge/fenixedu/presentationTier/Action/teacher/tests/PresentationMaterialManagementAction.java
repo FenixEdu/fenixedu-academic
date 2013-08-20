@@ -72,9 +72,8 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareEditPresentationMaterials(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        Integer testElementId = getCodeFromRequest(request, "oid");
 
-        NewTestElement testElement = rootDomainObject.readNewTestElementByOID(testElementId);
+        NewTestElement testElement = getDomainObject(request, "oid");
 
         request.setAttribute("bean", new PresentationMaterialBean(testElement, request.getParameter("returnPath"),
                 getCodeFromRequest(request, "returnId"), request.getParameter("contextKey")));
@@ -84,9 +83,8 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
     public ActionForward editPresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        Integer testElementId = getCodeFromRequest(request, "oid");
 
-        NewTestElement testElement = rootDomainObject.readNewTestElementByOID(testElementId);
+        NewTestElement testElement = getDomainObject(request, "oid");
 
         request.setAttribute("bean", new PresentationMaterialBean(testElement, request.getParameter("returnPath"),
                 getCodeFromRequest(request, "returnId"), request.getParameter("contextKey")));
@@ -95,10 +93,9 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareDeletePresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Integer presentationMaterialId = getCodeFromRequest(request, "oid");
+            HttpServletResponse response) throws FenixServiceException {
 
-        NewPresentationMaterial presentationMaterial = rootDomainObject.readNewPresentationMaterialByOID(presentationMaterialId);
+        NewPresentationMaterial presentationMaterial = getDomainObject(request, "oid");
 
         request.setAttribute("presentationMaterial", presentationMaterial);
         request.setAttribute("bean",
@@ -109,12 +106,11 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deletePresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Integer presentationMaterialId = getCodeFromRequest(request, "oid");
+            HttpServletResponse response) throws FenixServiceException {
 
-        NewPresentationMaterial presentationMaterial = rootDomainObject.readNewPresentationMaterialByOID(presentationMaterialId);
+        NewPresentationMaterial presentationMaterial = getDomainObject(request, "oid");
 
-        request.setAttribute("oid", presentationMaterial.getTestElement().getIdInternal());
+        request.setAttribute("oid", presentationMaterial.getTestElement().getExternalId());
 
         if (presentationMaterial instanceof NewMathMlMaterial) {
             DeletePresentationMaterial.run((NewMathMlMaterial) presentationMaterial);
@@ -131,10 +127,9 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward switchPresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Integer presentationMaterialId = getCodeFromRequest(request, "oid");
+            HttpServletResponse response) throws FenixServiceException {
 
-        NewPresentationMaterial presentationMaterial = rootDomainObject.readNewPresentationMaterialByOID(presentationMaterialId);
+        NewPresentationMaterial presentationMaterial = getDomainObject(request, "oid");
 
         Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
@@ -148,7 +143,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward createPresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("edit-presentation-materials");
 
         bean.setPresentationMaterialType(null);
@@ -161,7 +156,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward createPictureMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IOException {
+            HttpServletResponse response) throws FenixServiceException, IOException {
         PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("create-picture-material");
 
         IUserView userView = getUserView(request);
@@ -179,7 +174,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward invalidCreatePresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("edit-presentation-materials");
 
         request.setAttribute("bean", bean);
@@ -188,7 +183,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward invalidCreatePictureMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("create-picture-material");
 
         request.setAttribute("bean", bean);
@@ -237,6 +232,6 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     private ActionForward getReturnAction(HttpServletRequest request, NewTestElement testElement) {
-        return new ActionForward(request.getParameter("returnTo") + "&oid=" + testElement.getIdInternal(), true);
+        return new ActionForward(request.getParameter("returnTo") + "&oid=" + testElement.getExternalId(), true);
     }
 }

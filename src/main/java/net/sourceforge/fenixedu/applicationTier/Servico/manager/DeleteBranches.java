@@ -9,10 +9,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -23,16 +23,16 @@ public class DeleteBranches {
     // delete a set of branches
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List run(List internalIds, Boolean forceDelete) throws FenixServiceException {
-        Iterator iter = internalIds.iterator();
+    public static List run(List<String> internalIds, Boolean forceDelete) throws FenixServiceException {
+        Iterator<String> iter = internalIds.iterator();
 
         List undeletedCodes = new ArrayList();
-        Integer internalId;
+        String internalId;
         Branch branch;
 
         while (iter.hasNext()) {
-            internalId = (Integer) iter.next();
-            branch = RootDomainObject.getInstance().readBranchByOID(internalId);
+            internalId = iter.next();
+            branch = AbstractDomainObject.fromExternalId(internalId);
             if (branch != null) {
                 try {
                     if (branch.getStudentCurricularPlans().isEmpty()) {

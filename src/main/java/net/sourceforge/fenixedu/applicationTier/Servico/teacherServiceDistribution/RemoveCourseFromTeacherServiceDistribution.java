@@ -1,24 +1,23 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class RemoveCourseFromTeacherServiceDistribution {
 
-    protected void run(Integer tsdId, Integer courseId) throws FenixServiceException {
+    protected void run(String tsdId, String courseId) throws FenixServiceException {
 
-        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
-        TSDCourse course = RootDomainObject.getInstance().readTSDCourseByOID(courseId);
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        TSDCourse course = AbstractDomainObject.fromExternalId(courseId);
         CompetenceCourse competenceCourse = course.getCompetenceCourse();
 
         if (course instanceof TSDVirtualCourseGroup) {
@@ -36,8 +35,8 @@ public class RemoveCourseFromTeacherServiceDistribution {
             new RemoveCourseFromTeacherServiceDistribution();
 
     @Service
-    public static void runRemoveCourseFromTeacherServiceDistribution(Integer tsdId, Integer courseId)
-            throws FenixServiceException, NotAuthorizedException {
+    public static void runRemoveCourseFromTeacherServiceDistribution(String tsdId, String courseId) throws FenixServiceException,
+            NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             serviceInstance.run(tsdId, courseId);

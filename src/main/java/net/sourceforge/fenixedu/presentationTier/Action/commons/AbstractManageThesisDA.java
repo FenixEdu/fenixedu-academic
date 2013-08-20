@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -44,12 +43,7 @@ public abstract class AbstractManageThesisDA extends FenixDispatchAction {
     }
 
     protected Thesis getThesis(HttpServletRequest request) {
-        Integer id = getId(request.getParameter("thesisID"));
-        if (id == null) {
-            return null;
-        } else {
-            return RootDomainObject.getInstance().readThesisByOID(id);
-        }
+        return getDomainObject(request, "thesisID");
     }
 
     public ActionForward changePersonType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

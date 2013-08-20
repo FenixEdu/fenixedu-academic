@@ -7,11 +7,11 @@
 
 <bean:define id="participations" name="result" property="orderedResultParticipations"/>
 <bean:define id="result" name="result"/>
-<bean:define id="resultId" name="result" property="idInternal"/>
+<bean:define id="resultId" name="result" property="externalId"/>
 <bean:define id="listSchema" name="listSchema" type="java.lang.String"/>
 <bean:define id="parameters" value="<%="resultId=" + resultId + "&amp;resultType=" + result.getClass().getSimpleName()%>"/>
 	<logic:present name="unit">
-	<bean:define id="unitID" name="unit" property="idInternal"/>
+	<bean:define id="unitID" name="unit" property="externalId"/>
 	<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
 </logic:present>
 <bean:define id="prepareEdit" value="<%="/resultParticipations/prepareEdit.do?" + parameters%>"/>
@@ -54,7 +54,7 @@
 			<fr:property name="sortBy" value="personOrder"/>
 			
 			<fr:property name="link(remove)" value="<%= remove %>"/>
-			<fr:property name="param(remove)" value="idInternal/participationId"/>
+			<fr:property name="param(remove)" value="externalId/participationId"/>
 			<fr:property name="key(remove)" value="link.remove"/>
 			<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 			<fr:property name="visibleIf(remove)" value="canBeRemoved"/>

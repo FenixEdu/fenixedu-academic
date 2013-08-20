@@ -110,7 +110,7 @@ public abstract class Space extends Space_Base {
         int compareTo =
                 space1.getSpaceInformation().getPresentationName().compareTo(space2.getSpaceInformation().getPresentationName());
         if (compareTo == 0) {
-            return space1.getIdInternal().compareTo(space2.getIdInternal());
+            return space1.getExternalId().compareTo(space2.getExternalId());
         }
         return compareTo;
     }
@@ -118,7 +118,7 @@ public abstract class Space extends Space_Base {
     private static int compareFloors(Floor floor1, Floor floor2) {
         int compareTo = floor1.getSpaceInformation().getLevel().compareTo(floor2.getSpaceInformation().getLevel());
         if (compareTo == 0) {
-            return floor1.getIdInternal().compareTo(floor2.getIdInternal());
+            return floor1.getExternalId().compareTo(floor2.getExternalId());
         }
         return compareTo;
     }

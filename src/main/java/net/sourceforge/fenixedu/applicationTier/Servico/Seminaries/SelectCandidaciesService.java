@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SelectCandidaciesService {
 
-    protected SelectCandidaciesDTO run(Boolean inEnrollmentPeriod, Integer seminaryID) throws FenixServiceException {
+    protected SelectCandidaciesDTO run(Boolean inEnrollmentPeriod, String seminaryID) throws FenixServiceException {
         SelectCandidaciesDTO result = new SelectCandidaciesDTO();
 
         List<Seminary> seminaries = RootDomainObject.getInstance().getSeminarys();
@@ -47,7 +47,7 @@ public class SelectCandidaciesService {
             candidacyDTO.setUsername(registration.getPerson().getUsername());
             candidacyDTO.setEmail(registration.getPerson().getName());
             candidacyDTO.setInfoClassification(getInfoClassification(studentCurricularPlan.getEnrolments()));
-            candidacyDTO.setCandidacyId(candidacy.getIdInternal());
+            candidacyDTO.setCandidacyId(candidacy.getExternalId());
             if (candidacy.getApproved() != null) {
                 candidacyDTO.setApproved(candidacy.getApproved());
             } else {
@@ -92,13 +92,13 @@ public class SelectCandidaciesService {
         return selectedSCP;
     }
 
-    private List<SeminaryCandidacy> getCandidacies(final Integer seminaryID, List seminaries) {
+    private List<SeminaryCandidacy> getCandidacies(final String seminaryID, List seminaries) {
         Seminary seminary = (Seminary) CollectionUtils.find(seminaries, new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
                 Seminary seminary = (Seminary) arg0;
-                return seminary.getIdInternal().equals(seminaryID);
+                return seminary.getExternalId().equals(seminaryID);
             }
         });
 
@@ -131,7 +131,7 @@ public class SelectCandidaciesService {
     private static final SelectCandidaciesService serviceInstance = new SelectCandidaciesService();
 
     @Service
-    public static SelectCandidaciesDTO runSelectCandidaciesService(Boolean inEnrollmentPeriod, Integer seminaryID)
+    public static SelectCandidaciesDTO runSelectCandidaciesService(Boolean inEnrollmentPeriod, String seminaryID)
             throws FenixServiceException, NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run(inEnrollmentPeriod, seminaryID);

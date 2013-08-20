@@ -14,17 +14,18 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadAvailableExecutionPeriods {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List run(List<Integer> unavailableExecutionPeriodsIDs) throws FenixServiceException {
+    public static List run(List<String> unavailableExecutionPeriodsIDs) throws FenixServiceException {
 
         final Collection<ExecutionSemester> filteredExecutionPeriods =
                 new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriodsSet());
-        for (final Integer executionPeriodID : unavailableExecutionPeriodsIDs) {
-            final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
+        for (final String executionPeriodID : unavailableExecutionPeriodsIDs) {
+            final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
             filteredExecutionPeriods.remove(executionSemester);
         }
         return (List) CollectionUtils.collect(filteredExecutionPeriods, TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);

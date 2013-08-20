@@ -15,8 +15,8 @@
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/alterStudentCurricularPlan">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
-<bean:define id="idInternal" name="studentCurricularPlan" property="idInternal"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCurricularPlanId" property="studentCurricularPlanId" value="<%= idInternal.toString() %>"/>
+<bean:define id="externalId" name="studentCurricularPlan" property="externalId"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCurricularPlanId" property="studentCurricularPlanId" value="<%= externalId.toString() %>"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <table border="0" cellspacing="3" cellpadding="10">
 	<tr>
@@ -30,7 +30,7 @@
 		<td>
 			<strong><bean:message key="label.student.branch" /></strong>
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.branch" property="branch">
-				<html:options collection="<%= PresentationConstants.BRANCH %>" property="idInternal" labelProperty="name"/>
+				<html:options collection="<%= PresentationConstants.BRANCH %>" property="externalId" labelProperty="name"/>
 		    </html:select>
 			<!--<logic:empty name="studentCurricularPlan" property="infoBranch">
 				<bean:message key="label.masterDegree.administrativeOffice.noBranch"/>
@@ -151,12 +151,12 @@
 									<bean:write name="infoEnrolment" property="infoExecutionPeriod.name" />
 								</td>
 								<td>
-									<bean:define  id="idEnrolment" name="infoEnrolment" property="idInternal"/>
-									<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.extraCurricularCourses" property="extraCurricularCourses"><bean:write name="infoEnrolment" property="idInternal"/> </html:multibox >&nbsp;
+									<bean:define  id="idEnrolment" name="infoEnrolment" property="externalId"/>
+									<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.extraCurricularCourses" property="extraCurricularCourses"><bean:write name="infoEnrolment" property="externalId"/> </html:multibox >&nbsp;
 								</td>
 								<td>
 									<logic:equal name="infoEnrolment" property="enrollmentState.name" value="ANNULED">
-										<bean:define  id="idEnrolment" name="infoEnrolment" property="idInternal" />
+										<bean:define  id="idEnrolment" name="infoEnrolment" property="externalId" />
 										<html:link page="<%= "/editStudentCurricularPlan.do?method=enrol&amp;enrolmentID=" + idEnrolment.toString() %>">
 											<bean:message key="label.enrol" bundle="APPLICATION_RESOURCES"/>
 										</html:link>										

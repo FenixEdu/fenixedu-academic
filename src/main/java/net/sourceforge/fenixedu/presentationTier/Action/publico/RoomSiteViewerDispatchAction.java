@@ -59,16 +59,16 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
     }
 
-    private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, Integer infoExecutionCourseCode,
+    private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, String infoExecutionCourseCode,
             Integer sectionIndex, Integer curricularCourseId) throws FenixActionException {
-        Integer objectCode = null;
+        String objectCode = null;
         if (infoExecutionCourseCode == null) {
             String objectCodeString = request.getParameter("objectCode");
             if (objectCodeString == null) {
                 objectCodeString = (String) request.getAttribute("objectCode");
 
             }
-            objectCode = new Integer(objectCodeString);
+            objectCode = objectCodeString;
         }
 
         ISiteComponent commonComponent = new InfoSiteCommon();
@@ -83,17 +83,17 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
             if (siteView != null) {
                 if (infoExecutionCourseCode != null) {
-                    request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent()).getSiteIdInternal());
+                    request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent()).getSiteExternalId());
                 } else {
                     request.setAttribute("objectCode", objectCode);
                 }
 
                 request.setAttribute("siteView", siteView);
                 request.setAttribute("executionCourseCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                        .getIdInternal());
+                        .getExternalId());
                 request.setAttribute("sigla", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getSigla());
                 request.setAttribute("executionPeriodCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                        .getInfoExecutionPeriod().getIdInternal());
+                        .getInfoExecutionPeriod().getExternalId());
 
                 if (siteView.getComponent() instanceof InfoSiteSection) {
                     request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
@@ -131,12 +131,14 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
             if (executionPeriodIDString == null) {
                 executionPeriodIDString = (String) request.getAttribute("selectedExecutionPeriodID");
             }
-            Integer executionPeriodID = (executionPeriodIDString != null) ? Integer.valueOf(executionPeriodIDString) : null;
+            String executionPeriodID = (executionPeriodIDString != null) ? executionPeriodIDString : null;
             if (executionPeriodID == null) {
                 try {
                     // executionPeriodID = (Integer)
                     // indexForm.get("selectedExecutionPeriodID");
-                    executionPeriodID = Integer.valueOf((String) indexForm.get("selectedExecutionPeriodID"));
+                    executionPeriodID =
+                            indexForm.get("selectedExecutionPeriodID").equals("") ? null : (String) indexForm
+                                    .get("selectedExecutionPeriodID");
                 } catch (IllegalArgumentException ex) {
                 }
             }
@@ -146,9 +148,9 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
             InfoExecutionPeriod executionPeriod;
             if (executionPeriodID == null) {
                 executionPeriod = ReadCurrentExecutionPeriod.run();
-                executionPeriodID = executionPeriod.getIdInternal();
+                executionPeriodID = executionPeriod.getExternalId();
                 try {
-                    indexForm.set("selectedExecutionPeriodID", executionPeriod.getIdInternal().toString());
+                    indexForm.set("selectedExecutionPeriodID", executionPeriod.getExternalId().toString());
                 } catch (IllegalArgumentException ex) {
                 }
             } else {
@@ -185,7 +187,7 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
             for (final ExecutionSemester ep : executionSemesters) {
                 if (ep.getState().equals(PeriodState.OPEN) || ep.getState().equals(PeriodState.CURRENT)) {
                     executionPeriodLabelValueBeans.add(new LabelValueBean(ep.getName() + " " + ep.getExecutionYear().getYear(),
-                            ep.getIdInternal().toString()));
+                            ep.getExternalId().toString()));
                 }
             }
             request.setAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodLabelValueBeans);

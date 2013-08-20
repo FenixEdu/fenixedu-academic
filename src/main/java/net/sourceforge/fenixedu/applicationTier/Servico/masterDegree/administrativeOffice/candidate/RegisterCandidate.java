@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -40,14 +39,15 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class RegisterCandidate {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber, IUserView userView)
+    public static InfoCandidateRegistration run(String candidateID, String branchID, Integer studentNumber, IUserView userView)
             throws FenixServiceException {
-        MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
 
         Person person = masterDegreeCandidate.getPerson();
 
@@ -153,9 +153,9 @@ public class RegisterCandidate {
         }
     }
 
-    private static StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, Integer branchID,
+    private static StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, String branchID,
             MasterDegreeCandidate masterDegreeCandidate) {
-        Branch branch = RootDomainObject.getInstance().readBranchByOID(branchID);
+        Branch branch = AbstractDomainObject.fromExternalId(branchID);
         DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan();
 
         StudentCurricularPlan studentCurricularPlan =

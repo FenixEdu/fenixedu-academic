@@ -62,7 +62,7 @@
 			<tr>
 				<td><bean:write name="nonAffiliatedTeacher" property="name"/></td>
 				<td><bean:write name="nonAffiliatedTeacher" property="infoInstitution.name"/></td>
-				<bean:define id="nonAffiliatedTeacherID" name="nonAffiliatedTeacher" property="idInternal"/>
+				<bean:define id="nonAffiliatedTeacherID" name="nonAffiliatedTeacher" property="externalId"/>
 				<td><td><html:link module="/manager" page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=insertProfessorship&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId") + "&amp;nonAffiliatedTeacherID=" + nonAffiliatedTeacherID %>" paramId="executionCourseName" paramName="executionCourseName">Associar à disciplina</html:link></td>
 			</tr>
 		</logic:iterate>
@@ -86,7 +86,7 @@
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.institutionID" property="institutionID">
 					<logic:notEmpty name="institutions">
-						<html:options collection="institutions" property="idInternal" labelProperty="name" />
+						<html:options collection="institutions" property="externalId" labelProperty="name" />
 					</logic:notEmpty>
 				</html:select>	
 			</td>

@@ -42,19 +42,19 @@
 				<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
 	   
 	   			<fr:property name="link(view)" value="/vehicleManagement.do?method=seeVehicleAllocation"/>
-	            <fr:property name="param(view)" value="idInternal/allocationID"/>
+	            <fr:property name="param(view)" value="externalId/allocationID"/>
 		        <fr:property name="key(view)" value="link.see"/>
 	            <fr:property name="bundle(view)" value="SOP_RESOURCES"/>
 	            <fr:property name="order(view)" value="0"/>
 	            
 	   			<fr:property name="link(edit)" value="/vehicleManagement.do?method=prepareEditAllocation"/>
-	            <fr:property name="param(edit)" value="idInternal/allocationID"/>
+	            <fr:property name="param(edit)" value="externalId/allocationID"/>
 		        <fr:property name="key(edit)" value="link.edit"/>
 	            <fr:property name="bundle(edit)" value="SOP_RESOURCES"/>
 	            <fr:property name="order(edit)" value="1"/>
 	            
 	            <fr:property name="link(delete)" value="/vehicleManagement.do?method=deleteAllocation"/>
-	            <fr:property name="param(delete)" value="idInternal/allocationID"/>
+	            <fr:property name="param(delete)" value="externalId/allocationID"/>
 		        <fr:property name="key(delete)" value="link.delete"/>
 	            <fr:property name="bundle(delete)" value="SOP_RESOURCES"/>
 	            <fr:property name="order(delete)" value="2"/> 
@@ -77,19 +77,19 @@
 				<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
 	   
 	      		<fr:property name="link(view)" value="/vehicleManagement.do?method=seeVehicleAllocation"/>
-	            <fr:property name="param(view)" value="idInternal/allocationID"/>
+	            <fr:property name="param(view)" value="externalId/allocationID"/>
 		        <fr:property name="key(view)" value="link.see"/>
 	            <fr:property name="bundle(view)" value="SOP_RESOURCES"/>
 	            <fr:property name="order(view)" value="0"/>                                           	            
 	   
 	   			<fr:property name="link(edit)" value="/vehicleManagement.do?method=prepareEditAllocation"/>
-	            <fr:property name="param(edit)" value="idInternal/allocationID"/>
+	            <fr:property name="param(edit)" value="externalId/allocationID"/>
 		        <fr:property name="key(edit)" value="link.edit"/>
 	            <fr:property name="bundle(edit)" value="SOP_RESOURCES"/>
 	            <fr:property name="order(edit)" value="1"/>
 	            
 	            <fr:property name="link(delete)" value="/vehicleManagement.do?method=deleteAllocation"/>
-	            <fr:property name="param(delete)" value="idInternal/allocationID"/>
+	            <fr:property name="param(delete)" value="externalId/allocationID"/>
 		        <fr:property name="key(delete)" value="link.delete"/>
 	            <fr:property name="bundle(delete)" value="SOP_RESOURCES"/>
 	            <fr:property name="order(delete)" value="2"/>                                           

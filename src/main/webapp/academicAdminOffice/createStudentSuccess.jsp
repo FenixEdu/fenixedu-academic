@@ -28,7 +28,7 @@
 	</fr:layout>
 </fr:view>
 
-<bean:define id="registrationID" name="registration" property="idInternal" />
+<bean:define id="registrationID" name="registration" property="externalId" />
 <ul>
 <%-- 
 	<li>
@@ -38,7 +38,7 @@
 <bean:define id="program" name="registration" property="degree" type="net.sourceforge.fenixedu.domain.AcademicProgram"/>
 <academic:allowed operation="SERVICE_REQUESTS" program="<%= program %>">
 	<li>
-		<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest&schema=DocumentRequestCreateBean.chooseDocumentRequestQuickType" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+		<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest&schema=DocumentRequestCreateBean.chooseDocumentRequestQuickType" paramId="registrationId" paramName="registration" paramProperty="externalId">
 			<bean:message key="link.student.createSchoolRegistrationDeclarationRequest" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>	
 	</li>

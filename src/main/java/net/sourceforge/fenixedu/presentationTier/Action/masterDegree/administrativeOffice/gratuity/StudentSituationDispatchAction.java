@@ -98,9 +98,9 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 
             try {
                 infoInsuranceTransaction =
-                        ReadInsuranceTransactionByStudentIDAndExecutionYearID.run(infoStudent.getIdInternal(),
+                        ReadInsuranceTransactionByStudentIDAndExecutionYearID.run(infoStudent.getExternalId(),
                                 infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear()
-                                        .getIdInternal());
+                                        .getExternalId());
             } catch (FenixServiceException e) {
                 errors.add("insurance", new ActionError("error.duplicate.insurance", studentNumber));
                 saveErrors(request, errors);
@@ -112,7 +112,7 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
             infoExecutionYear = infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear();
 
             try {
-                infoInsuranceValue = ReadInsuranceValueByExecutionYearID.run(infoExecutionYear.getIdInternal());
+                infoInsuranceValue = ReadInsuranceValueByExecutionYearID.run(infoExecutionYear.getExternalId());
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
@@ -123,13 +123,13 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
             if (infoInsuranceTransaction != null) {
 
                 insuranceSituationDTO.setInfoExecutionYear(infoInsuranceTransaction.getInfoExecutionYear());
-                insuranceSituationDTO.setExecutionYearID(infoInsuranceTransaction.getInfoExecutionYear().getIdInternal());
+                insuranceSituationDTO.setExecutionYearID(infoInsuranceTransaction.getInfoExecutionYear().getExternalId());
                 insuranceSituationDTO.setPayedValue(infoInsuranceTransaction.getValue());
-                insuranceSituationDTO.setInsuranceTransactionID(infoInsuranceTransaction.getIdInternal());
+                insuranceSituationDTO.setInsuranceTransactionID(infoInsuranceTransaction.getExternalId());
             } else {
 
                 insuranceSituationDTO.setInfoExecutionYear(infoExecutionYear);
-                insuranceSituationDTO.setExecutionYearID(infoExecutionYear.getIdInternal());
+                insuranceSituationDTO.setExecutionYearID(infoExecutionYear.getExternalId());
                 insuranceSituationDTO.setPayedValue(new Double(0));
 
             }

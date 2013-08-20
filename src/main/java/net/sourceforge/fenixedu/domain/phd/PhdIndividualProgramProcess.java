@@ -663,7 +663,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
                 DateTime o1StateDate = o1.getStateDate() == null ? o1.getWhenCreated() : o1.getStateDate();
                 DateTime o2StateDate = o2.getStateDate() == null ? o2.getWhenCreated() : o2.getStateDate();
                 int result = o1StateDate.compareTo(o2StateDate);
-                return result != 0 ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
+                return result != 0 ? result : o1.getExternalId().compareTo(o2.getExternalId());
             }
         });
         states.addAll(getStates());

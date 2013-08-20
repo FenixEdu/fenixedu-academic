@@ -38,7 +38,7 @@
 	</fr:form>
 	
 	<logic:present name="candidacy">
-		<bean:define id="candidacyID" name="candidacy" property="idInternal" />
+		<bean:define id="candidacyID" name="candidacy" property="externalId" />
 		
 		<br/><br/>
 		<html:link	module="/candidate" action="<%= "/degreeCandidacyManagement.do?method=generateSummaryFile&amp;candidacyID=" + candidacyID%>">

@@ -16,7 +16,7 @@
 <br/>
 
 <html:link page="/executionCourse.do?method=marks"
-		paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+		paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 	<bean:message key="label.publishedMarks"/>
 </html:link>
 
@@ -27,7 +27,7 @@
 		<th><bean:message key="label.online.test"/></th>
 	</tr>
 	<logic:iterate id="evaluation" name="evaluations">
-		<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
+		<bean:define id="evaluationOID" name="evaluation" property="externalId"/>
 		<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest">
 			<tr>
 				<td>
@@ -62,7 +62,7 @@
 		<th><bean:message key="label.end"/></th>
 	</tr>
 	<logic:iterate id="evaluation" name="evaluations">
-		<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
+		<bean:define id="evaluationOID" name="evaluation" property="externalId"/>
 		<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Project">
 			<tr>
 				<td>
@@ -89,7 +89,7 @@
 		<th><bean:message key="label.rooms"/></th>
 	</tr>	
 	<logic:iterate id="evaluation" name="executionCourse" property="writtenEvaluations">
-		<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
+		<bean:define id="evaluationOID" name="evaluation" property="externalId"/>
 		<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Exam">
 		<logic:equal name="evaluation" property="isExamsMapPublished" value="true">
 			<tr>

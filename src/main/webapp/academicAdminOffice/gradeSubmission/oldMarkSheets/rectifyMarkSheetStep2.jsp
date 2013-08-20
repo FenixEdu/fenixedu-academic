@@ -56,7 +56,7 @@
 		<bean:define id="url" name="rectifyBean" property="url" />
 		
 		<logic:iterate id="evaluation" name="enrolmentEvaluations" type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation" >
-			<bean:define id="evaluationID" name="evaluation" property="idInternal"/>
+			<bean:define id="evaluationID" name="evaluation" property="externalId"/>
 			<bean:define id="studentNumber" name="evaluation" property="enrolment.studentCurricularPlan.student.number"/>		
 			<tr>
 				<td>

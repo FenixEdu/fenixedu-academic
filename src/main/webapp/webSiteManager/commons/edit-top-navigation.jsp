@@ -37,7 +37,7 @@
     </logic:greaterThan>
     
     <logic:iterate id="link" name="customLinks">
-        <bean:define id="linkId" name="link" property="idInternal"/>
+        <bean:define id="linkId" name="link" property="externalId"/>
     
         <div id="link<%= linkId %>">
             <logic:notPresent name="<%= "editLink" + linkId %>">

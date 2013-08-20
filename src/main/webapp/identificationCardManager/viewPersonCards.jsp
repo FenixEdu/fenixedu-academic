@@ -31,7 +31,7 @@
 
 			<fr:property name="link(view)" value="/searchPeople.do?method=viewPersonCards"/>
 			<fr:property name="key(view)" value="label.view" />
-			<fr:property name="param(view)" value="idInternal/personId" />
+			<fr:property name="param(view)" value="externalId/personId" />
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
 			<fr:property name="order(view)" value="1" />
 		</fr:layout>
@@ -49,7 +49,7 @@
 
 				<fr:property name="link(view)" value="/searchPeople.do?method=viewPersonCard"/>
 				<fr:property name="key(view)" value="label.view" />
-				<fr:property name="param(view)" value="idInternal/cardGenerationEntryId" />
+				<fr:property name="param(view)" value="externalId/cardGenerationEntryId" />
 				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
 				<fr:property name="order(view)" value="1" />
 

@@ -20,10 +20,10 @@
 	<h2><bean:message key="title.StudentGroupInformation"/></h2>
 	
 	<bean:define id="infoStudentGroup" name="component" property="infoStudentGroup"/>
-	<bean:define id="studentGroupCode" name="infoStudentGroup" property="idInternal"/>
+	<bean:define id="studentGroupCode" name="infoStudentGroup" property="externalId"/>
 	<bean:define id="infoAttends" name="infoStudentGroup" property="infoAttends"/>
 	<bean:define id="infoGrouping" name="infoStudentGroup" property="infoGrouping"/>
-	<bean:define id="groupPropertiesCode" name="infoGrouping" property="idInternal"/>
+	<bean:define id="groupPropertiesCode" name="infoGrouping" property="externalId"/>
 	
 <logic:empty name="component" property="infoSiteStudentInformationList">
 	<logic:lessEqual name="ShiftType" value="2">
@@ -54,7 +54,7 @@
 
 	<logic:lessEqual name="ShiftType" value="2">
 	<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
-	<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
+	<bean:define id="shiftCode" name="infoShift" property="externalId"/>
 
 	<table class="tstyle4 tdcenter">	
 		<tr>
@@ -82,7 +82,7 @@
 		
 	 	<bean:define id="infoStudentGroup" name="component" property="infoStudentGroup"/>
 		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
-		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>	
+		<bean:define id="shiftCode" name="infoShift" property="externalId"/>	
 						
 	 		<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
             		<% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>
@@ -170,7 +170,7 @@
 		
 		<logic:lessEqual name="ShiftType" value="2">
 		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
-		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
+		<bean:define id="shiftCode" name="infoShift" property="externalId"/>
 		<html:link page="<%="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString() + "&amp;shiftCode=" + shiftCode.toString()%>">
 	    	<bean:message key="link.editGroupMembers"/>
 	    </html:link>
@@ -185,7 +185,7 @@
 	 
 	   <logic:equal name="ShiftType" value="1">
 	    <bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
-		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
+		<bean:define id="shiftCode" name="infoShift" property="externalId"/>
 	    
 	    <html:link page="<%="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.editGroupShift"/></html:link> | 
@@ -203,7 +203,7 @@
 		
 		<logic:lessEqual name="ShiftType" value="2">
 		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
-		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
+		<bean:define id="shiftCode" name="infoShift" property="externalId"/>
 		<html:link page="<%= "/deleteStudentGroup.do?method=deleteStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString() +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.deleteGroup"/></html:link>
 		</logic:lessEqual>
@@ -245,7 +245,7 @@
 	
 	<logic:present name="infoStudentGroup" property="infoShift">
 		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
-		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
+		<bean:define id="shiftCode" name="infoShift" property="externalId"/>
 	
 		<logic:present name="showPhotos">
 			<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
@@ -298,7 +298,7 @@
 			</td>
 			<logic:notPresent name="showPhotos">
 				<td class="acenter">
-					<bean:define id="personID" name="person" property="idInternal"/>
+					<bean:define id="personID" name="person" property="externalId"/>
 					<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 				</td>
 			</logic:notPresent>
@@ -326,7 +326,7 @@
 		
 		<logic:lessEqual name="ShiftType" value="2">
 		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
-		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
+		<bean:define id="shiftCode" name="infoShift" property="externalId"/>
 		<html:link page="<%="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString() + "&amp;shiftCode=" + shiftCode.toString()%>">
 	    	<bean:message key="link.editGroupMembers"/>
 	    </html:link> | 
@@ -340,7 +340,7 @@
 	 	
 	    <logic:equal name="ShiftType" value="1">
 	     <bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
-		 <bean:define id="shiftCode" name="infoShift" property="idInternal"/>
+		 <bean:define id="shiftCode" name="infoShift" property="externalId"/>
 	    <html:link page="<%="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.editGroupShift"/>
 	    </html:link> | 
@@ -360,7 +360,7 @@
 
 		<logic:lessEqual name="ShiftType" value="2">
 		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
-		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
+		<bean:define id="shiftCode" name="infoShift" property="externalId"/>
 		<html:link page="<%= "/deleteStudentGroup.do?method=deleteStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString() +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.deleteGroup"/>
 	    </html:link>

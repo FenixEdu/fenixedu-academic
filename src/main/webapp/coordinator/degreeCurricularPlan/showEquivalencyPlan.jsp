@@ -31,8 +31,8 @@
 	<logic:notPresent name="viewTable">
 		<p>
 			<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
-					+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-					+ equivalencePlan.getIdInternal() %>">
+					+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+					+ equivalencePlan.getExternalId() %>">
 				<bean:message key="link.equivalency.view.table" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</p>
@@ -49,8 +49,8 @@
 		<ul class="mbottom05">
 			<li>
 				<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID="
-						+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-						+ equivalencePlan.getIdInternal() %>">
+						+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+						+ equivalencePlan.getExternalId() %>">
 					<bean:message key="link.equivalency.view.plan" bundle="APPLICATION_RESOURCES"/>
 				</html:link>
 			</li>
@@ -84,7 +84,7 @@
 					<bean:write name="degreeCurricularPlan" property="degree.name"/>
 				</td>
 				<td>
-					<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlan" property="idInternal"/>
+					<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlan" property="externalId"/>
 					<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 						<bean:message key="link.equivalency.view.plan" bundle="APPLICATION_RESOURCES"/>
 					</html:link>

@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author T�nia Pous�o
@@ -32,7 +32,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static Object run(Integer degreeCurricularPlanID, String executionYearName) throws FenixServiceException {
+    public static Object run(String degreeCurricularPlanID, String executionYearName) throws FenixServiceException {
         if (degreeCurricularPlanID == null || executionYearName == null) {
             throw new FenixServiceException("error.impossible.noGratuityValues");
         }
@@ -40,7 +40,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear {
         GratuityValues gratuityValues = null;
         List infoPaymentPhases = null;
 
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
         if (degreeCurricularPlan == null || executionYear == null) {
             throw new FenixServiceException("error.impossible.noGratuityValues");

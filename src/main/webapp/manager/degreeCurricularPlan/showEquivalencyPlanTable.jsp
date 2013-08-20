@@ -12,8 +12,8 @@
 	<ul class="mtop05">
 		<li>
 			<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="
-					+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-					+ equivalencePlan.getIdInternal() %>">
+					+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+					+ equivalencePlan.getExternalId() %>">
 				<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</li>
@@ -103,9 +103,9 @@
 			<td>
 			<span>
 				<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=deleteEquivalency&amp;degreeCurricularPlanID="
-						+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-						+ equivalencePlan.getIdInternal() + "&amp;equivalencePlanEntryID="
-						+ entry.getIdInternal() %>">
+						+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+						+ equivalencePlan.getExternalId() + "&amp;equivalencePlanEntryID="
+						+ entry.getExternalId() %>">
 					<bean:message key="link.delete" bundle="APPLICATION_RESOURCES"/>
 				</html:link>
 			</span>

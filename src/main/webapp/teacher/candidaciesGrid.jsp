@@ -31,7 +31,7 @@
 												<html:option value="-1" key="label.seminary.candidaciesGrid.select">
 													<bean:message key="label.seminary.candidaciesGrid.select"/>
 												</html:option>
-											<html:options collection="seminaries" property="idInternal" labelProperty="name"/>
+											<html:options collection="seminaries" property="externalId" labelProperty="name"/>
 										</html:select>
 									</td>
 								</tr>
@@ -44,7 +44,7 @@
 											<html:option value="-1" key="label.degree.candidaciesGrid.select">
 												<bean:message key="label.degree.candidaciesGrid.select"/>
 											</html:option>
-											<html:options collection="degrees" property="idInternal" labelProperty="name"/>
+											<html:options collection="degrees" property="externalId" labelProperty="name"/>
 										</html:select>
 									</td>
 								</tr>
@@ -57,7 +57,7 @@
 											<html:option value="-1" key="label.course.candidaciesGrid.select">
 												<bean:message key="label.course.candidaciesGrid.select"/>
 											</html:option>
-											<html:options collection="courses" property="idInternal" labelProperty="name"/>
+											<html:options collection="courses" property="externalId" labelProperty="name"/>
 										</html:select>
 									</td>
 								</tr>
@@ -70,7 +70,7 @@
 											<html:option value="-1" key="label.modality.candidaciesGrid.select">
 												<bean:message key="label.modality.candidaciesGrid.select"/>
 											</html:option>
-											<html:options collection="modalities" property="idInternal" labelProperty="name"/>
+											<html:options collection="modalities" property="externalId" labelProperty="name"/>
 										</html:select>
 									</td>
 								</tr>
@@ -83,7 +83,7 @@
 											<html:option value="-1" key="label.theme.candidaciesGrid.select">
 												<bean:message key="label.theme.candidaciesGrid.select"/>
 											</html:option>
-											<html:options collection="themes" property="idInternal" labelProperty="name"/>
+											<html:options collection="themes" property="externalId" labelProperty="name"/>
 										</html:select>
 									</td>
 								</tr>
@@ -97,7 +97,7 @@
 												<bean:message key="label.case1.candidaciesGrid.select"/>
 											</html:option>
 											<logic:iterate name="cases" id="caseStudy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy">
-												<option value="<bean:write name="caseStudy" property="idInternal"/>"
+												<option value="<bean:write name="caseStudy" property="externalId"/>"
 														title="<bean:write name="caseStudy" property="name"/>">
 													<bean:write name="caseStudy" property="code"/>
 												</option>
@@ -115,7 +115,7 @@
 												<bean:message key="label.case2.candidaciesGrid.select"/>
 											</html:option>
 											<logic:iterate name="cases" id="caseStudy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy">
-												<option value="<bean:write name="caseStudy" property="idInternal"/>"
+												<option value="<bean:write name="caseStudy" property="externalId"/>"
 														title="<bean:write name="caseStudy" property="name"/>">
 													<bean:write name="caseStudy" property="code"/>
 												</option>
@@ -133,7 +133,7 @@
 												<bean:message key="label.case3.candidaciesGrid.select"/>
 											</html:option>
 											<logic:iterate name="cases" id="caseStudy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy">
-												<option value="<bean:write name="caseStudy" property="idInternal"/>"
+												<option value="<bean:write name="caseStudy" property="externalId"/>"
 														title="<bean:write name="caseStudy" property="name"/>">
 													<bean:write name="caseStudy" property="code"/>
 												</option>
@@ -151,7 +151,7 @@
 												<bean:message key="label.case4.candidaciesGrid.select"/>
 											</html:option>
 											<logic:iterate name="cases" id="caseStudy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy">
-												<option value="<bean:write name="caseStudy" property="idInternal"/>"
+												<option value="<bean:write name="caseStudy" property="externalId"/>"
 														title="<bean:write name="caseStudy" property="name"/>">
 													<bean:write name="caseStudy" property="code"/>
 												</option>
@@ -169,7 +169,7 @@
 												<bean:message key="label.case5.candidaciesGrid.select"/>
 											</html:option>
 											<logic:iterate name="cases" id="caseStudy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy">
-												<option value="<bean:write name="caseStudy" property="idInternal"/>"
+												<option value="<bean:write name="caseStudy" property="externalId"/>"
 														title="<bean:write name="caseStudy" property="name"/>">
 													<bean:write name="caseStudy" property="code"/>
 												</option>
@@ -290,7 +290,7 @@
 										<html:link page="/candidacyDetails.do" 
 												paramId="objectCode" 
 												paramName="candidacy" 
-												paramProperty="idInternal">
+												paramProperty="externalId">
 											Ver
 										</html:link>
 									</td>
@@ -340,7 +340,7 @@
 										<html:link page="/showCandidacies.do" 
 											  paramId="seminaryID" 
 											  paramName="candidacy" 
-											  paramProperty="seminary.idInternal">
+											  paramProperty="seminary.externalId">
 											<bean:write name="candidacy" property="seminary.name"/>
 										</html:link>
 									</td>
@@ -348,7 +348,7 @@
 										<html:link page="/showCandidacies.do"
 											  paramId="degreeID"
 											  paramName="candidacy"
-											  paramProperty="curricularCourse.infoDegreeCurricularPlan.idInternal">
+											  paramProperty="curricularCourse.infoDegreeCurricularPlan.externalId">
 											<bean:write name="candidacy" property="curricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/>
 										</html:link>
 									</td>
@@ -356,7 +356,7 @@
 										<html:link page="/showCandidacies.do"
 											  paramId="courseID"
 											  paramName="candidacy"
-											  paramProperty="curricularCourse.idInternal">
+											  paramProperty="curricularCourse.externalId">
 											<bean:write name="candidacy" property="curricularCourse.name"/>
 										</html:link>
 									</td>
@@ -364,7 +364,7 @@
 										<html:link page="/showCandidacies.do"
 											  paramId="modalityID"
 											  paramName="candidacy"
-											  paramProperty="modality.idInternal">
+											  paramProperty="modality.externalId">
 											<bean:write name="candidacy" property="modality.name"/>
 										</html:link>
 									</td>
@@ -373,7 +373,7 @@
 											<html:link page="/showCandidacies.do"
 													paramId="themeID"
 													paramName="candidacy"
-													paramProperty="theme.idInternal">
+													paramProperty="theme.externalId">
 												<bean:write name="candidacy" property="theme.name"/>
 											</html:link>
 										</logic:notEmpty>
@@ -403,7 +403,7 @@
 										<html:link page="/showCandidacies.do"
 														paramId="<%="case" + (index.intValue()+1) +"ID"%>"
 														paramName="caseStudy"
-														paramProperty="idInternal">
+														paramProperty="externalId">
 												<bean:write name="caseStudy" property="code"/>
 											</html:link>
 										</td> 

@@ -21,7 +21,7 @@
 			
 			<fr:property name="classes" value="tstyle4 mtop05" />
 			
-			<fr:property name="linkFormat(showExemptions)" value="/exemptionsManagement.do?method=showExemptions&eventId=${idInternal}" />
+			<fr:property name="linkFormat(showExemptions)" value="/exemptionsManagement.do?method=showExemptions&eventId=${externalId}" />
 			<fr:property name="key(showExemptions)" value="label.payments.exemptions" />
 			<fr:property name="bundle(showExemptions)" value="ACADEMIC_OFFICE_RESOURCES" />
 							
@@ -37,7 +37,7 @@
 	</p>
 </logic:empty>
 
-<bean:define id="personId" name="person" property="idInternal" />
+<bean:define id="personId" name="person" property="externalId" />
 <fr:form action="<%="/payments.do?method=backToShowOperations&amp;personId=" + personId%>">
 	<p>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">

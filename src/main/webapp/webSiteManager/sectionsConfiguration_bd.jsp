@@ -27,7 +27,7 @@
 			<bean:size id="sectionsSize" name="sectionsList" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.sectionsSize" property="sectionsSize" value="<%= sectionsSize.toString() %>" />
 			<logic:iterate id="section" name="sectionsList">
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="section" property="idInternal" indexed="true"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" name="section" property="externalId" indexed="true"/>
 				<tr>
 					<td class="listClasses">
 						<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" name="section" property="name" size="20" indexed="true"/>

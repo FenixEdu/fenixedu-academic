@@ -18,10 +18,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadActiveDegreeCurricularPlanScopes extends ReadDegreeCurricularPlanBaseService {
 
-    protected List run(final Integer degreeCurricularPlanId) {
-
+    protected List run(final String degreeCurricularPlanId) {
         return super.readActiveCurricularCourseScopes(degreeCurricularPlanId);
-
     }
 
     // Service Invokers migrated from Berserk
@@ -29,7 +27,7 @@ public class ReadActiveDegreeCurricularPlanScopes extends ReadDegreeCurricularPl
     private static final ReadActiveDegreeCurricularPlanScopes serviceInstance = new ReadActiveDegreeCurricularPlanScopes();
 
     @Service
-    public static List runReadActiveDegreeCurricularPlanScopes(Integer degreeCurricularPlanId) throws NotAuthorizedException {
+    public static List runReadActiveDegreeCurricularPlanScopes(String degreeCurricularPlanId) throws NotAuthorizedException {
         CoordinatorAuthorizationFilter.instance.execute();
         return serviceInstance.run(degreeCurricularPlanId);
     }

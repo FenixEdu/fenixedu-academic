@@ -69,7 +69,7 @@
 				<fr:property name="columnClasses" value="<%= columnClasses %>"/>
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="selectedDegrees" />
-				<fr:property name="checkboxValue" value="degree.idInternal" />
+				<fr:property name="checkboxValue" value="degree.externalId" />
 				<fr:property name="selectAllShown" value="true" />
 				<fr:property name="selectAllLocation" value="top" />
 			</fr:layout>
@@ -116,7 +116,7 @@
 			</logic:present>
 			<logic:notPresent name="selectedDegrees" >
 				<bean:define id="selectedYear" name="newElectionPeriodBean" property="curricularYear.year"  />
-				<bean:define id="degreeOID" name="newElectionPeriodBean" property="degree.idInternal"  />
+				<bean:define id="degreeOID" name="newElectionPeriodBean" property="degree.externalId"  />
 				<bean:define id="parameters" value="<%= "forwardTo=" + forwardTo + "&selectedYear=" + selectedYear + "&selectedDegree=" + degreeOID %>" />
 				<fr:destination name="invalid" path="<%="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&" + parameters %>" />
 			</logic:notPresent>
@@ -161,7 +161,7 @@
 				<fr:destination name="invalid" path="<%= "/editElectionsPeriods.do?method=prepareEditYearDelegateElectionsPeriods&" + parameters %>" />
 			</logic:present>
 			<logic:notPresent name="selectedDegrees" >
-				<bean:define id="selectedPeriod" name="editElectionBean" property="election.idInternal"  />
+				<bean:define id="selectedPeriod" name="editElectionBean" property="election.externalId"  />
 				<bean:define id="parameters" value="<%= "selectedPeriod=" + selectedPeriod %>" />
 				<fr:destination name="invalid" path="<%="/editElectionsPeriods.do?method=prepareEditYearDelegateCandidacyPeriod&" + parameters %>" />
 			</logic:notPresent>

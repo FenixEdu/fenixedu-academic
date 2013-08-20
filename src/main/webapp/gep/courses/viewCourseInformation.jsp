@@ -44,9 +44,9 @@
 		&nbsp;<bean:write name="executionYear" property="year" />
 		<logic:iterate id="curricularCourse" name="infoSiteCourseInformation" property="infoCurricularCourses">
 			<logic:present name="infoExecutionDegree">
-				<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
+				<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.externalId"/>
 		  		<logic:equal name="curricularCourse" 
-		  						 property="infoDegreeCurricularPlan.idInternal" 
+		  						 property="infoDegreeCurricularPlan.externalId" 
 		  						 value="<%= degreeCurricularPlanId.toString() %>">
 					<blockquote style="margin-top:1px">
 						<br />
@@ -218,9 +218,9 @@
 	<table border="0" cellspacing="1" style="margin-top:10px">
 		<logic:iterate id="infoCurriculum" name="infoSiteCourseInformation" property="infoCurriculums">
 			<logic:present name="infoExecutionDegree">
-				<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
+				<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.externalId"/>
 				<logic:equal name="infoCurriculum" 
-	  						 property="infoCurricularCourse.infoDegreeCurricularPlan.idInternal" 
+	  						 property="infoCurricularCourse.infoDegreeCurricularPlan.externalId" 
 	  						 value="<%= degreeCurricularPlanId.toString() %>">
 					<tr>
 						<td>
@@ -278,9 +278,9 @@
 		<table border="0" cellspacing="1" style="margin-top:10px">
 			<logic:iterate id="infoCurriculum" name="infoSiteCourseInformation" property="infoCurriculums">
 				<logic:present name="infoExecutionDegree">
-					<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
+					<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.externalId"/>
 					<logic:equal name="infoCurriculum" 
-	  						 	property="infoCurricularCourse.infoDegreeCurricularPlan.idInternal" 
+	  						 	property="infoCurricularCourse.infoDegreeCurricularPlan.externalId" 
 	  						 	value="<%= degreeCurricularPlanId.toString() %>">
 						<tr>
 							<td>

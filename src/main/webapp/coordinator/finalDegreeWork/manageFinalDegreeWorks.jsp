@@ -15,7 +15,7 @@
 	<bean:define id="executionDegrees" name="degreeCurricularPlan" property="executionDegrees"/>
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeID" property="executionDegreeID" onchange="this.form.submit();">
 		<html:option value=""/>
-		<html:options collection="executionDegrees" property="idInternal" labelProperty="executionYear.nextExecutionYear.year"/>
+		<html:options collection="executionDegrees" property="externalId" labelProperty="executionYear.nextExecutionYear.year"/>
 	</html:select>
 	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.submit"/>

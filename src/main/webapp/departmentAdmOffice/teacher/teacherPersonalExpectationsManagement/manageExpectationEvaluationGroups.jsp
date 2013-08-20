@@ -26,7 +26,7 @@
 		
 		<ul class="list5 mvert15">
 			<li>
-				<html:link page="/defineExpectationEvaluationGroups.do?method=listGroupsInExecutionYear" paramId="executionYearID" paramName="expectationEvaluationGroupBean" paramProperty="executionYear.idInternal">		
+				<html:link page="/defineExpectationEvaluationGroups.do?method=listGroupsInExecutionYear" paramId="executionYearID" paramName="expectationEvaluationGroupBean" paramProperty="executionYear.externalId">		
 					<bean:message bundle="DEPARTMENT_ADM_OFFICE_RESOURCES" key="link.return"/>
 				</html:link>
 			</li>
@@ -66,7 +66,7 @@
 							</logic:empty>
 						</td>
 						<td>
-							<html:link page="/defineExpectationEvaluationGroups.do?method=deleteGroup" paramId="groupID" paramName="evaluatedTeacherGroup" paramProperty="idInternal">
+							<html:link page="/defineExpectationEvaluationGroups.do?method=deleteGroup" paramId="groupID" paramName="evaluatedTeacherGroup" paramProperty="externalId">
 								<bean:message key="link.delete" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>
 							</html:link>
 						</td>			

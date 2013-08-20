@@ -11,7 +11,7 @@
             </form-bean>
             <!-- TEACHING REPORT FORM  -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teachingReportForm">
-                  <form-property type="java.lang.Integer" name="executionCourseId"></form-property>
+                  <form-property type="java.lang.String" name="executionCourseId"></form-property>
             </form-bean>
             <!-- ==================== View Curricular Course Historic ================== -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="executionYearDegreeCurricularPlanForm">
@@ -23,18 +23,18 @@
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="sendEmailReminderForm">
                   <form-property name="method" type="java.lang.String"></form-property>
                   <form-property name="page" type="java.lang.Integer"></form-property>
-                  <form-property name="degreeCurricularPlanIds" type="java.lang.Integer[]"></form-property>
+                  <form-property name="degreeCurricularPlanIds" type="java.lang.String[]"></form-property>
                   <form-property name="bodyTextSubject" type="java.lang.String"></form-property>
                   <form-property name="bodyTextIntro" type="java.lang.String"></form-property>
                   <form-property name="bodyTextEnd" type="java.lang.String"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teachingStaffForm">
-                  <form-property type="java.lang.Integer" name="executionYearID"></form-property>
-                  <form-property type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
-                  <form-property type="java.lang.Integer" name="executionCourseID"></form-property>
+                  <form-property type="java.lang.String" name="executionYearID"></form-property>
+                  <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="executionCourseID"></form-property>
                   <form-property type="java.lang.String" name="nonAffiliatedTeacherName"></form-property>
                   <form-property type="java.lang.Integer" name="nonAffiliatedTeacherID"></form-property>
-                  <form-property type="java.lang.Integer" name="nonAffiliatedTeacherInstitutionID"></form-property>
+                  <form-property type="java.lang.String" name="nonAffiliatedTeacherInstitutionID"></form-property>
                   <form-property type="java.lang.String" name="nonAffiliatedTeacherInstitutionName"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
@@ -55,7 +55,7 @@
                   <form-property type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="competenceCourseStatisticsForm">
-                  <form-property type="java.lang.Integer" name="executionYearID"></form-property>
+                  <form-property type="java.lang.String" name="executionYearID"></form-property>
                   <form-property type="java.lang.String" name="registrationAgreement"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
             </form-bean>

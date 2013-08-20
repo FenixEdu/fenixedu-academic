@@ -17,8 +17,8 @@ public class MeasurementTestShift extends MeasurementTestShift_Base {
         @Override
         public int compare(MeasurementTestShift leftMeasurementTestShift, MeasurementTestShift rightMeasurementTestShift) {
             int comparationResult = leftMeasurementTestShift.getName().compareTo(rightMeasurementTestShift.getName());
-            return (comparationResult == 0) ? leftMeasurementTestShift.getIdInternal().compareTo(
-                    rightMeasurementTestShift.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftMeasurementTestShift.getExternalId().compareTo(
+                    rightMeasurementTestShift.getExternalId()) : comparationResult;
         }
     };
 

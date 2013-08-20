@@ -21,7 +21,7 @@ public class UnitAnnouncementBoardsManagementForm extends ValidatorForm {
     private static final long serialVersionUID = 5861718840827152423L;
 
     private String name;
-    private Integer keyUnit;
+    private String keyUnit;
     private Boolean mandatory;
     private String unitBoardWritePermittedGroupType = UnitBoardPermittedGroupType.UB_PUBLIC.name();
     private String unitBoardReadPermittedGroupType = UnitBoardPermittedGroupType.UB_PUBLIC.name();
@@ -51,11 +51,11 @@ public class UnitAnnouncementBoardsManagementForm extends ValidatorForm {
         this.mandatory = false;
     }
 
-    public Integer getKeyUnit() {
+    public String getKeyUnit() {
         return keyUnit;
     }
 
-    public void setKeyUnit(Integer keyUnit) {
+    public void setKeyUnit(String keyUnit) {
         this.keyUnit = keyUnit;
     }
 

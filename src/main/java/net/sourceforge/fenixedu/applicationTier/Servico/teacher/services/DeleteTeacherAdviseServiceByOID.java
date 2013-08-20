@@ -3,15 +3,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Ricardo Rodrigues
@@ -20,9 +19,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteTeacherAdviseServiceByOID {
 
-    protected void run(Integer teacherAdviseServiceID, RoleType roleType) {
+    protected void run(String teacherAdviseServiceID, RoleType roleType) {
         TeacherAdviseService teacherAdviseService =
-                (TeacherAdviseService) RootDomainObject.getInstance().readTeacherServiceItemByOID(teacherAdviseServiceID);
+                (TeacherAdviseService) AbstractDomainObject.fromExternalId(teacherAdviseServiceID);
         teacherAdviseService.delete(roleType);
     }
 
@@ -31,7 +30,7 @@ public class DeleteTeacherAdviseServiceByOID {
     private static final DeleteTeacherAdviseServiceByOID serviceInstance = new DeleteTeacherAdviseServiceByOID();
 
     @Service
-    public static void runDeleteTeacherAdviseServiceByOID(Integer teacherAdviseServiceID, RoleType roleType)
+    public static void runDeleteTeacherAdviseServiceByOID(String teacherAdviseServiceID, RoleType roleType)
             throws NotAuthorizedException {
         try {
             ScientificCouncilAuthorizationFilter.instance.execute();

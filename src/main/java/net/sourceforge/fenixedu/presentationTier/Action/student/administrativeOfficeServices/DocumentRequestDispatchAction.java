@@ -21,6 +21,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
@@ -40,8 +41,11 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     }
 
     private Registration getRegistration(final HttpServletRequest request, final ActionForm actionForm) {
-        return rootDomainObject.readRegistrationByOID(getIntegerFromRequestOrForm(request, (DynaActionForm) actionForm,
-                "registrationId"));
+        String registrationId = getStringFromRequest(request, "registrationId");
+        if (registrationId == null) {
+            registrationId = ((DynaActionForm) actionForm).getString("registrationId");
+        }
+        return AbstractDomainObject.fromExternalId(registrationId);
     }
 
     public ActionForward viewDocumentRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -63,21 +67,19 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("documentRequest",
-                rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request, "documentRequestId")));
-
+        request.setAttribute("documentRequest", AbstractDomainObject.fromExternalId(request.getParameter("documentRequestId")));
         return mapping.findForward("viewDocumentRequest");
     }
 
     public ActionForward prepareCancelAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         getAndSetAcademicServiceRequest(request);
         return mapping.findForward("prepareCancelAcademicServiceRequest");
     }
 
     public ActionForward cancelAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
         final String justification = ((DynaActionForm) actionForm).getString("justification");
@@ -96,8 +98,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
     private AcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
         final AcademicServiceRequest academicServiceRequest =
-                rootDomainObject
-                        .readAcademicServiceRequestByOID(getRequestParameterAsInteger(request, "academicServiceRequestId"));
+                AbstractDomainObject.fromExternalId(request.getParameter("academicServiceRequestId"));
         request.setAttribute("academicServiceRequest", academicServiceRequest);
         return academicServiceRequest;
     }
@@ -152,7 +153,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeFactoryMethod();
         } catch (DomainException e) {

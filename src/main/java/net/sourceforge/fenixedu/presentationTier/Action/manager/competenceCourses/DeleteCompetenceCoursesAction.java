@@ -29,7 +29,7 @@ public class DeleteCompetenceCoursesAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         DynaActionForm actionForm = (DynaActionForm) form;
 
-        Integer[] competenceCoursesIDs = (Integer[]) actionForm.get("competenceCoursesIds");
+        String[] competenceCoursesIDs = (String[]) actionForm.get("competenceCoursesIds");
 
         DeleteCompetenceCourses.run(competenceCoursesIDs);
         return mapping.findForward("showAllCompetenceCourses");

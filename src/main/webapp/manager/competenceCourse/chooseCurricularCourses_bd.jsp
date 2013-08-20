@@ -32,7 +32,7 @@
 					<td class="listClasses">
 					
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularCoursesIds" property="curricularCoursesIds">
-						<bean:write name="curricularCourse" property="idInternal"/>
+						<bean:write name="curricularCourse" property="externalId"/>
 					</html:multibox>
 					</td>	
 					<td class="listClasses"><bean:write name="curricularCourse" property="code"/>

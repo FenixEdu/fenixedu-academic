@@ -11,7 +11,7 @@
 <logic:present name="selectedSpaceInformation">
 	
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
-	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
+	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="externalId" />
 	<jsp:include page="spaceCrumbs.jsp"/>
 	<bean:define id="space" name="selectedSpaceInformation" property="space"/>
 		
@@ -47,13 +47,13 @@
    			<fr:property name="columnClasses" value="aleft,,,,"/>
    			
    			<fr:property name="link(edit)" value="<%="/manageSpaceResponsibility.do?method=prepareEditSpaceResponsibility&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(edit)" value="idInternal/spaceResponsibilityID"/>
+            <fr:property name="param(edit)" value="externalId/spaceResponsibilityID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>
             <fr:property name="bundle(edit)" value="SPACE_RESOURCES"/>
             <fr:property name="order(edit)" value="0"/>
             
             <fr:property name="link(delete)" value="<%="/manageSpaceResponsibility.do?method=deleteSpaceResponsibility&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(delete)" value="idInternal/spaceResponsibilityID"/>
+            <fr:property name="param(delete)" value="externalId/spaceResponsibilityID"/>
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
             <fr:property name="order(delete)" value="0"/>                                           
@@ -66,7 +66,7 @@
 	<p class="mtop15 mbottom05"><strong><bean:message key="label.choose.unit" bundle="SPACE_RESOURCES"/></strong></p>
 	<logic:notEmpty name="possibleInternalUnits">	
 		<logic:iterate id="internalUnit" name="possibleInternalUnits">
-			<bean:define id="path">/manageSpaceResponsibility.do?method=manageResponsabilityInterval&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&unitID=<bean:write name="internalUnit" property="idInternal"/></bean:define>	
+			<bean:define id="path">/manageSpaceResponsibility.do?method=manageResponsabilityInterval&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&unitID=<bean:write name="internalUnit" property="externalId"/></bean:define>	
 			<p>
 				<html:link page="<%= path %>"><bean:write name="internalUnit" property="nameWithAcronym"/></html:link>
 			</p>
@@ -103,13 +103,13 @@
    			<fr:property name="columnClasses" value="aleft,,,,"/>
    			   			
    			<fr:property name="link(edit)" value="<%="/manageSpaceResponsibility.do?method=prepareEditSpaceResponsibility&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(edit)" value="idInternal/spaceResponsibilityID"/>
+            <fr:property name="param(edit)" value="externalId/spaceResponsibilityID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>
             <fr:property name="bundle(edit)" value="SPACE_RESOURCES"/>
             <fr:property name="order(edit)" value="0"/>
             
             <fr:property name="link(delete)" value="<%="/manageSpaceResponsibility.do?method=deleteSpaceResponsibility&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(delete)" value="idInternal/spaceResponsibilityID"/>
+            <fr:property name="param(delete)" value="externalId/spaceResponsibilityID"/>
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
             <fr:property name="order(delete)" value="0"/>  

@@ -30,7 +30,7 @@
 		    <fr:property name="classes" value="style1"/>
      		<fr:property name="columnClasses" value="listClasses"/>
 			<fr:property name="link(activate)" value="/recoverInactivePerson.do?method=activate"/>
-			<fr:property name="param(activate)" value="idInternal/personID"/>
+			<fr:property name="param(activate)" value="externalId/personID"/>
 			<fr:property name="key(activate)" value="link.activate.person"/>
 			<fr:property name="bundle(activate)" value="MANAGER_RESOURCES"/>
 		</fr:layout>

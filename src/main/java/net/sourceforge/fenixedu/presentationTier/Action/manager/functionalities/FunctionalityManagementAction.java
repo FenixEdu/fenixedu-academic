@@ -327,14 +327,13 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         return forwardTo(mapping.findForward("view"), request, functionality);
     }
 
-    private void deleteFunctionalityParameter(FunctionalityParameter functionalityParameter) throws 
-            FenixServiceException {
+    private void deleteFunctionalityParameter(FunctionalityParameter functionalityParameter) throws FenixServiceException {
         DeleteFunctionalityParameter.run(functionalityParameter);
 
     }
 
     protected FunctionalityParameter getFunctionalityParameter(HttpServletRequest request) {
-        return (FunctionalityParameter) getObject(request, FunctionalityParameter.class, "functionalityParameter");
+        return getDomainObject(request, "functionalityParameter");
     }
 
 }

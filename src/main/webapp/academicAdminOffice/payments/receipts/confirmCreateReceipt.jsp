@@ -64,7 +64,7 @@
 	</tr>
 </table>
 
-<bean:define id="personId" name="createReceiptBean" property="person.idInternal"/>
+<bean:define id="personId" name="createReceiptBean" property="person.externalId"/>
 
 <fr:form action='<%= "/receipts.do?personId=" + personId %>'>
 	

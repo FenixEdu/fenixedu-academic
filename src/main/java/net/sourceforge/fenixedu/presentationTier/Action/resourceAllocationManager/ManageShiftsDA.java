@@ -153,9 +153,9 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
             return mapping.getInputForward();
         }
 
-        final List<Integer> shiftOIDs = new ArrayList<Integer>();
+        final List<String> shiftOIDs = new ArrayList<String>();
         for (String selectedShift : selectedShifts) {
-            shiftOIDs.add(Integer.valueOf(selectedShift));
+            shiftOIDs.add(selectedShift);
         }
 
         try {
@@ -175,8 +175,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
         return mapping.findForward("ShowShiftList");
     }
 
-    private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, 
-            Exception {
+    private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, Exception {
         ContextSelectionBean context = (ContextSelectionBean) request.getAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN);
         logger.warn(String.format("ContextSelectionBean: academicInterval %s executionDegree %s curricularYear %s",
                 context.getAcademicInterval(), context.getExecutionDegree(), context.getCurricularYear()));

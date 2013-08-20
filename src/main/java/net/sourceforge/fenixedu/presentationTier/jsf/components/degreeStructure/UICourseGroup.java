@@ -65,7 +65,7 @@ public class UICourseGroup extends UIDegreeModule {
                 StringBuilder buffer = new StringBuilder();
                 buffer.append(tabs);
                 buffer.append("[LEVEL ").append(Integer.valueOf(this.depth)).append("]");
-                buffer.append("[CG ").append(this.courseGroup.getIdInternal()).append("] ").append(this.courseGroup.getName());
+                buffer.append("[CG ").append(this.courseGroup.getExternalId()).append("] ").append(this.courseGroup.getName());
                 System.out.println(buffer);
             }
         }
@@ -88,7 +88,7 @@ public class UICourseGroup extends UIDegreeModule {
             writer.startElement("p", this);
             writer.startElement("a", this);
             this.encodeLinkHref(module + "/curricularPlans/courseGroupReport.faces",
-                    "&courseGroupID=" + this.courseGroup.getIdInternal(), true);
+                    "&courseGroupID=" + this.courseGroup.getExternalId(), true);
             writer.write("Relatórios de Plano Curricular");
             writer.endElement("a");
             writer.endElement("p");
@@ -99,7 +99,7 @@ public class UICourseGroup extends UIDegreeModule {
                     writer.startElement("p", this);
                     writer.writeAttribute("style", "mtop05", null);
                     if (loggedPersonCanManageDegreeCurricularPlans()) {
-                        encodeLink("createCourseGroup.faces", "&parentCourseGroupID=" + this.courseGroup.getIdInternal()
+                        encodeLink("createCourseGroup.faces", "&parentCourseGroupID=" + this.courseGroup.getExternalId()
                                 + "&toOrder=false", false, "create.course.group.root");
                     }
                     writer.endElement("p");
@@ -248,7 +248,7 @@ public class UICourseGroup extends UIDegreeModule {
         if (linkable) {
             writer.startElement("a", this);
             this.encodeLinkHref(module + "/curricularPlans/courseGroupReport.faces",
-                    "&courseGroupID=" + this.courseGroup.getIdInternal(), true);
+                    "&courseGroupID=" + this.courseGroup.getExternalId(), true);
             appendCodeAndName();
             writer.endElement("a");
         } else {
@@ -280,8 +280,8 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     private void encodeOrderOption(Integer posToTest, String label, boolean lastOption) throws IOException {
-        encodeLink("orderCourseGroup.faces", "&courseGroupID=" + this.courseGroup.getIdInternal() + "&contextID="
-                + this.previousContext.getIdInternal() + "&pos=" + posToTest + "&toOrder=true", false, label);
+        encodeLink("orderCourseGroup.faces", "&courseGroupID=" + this.courseGroup.getExternalId() + "&contextID="
+                + this.previousContext.getExternalId() + "&pos=" + posToTest + "&toOrder=true", false, label);
         if (!lastOption) {
             writer.append(" , ");
         }
@@ -291,10 +291,10 @@ public class UICourseGroup extends UIDegreeModule {
         writer.startElement("td", this);
         writer.writeAttribute("class", "aleft", null);
 
-        String createAssociateAditionalParameters = "&parentCourseGroupID=" + this.courseGroup.getIdInternal() + "&toOrder=false";
+        String createAssociateAditionalParameters = "&parentCourseGroupID=" + this.courseGroup.getExternalId() + "&toOrder=false";
         String editAndDeleteAditionalParameters =
-                "&courseGroupID=" + this.courseGroup.getIdInternal()
-                        + ((!this.courseGroup.isRoot()) ? ("&contextID=" + this.previousContext.getIdInternal()) : "")
+                "&courseGroupID=" + this.courseGroup.getExternalId()
+                        + ((!this.courseGroup.isRoot()) ? ("&contextID=" + this.previousContext.getExternalId()) : "")
                         + "&toOrder=false";
 
         if (loggedPersonCanManageDegreeCurricularPlans()) {
@@ -336,13 +336,13 @@ public class UICourseGroup extends UIDegreeModule {
         if (this.showRules) {
             if (!this.courseGroup.isRoot() || loggedPersonCanManageDegreeCurricularPlans()) {
                 encodeLink(module + "/curricularRules/createCurricularRule.faces",
-                        "&degreeModuleID=" + this.courseGroup.getIdInternal(), false, "setCurricularRule");
+                        "&degreeModuleID=" + this.courseGroup.getExternalId(), false, "setCurricularRule");
             }
         } else {
-            encodeLink("createCurricularCourse.faces", "&courseGroupID=" + this.courseGroup.getIdInternal(), false,
+            encodeLink("createCurricularCourse.faces", "&courseGroupID=" + this.courseGroup.getExternalId(), false,
                     "create.curricular.course");
             writer.append(" , ");
-            encodeLink("associateCurricularCourse.faces", "&courseGroupID=" + this.courseGroup.getIdInternal(), false,
+            encodeLink("associateCurricularCourse.faces", "&courseGroupID=" + this.courseGroup.getExternalId(), false,
                     "associate.curricular.course");
         }
         writer.endElement("th");

@@ -11,7 +11,7 @@
 	bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
 	
 	<p>
-		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="studentCurricularPlan" paramProperty="registration.idInternal">
+		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="studentCurricularPlan" paramProperty="registration.externalId">
 			<bean:message key="label.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</p>
@@ -45,7 +45,7 @@
 	<br />
 </html:messages>
 
-<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" />
+<bean:define id="scpID" name="studentCurricularPlan" property="externalId" />
 <ul>
 	<li>
 		<html:link action="<%="/accountingEventsManagement.do?method=chooseEventType&amp;scpID=" + scpID.toString() + "&amp;eventType=" +  EventType.GRATUITY.name()%>">

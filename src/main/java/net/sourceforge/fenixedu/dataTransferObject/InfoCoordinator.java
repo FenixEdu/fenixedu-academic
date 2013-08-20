@@ -45,12 +45,12 @@ public class InfoCoordinator extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getCoordinator().getIdInternal();
+    public String getExternalId() {
+        return getCoordinator().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

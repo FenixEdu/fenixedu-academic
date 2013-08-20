@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisState;
@@ -98,23 +97,11 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
     }
 
     private Degree getCustomDegree(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "degreeID");
-
-        if (id == null) {
-            return null;
-        }
-
-        return RootDomainObject.getInstance().readDegreeByOID(id);
+        return getDomainObject(request, "degreeID");
     }
 
     private ExecutionYear getCustomExecutionYear(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "executionYearID");
-
-        if (id == null) {
-            return null;
-        }
-
-        return RootDomainObject.getInstance().readExecutionYearByOID(id);
+        return getDomainObject(request, "executionYearID");
     }
 
     protected void collectTheses(HttpServletRequest request, SortedSet<ExecutionYear> years,
@@ -159,9 +146,7 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
 
     public ActionForward showThesisDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer thesisId = getIntegerFromRequest(request, "thesisID");
-
-        Thesis thesis = RootDomainObject.getInstance().readThesisByOID(thesisId);
+        Thesis thesis = getDomainObject(request, "thesisID");
         request.setAttribute("thesis", thesis);
 
         return mapping.findForward("showThesisDetails");
@@ -169,9 +154,8 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
 
     public ActionForward showResult(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer thesisId = getIntegerFromRequest(request, "thesisID");
 
-        ResearchResult result = RootDomainObject.getInstance().readResearchResultByOID(thesisId);
+        ResearchResult result = getDomainObject(request, "thesisID");
         request.setAttribute("result", result);
 
         return mapping.findForward("showResult");
@@ -188,7 +172,7 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
             if (c != 0) {
                 return c;
             } else {
-                return o1.getIdInternal().compareTo(o2.getIdInternal());
+                return o1.getExternalId().compareTo(o2.getExternalId());
             }
         }
 

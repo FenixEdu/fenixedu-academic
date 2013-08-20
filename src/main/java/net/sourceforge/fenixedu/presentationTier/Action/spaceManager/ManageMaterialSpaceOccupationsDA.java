@@ -21,6 +21,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "SpaceManager", path = "/manageMaterialSpaceOccupations", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -39,7 +40,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareInsertMaterialOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         IViewState viewState = RenderUtils.getViewState("materialTypeWithMaterial");
         if (viewState != null) {
             MaterialTypeBean materialTypeBean = (MaterialTypeBean) viewState.getMetaObject().getObject();
@@ -53,7 +54,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareChooseMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState();
         RenderUtils.invalidateViewState();
@@ -61,7 +62,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditMaterialSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         readAndSetSpaceInformation(request);
         MaterialSpaceOccupation materialOccupation = getMaterialOccupationFromParameter(request);
@@ -70,7 +71,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteMaterialSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         MaterialSpaceOccupation materialOccupation = getMaterialOccupationFromParameter(request);
 
@@ -84,7 +85,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareChooseMaterialType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SpaceInformation spaceInformation = readAndSetSpaceInformation(request);
         request.setAttribute("materialTypeBean", new MaterialTypeBean(spaceInformation));
@@ -108,16 +109,13 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
         final String spaceInformationIDString =
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
-        final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-        return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+        return AbstractDomainObject.fromExternalId(spaceInformationIDString);
     }
 
     private MaterialSpaceOccupation getMaterialOccupationFromParameter(final HttpServletRequest request) {
         final String materialOccupationIDString =
                 request.getParameterMap().containsKey("materialOccupationID") ? request.getParameter("materialOccupationID") : (String) request
                         .getAttribute("materialOccupationID");
-        final Integer materialOccupationID =
-                materialOccupationIDString != null ? Integer.valueOf(materialOccupationIDString) : null;
-        return (MaterialSpaceOccupation) rootDomainObject.readResourceAllocationByOID(materialOccupationID);
+        return (MaterialSpaceOccupation) AbstractDomainObject.fromExternalId(materialOccupationIDString);
     }
 }

@@ -22,7 +22,7 @@
 
 		<ul class="listresearch">
 		<logic:iterate id="prize" name="prizes">
-			<bean:define id="prizeID" name="prize" property="idInternal"/>
+			<bean:define id="prizeID" name="prize" property="externalId"/>
 			<li class="mtop1">
 				<p class="mvert0">
 		 			<strong>
@@ -34,7 +34,7 @@
 			 		</span>
 		 		</p>
 		 		<logic:present name="prize" property="researchResult">
-				<bean:define id="resultId" name="prize" property="researchResult.idInternal"/>
+				<bean:define id="resultId" name="prize" property="researchResult.externalId"/>
 				<bean:define id="action" value="/resultPublications/showPublication.do"/>
 				<logic:equal name="prize" property="associatedToPatent" value="true">
 					<bean:define id="action" value="/resultPatents/showPatent.do"/>

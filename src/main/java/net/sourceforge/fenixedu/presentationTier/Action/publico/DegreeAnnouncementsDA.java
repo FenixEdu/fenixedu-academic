@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -23,6 +22,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "publico", path = "/showDegreeAnnouncements", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "viewAnnouncement", path = "degree-view-announcement"),
@@ -74,10 +74,8 @@ public class DegreeAnnouncementsDA extends AnnouncementManagement {
         if (parameter == null) {
             return null;
         }
-
         try {
-            Integer oid = new Integer(parameter);
-            return RootDomainObject.getInstance().readDegreeByOID(oid);
+            return AbstractDomainObject.fromExternalId(parameter);
         } catch (NumberFormatException e) {
             return null;
         }

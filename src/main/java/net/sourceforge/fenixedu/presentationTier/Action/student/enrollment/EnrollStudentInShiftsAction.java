@@ -23,6 +23,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "student", path = "/enrollStudentInShifts",
         input = "/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos&page=0",
@@ -33,11 +34,9 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response)  {
+            HttpServletResponse response) {
 
-        final IUserView userView = getUserView(request);
-
-        final Integer shiftId = Integer.valueOf(request.getParameter("shiftId"));
+        final String shiftId = request.getParameter("shiftId");
         if (!StringUtils.isEmpty(request.getParameter("executionCourseID"))) {
             request.setAttribute("executionCourseID", request.getParameter("executionCourseID"));
         }
@@ -74,7 +73,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
     }
 
     private Registration getRegistration(HttpServletRequest request) {
-        return rootDomainObject.readRegistrationByOID(Integer.valueOf(request.getParameter("registrationOID")));
+        return AbstractDomainObject.fromExternalId(request.getParameter("registrationOID"));
     }
 
     private Registration getStudent(final IUserView userView) {

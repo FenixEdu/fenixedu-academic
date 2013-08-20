@@ -15,12 +15,14 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
     protected final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
 
     protected String name;
     protected AdHocEvaluation adHocEvaluation;
-    protected Integer adHocEvaluationID;
+    protected String adHocEvaluationID;
 
     public AdHocEvaluationManagementBackingBean() {
         super();
@@ -57,7 +59,7 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
 
     private AdHocEvaluation getAdHocEvaluation() {
         if (this.adHocEvaluation == null && this.getAdHocEvaluationID() != null) {
-            this.adHocEvaluation = (AdHocEvaluation) rootDomainObject.readEvaluationByOID(getAdHocEvaluationID());
+            this.adHocEvaluation = (AdHocEvaluation) AbstractDomainObject.fromExternalId(getAdHocEvaluationID());
         }
         return this.adHocEvaluation;
     }
@@ -74,7 +76,7 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
         return "adHocEvaluationsIndex";
     }
 
-    public List<AdHocEvaluation> getAssociatedAdHocEvaluations() throws  FenixServiceException {
+    public List<AdHocEvaluation> getAssociatedAdHocEvaluations() throws FenixServiceException {
         List<AdHocEvaluation> associatedAdHocEvaluations = getExecutionCourse().getAssociatedAdHocEvaluations();
         Collections.sort(associatedAdHocEvaluations, new BeanComparator("creationDateTime"));
         return associatedAdHocEvaluations;
@@ -99,17 +101,17 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
         return this.description;
     }
 
-    public Integer getAdHocEvaluationID() {
+    public String getAdHocEvaluationID() {
         if (this.adHocEvaluationID == null) {
             if (this.getRequestParameter("adHocEvaluationID") != null
                     && !this.getRequestParameter("adHocEvaluationID").equals("")) {
-                this.adHocEvaluationID = Integer.valueOf(this.getRequestParameter("adHocEvaluationID"));
+                this.adHocEvaluationID = this.getRequestParameter("adHocEvaluationID");
             }
         }
         return this.adHocEvaluationID;
     }
 
-    public void setAdHocEvaluationID(Integer adHocEvaluationID) {
+    public void setAdHocEvaluationID(String adHocEvaluationID) {
         this.adHocEvaluationID = adHocEvaluationID;
     }
 

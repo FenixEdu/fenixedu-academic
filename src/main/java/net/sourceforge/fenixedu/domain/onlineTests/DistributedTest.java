@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -41,7 +42,7 @@ public class DistributedTest extends DistributedTest_Base {
     }
 
     public void delete() {
-        ExecutionCourse ec = (ExecutionCourse) getTestScope().getDomainObject();
+        ExecutionCourse ec = getTestScope().getExecutionCourse();
         EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
                 "log.executionCourse.evaluation.tests.distribution.removed", getEvaluationTitle(), getBeginDateTimeFormatted(),
                 ec.getName(), ec.getDegreePresentationString());
@@ -141,8 +142,8 @@ public class DistributedTest extends DistributedTest_Base {
         setEndHourDate(date);
     }
 
-    public StudentTestLog getLastSubmissionStudentTestLog(final Integer registrationId) {
-        Registration registration = RootDomainObject.getInstance().readRegistrationByOID(registrationId);
+    public StudentTestLog getLastSubmissionStudentTestLog(final String registrationId) {
+        Registration registration = AbstractDomainObject.fromExternalId(registrationId);
         for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
             if (studentTestLog.getEvent().startsWith("Submeter Teste;") && registration.equals(studentTestLog.getStudent())) {
                 return studentTestLog;
@@ -306,9 +307,9 @@ public class DistributedTest extends DistributedTest_Base {
         return getDistributedTestQuestionsSet().size() / getNumberOfQuestions().intValue();
     }
 
-    public Question findQuestionByOID(Integer questionId) {
+    public Question findQuestionByOID(String questionId) {
         for (StudentTestQuestion studentTestQuestion : this.getDistributedTestQuestions()) {
-            if (studentTestQuestion.getQuestion().getIdInternal().equals(questionId)) {
+            if (studentTestQuestion.getQuestion().getExternalId().equals(questionId)) {
                 return studentTestQuestion.getQuestion();
             }
         }

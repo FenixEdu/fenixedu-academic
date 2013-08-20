@@ -62,7 +62,6 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 
     public ActionForward preparePrintDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        Integer dcocumentRequestId = getRequestParameterAsInteger(request, "documentRequestId");
 
         final IDocumentRequest documentRequest = getDocumentRequest(request);
 
@@ -103,7 +102,7 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 
     @Override
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException,  FenixServiceException {
+            HttpServletResponse response) throws JRException, IOException, FenixServiceException {
         final IDocumentRequest documentRequest = getDocumentRequest(request);
         try {
             final List<AdministrativeOfficeDocument> documents =

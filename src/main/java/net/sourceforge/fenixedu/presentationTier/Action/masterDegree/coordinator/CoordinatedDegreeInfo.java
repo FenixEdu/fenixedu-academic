@@ -38,12 +38,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class CoordinatedDegreeInfo extends FenixAction {
 
     public static void setCoordinatorContext(final HttpServletRequest request) {
-        final Integer degreeCurricularPlanOID = findDegreeCurricularPlanID(request);
+        final String degreeCurricularPlanOID = findDegreeCurricularPlanID(request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {
-            final DegreeCurricularPlan degreeCurricularPlan =
-                    rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
             if (degreeCurricularPlan != null) {
                 final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
 
@@ -75,20 +74,20 @@ public class CoordinatedDegreeInfo extends FenixAction {
         return mapping.findForward("Success");
     }
 
-    public static Integer findDegreeCurricularPlanID(HttpServletRequest request) {
-        final Integer degreeCurricularPlanID;
+    public static String findDegreeCurricularPlanID(HttpServletRequest request) {
+        final String degreeCurricularPlanID;
 
         String paramValue = request.getParameter("degreeCurricularPlanID");
         if (!StringUtils.isEmpty(paramValue)) {
-            degreeCurricularPlanID = Integer.valueOf(paramValue);
+            degreeCurricularPlanID = paramValue;
         } else {
             Object attribute = request.getAttribute("degreeCurricularPlanID");
 
-            if (attribute != null && attribute instanceof Integer) {
-                return (Integer) attribute;
+            if (attribute != null && attribute instanceof String) {
+                return (String) attribute;
             }
             paramValue = (String) attribute;
-            degreeCurricularPlanID = StringUtils.isEmpty(paramValue) ? null : Integer.valueOf(paramValue);
+            degreeCurricularPlanID = StringUtils.isEmpty(paramValue) ? null : paramValue;
         }
 
         return degreeCurricularPlanID;
@@ -108,7 +107,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
                 request.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
 
                 final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates =
-                        ReadDegreeCandidates.run(degreeCurricularPlan.getIdInternal());
+                        ReadDegreeCandidates.run(degreeCurricularPlan.getExternalId());
                 request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT,
                         Integer.valueOf(infoMasterDegreeCandidates.size()));
             }

@@ -6,14 +6,12 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
 
 <%
-Integer degreeCurricularPlanID = null;
+String degreeCurricularPlanID = null;
 if(request.getAttribute("degreeCurricularPlanID") instanceof String){
-    degreeCurricularPlanID = Integer.valueOf((String) request.getAttribute("degreeCurricularPlanID"));
-} else if(request.getAttribute("degreeCurricularPlanID") instanceof Integer){
-    degreeCurricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanID");   
+    degreeCurricularPlanID = (String) request.getAttribute("degreeCurricularPlanID");
 }
 if (degreeCurricularPlanID == null) {
-    degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+    degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
 }
 %>
 

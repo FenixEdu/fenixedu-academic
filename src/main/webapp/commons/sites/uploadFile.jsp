@@ -13,7 +13,7 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
 <bean:define id="container" name="fileItemCreator" property="fileHolder"/>
-<bean:define id="containerId" name="container" property="idInternal"/>
+<bean:define id="containerId" name="container" property="externalId"/>
 
 <bean:define id="topContainerString" value="<%= "sectionID=" %>"/>
 <bean:define id="selectContainerString" value="<%= "itemID=" + containerId %>"/>
@@ -23,7 +23,7 @@
 	<bean:define id="topContainerString" value="<%= "sectionID=" + containerId %>"/>
 </logic:equal>
  <logic:equal name="container" property="class.simpleName" value="Item">
-	<bean:define id="sectionID" name="container" property="section.idInternal"/>
+	<bean:define id="sectionID" name="container" property="section.externalId"/>
 	<bean:define id="topContainerString" value="<%= "sectionID=" + sectionID%>"/> 
  </logic:equal>
 

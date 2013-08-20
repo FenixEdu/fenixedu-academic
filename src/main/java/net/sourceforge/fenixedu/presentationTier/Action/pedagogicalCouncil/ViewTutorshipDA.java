@@ -86,8 +86,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
     private Tutorship provideTutorship(HttpServletRequest request) {
         // If atribute "tutorshipId" is present
         if (request.getParameter("tutorshipId") != null) {
-            Integer tutorshipId = getIdInternal(request, "tutorshipId");
-            Tutorship tutorship = RootDomainObject.getInstance().readTutorshipByOID(tutorshipId);
+            Tutorship tutorship = getDomainObject(request, "tutorshipId");
             return tutorship;
         }
 
@@ -100,9 +99,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
 
     public ActionForward deleteTutorship(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        Integer tutorshipId = new Integer(request.getParameter("tutorshipID"));
-        Tutorship tutorship = rootDomainObject.readTutorshipByOID(tutorshipId);
+        Tutorship tutorship = AbstractDomainObject.fromExternalId(request.getParameter("tutorshipID"));
 
         ExecutionDegree executionDegree = getExecutionDegree(tutorship);
         deleteTutor(tutorship, executionDegree, request, mapping);
@@ -187,11 +184,11 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         ChangeTutorshipBean tutorshipBean = initializeChangeBean(tutorship, tutorshipPeriodPartialBean.getEndDate());
         changeTutorshipBeans.add(tutorshipBean);
         if (request.getParameter("cancel") == null) {
-            Object[] args = new Object[] { executionDegree.getIdInternal(), changeTutorshipBeans };
+            Object[] args = new Object[] { executionDegree.getExternalId(), changeTutorshipBeans };
 
             List<TutorshipErrorBean> tutorshipsNotChanged = new ArrayList<TutorshipErrorBean>();
             try {
-                tutorshipsNotChanged = ChangeTutorship.runChangeTutorship(executionDegree.getIdInternal(), changeTutorshipBeans);
+                tutorshipsNotChanged = ChangeTutorship.runChangeTutorship(executionDegree.getExternalId(), changeTutorshipBeans);
             } catch (NotAuthorizedException fenixFilterExceptione) {
                 // TODO Auto-generated catch block
                 addActionMessage(request, fenixFilterExceptione.getMessage());
@@ -237,7 +234,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
 
         List<Tutorship> tutorshipToDelete = new ArrayList<Tutorship>();
         tutorshipToDelete.add(tutorship);
-        return DeleteTutorship.runDeleteTutorship(executionDegree.getIdInternal(), tutorshipToDelete);
+        return DeleteTutorship.runDeleteTutorship(executionDegree.getExternalId(), tutorshipToDelete);
 
     }
 
@@ -251,16 +248,15 @@ public class ViewTutorshipDA extends FenixDispatchAction {
      * @param teacher
      * @return
      * @throws FenixServiceException
-     * @
-     * @throws Exception
+     *             @ * @throws Exception
      */
     private List<TutorshipErrorBean> createTutorship(ExecutionYear executionYear, ExecutionDegree executionDegree,
-            Person student, Partial endDate, Teacher teacher) throws  FenixServiceException {
+            Person student, Partial endDate, Teacher teacher) throws FenixServiceException {
         StudentsByEntryYearBean selectedStudentsAndTutorBean = new StudentsByEntryYearBean(executionYear);
         // Initialize Tutorship creation bean to use in InsertTutorship Service
         BeanInitializer.initializeBean(selectedStudentsAndTutorBean, teacher, executionDegree, student, endDate);
 
-        return InsertTutorship.runInsertTutorship(executionDegree.getIdInternal(), selectedStudentsAndTutorBean);
+        return InsertTutorship.runInsertTutorship(executionDegree.getExternalId(), selectedStudentsAndTutorBean);
     }
 
     private ExecutionDegree getExecutionDegree(Tutorship tutorship) {
@@ -387,7 +383,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         if (creationCorrect) {
             List<Tutorship> tutorships = student.getActiveTutorships();
             Tutorship tutorship = tutorships.get(0);
-            request.setAttribute("tutorshipId", tutorship.getIdInternal());
+            request.setAttribute("tutorshipId", tutorship.getExternalId());
             request.setAttribute("success", "success");
         }
 

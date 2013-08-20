@@ -62,7 +62,7 @@
 											<h:outputText rendered="#{!CompetenceCourseManagement.renderInEnglish}" value="#{competenceCourse.name} (#{competenceCourse.acronym})"/>
 											<h:outputText rendered="#{CompetenceCourseManagement.renderInEnglish}" value="#{competenceCourse.nameEn} (#{competenceCourse.acronym})"/>
 											<f:param name="action" value="ccm"/>
-											<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+											<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 											<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
 										</h:outputLink>
 

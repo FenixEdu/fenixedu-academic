@@ -47,11 +47,9 @@ public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
         IUserView userView = getUserView(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
 
         try {
-            UnEnrollGroupShift.run(studentGroupCode, groupPropertiesCode, userView.getUtilizador());
+            UnEnrollGroupShift.run(studentGroupCodeString, studentGroupCodeString, userView.getUtilizador());
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors2 = new ActionErrors();
             ActionError error2 = null;

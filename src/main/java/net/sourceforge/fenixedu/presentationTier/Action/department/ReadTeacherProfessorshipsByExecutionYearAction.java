@@ -49,12 +49,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractReadProfessorshipsAction {
 
     @Override
-    List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm, HttpServletRequest request)
+    List getDetailedProfessorships(IUserView userView, String teacherId, DynaActionForm actionForm, HttpServletRequest request)
             throws FenixServiceException {
 
         List detailedInfoProfessorshipList =
                 ReadDetailedTeacherProfessorshipsByExecutionYear.runReadDetailedTeacherProfessorshipsByExecutionYear(teacherId,
-                        (Integer) actionForm.get("executionYearId"));
+                        (String) actionForm.get("executionYearId"));
         request.setAttribute("args", new TreeMap());
         return detailedInfoProfessorshipList;
     }
@@ -70,10 +70,10 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
     private void prepareForm(DynaActionForm dynaForm, HttpServletRequest request) {
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
-        dynaForm.set("idInternal", infoTeacher.getIdInternal());
-        dynaForm.set("teacherId", infoTeacher.getIdInternal().toString());
+        dynaForm.set("externalId", infoTeacher.getExternalId());
+        dynaForm.set("teacherId", infoTeacher.getExternalId().toString());
         if (dynaForm.get("executionYearId") == null) {
-            dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
+            dynaForm.set("executionYearId", infoExecutionYear.getExternalId());
         }
 
         List detailedProfessorshipList = (List) request.getAttribute("detailedProfessorshipList");
@@ -83,7 +83,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
         for (int i = 0; i < detailedProfessorshipList.size(); i++) {
             DetailedProfessorship dps = (DetailedProfessorship) detailedProfessorshipList.get(i);
 
-            Integer executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getIdInternal();
+            String executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getExternalId();
             if (dps.getResponsibleFor().booleanValue()) {
                 executionCourseIds.add(executionCourseId);
             }
@@ -94,7 +94,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
             }
         }
 
-        dynaForm.set("executionCourseResponsability", executionCourseIds.toArray(new Integer[] {}));
+        dynaForm.set("executionCourseResponsability", executionCourseIds.toArray(new String[] {}));
         dynaForm.set("hours", hours);
 
     }

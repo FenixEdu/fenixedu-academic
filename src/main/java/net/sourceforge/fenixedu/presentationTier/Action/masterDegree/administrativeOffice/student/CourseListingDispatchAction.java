@@ -55,9 +55,9 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
     public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         // Get the Chosen Master Degree
-        Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
+        String masterDegreeID = request.getParameter("degreeID");
         if (masterDegreeID == null) {
-            masterDegreeID = (Integer) request.getAttribute("degreeID");
+            masterDegreeID = (String) request.getAttribute("degreeID");
         }
 
         List result = null;
@@ -82,7 +82,7 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
 
         List curricularCourseList = null;
         try {
-            curricularCourseList = ReadCurricularCoursesByDegreeCurricularPlan.run(Integer.valueOf(degreeCurricularPlanId));
+            curricularCourseList = ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanId);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -99,13 +99,9 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
 
         // Get the Selected Course
 
-        Integer scopeCode = null;
         String scopeCodeString = request.getParameter("scopeCode");
         if (scopeCodeString == null) {
             scopeCodeString = (String) request.getAttribute("scopeCode");
-        }
-        if (scopeCodeString != null) {
-            scopeCode = new Integer(scopeCodeString);
         }
 
         String yearString = getFromRequest("executionYear", request);
@@ -113,7 +109,8 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
         List enrolments = null;
         try {
 
-            enrolments = ReadStudentListByCurricularCourse.runReadStudentListByCurricularCourse(userView, scopeCode, yearString);
+            enrolments =
+                    ReadStudentListByCurricularCourse.runReadStudentListByCurricularCourse(userView, scopeCodeString, yearString);
 
         } catch (NonExistingServiceException e) {
             ActionErrors errors = new ActionErrors();

@@ -37,7 +37,7 @@ function invertSelect(){
 <strong><jsp:include page="context.jsp"/></strong>
 
 <bean:define id="shiftName" name="<%= PresentationConstants.SHIFT %>" property="nome"/>
-<bean:define id="shiftId" name="<%= PresentationConstants.SHIFT %>" property="idInternal"/>
+<bean:define id="shiftId" name="<%= PresentationConstants.SHIFT %>" property="externalId"/>
 <bean:define id="shiftType" name="<%= PresentationConstants.SHIFT %>" property="shiftTypesIntegerComparator"/>
 
 <h3>Alunos Inscritos</h3>
@@ -76,7 +76,7 @@ function invertSelect(){
 			<bean:define id="student" name="shiftEnrolment" property="registration"/>
 			<tr>
 				<td>
-					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentIDs" property="studentIDs"><bean:write name="student" property="idInternal"/></html:multibox>
+					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentIDs" property="studentIDs"><bean:write name="student" property="externalId"/></html:multibox>
 				</td>
 				<td>
 					<bean:write name="student" property="number"/>
@@ -133,7 +133,7 @@ function invertSelect(){
 			</tr>
 			<logic:iterate id="otherShift" name="<%= PresentationConstants.SHIFTS %>">
 				<logic:notEqual name="otherShift" property="nome" value="<%= pageContext.findAttribute("shiftName").toString() %>">
-					<bean:define id="otherShiftId" name="otherShift" property="idInternal"/>
+					<bean:define id="otherShiftId" name="otherShift" property="externalId"/>
 					<bean:define id="otherShiftType" name="otherShift" property="shiftTypesIntegerComparator"/>
 					<logic:equal name="shiftType" value="<%= pageContext.findAttribute("otherShiftType").toString() %>">
 						<tr>

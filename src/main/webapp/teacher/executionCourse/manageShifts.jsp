@@ -22,7 +22,7 @@
 			<td><fr:view name="shift" property="lotacao"/></td>
 			<td><fr:view name="shift" property="studentsCount"/></td>
 			<bean:define id="executionCourseID" name="executionCourseID"></bean:define>
-			<td><html:link page="<%= "/manageExecutionCourse.do?method=editShift&executionCourseID=" + executionCourseID %>" paramId="shiftID" paramName="shift" paramProperty="idInternal"><bean:message key="label.edit"/></html:link></td>
+			<td><html:link page="<%= "/manageExecutionCourse.do?method=editShift&executionCourseID=" + executionCourseID %>" paramId="shiftID" paramName="shift" paramProperty="externalId"><bean:message key="label.edit"/></html:link></td>
 		</tr>
 		</logic:iterate>
 	</table>

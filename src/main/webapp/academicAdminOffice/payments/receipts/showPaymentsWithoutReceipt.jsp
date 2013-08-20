@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
-<bean:define id="personId" name="createReceiptBean" property="person.idInternal"/>
+<bean:define id="personId" name="createReceiptBean" property="person.externalId"/>
 <fr:form action="<%="/receipts.do?personId=" + personId%>">
 	
 	<input type="hidden" name="method" value=""/>

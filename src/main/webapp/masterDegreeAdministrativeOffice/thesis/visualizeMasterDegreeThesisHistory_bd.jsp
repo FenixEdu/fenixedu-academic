@@ -9,7 +9,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEmployee" %>
 
 <bean:define id="student" name="<%= PresentationConstants.STUDENT %>" scope="request"/>
-<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" scope="request" />
+<bean:define id="scpID" name="studentCurricularPlan" property="externalId" scope="request" />
 <bean:define id="dissertationTitle" name="<%= PresentationConstants.DISSERTATION_TITLE %>" scope="request"/>
 <bean:define id="responsibleEmployee" name="<%= PresentationConstants.RESPONSIBLE_EMPLOYEE %>" scope="request"/>
 <bean:define id="lastModification" name="<%= PresentationConstants.LAST_MODIFICATION %>" scope="request"/>

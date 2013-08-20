@@ -16,7 +16,7 @@
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:write name="tsdProcess" property="name"/>&nbsp;
 			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
@@ -48,7 +48,7 @@
 		</th>
 		<td>
 			<html:select property="person" onchange="this.form.method.value='loadTeacherServiceDistributionsForPermissionServices'; this.form.submit()">
-				<html:options collection="departmentPersonList" property="idInternal" labelProperty="name"/>
+				<html:options collection="departmentPersonList" property="externalId" labelProperty="name"/>
 			</html:select>
 		</td>
 	</tr>
@@ -148,7 +148,7 @@
 
 <br>
 
-<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 	<bean:message key="link.back"/>
 </html:link>
 

@@ -248,13 +248,13 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
 
     @Override
     public String getViewStudentProgrammeLink() {
-        return "/student.do?method=visualizeRegistration&amp;registrationID=" + getRegistration().getIdInternal();
+        return "/student.do?method=visualizeRegistration&amp;registrationID=" + getRegistration().getExternalId();
     }
 
     @Override
     public String getReceivedActionLink() {
         return "/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId="
-                + getIdInternal();
+                + getExternalId();
     }
 
     @Override

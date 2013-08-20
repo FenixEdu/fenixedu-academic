@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.SubmitFinalWorkProposalAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -14,10 +13,10 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposalE
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Correia
@@ -26,8 +25,8 @@ import pt.ist.fenixWebFramework.services.Service;
 public class SubmitFinalWorkProposal {
 
     protected void run(InfoProposalEditor infoProposal) throws FenixServiceException {
-        Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+        String executionDegreeId = infoProposal.getExecutionDegree().getExternalId();
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
         Scheduleing scheduleing = executionDegree.getScheduling();
         if (scheduleing == null) {
@@ -35,8 +34,8 @@ public class SubmitFinalWorkProposal {
         }
 
         Proposal proposal = null;
-        if (infoProposal.getIdInternal() != null) {
-            proposal = RootDomainObject.getInstance().readProposalByOID(infoProposal.getIdInternal());
+        if (infoProposal.getExternalId() != null) {
+            proposal = AbstractDomainObject.fromExternalId(infoProposal.getExternalId());
         }
         if (proposal == null) {
             proposal = new Proposal();
@@ -86,8 +85,8 @@ public class SubmitFinalWorkProposal {
         if (infoProposal.getBranches() != null && !infoProposal.getBranches().isEmpty()) {
             for (int i = 0; i < infoProposal.getBranches().size(); i++) {
                 InfoBranch infoBranch = (InfoBranch) infoProposal.getBranches().get(i);
-                if (infoBranch != null && infoBranch.getIdInternal() != null) {
-                    Branch branch = RootDomainObject.getInstance().readBranchByOID(infoBranch.getIdInternal());
+                if (infoBranch != null && infoBranch.getExternalId() != null) {
+                    Branch branch = AbstractDomainObject.fromExternalId(infoBranch.getExternalId());
                     if (branch != null) {
                         proposal.getBranches().add(branch);
                     }

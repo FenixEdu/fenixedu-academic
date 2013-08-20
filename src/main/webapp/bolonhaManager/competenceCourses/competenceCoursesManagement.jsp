@@ -56,7 +56,7 @@
 										<h:outputFormat value="#{bolonhaBundle['create.param']}" escape="false">
 											<f:param value=" #{bolonhaBundle['course']}"/>
 										</h:outputFormat>								
-										<f:param name="competenceCourseGroupUnitID" value="#{competenceCourseGroupUnit.idInternal}"/>
+										<f:param name="competenceCourseGroupUnitID" value="#{competenceCourseGroupUnit.externalId}"/>
 									</h:outputLink>
 								<h:outputText value="</td></tr></table>" escape="false"/>
 								
@@ -77,26 +77,26 @@
 										<h:outputLink value="showCompetenceCourse.faces">
 											<h:outputText value="#{bolonhaBundle['show']}"/>
 											<f:param name="action" value="ccm"/>
-											<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+											<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 										</h:outputLink>
 										<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}">
 											<h:outputText value=", "/>
 												<h:outputLink value="editCompetenceCourseMainPage.faces">
 													<h:outputText value="#{bolonhaBundle['edit']}" />
 													<f:param name="action" value="ccm"/>
-													<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+													<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 												</h:outputLink>
 												<h:outputText value=", "/>
 														<h:outputLink rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}" value="deleteCompetenceCourse.faces">
 												<h:outputText value="#{bolonhaBundle['delete']}" />
-												<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+												<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 											</h:outputLink>
 											<h:outputText value=", "/>
 											<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
 												<h:outputText value="#{bolonhaBundle['bibliographicReference']}" />
 												<f:param name="action" value="add"/>
 												<f:param name="bibliographicReferenceID" value="-1"/>
-												<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+												<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 											</h:outputLink>									
 										</h:panelGroup>
 									</h:column>

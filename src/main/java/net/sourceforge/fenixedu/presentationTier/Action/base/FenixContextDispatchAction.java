@@ -38,22 +38,12 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
         return actionForward;
     }
 
-    public static Integer getFromRequest(String parameter, HttpServletRequest request) {
+    public static String getFromRequest(String parameter, HttpServletRequest request) {
         if (request.getParameter(parameter) != null) {
-            try {
-                return Integer.valueOf(request.getParameter(parameter));
-            } catch (NumberFormatException e) {
-                return null;
-            }
+            return request.getParameter(parameter);
         } else if (request.getAttribute(parameter) != null) {
             if (request.getAttribute(parameter) instanceof String) {
-                try {
-                    return Integer.valueOf((String) request.getAttribute(parameter));
-                } catch (NumberFormatException e) {
-                    return null;
-                }
-            } else if (request.getAttribute(parameter) instanceof Integer) {
-                return (Integer) request.getAttribute(parameter);
+                return (String) request.getAttribute(parameter);
             }
         }
         return null;
@@ -64,8 +54,7 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
                 .getAttribute(parameter);
     }
 
-    protected List<LabelValueBean> buildExecutionPeriodsLabelValueList(Integer degreeCurricularPlanId)
-            throws FenixActionException {
+    protected List<LabelValueBean> buildExecutionPeriodsLabelValueList(String degreeCurricularPlanId) throws FenixActionException {
         List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
         try {
 
@@ -83,7 +72,7 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
 
                 for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
                     result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - "
-                            + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), infoExecutionPeriodIter.getIdInternal()
+                            + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), infoExecutionPeriodIter.getExternalId()
                             .toString()));
                 }
             } catch (Exception e) {

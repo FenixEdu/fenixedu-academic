@@ -13,7 +13,7 @@
 	<br/>
 </html:messages>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 <bean:define id="processName" name="processName" />
 
 <fr:hasMessages for="candidacyProcessBean" type="conversion">

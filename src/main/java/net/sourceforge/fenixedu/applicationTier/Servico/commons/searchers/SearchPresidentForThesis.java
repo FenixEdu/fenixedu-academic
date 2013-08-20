@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SearchPresidentForThesis implements AutoCompleteProvider<PersonName> {
 
@@ -25,8 +25,7 @@ public class SearchPresidentForThesis implements AutoCompleteProvider<PersonName
             return null;
         }
 
-        final Integer thesisId = new Integer(thesisIdString);
-        final Thesis thesis = RootDomainObject.getInstance().readThesisByOID(thesisId);
+        final Thesis thesis = AbstractDomainObject.fromExternalId(thesisIdString);
         if (thesis == null) {
             return null;
         }

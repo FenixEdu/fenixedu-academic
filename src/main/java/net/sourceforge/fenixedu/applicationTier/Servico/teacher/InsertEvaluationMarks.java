@@ -27,10 +27,10 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério
@@ -38,7 +38,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class InsertEvaluationMarks {
 
-    protected TeacherAdministrationSiteView run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
+    protected TeacherAdministrationSiteView run(String executionCourseCode, String evaluationCode, HashMap hashMarks)
             throws ExcepcaoInexistente, FenixServiceException {
 
         ExecutionCourseSite site = null;
@@ -48,11 +48,11 @@ public class InsertEvaluationMarks {
         HashMap<String, String> newHashMarks = new HashMap<String, String>();
 
         // Site
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
         site = executionCourse.getSite();
 
         // Evaluation
-        evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationCode);
+        evaluation = AbstractDomainObject.fromExternalId(evaluationCode);
 
         // Attend List
         attendList = executionCourse.getAttends();
@@ -153,7 +153,7 @@ public class InsertEvaluationMarks {
     private static final InsertEvaluationMarks serviceInstance = new InsertEvaluationMarks();
 
     @Service
-    public static TeacherAdministrationSiteView runInsertEvaluationMarks(Integer executionCourseCode, Integer evaluationCode,
+    public static TeacherAdministrationSiteView runInsertEvaluationMarks(String executionCourseCode, String evaluationCode,
             HashMap hashMarks) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, evaluationCode, hashMarks);

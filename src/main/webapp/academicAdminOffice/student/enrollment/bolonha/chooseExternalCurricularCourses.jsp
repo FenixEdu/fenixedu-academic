@@ -30,10 +30,10 @@
 <fr:form action="<%= contextInformation.toString() + parameters.toString() %>">
 	<html:hidden property="method" value="prepareCreateExternalEnrolments"/>
 	
-	<bean:define id="registrationId" name="registration" property="idInternal" />
+	<bean:define id="registrationId" name="registration" property="externalId" />
 	<html:hidden property="registrationId" value="<%= registrationId.toString() %>"/>
 	
-	<bean:define id="externalUnitId" name="externalUnit" property="idInternal" />
+	<bean:define id="externalUnitId" name="externalUnit" property="externalId" />
 	<html:hidden property="externalUnitId" value="<%= externalUnitId.toString() %>"/>
 
 	<logic:notEmpty name="externalCurricularCourseBeans">	
@@ -43,7 +43,7 @@
 				<fr:property name="columnClasses" value=",inobullet ulmvert0,inobullet ulmvert0,," />
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="selectedExternalCurricularCourses" />
-				<fr:property name="checkboxValue" value="externalCurricularCourse.idInternal" />	
+				<fr:property name="checkboxValue" value="externalCurricularCourse.externalId" />	
 			</fr:layout>
 		</fr:view>
 		<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>

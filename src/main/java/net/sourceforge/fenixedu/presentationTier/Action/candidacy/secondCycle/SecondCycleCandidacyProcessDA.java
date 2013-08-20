@@ -59,13 +59,13 @@ import com.google.common.collect.Collections2;
 public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class SecondCycleCandidacyProcessForm extends CandidacyProcessForm {
-        private Integer selectedProcessId;
+        private String selectedProcessId;
 
-        public Integer getSelectedProcessId() {
+        public String getSelectedProcessId() {
             return selectedProcessId;
         }
 
-        public void setSelectedProcessId(Integer selectedProcessId) {
+        public void setSelectedProcessId(String selectedProcessId) {
             this.selectedProcessId = selectedProcessId;
         }
     }
@@ -186,8 +186,8 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     protected void setCandidacyProcessInformation(final ActionForm actionForm, final SecondCycleCandidacyProcess process) {
         final SecondCycleCandidacyProcessForm form = (SecondCycleCandidacyProcessForm) actionForm;
-        form.setSelectedProcessId(process.getIdInternal());
-        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
+        form.setSelectedProcessId(process.getExternalId());
+        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getExternalId());
     }
 
     @Override
@@ -199,10 +199,10 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     protected SecondCycleCandidacyProcess getCandidacyProcess(final HttpServletRequest request,
             final ExecutionInterval executionInterval) {
 
-        final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
+        final String selectedProcessId = getStringFromRequest(request, "selectedProcessId");
         if (selectedProcessId != null) {
             for (final SecondCycleCandidacyPeriod candidacyPeriod : executionInterval.getSecondCycleCandidacyPeriods()) {
-                if (candidacyPeriod.getSecondCycleCandidacyProcess().getIdInternal().equals(selectedProcessId)) {
+                if (candidacyPeriod.getSecondCycleCandidacyProcess().getExternalId().equals(selectedProcessId)) {
                     return candidacyPeriod.getSecondCycleCandidacyProcess();
                 }
             }
@@ -216,7 +216,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "SendToCoordinator");
         } catch (DomainException e) {
@@ -245,7 +245,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public ActionForward executeSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "SendToScientificCouncil");
         } catch (final DomainException e) {

@@ -16,7 +16,7 @@
 </tr>
 <logic:iterate id="infoCurricularCourse" name="curricularCourses">
 <tr>
-<bean:define id="curricularCourseId" name="infoCurricularCourse" property="idInternal"/>
+<bean:define id="curricularCourseId" name="infoCurricularCourse" property="externalId"/>
 <td class="listClasses">
 <html:link page="<%= "/curricularCourseManager.do?method=viewCurriculum&index=" + curricularCourseId %>" >
 	<bean:write name="infoCurricularCourse" property="name"/></td>

@@ -13,8 +13,8 @@
 <logic:notEmpty name="component" property="infoWrittenTest">
 	<bean:define id="evaluation" name="component" property="infoWrittenTest"/>
 </logic:notEmpty>
-<bean:define id="executionCourseCode"  name="siteView" property="commonComponent.executionCourse.idInternal"/>
-<bean:define id="evaluationCode"  name="evaluation" property="idInternal"/>
+<bean:define id="executionCourseCode"  name="siteView" property="commonComponent.executionCourse.externalId"/>
+<bean:define id="evaluationCode"  name="evaluation" property="externalId"/>
 <br/>
 <table cellspacing="1" border="0">
 	<tr>

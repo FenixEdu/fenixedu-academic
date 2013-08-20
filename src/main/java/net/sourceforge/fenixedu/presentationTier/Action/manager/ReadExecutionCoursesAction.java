@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCoursesByExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -22,7 +21,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -39,13 +37,11 @@ public class ReadExecutionCoursesAction extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
-        IUserView userView = UserView.getUser();
 
-        Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
         List executionCourses = null;
 
         try {
-            executionCourses = ReadExecutionCoursesByExecutionPeriod.run(executionPeriodId);
+            executionCourses = ReadExecutionCoursesByExecutionPeriod.run(request.getParameter("executionPeriodId"));
 
             if (executionCourses != null && executionCourses.size() > 0) {
                 Collections.sort(executionCourses, new BeanComparator("nome"));

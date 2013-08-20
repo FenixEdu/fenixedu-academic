@@ -31,7 +31,7 @@
 		<fr:property name="classes" value="tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc"/>
 		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 	</fr:layout>
-		<fr:destination name="view.prize" path="/prizes/showPrizes.do?method=showPrize&oid=${idInternal}"/>
+		<fr:destination name="view.prize" path="/prizes/showPrizes.do?method=showPrize&oid=${externalId}"/>
 	</fr:view>
 	</logic:notEqual>
 
@@ -41,7 +41,7 @@
 		<fr:property name="classes" value="tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc"/>
 		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 	</fr:layout>
-		<fr:destination name="view.prize" path="/prizes/showPrizes.do?method=showPrize&oid=${idInternal}"/>
+		<fr:destination name="view.prize" path="/prizes/showPrizes.do?method=showPrize&oid=${externalId}"/>
 	</fr:view>
 	</logic:equal>
 

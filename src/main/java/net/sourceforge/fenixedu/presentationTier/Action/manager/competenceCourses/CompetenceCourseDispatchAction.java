@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -58,14 +57,12 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
 
         DynaActionForm actionForm = (DynaActionForm) form;
         String departmentString = (String) actionForm.get("departmentID");
-        Integer departmentID =
-                (departmentString != null && StringUtils.isNumeric(departmentString)) ? Integer.valueOf(departmentString) : null;
 
         List<InfoDepartment> infoDepartments;
         List<InfoCompetenceCourse> infoCompetenceCourses;
 
         try {
-            infoCompetenceCourses = ReadCompetenceCoursesByDepartment.run(departmentID);
+            infoCompetenceCourses = ReadCompetenceCoursesByDepartment.run(departmentString);
             infoDepartments = ReadAllDepartments.run();
         } catch (FenixServiceException fse) {
             throw new FenixActionException(fse.getMessage());
@@ -82,7 +79,7 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         DynaActionForm actionForm = (DynaActionForm) form;
 
-        Integer[] competenceCoursesIDs = (Integer[]) actionForm.get("competenceCoursesIds");
+        String[] competenceCoursesIDs = (String[]) actionForm.get("competenceCoursesIds");
 
         try {
             DeleteCompetenceCourses.run(competenceCoursesIDs);
@@ -132,7 +129,7 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         IUserView userView = UserView.getUser();
 
-        Integer competenceCourseID = Integer.valueOf(request.getParameter("competenceCourseID"));
+        String competenceCourseID = request.getParameter("competenceCourseID");
 
         InfoCompetenceCourse competenceCourse = null;
         try {
@@ -169,11 +166,11 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
 
         String code = (String) actionForm.get("code");
         String name = (String) actionForm.get("name");
-        Integer departmentID = (Integer) actionForm.get("departmentID");
+        String departmentID = (String) actionForm.get("departmentID");
 
         InfoCompetenceCourse competenceCourse = null;
         try {
-            competenceCourse = CreateEditCompetenceCourse.run(null, code, name, new Integer[] { departmentID });
+            competenceCourse = CreateEditCompetenceCourse.run(null, code, name, new String[] { departmentID });
         } catch (InvalidArgumentsServiceException invalidArgumentsServiceException) {
             throw new FenixActionException(invalidArgumentsServiceException.getMessage());
         } catch (FenixServiceException fenixServiceException) {

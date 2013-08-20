@@ -8,7 +8,7 @@
 
 <fr:form action="/student.do">	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editPersonalData"/>
-	<bean:define id="studentID" type="java.lang.Integer" name="student" property="idInternal"/>
+	<bean:define id="studentID" type="java.lang.String" name="student" property="externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="studentID" value="<%= studentID.toString() %>"/>
 
 	<logic:messagesPresent message="true">

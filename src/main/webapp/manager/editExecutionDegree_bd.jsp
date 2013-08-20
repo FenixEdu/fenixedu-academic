@@ -25,7 +25,7 @@
 			</td>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearId" property="executionYearId">
-					<html:options collection="infoExecutionYearsList" property="idInternal" labelProperty="year"/>
+					<html:options collection="infoExecutionYearsList" property="externalId" labelProperty="year"/>
 				</html:select>				
 			</td>
 		</tr>
@@ -35,7 +35,7 @@
 			</td>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.campusId" property="campusId">
-					<html:options collection="infoCampusList" property="idInternal" labelProperty="name"/>
+					<html:options collection="infoCampusList" property="externalId" labelProperty="name"/>
 				</html:select>				
 			</td>
 		</tr>

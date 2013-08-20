@@ -56,9 +56,9 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
                     Row row = spreadsheet.addRow();
                     row.setCell(executionSemester.getSemester());
                     row.setCell(nonRegularTeachingService.getProfessorship().getPerson().getIstUsername());
-                    row.setCell(shift.getIdInternal());
+                    row.setCell(shift.getExternalId());
                     row.setCell(shift.getNome());
-                    row.setCell(shift.getExecutionCourse().getIdInternal());
+                    row.setCell(shift.getExecutionCourse().getExternalId());
                     row.setCell(nonRegularTeachingService.getPercentage() != null ? nonRegularTeachingService.getPercentage()
                             .toString().replace('.', ',') : StringUtils.EMPTY);
                     row.setCell(String.valueOf(shift.getExecutionCourse().getOid()));
@@ -77,9 +77,9 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
                     Row row = spreadsheet.addRow();
                     row.setCell(executionSemester.getSemester());
                     row.setCell(teacherService.getTeacher().getPerson().getIstUsername());
-                    row.setCell(shift.getIdInternal());
+                    row.setCell(shift.getExternalId());
                     row.setCell(shift.getNome());
-                    row.setCell(shift.getExecutionCourse().getIdInternal());
+                    row.setCell(shift.getExecutionCourse().getExternalId());
                     row.setCell(degreeTeachingService.getPercentage() != null ? degreeTeachingService.getPercentage().toString()
                             .replace('.', ',') : StringUtils.EMPTY);
                     row.setCell(String.valueOf(shift.getExecutionCourse().getOid()));

@@ -9,7 +9,7 @@
 	<fr:view name="researchUnit" property="nameWithAcronym"/>
 </h1>
 
-<bean:define id="siteID" name="site" property="idInternal"/>
+<bean:define id="siteID" name="site" property="externalId"/>
 
 <p>
 	<html:link href="<%= request.getContextPath() + "/publico/researchSite/viewResearchUnitSite.do?siteID=" + siteID + "&method=organization"%>" ><bean:message key="label.organization" bundle="SITE_RESOURCES"/></html:link> | <bean:message key="label.members" bundle="SITE_RESOURCES"/>

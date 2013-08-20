@@ -36,7 +36,7 @@
 
 <fr:view name="tree" layout="unit-functions-tree">
     <fr:layout>
-        <fr:property name="treeId" value="<%= "personFunctions" + unit.getIdInternal() %>"/>
+        <fr:property name="treeId" value="<%= "personFunctions" + unit.getExternalId() %>"/>
 
         <fr:property name="eachLayout" value="values"/>
 
@@ -44,22 +44,22 @@
         <fr:property name="schemaFor(Function)" value="site.functions.tree.function"/>
 		
         <fr:property name="addFunctionLink">
-        	<html:link page="<%= String.format("%s?method=addFunction&amp;%s&amp;unitID=${idInternal}", actionName, context) %>">
+        	<html:link page="<%= String.format("%s?method=addFunction&amp;%s&amp;unitID=${externalId}", actionName, context) %>">
         		<bean:message key="link.site.manage.existingFunctions.addFunction" bundle="SITE_RESOURCES"/>
         	</html:link>
 		</fr:property>
         <fr:property name="orderFunctionsLink">
-        	<html:link page="<%= String.format("%s?method=organizeFunctions&amp;%s&amp;unitID=${idInternal}", actionName, context) %>">
+        	<html:link page="<%= String.format("%s?method=organizeFunctions&amp;%s&amp;unitID=${externalId}", actionName, context) %>">
         		<bean:message key="link.site.manage.existingFunctions.organizeFunctions" bundle="SITE_RESOURCES"/>
         	</html:link>
 		</fr:property>
         <fr:property name="editFunctionLink">
-        	<html:link page="<%= String.format("%s?method=prepareEditFunction&amp;%s&amp;functionID=${idInternal}", actionName, context) %>">
+        	<html:link page="<%= String.format("%s?method=prepareEditFunction&amp;%s&amp;functionID=${externalId}", actionName, context) %>">
         		<bean:message key="link.site.manage.existingFunctions.editFunction" bundle="SITE_RESOURCES"/>
         	</html:link>
         </fr:property>
         <fr:property name="deleteFunctionLink">
-        	<html:link page="<%= String.format("%s?method=deleteFunction&amp;%s&amp;functionID=${idInternal}", actionName, context) %>">
+        	<html:link page="<%= String.format("%s?method=deleteFunction&amp;%s&amp;functionID=${externalId}", actionName, context) %>">
         		<bean:message key="link.site.manage.existingFunctions.deleteFunction" bundle="SITE_RESOURCES"/>
         	</html:link>
         </fr:property>

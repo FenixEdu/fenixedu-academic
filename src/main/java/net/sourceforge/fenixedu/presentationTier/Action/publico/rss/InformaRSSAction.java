@@ -39,7 +39,7 @@ public abstract class InformaRSSAction extends FenixAction {
 
     protected static ItemGuidIF getItemGuidIF(final ItemIF itemIF, final DomainObject domainObject) {
         final ItemGuidIF itemGuidIF = new ItemGuid(itemIF);
-        itemGuidIF.setLocation(domainObject.getClass().getName() + domainObject.getIdInternal());
+        itemGuidIF.setLocation(domainObject.getClass().getName() + domainObject.getExternalId());
         itemGuidIF.setPermaLink(false);
         return itemGuidIF;
     }

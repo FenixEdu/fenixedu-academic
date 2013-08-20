@@ -17,9 +17,9 @@
 				<th><bean:message key="message.studentTestLog.checksumReport"/></th>
 			</tr>
 			<logic:iterate id="registrationDistributedTests" name="tests" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.RegistrationDistributedTests">
-				<bean:define id="student" name="registrationDistributedTests" property="registration.idInternal"/>
+				<bean:define id="student" name="registrationDistributedTests" property="registration.externalId"/>
 				<logic:iterate id="distributedTest" name="registrationDistributedTests" property="distributedTestsToDo" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
-					<bean:define id="testCode" name="distributedTest" property="idInternal"/>
+					<bean:define id="testCode" name="distributedTest" property="externalId"/>
 					<tr>
 						<td>
 							<html:link page="<%="/studentTests.do?method=prepareToDoTest&testCode="+testCode.toString()+"&student="+student.toString()%>">
@@ -31,9 +31,9 @@
 						<td class="acenter">
 							<% 
 							net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
-							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(new Integer(student.toString()));
+							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(student.toString());
 								if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
-							<bean:define id="logId" value="<%= studentTestLog.getIdInternal().toString() %>"/>
+							<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
 							<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">
 								<bean:message key="message.studentTestLog.checksumReport" />
 							</html:link>
@@ -55,9 +55,9 @@
 				<th><bean:message key="message.studentTestLog.checksumReport"/></th>
 			</tr>
 			<logic:iterate id="registrationDistributedTests" name="tests" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.RegistrationDistributedTests">
-				<bean:define id="student" name="registrationDistributedTests" property="registration.idInternal"/>
+				<bean:define id="student" name="registrationDistributedTests" property="registration.externalId"/>
 				<logic:iterate id="distributedTest" name="registrationDistributedTests" property="distributedTestsDone" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
-					<bean:define id="testCode" name="distributedTest" property="idInternal"/>
+					<bean:define id="testCode" name="distributedTest" property="externalId"/>
 					<tr>
 						<td>
 							<html:link page="<%="/studentTests.do?method=showTestCorrection&testCode="+testCode.toString()+"&student="+student.toString()%>">
@@ -69,9 +69,9 @@
 						<td class="acenter">
 							<% 
 							net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
-							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(new Integer(student.toString()));
+							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(student.toString());
 								if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
-							<bean:define id="logId" value="<%= studentTestLog.getIdInternal().toString() %>"/>
+							<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
 							<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">
 								<bean:message key="message.studentTestLog.checksumReport" />
 							</html:link>
@@ -98,7 +98,7 @@
 			</tr>
 			<logic:iterate id="distributedTest" name="testToDoList" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
 				<bean:define id="student" name="distributedTest" property="student"/>
-				<bean:define id="testCode" name="distributedTest" property="idInternal"/>
+				<bean:define id="testCode" name="distributedTest" property="externalId"/>
 				<tr>
 					<td>
 						<html:link page="<%="/studentTests.do?method=prepareToDoTest&testCode="+testCode.toString()+"&student="+student.toString()%>">
@@ -112,7 +112,7 @@
 						net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
 						net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
 							if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
-						<bean:define id="logId" value="<%= studentTestLog.getIdInternal().toString() %>"/>
+						<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
 						<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">
 							<bean:message key="message.studentTestLog.checksumReport" />
 						</html:link>
@@ -138,7 +138,7 @@
 		<logic:iterate id="distributedTest" name="doneTestsList" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
 		<tr>
 			<td>
-				<html:link page="/studentTests.do?method=showTestCorrection" paramId="testCode" paramName="distributedTest" paramProperty="idInternal">
+				<html:link page="/studentTests.do?method=showTestCorrection" paramId="testCode" paramName="distributedTest" paramProperty="externalId">
 				<bean:write name="distributedTest" property="title"/>
 				</html:link>
 			</td>
@@ -149,7 +149,7 @@
 				net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
 				net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
 					if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
-				<bean:define id="logId" value="<%= studentTestLog.getIdInternal().toString() %>"/>
+				<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
 				<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">
 					<bean:message key="message.studentTestLog.checksumReport" />
 				</html:link>

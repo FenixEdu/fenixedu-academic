@@ -32,12 +32,11 @@ public class ShowCurriculumHistoricAction extends FenixDispatchAction {
     public ActionForward showCurriculumHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        final Integer curricularCourseOID = getIntegerFromRequest(request, "curricularCourseCode");
         final Integer semester = getIntegerFromRequest(request, "semester");
         final AcademicInterval academicInterval =
                 AcademicInterval.getAcademicIntervalFromResumedString(request.getParameter("academicInterval"));
 
-        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseOID);
+        final CurricularCourse curricularCourse = getDomainObject(request, "curricularCourseCode");
 
         final AcademicInterval interval =
                 curricularCourse.isAnual() ? academicInterval : academicInterval.getChildAcademicInterval(

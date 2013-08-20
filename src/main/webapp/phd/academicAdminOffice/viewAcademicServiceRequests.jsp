@@ -17,7 +17,7 @@
 		</html:link>
 		<logic:present name="process" property="registration">
 		|
-		<html:link action="/academicServiceRequestsManagement.do?method=chooseServiceRequestType" paramId="registrationID" paramName="process" paramProperty="registration.idInternal">
+		<html:link action="/academicServiceRequestsManagement.do?method=chooseServiceRequestType" paramId="registrationID" paramName="process" paramProperty="registration.externalId">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.serviceRequests"/>
 		</html:link>
 		</logic:present>

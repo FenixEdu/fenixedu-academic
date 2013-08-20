@@ -12,18 +12,18 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadStudentListByCurricularCourse {
 
-    protected List run(final IUserView userView, final Integer curricularCourseID, final String executionYear)
+    protected List run(final IUserView userView, final String curricularCourseID, final String executionYear)
             throws FenixServiceException {
 
-        final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
+        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
         return (executionYear != null) ? cleanList(curricularCourse.getEnrolmentsByYear(executionYear)) : cleanList(curricularCourse
                 .getEnrolments());
     }
@@ -53,8 +53,9 @@ public class ReadStudentListByCurricularCourse {
     private static final ReadStudentListByCurricularCourse serviceInstance = new ReadStudentListByCurricularCourse();
 
     @Service
-    public static List runReadStudentListByCurricularCourse(IUserView userView, Integer curricularCourseID, String executionYear) throws FenixServiceException  , NotAuthorizedException {
-        StudentListByCurricularCourseAuthorizationFilter.instance.execute(userView, curricularCourseID, executionYear);
+    public static List runReadStudentListByCurricularCourse(IUserView userView, String curricularCourseID, String executionYear)
+            throws FenixServiceException, NotAuthorizedException {
+        StudentListByCurricularCourseAuthorizationFilter.instance.execute(curricularCourseID);
         return serviceInstance.run(userView, curricularCourseID, executionYear);
     }
 

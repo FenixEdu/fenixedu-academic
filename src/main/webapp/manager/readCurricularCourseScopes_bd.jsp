@@ -67,15 +67,15 @@
 						<bean:define id="infoCurricularYear" name="infoCurricularSemester" property="infoCurricularYear"/>
 						<tr>
 							<td class="listClasses">
-								<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.curricularCourseScopeId" property="curricularCourseScopeId" idName="curricularCourseScope" value="idInternal" />		
+								<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.curricularCourseScopeId" property="curricularCourseScopeId" idName="curricularCourseScope" value="externalId" />		
 							</td>
 							<td class="listClasses">
-								<html:link module="/manager" page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
+								<html:link module="/manager" page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="externalId">
 									<bean:write name="infoCurricularYear" property="year"/>
 								</html:link>
 							</td>
 							<td class="listClasses">
-								<html:link module="/manager" page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
+								<html:link module="/manager" page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="externalId">
 									<bean:write name="infoCurricularSemester" property="semester"/>
 								</html:link>
 							</td>	 			
@@ -84,7 +84,7 @@
 							</logic:empty>
 							<logic:notEmpty name="infoBranch" property="code">
 								<td class="listClasses">
-								<html:link module="/manager" page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
+								<html:link module="/manager" page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="externalId">
 									<bean:write name="infoBranch" property="code"/>
 								</html:link>
 								</td>										
@@ -103,10 +103,10 @@
 								</td>										
 							</logic:notEmpty>
 							<td class="listClasses">
-								<html:link module="/manager" page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
+								<html:link module="/manager" page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="externalId">
 									<bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.curricularCourseScope"/>
 								</html:link> /<br />
-								<html:link module="/manager" page="<%="/endCurricularCourseScope.do?method=prepareEnd&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
+								<html:link module="/manager" page="<%="/endCurricularCourseScope.do?method=prepareEnd&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="externalId">
 									<bean:message bundle="MANAGER_RESOURCES" key="label.manager.end.curricular.course.scope"/>
 								</html:link>
 		 					</td>

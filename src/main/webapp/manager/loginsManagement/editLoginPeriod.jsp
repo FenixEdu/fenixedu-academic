@@ -25,7 +25,7 @@
 			<b><bean:message key="label.person.username" bundle="MANAGER_RESOURCES"/></b> <bean:write name="loginPeriod" property="login.user.person.username"/>
 		</p>
 		
-		<bean:define id="managePeriodsURL" type="java.lang.String">/loginsManagement.do?method=prepareManageLoginTimeIntervals&personID=<bean:write name="loginPeriod" property="login.user.person.idInternal"/></bean:define>								
+		<bean:define id="managePeriodsURL" type="java.lang.String">/loginsManagement.do?method=prepareManageLoginTimeIntervals&personID=<bean:write name="loginPeriod" property="login.user.person.externalId"/></bean:define>								
 		<fr:edit id="editLoginPeridoID" name="loginPeriod" schema="EditLoginPeriod" action="<%= managePeriodsURL %>">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1"/>

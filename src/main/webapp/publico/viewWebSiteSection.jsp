@@ -40,7 +40,7 @@
 			</logic:notEmpty>
 			<tr>
 				<td align="left">
-					<bean:define id="objectCode" name="item" property="idInternal"/>
+					<bean:define id="objectCode" name="item" property="externalId"/>
 					<bean:write name="item" property="mainEntryText"/><br/>
 					<bean:message key="label.author"/>:&nbsp;<bean:write name="item" property="infoEditor.nome"/><br/>
 					<bean:message key="label.contact"/>:&nbsp;<bean:write name="item" property="infoEditor.email"/><br/>

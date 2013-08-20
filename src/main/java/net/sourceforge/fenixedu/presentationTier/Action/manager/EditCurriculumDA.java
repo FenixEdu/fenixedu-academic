@@ -33,6 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -60,13 +61,12 @@ public class EditCurriculumDA extends FenixDispatchAction {
 
         DynaActionForm curriculumForm = (DynaActionForm) form;
 
-        Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
         String language = request.getParameter("language");
 
         InfoCurriculum infoCurriculum = null;
 
         try {
-            infoCurriculum = ReadCurriculum.run(curricularCourseId);
+            infoCurriculum = ReadCurriculum.run(request.getParameter("curricularCourseId"));
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingCurricularCourse",
@@ -105,8 +105,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
 
         InfoCurriculum infoCurriculum = new InfoCurriculum();
         final CurricularCourse curricularCourse =
-                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(Integer.valueOf(request
-                        .getParameter("curricularCourseId")));
+                (CurricularCourse) AbstractDomainObject.fromExternalId(request.getParameter("curricularCourseId"));
         InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
         Curriculum curriculum = curricularCourse.findLatestCurriculum();
 
@@ -134,7 +133,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
         String programEn = (String) editForm.get("programEn");
         infoCurriculum.setProgramEn(StringUtils.isEmpty(programEn) && curriculum != null ? curriculum.getProgramEn() : programEn);
 
-        Integer executionYearId = (Integer) editForm.get("executionYearId");
+        String executionYearId = (String) editForm.get("executionYearId");
         infoCurriculum.setExecutionYearId(executionYearId);
 
         try {

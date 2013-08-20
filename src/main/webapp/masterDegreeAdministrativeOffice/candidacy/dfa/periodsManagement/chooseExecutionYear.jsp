@@ -16,7 +16,7 @@
 		<tr>
 			<td><bean:message key="label.executionYear" bundle="ADMIN_OFFICE_RESOURCES" /></td>
 			<td><html:select property="executionYear">
-				<html:options collection="executionYears" property="idInternal" labelProperty="year"  />
+				<html:options collection="executionYears" property="externalId" labelProperty="year"  />
 			</html:select></td>
 		</tr>
 	</table>

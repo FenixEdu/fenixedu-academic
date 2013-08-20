@@ -40,7 +40,7 @@ public class InfoGratuityValues extends InfoObject {
     public String toString() {
         StringBuilder result = new StringBuilder();
         result =
-                result.append("[InfoGratuityValues: \n").append("idInternal= ").append(getIdInternal()).append("\nanualValue= ")
+                result.append("[InfoGratuityValues: \n").append("externalId= ").append(getExternalId()).append("\nanualValue= ")
                         .append(getAnualValue()).append("\nscholarShipPart= ").append(getScholarShipValue())
                         .append("\nfinalProofValue= ").append(getFinalProofValue()).append("\ncourseValue= ")
                         .append(getCourseValue()).append("\ncreditValue= ").append(getCreditValue())

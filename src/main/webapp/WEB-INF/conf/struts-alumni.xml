@@ -25,7 +25,7 @@
                   <form-property initial="false" type="java.lang.String" name="urgentRequest"></form-property>
                   <form-property type="java.lang.String" name="justification"></form-property>
                   <form-property type="java.lang.Integer" name="numberOfPages"></form-property>
-                  <form-property type="java.lang.Integer" name="registrationId"></form-property>
+                  <form-property type="java.lang.String" name="registrationId"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
             </form-bean>
       </form-beans>

@@ -51,7 +51,7 @@ public class RegistrationConclusionDA extends FenixDispatchAction {
     }
 
     private Registration getRegistration(final HttpServletRequest request) {
-        return rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
+        return getDomainObject(request, "registrationId");
     }
 
     public ActionForward prepareEditForRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -79,7 +79,6 @@ public class RegistrationConclusionDA extends FenixDispatchAction {
     }
 
     private CycleCurriculumGroup getCycleCurriculumGroup(HttpServletRequest request) {
-        return (CycleCurriculumGroup) rootDomainObject.readCurriculumModuleByOID(getIntegerFromRequest(request,
-                "cycleCurriculumGroupId"));
+        return getDomainObject(request, "cycleCurriculumGroupId");
     }
 }

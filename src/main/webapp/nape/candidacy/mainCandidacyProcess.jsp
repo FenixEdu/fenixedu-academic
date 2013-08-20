@@ -20,7 +20,7 @@
 		<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>'>
 			<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId">
 				<html:option value=""><!-- w3c complient --></html:option>
-				<html:options collection="executionIntervals" property="idInternal" labelProperty="name"/>
+				<html:options collection="executionIntervals" property="externalId" labelProperty="name"/>
 			</html:select>
 			<html:submit><bean:message key="label.choose" bundle="APPLICATION_RESOURCES"/> </html:submit>
 		</html:form>
@@ -34,7 +34,7 @@
 	<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:write name="process" property="displayName" /> </h2>
 
-	<bean:define id="processId" name="process" property="idInternal" />
+	<bean:define id="processId" name="process" property="externalId" />
 	<bean:define id="childProcessName" name="childProcessName" />
 
 	<br/>
@@ -48,7 +48,7 @@
 		<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>'>
 			<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId" value="<%= executionIntervalId.toString() %>">
 				<html:option value=""><!-- w3c complient --></html:option>
-				<html:options collection="executionIntervals" property="idInternal" labelProperty="name"/>
+				<html:options collection="executionIntervals" property="externalId" labelProperty="name"/>
 			</html:select>
 			<html:submit><bean:message key="label.choose" bundle="APPLICATION_RESOURCES"/> </html:submit>
 			
@@ -104,7 +104,7 @@
 				<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
 				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
 
-				<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${idInternal}" %>' />
+				<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${externalId}" %>' />
 				<fr:property name="key(viewProcess)" value="label.candidacy.show.candidate"/>
 				<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIfNot(viewProcess)" value="candidacyCancelled" />

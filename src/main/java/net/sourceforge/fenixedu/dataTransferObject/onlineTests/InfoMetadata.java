@@ -158,7 +158,7 @@ public class InfoMetadata extends InfoObject {
         if (obj instanceof InfoMetadata) {
             InfoMetadata infoMetadata = (InfoMetadata) obj;
             result =
-                    (getIdInternal().equals(infoMetadata.getIdInternal()))
+                    (getExternalId().equals(infoMetadata.getExternalId()))
                             && (getInfoExecutionCourse().equals(infoMetadata.getInfoExecutionCourse()))
                             && (equals(getMetadataFile(), infoMetadata.getMetadataFile()))
                             && (equals(getDescription(), infoMetadata.getDescription()))

@@ -12,7 +12,7 @@
 	<br />
 </html:messages>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 
 <fr:form action='<%="/caseHandlingSecondCycleIndividualCandidacyProcess.do?processId=" + processId.toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>'>
  	<html:hidden property="method" value="executeIntroduceCandidacyResult" />

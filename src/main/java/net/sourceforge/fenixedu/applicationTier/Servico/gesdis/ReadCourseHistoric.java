@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadCourseHistoric {
 
-    protected List run(Integer executionCourseId) throws FenixServiceException {
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+    protected List run(String executionCourseId) throws FenixServiceException {
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         Integer semester = executionCourse.getExecutionPeriod().getSemester();
         List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
         return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester);
@@ -80,7 +80,7 @@ public class ReadCourseHistoric {
     private static final ReadCourseHistoric serviceInstance = new ReadCourseHistoric();
 
     @Service
-    public static List runReadCourseHistoric(Integer executionCourseId) throws FenixServiceException, NotAuthorizedException {
+    public static List runReadCourseHistoric(String executionCourseId) throws FenixServiceException, NotAuthorizedException {
         try {
             ReadCourseInformationAuthorizationFilter.instance.execute(executionCourseId);
             return serviceInstance.run(executionCourseId);

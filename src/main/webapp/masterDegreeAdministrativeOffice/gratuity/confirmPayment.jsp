@@ -107,7 +107,7 @@
 					</tr>	
 					<tr align="left">
 						<th colspan="2">
-							<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.insuranceExecutionYearId" property="insuranceExecutionYearId" value="<%= ((InfoInsuranceValue)insuranceValueWithGratuity).getInfoExecutionYear().getIdInternal().toString() %>"/>
+							<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.insuranceExecutionYearId" property="insuranceExecutionYearId" value="<%= ((InfoInsuranceValue)insuranceValueWithGratuity).getInfoExecutionYear().getExternalId().toString() %>"/>
 							<bean:message key="label.masterDegree.gratuity.payInsurance"/>
 						</th>
 					</tr>

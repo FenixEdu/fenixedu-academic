@@ -11,16 +11,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipErrorBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteTutorship extends TutorshipManagement {
 
-    public List<TutorshipErrorBean> run(Integer executionDegreeID, List<Tutorship> tutorsToDelete) {
+    public List<TutorshipErrorBean> run(String executionDegreeID, List<Tutorship> tutorsToDelete) {
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         List<TutorshipErrorBean> studentsWithErrors = new ArrayList<TutorshipErrorBean>();
@@ -47,7 +47,7 @@ public class DeleteTutorship extends TutorshipManagement {
     private static final DeleteTutorship serviceInstance = new DeleteTutorship();
 
     @Service
-    public static List<TutorshipErrorBean> runDeleteTutorship(Integer executionDegreeID, List<Tutorship> tutorsToDelete)
+    public static List<TutorshipErrorBean> runDeleteTutorship(String executionDegreeID, List<Tutorship> tutorsToDelete)
             throws NotAuthorizedException {
         try {
             TutorshipAuthorizationFilter.instance.execute();

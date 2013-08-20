@@ -12,7 +12,7 @@
 
 
 <bean:define id="student" name="<%= PresentationConstants.STUDENT %>" scope="request"/>
-<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" scope="request" />
+<bean:define id="scpID" name="studentCurricularPlan" property="externalId" scope="request" />
 <bean:define id="dissertationTitle" name="<%= PresentationConstants.DISSERTATION_TITLE %>" />
 <bean:define id="attachedCopiesNumber" name="<%= PresentationConstants.ATTACHED_COPIES_NUMBER %>" />
 <logic:present name="<%= PresentationConstants.PROOF_DATE %>" scope="request">
@@ -215,7 +215,7 @@
 					paramsHistory = new java.util.Hashtable();
 					paramsHistory.put("degreeType", infoStudent.getDegreeType().toString());
 					paramsHistory.put("scpID", scpID);
-					paramsHistory.put("masterDegreeProofVersionID", masterDegreeProofVersion.getIdInternal());
+					paramsHistory.put("masterDegreeProofVersionID", masterDegreeProofVersion.getExternalId());
 					paramsHistory.put("method", "getStudentAndMasterDegreeProofVersion");
 					pageContext.setAttribute("parametersHistory", paramsHistory, PageContext.PAGE_SCOPE);
 		

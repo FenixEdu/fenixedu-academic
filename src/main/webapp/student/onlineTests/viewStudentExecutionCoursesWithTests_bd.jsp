@@ -44,12 +44,12 @@
 			<logic:iterate id="executionCourse" name="studentExecutionCoursesList" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
 			<tr>
 				<td>
-					<html:link page="/studentTests.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+					<html:link page="/studentTests.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="externalId">
 						<bean:write name="executionCourse" property="sigla"/>
 					</html:link>
 				</td>
 				<td>
-					<html:link page="/studentTests.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+					<html:link page="/studentTests.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="externalId">
 						<bean:write name="executionCourse" property="nome"/>
 					</html:link>
 				</td>

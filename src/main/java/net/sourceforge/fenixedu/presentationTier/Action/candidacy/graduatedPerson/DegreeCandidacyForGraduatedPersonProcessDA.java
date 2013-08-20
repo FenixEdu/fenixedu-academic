@@ -101,7 +101,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
 
     protected void setCandidacyProcessInformation(final ActionForm actionForm, final CandidacyProcess process) {
         final CandidacyProcessForm form = (CandidacyProcessForm) actionForm;
-        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
+        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getExternalId());
     }
 
     private void setChooseDegreeBean(HttpServletRequest request) {

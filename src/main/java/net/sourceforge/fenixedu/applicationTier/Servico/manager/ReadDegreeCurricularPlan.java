@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
@@ -13,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -22,9 +21,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDegreeCurricularPlan {
 
-    protected InfoDegreeCurricularPlan run(final Integer idInternal) throws FenixServiceException {
+    protected InfoDegreeCurricularPlan run(final String externalId) throws FenixServiceException {
 
-        final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(idInternal);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(externalId);
 
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException();
@@ -38,23 +37,23 @@ public class ReadDegreeCurricularPlan {
     private static final ReadDegreeCurricularPlan serviceInstance = new ReadDegreeCurricularPlan();
 
     @Service
-    public static InfoDegreeCurricularPlan runReadDegreeCurricularPlan(Integer idInternal) throws FenixServiceException,
+    public static InfoDegreeCurricularPlan runReadDegreeCurricularPlan(String externalId) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
-            return serviceInstance.run(idInternal);
+            return serviceInstance.run(externalId);
         } catch (NotAuthorizedException ex1) {
             try {
                 CoordinatorAuthorizationFilter.instance.execute();
-                return serviceInstance.run(idInternal);
+                return serviceInstance.run(externalId);
             } catch (NotAuthorizedException ex2) {
                 try {
                     GEPAuthorizationFilter.instance.execute();
-                    return serviceInstance.run(idInternal);
+                    return serviceInstance.run(externalId);
                 } catch (NotAuthorizedException ex3) {
                     try {
                         OperatorAuthorizationFilter.instance.execute();
-                        return serviceInstance.run(idInternal);
+                        return serviceInstance.run(externalId);
                     } catch (NotAuthorizedException ex4) {
                         throw ex4;
                     }

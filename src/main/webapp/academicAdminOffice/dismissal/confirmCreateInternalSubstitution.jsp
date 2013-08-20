@@ -44,7 +44,7 @@
 
 
 <logic:equal name="dismissalBean" property="dismissalType.name" value="CURRICULAR_COURSE_CREDITS">
-	<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.idInternal" />
+	<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.externalId" />
 	<fr:form action="<%= "/studentInternalSubstitutions.do?scpID=" + scpID.toString() %>">
 		<html:hidden property="method" value="createDismissals"/>
 		<fr:edit id="dismissalBean" name="dismissalBean" visible="false"/>
@@ -132,7 +132,7 @@
 	
 
 
-	<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.idInternal" />
+	<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.externalId" />
 	<fr:form action="<%= "/studentInternalSubstitutions.do?scpID=" + scpID.toString() %>">
 		<html:hidden property="method" value="createDismissals"/>
 		
@@ -166,7 +166,7 @@
 	</fr:view>
 	
 	
-	<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.idInternal" />
+	<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.externalId" />
 	<fr:form action="<%= "/studentInternalSubstitutions.do?scpID=" + scpID.toString() %>">
 		<html:hidden property="method" value="createDismissals"/>
 		

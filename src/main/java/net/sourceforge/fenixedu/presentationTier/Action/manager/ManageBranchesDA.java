@@ -45,6 +45,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -81,9 +82,9 @@ public class ManageBranchesDA extends FenixDispatchAction {
         String degreeCurricularPlanIdString = request.getParameter("degreeCurricularPlanId");
         String degreeIdString = request.getParameter("degreeId");
 
-        Integer degreeCurricularPlanId = null;
+        String degreeCurricularPlanId = null;
         if (degreeCurricularPlanIdString != null) {
-            degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
+            degreeCurricularPlanId = degreeCurricularPlanIdString;
         }
 
         DynaActionForm branchesForm = (DynaActionForm) form;
@@ -187,11 +188,11 @@ public class ManageBranchesDA extends FenixDispatchAction {
         request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanIdString);
         request.setAttribute("degreeId", degreeIdString);
 
-        Integer degreeCurricularPlanId = null;
+        String degreeCurricularPlanId = null;
         if (degreeCurricularPlanIdString != null) {
-            degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+            degreeCurricularPlanId = request.getParameter("degreeCurricularPlanId");
         }
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
         DynaActionForm insertForm = (DynaActionForm) form;
         String name = (String) insertForm.get("name");
@@ -238,7 +239,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
 
         DynaActionForm editForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
-        Integer branchId = new Integer(request.getParameter("branchId"));
+        String branchId = request.getParameter("branchId");
 
         InfoBranch infoBranch;
 
@@ -263,7 +264,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
             throws Exception {
 
         IUserView userView = UserView.getUser();
-        Integer branchId = new Integer(request.getParameter("branchId"));
+        String branchId = request.getParameter("branchId");
 
         DynaActionForm editForm = (DynaActionForm) form;
         String name = (String) editForm.get("name");
@@ -283,7 +284,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
         infoBranch.setCode(code);
         infoBranch.setName(name);
         infoBranch.setNameEn(nameEn);
-        infoBranch.setIdInternal(branchId);
+        infoBranch.setExternalId(branchId);
 
         try {
             EditBranch.run(infoBranch);

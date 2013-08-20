@@ -31,12 +31,12 @@
 	</fr:layout>
 </fr:view>
 
-<bean:define id="personId" name="personBean" property="person.idInternal"/>
+<bean:define id="personId" name="personBean" property="person.externalId"/>
 
 <div>
 	<fr:view name="personBean" layout="person-unit-functions-tree">
 	    <fr:layout>
-	        <fr:property name="treeId" value="<%= "person" + personId + "FunctionsInUnit" + unit.getIdInternal() %>"/>
+	        <fr:property name="treeId" value="<%= "person" + personId + "FunctionsInUnit" + unit.getExternalId() %>"/>
 	
 	        <fr:property name="eachLayout" value="values"/>
 	
@@ -46,17 +46,17 @@
 	        <fr:property name="schemaFor(PersonFunction)" value="site.functions.tree.personFunction"/>
 			
 	        <fr:property name="addPersonFunctionLink">
-	        	<html:link page="<%= String.format("%s?method=addPersonFunction&amp;%s&amp;personID=%s&amp;functionID=${idInternal}", actionName, context, personId) %>">
+	        	<html:link page="<%= String.format("%s?method=addPersonFunction&amp;%s&amp;personID=%s&amp;functionID=${externalId}", actionName, context, personId) %>">
 	        		<bean:message key="link.site.manage.person.functions.add" bundle="SITE_RESOURCES"/>
 	        	</html:link>
 			</fr:property>
 	        <fr:property name="editPersonFunctionLink">
-	        	<html:link page="<%= String.format("%s?method=editPersonFunction&amp;%s&amp;personFunctionID=${idInternal}", actionName, context) %>">
+	        	<html:link page="<%= String.format("%s?method=editPersonFunction&amp;%s&amp;personFunctionID=${externalId}", actionName, context) %>">
 	        		<bean:message key="link.site.manage.person.functions.edit" bundle="SITE_RESOURCES"/>
 	        	</html:link>
 			</fr:property>
 	        <fr:property name="deletePersonFunctionLink">
-	        	<html:link page="<%= String.format("%s?method=removePersonFunction&amp;%s&amp;personID=%s&amp;personFunctionID=${idInternal}", actionName, context, personId) %>">
+	        	<html:link page="<%= String.format("%s?method=removePersonFunction&amp;%s&amp;personID=%s&amp;personFunctionID=${externalId}", actionName, context, personId) %>">
 	        		<bean:message key="link.site.manage.person.functions.remove" bundle="SITE_RESOURCES"/>
 	        	</html:link>
 			</fr:property>

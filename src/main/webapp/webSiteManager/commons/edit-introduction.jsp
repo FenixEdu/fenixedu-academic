@@ -34,7 +34,7 @@
     </div>
 </fr:hasMessages>
 
-<bean:define id="oid" name="site" property="idInternal"/>
+<bean:define id="oid" name="site" property="externalId"/>
 <fr:form action="<%= String.format("%s?method=introduction&amp;%s", actionName, context) %>">
     <fr:edit id="editSiteIntroduction" name="site" slot="description">
         <fr:layout name="rich-text">

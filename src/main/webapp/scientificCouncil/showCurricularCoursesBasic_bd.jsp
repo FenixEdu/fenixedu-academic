@@ -18,7 +18,7 @@
 	<br />
 <html:form action="/basicCurricularCourseManager">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="setBasicCurricularCourses"/>
-<bean:define id="curricularPlanId" name="curricularPlan" property="idInternal"/>
+<bean:define id="curricularPlanId" name="curricularPlan" property="externalId"/>
 
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularIndex" property="curricularIndex" value="<%= curricularPlanId.toString() %>"/>
 <table>
@@ -26,14 +26,14 @@
 <logic:iterate id="infoCurricularCourse" name="basicCurricularCourses">
 <tr>
 
-<td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.basicCurricularCourses"  property="basicCurricularCourses"><bean:write name="infoCurricularCourse" property="idInternal"/> </html:multibox ></td>
+<td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.basicCurricularCourses"  property="basicCurricularCourses"><bean:write name="infoCurricularCourse" property="externalId"/> </html:multibox ></td>
 <td><bean:write name="infoCurricularCourse" property="name"/></td>
 </tr>
 </logic:iterate>
 <logic:iterate id="infoCurricularCourse" name="nonBasicCurricularCourses">
 <tr>
 
-<td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.basicCurricularCourses"  property="basicCurricularCourses"><bean:write name="infoCurricularCourse" property="idInternal"/> </html:multibox ></td>
+<td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.basicCurricularCourses"  property="basicCurricularCourses"><bean:write name="infoCurricularCourse" property="externalId"/> </html:multibox ></td>
 <td><bean:write name="infoCurricularCourse" property="name"/></td>
 </tr>
 </logic:iterate>

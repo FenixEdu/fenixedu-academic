@@ -39,7 +39,7 @@
 		</fr:form>
 
 		<logic:notEmpty name="period">
-			<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
+			<bean:define id="executionYearId" name="bean" property="executionYear.externalId"/>
 			<fr:view name="period" schema="editTeacherPersonalExpectationsEvaluationPeriod">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle1 thlight thright"/>
@@ -55,7 +55,7 @@
 		</logic:notEmpty>
 		
 		<logic:notEmpty name="bean" property="executionYear">
-			<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
+			<bean:define id="executionYearId" name="bean" property="executionYear.externalId"/>
 			<logic:empty name="period">
 				<p class="mtop15 mbottom1"><em><bean:message key="label.teacherPersonalExpectationsEvaluationPeriodNotAvailable"/></em></p>
 				<ul class="list5">

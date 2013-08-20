@@ -128,12 +128,12 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     }
 
-    public static Set<StudentCandidacy> readByIds(final List<Integer> studentCandidacyIds) {
+    public static Set<StudentCandidacy> readByIds(final List<String> studentCandidacyIds) {
         final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
 
         for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {
             if (candidacy instanceof StudentCandidacy) {
-                if (studentCandidacyIds.contains(candidacy.getIdInternal())) {
+                if (studentCandidacyIds.contains(candidacy.getExternalId())) {
                     result.add((StudentCandidacy) candidacy);
                 }
             }

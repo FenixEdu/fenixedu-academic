@@ -36,7 +36,7 @@ public class ShowAllTeacherCreditsResumeAction extends FenixDispatchAction {
 
         List<CreditLineDTO> creditsLines;
         try {
-            creditsLines = ReadAllTeacherCredits.run(teacher.getIdInternal());
+            creditsLines = ReadAllTeacherCredits.run(teacher.getExternalId());
         } catch (ParseException e) {
             throw new FenixActionException(e);
         }

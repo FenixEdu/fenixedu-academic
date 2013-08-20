@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,6 +35,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author jpvl
@@ -61,10 +63,10 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
         setExecutionContext(request);
 
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-        Integer degreeId = getFromRequest("degreeID", request);
+        String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
         // lista
@@ -204,7 +206,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, anoCurricular.toString());
             request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
             request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
-            request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
+            request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getExternalId().toString());
         } else {
             return mapping.findForward("Licenciatura execucao inexistente");
         }
@@ -224,11 +226,11 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         final DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
         // degreeID
-        final Integer degreeId = getFromRequest("degreeID", request);
+        final String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
         // degreeCurricularPlanID
-        final Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        final String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
         // lista
@@ -245,8 +247,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
         // infoDegreeCurricularPlan
         if (degreeCurricularPlanId != null) {
-            final DegreeCurricularPlan degreeCurricularPlan =
-                    rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
             InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
             request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
@@ -254,23 +255,22 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-        Integer executionPeriodID = (Integer) escolherContextoForm.get("indice");
-        if (executionPeriodID == null) {
+        String executionPeriodID = (String) escolherContextoForm.get("indice");
+        if (StringUtils.isEmpty(executionPeriodID)) {
             executionPeriodID = getFromRequest("indice", request);
         }
-        if (executionPeriodID != null) {
+        if (!StringUtils.isEmpty(executionPeriodID)) {
             infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodID);
         }
-        request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
-        escolherContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
+        request.setAttribute("indice", infoExecutionPeriod.getExternalId());
+        escolherContextoForm.set("indice", infoExecutionPeriod.getExternalId());
         RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
         request.setAttribute("semester", infoExecutionPeriod.getSemester());
 
-        final ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionSemester.getExecutionYear());
         if (executionDegree == null) {
             executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
@@ -278,11 +278,11 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             if (executionDegree != null) {
                 infoExecutionPeriod =
                         InfoExecutionPeriod.newInfoFromDomain(executionDegree.getExecutionYear().getExecutionSemesterFor(1));
-                request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
-                escolherContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
+                request.setAttribute("indice", infoExecutionPeriod.getExternalId());
+                escolherContextoForm.set("indice", infoExecutionPeriod.getExternalId());
                 RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
                 request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-                request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+                request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
                 request.setAttribute("semester", infoExecutionPeriod.getSemester());
             }
         }
@@ -290,7 +290,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         if (executionDegree != null) {
             InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
             request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
-            request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal().toString());
+            request.setAttribute("executionDegreeID", infoExecutionDegree.getExternalId().toString());
             RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
 
             request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree.getInfoDegreeCurricularPlan());

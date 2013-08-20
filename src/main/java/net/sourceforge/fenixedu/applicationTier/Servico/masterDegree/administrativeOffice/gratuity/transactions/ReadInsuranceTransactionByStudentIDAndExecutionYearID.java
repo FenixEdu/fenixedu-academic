@@ -5,11 +5,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -27,13 +27,13 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static InfoInsuranceTransaction run(Integer studentId, Integer executionYearId) throws FenixServiceException {
+    public static InfoInsuranceTransaction run(String studentId, String executionYearId) throws FenixServiceException {
 
         InfoInsuranceTransaction infoInsuranceTransaction = null;
 
-        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearId);
+        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
 
-        Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentId);
+        Registration registration = AbstractDomainObject.fromExternalId(studentId);
 
         if ((executionYear == null) || (registration == null)) {
             return null;

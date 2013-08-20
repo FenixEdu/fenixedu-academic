@@ -17,13 +17,13 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério 17/Nov/2003
@@ -32,7 +32,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
 
     @Checked("RolePredicates.COORDINATOR_PREDICATE")
     @Service
-    public static InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode, String stringExecutionYear)
+    public static InfoCurriculum run(Integer executionDegreeCode, String curricularCourseCode, String stringExecutionYear)
             throws FenixServiceException {
         InfoCurriculum infoCurriculum = null;
 
@@ -42,7 +42,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
         if (stringExecutionYear == null || stringExecutionYear.length() == 0) {
             throw new FenixServiceException("nullExecutionYearName");
         }
-        CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseCode);
+        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");
         }

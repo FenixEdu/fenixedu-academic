@@ -10,7 +10,7 @@
 <logic:present role="MANAGER">
 	<h2><bean:message key="student.registration.states.log" bundle="APPLICATION_RESOURCES" /></h2>
 
-	<html:link action="/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans" paramId="studentId" paramName="registration" paramProperty="student.idInternal">
+	<html:link action="/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans" paramId="studentId" paramName="registration" paramProperty="student.externalId">
 		<bean:message key="label.back"  bundle="APPLICATION_RESOURCES"/>
 	</html:link>
 

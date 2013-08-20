@@ -25,7 +25,7 @@
 			<b><bean:message key="label.person.username" bundle="MANAGER_RESOURCES"/></b> <bean:write name="loginAlias" property="login.user.person.username"/>
 		</p>
 		
-		<bean:define id="manageAliasURL" type="java.lang.String">/loginsManagement.do?method=prepareManageAlias&personID=<bean:write name="loginAlias" property="login.user.person.idInternal"/></bean:define>								
+		<bean:define id="manageAliasURL" type="java.lang.String">/loginsManagement.do?method=prepareManageAlias&personID=<bean:write name="loginAlias" property="login.user.person.externalId"/></bean:define>								
 		<fr:edit id="editLoginAliasID" name="loginAlias" schema="EditCustomAlias" action="<%= manageAliasURL %>">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1"/>

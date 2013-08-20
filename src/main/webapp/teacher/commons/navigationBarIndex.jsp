@@ -53,7 +53,7 @@
   	</html:link>  
   </li>--%>
 	<%--  <li>
-  	<html:link forward="creditsManagement" paramId="teacherOID" paramName="infoTeacher" paramProperty="idInternal">
+  	<html:link forward="creditsManagement" paramId="teacherOID" paramName="infoTeacher" paramProperty="externalId">
   		<bean:message key="link.manage.credits"/>
   	</html:link>
   </li> --%>
@@ -72,7 +72,7 @@
 	</logic:present>
 	<%-- 
   <li>
-  	<bean:define id="url"><%= request.getContextPath() %>/teacher/credits.do?method=showTeacherCredits&amp;teacherId=<bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher.idInternal"/>&amp;executionPeriodId=<%= ExecutionPeriod.readActualExecutionPeriod().getIdInternal() %></bean:define>
+  	<bean:define id="url"><%= request.getContextPath() %>/teacher/credits.do?method=showTeacherCredits&amp;teacherId=<bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher.externalId"/>&amp;executionPeriodId=<%= ExecutionPeriod.readActualExecutionPeriod().getExternalId() %></bean:define>
   	<html:link href="<%= url %>">
   		<bean:message key="link.credits"/>
   	</html:link>  

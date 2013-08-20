@@ -75,13 +75,13 @@
                  <bean:write name="infoGrantSubsidy" property="totalCost"/>
             </td>
         <%--    <td class="listClasses">
-                    <bean:define id="idSubsidy" name="infoGrantSubsidy" property="idInternal"/>
+                    <bean:define id="idSubsidy" name="infoGrantSubsidy" property="externalId"/>
                     <html:link page='<%= "/editGrantSubsidy.do?method=prepareEditGrantSubsidyForm&amp;idSubsidy=" + idSubsidy %>' > 
                         <bean:message key="link.grant.subsidy.edit" />
                     </html:link>        
             </td> --%>
             <td class="listClasses">
-            		<bean:define id="idSubsidy" name="infoGrantSubsidy" property="idInternal"/>
+            		<bean:define id="idSubsidy" name="infoGrantSubsidy" property="externalId"/>
                     <html:link page='<%= "/manageGrantPart.do?method=prepareManageGrantPart&amp;idSubsidy=" + idSubsidy %>' > 
                         <bean:message key="link.manage.grant.part" />
                     </html:link>        
@@ -158,13 +158,13 @@
                  <bean:write name="infoGrantSubsidy" property="totalCost"/>
             </td>
        <%--     <td class="listClasses">
-                    <bean:define id="idSubsidy" name="infoGrantSubsidy" property="idInternal"/>
+                    <bean:define id="idSubsidy" name="infoGrantSubsidy" property="externalId"/>
                     <html:link page='<%= "/editGrantSubsidy.do?method=prepareEditGrantSubsidyForm&amp;idSubsidy=" + idSubsidy %>' > 
                         <bean:message key="link.grant.subsidy.edit" />
                     </html:link>        
             </td> --%>
             <td class="listClasses">
-            		<bean:define id="idSubsidy" name="infoGrantSubsidy" property="idInternal"/>
+            		<bean:define id="idSubsidy" name="infoGrantSubsidy" property="externalId"/>
                     <html:link page='<%= "/manageGrantPart.do?method=prepareManageGrantPart&amp;idSubsidy=" + idSubsidy %>' > 
                         <bean:message key="link.manage.grant.part" />
                     </html:link>        
@@ -179,7 +179,7 @@
 <html:form action="/manageGrantContract" style="display:inline">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantContractForm"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 		<bean:message key="button.manageGrantContract"/>
 	</html:submit>

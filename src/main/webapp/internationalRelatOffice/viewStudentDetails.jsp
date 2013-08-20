@@ -28,7 +28,7 @@
 			</fr:view>
 		</td>
 		<td>
-			<bean:define id="personID" name="student" property="person.idInternal"/>
+			<bean:define id="personID" name="student" property="person.externalId"/>
 			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 		</td>
 	</tr>
@@ -37,7 +37,7 @@
 
 <p class="mvert05">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link page="/student.do?method=viewPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
+	<html:link page="/student.do?method=viewPersonalData" paramId="studentID" paramName="student" paramProperty="externalId">
 		<bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 
@@ -50,7 +50,7 @@
 		<fr:property name="sortBy" value="startDate=desc"/>
 		<fr:property name="classes" value="tstyle1 thlight mtop025 boldlink1"/>
 		<fr:property name="columnClasses" value=",,tdhl1,,"/>
-		<fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${idInternal}" />
+		<fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${externalId}" />
 		<fr:property name="key(view)" value="link.student.visualizeRegistration"/>
 		<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
 		<fr:property name="contextRelative(view)" value="true"/>

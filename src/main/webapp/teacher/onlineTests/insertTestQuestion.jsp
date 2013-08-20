@@ -15,8 +15,8 @@
 <logic:present name="question">
 	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
 	<bean:define id="metadata" name="question" property="metadata" />
-	<bean:define id="exerciseCode" name="question" property="idInternal" />
-	<bean:define id="metadataCode" name="metadata" property="idInternal" />
+	<bean:define id="exerciseCode" name="question" property="externalId" />
+	<bean:define id="metadataCode" name="metadata" property="externalId" />
 	<logic:iterate id="subQuestion" name="question" property="subQuestions" />
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 

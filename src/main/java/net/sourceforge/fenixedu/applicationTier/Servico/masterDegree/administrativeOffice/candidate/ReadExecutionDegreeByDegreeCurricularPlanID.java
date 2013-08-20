@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -35,11 +35,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionDegreeByDegreeCurricularPlanID {
 
-    protected InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionDegreeIndex) {
+    protected InfoExecutionDegree run(String degreeCurricularPlanID, Integer executionDegreeIndex) {
         List infoExecutionDegreeList = null;
         List executionDegrees = null;
 
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         executionDegrees = degreeCurricularPlan.getExecutionDegrees();
 
@@ -71,8 +71,8 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    protected InfoExecutionDegree run(Integer degreeCurricularPlanID, final String executionYear) {
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+    protected InfoExecutionDegree run(String degreeCurricularPlanID, final String executionYear) {
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         if (executionYear.equals("")) {
             return InfoExecutionDegree.newInfoFromDomain(degreeCurricularPlan.getExecutionDegrees().get(0));
@@ -100,7 +100,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
             new ReadExecutionDegreeByDegreeCurricularPlanID();
 
     @Service
-    public static InfoExecutionDegree runReadExecutionDegreeByDegreeCurricularPlanID(Integer degreeCurricularPlanID,
+    public static InfoExecutionDegree runReadExecutionDegreeByDegreeCurricularPlanID(String degreeCurricularPlanID,
             Integer executionDegreeIndex) throws NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
@@ -121,7 +121,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
     }
 
     @Service
-    public static InfoExecutionDegree runReadExecutionDegreeByDegreeCurricularPlanID(Integer degreeCurricularPlanID,
+    public static InfoExecutionDegree runReadExecutionDegreeByDegreeCurricularPlanID(String degreeCurricularPlanID,
             final String executionYear) throws NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

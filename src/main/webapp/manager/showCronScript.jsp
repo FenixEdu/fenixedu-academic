@@ -25,7 +25,7 @@
 	<br/>
 	<br/>
 		
-	<bean:define id="path">/manager/cron.do?method=showScript&page=0&cronScriptStateID=<bean:write name="cronScriptState" property="idInternal"/></bean:define>	
+	<bean:define id="path">/manager/cron.do?method=showScript&page=0&cronScriptStateID=<bean:write name="cronScriptState" property="externalId"/></bean:define>	
 	<cp:collectionPages url="<%= path %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>	
 	
 	<br/>
@@ -38,7 +38,7 @@
 		    	<fr:property name="classes" value="style1"/>
    	 			<fr:property name="columnClasses" value="listClasses"/>
 				<fr:property name="link(view)" value="/cron.do?method=showScriptInvocationLog&amp;page=0"/>
-				<fr:property name="param(view)" value="idInternal/cronScriptInvocationID"/>
+				<fr:property name="param(view)" value="externalId/cronScriptInvocationID"/>
 				<fr:property name="key(view)" value="link.view.log"/>
 				<fr:property name="bundle(view)" value="MANAGER_RESOURCES"/>
 			</fr:layout>

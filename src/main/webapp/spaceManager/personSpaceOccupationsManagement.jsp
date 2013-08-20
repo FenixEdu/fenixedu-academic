@@ -12,7 +12,7 @@
 <logic:present name="selectedSpaceInformation">	
 	
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
-	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
+	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="externalId" />
 	<jsp:include page="spaceCrumbs.jsp"/>
 	
 	<bean:define id="space" name="selectedSpaceInformation" property="space"/>
@@ -45,13 +45,13 @@
    			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
    			   			
    			<fr:property name="link(edit)" value="<%="/managePersonSpaceOccupations.do?method=prepareEditSpacePersonOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(edit)" value="idInternal/spaceOccupationID"/>
+            <fr:property name="param(edit)" value="externalId/spaceOccupationID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>
             <fr:property name="bundle(edit)" value="SPACE_RESOURCES"/>
             <fr:property name="order(edit)" value="0"/>
             
             <fr:property name="link(delete)" value="<%="/managePersonSpaceOccupations.do?method=deleteSpacePersonOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(delete)" value="idInternal/spaceOccupationID"/>
+            <fr:property name="param(delete)" value="externalId/spaceOccupationID"/>
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
             <fr:property name="order(delete)" value="0"/>
@@ -82,7 +82,7 @@
 	</logic:empty>
 		
 	<logic:notEmpty name="personSpaceOccupation">	
-		<bean:define id="exceptionLink2">/managePersonSpaceOccupations.do?method=prepareEditSpacePersonOccupation&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&spaceOccupationID=<bean:write name="personSpaceOccupation" property="idInternal"/></bean:define>			
+		<bean:define id="exceptionLink2">/managePersonSpaceOccupations.do?method=prepareEditSpacePersonOccupation&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&spaceOccupationID=<bean:write name="personSpaceOccupation" property="externalId"/></bean:define>			
 		<p class="mbottom05"><strong><bean:message key="label.edit.occupation" bundle="SPACE_RESOURCES"/></strong></p>							
 		<p><i><bean:write name="personSpaceOccupation" property="person.name"/> -> <bean:write name="personSpaceOccupation" property="person.username"/></i></p>
 		<fr:hasMessages for="edit" type="conversion">
@@ -113,13 +113,13 @@
    			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
    			   			   			
    			<fr:property name="link(edit)" value="<%="/managePersonSpaceOccupations.do?method=prepareEditSpacePersonOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(edit)" value="idInternal/spaceOccupationID"/>
+            <fr:property name="param(edit)" value="externalId/spaceOccupationID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>
             <fr:property name="bundle(edit)" value="SPACE_RESOURCES"/>
             <fr:property name="order(edit)" value="0"/>
             
 			<fr:property name="link(delete)" value="<%="/managePersonSpaceOccupations.do?method=deleteSpacePersonOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(delete)" value="idInternal/spaceOccupationID"/>
+            <fr:property name="param(delete)" value="externalId/spaceOccupationID"/>
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
             <fr:property name="order(delete)" value="0"/>           

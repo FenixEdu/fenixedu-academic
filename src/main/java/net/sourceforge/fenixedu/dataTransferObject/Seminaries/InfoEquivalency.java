@@ -51,8 +51,8 @@ public class InfoEquivalency extends InfoObject {
     /**
      * @return
      */
-    public Integer getSeminaryIdInternal() {
-        return getInfoSeminary().getIdInternal();
+    public String getSeminaryExternalId() {
+        return getInfoSeminary().getExternalId();
     }
 
     /**
@@ -72,10 +72,10 @@ public class InfoEquivalency extends InfoObject {
     @Override
     public String toString() {
         String result = "[InfoEquivalency:";
-        result += "IdInternal: " + this.getIdInternal() + ";";
+        result += "ExternalId: " + this.getExternalId() + ";";
         result += "CurricularCourse" + this.getCurricularCourse() + ";";
-        result += "CurricularCourseInternal " + this.getCurricularCourse().getIdInternal() + ";";
-        result += "Seminary:" + this.getSeminaryIdInternal() + ";";
+        result += "CurricularCourseInternal " + this.getCurricularCourse().getExternalId() + ";";
+        result += "Seminary:" + this.getSeminaryExternalId() + ";";
         result += "Modality:" + this.getModality() + "]";
         return result;
     }

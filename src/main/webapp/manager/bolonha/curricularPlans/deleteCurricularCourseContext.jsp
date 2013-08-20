@@ -26,7 +26,7 @@
 		<h:outputText value="#{ManagerCurricularCourseManagement.curricularCourse.name}</p>" escape="false"/>		
 
 		<fc:dataRepeater value="#{ManagerCurricularCourseManagement.curricularCourse.parentContexts}" var="context">
-			<h:panelGroup rendered="#{context.idInternal == ManagerCurricularCourseManagement.contextID}">								
+			<h:panelGroup rendered="#{context.externalId == ManagerCurricularCourseManagement.contextID}">								
 				<h:outputText value="<p><strong>#{bolonhaBundle['courseGroup']}:</strong> " escape="false"/>
 				<h:outputText value="#{context.parentCourseGroup.oneFullName}</p>" escape="false"/>			
 				<h:outputText value="<p><strong>#{bolonhaBundle['curricularPeriod']}:</strong> " escape="false"/>

@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -20,13 +20,13 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID {
 
-    public List<Teacher> run(Integer departmentID, Integer executionYearID) throws FenixServiceException {
-        Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentID);
+    public List<Teacher> run(String departmentID, String executionYearID) throws FenixServiceException {
+        Department department = AbstractDomainObject.fromExternalId(departmentID);
 
         List<Teacher> teachersFromDepartment = new ArrayList<Teacher>();
 
         if (executionYearID != null) {
-            ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+            ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
 
             teachersFromDepartment =
                     department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
@@ -44,8 +44,8 @@ public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID {
             new ReadDepartmentTeachersByDepartmentIDAndExecutionYearID();
 
     @Service
-    public static List<Teacher> runReadDepartmentTeachersByDepartmentIDAndExecutionYearID(Integer departmentID,
-            Integer executionYearID) throws FenixServiceException, NotAuthorizedException {
+    public static List<Teacher> runReadDepartmentTeachersByDepartmentIDAndExecutionYearID(String departmentID,
+            String executionYearID) throws FenixServiceException, NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             return serviceInstance.run(departmentID, executionYearID);

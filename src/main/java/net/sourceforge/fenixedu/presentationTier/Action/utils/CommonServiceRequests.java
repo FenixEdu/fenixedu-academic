@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
  */
 public class CommonServiceRequests {
 
-    public static List getBranchesByDegreeCurricularPlan(IUserView userView, Integer degreeCurricularPlanOID)
+    public static List getBranchesByDegreeCurricularPlan(IUserView userView, String degreeCurricularPlanOID)
             throws FenixActionException {
 
         List branches = null;
@@ -53,7 +53,7 @@ public class CommonServiceRequests {
      * @param degreeOID
      * @return
      */
-    public static InfoExecutionDegree getInfoExecutionDegree(IUserView userView, Integer degreeOID) {
+    public static InfoExecutionDegree getInfoExecutionDegree(IUserView userView, String degreeOID) {
         InfoExecutionDegree infoExecutionDegree = null;
 
         infoExecutionDegree = ReadExecutionDegreeByOID.run(degreeOID);

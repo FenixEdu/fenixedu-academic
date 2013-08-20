@@ -33,7 +33,7 @@
 			</li>
 			<logic:equal name="currentStateName" value="NEW">
 				<li>
-					<bean:define id="prepareEditURL">/roomsReserveManagement.do?method=prepareEdit&punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+					<bean:define id="prepareEditURL">/roomsReserveManagement.do?method=prepareEdit&punctualReserveID=<bean:write name="punctualRequest" property="externalId"/></bean:define>
 					<html:link page="<%= prepareEditURL %>">		
 						<bean:message bundle="APPLICATION_RESOURCES" key="label.edit.rooms.reserve.request"/>
 					</html:link>
@@ -129,7 +129,7 @@
 			<p class="mtop15 mbottom05"><bean:message key="label.rooms.reserve.new.comment" bundle="APPLICATION_RESOURCES"/>:</p>
 			<fr:form action="/roomsReserveManagement.do">
 				<html:hidden property="method" value="createNewComment"/>
-				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&amp;punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&amp;punctualReserveID=<bean:write name="punctualRequest" property="externalId"/></bean:define>
 	
 				<fr:hasMessages for="roomsReserveNewComment">
 					<p>
@@ -139,7 +139,7 @@
 					</p>
 				</fr:hasMessages>
 				
-				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&punctualReserveID=<bean:write name="punctualRequest" property="externalId"/></bean:define>
 				<fr:edit id="roomsReserveNewComment" name="roomsReserveBean" slot="description" 
 					validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"
 					type="net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean">

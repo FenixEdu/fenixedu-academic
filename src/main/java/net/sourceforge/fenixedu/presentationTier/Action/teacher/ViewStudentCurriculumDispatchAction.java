@@ -20,7 +20,7 @@ public class ViewStudentCurriculumDispatchAction extends FenixDispatchAction {
         getExecutionDegreeId(request);
 
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 

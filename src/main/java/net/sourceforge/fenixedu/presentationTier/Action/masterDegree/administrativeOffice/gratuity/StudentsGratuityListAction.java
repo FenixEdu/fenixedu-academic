@@ -131,7 +131,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 
             InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
             InfoDegree infoDegree = infoDegreeCurricularPlan.getInfoDegree();
-            DegreeType degreeTypeEnum = (DegreeType) infoDegree.getDegreeType();
+            DegreeType degreeTypeEnum = infoDegree.getDegreeType();
             MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
             String degreeType = messageResources.getMessage(degreeTypeEnum.name());
 
@@ -141,7 +141,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            executionDegreeLabels.add(new LabelValueBean(name, name + ">" + infoExecutionDegree.getIdInternal().toString()));
+            executionDegreeLabels.add(new LabelValueBean(name, name + ">" + infoExecutionDegree.getExternalId().toString()));
         }
         return executionDegreeLabels;
     }
@@ -186,7 +186,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             degree = request.getParameter("degree");
         }
 
-        Integer executionDegreeId = null;
+        String executionDegreeId = null;
         try {
             executionDegreeId = findExecutionDegreeId(degree);
         } catch (NumberFormatException exception) {
@@ -249,7 +249,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 
         // data from request
         String executionYearString = null;
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
         String orderingType = null;
 
         try {
@@ -257,11 +257,11 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             orderingType = request.getParameter("order");
             if (orderingType != null) {
                 executionYearString = request.getParameter("chosenYear");
-                degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+                degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
 
             } else {
                 executionYearString = (String) studentGratuityListForm.get("chosenYear");
-                degreeCurricularPlanID = (Integer) studentGratuityListForm.get("degreeCurricularPlanID");
+                degreeCurricularPlanID = (String) studentGratuityListForm.get("degreeCurricularPlanID");
                 orderingType = (String) studentGratuityListForm.get("order");
             }
         } catch (NumberFormatException nfe) {
@@ -299,7 +299,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         try {
             gratuityList =
                     (HashMap) ReadGratuitySituationListByExecutionDegreeAndSpecialization
-                            .runReadGratuitySituationListByExecutionDegreeAndSpecialization(infoExecutionDegree.getIdInternal(),
+                            .runReadGratuitySituationListByExecutionDegreeAndSpecialization(infoExecutionDegree.getExternalId(),
                                     infoExecutionDegree.getInfoExecutionYear().getYear(), specialization, situation);
         } catch (FenixServiceException exception) {
             exception.printStackTrace();
@@ -341,7 +341,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         DynaActionForm studentGratuityListForm = (DynaActionForm) actionForm;
 
         String degree = (String) studentGratuityListForm.get("degree");
-        Integer executionDegreeID = null;
+        String executionDegreeID = null;
 
         try {
             executionDegreeID = findExecutionDegreeId(degree);
@@ -361,7 +361,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         }
 
         List infoExecutionDegrees = null;
-        Integer degreeCurricularPlanID = infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal();
+        String degreeCurricularPlanID = infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId();
 
         try {
             infoExecutionDegrees =
@@ -371,8 +371,8 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             throw new FenixActionException(exception);
         }
 
-        Integer firstExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(0)).getIdInternal();
-        Integer secondExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(1)).getIdInternal();
+        String firstExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(0)).getExternalId();
+        String secondExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(1)).getExternalId();
 
         if (executionDegreeID.equals(firstExecutionDegreeID)) {
             degree = (degree.substring(0, degree.lastIndexOf('>') + 1)).concat(secondExecutionDegreeID.toString());
@@ -421,14 +421,14 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
      *            <execution degree's id internal>'
      * @return Integer whith execution degree id internal
      */
-    private Integer findExecutionDegreeId(String degree) {
-        Integer idInternal = null;
+    private String findExecutionDegreeId(String degree) {
+        String externalId = null;
         // if degree is the string "all", then all degrees are desirable
         if (!degree.equals("all")) {
             String idInString = degree.substring(degree.indexOf(">") + 1, degree.length());
             try {
                 if (idInString.length() != 0) {
-                    idInternal = Integer.valueOf(idInString);
+                    externalId = idInString;
                 }
             } catch (NumberFormatException numberFormatException) {
                 numberFormatException.printStackTrace();
@@ -436,6 +436,6 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             }
         }
 
-        return idInternal;
+        return externalId;
     }
 }

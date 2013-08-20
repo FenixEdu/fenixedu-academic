@@ -12,7 +12,7 @@
 
 <div>  
     <logic:iterate id="crumb" name="crumbs">
-        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="externalId">
             <fr:view name="crumb" property="name"/>
         </html:link> &gt;
     </logic:iterate>
@@ -35,11 +35,11 @@
      ======================  -->
 
 <bean:define id="action">
-    /module/importStructure.do?module=<bean:write name="module" property="idInternal"/>
+    /module/importStructure.do?module=<bean:write name="module" property="externalId"/>
 </bean:define>
 
 <bean:define id="cancel">
-    /module/view.do?module=<bean:write name="module" property="idInternal"/>
+    /module/view.do?module=<bean:write name="module" property="externalId"/>
 </bean:define>
 
 <fr:edit id="structure" name="bean" schema="functionalities.structure.bean"

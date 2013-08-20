@@ -24,8 +24,8 @@
 	<em><bean:message key="message.candidacy.transfer.application.instruction" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 </p>
 
-<bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="parentProcessId" name="parentProcess" property="externalId" />
+<bean:define id="processId" name="process" property="externalId" />
 
 <fr:form action="<%= String.format("/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=executeCopyIndividualCandidacyToNextCandidacyProcess&processId=%s&parentProcessId=%s", processId, parentProcessId) %>">
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />

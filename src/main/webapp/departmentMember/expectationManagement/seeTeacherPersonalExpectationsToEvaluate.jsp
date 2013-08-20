@@ -15,7 +15,7 @@
 		
 	<ul class="list5 mvert15">
 		<li>
-			<html:link page="/evaluateExpectations.do?method=prepareEditExpectationEvaluation" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">		
+			<html:link page="/evaluateExpectations.do?method=prepareEditExpectationEvaluation" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="externalId">		
 				<bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="link.return"/>
 			</html:link>
 		</li>

@@ -58,7 +58,7 @@
 				<c:forEach items="${coordinatorProjectsInformationBackingBean.executionCoursesWithProjects}" var="executionCourse">
 					<tr class="space"><td></td></tr>
 					<tr><td colspan="5" class="header"><c:out value="${executionCourse.sigla} - ${executionCourse.nome}" /></td></tr>
-					<c:forEach items="${coordinatorProjectsInformationBackingBean.projects[executionCourse.idInternal]}" var="evaluation">
+					<c:forEach items="${coordinatorProjectsInformationBackingBean.projects[executionCourse.externalId]}" var="evaluation">
 						<tr>
 							<td><c:out value="${evaluation.name}"/></td>
 							<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${evaluation.begin}"/></td>
@@ -69,8 +69,8 @@
 									<c:param name="degreeCurricularPlanID" value="${coordinatorProjectsInformationBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${coordinatorProjectsInformationBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${coordinatorProjectsInformationBackingBean.curricularYearID}"/>
-									<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
-									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourse.externalId}"/>
+									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 								</c:url>
 								<a href='<c:out value="${editEvaluationURL}"/>'>
 									<c:out value="${bundle['label.edit']}"/>
@@ -80,8 +80,8 @@
 									<c:param name="degreeCurricularPlanID" value="${coordinatorProjectsInformationBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${coordinatorProjectsInformationBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${coordinatorProjectsInformationBackingBean.curricularYearID}"/>
-									<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
-									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourse.externalId}"/>
+									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 								</c:url>
 								<a href='<c:out value="${deleteEvaluationURL}"/>'>
 									<c:out value="${bundle['label.remove']}"/>
@@ -107,7 +107,7 @@
 									<c:param name="degreeCurricularPlanID" value="${coordinatorProjectsInformationBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${coordinatorProjectsInformationBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${coordinatorProjectsInformationBackingBean.curricularYearID}"/>
-									<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourse.externalId}"/>
 								</c:url>
 								<c:out value="${executionCourse.sigla} - ${executionCourse.nome}: ("/>
 								<a href='<c:out value="${evaluationManagementURL}"/>' style="text-decoration:none">

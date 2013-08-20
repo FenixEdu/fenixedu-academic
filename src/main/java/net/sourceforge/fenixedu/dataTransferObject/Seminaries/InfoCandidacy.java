@@ -70,14 +70,14 @@ public class InfoCandidacy extends InfoObject {
     @Override
     public String toString() {
         String result = "[InfoCandidacy:";
-        result += "Theme=" + this.theme.getIdInternal() + ";";
-        result += "IdInternal=" + super.getIdInternal() + ";";
+        result += "Theme=" + this.theme.getExternalId() + ";";
+        result += "ExternalId=" + super.getExternalId() + ";";
         result += "Motivation=" + this.motivation + ";";
-        result += "Registration=" + this.getInfoStudent().getIdInternal() + ";";
+        result += "Registration=" + this.getInfoStudent().getExternalId() + ";";
         result += "CaseStudyChoices" + this.caseStudyChoices + ";";
-        result += "CurricularCourse=" + this.curricularCourse.getIdInternal() + ";";
-        result += "Seminary:=" + this.infoSeminary.getIdInternal() + ";";
-        result += "Modality=" + this.getInfoModality().getIdInternal() + "]";
+        result += "CurricularCourse=" + this.curricularCourse.getExternalId() + ";";
+        result += "Seminary:=" + this.infoSeminary.getExternalId() + ";";
+        result += "Modality=" + this.getInfoModality().getExternalId() + "]";
         return result;
     }
 

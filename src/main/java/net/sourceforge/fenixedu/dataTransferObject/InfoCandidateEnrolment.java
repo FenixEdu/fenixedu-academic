@@ -36,7 +36,7 @@ public class InfoCandidateEnrolment extends InfoObject {
     @Override
     public String toString() {
         String result = "[CANDIDATE_ENROLMENT";
-        result += ", codInt=" + getIdInternal();
+        result += ", codInt=" + getExternalId();
         result += ", infoMasterDegreeCandidate=" + infoMasterDegreeCandidate;
         result += ", infoCurricularCourse=" + infoCurricularCourse;
         result += "]";

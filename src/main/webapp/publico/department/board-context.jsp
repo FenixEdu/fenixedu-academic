@@ -28,7 +28,7 @@
     
     <bean:define id="site" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer"/>
 
-	<bean:define id="unitId" name="site" property="unit.idInternal"/>
+	<bean:define id="unitId" name="site" property="unit.externalId"/>
 	
     <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>">
         <fr:view name="site" property="unit.nameI18n"/>

@@ -31,21 +31,23 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean {
 
-    private Integer degreeCurricularPlanID;
+    private String degreeCurricularPlanID;
     private HtmlInputHidden degreeCurricularPlanIdHidden;
-    private Integer executionPeriodID;
-    private Integer curricularYearID;
+    private String executionPeriodID;
+    private String curricularYearID;
     private HtmlInputHidden executionPeriodIdHidden;
     private HtmlInputHidden curricularYearIdHidden;
     private ExecutionSemester executionSemester;
-    private Integer executionCourseID;
+    private String executionCourseID;
     private HtmlInputHidden executionCourseIdHidden;
     private List<ExecutionCourse> executionCourses;
     private List<SelectItem> executionPeriodsLabels;
     private List<SelectItem> curricularYearsLabels;
-    private Integer evaluationID;
+    private String evaluationID;
     private HtmlInputHidden evaluationIdHidden;
     protected Evaluation evaluation;
     private Integer day;
@@ -60,7 +62,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
 
     public HtmlInputHidden getDegreeCurricularPlanIdHidden() {
         if (this.degreeCurricularPlanIdHidden == null) {
-            final Integer degreeCurricularPlanId = this.getDegreeCurricularPlanID();
+            final String degreeCurricularPlanId = this.getDegreeCurricularPlanID();
             this.degreeCurricularPlanIdHidden = new HtmlInputHidden();
             this.degreeCurricularPlanIdHidden.setValue(degreeCurricularPlanId);
         }
@@ -69,25 +71,25 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
 
     public void setDegreeCurricularPlanIdHidden(HtmlInputHidden degreeCurricularPlanIdHidden) {
         if (degreeCurricularPlanIdHidden != null) {
-            setDegreeCurricularPlanID(Integer.valueOf(degreeCurricularPlanIdHidden.getValue().toString()));
+            setDegreeCurricularPlanID(degreeCurricularPlanIdHidden.getValue().toString());
         }
         this.degreeCurricularPlanIdHidden = degreeCurricularPlanIdHidden;
     }
 
-    public Integer getDegreeCurricularPlanID() {
+    public String getDegreeCurricularPlanID() {
         if (this.degreeCurricularPlanID == null) {
             if (this.degreeCurricularPlanIdHidden != null) {
-                this.degreeCurricularPlanID = Integer.valueOf(this.degreeCurricularPlanIdHidden.getValue().toString());
+                this.degreeCurricularPlanID = this.degreeCurricularPlanIdHidden.getValue().toString();
             } else if (this.getRequestParameter("degreeCurricularPlanID") != null) {
-                this.degreeCurricularPlanID = Integer.valueOf(this.getRequestParameter("degreeCurricularPlanID"));
+                this.degreeCurricularPlanID = this.getRequestParameter("degreeCurricularPlanID");
             } else if (this.getRequestAttribute("degreeCurricularPlanID") != null) {
-                this.degreeCurricularPlanID = Integer.valueOf(this.getRequestAttribute("degreeCurricularPlanID").toString());
+                this.degreeCurricularPlanID = this.getRequestAttribute("degreeCurricularPlanID").toString();
             }
         }
         return degreeCurricularPlanID;
     }
 
-    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+    public void setDegreeCurricularPlanID(String degreeCurricularPlanID) {
         this.degreeCurricularPlanID = degreeCurricularPlanID;
     }
 
@@ -102,7 +104,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
             Collections.sort(infoExecutionPeriods, comparatorChain);
             for (final InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
                 final SelectItem selectItem = new SelectItem();
-                selectItem.setValue(infoExecutionPeriod.getIdInternal());
+                selectItem.setValue(infoExecutionPeriod.getExternalId());
                 selectItem.setLabel(infoExecutionPeriod.getName() + " - " + infoExecutionPeriod.getInfoExecutionYear().getYear());
                 this.executionPeriodsLabels.add(selectItem);
             }
@@ -125,8 +127,8 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         return this.curricularYearsLabels;
     }
 
-    public ExecutionCourse getExecutionCourse() throws  FenixServiceException {
-        return rootDomainObject.readExecutionCourseByOID(this.getExecutionCourseID());
+    public ExecutionCourse getExecutionCourse() throws FenixServiceException {
+        return AbstractDomainObject.fromExternalId(this.getExecutionCourseID());
     }
 
     protected List<ExecutionCourse> getExecutionCourses() {
@@ -147,7 +149,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     }
 
     public ExecutionSemester getExecutionPeriod() {
-        return executionSemester == null ? rootDomainObject.readExecutionSemesterByOID(getExecutionCourseID()) : this.executionSemester;
+        return executionSemester == null ? AbstractDomainObject.<ExecutionSemester> fromExternalId(getExecutionCourseID()) : this.executionSemester;
     }
 
     protected InfoExecutionPeriod getCurrentExecutionPeriod() {
@@ -157,7 +159,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     public List<SelectItem> getExecutionCoursesLabels() {
         final List<SelectItem> result = new ArrayList();
         for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-            result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
+            result.add(new SelectItem(executionCourse.getExternalId(), executionCourse.getNome()));
         }
         Collections.sort(result, new BeanComparator("label"));
         return result;
@@ -166,7 +168,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     public Evaluation getEvaluation() {
         try {
             if (this.evaluation == null && this.getEvaluationID() != null) {
-                this.evaluation = rootDomainObject.readEvaluationByOID(this.getEvaluationID());
+                this.evaluation = AbstractDomainObject.fromExternalId(this.getEvaluationID());
             }
             return this.evaluation;
         } catch (Exception e) {
@@ -216,7 +218,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan() {
-        return rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanID());
+        return AbstractDomainObject.fromExternalId(getDegreeCurricularPlanID());
     }
 
     /**
@@ -246,20 +248,20 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         this.executionCourses = null;
     }
 
-    public Integer getExecutionCourseID() {
+    public String getExecutionCourseID() {
         if (this.executionCourseID == null) {
             if (this.getExecutionCourseIdHidden().getValue() != null) {
-                this.executionCourseID = Integer.valueOf(this.getExecutionCourseIdHidden().getValue().toString());
+                this.executionCourseID = this.getExecutionCourseIdHidden().getValue().toString();
             } else if (this.getRequestParameter("executionCourseID") != null) {
-                this.executionCourseID = Integer.valueOf(this.getRequestParameter("executionCourseID"));
+                this.executionCourseID = this.getRequestParameter("executionCourseID");
             } else if (this.getRequestAttribute("executionCourseID") != null) {
-                this.executionCourseID = Integer.valueOf(this.getRequestAttribute("executionCourseID").toString());
+                this.executionCourseID = this.getRequestAttribute("executionCourseID").toString();
             }
         }
         return this.executionCourseID;
     }
 
-    public void setExecutionCourseID(Integer executionCourseID) {
+    public void setExecutionCourseID(String executionCourseID) {
         if (executionCourseID != null) {
             this.getExecutionCourseIdHidden().setValue(executionCourseID);
         }
@@ -276,50 +278,50 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
 
     public void setExecutionCourseIdHidden(HtmlInputHidden executionCourseIdHidden) {
         if (executionCourseIdHidden != null) {
-            this.setExecutionCourseID(Integer.valueOf(executionCourseIdHidden.getValue().toString()));
+            this.setExecutionCourseID(executionCourseIdHidden.getValue().toString());
         }
         this.executionCourseIdHidden = executionCourseIdHidden;
     }
 
-    public Integer getExecutionPeriodID() {
+    public String getExecutionPeriodID() {
         if (this.executionPeriodID == null) {
             if (this.getExecutionPeriodIdHidden().getValue() != null) {
-                this.executionPeriodID = Integer.valueOf(this.getExecutionPeriodIdHidden().getValue().toString());
+                this.executionPeriodID = this.getExecutionPeriodIdHidden().getValue().toString();
             } else if (this.getRequestParameter("executionPeriodID") != null) {
-                this.executionPeriodID = Integer.valueOf(this.getRequestParameter("executionPeriodID"));
+                this.executionPeriodID = this.getRequestParameter("executionPeriodID");
             } else if (this.getRequestAttribute("executionPeriodID") != null) {
-                this.executionPeriodID = Integer.valueOf(this.getRequestAttribute("executionPeriodID").toString());
+                this.executionPeriodID = this.getRequestAttribute("executionPeriodID").toString();
             } else {
                 final InfoExecutionPeriod currentExecutionPeriod = getCurrentExecutionPeriod();
-                this.executionPeriodID = (currentExecutionPeriod != null) ? currentExecutionPeriod.getIdInternal() : null;
+                this.executionPeriodID = (currentExecutionPeriod != null) ? currentExecutionPeriod.getExternalId() : null;
             }
         }
         return executionPeriodID;
     }
 
-    public void setExecutionPeriodID(Integer executionPeriodID) {
+    public void setExecutionPeriodID(String executionPeriodID) {
         if (executionPeriodID != null) {
             getExecutionPeriodIdHidden().setValue(executionPeriodID);
         }
         this.executionPeriodID = executionPeriodID;
     }
 
-    public Integer getCurricularYearID() {
+    public String getCurricularYearID() {
         if (this.curricularYearID == null) {
             if (getCurricularYearIdHidden().getValue() != null) {
-                this.curricularYearID = Integer.valueOf(getCurricularYearIdHidden().getValue().toString());
+                this.curricularYearID = getCurricularYearIdHidden().getValue().toString();
             } else if (this.getRequestParameter("curricularYearID") != null) {
-                this.curricularYearID = Integer.valueOf(this.getRequestParameter("curricularYearID"));
+                this.curricularYearID = this.getRequestParameter("curricularYearID");
             } else if (this.getRequestAttribute("curricularYearID") != null) {
-                this.curricularYearID = Integer.valueOf(this.getRequestAttribute("curricularYearID").toString());
+                this.curricularYearID = this.getRequestAttribute("curricularYearID").toString();
             } else {
-                this.curricularYearID = Integer.valueOf(1);
+                this.curricularYearID = null;
             }
         }
         return curricularYearID;
     }
 
-    public void setCurricularYearID(Integer curricularYearID) {
+    public void setCurricularYearID(String curricularYearID) {
         if (curricularYearID != null) {
             getCurricularYearIdHidden().setValue(curricularYearID);
         }
@@ -336,7 +338,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
 
     public void setExecutionPeriodIdHidden(HtmlInputHidden executionPeriodIdHidden) {
         if (executionPeriodIdHidden != null) {
-            setExecutionPeriodID(Integer.valueOf(executionPeriodIdHidden.getValue().toString()));
+            setExecutionPeriodID(executionPeriodIdHidden.getValue().toString());
         }
         this.executionPeriodIdHidden = executionPeriodIdHidden;
     }
@@ -351,23 +353,23 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
 
     public void setCurricularYearIdHidden(HtmlInputHidden curricularYearIdHidden) {
         if (curricularYearIdHidden != null) {
-            setCurricularYearID(Integer.valueOf(curricularYearIdHidden.getValue().toString()));
+            setCurricularYearID(curricularYearIdHidden.getValue().toString());
         }
         this.curricularYearIdHidden = curricularYearIdHidden;
     }
 
-    public Integer getEvaluationID() {
+    public String getEvaluationID() {
         if (this.evaluationID == null) {
             if (this.getRequestParameter("evaluationID") != null) {
-                setEvaluationID(Integer.valueOf(this.getRequestParameter("evaluationID")));
+                setEvaluationID(this.getRequestParameter("evaluationID"));
             } else if (this.getEvaluationIdHidden().getValue() != null) {
-                setEvaluationID(Integer.valueOf(this.getEvaluationIdHidden().getValue().toString()));
+                setEvaluationID(this.getEvaluationIdHidden().getValue().toString());
             }
         }
         return this.evaluationID;
     }
 
-    public void setEvaluationID(Integer evaluationID) {
+    public void setEvaluationID(String evaluationID) {
         this.evaluationID = evaluationID;
     }
 
@@ -381,7 +383,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
 
     public void setEvaluationIdHidden(HtmlInputHidden evaluationIdHidden) {
         if (evaluationIdHidden != null) {
-            setEvaluationID(Integer.valueOf(evaluationIdHidden.getValue().toString()));
+            setEvaluationID(evaluationIdHidden.getValue().toString());
         }
         this.evaluationIdHidden = evaluationIdHidden;
     }

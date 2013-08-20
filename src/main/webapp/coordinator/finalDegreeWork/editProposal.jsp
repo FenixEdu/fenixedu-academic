@@ -18,7 +18,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="submit"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.orientatorOID" property="orientatorOID"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.coorientatorOID" property="coorientatorOID"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.alteredField" property="alteredField"/>
@@ -47,7 +47,7 @@
 		%>
 	</logic:empty>
 	<%
-		final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance().readExecutionDegreeByOID((Integer) request.getAttribute("executionDegreeOID"));
+		final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = net.sourceforge.fenixedu.domain.AbstractDomainObject.fromExternalId((String) request.getAttribute("executionDegreeOID"));
 		final net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing scheduleing = executionDegree.getScheduling();
 		if (scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
 			showCoordinator = true;
@@ -223,7 +223,7 @@
 				</td>
 				<td>
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.branchList" property="branchList">
-						<bean:write name="branch" property="idInternal"/>
+						<bean:write name="branch" property="externalId"/>
 					</html:multibox>
 				</td>
 			</tr>

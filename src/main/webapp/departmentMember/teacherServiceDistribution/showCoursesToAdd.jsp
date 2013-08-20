@@ -15,12 +15,12 @@
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:write name="tsdProcess" property="name"/>&nbsp;
 			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getExternalId().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.manageRootGrouping"/>
 		</html:link>
 		>
@@ -37,7 +37,7 @@
 
 	<b><bean:message key="label.teacherServiceDistribution.department"/>:</b>
 	<html:select property="department" title="Departamento" onchange="this.form.submit();">
-		<html:options collection="departmentList" property="idInternal" labelProperty="realName"/>
+		<html:options collection="departmentList" property="externalId" labelProperty="realName"/>
 	</html:select>
 
 <br/>
@@ -61,7 +61,7 @@
 				<bean:write name="course" property="name" />
     		</td>
     		<td>
-    			<bean:define id="courseID" name="course" property="idInternal"/>
+    			<bean:define id="courseID" name="course" property="externalId"/>
     			<html:link href="javascript:void(0)" onclick='<%= "document.forms[0].method.value='addCourse'; document.forms[0].tsdCourse.value=" + courseID.toString() + "; document.forms[0].submit()" %>'>
     				<bean:message key="button.add"/>
     			</html:link>
@@ -80,6 +80,6 @@
 </html:form>
 
 <br/>
-<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getIdInternal().toString() %>'>
+<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getExternalId().toString() %>'>
 	<bean:message key="link.back"/>
 </html:link>

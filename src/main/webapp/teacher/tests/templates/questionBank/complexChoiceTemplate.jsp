@@ -11,7 +11,7 @@
 <ft:define id="choice" type="net.sourceforge.fenixedu.domain.tests.NewChoice" />
 
 <ul>
-<li><html:link page="/tests/questionBank.do?method=editTestElement" paramId="oid" paramName="choice" paramProperty="multipleChoiceQuestion.idInternal">Voltar</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=editTestElement" paramId="oid" paramName="choice" paramProperty="multipleChoiceQuestion.externalId">Voltar</html:link></li>
 </ul>
 
 <h4>Materiais de apresenta��o</h4>
@@ -19,9 +19,9 @@
 <div class="questionBlockHeader">
 	<strong><bean:message key="label.testElement.presentationMaterials" bundle="TESTS_RESOURCES" />:</strong>
 	(<f:parameterLink page="/tests/questionBank/presentationMaterial.do?method=prepareEditPresentationMaterials">
-	 	<f:parameter id="oid" name="choice" property="idInternal" />
+	 	<f:parameter id="oid" name="choice" property="externalId" />
 	 	<f:parameter id="returnPath" value="/tests/questionBank.do?method=editTestElement" />
-	 	<f:parameter id="returnId" name="choice" property="idInternal" />
+	 	<f:parameter id="returnId" name="choice" property="externalId" />
 	 	<f:parameter id="contextKey" value="message.questionBank.manage" />
 	 	Editar
 	 </f:parameterLink>)

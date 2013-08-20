@@ -1,21 +1,20 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ContentManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditCustomizationOptions {
 
-    protected Boolean run(Integer infoExecutionCourseCode, final String alternativeSite, final String mail,
+    protected Boolean run(String infoExecutionCourseCode, final String alternativeSite, final String mail,
             final Boolean dynamicMailDistribution, final String initialStatement, final String introduction)
             throws FenixServiceException {
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourseCode);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourseCode);
         final ExecutionCourseSite site = executionCourse.getSite();
 
         site.setAlternativeSite(alternativeSite);
@@ -35,7 +34,7 @@ public class EditCustomizationOptions {
     private static final EditCustomizationOptions serviceInstance = new EditCustomizationOptions();
 
     @Service
-    public static Boolean runEditCustomizationOptions(Integer infoExecutionCourseCode, String alternativeSite, String mail,
+    public static Boolean runEditCustomizationOptions(String infoExecutionCourseCode, String alternativeSite, String mail,
             Boolean dynamicMailDistribution, String initialStatement, String introduction) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(infoExecutionCourseCode);

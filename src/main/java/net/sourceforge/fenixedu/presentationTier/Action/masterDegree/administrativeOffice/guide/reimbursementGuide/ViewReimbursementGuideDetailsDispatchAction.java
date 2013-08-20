@@ -52,7 +52,7 @@ public class ViewReimbursementGuideDetailsDispatchAction extends FenixDispatchAc
 
         IUserView userView = UserView.getUser();
 
-        Integer reimbursementGuideId = new Integer(this.getFromRequest("id", request));
+        String reimbursementGuideId = this.getFromRequest("id", request);
 
         InfoReimbursementGuide infoReimbursementGuide = null;
 

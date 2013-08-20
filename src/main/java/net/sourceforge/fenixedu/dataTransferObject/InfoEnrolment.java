@@ -30,12 +30,12 @@ public class InfoEnrolment extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return enrolment.getIdInternal();
+    public String getExternalId() {
+        return enrolment.getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

@@ -49,12 +49,12 @@ public class InfoCountry extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getCountry().getIdInternal();
+    public String getExternalId() {
+        return getCountry().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

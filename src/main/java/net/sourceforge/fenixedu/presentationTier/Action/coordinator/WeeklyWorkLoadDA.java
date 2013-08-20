@@ -33,6 +33,7 @@ import org.joda.time.Interval;
 import org.joda.time.Period;
 
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
@@ -112,16 +113,16 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
         final Set<ExecutionSemester> sortedExecutionPeriods = new TreeSet<ExecutionSemester>(executionSemesters);
         request.setAttribute("executionPeriods", sortedExecutionPeriods);
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        final Integer executionPeriodID = getExecutionPeriodID(dynaActionForm);
+        final String executionPeriodID = getExecutionPeriodID(dynaActionForm);
         final ExecutionSemester selectedExecutionPeriod = findExecutionPeriod(executionSemesters, executionPeriodID);
-        dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+        dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
 
         final Collection<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
         for (final ExecutionDegree executionDegree : selectedExecutionPeriod.getExecutionYear()
@@ -144,7 +145,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
                         "executionCourse");
         request.setAttribute("selectedExecutionCourse", selectedExecutionCourse);
 
-        final Integer curricularYearID = getCurricularYearID(dynaActionForm);
+        final String curricularYearID = getCurricularYearID(dynaActionForm);
         final CurricularYear selecctedCurricularYear =
                 (CurricularYear) setDomainObjectInRequest(dynaActionForm, request, CurricularYear.class, "curricularYearID",
                         "selecctedCurricularYear");
@@ -153,13 +154,13 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
                 (DegreeCurricularPlan) setDomainObjectInRequest(dynaActionForm, request, DegreeCurricularPlan.class,
                         "degreeCurricularPlanID", "executionCourse");
         if (degreeCurricularPlan != null) {
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getExternalId());
             for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
                 for (final DegreeModuleScope degreeCourseScope : curricularCourse.getDegreeModuleScopes()) {
                     final CurricularYear curricularYear = CurricularYear.readByYear(degreeCourseScope.getCurricularYear());
                     curricularYears.add(curricularYear);
 
-                    if (curricularYearID == null || curricularYear.getIdInternal().equals(curricularYearID)) {
+                    if (curricularYearID == null || curricularYear.getExternalId().equals(curricularYearID)) {
                         for (final ExecutionCourse executionCourse : curricularCourse
                                 .getExecutionCoursesByExecutionPeriod(selectedExecutionPeriod)) {
                             executionCourses.add(executionCourse);
@@ -178,35 +179,30 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     private DomainObject setDomainObjectInRequest(final DynaActionForm dynaActionForm, final HttpServletRequest request,
-            final Class clazz, final String formAttributeName, final String requestAttributeName) throws 
-            FenixServiceException {
+            final Class clazz, final String formAttributeName, final String requestAttributeName) throws FenixServiceException {
         final String domainObjectIDString = (String) dynaActionForm.get(formAttributeName);
-        final Integer domainObjectID =
-                domainObjectIDString == null || domainObjectIDString.length() == 0 ? null : Integer.valueOf(domainObjectIDString);
-        final DomainObject domainObject = rootDomainObject.readDomainObjectByOID(clazz, domainObjectID);
+        final DomainObject domainObject = AbstractDomainObject.fromExternalId(domainObjectIDString);
         request.setAttribute(requestAttributeName, domainObject);
         return domainObject;
     }
 
-    private Integer getCurricularYearID(final DynaActionForm dynaActionForm) {
+    private String getCurricularYearID(final DynaActionForm dynaActionForm) {
         final String curricularYearIDString = dynaActionForm.getString("curricularYearID");
-        return curricularYearIDString == null || curricularYearIDString.length() == 0 ? null : Integer
-                .valueOf(curricularYearIDString);
+        return curricularYearIDString == null || curricularYearIDString.length() == 0 ? null : curricularYearIDString;
     }
 
-    private Integer getExecutionPeriodID(final DynaActionForm dynaActionForm) {
+    private String getExecutionPeriodID(final DynaActionForm dynaActionForm) {
         final String exeutionPeriodIDString = dynaActionForm.getString("executionPeriodID");
-        return exeutionPeriodIDString == null || exeutionPeriodIDString.length() == 0 ? null : Integer
-                .valueOf(exeutionPeriodIDString);
+        return exeutionPeriodIDString == null || exeutionPeriodIDString.length() == 0 ? null : exeutionPeriodIDString;
     }
 
     private ExecutionSemester findExecutionPeriod(final Collection<ExecutionSemester> executionSemesters,
-            final Integer executionPeriodID) {
+            final String executionPeriodID) {
         for (final ExecutionSemester executionSemester : executionSemesters) {
             if (executionPeriodID == null && executionSemester.getState().equals(PeriodState.CURRENT)) {
                 return executionSemester;
             }
-            if (executionPeriodID != null && executionSemester.getIdInternal().equals(executionPeriodID)) {
+            if (executionPeriodID != null && executionSemester.getExternalId().equals(executionPeriodID)) {
                 return executionSemester;
             }
         }

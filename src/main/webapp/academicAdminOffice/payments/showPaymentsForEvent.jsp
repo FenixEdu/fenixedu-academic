@@ -26,7 +26,7 @@
 </logic:notEmpty>
 
 	
-<bean:define id="personId" name="person" property="idInternal" />
+<bean:define id="personId" name="person" property="externalId" />
 <fr:form action='<%= "/payments.do?method=showEventsWithPayments&amp;personId=" + personId %>'>
 <html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:cancel>
 </fr:form>

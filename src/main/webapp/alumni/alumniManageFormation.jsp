@@ -36,7 +36,7 @@
 			<select name="formationEducationArea">
 				<logic:iterate id="alumniEducationArea" name="alumniFormation" property="allAreas">
 					
-					<bean:define id="areaIdInternal" name="alumniEducationArea" property="educationArea.idInternal" />
+					<bean:define id="areaExternalId" name="alumniEducationArea" property="educationArea.externalId" />
 					<bean:define id="areaCode" name="alumniEducationArea" property="codeIndentationValue" type="java.lang.String" />
 					<bean:define id="areaDescription" name="alumniEducationArea" property="educationArea.description" type="java.lang.String" />
 	
@@ -46,13 +46,13 @@
 					</logic:notEmpty>
 					
 					<logic:empty name="alumniEducationArea" property="educationArea.childAreas">
-						<logic:equal name="formationEducationArea" value="<%= areaIdInternal.toString() %>">
-							<option value="<%= areaIdInternal %>" selected="selected">
+						<logic:equal name="formationEducationArea" value="<%= areaExternalId.toString() %>">
+							<option value="<%= areaExternalId %>" selected="selected">
 								<%= areaCode + " " + areaDescription %>
 							</option>
 						</logic:equal>
-						<logic:notEqual name="formationEducationArea" value="<%= areaIdInternal.toString() %>">
-							<option value="<%= areaIdInternal %>">
+						<logic:notEqual name="formationEducationArea" value="<%= areaExternalId.toString() %>">
+							<option value="<%= areaExternalId %>">
 								<%= areaCode + " " + areaDescription %>
 							</option>
 						</logic:notEqual>

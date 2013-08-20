@@ -168,7 +168,7 @@
 				</logic:equal>
 			
 				<p class="mtop05">
-					<bean:define id="registrationId" name="registrationConclusionBean" property="registration.idInternal" />		
+					<bean:define id="registrationId" name="registrationConclusionBean" property="registration.externalId" />		
 					<logic:empty name="registrationConclusionBean" property="cycleCurriculumGroup">
 						<html:link action="<%="/registration.do?method=prepareRegistrationConclusionDocument&amp;registrationId=" + registrationId %>" target="_blank">
 							Folha de <bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>

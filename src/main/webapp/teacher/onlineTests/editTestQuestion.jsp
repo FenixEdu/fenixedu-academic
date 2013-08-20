@@ -8,9 +8,9 @@
 <logic:present name="testQuestion">
 	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 	<bean:define id="question" name="testQuestion" property="question" />
-	<bean:define id="exerciseCode" name="question" property="idInternal" />
-	<bean:define id="metadataId" name="question" property="metadata.idInternal" />
-	<bean:define id="testQuestionCode" name="testQuestion" property="idInternal" />
+	<bean:define id="exerciseCode" name="question" property="externalId" />
+	<bean:define id="metadataId" name="question" property="metadata.externalId" />
+	<bean:define id="testQuestionCode" name="testQuestion" property="externalId" />
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<html:form action="/testQuestionEdition">

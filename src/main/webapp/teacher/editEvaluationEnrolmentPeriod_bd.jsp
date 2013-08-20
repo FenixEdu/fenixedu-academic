@@ -15,7 +15,7 @@
 		</tr>
 	</table>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>	
-	<bean:define id="evaluationCode" name="evaluation" property="idInternal"/>			
+	<bean:define id="evaluationCode" name="evaluation" property="externalId"/>			
 	<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.EXAM_STRING %>">
 		<html:form action="/examEnrollmentEditionManager" > 
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />

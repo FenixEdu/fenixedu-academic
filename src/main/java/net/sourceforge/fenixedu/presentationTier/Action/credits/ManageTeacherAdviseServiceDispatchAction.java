@@ -42,7 +42,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
     protected void getAdviseServices(HttpServletRequest request, DynaActionForm dynaForm,
             final ExecutionSemester executionSemester, Teacher teacher) {
 
-        dynaForm.set("executionPeriodId", executionSemester.getIdInternal());
+        dynaForm.set("executionPeriodId", executionSemester.getExternalId());
         dynaForm.set("teacherId", teacher.getExternalId());
 
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
@@ -58,14 +58,14 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
     }
 
     protected ActionForward editAdviseService(ActionForm form, HttpServletRequest request, ActionMapping mapping,
-            RoleType roleType) throws NumberFormatException,  FenixServiceException {
+            RoleType roleType) throws NumberFormatException, FenixServiceException {
 
         DynaActionForm adviseServiceForm = (DynaActionForm) form;
 
         Integer studentNumber = Integer.valueOf(adviseServiceForm.getString("studentNumber"));
         Double percentage = Double.valueOf(adviseServiceForm.getString("percentage"));
         Teacher teacher = AbstractDomainObject.fromExternalId((String) adviseServiceForm.get("teacherId"));
-        Integer executionPeriodID = (Integer) adviseServiceForm.get("executionPeriodId");
+        String executionPeriodID = (String) adviseServiceForm.get("executionPeriodId");
         try {
             EditTeacherAdviseService.runEditTeacherAdviseService(teacher, executionPeriodID, studentNumber, percentage,
                     AdviseType.FINAL_WORK_DEGREE, roleType);
@@ -84,9 +84,9 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
     }
 
     protected void deleteAdviseService(HttpServletRequest request, RoleType roleType) throws NumberFormatException,
-             FenixServiceException {
+            FenixServiceException {
 
-        Integer adviseServiceID = Integer.valueOf(request.getParameter("teacherAdviseServiceID"));
+        String adviseServiceID = request.getParameter("teacherAdviseServiceID");
         try {
             DeleteTeacherAdviseServiceByOID.runDeleteTeacherAdviseServiceByOID(adviseServiceID, roleType);
         } catch (DomainException e) {

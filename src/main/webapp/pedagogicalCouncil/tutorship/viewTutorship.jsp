@@ -69,7 +69,7 @@
 		</fr:edit>
 
 		<html:link action="/viewTutorship.do?method=deleteTutorship"
-			paramId="tutorshipID" paramName="periodBean" paramProperty="tutorship.idInternal">
+			paramId="tutorshipID" paramName="periodBean" paramProperty="tutorship.externalId">
 			<bean:message key="label.submit.delete" bundle="PEDAGOGICAL_COUNCIL" />
 		</html:link>
 		<p>

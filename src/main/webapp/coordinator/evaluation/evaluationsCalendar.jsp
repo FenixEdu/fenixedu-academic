@@ -77,7 +77,7 @@
 						<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
 						<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
 						<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
-						<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.idInternal}"/>
+						<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.externalId}"/>
 					</c:url>
 					<a href='<c:out value="${createEvaluationURL}"/>'>
 						<c:out value="${bundle['label.create.evaluation']}"/>
@@ -98,9 +98,9 @@
 									<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
-									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 									<c:param name="evaluationType" value="${evaluation.class.name}"/>
-									<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.externalId}"/>
 									<c:param name="description" value="${evaluation.description}"/>
 									<c:param name="date" value="${date}"/>
 									<c:param name="beginTime" value="${begin}"/>
@@ -114,9 +114,9 @@
 									<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
-									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 									<c:param name="evaluationType" value="${evaluation.class.name}"/>
-									<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.externalId}"/>
 									<c:param name="description" value="${evaluation.description}"/>
 									<c:param name="date" value="${date}"/>
 									<c:param name="beginTime" value="${begin}"/>
@@ -143,9 +143,9 @@
 									<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
-									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 									<c:param name="evaluationType" value="${evaluation.class.name}"/>
-									<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.externalId}"/>
 									<c:param name="name" value="${evaluation.name}"/>
 									<c:param name="begin" value="${begin}"/>
 									<c:param name="end" value="${end}"/>
@@ -159,9 +159,9 @@
 									<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
-									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 									<c:param name="evaluationType" value="${evaluation.class.name}"/>
-									<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourseEvaluationEntry.key.externalId}"/>
 									<c:param name="name" value="${evaluation.name}"/>
 									<c:param name="begin" value="${begin}"/>
 									<c:param name="end" value="${end}"/>

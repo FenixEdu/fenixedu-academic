@@ -44,7 +44,7 @@
 				<logic:equal name="periodOpen" value="true">
 					<ul class="list5">
 						<li>
-							<html:link page="/personalExpectationManagement.do?method=prepareDefineTeacherPersonalExpection" paramId="executionYearID" paramName="teacherPersonalExpectationBean" paramProperty="executionYear.idInternal">
+							<html:link page="/personalExpectationManagement.do?method=prepareDefineTeacherPersonalExpection" paramId="executionYearID" paramName="teacherPersonalExpectationBean" paramProperty="executionYear.externalId">
 								<bean:message key="link.personalExpectationsManagement.definePersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
 							</html:link>
 						</li>

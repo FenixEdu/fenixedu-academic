@@ -60,10 +60,10 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+        final String oid = request.getParameter("projectId");
 
         for (Project project : rootDomainObject.getProjects()) {
-            if (project.getIdInternal().equals(oid)) {
+            if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 List<ProjectParticipation> participations = new ArrayList<ProjectParticipation>();
                 for (ProjectParticipation participation : project.getProjectParticipations()) {
@@ -115,8 +115,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         if (simpleBean.getPerson() != null) {
             // Criar a participação efectivamente quando já existe a pessoa
             // escolhida
-            Integer oid = Integer.parseInt(request.getParameter("projectId"));
-            CreateProjectParticipant.run(simpleBean, oid);
+            CreateProjectParticipant.run(simpleBean, request.getParameter("projectId"));
 
             mantainExternalStatus(request);
             return prepareEditParticipants(mapping, form, request, response);
@@ -131,7 +130,6 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final IUserView userView = getUserView(request);
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
 
         if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectParticipantSimpleCreationBean) {
             ProjectParticipantSimpleCreationBean simpleBean =
@@ -140,7 +138,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
             if (simpleBean.getPerson() != null) {
                 // Criação de uma participação com uma pessoa externa já
                 // existente
-                CreateProjectParticipant.run(simpleBean, oid);
+                CreateProjectParticipant.run(simpleBean, request.getParameter("projectId"));
             } else {
                 // Caso em que foi inserido o nome de uma pessoa externa não
                 // existente
@@ -160,7 +158,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
             // existente ainda no sistema e a sua organização
             ProjectParticipantFullCreationBean fullBean =
                     (ProjectParticipantFullCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
-            CreateProjectParticipant.run(fullBean, oid);
+            CreateProjectParticipant.run(fullBean, request.getParameter("projectId"));
         }
         return prepareEditParticipants(mapping, form, request, response);
     }
@@ -168,10 +166,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward removeParticipant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final IUserView userView = getUserView(request);
-        Integer participantId = Integer.parseInt(request.getParameter("participantId"));
-
-        DeleteProjectParticipant.run(participantId);
+        DeleteProjectParticipant.run(request.getParameter("participantId"));
 
         return prepareEditParticipants(mapping, form, request, response);
     }
@@ -183,10 +178,10 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditEventAssociationsSimple(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+        final String oid = request.getParameter("projectId");
 
         for (Project project : rootDomainObject.getProjects()) {
-            if (project.getIdInternal().equals(oid)) {
+            if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 List<ProjectEventAssociation> associations = project.getAssociatedEvents();
                 request.setAttribute("eventAssociations", associations);
@@ -218,8 +213,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
             if (simpleBean.getEvent() != null) {
                 // Criar a associaï¿½ï¿½o efectivamente quando jï¿½ existe o
                 // evento escolhido
-                Integer oid = Integer.parseInt(request.getParameter("projectId"));
-                CreateProjectEventAssociation.run(simpleBean, oid);
+                CreateProjectEventAssociation.run(simpleBean, request.getParameter("projectId"));
                 return prepareEditEventAssociations(mapping, form, request, response);
             } else {
                 // Permitir a criaï¿½ï¿½o de um novo evento on-the-fly
@@ -240,10 +234,8 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 
         ProjectEventAssociationFullCreationBean fullBean =
                 (ProjectEventAssociationFullCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
-        final IUserView userView = getUserView(request);
-        Integer oid = Integer.parseInt(request.getParameter("projectId"));
 
-        CreateProjectEventAssociation.run(fullBean, oid);
+        CreateProjectEventAssociation.run(fullBean, request.getParameter("projectId"));
 
         return prepareEditEventAssociations(mapping, form, request, response);
     }
@@ -251,10 +243,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward removeEventAssociation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final IUserView userView = getUserView(request);
-        Integer associationId = Integer.parseInt(request.getParameter("associationId"));
-
-        DeleteProjectEventAssociation.run(associationId);
+        DeleteProjectEventAssociation.run(request.getParameter("associationId"));
 
         return prepareEditEventAssociations(mapping, form, request, response);
     }
@@ -266,10 +255,10 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditParticipantUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+        final String oid = request.getParameter("projectId");
 
         for (Project project : rootDomainObject.getProjects()) {
-            if (project.getIdInternal().equals(oid)) {
+            if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 List<ProjectParticipation> unitParticipations = new ArrayList<ProjectParticipation>();
                 for (ProjectParticipation unitParticipation : project.getProjectParticipations()) {
@@ -295,8 +284,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         ProjectParticipantUnitCreationBean bean =
                 (ProjectParticipantUnitCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
 
-        Integer oid = Integer.parseInt(request.getParameter("projectId"));
-        CreateProjectParticipant.run(bean, oid);
+        CreateProjectParticipant.run(bean, request.getParameter("projectId"));
         return prepareEditParticipantUnits(mapping, form, request, response);
     }
 
@@ -304,9 +292,8 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final IUserView userView = getUserView(request);
-        Integer participantId = Integer.parseInt(request.getParameter("participantUnitId"));
 
-        DeleteProjectParticipant.run(participantId);
+        DeleteProjectParticipant.run(request.getParameter("participantUnitId"));
 
         return prepareEditParticipants(mapping, form, request, response);
     }
@@ -316,10 +303,10 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     // ***************************************
 
     private void setAttributeSelectedProject(HttpServletRequest request) {
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+        final String oid = request.getParameter("projectId");
 
         for (Project project : rootDomainObject.getProjects()) {
-            if (project.getIdInternal().equals(oid)) {
+            if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
             }
         }

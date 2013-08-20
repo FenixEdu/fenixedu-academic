@@ -29,7 +29,7 @@
 		<logic:iterate id="sibsPaymentFileEntry" name="sibsPaymentFileEntries">
 			
 			<tr align="center">
-				<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.sibsPaymentFileEntryId" idName="sibsPaymentFileEntry" property="sibsPaymentFileEntryId" value="idInternal"/>	</td>
+				<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.sibsPaymentFileEntryId" idName="sibsPaymentFileEntry" property="sibsPaymentFileEntryId" value="externalId"/>	</td>
 				<td><bean:write name="sibsPaymentFileEntry" property="year"/></td>
 				
 				<td><bean:write name="sibsPaymentFileEntry" property="studentNumber"/></td>

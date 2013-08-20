@@ -40,7 +40,7 @@ public class EditResultPublication extends ResultPublicationService {
         } else {
             final Book book = getCreateService().createBookFromBean(bean);
             publication.copyReferecesTo(book);
-            getDeleteService().run(publication.getIdInternal());
+            getDeleteService().run(publication.getExternalId());
             finalPublication = book;
         }
         ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
@@ -61,7 +61,7 @@ public class EditResultPublication extends ResultPublicationService {
         } else {
             final BookPart bookPart = getCreateService().createBookPartFromBean(bean);
             publication.copyReferecesTo(bookPart);
-            getDeleteService().run(publication.getIdInternal());
+            getDeleteService().run(publication.getExternalId());
             finalPublication = bookPart;
         }
         ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
@@ -79,7 +79,7 @@ public class EditResultPublication extends ResultPublicationService {
         } else {
             final Article article = getCreateService().createArticleFromBean(bean);
             publication.copyReferecesTo(article);
-            getDeleteService().run(publication.getIdInternal());
+            getDeleteService().run(publication.getExternalId());
             finalPublication = article;
         }
         ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
@@ -100,7 +100,7 @@ public class EditResultPublication extends ResultPublicationService {
         } else {
             final Inproceedings inproceedings = getCreateService().createInproceedingsFromBean(bean);
             publication.copyReferecesTo(inproceedings);
-            getDeleteService().run(publication.getIdInternal());
+            getDeleteService().run(publication.getExternalId());
             finalPublication = inproceedings;
         }
         ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
@@ -120,7 +120,7 @@ public class EditResultPublication extends ResultPublicationService {
         } else {
             final Proceedings proceedings = getCreateService().createProceedingsFromBean(bean);
             publication.copyReferecesTo(proceedings);
-            getDeleteService().run(publication.getIdInternal());
+            getDeleteService().run(publication.getExternalId());
             finalPublication = proceedings;
         }
         ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
@@ -140,7 +140,7 @@ public class EditResultPublication extends ResultPublicationService {
         } else {
             final Thesis thesis = getCreateService().createThesisFromBean(bean);
             publication.copyReferecesTo(thesis);
-            getDeleteService().run(publication.getIdInternal());
+            getDeleteService().run(publication.getExternalId());
             finalPublication = thesis;
         }
         ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
@@ -159,7 +159,7 @@ public class EditResultPublication extends ResultPublicationService {
         } else {
             final Manual manual = getCreateService().createManualFromBean(bean);
             publication.copyReferecesTo(manual);
-            getDeleteService().run(publication.getIdInternal());
+            getDeleteService().run(publication.getExternalId());
             finalPublication = manual;
         }
         ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
@@ -178,7 +178,7 @@ public class EditResultPublication extends ResultPublicationService {
         } else {
             final TechnicalReport techReport = getCreateService().createTechnicalReportFromBean(bean);
             publication.copyReferecesTo(techReport);
-            getDeleteService().run(publication.getIdInternal());
+            getDeleteService().run(publication.getExternalId());
             finalPublication = techReport;
         }
         ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
@@ -197,7 +197,7 @@ public class EditResultPublication extends ResultPublicationService {
         } else {
             final OtherPublication other = getCreateService().createOtherPublicationFromBean(bean);
             publication.copyReferecesTo(other);
-            getDeleteService().run(publication.getIdInternal());
+            getDeleteService().run(publication.getExternalId());
             finalPublication = other;
         }
         ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
@@ -205,11 +205,11 @@ public class EditResultPublication extends ResultPublicationService {
     }
 
     private ResearchResultPublication getResultPublication(ResultPublicationBean bean) throws FenixServiceException {
-        if ((bean == null) || (bean.getIdInternal() == null)) {
+        if ((bean == null) || (bean.getExternalId() == null)) {
             throw new FenixServiceException();
         }
 
-        ResearchResultPublication publication = (ResearchResultPublication) ResearchResult.readByOid(bean.getIdInternal());
+        ResearchResultPublication publication = (ResearchResultPublication) ResearchResult.readByOid(bean.getExternalId());
         if (publication == null) {
             throw new FenixServiceException();
         }

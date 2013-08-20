@@ -26,7 +26,7 @@
 <h1><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></h1>
 
 <bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess"/>
-<bean:define id="processId" name="individualCandidacyProcess" property="idInternal"/>
+<bean:define id="processId" name="individualCandidacyProcess" property="externalId"/>
 
 <%
 	String spToInvoke = SPUtil.getInstance().getSpInvokeUrl();

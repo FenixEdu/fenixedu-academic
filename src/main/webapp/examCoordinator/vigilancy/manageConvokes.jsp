@@ -69,7 +69,7 @@
 <logic:equal name="bean" property="showInformationByVigilant" value="false">
 <ul>
 	<li>
-		<html:link page="<%= "/vigilancy/convokeManagement.do?method=showConvokesByVigilants&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=vigilants" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") + ((bean.getExecutionYear()!=null) ? "&executionYear=" + bean.getExecutionYear().getIdInternal().toString() : "") %>">
+		<html:link page="<%= "/vigilancy/convokeManagement.do?method=showConvokesByVigilants&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=vigilants" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getExternalId().toString() : "") + ((bean.getExecutionYear()!=null) ? "&executionYear=" + bean.getExecutionYear().getExternalId().toString() : "") %>">
 		<bean:message key="label.vigilancy.showConvokesByVigilant" bundle="VIGILANCY_RESOURCES"/>
 		</html:link>, 
 		<span class="highlight1"><bean:message key="label.vigilancy.showConvokesByEvaluation" bundle="VIGILANCY_RESOURCES"/></span>,	
@@ -81,11 +81,11 @@
 <ul>
 	<li>
 	<span class="highlight1"><bean:message key="label.vigilancy.showConvokesByVigilant" bundle="VIGILANCY_RESOURCES"/></span>, 
-	<html:link page="<%= "/vigilancy/convokeManagement.do?method=showConvokesByEvaluation&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") + ((bean.getExecutionYear()!=null) ? "&executionYear=" + bean.getExecutionYear().getIdInternal().toString() : "")%>">
+	<html:link page="<%= "/vigilancy/convokeManagement.do?method=showConvokesByEvaluation&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getExternalId().toString() : "") + ((bean.getExecutionYear()!=null) ? "&executionYear=" + bean.getExecutionYear().getExternalId().toString() : "")%>">
 	<bean:message key="label.vigilancy.showConvokesByEvaluation" bundle="VIGILANCY_RESOURCES"/>
 	</html:link>,
 	<span>
-		<html:link target="_blank" page="<%= "/vigilancy/convokeManagement.do?method=exportVigilancyTable&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showPointsWeight=" + bean.isShowPointsWeight() + "&showStartPoints=" + bean.isShowStartPoints() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=vigilants" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") + ((bean.getExecutionYear()!=null) ? "&executionYear=" + bean.getExecutionYear().getIdInternal().toString() : "") %>">
+		<html:link target="_blank" page="<%= "/vigilancy/convokeManagement.do?method=exportVigilancyTable&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showPointsWeight=" + bean.isShowPointsWeight() + "&showStartPoints=" + bean.isShowStartPoints() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=vigilants" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getExternalId().toString() : "") + ((bean.getExecutionYear()!=null) ? "&executionYear=" + bean.getExecutionYear().getExternalId().toString() : "") %>">
 			<bean:message key="label.vigilancy.exportVigilantTable" bundle="VIGILANCY_RESOURCES"/>
 		</html:link>
 	</span>
@@ -243,24 +243,24 @@
 				<logic:equal name="vigilancy" property="otherCourseVigilancy" value="true">
 				<logic:equal name="vigilancy" property="ableToConfirmAttend" value="true">
 					<logic:equal name="vigilancy" property="attended" value="true">
-						<html:link page="<%= "/vigilancy/convokeManagement.do?method=convokeAttended&bool=false&oid=" + vigilancy.getIdInternal() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() +  "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>">
+						<html:link page="<%= "/vigilancy/convokeManagement.do?method=convokeAttended&bool=false&oid=" + vigilancy.getExternalId() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() +  "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getExternalId().toString() : "")%>">
 							<bean:message key="label.unconfirm" bundle="VIGILANCY_RESOURCES"/>						
 						</html:link>
 					</logic:equal>
 					<logic:equal name="vigilancy" property="attended" value="false">
-						<html:link page="<%="/vigilancy/convokeManagement.do?method=convokeAttended&bool=true&oid=" + vigilancy.getIdInternal() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>">
+						<html:link page="<%="/vigilancy/convokeManagement.do?method=convokeAttended&bool=true&oid=" + vigilancy.getExternalId() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getExternalId().toString() : "")%>">
 							<bean:message key="label.confirm" bundle="VIGILANCY_RESOURCES"/>
 						</html:link>
 					</logic:equal>, 
 				</logic:equal>
 				</logic:equal>
 				<logic:equal name="vigilancy" property="active" value="true">
-					<html:link page="<%= "/vigilancy/convokeManagement.do?method=convokeActive&bool=false&oid=" + vigilancy.getIdInternal() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() +  "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>">
+					<html:link page="<%= "/vigilancy/convokeManagement.do?method=convokeActive&bool=false&oid=" + vigilancy.getExternalId() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() +  "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getExternalId().toString() : "")%>">
 							<bean:message key="label.deactivate" bundle="VIGILANCY_RESOURCES"/>						
 					</html:link>
 				</logic:equal>
 				<logic:equal name="vigilancy" property="active" value="false">
-				     <html:link page="<%= "/vigilancy/convokeManagement.do?method=convokeActive&bool=true&oid=" + vigilancy.getIdInternal() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() +  "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>">
+				     <html:link page="<%= "/vigilancy/convokeManagement.do?method=convokeActive&bool=true&oid=" + vigilancy.getExternalId() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() +  "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getExternalId().toString() : "")%>">
 							<bean:message key="label.activate" bundle="VIGILANCY_RESOURCES"/>						
 					</html:link>
 				</logic:equal>
@@ -270,7 +270,7 @@
 </table>
 </logic:notEmpty>	
 
-<p class="mtop0"><a href="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=" + evaluation.getIdInternal() + "&method=prepareAddMoreVigilants" %>">Adicionar Vigilantes</a></p>
+<p class="mtop0"><a href="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=" + evaluation.getExternalId() + "&method=prepareAddMoreVigilants" %>">Adicionar Vigilantes</a></p>
 
 </logic:iterate>
 

@@ -78,7 +78,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends Indivi
     @Override
     public ActionForward listProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("processId", getParentProcess(request).getIdInternal());
+        request.setAttribute("processId", getParentProcess(request).getExternalId());
         return mapping.findForward("intro");
     }
 

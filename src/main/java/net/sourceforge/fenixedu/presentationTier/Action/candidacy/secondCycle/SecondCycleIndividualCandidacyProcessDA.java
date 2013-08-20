@@ -86,7 +86,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     @Override
     public ActionForward listProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("processId", getParentProcess(request).getIdInternal());
+        request.setAttribute("processId", getParentProcess(request).getExternalId());
         return mapping.findForward("intro");
     }
 
@@ -386,7 +386,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
                             "CopyIndividualCandidacyToNextCandidacyProcess", individualCandidacyProcessBean);
             return new FenixActionForward(request, new ActionForward(
                     "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=listProcessAllowedActivities&processId="
-                            + newProcess.getIdInternal()));
+                            + newProcess.getExternalId()));
         } catch (final DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
@@ -433,7 +433,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
                             individualCandidacyProcessBean);
             return new FenixActionForward(request, new ActionForward(
                     "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=listProcessAllowedActivities&processId="
-                            + newProcess.getIdInternal()));
+                            + newProcess.getExternalId()));
         } catch (final DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());

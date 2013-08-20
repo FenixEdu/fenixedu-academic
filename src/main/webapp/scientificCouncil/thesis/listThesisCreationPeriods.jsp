@@ -25,7 +25,7 @@
 		<logic:present name="thesisCreationPeriodFactoryExecutor" property="executionYear">
 			<logic:notPresent name="thesisCreationPeriodFactoryExecutor" property="executionDegree">
 
-				<bean:define id="executionYearId" name="thesisCreationPeriodFactoryExecutor" property="executionYear.idInternal"/>
+				<bean:define id="executionYearId" name="thesisCreationPeriodFactoryExecutor" property="executionYear.externalId"/>
 				<bean:define id="url">/scientificCouncilManageThesis.do?method=prepareDefineCreationPeriods&amp;executionYearId=<bean:write name="executionYearId"/></bean:define>
 
 				<html:link page="<%= url %>">
@@ -38,7 +38,7 @@
 
             			<fr:property name="link(change)" value="<%= String.format("/scientificCouncilManageThesis.do?method=prepareDefineCreationPeriods&amp;executionYearId=%s", executionYearId) %>"/>
             			<fr:property name="key(change)" value="link.thesis.set.period"/>
-            			<fr:property name="param(change)" value="idInternal/executionDegreeId"/>
+            			<fr:property name="param(change)" value="externalId/executionDegreeId"/>
 			            <fr:property name="order(change)" value="1"/>
 
            			</fr:layout>
@@ -58,7 +58,7 @@
 			<bean:message key="label.all.executionDegrees"/>
 		</logic:notPresent>
 		
-		<bean:define id="executionYearId" name="thesisCreationPeriodFactoryExecutor" property="executionYear.idInternal" />
+		<bean:define id="executionYearId" name="thesisCreationPeriodFactoryExecutor" property="executionYear.externalId" />
 
 	    <fr:edit id="thesisCreationPeriodFactoryExecutor" name="thesisCreationPeriodFactoryExecutor" 
 	    		schema="scientificCouncil.thesis.creation.period.definition"

@@ -18,7 +18,7 @@
 		<jsp:include page="spaceCrumbs.jsp"/>
 	</div>	
 	
-	<bean:define id="backLink">/manageSpaces.do?method=manageSpace&amp;spaceInformationID=<bean:write name="moveSpaceBean" property="space.spaceInformation.idInternal"/></bean:define>		
+	<bean:define id="backLink">/manageSpaces.do?method=manageSpace&amp;spaceInformationID=<bean:write name="moveSpaceBean" property="space.spaceInformation.externalId"/></bean:define>		
 	<ul class="mvert15 list5">
 		<li>
 			<html:link page="<%= backLink %>">

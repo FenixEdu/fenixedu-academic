@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.research.Prize;
@@ -48,6 +47,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "researcher", path = "/viewCurriculum", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "Success", path = "/researcher/viewCurriculum.jsp", tileProperties = @Tile(
@@ -61,8 +61,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
         String personId = request.getParameter("personOID");
 
         final Person person =
-                ((personId != null && personId.length() > 0) ? (Person) RootDomainObject.readDomainObjectByOID(Person.class,
-                        Integer.valueOf(personId)) : getLoggedPerson(request));
+                ((personId != null && personId.length() > 0) ? (Person) AbstractDomainObject.fromExternalId(personId) : getLoggedPerson(request));
 
         request.setAttribute("person", person);
 

@@ -27,8 +27,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        final Integer scpID = Integer.valueOf(getIntegerFromRequest(request, "scpID"));
-        final StudentCurricularPlan plan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        final StudentCurricularPlan plan = getDomainObject(request, "scpID");
         StudentEnrolmentBean studentEnrolmentBean = new StudentEnrolmentBean();
         if (plan != null) {
             studentEnrolmentBean.setStudentCurricularPlan(plan);
@@ -81,7 +80,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
     public ActionForward backViewRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final StudentEnrolmentBean studentEnrolmentBean = getRenderedObject();
-        request.setAttribute("registrationId", studentEnrolmentBean.getStudentCurricularPlan().getRegistration().getIdInternal());
+        request.setAttribute("registrationId", studentEnrolmentBean.getStudentCurricularPlan().getRegistration().getExternalId());
         return mapping.findForward("visualizeRegistration");
     }
 

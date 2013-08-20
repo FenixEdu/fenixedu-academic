@@ -50,19 +50,19 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
         // request);
 
         DynaActionForm indexForm = (DynaActionForm) actionForm;
-        Integer degreeId = getFromRequest("degreeID", request);
+        String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
-        Integer index = getFromRequest("index", request);
+        String index = getFromRequest("index", request);
         request.setAttribute("index", index);
 
-        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        String executionDegreeId = getFromRequest("executionDegreeID", request);
         request.setAttribute("executionDegreeID", executionDegreeId);
 
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-        Integer curricularCourseId = getFromRequest("curricularCourseID", request);
+        String curricularCourseId = getFromRequest("curricularCourseID", request);
         request.setAttribute("curricularCourseID", curricularCourseId);
 
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
@@ -122,10 +122,10 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
     public ActionForward showExecutionCourseSite(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer degreeId = getFromRequest("degreeID", request);
+        String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
-        Integer executionCourseId = getFromRequest("executionCourseID", request);
+        String executionCourseId = getFromRequest("executionCourseID", request);
         request.setAttribute("executionCourseID", executionCourseId);
 
         ISiteComponent firstPageComponent = new InfoSiteFirstPage();
@@ -139,12 +139,12 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
                     ExecutionCourseSiteComponentService.runExecutionCourseSiteComponentService(commonComponent,
                             firstPageComponent, null, executionCourseId, null, null);
 
-            request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent()).getSiteIdInternal());
+            request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent()).getSiteExternalId());
             request.setAttribute("siteView", siteView);
             request.setAttribute("executionCourseCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getIdInternal());
+                    .getExternalId());
             request.setAttribute("executionPeriodCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getInfoExecutionPeriod().getIdInternal());
+                    .getInfoExecutionPeriod().getExternalId());
             if (siteView.getComponent() instanceof InfoSiteSection) {
                 request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
             }

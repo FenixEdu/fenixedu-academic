@@ -7,7 +7,7 @@
 <h2><bean:message key="label.extraCurricularActivities.manage" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
 <html:link action="/student.do?method=visualizeStudent" paramId="studentID" paramName="student"
-    paramProperty="idInternal">
+    paramProperty="externalId">
     <bean:message key="link.back" bundle="COMMON_RESOURCES" />
 </html:link>
 
@@ -24,7 +24,7 @@
                 <fr:property name="rowClasses" value="tdhl1,,,," />
             </fr:layout>
         </fr:view></td>
-        <td><bean:define id="personID" name="student" property="person.idInternal" /> <html:img align="middle"
+        <td><bean:define id="personID" name="student" property="person.externalId" /> <html:img align="middle"
             src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>"
             altKey="personPhoto" bundle="IMAGE_RESOURCES" /></td>
     </tr>

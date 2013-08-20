@@ -166,8 +166,8 @@ public class Teacher extends Teacher_Base {
         return null;
     }
 
-    public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> executionCourses)
-            throws MaxResponsibleForExceed, InvalidCategory {
+    public void updateResponsabilitiesFor(String executionYearId, List<Integer> executionCourses) throws MaxResponsibleForExceed,
+            InvalidCategory {
 
         if (executionYearId == null || executionCourses == null) {
             throw new NullPointerException();
@@ -176,8 +176,8 @@ public class Teacher extends Teacher_Base {
         boolean responsible;
         for (final Professorship professorship : this.getProfessorships()) {
             final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-            if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(executionYearId)) {
-                responsible = executionCourses.contains(executionCourse.getIdInternal());
+            if (executionCourse.getExecutionPeriod().getExecutionYear().getExternalId().equals(executionYearId)) {
+                responsible = executionCourses.contains(executionCourse.getExternalId());
                 if (!professorship.getResponsibleFor().equals(Boolean.valueOf(responsible))) {
                     ResponsibleForValidator.getInstance().validateResponsibleForList(this, executionCourse, professorship);
                     professorship.setResponsibleFor(responsible);

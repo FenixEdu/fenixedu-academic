@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -24,8 +24,8 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCoordinationTeam {
 
-    protected List run(Integer executionDegreeId) throws FenixServiceException {
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+    protected List run(String executionDegreeId) throws FenixServiceException {
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
         if (executionDegree == null) {
             throw new FenixServiceException("errors.invalid.execution.degree");
         }
@@ -39,12 +39,13 @@ public class ReadCoordinationTeam {
         }
         return infoCoordinators;
     }
+
     // Service Invokers migrated from Berserk
 
     private static final ReadCoordinationTeam serviceInstance = new ReadCoordinationTeam();
 
     @Service
-    public static List runReadCoordinationTeam(Integer executionDegreeId) throws FenixServiceException  , NotAuthorizedException {
+    public static List runReadCoordinationTeam(String executionDegreeId) throws FenixServiceException, NotAuthorizedException {
         DegreeCoordinatorAuthorizationFilter.instance.execute(executionDegreeId);
         return serviceInstance.run(executionDegreeId);
     }

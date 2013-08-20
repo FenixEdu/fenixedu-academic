@@ -1146,9 +1146,9 @@ public class CreateTestData {
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.setDateOfBirthYearMonthDay(new YearMonthDay().minusYears(23));
         person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
-        person.setDocumentIdNumber(person.getIdInternal().toString());
+        person.setDocumentIdNumber(person.getExternalId().toString());
 
-        EmailAddress.createEmailAddress(person, "abc" + person.getIdInternal() + "@gmail.com", PartyContactType.PERSONAL, true);
+        EmailAddress.createEmailAddress(person, "abc" + person.getExternalId() + "@gmail.com", PartyContactType.PERSONAL, true);
 
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
@@ -1357,7 +1357,7 @@ public class CreateTestData {
                     // shift, Double.valueOf(100), RoleType.SCIENTIFIC_COUNCIL);
 
                     final SupportLessonDTO supportLessonDTO = new SupportLessonDTO();
-                    supportLessonDTO.setProfessorshipID(professorship.getIdInternal());
+                    supportLessonDTO.setProfessorshipID(professorship.getExternalId());
                     supportLessonDTO.setPlace("Room23");
                     supportLessonDTO.setStartTime(new DateTime().withField(DateTimeFieldType.hourOfDay(), 20).toDate());
                     supportLessonDTO.setEndTime(new DateTime().withField(DateTimeFieldType.hourOfDay(), 21).toDate());

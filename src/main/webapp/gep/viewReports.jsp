@@ -12,7 +12,7 @@
 
 <logic:present name="executionYear">
 <bean:define id="year" name="executionYear" property="year"/>
-<bean:define id="executionYearID" name="executionYear" property="idInternal"/>
+<bean:define id="executionYearID" name="executionYear" property="externalId"/>
 <bean:define id="link" type="java.lang.String">
 	<bean:write name="link" />&executionYearID=<%= executionYearID %>
 </bean:define>

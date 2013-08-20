@@ -9,9 +9,9 @@
 </logic:notPresent>
 
 <logic:present name="infoExecutionDegree" >
-	<bean:define id="executionDegreeId" name="infoExecutionDegree" property="idInternal" />
-	<bean:define id="degreeId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.idInternal" />	
-	<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal" />
+	<bean:define id="executionDegreeId" name="infoExecutionDegree" property="externalId" />
+	<bean:define id="degreeId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.externalId" />	
+	<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.externalId" />
 
 	<table>
 		<tr>

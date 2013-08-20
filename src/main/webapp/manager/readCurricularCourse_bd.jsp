@@ -150,15 +150,15 @@
 						<bean:define id="deleteConfirm">
 							return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.confirm.remove.execution.course"/>')
 	  					</bean:define>
-						<%--<html:link module="/manager" page="<%="/dissociateExecutionCourse.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal" onclick='<%= deleteConfirm.toString() %>'>
+						<%--<html:link module="/manager" page="<%="/dissociateExecutionCourse.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="externalId" onclick='<%= deleteConfirm.toString() %>'>
 							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.dissociate.execution.course"/>
 						</html:link> /--%>
-						<html:link module="/manager" page="<%="/readTeacherInCharge.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+						<html:link module="/manager" page="<%="/readTeacherInCharge.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="externalId">
 							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.execution.course.teachers"/>
 						</html:link>
 						<logic:equal name="hasSite" value="false">
 							/
-							<html:link module="/manager" page="<%="/createSite.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+							<html:link module="/manager" page="<%="/createSite.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="externalId">
 								<bean:message bundle="MANAGER_RESOURCES" key="label.manager.create.site"/>
 							</html:link>
 						</logic:equal>
@@ -206,7 +206,7 @@
 						<bean:define id="infoCurricularYear" name="infoCurricularSemester" property="infoCurricularYear"/>
 					<tr>
 						<td class="listClasses">
-							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.curricularCourseScopeId" property="curricularCourseScopeId" idName="curricularCourseScope" value="idInternal" />		
+							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.curricularCourseScopeId" property="curricularCourseScopeId" idName="curricularCourseScope" value="externalId" />		
 						</td>
 						<td class="listClasses"><bean:write name="infoCurricularYear" property="year"/>
 						</td>
@@ -224,13 +224,13 @@
 							<%=beginDate.get(Calendar.DAY_OF_MONTH)%>/<%=String.valueOf(beginDate.get(Calendar.MONTH) + 1)%>/<%=beginDate.get(Calendar.YEAR)%>
 						</td>
 						<td class="listClasses">
-							<html:link module="/manager" page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
+							<html:link module="/manager" page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="externalId">
 								<bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.curricularCourseScope"/>
 							</html:link> /<br />
-							<html:link module="/manager" page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
+							<html:link module="/manager" page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="externalId">
 								<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.curricularCourseScope.fromAnother"/>
 							</html:link> /<br />
-							<html:link module="/manager" page="<%="/endCurricularCourseScope.do?method=prepareEnd&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
+							<html:link module="/manager" page="<%="/endCurricularCourseScope.do?method=prepareEnd&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="externalId">
 								<bean:message bundle="MANAGER_RESOURCES" key="label.manager.end.curricular.course.scope"/>
 							</html:link>
 						</td>

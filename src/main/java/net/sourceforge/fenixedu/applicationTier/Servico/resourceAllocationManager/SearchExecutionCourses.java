@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -37,6 +36,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SearchExecutionCourses {
 
@@ -61,16 +61,16 @@ public class SearchExecutionCourses {
         List<InfoExecutionCourse> result = null;
 
         final ExecutionSemester executionSemester =
-                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
 
         ExecutionDegree executionDegree = null;
         if (infoExecutionDegree != null) {
-            executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+            executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
         }
 
         CurricularYear curricularYear = null;
         if (infoCurricularYear != null) {
-            curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(infoCurricularYear.getIdInternal());
+            curricularYear = AbstractDomainObject.fromExternalId(infoCurricularYear.getExternalId());
         }
 
         List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
@@ -247,7 +247,7 @@ public class SearchExecutionCourses {
     @Service
     public static List<InfoExecutionCourse> runSearchExecutionCourses(AcademicInterval academicInterval,
             ExecutionDegree executionDegree, String courseName) throws NotAuthorizedException {
-        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getIdInternal());
+        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getExternalId());
         return serviceInstance.run(academicInterval, executionDegree, courseName);
     }
 
@@ -255,14 +255,14 @@ public class SearchExecutionCourses {
     public static List<InfoExecutionCourse> runSearchExecutionCourses(InfoExecutionPeriod infoExecutionPeriod,
             InfoExecutionDegree infoExecutionDegree, InfoCurricularYear infoCurricularYear, String executionCourseName)
             throws NotAuthorizedException {
-        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(infoExecutionDegree.getIdInternal());
+        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(infoExecutionDegree.getExternalId());
         return serviceInstance.run(infoExecutionPeriod, infoExecutionDegree, infoCurricularYear, executionCourseName);
     }
 
     @Service
     public static List<InfoExecutionCourse> runSearchExecutionCourses(AcademicInterval academicInterval,
             ExecutionDegree executionDegree, CurricularYear curricularYear, String courseName) throws NotAuthorizedException {
-        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getIdInternal());
+        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getExternalId());
         return serviceInstance.run(academicInterval, executionDegree, curricularYear, courseName);
     }
 }

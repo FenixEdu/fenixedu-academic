@@ -89,7 +89,7 @@ function cleanSelect() {
 			<td class="listClasses"><bean:write name="shift" property="shiftTypesPrettyPrint"/></td>
 			<td class="listClasses">
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selected" property="selected" onclick="cleanSelect()">
-			    <bean:write name="shift" property="idInternal"/>
+			    <bean:write name="shift" property="externalId"/>
 				</html:multibox> 
 			</td>
 		</tr>

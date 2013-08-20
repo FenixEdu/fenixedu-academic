@@ -245,7 +245,7 @@
 
 		<h:dataTable value="#{ManagerCurricularCourseManagement.curricularCourse.parentContexts}" var="context">
 			<h:column>
-				<h:panelGroup rendered="#{context.idInternal != ManagerCurricularCourseManagement.contextID}">
+				<h:panelGroup rendered="#{context.externalId != ManagerCurricularCourseManagement.contextID}">
 					<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 					
 					<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
@@ -265,8 +265,8 @@
 					<h:outputLink value="editCurricularCourse.faces">
 						<h:outputText value="#{bolonhaBundle['edit']}" />
 						<f:param name="degreeCurricularPlanID" value="#{ManagerCurricularCourseManagement.degreeCurricularPlanID}" />
-						<f:param name="courseGroupID" value="#{context.parentCourseGroup.idInternal}" />
-						<f:param name="contextID" value="#{context.idInternal}" />
+						<f:param name="courseGroupID" value="#{context.parentCourseGroup.externalId}" />
+						<f:param name="contextID" value="#{context.externalId}" />
 						<f:param name="curricularCourseID" value="#{ManagerCurricularCourseManagement.curricularCourseID}" />
 						<f:param name="executionYearID" value="#{ManagerCurricularCourseManagement.executionYearID}"/>
 						<f:param name="organizeBy" value="#{ManagerCurricularCourseManagement.organizeBy}"/>
@@ -277,12 +277,12 @@
 					<h:outputText value=", " escape="false"/>
 					<fc:commandLink value="#{bolonhaBundle['delete']}" action="#{ManagerCurricularCourseManagement.editCurricularCourseReturnPath}"
 							actionListener="#{ManagerCurricularCourseManagement.tryDeleteContext}">
-						<f:param name="contextIDToDelete" value="#{context.idInternal}"/>
+						<f:param name="contextIDToDelete" value="#{context.externalId}"/>
 					</fc:commandLink>
 					<h:outputText value="</p></fieldset>" escape="false"/>
 				</h:panelGroup>
 				
-				<h:panelGroup rendered="#{context.idInternal == ManagerCurricularCourseManagement.contextID}">
+				<h:panelGroup rendered="#{context.externalId == ManagerCurricularCourseManagement.contextID}">
 					<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 					
 					<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
@@ -316,7 +316,7 @@
 					<h:outputText value="</p>" escape="false"/>
 					
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
-					<h:outputText escape="false" value="<input alt='input.contextID' id='contextID' name='contextID' type='hidden' value='#{context.idInternal}'/>"/>
+					<h:outputText escape="false" value="<input alt='input.contextID' id='contextID' name='contextID' type='hidden' value='#{context.externalId}'/>"/>
 					<fc:commandButton alt="#{htmlAltBundle['commandButton.update']}" styleClass="inputbutton" value="#{bolonhaBundle['update']}"
 							action="#{ManagerCurricularCourseManagement.editContext}"/>
 					<h:outputText value=" " escape="false"/>							

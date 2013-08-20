@@ -36,14 +36,14 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends In
         if (infoTeacherOrNonAffiliatedTeacher instanceof InfoPerson) {
             this.person = (InfoPerson) infoTeacherOrNonAffiliatedTeacher;
             this.nonAffiliatedTeacher = null;
-            this.setIdInternal(this.person.getIdInternal());
+            this.setExternalId(this.person.getExternalId());
             this.teacherName = this.person.getNome();
 
         } else if (infoTeacherOrNonAffiliatedTeacher instanceof InfoNonAffiliatedTeacher) {
 
             this.person = null;
             this.nonAffiliatedTeacher = (InfoNonAffiliatedTeacher) infoTeacherOrNonAffiliatedTeacher;
-            this.setIdInternal(this.nonAffiliatedTeacher.getIdInternal());
+            this.setExternalId(this.nonAffiliatedTeacher.getExternalId());
             this.teacherName = this.nonAffiliatedTeacher.getName();
         }
 

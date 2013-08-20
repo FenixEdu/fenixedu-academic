@@ -9,7 +9,7 @@
 	bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
 <bean:define id="personId" name="depositAmountBean"
-	property="event.person.idInternal" />
+	property="event.person.externalId" />
 
 <fr:hasMessages type="conversion" for="depositAmountBean">
 	<ul class="nobullet list6">

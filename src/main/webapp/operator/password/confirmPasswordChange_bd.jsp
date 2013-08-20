@@ -33,7 +33,7 @@
 
 	
 	<logic:iterate id="personalInfo" name="personListFinded" indexId="personIndex">	    
-		<bean:define id="personID" name="personalInfo" property="idInternal"/>
+		<bean:define id="personID" name="personalInfo" property="externalId"/>
 		<bean:define id="username" name="personalInfo" property="username" />
 	
 	  	<table width="98%" cellpadding="0" cellspacing="0" class="mvert15">

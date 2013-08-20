@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTe
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
@@ -24,19 +23,20 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SimulateTest {
 
     private final String path = new String();
 
-    protected InfoSiteStudentTestFeedback run(Integer executionCourseId, Integer testId, Response[] responses,
+    protected InfoSiteStudentTestFeedback run(String executionCourseId, String testId, Response[] responses,
             String[] questionCodes, String[] optionShuffle, TestType testType, CorrectionAvailability correctionAvailability,
             Boolean imsfeedback, String testInformation, String path) throws FenixServiceException {
 
         // InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new
         // InfoSiteStudentTestFeedback();
         // this.path = path.replace('\\', '/');
-        // Test test = rootDomainObject.readTestByOID(testId);
+        // Test test = AbstractDomainObject.fromExternalId(testId);
         // if (test == null)
         // throw new FenixServiceException();
         //
@@ -51,14 +51,14 @@ public class SimulateTest {
         //
         // if (testScope == null) {
         // ExecutionCourse executionCourse =
-        // rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        // AbstractDomainObject.fromExternalId(executionCourseId);
         // if (executionCourse == null)
         // throw new InvalidArgumentsServiceException();
         // testScope = DomainFactory.makeTestScope(executionCourse);
         // }
         //
         // InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
-        // infoDistributedTest.setIdInternal(testId);
+        // infoDistributedTest.setExternalId(testId);
         // infoDistributedTest.setInfoTestScope(InfoTestScope.newInfoFromDomain(
         // testScope));
         // infoDistributedTest.setTestType(testType);
@@ -153,11 +153,11 @@ public class SimulateTest {
     }
 
     private List<InfoStudentTestQuestion> getInfoStudentTestQuestionList(String[] questionCodes, String[] optionShuffle,
-            Response[] responses, InfoDistributedTest infoDistributedTest, Integer testId)
+            Response[] responses, InfoDistributedTest infoDistributedTest, String testId)
             throws InvalidArgumentsServiceException, FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 
-        Test test = RootDomainObject.getInstance().readTestByOID(testId);
+        Test test = AbstractDomainObject.fromExternalId(testId);
         List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
         Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
         for (int i = 0; i < testQuestionList.size(); i++) {
@@ -170,7 +170,7 @@ public class SimulateTest {
             infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
             infoStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
             infoStudentTestQuestion.setResponse(null);
-            Question question = RootDomainObject.getInstance().readQuestionByOID(Integer.valueOf(questionCodes[i]));
+            Question question = AbstractDomainObject.fromExternalId(questionCodes[i]);
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -198,7 +198,7 @@ public class SimulateTest {
     private static final SimulateTest serviceInstance = new SimulateTest();
 
     @Service
-    public static InfoSiteStudentTestFeedback runSimulateTest(Integer executionCourseId, Integer testId, Response[] responses,
+    public static InfoSiteStudentTestFeedback runSimulateTest(String executionCourseId, String testId, Response[] responses,
             String[] questionCodes, String[] optionShuffle, TestType testType, CorrectionAvailability correctionAvailability,
             Boolean imsfeedback, String testInformation, String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

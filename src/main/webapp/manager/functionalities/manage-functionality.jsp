@@ -12,12 +12,12 @@
 
 <div> 
     <logic:iterate id="crumb" name="crumbs">
-        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="externalId">
             <fr:view name="crumb" property="name"/>
         </html:link> &gt;
     </logic:iterate>
     
-    <html:link page="/functionality/view.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
+    <html:link page="/functionality/view.do" paramId="functionality" paramName="functionality" paramProperty="externalId">
         <fr:view name="functionality" property="name"/>
     </html:link>
 </div>
@@ -42,7 +42,7 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thleft mvert05"/>
 		</fr:layout>
-        <fr:destination name="viewModule" path="/module/view.do?module=${module.idInternal}"/>
+        <fr:destination name="viewModule" path="/module/view.do?module=${module.externalId}"/>
     </fr:view>
 </logic:present>
 
@@ -89,7 +89,7 @@
     </div>
 </logic:messagesPresent>
 
-<bean:define id="oid" name="functionality" property="idInternal"/>
+<bean:define id="oid" name="functionality" property="externalId"/>
 
 <fr:edit name="bean" schema="functionalities.expression"
          action="<%= "/functionality/parse.do?functionality=" + oid %>">

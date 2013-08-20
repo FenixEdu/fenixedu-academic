@@ -19,7 +19,7 @@
 </div>
 
 <p>
-	<html:link page="/masterDegreeCreditsManagement.do?method=exportToExcel" paramId="executionDegreeID" paramName="executionDegree" paramProperty="idInternal">
+	<html:link page="/masterDegreeCreditsManagement.do?method=exportToExcel" paramId="executionDegreeID" paramName="executionDegree" paramProperty="externalId">
 		<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
 		<bean:message key="link.export.to.excel"/>						
 	</html:link>
@@ -175,7 +175,7 @@
 								<logic:equal name="isLastCellDone" value="false">
 									<td rowspan="<%= numOfProfessorships %>">										
 										<logic:equal name="executionCourseTrio" property="first.value" value="true">
-											<html:link page="<%= "/masterDegreeCreditsManagement.do?method=prepareEdit&amp;executionDegreeID=" + executionDegree.getIdInternal().toString() %>" paramId="curricularCourseID" paramName="masterDegreeCoursesDTO" paramProperty="curricularCourse.idInternal">
+											<html:link page="<%= "/masterDegreeCreditsManagement.do?method=prepareEdit&amp;executionDegreeID=" + executionDegree.getExternalId().toString() %>" paramId="curricularCourseID" paramName="masterDegreeCoursesDTO" paramProperty="curricularCourse.externalId">
 												<bean:message key="link.credits.masterDegree.assign"/>
 											</html:link>
 										</logic:equal>										
@@ -206,7 +206,7 @@
 							<logic:equal name="isLastCellDone" value="false">
 								<td rowspan="1">										
 									<logic:equal name="executionCourseTrio" property="first.value" value="true">
-										<html:link page="<%= "/masterDegreeCreditsManagement.do?method=prepareEdit&amp;executionDegreeID=" + executionDegree.getIdInternal().toString() %>" paramId="curricularCourseID" paramName="masterDegreeCoursesDTO" paramProperty="curricularCourse.idInternal">
+										<html:link page="<%= "/masterDegreeCreditsManagement.do?method=prepareEdit&amp;executionDegreeID=" + executionDegree.getExternalId().toString() %>" paramId="curricularCourseID" paramName="masterDegreeCoursesDTO" paramProperty="curricularCourse.externalId">
 											<bean:message key="link.credits.masterDegree.assign"/>
 										</html:link>
 									</logic:equal>										

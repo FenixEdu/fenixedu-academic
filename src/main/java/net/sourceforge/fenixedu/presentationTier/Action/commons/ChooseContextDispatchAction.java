@@ -230,7 +230,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
             request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, anoCurricular.toString());
             request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
             request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
-            request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
+            request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getExternalId().toString());
         } else {
             return mapping.findForward("Licenciatura execucao inexistente");
         }

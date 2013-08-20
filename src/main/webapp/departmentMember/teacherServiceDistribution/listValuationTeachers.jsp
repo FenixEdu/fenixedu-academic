@@ -17,7 +17,7 @@
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:write name="tsdProcess" property="name"/>&nbsp;
 			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
@@ -88,7 +88,7 @@
 			</logic:notEmpty>
 		</td>
 		<td class="acenter">
-			<html:link href="javascript:void(0)" onclick='<%= "document.forms[0].tsdTeacher.value=" + ((TSDTeacher) tsdTeacher).getIdInternal() + ";document.forms[0].method.value='removeTeacher'; document.forms[0].submit()" %>'>
+			<html:link href="javascript:void(0)" onclick='<%= "document.forms[0].tsdTeacher.value=" + ((TSDTeacher) tsdTeacher).getExternalId() + ";document.forms[0].method.value='removeTeacher'; document.forms[0].submit()" %>'>
 				<bean:message key="link.remove"/>
 			</html:link>
 		</td>			
@@ -114,7 +114,7 @@
 			<bean:write name="tsdCourse" property="name"/>
 		</td>
 		<td class="acenter">
-			<html:link href="javascript:void(0)" onclick='<%= "document.forms[0].tsdCourse.value=" + ((TSDCourse) tsdCourse).getIdInternal() + ";document.forms[0].method.value='removeCourse'; document.forms[0].submit()" %>'>
+			<html:link href="javascript:void(0)" onclick='<%= "document.forms[0].tsdCourse.value=" + ((TSDCourse) tsdCourse).getExternalId() + ";document.forms[0].method.value='removeCourse'; document.forms[0].submit()" %>'>
 				<bean:message key="link.remove"/>
 			</html:link>
 		</td>						
@@ -127,6 +127,6 @@
 </table>
 </html:form>
 
-<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 	<bean:message key="link.back"/>
 </html:link>

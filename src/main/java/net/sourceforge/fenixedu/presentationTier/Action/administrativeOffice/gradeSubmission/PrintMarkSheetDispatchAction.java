@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
@@ -37,6 +36,7 @@ import org.apache.struts.util.LabelValueBean;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/printMarkSheet", module = "academicAdministration", formBean = "printMarkSheetForm",
         input = "/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0")
@@ -70,12 +70,12 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
     }
 
     private ExecutionSemester getExecutionSemester(DynaActionForm form) {
-        return rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(form.getString("ecID")));
+        return AbstractDomainObject.fromExternalId(form.getString("ecID"));
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(DynaActionForm form) {
-        final Integer dcpID = (!StringUtils.isEmpty(form.getString("dcpID")) ? Integer.valueOf(form.getString("dcpID")) : null);
-        return dcpID != null ? rootDomainObject.readDegreeCurricularPlanByOID(dcpID) : null;
+        final String dcpID = form.getString("dcpID");
+        return AbstractDomainObject.fromExternalId(dcpID);
     }
 
     private ActionForward choosePrinterMarkSheetsWeb(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -96,9 +96,9 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
         buildPeriods(request);
         buildDegreeCurricularPlans(request, employee, executionSemester);
 
-        form.set("ecID", executionSemester.getIdInternal().toString());
+        form.set("ecID", executionSemester.getExternalId().toString());
         if (degreeCurricularPlan != null) {
-            form.set("dcpID", degreeCurricularPlan.getIdInternal().toString());
+            form.set("dcpID", degreeCurricularPlan.getExternalId().toString());
         }
 
         return mapping.findForward("choosePrinterMarkSheetsWeb");
@@ -117,7 +117,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
         for (final DegreeCurricularPlan dcp : dcps) {
             if (degreesForMarksheets.contains(dcp.getDegree())) {
-                result.add(new LabelValueBean(dcp.getPresentationName(semester.getExecutionYear()), dcp.getIdInternal()
+                result.add(new LabelValueBean(dcp.getPresentationName(semester.getExecutionYear()), dcp.getExternalId()
                         .toString()));
             }
         }
@@ -131,7 +131,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
         final List<LabelValueBean> periods = new ArrayList<LabelValueBean>();
         for (final ExecutionSemester period : notClosedExecutionPeriods) {
-            periods.add(new LabelValueBean(period.getExecutionYear().getYear() + " - " + period.getName(), period.getIdInternal()
+            periods.add(new LabelValueBean(period.getExecutionYear().getYear() + " - " + period.getName(), period.getExternalId()
                     .toString()));
         }
 
@@ -171,7 +171,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward printMarkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DynaActionForm form = (DynaActionForm) actionForm;
         String markSheet = form.getString("markSheet");
         if (markSheet.equals("all")) {
@@ -182,11 +182,11 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
     }
 
     private ActionForward printMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DynaActionForm form = (DynaActionForm) actionForm;
         String printerName = form.getString("printerName");
         String markSheetString = form.getString("markSheet");
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(Integer.valueOf(markSheetString));
+        MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetString);
         ActionMessages actionMessages = new ActionMessages();
 
         try {
@@ -200,7 +200,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
     }
 
     private ActionForward printWebMarkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final String printerName = form.getString("printerName");

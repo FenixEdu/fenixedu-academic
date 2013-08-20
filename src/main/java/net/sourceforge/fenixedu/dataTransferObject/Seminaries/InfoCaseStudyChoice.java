@@ -39,7 +39,7 @@ public class InfoCaseStudyChoice extends InfoObject {
     public void copyFromDomain(CaseStudyChoice caseStudyChoice) {
         super.copyFromDomain(caseStudyChoice);
         if (caseStudyChoice != null) {
-            // setCandidacyIdInternal(caseStudyChoice.getCandidacyIdInternal());
+            // setCandidacyExternalId(caseStudyChoice.getCandidacyExternalId());
             setCaseStudy(InfoCaseStudy.newInfoFromDomain(caseStudyChoice.getCaseStudy()));
             setOrder(caseStudyChoice.getOrder());
         }

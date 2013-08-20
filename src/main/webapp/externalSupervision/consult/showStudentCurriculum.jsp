@@ -23,7 +23,7 @@
 
 <%-- Foto --%>
 <div style="float: right;" class="printhidden">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -62,7 +62,7 @@
 
 
 <%-- Choose Student Curricular Plan form --%>
-<html:form action="<%="/viewCurriculum.do?method=prepare&registrationOID=" + registration.getIdInternal()%>">
+<html:form action="<%="/viewCurriculum.do?method=prepare&registrationOID=" + registration.getExternalId()%>">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
 	<logic:present property="studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm" property="studentNumber"/>
@@ -205,7 +205,7 @@
 <div class="cboth"></div>
 
 <div class="mtop15">
-	<bean:define id="graph" type="java.lang.String"><%= request.getContextPath() %>/student/viewCurriculumGraph.do?method=createAreaXYChart&registrationOID=<%= registration.getIdInternal() %></bean:define>
+	<bean:define id="graph" type="java.lang.String"><%= request.getContextPath() %>/student/viewCurriculumGraph.do?method=createAreaXYChart&registrationOID=<%= registration.getExternalId() %></bean:define>
 	<html:img align="middle" src="<%= graph %>"/>
 </div>
 

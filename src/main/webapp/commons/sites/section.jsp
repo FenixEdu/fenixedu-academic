@@ -16,9 +16,9 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
-<bean:define id="siteId" name="site" property="idInternal"/>
+<bean:define id="siteId" name="site" property="externalId"/>
 <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
-<bean:define id="sectionId" name="section" property="idInternal"/>
+<bean:define id="sectionId" name="section" property="externalId"/>
 
 <jsp:include page="siteQuota.jsp"/>
 
@@ -44,7 +44,7 @@
     </html:link> &gt;
     
     <logic:iterate id="crumb" name="sectionBreadCrumbs">
-        <html:link page="<%= String.format("%s?method=section&amp;%s", actionName, context) %>" paramId="sectionID" paramName="crumb" paramProperty="idInternal">
+        <html:link page="<%= String.format("%s?method=section&amp;%s", actionName, context) %>" paramId="sectionID" paramName="crumb" paramProperty="externalId">
             <fr:view name="crumb" property="name"/>
         </html:link> &gt;
     </logic:iterate>
@@ -87,7 +87,7 @@
         <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
     </fr:form>
     
-    <% String treeId = "subSectionTree" + site.getIdInternal(); %>
+    <% String treeId = "subSectionTree" + site.getExternalId(); %>
             
     <div style="background: #FAFAFF; border: 1px solid #EEE; margin: 10px 0px 10px 0px; padding: 10px 10px 10px 10px;">
         <fr:view name="site" property="directChildrenAsContent">
@@ -111,9 +111,9 @@
                 <fr:property name="currentClasses" value="highlight1"/>
                 <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>
-            <fr:destination name="section.view" path="<%= actionName + "?method=section&sectionID=${idInternal}&" + context %>"/>
-            <fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.idInternal}&" + context  + "#item-${idInternal}"%>"/>
-        	<fr:destination name="functionality.view" path="<%= actionName + "?method=functionality&siteID=" + siteId + "&functionalityID=${idInternal}&" + context  + "#content-${idInternal}"%>"/>
+            <fr:destination name="section.view" path="<%= actionName + "?method=section&sectionID=${externalId}&" + context %>"/>
+            <fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.externalId}&" + context  + "#item-${externalId}"%>"/>
+        	<fr:destination name="functionality.view" path="<%= actionName + "?method=functionality&siteID=" + siteId + "&functionalityID=${externalId}&" + context  + "#content-${externalId}"%>"/>
         </fr:view>
 
 		<p class="mtop15">
@@ -286,7 +286,7 @@
 <logic:notEmpty name="section" property="associatedItems">
 	<logic:iterate id="item" name="section" property="orderedItems" type="net.sourceforge.fenixedu.domain.Item">
 
-        <bean:define id="itemId" name="item" property="idInternal"/>
+        <bean:define id="itemId" name="item" property="externalId"/>
 		
 		<div id="item-<%= itemId %>">
 		<div class="mtop15 mbottom0" style="background: #f5f5f5; padding: 0.5em;">
@@ -318,7 +318,7 @@
 	
 			|
 	        <bean:define id="deleteUrl" type="java.lang.String" value="<%= String.format("%s?method=deleteItem&amp;%s&amp;itemID=%s", actionName, context, itemId) %>"/>
-	        <bean:define id="deleteId" value="<%= "deleteForm" + item.getIdInternal() %>"/>
+	        <bean:define id="deleteId" value="<%= "deleteForm" + item.getExternalId() %>"/>
 	
 	        <span class="switchNoneStyle">
 	        	   <span> 
@@ -437,14 +437,14 @@
        	    	                
             					<td class="nowrap">	
         							<span class="pleft1">
-           		                		<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>"
+           		                		<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getExternalId()) %>"
            		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
            			                        <bean:message key="link.delete" bundle="SITE_RESOURCES"/>
            			                    </html:link> |
-           			                    <html:link page="<%= String.format("%s?method=editDisplayName&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>">
+           			                    <html:link page="<%= String.format("%s?method=editDisplayName&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getExternalId()) %>">
            			                        <bean:message key="link.edit" bundle="SITE_RESOURCES"/>
            			                    </html:link> | 
-           			                    <html:link page="<%= String.format("%s?method=prepareEditItemFilePermissions&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>">
+           			                    <html:link page="<%= String.format("%s?method=prepareEditItemFilePermissions&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getExternalId()) %>">
            			 	                   <bean:message key="link.permissions" bundle="SITE_RESOURCES"/>
            			    	            </html:link>
 									</span>
@@ -482,9 +482,9 @@
 </logic:empty>
 
 <logic:notEmpty name="section" property="associatedFunctionalities">
-	<bean:define id="containerID" name="section" property="idInternal"/>
+	<bean:define id="containerID" name="section" property="externalId"/>
 	<logic:iterate id="functionality" name="section" property="associatedFunctionalities">
-			<bean:define id="contentID" name="functionality" property="idInternal"/>
+			<bean:define id="contentID" name="functionality" property="externalId"/>
 
 			<div id="content-<%= contentID%>" class="mtop15 mbottom0" style="background: #f5f5f5; padding: 0.5em;">
 			<span style="float: right;"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#breadcrumbs"><bean:message key="label.top" bundle="SITE_RESOURCES"/></a></span>
@@ -583,14 +583,14 @@
        	    	                
             					<td class="nowrap">	
         							<span class="pleft1">
-           		                		<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;fileItemId=%s", actionName, context, sectionId, fileItem.getIdInternal()) %>"
+           		                		<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;fileItemId=%s", actionName, context, sectionId, fileItem.getExternalId()) %>"
            		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
            			                        <bean:message key="link.delete" bundle="SITE_RESOURCES"/>
            			                    </html:link> |
-           			                    <html:link page="<%= String.format("%s?method=editDisplayName&amp;%s&amp;sectionID=%s&amp;fileItemId=%s", actionName, context, sectionId, fileItem.getIdInternal()) %>">
+           			                    <html:link page="<%= String.format("%s?method=editDisplayName&amp;%s&amp;sectionID=%s&amp;fileItemId=%s", actionName, context, sectionId, fileItem.getExternalId()) %>">
            			                        <bean:message key="link.edit" bundle="SITE_RESOURCES"/>
            			                    </html:link> | 
-           			                    <html:link page="<%= String.format("%s?method=prepareEditItemFilePermissions&amp;%s&amp;sectionID=%s&amp;fileItemId=%s", actionName, context, sectionId, fileItem.getIdInternal()) %>">
+           			                    <html:link page="<%= String.format("%s?method=prepareEditItemFilePermissions&amp;%s&amp;sectionID=%s&amp;fileItemId=%s", actionName, context, sectionId, fileItem.getExternalId()) %>">
            			 	                   <bean:message key="link.permissions" bundle="SITE_RESOURCES"/>
            			    	            </html:link>
 									</span>

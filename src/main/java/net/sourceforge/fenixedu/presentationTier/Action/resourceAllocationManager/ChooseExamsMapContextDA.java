@@ -140,7 +140,7 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 
         if (infoExecutionDegree != null) {
             request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
-            request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
+            request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getExternalId().toString());
         } else {
             return mapping.findForward("Licenciatura execucao inexistente");
         }

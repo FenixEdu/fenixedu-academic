@@ -10,7 +10,7 @@
 
 <em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.student.thesis.submission"/></h2>
-<bean:define id="thesisId" name="thesis" property="idInternal"/>
+<bean:define id="thesisId" name="thesis" property="externalId"/>
 
 <ul>
     <li>

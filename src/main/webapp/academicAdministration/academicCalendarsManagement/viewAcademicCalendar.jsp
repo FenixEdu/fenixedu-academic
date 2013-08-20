@@ -91,7 +91,7 @@
 			<jsp:include page="entriesCrumbs.jsp"/>
 		</div>		
 					
-		<bean:define id="rootEntryID" name="rootEntry" property="idInternal" />			
+		<bean:define id="rootEntryID" name="rootEntry" property="externalId" />			
 		<bean:define id="beginDate" name="entryBean" property="beginPartialString" />
 		<bean:define id="endDate" name="entryBean" property="endPartialString" />												
 		
@@ -126,16 +126,16 @@
 			</p>		
 			
 			<p>				
-				<html:link page="<%= "/academicCalendarsManagement.do?method=prepareCreateEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="entryID" paramName="entryBean" paramProperty="entry.idInternal">
+				<html:link page="<%= "/academicCalendarsManagement.do?method=prepareCreateEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="entryID" paramName="entryBean" paramProperty="entry.externalId">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.academic.calendars.entry.insert"/>
 				</html:link>,	
-				<html:link page="<%= "/academicCalendarsManagement.do?method=prepareEditEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="entryID" paramName="entryBean" paramProperty="entry.idInternal">
+				<html:link page="<%= "/academicCalendarsManagement.do?method=prepareEditEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="entryID" paramName="entryBean" paramProperty="entry.externalId">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.academic.calendars.entry.edit"/>
 				</html:link>,
 				<bean:define id="deleteConfirm">
 					return confirm('<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.academic.calendars.entry.delete.confirm"/>')
 				</bean:define>		
-				<html:link page="<%= "/academicCalendarsManagement.do?method=deleteEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="entryID" paramName="entryBean" paramProperty="entry.idInternal" onclick="<%= deleteConfirm %>">
+				<html:link page="<%= "/academicCalendarsManagement.do?method=deleteEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="entryID" paramName="entryBean" paramProperty="entry.externalId" onclick="<%= deleteConfirm %>">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.academic.calendars.entry.delete"/>
 				</html:link>
 			</p>

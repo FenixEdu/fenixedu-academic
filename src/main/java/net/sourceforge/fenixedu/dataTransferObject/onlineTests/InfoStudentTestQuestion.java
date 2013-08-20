@@ -123,7 +123,7 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
         boolean result = false;
         if (obj instanceof InfoStudentTestQuestion) {
             InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) obj;
-            result = getIdInternal().equals(infoStudentTestQuestion.getIdInternal());
+            result = getExternalId().equals(infoStudentTestQuestion.getExternalId());
             result =
                     result || (getStudent().equals(infoStudentTestQuestion.getStudent()))
                             && (getDistributedTest().equals(infoStudentTestQuestion.getDistributedTest()))

@@ -20,22 +20,22 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadStudentsEnrolledInWrittenEvaluation {
 
-    protected SiteView run(Integer executionCourseID, Integer writtenEvaluationID) throws FenixServiceException {
+    protected SiteView run(String executionCourseID, String writtenEvaluationID) throws FenixServiceException {
 
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
         final ExecutionCourseSite site = executionCourse.getSite();
         if (site == null) {
             throw new FenixServiceException("error.noSite");
@@ -78,7 +78,7 @@ public class ReadStudentsEnrolledInWrittenEvaluation {
     private static final ReadStudentsEnrolledInWrittenEvaluation serviceInstance = new ReadStudentsEnrolledInWrittenEvaluation();
 
     @Service
-    public static SiteView runReadStudentsEnrolledInWrittenEvaluation(Integer executionCourseID, Integer writtenEvaluationID)
+    public static SiteView runReadStudentsEnrolledInWrittenEvaluation(String executionCourseID, String writtenEvaluationID)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID, writtenEvaluationID);

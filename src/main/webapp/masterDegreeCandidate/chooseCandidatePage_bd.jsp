@@ -16,7 +16,7 @@
 
 <logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">
 	<bean:define id="candidateLink">
-		/chooseCandidate.do?candidateID=<bean:write name="candidate" property="idInternal"/>
+		/chooseCandidate.do?candidateID=<bean:write name="candidate" property="externalId"/>
 	</bean:define>
 	<html:link page='<%= pageContext.findAttribute("candidateLink").toString() %>'>
         <bean:write name="candidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome" /> - 

@@ -31,7 +31,7 @@
 								<td class="listClasses" style="text-align:left"><bean:write name="executionCourse" property="nome"/>
 								</td>
 								<td class="listClasses">
-									<bean:define id="executionCourseId" name="executionCourse" property="idInternal"/> 
+									<bean:define id="executionCourseId" name="executionCourse" property="externalId"/> 
 									
 									&nbsp;<html:link page="<%="/copySiteExecutionCourse.do?method=chooseFeaturesToCopy&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;executionCourseId=" + executionCourseId.toString() %>">
 										<bean:message key="link.copySite.do"/>

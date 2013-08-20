@@ -12,7 +12,7 @@
 	</p>
 </html:messages>
 
-<bean:define id="personId" name="person" property="idInternal" />
+<bean:define id="personId" name="person" property="externalId" />
 <fr:form action='<%= "/payments.do?personId=" + personId %>'>
 
 	<input type="hidden" name="method" value=""/>
@@ -21,7 +21,7 @@
 	
 	<logic:present name="person" property="student">
 			<p>
-				<html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="person" paramProperty="student.idInternal">
+				<html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="person" paramProperty="student.externalId">
 					<bean:message key="label.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</html:link>
 			</p>

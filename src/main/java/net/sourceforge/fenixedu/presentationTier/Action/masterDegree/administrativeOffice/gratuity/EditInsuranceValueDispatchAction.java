@@ -93,7 +93,7 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
         DynaActionForm editInsuranceForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
 
-        Integer executionYearId = (Integer) editInsuranceForm.get("executionYear");
+        String executionYearId = (String) editInsuranceForm.get("executionYear");
 
         InfoInsuranceValue infoInsuranceValue = null;
         try {
@@ -144,7 +144,7 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
         DynaActionForm editInsuranceForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
 
-        Integer executionYearId = (Integer) editInsuranceForm.get("executionYear");
+        String executionYearId = (String) editInsuranceForm.get("executionYear");
         Double insuranceValue = (Double) editInsuranceForm.get("insuranceValue");
         Integer endDateDay = (Integer) editInsuranceForm.get("endDateDay");
         Integer endDateMonth = (Integer) editInsuranceForm.get("endDateMonth");
@@ -179,7 +179,7 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
                 InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
 
                 LabelValueBean executionYear =
-                        new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getIdInternal().toString());
+                        new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getExternalId().toString());
                 return executionYear;
             }
         }, executionYearLabels);

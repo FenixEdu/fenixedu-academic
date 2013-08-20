@@ -49,7 +49,7 @@
 							<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodId" property="executionPeriodId" onchange="this.form.submit()">
 								<html:option value="">Escolher</html:option>		
 								<logic:iterate id="executionPeriod" name="executionPeriodList" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod"> 
-									<bean:define    id="currentPeriodId"   name="executionPeriod" property="idInternal"/>
+									<bean:define    id="currentPeriodId"   name="executionPeriod" property="externalId"/>
 									<html:option value="<%= currentPeriodId.toString() %>">
 										<bean:write name="executionPeriod" property="semester"/>&ordm; Semestre
 										&nbsp;-&nbsp;

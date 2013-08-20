@@ -52,6 +52,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "gep", path = "/reportsByDegreeType", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -80,8 +81,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
             return executionYearReference;
         }
 
-        public Integer getExecutionYearOID() {
-            return getExecutionYear() == null ? null : getExecutionYear().getIdInternal();
+        public String getExecutionYearOID() {
+            return getExecutionYear() == null ? null : getExecutionYear().getExternalId();
         }
 
         public void setExecutionYear(final ExecutionYear executionYear) {
@@ -202,7 +203,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
         final DegreeType degreeType = getDegreeType(request);
         request.setAttribute("degreeType", degreeType);
         final ExecutionYear executionYear = getExecutionYear(request);
-        request.setAttribute("executionYearID", (executionYear == null) ? null : executionYear.getIdInternal());
+        request.setAttribute("executionYearID", (executionYear == null) ? null : executionYear.getExternalId());
         final String fileType = getFileType(request);
         for (QueueJob queueJob : QueueJob.getAllJobsForClassOrSubClass(GepReportFile.class, 5)) {
             GepReportFile gepReportFile = (GepReportFile) queueJob;
@@ -226,7 +227,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private ExecutionYear getExecutionYear(final HttpServletRequest httpServletRequest) {
         final String OIDString = httpServletRequest.getParameter("executionYearID");
-        return StringUtils.isEmpty(OIDString) ? null : rootDomainObject.readExecutionYearByOID(Integer.valueOf(OIDString));
+        return StringUtils.isEmpty(OIDString) ? null : AbstractDomainObject.<ExecutionYear> fromExternalId(OIDString);
     }
 
     private String getFormat(final HttpServletRequest httpServletRequest) {

@@ -54,13 +54,13 @@
 				<fr:property name="classes" value="tstyle1 tdcenter"/>
 					
 				<fr:property name="link(edit)" value="<%="/vehicleManagement.do?method=prepareEditVehicle"%>"/>
-            	<fr:property name="param(edit)" value="idInternal/vehicleID"/>
+            	<fr:property name="param(edit)" value="externalId/vehicleID"/>
 		        <fr:property name="key(edit)" value="link.edit"/>
 	            <fr:property name="bundle(edit)" value="RESOURCE_MANAGER_RESOURCES"/>
 	            <fr:property name="order(edit)" value="0"/>
 	            
 	    		<fr:property name="link(delete)" value="<%="/vehicleManagement.do?method=deleteVehicle"%>"/>
-            	<fr:property name="param(delete)" value="idInternal/vehicleID"/>
+            	<fr:property name="param(delete)" value="externalId/vehicleID"/>
 		        <fr:property name="key(delete)" value="link.delete"/>
 	            <fr:property name="bundle(delete)" value="RESOURCE_MANAGER_RESOURCES"/>
 	            <fr:property name="order(delete)" value="1"/>

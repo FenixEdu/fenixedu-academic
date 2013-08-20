@@ -15,14 +15,14 @@
 
 
 <p>
-	<html:link page="/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans" paramId="studentId" paramName="registration" paramProperty="student.idInternal">
+	<html:link page="/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans" paramId="studentId" paramName="registration" paramProperty="student.externalId">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>
 
 
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -58,7 +58,7 @@
 </fr:view>
 </logic:notPresent>
 
-<bean:define id="studentId" name="registration" property="student.idInternal" />
+<bean:define id="studentId" name="registration" property="student.externalId" />
 <h3 class="mbottom025"><bean:message key="label.registration.manageState" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:edit name="registrationStateBean" schema="student.manageRegistrationState" action="/manageRegistrationState.do?method=createNewState">
 	<fr:layout name="tabular">
@@ -69,7 +69,7 @@
 </fr:edit>
 
 <bean:define id="deleteLink">
-	/manageRegistrationState.do?method=deleteState&amp;registrationId=${registration.idInternal}&amp;registrationStateId=${idInternal}
+	/manageRegistrationState.do?method=deleteState&amp;registrationId=${registration.externalId}&amp;registrationStateId=${externalId}
 </bean:define>	
 
 <bean:define id="deleteConfirm">

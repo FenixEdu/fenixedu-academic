@@ -7,7 +7,7 @@
 
 <html:xhtml/>
 
-<bean:define id="unitId" name="unit" property="idInternal"/>
+<bean:define id="unitId" name="unit" property="externalId"/>
 <bean:define id="listThesesActionPath" value="/department/theses.do" toScope="request"/>
 <bean:define id="listThesesContext" value="<%= "selectedDepartmentUnitID=" + unitId %>" toScope="request"/>
 <bean:define id="listThesesSchema" value="department.thesis.list.filter" toScope="request"/>
@@ -40,12 +40,12 @@
 	    <bean:message key="label.dissertations" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     </html:link>
     &nbsp;&gt;&nbsp;
-    <bean:define id="degreeId" name="thesis" property="degree.idInternal"/>
+    <bean:define id="degreeId" name="thesis" property="degree.externalId"/>
     <html:link page="<%= String.format("/department/theses.do?method=showTheses&amp;selectedDepartmentUnitID=%s&amp;degreeID=%s", unitId, degreeId) %>">
         <fr:view name="thesis" property="degree.sigla"/>
     </html:link>
     &nbsp;&gt;&nbsp;
-    <bean:define id="executionYearId" name="thesis" property="enrolment.executionYear.idInternal"/>
+    <bean:define id="executionYearId" name="thesis" property="enrolment.executionYear.externalId"/>
     <html:link page="<%= String.format("/department/theses.do?method=showTheses&amp;selectedDepartmentUnitID=%s&amp;degreeID=%s&amp;executionYearID=%s", unitId, degreeId, executionYearId) %>">
 		<fr:view name="thesis" property="enrolment.executionYear.year"/>
     </html:link>

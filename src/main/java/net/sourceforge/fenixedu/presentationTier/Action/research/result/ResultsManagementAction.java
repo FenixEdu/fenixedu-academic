@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.DeletePrize;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.research.Prize;
@@ -23,6 +22,7 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ResultsManagementAction extends FenixDispatchAction {
@@ -32,8 +32,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
             throws Exception {
         String unitId = request.getParameter("unitId");
         if (unitId != null) {
-            ResearchUnit unit =
-                    (ResearchUnit) RootDomainObject.readDomainObjectByOID(ResearchUnit.class, Integer.valueOf(unitId));
+            ResearchUnit unit = (ResearchUnit) AbstractDomainObject.fromExternalId(unitId);
             request.setAttribute("unit", unit);
         }
         return super.execute(mapping, form, request, response);
@@ -46,7 +45,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
             return backToResultList(mapping, form, request, response);
         }
 
-        request.setAttribute("resultId", result.getIdInternal());
+        request.setAttribute("resultId", result.getExternalId());
         if (result instanceof ResearchResultPatent) {
             return mapping.findForward("editPatent");
         } else if (result instanceof ResearchResultPublication) {
@@ -79,10 +78,10 @@ public class ResultsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deletePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
+        Prize prize = (Prize) AbstractDomainObject.fromExternalId(prizeID);
         if (prize.isDeletableByUser((getLoggedPerson(request)))) {
             try {
                 DeletePrize.runDeletePrize(prize);
@@ -94,10 +93,10 @@ public class ResultsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward editPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
+        Prize prize = (Prize) AbstractDomainObject.fromExternalId(prizeID);
         if (prize != null && prize.isEditableByUser(getLoggedPerson(request))) {
             request.setAttribute("prize", prize);
         }
@@ -106,7 +105,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
     }
 
     protected ResearchResult getResultByIdFromRequest(HttpServletRequest request) {
-        final Integer resultId = Integer.valueOf(getFromRequest(request, "resultId").toString());
+        final String resultId = getFromRequest(request, "resultId").toString();
 
         if (resultId != null) {
             try {
@@ -133,7 +132,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
                     result = (ResearchResult) object;
                 }
                 if (object instanceof ResultPublicationBean) {
-                    result = ResearchResult.readByOid(((ResultPublicationBean) object).getIdInternal());
+                    result = ResearchResult.readByOid(((ResultPublicationBean) object).getExternalId());
                 }
 
             } catch (Exception e) {

@@ -44,7 +44,7 @@ public class ViewExternalPersonDispatchAction extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
 
-        Integer externalPersonId = new Integer(this.getFromRequest("id", request));
+        String externalPersonId = this.getFromRequest("id", request);
 
         InfoExternalPerson infoExternalPerson = null;
 

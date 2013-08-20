@@ -5,12 +5,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -20,9 +19,9 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadClassByOID {
 
     @Service
-    public static InfoClass run(Integer oid) throws FenixServiceException {
+    public static InfoClass run(String oid) throws FenixServiceException {
         InfoClass result = null;
-        SchoolClass turma = RootDomainObject.getInstance().readSchoolClassByOID(oid);
+        SchoolClass turma = AbstractDomainObject.fromExternalId(oid);
         if (turma != null) {
             result = InfoClass.newInfoFromDomain(turma);
         }

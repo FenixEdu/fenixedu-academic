@@ -68,7 +68,7 @@
 						</logic:equal>
 						<bean:size id="numberOfMembers" name="metadata" property="visibleQuestions"/>
 						<td class="listClasses"><bean:write name="numberOfMembers" /></td>
-						<bean:define id="metadataCode" name="metadata" property="idInternal" />
+						<bean:define id="metadataCode" name="metadata" property="externalId" />
 						<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.metadataCode" property="metadataCode" value="<%= metadataCode.toString() %>" /></td>
 					</tr>
 				</logic:iterate>

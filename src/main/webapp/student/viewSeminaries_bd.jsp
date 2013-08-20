@@ -30,7 +30,7 @@
 			<td class="listClasses">
 				<html:link page="/candidacyOptions.do" 
 						   paramName="seminary" 
-						   paramProperty="idInternal" 
+						   paramProperty="externalId" 
 						   paramId="objectCode">
 								<bean:message key="label.seminaryEnroll" />
 				</html:link>
@@ -58,7 +58,7 @@
 				<td class="listClasses">
 					<html:link page="/candidacyDetails.do" 
 							   paramName="candidacy" 
-							   paramProperty="idInternal" 
+							   paramProperty="externalId" 
 							   paramId="objectCode">
 									<bean:message key="label.seminaryCandidacyDetails" />
 					</html:link>
@@ -66,7 +66,7 @@
 				<td class="listClasses">
 				<html:link page="/cancelCandidacy.do" 
 							   paramName="candidacy" 
-							   paramProperty="idInternal" 
+							   paramProperty="externalId" 
 							   paramId="objectCode">
 									<bean:message key="label.cancelCandidacy" />
 				</html:link>

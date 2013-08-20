@@ -38,7 +38,7 @@
 				</logic:notEqual>
 				<bean:define id="moreThanOne" name="allCurricularCourseScopes" type="java.util.List"/>
 				<logic:iterate id="scopeEntry" name="curricularCourseScopesHashMap" type="Map.Entry">
-					<logic:equal name="curricularCourseScopeElem" property="idInternal" value="<%= scopeEntry.getKey().toString() %>">
+					<logic:equal name="curricularCourseScopeElem" property="externalId" value="<%= scopeEntry.getKey().toString() %>">
 						<bean:size id="scopesSize" name="scopeEntry" property="value"/>
 						<bean:define id="equalScopesSize" value="<%= scopesSize.toString()%>"/>				
 						<bean:define id="moreThanOne" name="scopeEntry" property="value" type="java.util.List"/>				

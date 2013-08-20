@@ -24,7 +24,7 @@
 	</span>
 </p>
 <logic:present name="shift">
-	<bean:define id="shiftID" name="shift" property="idInternal"/>
+	<bean:define id="shiftID" name="shift" property="externalId"/>
 	<p>
 		<b><bean:message key="label.shift"/>:</b> <fr:view name="shift" property="nome"/>
 	</p>
@@ -39,7 +39,7 @@
 	<logic:notEmpty name="registrations">
 		<bean:define id="executionCourseID" name="executionCourseID"/>
 		<p class="mbottom0">
-			<html:link page="<%= "/manageExecutionCourse.do?method=removeAttendsFromShift&executionCourseID=" + executionCourseID + "&removeAll=true" %>" paramId="shiftID" paramName="shift" paramProperty="idInternal">
+			<html:link page="<%= "/manageExecutionCourse.do?method=removeAttendsFromShift&executionCourseID=" + executionCourseID + "&removeAll=true" %>" paramId="shiftID" paramName="shift" paramProperty="externalId">
 				<bean:message key="label.shifts.remove"/>
 			</html:link>
 		</p>
@@ -72,14 +72,14 @@
 				</th>
 			</tr>
 			<logic:iterate id="registration" name="registrations">
-				<bean:define id="registrationID" name="registration" property="idInternal"/>
+				<bean:define id="registrationID" name="registration" property="externalId"/>
 				<tr>
 					<td>
 						<bean:write name="registration" property="person.student.number"/>
 					</td>
 					<logic:notPresent name="showPhotos">
 						<td class="acenter">
-							<bean:define id="personID" name="registration" property="person.idInternal"/>
+							<bean:define id="personID" name="registration" property="person.externalId"/>
 							<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 						</td>
 					</logic:notPresent>	

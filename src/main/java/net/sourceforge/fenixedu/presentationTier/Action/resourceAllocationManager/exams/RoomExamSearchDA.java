@@ -83,7 +83,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
         String rooms[] = (String[]) roomExamForm.get("roomsId");
         List infoRooms = new ArrayList();
         for (String roomId : rooms) {
-            InfoRoom infoRoom = ReadRoomByOID.run(new Integer(roomId));
+            InfoRoom infoRoom = ReadRoomByOID.run(roomId);
             infoRooms.add(infoRoom);
         }
 

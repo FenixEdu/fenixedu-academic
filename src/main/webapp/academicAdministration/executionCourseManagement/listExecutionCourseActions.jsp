@@ -9,7 +9,7 @@
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 
-<bean:define id="executionPeriodId" name="sessionBean" property="executionPeriod.idInternal" />
+<bean:define id="executionPeriodId" name="sessionBean" property="executionPeriod.externalId" />
 <bean:define id="executionPeriodQName" name="sessionBean" property="executionPeriod.qualifiedName" />
 
 <logic:messagesPresent message="true" property="success">
@@ -48,10 +48,10 @@
 <bean:define id="curricularYearId" name="sessionBean" /> <%-- bean redefined ahead --%>
 <bean:define id="notLinked" name="sessionBean" property="chooseNotLinked"/>
 <logic:equal name="sessionBean" property="chooseNotLinked" value="false">
-	<bean:define id="executionDegreeId" name="sessionBean" property="executionDegree.idInternal" />
+	<bean:define id="executionDegreeId" name="sessionBean" property="executionDegree.externalId" />
 	<bean:define id="executionDegreePName" name="sessionBean" property="executionDegree.presentationName" />
 	<bean:define id="curricularYear" name="sessionBean" property="curricularYear.year" />
-	<bean:define id="curricularYearId" name="sessionBean" property="curricularYear.idInternal" />
+	<bean:define id="curricularYearId" name="sessionBean" property="curricularYear.externalId" />
 	<bean:define id="yearTag">
 		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= curricularYear.toString() + ".ordinal.short" %>"/>
 		<bean:message bundle="ENUMERATION_RESOURCES" key="YEAR" />
@@ -104,12 +104,12 @@
 	<fr:layout name="tabular">
 		<fr:property name="linkGroupSeparator" value="&nbsp&nbsp|&nbsp&nbsp" />
 
-		<fr:property name="linkFormat(edit)" value="<%="/editExecutionCourse.do?method=editExecutionCourse&executionCourseId=${idInternal}" + linkGetRequestBigMessage.toString() %>" />
+		<fr:property name="linkFormat(edit)" value="<%="/editExecutionCourse.do?method=editExecutionCourse&executionCourseId=${externalId}" + linkGetRequestBigMessage.toString() %>" />
 		<fr:property name="order(edit)" value="1" />
 		<fr:property name="key(edit)" value="label.manager.executionCourseManagement.edit" />
 		<fr:property name="bundle(edit)" value="MANAGER_RESOURCES" />
 
-		<fr:property name="linkFormat(swapAnnoun)" value="<%= "/announcementSwap.do?method=prepareSwap&executionCourseId=${idInternal}" + linkGetRequestLilMessage.toString() %>" />
+		<fr:property name="linkFormat(swapAnnoun)" value="<%= "/announcementSwap.do?method=prepareSwap&executionCourseId=${externalId}" + linkGetRequestLilMessage.toString() %>" />
 		<fr:property name="order(swapAnnoun)" value="2" />
 		<fr:property name="visibleIf(swapAnnoun)" value="hasAnnouncements" />
 		<fr:property name="key(swapAnnoun)" value="label.manager.executionCourse.announcementMove" />
@@ -117,7 +117,7 @@
 
 		<fr:property name="linkFormat(manageCurricularSeparation)"
 					 value="<%="/seperateExecutionCourse.do?method=manageCurricularSeparation"
-					 		+ "&amp;executionCourseId=${idInternal}"
+					 		+ "&amp;executionCourseId=${externalId}"
 							+ parametersForManageSeparation.toString() %>"/> 
 		<fr:property name="order(manageCurricularSeparation)" value="3" />
 		<fr:property name="key(manageCurricularSeparation)" value="link.executionCourseManagement.curricular.manageCurricularSeparation" />
@@ -128,7 +128,7 @@
 			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" program="<%= (AcademicProgram) degree %>">
 		<fr:property name="linkFormat(delete)"
 					 value="<%="/editExecutionCourse.do?method=deleteExecutionCourse"
-					 		+ "&amp;executionCourseId=${idInternal}"
+					 		+ "&amp;executionCourseId=${externalId}"
 					 		+ linkGetRequestBigMessage.toString() %>" />
 		<fr:property name="order(delete)" value="4" />
 		<fr:property name="key(delete)" value="label.manager.executionCourseManagement.delete" />
@@ -143,7 +143,7 @@
 			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" program="<%= null %>">
 		<fr:property name="linkFormat(delete)"
 					 value="<%="/editExecutionCourse.do?method=deleteExecutionCourse"
-					 		+ "&amp;executionCourseId=${idInternal}"
+					 		+ "&amp;executionCourseId=${externalId}"
 					 		+ linkGetRequestBigMessage.toString() %>" />
 		<fr:property name="order(delete)" value="4" />
 		<fr:property name="key(delete)" value="label.manager.executionCourseManagement.delete" />
@@ -155,7 +155,7 @@
 			</academic:allowed>
 		</logic:notPresent>
 
-		<fr:property name="linkFormat(sentEmails)" value="/emails.do?method=viewSentEmails&senderId=${sender.idInternal}" />
+		<fr:property name="linkFormat(sentEmails)" value="/emails.do?method=viewSentEmails&senderId=${sender.externalId}" />
 		<fr:property name="order(sentEmails)" value="5" />
 		<fr:property name="key(sentEmails)" value="link.manager.email.sender" />
 		<fr:property name="bundle(sentEmails)" value="MANAGER_RESOURCES" />

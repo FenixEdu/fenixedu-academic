@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
@@ -279,8 +278,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     }
 
     private ExecutionCourse readAndSaveExecutionCourse(HttpServletRequest request) {
-        ExecutionCourse executionCourse =
-                rootDomainObject.readExecutionCourseByOID(getIntegerFromRequest(request, "executionCourseID"));
+        ExecutionCourse executionCourse = getDomainObject(request, "executionCourseID");
         if (executionCourse == null) {
             return (ExecutionCourse) request.getAttribute("executionCourse");
         }
@@ -295,8 +293,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final StudentInquiriesCourseResult courseResult =
-                RootDomainObject.getInstance().readStudentInquiriesCourseResultByOID(
-                        Integer.valueOf(getFromRequest(request, "resultId").toString()));
+                AbstractDomainObject.fromExternalId(getFromRequest(request, "resultId").toString());
         final Person loggedPerson = AccessControl.getPerson();
         if (!loggedPerson.isPedagogicalCouncilMember() && loggedPerson.getPersonRole(RoleType.GEP) == null
                 && loggedPerson.getPersonRole(RoleType.DEPARTMENT_MEMBER) == null
@@ -319,8 +316,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         final StudentInquiriesTeachingResult teachingResult =
-                RootDomainObject.getInstance().readStudentInquiriesTeachingResultByOID(
-                        Integer.valueOf(getFromRequest(request, "resultId").toString()));
+                AbstractDomainObject.fromExternalId(getFromRequest(request, "resultId").toString());
         final Person loggedPerson = AccessControl.getPerson();
         if (!loggedPerson.isPedagogicalCouncilMember() && loggedPerson.getPersonRole(RoleType.GEP) == null
                 && loggedPerson.getPersonRole(RoleType.DEPARTMENT_MEMBER) == null

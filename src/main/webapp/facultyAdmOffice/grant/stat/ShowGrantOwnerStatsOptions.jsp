@@ -75,7 +75,7 @@
 		</th>
 		<td>
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.grantType" property="grantType">
-				<html:options collection="grantTypeList" property="idInternal" labelProperty="sigla"/>
+				<html:options collection="grantTypeList" property="externalId" labelProperty="sigla"/>
 			</html:select>
 		</td>
 	</tr>

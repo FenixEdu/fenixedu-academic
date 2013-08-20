@@ -20,7 +20,7 @@
 	</ul>
 </logic:messagesPresent>
 
-<bean:define id="degreeCurricularPlanId" name="createDFAGratuityPostingRuleBean" property="degreeCurricularPlan.idInternal" />
+<bean:define id="degreeCurricularPlanId" name="createDFAGratuityPostingRuleBean" property="degreeCurricularPlan.externalId" />
 
 <fr:form action="<%="/postingRules.do?degreeCurricularPlanId=" + degreeCurricularPlanId.toString() %>">
 	<input type="hidden" name="method" value="" />

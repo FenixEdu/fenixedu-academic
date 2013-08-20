@@ -30,6 +30,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -158,14 +159,12 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
 
     protected TeacherPersonalExpectation getTeacherPersonalExpectationFromParameter(final HttpServletRequest request) {
         final String teacherPersonalExpectationIDString = request.getParameter("teacherPersonalExpectationID");
-        final Integer teacherPersonalExpectationID = Integer.valueOf(teacherPersonalExpectationIDString);
-        return rootDomainObject.readTeacherPersonalExpectationByOID(teacherPersonalExpectationID);
+        return AbstractDomainObject.fromExternalId(teacherPersonalExpectationIDString);
     }
 
     protected ExecutionYear getExecutionYearFromParameter(final HttpServletRequest request) {
         final String executionYearIDString = request.getParameter("executionYearId");
-        final Integer executionYearID = Integer.valueOf(executionYearIDString);
-        return rootDomainObject.readExecutionYearByOID(executionYearID);
+        return AbstractDomainObject.fromExternalId(executionYearIDString);
     }
 
     private Department getDepartment(HttpServletRequest request) {

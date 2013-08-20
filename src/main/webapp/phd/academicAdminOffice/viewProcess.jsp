@@ -55,7 +55,7 @@
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
 <div style="float: right;">
-	<bean:define id="personID" name="process" property="person.idInternal"/>
+	<bean:define id="personID" name="process" property="person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
  
@@ -154,7 +154,7 @@
 			</li>
 			<academic:allowed operation="MANAGE_STUDENT_PAYMENTS" program="<%= program %>">
 			<li>
-				<html:link action="/payments.do?method=showOperations" target="_blank" paramId="personId" paramName="process" paramProperty="person.idInternal">
+				<html:link action="/payments.do?method=showOperations" target="_blank" paramId="personId" paramName="process" paramProperty="person.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.payments"/>
 				</html:link>
 			</li>
@@ -240,7 +240,7 @@
 
 <logic:notEmpty name="process" property="student">
 	<br/>
-	<bean:define id="studentId" name="process" property="student.idInternal" />
+	<bean:define id="studentId" name="process" property="student.externalId" />
 	  
 	<strong><bean:message  key="label.phd.student.information" bundle="PHD_RESOURCES"/></strong>
 	<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view.student.information" name="process">

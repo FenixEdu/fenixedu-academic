@@ -100,7 +100,7 @@ public class OptionalCurricularCoursesLocationManagementDA extends FenixDispatch
     }
 
     protected StudentCurricularPlan getStudentCurricularPlan(HttpServletRequest request) {
-        return rootDomainObject.readStudentCurricularPlanByOID(getRequestParameterAsInteger(request, "scpID"));
+        return getDomainObject(request, "scpID");
     }
 
     private OptionalCurricularCoursesLocationBean getBean() {
@@ -111,7 +111,7 @@ public class OptionalCurricularCoursesLocationManagementDA extends FenixDispatch
         final List<Enrolment> result = new ArrayList<Enrolment>();
         final List<Enrolment> enrolments = studentCurricularPlan.getEnrolments();
         for (final String stringId : enrolmentIds) {
-            final Enrolment enrolment = getEnrolment(enrolments, Integer.valueOf(stringId));
+            final Enrolment enrolment = getEnrolment(enrolments, stringId);
             if (enrolment != null) {
                 result.add(enrolment);
             }
@@ -119,9 +119,9 @@ public class OptionalCurricularCoursesLocationManagementDA extends FenixDispatch
         return result;
     }
 
-    private Enrolment getEnrolment(final List<Enrolment> enrolments, final Integer enrolmentId) {
+    private Enrolment getEnrolment(final List<Enrolment> enrolments, final String enrolmentId) {
         for (final Enrolment enrolment : enrolments) {
-            if (enrolment.getIdInternal().equals(enrolmentId)) {
+            if (enrolment.getExternalId().equals(enrolmentId)) {
                 return enrolment;
             }
         }

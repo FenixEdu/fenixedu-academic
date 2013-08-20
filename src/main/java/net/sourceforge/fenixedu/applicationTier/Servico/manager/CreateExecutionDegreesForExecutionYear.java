@@ -11,20 +11,20 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateExecutionDegreesForExecutionYear {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List<DegreeCurricularPlan> run(final Integer[] degreeCurricularPlansIDs,
-            final Integer[] bolonhaDegreeCurricularPlansIDs, final Integer executionYearID, final String campusName,
+    public static List<DegreeCurricularPlan> run(final String[] degreeCurricularPlansIDs,
+            final String[] bolonhaDegreeCurricularPlansIDs, final String executionYearID, final String campusName,
             final Boolean publishedExamMap, final Calendar lessonSeason1BeginDate, final Calendar lessonSeason1EndDate,
             final Calendar lessonSeason2BeginDate, final Calendar lessonSeason2EndDate,
             final Calendar lessonSeason2BeginDatePart2, final Calendar lessonSeason2EndDatePart2,
@@ -33,7 +33,7 @@ public class CreateExecutionDegreesForExecutionYear {
             final Calendar examsSpecialSeasonEndDate, final Calendar gradeSubmissionNormalSeason1EndDate,
             final Calendar gradeSubmissionNormalSeason2EndDate, final Calendar gradeSubmissionSpecialSeasonEndDate) {
 
-        final ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
         final Campus campus = readCampusByName(campusName);
 
         final OccupationPeriod lessonSeason1 = getOccupationPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
@@ -50,7 +50,7 @@ public class CreateExecutionDegreesForExecutionYear {
         final OccupationPeriod gradeSubmissionSpecialSeason =
                 getOccupationPeriod(examsSpecialSeasonBeginDate, gradeSubmissionSpecialSeasonEndDate);
 
-        final Set<Integer> allDegreeCurricularPlanIDs = new HashSet<Integer>();
+        final Set<String> allDegreeCurricularPlanIDs = new HashSet<String>();
         if (degreeCurricularPlansIDs != null && degreeCurricularPlansIDs.length > 0) {
             allDegreeCurricularPlanIDs.addAll(Arrays.asList(degreeCurricularPlansIDs));
         }
@@ -59,9 +59,8 @@ public class CreateExecutionDegreesForExecutionYear {
         }
 
         final List<DegreeCurricularPlan> created = new ArrayList<DegreeCurricularPlan>();
-        for (final Integer degreeCurricularPlanID : allDegreeCurricularPlanIDs) {
-            final DegreeCurricularPlan degreeCurricularPlan =
-                    RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        for (final String degreeCurricularPlanID : allDegreeCurricularPlanIDs) {
+            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
             if (degreeCurricularPlan == null) {
                 continue;
             }

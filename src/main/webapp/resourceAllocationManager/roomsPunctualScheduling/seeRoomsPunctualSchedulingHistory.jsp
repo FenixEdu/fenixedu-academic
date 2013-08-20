@@ -94,7 +94,7 @@
 				</tr>				
 				<logic:iterate id="event" name="events">					
 					<tr>
-						<bean:define id="genericEventURL">/roomsPunctualScheduling.do?method=prepareView&amp;genericEventID=<bean:write name="event" property="idInternal"/></bean:define>																	
+						<bean:define id="genericEventURL">/roomsPunctualScheduling.do?method=prepareView&amp;genericEventID=<bean:write name="event" property="externalId"/></bean:define>																	
 						<bean:define id="tdTile" value=""/>					
 						<logic:notEmpty name="event" property="description">
 							<logic:notEmpty name="event" property="description.content">

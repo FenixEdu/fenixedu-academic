@@ -17,7 +17,7 @@
 <logic:present name="announcementBoard">
 <bean:define id="contextPrefix" name="contextPrefix" />
 <bean:define id="extraParameters" name="extraParameters" />
-<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
+<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>
 
 <html:form action="/announcements/manageUnitAnnouncementBoard" >
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editAnnouncementBoard"/>
@@ -93,7 +93,7 @@
 		<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
 		<bean:define id="extraParameters" name="extraParameters" />
 		<bean:define id="announcementBoard" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
-		<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>		
+		<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>		
 	
 		<ul>
 				

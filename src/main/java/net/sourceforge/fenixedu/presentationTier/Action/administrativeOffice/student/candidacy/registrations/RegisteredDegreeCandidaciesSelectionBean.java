@@ -53,7 +53,7 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
             if (result == 0) {
                 result = o1.getPerson().getDocumentIdNumber().compareTo(o2.getPerson().getDocumentIdNumber());
             }
-            return (result != 0) ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
+            return (result != 0) ? result : o1.getExternalId().compareTo(o2.getExternalId());
         }
     };
 

@@ -36,7 +36,7 @@
 			   	<bean:define id="curricularCourse" name="curricularCourseElem" property="name"/>
 					<tr>
 						<td>
-							<html:link page="<%="/marksManagement.do?method=getStudentMarksList&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + curricularCourseElem.getIdInternal() + "&amp;objectCode=" + curricularCourseElem.getInfoDegreeCurricularPlan().getIdInternal()%>">
+							<html:link page="<%="/marksManagement.do?method=getStudentMarksList&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + curricularCourseElem.getExternalId() + "&amp;objectCode=" + curricularCourseElem.getInfoDegreeCurricularPlan().getExternalId()%>">
 								<bean:write name="curricularCourseElem" property="name"/>
 							</html:link>
 						</td>

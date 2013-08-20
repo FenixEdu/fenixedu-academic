@@ -799,7 +799,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
 
             return DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd", evaluationComparisonDate)
-                    + evaluation.getIdInternal();
+                    + evaluation.getExternalId();
         }
     };
 

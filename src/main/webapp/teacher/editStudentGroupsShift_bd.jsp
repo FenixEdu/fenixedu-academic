@@ -182,7 +182,7 @@
 		<tr>	
 			<td class="acenter">
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentGroupsCodes" property="studentGroupsCodes">
-					<bean:write name="infoStudentGroup" property="idInternal" />
+					<bean:write name="infoStudentGroup" property="externalId" />
 				</html:multibox>
 			</td>	
 			

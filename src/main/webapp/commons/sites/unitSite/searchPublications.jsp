@@ -14,7 +14,7 @@
 
 <bean:define id="showMethod" value="&method=showPublications" toScope="request" />
 <bean:define id="searchMethod" value="&method=prepareSearchPublication" toScope="request" />
-<bean:define id="siteID" name="<%= FilterFunctionalityContext.CONTEXT_KEY%>" property="selectedContainer.idInternal"/>
+<bean:define id="siteID" name="<%= FilterFunctionalityContext.CONTEXT_KEY%>" property="selectedContainer.externalId"/>
 <bean:define id="showArguments" value="<%= "siteID=" + siteID %>" toScope="request" />
 <bean:define id="searchArguments" value="<%=  "siteID=" + siteID %>" toScope="request" />
 
@@ -126,7 +126,7 @@
 <ul>
 <logic:iterate id="result" name="bean" property="results" type="net.sourceforge.fenixedu.domain.research.result.ResearchResult">
 	<logic:present name="result">
-	<bean:define id="resultId" name="result" property="idInternal"/>
+	<bean:define id="resultId" name="result" property="externalId"/>
 	<bean:define id="schema" name="result" property="schema" type="java.lang.String"/>
 	
 	<li class="mtop1">

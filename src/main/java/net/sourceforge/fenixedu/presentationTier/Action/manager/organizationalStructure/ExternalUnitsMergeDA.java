@@ -22,6 +22,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "manager", path = "/unitsMerge", attribute = "unitsMergeForm", formBean = "unitsMergeForm", scope = "request",
         parameter = "method")
@@ -71,7 +72,7 @@ public class ExternalUnitsMergeDA extends FenixDispatchAction {
     }
 
     public ActionForward mergeUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Unit fromUnit = null, destinationUnit = null;
         IViewState viewState = RenderUtils.getViewState("noOfficialMerge");
@@ -81,10 +82,8 @@ public class ExternalUnitsMergeDA extends FenixDispatchAction {
             destinationUnit = getDestinationUnitFromParameter(request);
         } else {
             DynaActionForm dynaActionForm = (DynaActionForm) form;
-            Integer fromUnitID = (Integer) dynaActionForm.get("fromUnitID");
-            Integer destinationUnitID = (Integer) dynaActionForm.get("destinationUnitID");
-            fromUnit = (Unit) rootDomainObject.readPartyByOID(fromUnitID);
-            destinationUnit = (Unit) rootDomainObject.readPartyByOID(destinationUnitID);
+            fromUnit = getDomainObject(dynaActionForm, "fromUnitID");
+            destinationUnit = getDomainObject(dynaActionForm, "destinationUnitID");
         }
 
         try {
@@ -120,14 +119,12 @@ public class ExternalUnitsMergeDA extends FenixDispatchAction {
 
     private Unit getFromUnitFromParameter(final HttpServletRequest request) {
         final String unitIDString = request.getParameter("fromUnitID");
-        final Integer uniID = Integer.valueOf(unitIDString);
-        return (Unit) rootDomainObject.readPartyByOID(uniID);
+        return (Unit) AbstractDomainObject.fromExternalId(unitIDString);
     }
 
     private Unit getDestinationUnitFromParameter(final HttpServletRequest request) {
         final String unitIDString = request.getParameter("unitID");
-        final Integer uniID = Integer.valueOf(unitIDString);
-        return (Unit) rootDomainObject.readPartyByOID(uniID);
+        return (Unit) AbstractDomainObject.fromExternalId(unitIDString);
     }
 
     private void saveMessages(HttpServletRequest request, DomainException e) {

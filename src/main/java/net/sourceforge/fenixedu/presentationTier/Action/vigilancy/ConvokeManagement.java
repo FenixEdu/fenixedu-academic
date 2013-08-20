@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.Convoke
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.CreateConvokes;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -37,6 +36,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "examCoordination", path = "/vigilancy/convokeManagement",
         input = "/vigilancy/convokeManagement?method=prepareEditConvoke", scope = "request", parameter = "method")
@@ -53,9 +53,7 @@ public class ConvokeManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         RenderUtils.invalidateViewState();
         String writtenEvaluationId = request.getParameter("writtenEvaluationId");
-        WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
-                        Integer.valueOf(writtenEvaluationId));
+        WrittenEvaluation writtenEvaluation = AbstractDomainObject.fromExternalId(writtenEvaluationId);
 
         request.setAttribute("permission", true);
         request.setAttribute("writtenEvaluation", writtenEvaluation);
@@ -95,10 +93,9 @@ public class ConvokeManagement extends FenixDispatchAction {
     private void editAttend(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         String id = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(id);
         String bool = request.getParameter("bool");
         Boolean value = Boolean.valueOf(bool);
-        Vigilancy convoke = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, idInternal);
+        Vigilancy convoke = AbstractDomainObject.fromExternalId(id);
 
         try {
 
@@ -119,11 +116,10 @@ public class ConvokeManagement extends FenixDispatchAction {
     public ActionForward changeConvokeStatusInReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String id = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(id);
         String participationType = request.getParameter("participationType");
         AttendingStatus status = AttendingStatus.valueOf(participationType);
 
-        Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, idInternal);
+        Vigilancy vigilancy = AbstractDomainObject.fromExternalId(id);
         try {
 
             ChangeConvokeStatus.run(vigilancy, status);
@@ -136,11 +132,10 @@ public class ConvokeManagement extends FenixDispatchAction {
     private void editActive(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         String id = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(id);
         String bool = request.getParameter("bool");
         Boolean value = Boolean.valueOf(bool);
         Person person = getLoggedPerson(request);
-        Vigilancy convoke = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, idInternal);
+        Vigilancy convoke = AbstractDomainObject.fromExternalId(id);
 
         try {
 
@@ -296,9 +291,7 @@ public class ConvokeManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String writtenEvalatuionId = request.getParameter("writtenEvaluationId");
-        WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
-                        Integer.valueOf(writtenEvalatuionId));
+        WrittenEvaluation writtenEvaluation = AbstractDomainObject.fromExternalId(writtenEvalatuionId);
 
         Person person = getLoggedPerson(request);
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
@@ -370,8 +363,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         return mapping.findForward("prepareGenerateConvokes");
     }
 
-    private ExamCoordinator getCoordinatorForCurrentYear(HttpServletRequest request) throws 
-            FenixServiceException {
+    private ExamCoordinator getCoordinatorForCurrentYear(HttpServletRequest request) throws FenixServiceException {
         ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
         Person person = getLoggedPerson(request);
         ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(currentYear);
@@ -386,7 +378,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         return mapping.findForward(forwardTo);
     }
 
-    private void recoverBeanFromRequest(HttpServletRequest request) throws  FenixServiceException {
+    private void recoverBeanFromRequest(HttpServletRequest request) throws FenixServiceException {
         ConvokeBean bean = new ConvokeBean();
         String vigilantGroup = request.getParameter("gid");
         String incompatiblities = request.getParameter("showIncompatibilities");
@@ -410,11 +402,10 @@ public class ConvokeManagement extends FenixDispatchAction {
         bean.setVigilantGroups(coordinator.getVigilantGroups());
         String executionYear = request.getParameter("executionYear");
         ExecutionYear executionYearObj =
-                executionYear != null ? (ExecutionYear) RootDomainObject.readDomainObjectByOID(ExecutionYear.class,
-                        Integer.valueOf(executionYear)) : null;
+                executionYear != null ? (ExecutionYear) AbstractDomainObject.fromExternalId(executionYear) : null;
         VigilantGroup group = null;
         if (vigilantGroup != null) {
-            group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(vigilantGroup));
+            group = (VigilantGroup) AbstractDomainObject.fromExternalId(vigilantGroup);
             bean.setSelectedVigilantGroup(group);
         }
         bean.setExecutionYear(executionYearObj);
@@ -423,7 +414,7 @@ public class ConvokeManagement extends FenixDispatchAction {
     }
 
     private void putInformationOnRequest(HttpServletRequest request, VigilantGroup group, boolean showVigilants,
-            ExecutionYear executionYear) throws  FenixServiceException {
+            ExecutionYear executionYear) throws FenixServiceException {
 
         if (showVigilants) {
             request.setAttribute("group", group);

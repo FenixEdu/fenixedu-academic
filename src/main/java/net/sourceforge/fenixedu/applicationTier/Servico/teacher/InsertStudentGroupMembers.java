@@ -15,16 +15,16 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertStudentGroupMembers {
 
-    protected Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID,
+    protected Boolean run(String executionCourseID, String studentGroupID, Integer groupPropertiesID,
             List<String> studentUsernames) throws FenixServiceException {
 
-        final StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupID);
+        final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupID);
         if (studentGroup == null) {
             throw new ExistingServiceException();
         }
@@ -71,7 +71,7 @@ public class InsertStudentGroupMembers {
     private static final InsertStudentGroupMembers serviceInstance = new InsertStudentGroupMembers();
 
     @Service
-    public static Boolean runInsertStudentGroupMembers(Integer executionCourseID, Integer studentGroupID,
+    public static Boolean runInsertStudentGroupMembers(String executionCourseID, String studentGroupID,
             Integer groupPropertiesID, List<String> studentUsernames) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID, studentGroupID, groupPropertiesID, studentUsernames);

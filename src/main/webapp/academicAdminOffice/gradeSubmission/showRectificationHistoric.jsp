@@ -55,7 +55,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mss" name="markSheetManagementForm" property="mss" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" name="markSheetManagementForm" property="mst" />
 		
-		<bean:define id="markSheetID" name="enrolmentEvaluation" property="markSheet.idInternal" />
+		<bean:define id="markSheetID" name="enrolmentEvaluation" property="markSheet.externalId" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.msID" property="msID" value="<%= markSheetID.toString() %>"/>
 		<br/>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.back"/></html:submit>

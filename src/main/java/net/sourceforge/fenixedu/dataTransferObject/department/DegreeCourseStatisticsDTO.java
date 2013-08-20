@@ -7,10 +7,10 @@ public class DegreeCourseStatisticsDTO extends CourseStatisticsDTO {
         super();
     }
 
-    public DegreeCourseStatisticsDTO(int idInternal, String name, int firstEnrolledCount, int firstApprovedCount,
+    public DegreeCourseStatisticsDTO(String externalId, String name, int firstEnrolledCount, int firstApprovedCount,
             IGrade firstApprovedAverage, int restEnrolledCount, int restApprovedCount, IGrade restApprovedAverage,
             int totalEnrolledCount, int totalApprovedCount, IGrade totalApprovedAverage) {
-        super(idInternal, name, firstEnrolledCount, firstApprovedCount, firstApprovedAverage, restEnrolledCount,
+        super(externalId, name, firstEnrolledCount, firstApprovedCount, firstApprovedAverage, restEnrolledCount,
                 restApprovedCount, restApprovedAverage, totalEnrolledCount, totalApprovedCount, totalApprovedAverage);
     }
 }

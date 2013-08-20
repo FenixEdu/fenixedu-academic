@@ -55,7 +55,7 @@ public class TestsStudentAction extends FenixDispatchAction {
     }
 
     public ActionForward viewTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         List<NewTestGroup> publishedTestGroups = new ArrayList<NewTestGroup>();
         List<NewTestGroup> finishedTestGroups = new ArrayList<NewTestGroup>();
 
@@ -75,9 +75,8 @@ public class TestsStudentAction extends FenixDispatchAction {
 
     public ActionForward viewTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, ExcepcaoPersistencia {
-        Integer testGroupId = getCodeFromRequest(request, "oid");
 
-        NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+        NewTestGroup testGroup = getDomainObject(request, "oid");
 
         NewTest test = GetStudentTest.run(getPerson(request), testGroup);
 
@@ -89,30 +88,28 @@ public class TestsStudentAction extends FenixDispatchAction {
 
     public ActionForward deleteAnswer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, ExcepcaoPersistencia {
-        Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
+        NewAtomicQuestion atomicQuestion = getDomainObject(request, "oid");
 
         NewTestGroup testGroup = atomicQuestion.getTest().getTestGroup();
 
         DeleteAnswer.run(atomicQuestion);
 
-        request.setAttribute("oid", testGroup.getIdInternal());
+        request.setAttribute("oid", testGroup.getExternalId());
 
         return this.viewTest(mapping, form, request, response);
     }
 
     public ActionForward giveUpQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, ExcepcaoPersistencia {
-        Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
+        NewAtomicQuestion atomicQuestion = getDomainObject(request, "oid");
 
         NewTestGroup testGroup = atomicQuestion.getTest().getTestGroup();
 
         GiveUpQuestion.run(atomicQuestion);
 
-        request.setAttribute("oid", testGroup.getIdInternal());
+        request.setAttribute("oid", testGroup.getExternalId());
 
         return this.viewTest(mapping, form, request, response);
     }

@@ -16,7 +16,7 @@
 			<td><bean:message key="label.executionYear" />:&nbsp;</td>
 			<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearID" property="executionYearID">
 				<html:option value="" key="label.masterDegree.administrativeOffice.allExecutionYears" />
-				<html:options collection="executionYears"  property="idInternal" labelProperty="year" />
+				<html:options collection="executionYears"  property="externalId" labelProperty="year" />
 			</html:select></td>
 		</tr>	
 		<tr align="left">

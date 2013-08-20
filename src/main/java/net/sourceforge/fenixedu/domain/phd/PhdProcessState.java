@@ -22,7 +22,7 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
         @Override
         public int compare(PhdProcessState o1, PhdProcessState o2) {
             int result = o1.getWhenCreated().compareTo(o2.getWhenCreated());
-            return result != 0 ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
+            return result != 0 ? result : o1.getExternalId().compareTo(o2.getExternalId());
         }
     };
 

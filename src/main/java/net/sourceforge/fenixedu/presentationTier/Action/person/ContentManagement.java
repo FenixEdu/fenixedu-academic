@@ -45,6 +45,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "person", path = "/contentManagement", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -119,7 +120,7 @@ public class ContentManagement extends FenixDispatchAction {
     }
 
     public ActionForward editAvailabilityPolicy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Content content = getContent(request);
         ExpressionBean bean = (ExpressionBean) RenderUtils.getViewState("expressionBean").getMetaObject().getObject();
@@ -371,7 +372,7 @@ public class ContentManagement extends FenixDispatchAction {
 
     protected Content getContent(HttpServletRequest request) {
         String contentId = request.getParameter("contentId");
-        return (contentId == null) ? null : rootDomainObject.readContentByOID(Integer.valueOf(contentId));
+        return AbstractDomainObject.fromExternalId(contentId);
     }
 
     protected Element getElement(HttpServletRequest request) {
@@ -386,7 +387,7 @@ public class ContentManagement extends FenixDispatchAction {
 
     protected Container getParentContainer(HttpServletRequest request) {
         String containerId = request.getParameter("contentParentId");
-        return containerId == null ? null : (Container) rootDomainObject.readContentByOID(Integer.valueOf(containerId));
+        return AbstractDomainObject.fromExternalId(containerId);
     }
 
     private List<Content> flatten(Collection<Content> contents) {

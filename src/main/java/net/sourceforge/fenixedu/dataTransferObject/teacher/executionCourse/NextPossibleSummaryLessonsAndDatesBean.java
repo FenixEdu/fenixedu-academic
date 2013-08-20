@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -16,6 +15,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Comparable<NextPossibleSummaryLessonsAndDatesBean> {
 
     public static final ResourceBundle enumerationResourcesBundle = ResourceBundle.getBundle("resources/EnumerationResources");
@@ -23,7 +24,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
     static {
         ((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("date"), true);
         ((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("time"), true);
-        ((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("shift.idInternal"));
+        ((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("shift.externalId"));
     }
 
     private ShiftType lessonType;
@@ -117,7 +118,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
     public String getCheckBoxValue() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getDate().toString("yyyyMMdd"));
-        stringBuilder.append(getLesson().getIdInternal());
+        stringBuilder.append(getLesson().getExternalId());
         return stringBuilder.toString();
     }
 
@@ -131,8 +132,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
         }
 
         YearMonthDay date = new YearMonthDay(year, month, day);
-        Integer lessonIdInternal = Integer.parseInt(value.substring(8));
-        Lesson lesson = RootDomainObject.getInstance().readLessonByOID(lessonIdInternal);
+        Lesson lesson = AbstractDomainObject.fromExternalId(value.substring(8));
         NextPossibleSummaryLessonsAndDatesBean bean = new NextPossibleSummaryLessonsAndDatesBean(lesson, date);
 
         return bean;

@@ -24,7 +24,7 @@
 		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
 		<h:outputLink value="#{AcademicAdministrationCurricularCourseManagement.contextPath}/academicAdministration/bolonha/competenceCourses/showCompetenceCourse.faces" target="_blank">
 			<h:outputText value="(#{bolonhaBundle['showPage']} #{bolonhaBundle['competenceCourse']})"/>
-			<f:param name="competenceCourseID" value="#{AcademicAdministrationCurricularCourseManagement.curricularCourse.competenceCourse.idInternal}"/>
+			<f:param name="competenceCourseID" value="#{AcademicAdministrationCurricularCourseManagement.curricularCourse.competenceCourse.externalId}"/>
 		</h:outputLink>
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
 	</h:panelGroup>
@@ -72,7 +72,7 @@
 	</fc:dataRepeater>
 	<h:outputText value="</div>" escape="false"/>
 	<h:form>
-		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{AcademicAdministrationCurricularCourseManagement.curricularCourse.parentDegreeCurricularPlan.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{AcademicAdministrationCurricularCourseManagement.curricularCourse.parentDegreeCurricularPlan.externalId}'/>"/>
  		<h:outputText escape="false" value="<input alt='input.executionYearID' id='executionYearID' name='executionYearID' type='hidden' value='#{AcademicAdministrationCurricularCourseManagement.executionYearID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.organizeBy' id='organizeBy' name='organizeBy' type='hidden' value='#{AcademicAdministrationCurricularCourseManagement.organizeBy}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.showRules' id='showRules' name='showRules' type='hidden' value='#{AcademicAdministrationCurricularCourseManagement.showRules}'/>"/>

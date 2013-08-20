@@ -75,7 +75,7 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String executionYear = getFromRequest("executionYear", request);
-        Integer courseID = Integer.valueOf(getFromRequest("courseID", request));
+        String courseID = getFromRequest("courseID", request);
         request.setAttribute("courseID", getFromRequest("courseID", request));
 
         // parameters necessary to write in jsp
@@ -114,12 +114,12 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
         request.setAttribute("courseID", getFromRequest("courseID", request));
 
-        Integer courseID = new Integer(getFromRequest("courseID", request));
+        String courseID = getFromRequest("courseID", request);
         IUserView userView = getUserView(request);
 
         List studentList = null;

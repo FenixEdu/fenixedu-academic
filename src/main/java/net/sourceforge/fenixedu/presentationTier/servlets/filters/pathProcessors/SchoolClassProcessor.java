@@ -37,9 +37,9 @@ public class SchoolClassProcessor extends PathProcessor {
             SchoolClassContext ownContext = (SchoolClassContext) context;
             SchoolClass schoolClass = ownContext.getSchoolClass();
 
-            doForward(context, schoolClass.getIdInternal(), schoolClass.getNome(), schoolClass.getExecutionDegree()
-                    .getDegreeCurricularPlan().getIdInternal(), schoolClass.getExecutionDegree().getDegreeCurricularPlan()
-                    .getName(), schoolClass.getExecutionDegree().getDegreeCurricularPlan().getDegree().getIdInternal(),
+            doForward(context, schoolClass.getExternalId(), schoolClass.getNome(), schoolClass.getExecutionDegree()
+                    .getDegreeCurricularPlan().getExternalId(), schoolClass.getExecutionDegree().getDegreeCurricularPlan()
+                    .getName(), schoolClass.getExecutionDegree().getDegreeCurricularPlan().getDegree().getExternalId(),
                     schoolClass.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla());
             return true;
         }

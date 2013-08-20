@@ -55,7 +55,7 @@ public class CreateFileContentForBoard extends FileContentService {
     private VirtualPath getVirtualPath(AnnouncementBoard board) {
 
         final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(0, new VirtualPathNode("B" + board.getIdInternal(), board.getName().getContent()));
+        filePath.addNode(0, new VirtualPathNode("B" + board.getExternalId(), board.getName().getContent()));
         filePath.addNode(0, new VirtualPathNode("Announcements", "Announcements"));
         return filePath;
     }

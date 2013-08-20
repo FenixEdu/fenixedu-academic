@@ -38,7 +38,7 @@
 					<fr:property name="columnClasses" value=",,,,bold"/>
 																					
 		   			<fr:property name="link(aliasManagement)" value="/generateUserUID.do?method=generateUserUID"/>
-		            <fr:property name="param(aliasManagement)" value="idInternal/personID"/>
+		            <fr:property name="param(aliasManagement)" value="externalId/personID"/>
 			        <fr:property name="key(aliasManagement)" value="link.generate.institutional.username"/>
 		            <fr:property name="bundle(aliasManagement)" value="MANAGER_RESOURCES"/>
 		            <fr:property name="order(aliasManagement)" value="0"/>		     

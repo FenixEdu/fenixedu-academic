@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrat
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -27,6 +26,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -55,9 +56,9 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         // Get the Chosen Master Degree
-        Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
+        String masterDegreeID = request.getParameter("degreeID");
         if (masterDegreeID == null) {
-            masterDegreeID = (Integer) request.getAttribute("degreeID");
+            masterDegreeID = (String) request.getAttribute("degreeID");
         }
 
         List result = null;
@@ -79,9 +80,9 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         // Get the Chosen Master Degree
-        Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+        String curricularPlanID = request.getParameter("curricularPlanID");
         if (curricularPlanID == null) {
-            curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
+            curricularPlanID = (String) request.getAttribute("curricularPlanID");
         }
         List<InfoExecutionDegree> executionYearList =
                 ReadExecutionDegreesByDegreeCurricularPlanID.runReadExecutionDegreesByDegreeCurricularPlanID(curricularPlanID);
@@ -101,7 +102,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
                 InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) input;
                 LabelValueBean labelValueBean =
                         new LabelValueBean(infoExecutionDegree.getInfoExecutionYear().getYear(), infoExecutionDegree
-                                .getIdInternal().toString());
+                                .getExternalId().toString());
                 return labelValueBean;
             }
         }, executionYearsLabels);
@@ -114,11 +115,11 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
     public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer curricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        Integer executionDegreeID = new Integer(request.getParameter("executionDegreeID"));
+        String curricularPlanID = request.getParameter("degreeCurricularPlanID");
+        String executionDegreeID = request.getParameter("executionDegreeID");
 
         if (curricularPlanID == null) {
-            curricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanID");
+            curricularPlanID = (String) request.getAttribute("degreeCurricularPlanID");
 
         }
 
@@ -126,8 +127,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
         request.setAttribute("degreeCurricularPlanID", curricularPlanID);
 
         if (executionDegreeID != null) {
-            ExecutionDegree executionDegree =
-                    (ExecutionDegree) RootDomainObject.readDomainObjectByOID(ExecutionDegree.class, executionDegreeID);
+            ExecutionDegree executionDegree = (ExecutionDegree) AbstractDomainObject.fromExternalId(executionDegreeID);
             ExecutionYear executionYear = executionDegree.getExecutionYear();
             request.setAttribute(PresentationConstants.EXECUTION_YEAR, executionYear.getName());
         }

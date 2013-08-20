@@ -75,7 +75,7 @@
     		</td>
     		<td>
     			<logic:present role="MANAGER">
-	    			<html:link page="/manageCardGeneration.do?method=editDegree" paramId="degreeID" paramName="degree" paramProperty="idInternal">
+	    			<html:link page="/manageCardGeneration.do?method=editDegree" paramId="degreeID" paramName="degree" paramProperty="externalId">
 		    			<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.edit"/>
     				</html:link>
     			</logic:present>

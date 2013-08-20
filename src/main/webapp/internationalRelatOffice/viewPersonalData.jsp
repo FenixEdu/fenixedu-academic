@@ -10,7 +10,7 @@
 
 
 <p>
-	<html:link page="/students.do?method=visualizeStudent" paramId="studentID" paramName="student" paramProperty="idInternal">
+	<html:link page="/students.do?method=visualizeStudent" paramId="studentID" paramName="student" paramProperty="externalId">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>
@@ -114,7 +114,7 @@
 	
 
 <p>
-	<html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="student" paramProperty="idInternal">
+	<html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="student" paramProperty="externalId">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>

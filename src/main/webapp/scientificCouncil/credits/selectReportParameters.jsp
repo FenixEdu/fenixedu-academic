@@ -33,7 +33,7 @@
 		<td>
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.departmentID" property="departmentID" size="1">
 				<html:option value="0" key="label.allDepartments"/>
-				<html:options collection="departments" property="idInternal" labelProperty="realName"/>
+				<html:options collection="departments" property="externalId" labelProperty="realName"/>
 			</html:select>
 		</td>
 	</tr>

@@ -6,7 +6,7 @@
 
 <html:xhtml/>
 
-<bean:define id="unitID" name="unit" property="idInternal"/>
+<bean:define id="unitID" name="unit" property="externalId"/>
 <bean:define id="actionName" name="functionalityAction"/>
 
 <h2><bean:message key="label.newPersistentGroup" bundle="RESEARCHER_RESOURCES"/></h2>

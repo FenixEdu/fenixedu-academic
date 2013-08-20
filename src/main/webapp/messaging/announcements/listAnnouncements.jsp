@@ -36,8 +36,8 @@
 				type="net.sourceforge.fenixedu.domain.messaging.Announcement">
 	
 	
-				<bean:define id="announcementId" name="announcement" property="idInternal"/>
-				<bean:define id="announcementBoardId" name="announcement" property="announcementBoard.idInternal"/>
+				<bean:define id="announcementId" name="announcement" property="externalId"/>
+				<bean:define id="announcementBoardId" name="announcement" property="announcementBoard.externalId"/>
 				<bean:define id="announcementBoardClass" name="announcement" property="announcementBoard.class.simpleName"/>
 	
 				<div class="announcement mtop15 mbottom25">
@@ -222,7 +222,7 @@
 				<bean:define id="methodWithReturn" name="returnMethod" />
 			</logic:present>
 
-			<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal" />
+			<bean:define id="announcementBoardId" name="announcementBoard" property="externalId" />
 			<bean:define id="urlLinkEdit" type="java.lang.String"><%= contextPrefix %>method=editAnnouncement&amp;<%= extraParameters %>&amp;tabularVersion=true</bean:define>
 			<bean:define id="urlLinkView" type="java.lang.String"><%= contextPrefix %>method=viewAnnouncement&amp;<%= extraParameters %></bean:define>
 			<bean:define id="urlLinkRemove" type="java.lang.String"><%= contextPrefix %>method=deleteAnnouncement&amp;<%= extraParameters %>&amp;tabularVersion=true</bean:define>
@@ -235,35 +235,35 @@
 						value=",nowrap,acenter,acenter,nowrap" />
 					<fr:property name="link(edit)" value="<%= urlLinkEdit %>" />
 					<fr:property name="param(edit)"
-						value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId" />
+						value="externalId/announcementId,announcementBoard.externalId/announcementBoardId" />
 					<fr:property name="key(edit)" value="messaging.edit.link" />
 					<fr:property name="bundle(edit)" value="MESSAGING_RESOURCES" />
 					<fr:property name="order(edit)" value="2" />
 
 					<fr:property name="link(view)" value="<%= urlLinkView %>" />
-					<fr:property name="param(view)" value="idInternal/announcementId" />
+					<fr:property name="param(view)" value="externalId/announcementId" />
 					<fr:property name="key(view)" value="messaging.view.link" />
 					<fr:property name="bundle(view)" value="MESSAGING_RESOURCES" />
 					<fr:property name="order(view)" value="1" />
 
 					<fr:property name="link(remove)" value="<%= urlLinkRemove %>" />
 					<fr:property name="param(remove)"
-						value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId" />
+						value="externalId/announcementId,announcementBoard.externalId/announcementBoardId" />
 					<fr:property name="key(remove)" value="messaging.delete.label" />
 					<fr:property name="bundle(remove)" value="MESSAGING_RESOURCES" />
 					<fr:property name="order(remove)" value="3" />
 					<fr:property name="confirmationKey(remove)" value="message.remove.announcement.confirmation" />
 					<fr:property name="confirmationBundle(remove)" value="MESSAGING_RESOURCES" />
 
-					<fr:property name="link(approve)" value="<%= contextPrefix + "method=aproveAction&amp;announcementId=${idInternal}&amp;action=true&amp;"+extraParameters+"&amp;tabularVersion=true" %>" />
-					<fr:property name="param(approve)" value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId" />
+					<fr:property name="link(approve)" value="<%= contextPrefix + "method=aproveAction&amp;announcementId=${externalId}&amp;action=true&amp;"+extraParameters+"&amp;tabularVersion=true" %>" />
+					<fr:property name="param(approve)" value="externalId/announcementId,announcementBoard.externalId/announcementBoardId" />
 					<fr:property name="key(approve)" value="messaging.approve.link" />
 					<fr:property name="bundle(approve)" value="MESSAGING_RESOURCES" />
 					<fr:property name="order(approve)" value="4" />
 					<fr:property name="visibleIf(approve)" value="canApproveUser" />
 
-					<fr:property name="link(notApprove)" value="<%= contextPrefix + "method=aproveAction&amp;announcementId=${idInternal}&amp;action=false&amp;"+extraParameters+"&amp;tabularVersion=true" %>" />
-					<fr:property name="param(notApprove)" value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId" />
+					<fr:property name="link(notApprove)" value="<%= contextPrefix + "method=aproveAction&amp;announcementId=${externalId}&amp;action=false&amp;"+extraParameters+"&amp;tabularVersion=true" %>" />
+					<fr:property name="param(notApprove)" value="externalId/announcementId,announcementBoard.externalId/announcementBoardId" />
 					<fr:property name="key(notApprove)" value="messaging.not.approve.link" />
 					<fr:property name="bundle(notApprove)" value="MESSAGING_RESOURCES" />
 					<fr:property name="order(notApprove)" value="5" />
@@ -294,7 +294,7 @@
 
 
 		<div class="aarchives">
-			<bean:define id="urlTarget" type="java.lang.String"><%= request.getContextPath() %><%= module %><%= contextPrefix %>method=viewArchive&amp;announcementBoardId=<%= board.getIdInternal().toString() %>&amp;<%= extraParameters %>&amp;</bean:define>
+			<bean:define id="urlTarget" type="java.lang.String"><%= request.getContextPath() %><%= module %><%= contextPrefix %>method=viewArchive&amp;announcementBoardId=<%= board.getExternalId().toString() %>&amp;<%= extraParameters %>&amp;</bean:define>
 			<messaging:archive name="archive" targetUrl="<%= urlTarget %>" />
 		</div>
 

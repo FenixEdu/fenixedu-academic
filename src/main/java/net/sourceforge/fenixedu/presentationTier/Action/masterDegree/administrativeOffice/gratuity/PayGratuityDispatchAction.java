@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -81,15 +82,15 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         String insuranceExecutionYearId = getFromRequest("insuranceExecutionYearId", request);
 
         DynaActionForm payGratuityForm = (DynaActionForm) form;
-        payGratuityForm.set("studentId", new Integer(studentId));
+        payGratuityForm.set("studentId", studentId);
 
         if (gratuitySituationId != null) {
-            payGratuityForm.set("gratuitySituationId", new Integer(gratuitySituationId));
+            payGratuityForm.set("gratuitySituationId", gratuitySituationId);
             request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payGratuity");
         }
 
         if (insuranceExecutionYearId != null) {
-            payGratuityForm.set("insuranceExecutionYearId", new Integer(insuranceExecutionYearId));
+            payGratuityForm.set("insuranceExecutionYearId", insuranceExecutionYearId);
             request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payInsurance");
         }
 
@@ -104,26 +105,26 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         Integer contributorNumber = (Integer) payGratuityForm.get("contributorNumber");
-        Integer studentId = (Integer) payGratuityForm.get("studentId");
-        Integer gratuitySituationId = (Integer) payGratuityForm.get("gratuitySituationId");
-        Integer insuranceExecutionYearId = (Integer) payGratuityForm.get("insuranceExecutionYearId");
+        String studentId = (String) payGratuityForm.get("studentId");
+        String gratuitySituationId = (String) payGratuityForm.get("gratuitySituationId");
+        String insuranceExecutionYearId = (String) payGratuityForm.get("insuranceExecutionYearId");
 
         // Read Registration
         InfoStudent infoStudent = readStudent(mapping, userView, studentId);
         request.setAttribute(PresentationConstants.STUDENT, infoStudent);
 
-        if (gratuitySituationId.intValue() > 0) {
+        if (StringUtils.isEmpty(gratuitySituationId)) {
             // Read Gratuity Situation
             InfoGratuitySituation infoGratuitySituation = readGratuitySituation(userView, gratuitySituationId);
 
             // Read Insurance Situation
             InfoInsuranceTransaction infoInsuranceTransaction = null;
-            Integer executionYearID =
-                    infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear().getIdInternal();
+            String executionYearID =
+                    infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear().getExternalId();
 
             try {
                 infoInsuranceTransaction =
-                        ReadInsuranceTransactionByStudentIDAndExecutionYearID.run(infoStudent.getIdInternal(), executionYearID);
+                        ReadInsuranceTransactionByStudentIDAndExecutionYearID.run(infoStudent.getExternalId(), executionYearID);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
@@ -141,7 +142,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
         }
 
-        if (insuranceExecutionYearId.intValue() > 0) {
+        if (insuranceExecutionYearId == null) {
             // Read Insurance Value
             InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView, insuranceExecutionYearId);
 
@@ -173,9 +174,9 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         Integer contributorNumber = (Integer) payGratuityForm.get("contributorNumber");
-        Integer gratuitySituationId = (Integer) payGratuityForm.get("gratuitySituationId");
-        Integer studentId = (Integer) payGratuityForm.get("studentId");
-        Integer insuranceExecutionYearId = (Integer) payGratuityForm.get("insuranceExecutionYearId");
+        String gratuitySituationId = (String) payGratuityForm.get("gratuitySituationId");
+        String studentId = (String) payGratuityForm.get("studentId");
+        String insuranceExecutionYearId = (String) payGratuityForm.get("insuranceExecutionYearId");
         Double adHocValue = (Double) payGratuityForm.get("adHocValue");
 
         InfoGuide infoGuide = new InfoGuide();
@@ -188,7 +189,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
         List infoGuideEntries = new ArrayList();
 
-        if (gratuitySituationId.intValue() > 0) {
+        if (gratuitySituationId == null) {
             // Read Gratuity Situation
             InfoGratuitySituation infoGratuitySituation = readGratuitySituation(userView, gratuitySituationId);
 
@@ -222,7 +223,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
         }
 
-        if ((insuranceExecutionYearId != null) && (insuranceExecutionYearId.intValue() > 0)) {
+        if ((insuranceExecutionYearId != null) && (insuranceExecutionYearId == null)) {
             // Read Insurance Transaction
             InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView, insuranceExecutionYearId);
 
@@ -236,7 +237,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
             List studentCurricularPlans = null;
 
             try {
-                studentCurricularPlans = ReadPosGradStudentCurricularPlans.run(infoStudent.getIdInternal());
+                studentCurricularPlans = ReadPosGradStudentCurricularPlans.run(infoStudent.getExternalId());
 
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
@@ -262,7 +263,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
                 Iterator it = executionDegreesList.iterator();
                 while (it.hasNext()) {
                     infoExecutionDegree = (InfoExecutionDegree) it.next();
-                    if (infoExecutionDegree.getInfoExecutionYear().getIdInternal().equals(insuranceExecutionYearId)) {
+                    if (infoExecutionDegree.getInfoExecutionYear().getExternalId().equals(insuranceExecutionYearId)) {
                         found = true;
                         break;
                     }
@@ -334,7 +335,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @return
      * @throws FenixActionException
      */
-    private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
+    private InfoGratuitySituation readGratuitySituation(IUserView userView, String gratuitySituationId)
             throws FenixActionException {
         InfoGratuitySituation infoGratuitySituation = null;
 
@@ -357,7 +358,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @throws FenixActionException
      * @throws NonExistingActionException
      */
-    private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId) throws FenixActionException,
+    private InfoStudent readStudent(ActionMapping mapping, IUserView userView, String studentId) throws FenixActionException,
             NonExistingActionException {
         InfoStudent infoStudent = null;
 
@@ -381,7 +382,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @return
      * @throws FenixActionException
      */
-    private InfoInsuranceValue readInsuranceValue(IUserView userView, Integer insuranceExecutionYearId)
+    private InfoInsuranceValue readInsuranceValue(IUserView userView, String insuranceExecutionYearId)
             throws FenixActionException {
         InfoInsuranceValue infoInsuranceValue = null;
 

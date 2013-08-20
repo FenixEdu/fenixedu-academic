@@ -5,13 +5,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -22,10 +21,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class GetThemeById {
 
-    protected InfoTheme run(Integer themeID) {
+    protected InfoTheme run(String themeID) {
         InfoTheme infoTheme = null;
         if (themeID != null) {
-            Theme theme = RootDomainObject.getInstance().readThemeByOID(themeID);
+            Theme theme = AbstractDomainObject.fromExternalId(themeID);
             infoTheme = InfoTheme.newInfoFromDomain(theme);
 
         }
@@ -37,7 +36,7 @@ public class GetThemeById {
     private static final GetThemeById serviceInstance = new GetThemeById();
 
     @Service
-    public static InfoTheme runGetThemeById(Integer themeID) throws NotAuthorizedException {
+    public static InfoTheme runGetThemeById(String themeID) throws NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run(themeID);
     }

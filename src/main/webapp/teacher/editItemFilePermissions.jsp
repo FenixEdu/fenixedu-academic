@@ -10,10 +10,10 @@
 <h3><bean:message key="label.teacher.siteAdministration.editItemFilePermissions.editPermissions"/></h3>
 
  <html:form action="/editItemFilePermissions.do?method=editItemFilePermissions">
- 	<bean:define id="itemCode" name="siteView" property="component.item.idInternal"/>
- 	<bean:define id="objectCode" name="siteView" property="component.item.infoSection.infoSite.infoExecutionCourse.idInternal"/>
+ 	<bean:define id="itemCode" name="siteView" property="component.item.externalId"/>
+ 	<bean:define id="objectCode" name="siteView" property="component.item.infoSection.infoSite.infoExecutionCourse.externalId"/>
  	<bean:define id="currentSection" name="siteView" property="component.item.infoSection"/>
-	<bean:define id="currentSectionCode" name="currentSection" property="idInternal"/>
+	<bean:define id="currentSectionCode" name="currentSection" property="externalId"/>
 	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.currentSectionCode" property="currentSectionCode" value="<%= currentSectionCode.toString() %>" />
  	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= objectCode.toString() %>"/>

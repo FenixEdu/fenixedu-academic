@@ -12,7 +12,7 @@
 
 <div>
     <logic:iterate id="crumb" name="crumbs">
-        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="externalId">
             <fr:view name="crumb" property="name"/>
         </html:link> &gt;
     </logic:iterate>
@@ -41,7 +41,7 @@
          buttons
      ======================  -->
      
-<bean:define id="id" name="functionality" property="idInternal"/>
+<bean:define id="id" name="functionality" property="externalId"/>
 
 <fr:form action="<%= "/functionality/delete.do?functionality=" + id %>">
     <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">

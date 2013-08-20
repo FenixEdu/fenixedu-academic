@@ -136,7 +136,7 @@ public class InfoExecutionDegree extends InfoObject {
 
                 result.add(new LabelValueBean(degreeType + "  "
                         + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), infoExecutionDegree
-                        .getIdInternal().toString()));
+                        .getExternalId().toString()));
             } else {
                 String degreeType = null;
                 if (messageResources != null) {
@@ -150,7 +150,7 @@ public class InfoExecutionDegree extends InfoObject {
 
                 result.add(new LabelValueBean(degreeType + "  "
                         + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome() + " - "
-                        + infoExecutionDegree.getInfoDegreeCurricularPlan().getName(), infoExecutionDegree.getIdInternal()
+                        + infoExecutionDegree.getInfoDegreeCurricularPlan().getName(), infoExecutionDegree.getExternalId()
                         .toString()));
             }
         }
@@ -162,17 +162,13 @@ public class InfoExecutionDegree extends InfoObject {
         return executionDegree == null ? null : new InfoExecutionDegree(executionDegree);
     }
 
+    @Override
     public String getExternalId() {
         return getExecutionDegree().getExternalId();
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getExecutionDegree().getIdInternal();
-    }
-
-    @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

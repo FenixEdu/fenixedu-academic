@@ -53,7 +53,7 @@
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeId" property="executionDegreeId">
 						<html:option key="label.selectAll" bundle="GEP_RESOURCES" value="all"/>
-						<html:options collection="executionDegrees" labelProperty="presentationName" property="idInternal"/>
+						<html:options collection="executionDegrees" labelProperty="presentationName" property="externalId"/>
 					</html:select>
 				</td>
 			</tr>

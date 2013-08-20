@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -34,12 +34,12 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadStudentsAndGroupsByShiftID {
 
     @Service
-    public static InfoSiteStudentsAndGroups run(Integer groupPropertiesId, Integer shiftId) throws FenixServiceException {
+    public static InfoSiteStudentsAndGroups run(String groupPropertiesId, String shiftId) throws FenixServiceException {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesId);
+        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesId);
         infoSiteStudentsAndGroups.setInfoGrouping(InfoGrouping.newInfoFromDomain(groupProperties));
-        Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftId);
+        Shift shift = AbstractDomainObject.fromExternalId(shiftId);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();
@@ -77,7 +77,7 @@ public class ReadStudentsAndGroupsByShiftID {
 
                 infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
-                infoSiteStudentInformation.setPersonID(attend.getRegistration().getPerson().getIdInternal());
+                infoSiteStudentInformation.setPersonID(attend.getRegistration().getPerson().getExternalId());
 
                 infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
 

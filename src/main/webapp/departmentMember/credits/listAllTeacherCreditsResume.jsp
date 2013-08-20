@@ -25,7 +25,7 @@
 	</p>
 </html:messages>
 
-<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=" + net.sourceforge.fenixedu.domain.ExecutionSemester.readActualExecutionSemester().getIdInternal() + "&amp;teacherId=" + teacherID %>'>
+<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=" + net.sourceforge.fenixedu.domain.ExecutionSemester.readActualExecutionSemester().getExternalId() + "&amp;teacherId=" + teacherID %>'>
 	<bean:message key="label.credits.fill.information.for.current.semester" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 </html:link>					
 
@@ -101,7 +101,7 @@
 						</fr:view>
 					</logic:equal>
 					<logic:notEqual name="isThesesCreditsClosed" value="true">
-						<html:link title="Ver detalhes" page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;teacherId=" + teacherID %>' paramId="executionPeriodId" paramName="executionPeriod" paramProperty="idInternal">
+						<html:link title="Ver detalhes" page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;teacherId=" + teacherID %>' paramId="executionPeriodId" paramName="executionPeriod" paramProperty="externalId">
 							<bean:write name="executionPeriodName"/> - <bean:write name="executionPeriodYear"/>
 						</html:link>					
 					</logic:notEqual>						
@@ -164,6 +164,6 @@
 	
 </logic:notEmpty>
 
-<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=" + net.sourceforge.fenixedu.domain.ExecutionSemester.readActualExecutionSemester().getIdInternal() + "&amp;teacherId=" + teacherID %>'>
+<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=" + net.sourceforge.fenixedu.domain.ExecutionSemester.readActualExecutionSemester().getExternalId() + "&amp;teacherId=" + teacherID %>'>
 	<bean:message key="label.credits.fill.information.for.current.semester" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 </html:link>					

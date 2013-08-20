@@ -47,7 +47,7 @@
 				<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
 			</fr:layout>
 		</fr:view>
-		<html:link page="/defineCreditsPeriods.do?method=prepareEditTeacherCreditsPeriod" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
+		<html:link page="/defineCreditsPeriods.do?method=prepareEditTeacherCreditsPeriod" paramName="teacherCreditsBean" paramProperty="executionPeriod.externalId" paramId="executionPeriodId">
 			<bean:message key="link.change"/>
 		</html:link>
 		
@@ -57,7 +57,7 @@
 				<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
 			</fr:layout>
 		</fr:view>
-		<html:link page="/defineCreditsPeriods.do?method=prepareEditDepartmentAdmOfficeCreditsPeriod" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
+		<html:link page="/defineCreditsPeriods.do?method=prepareEditDepartmentAdmOfficeCreditsPeriod" paramName="teacherCreditsBean" paramProperty="executionPeriod.externalId" paramId="executionPeriodId">
 			<bean:message key="link.change"/>
 		</html:link>			
 		

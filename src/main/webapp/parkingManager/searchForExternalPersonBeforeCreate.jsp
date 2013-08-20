@@ -70,7 +70,7 @@
 							<bean:message key="label.no"/>
 						</td>
 						<td rowspan="<%= numberUnits %>" class="acenter">
-							<bean:define id="url" type="java.lang.String">/externalPerson.do?method=createParkingParty&amp;personID=<bean:write name="person" property="idInternal"/></bean:define>
+							<bean:define id="url" type="java.lang.String">/externalPerson.do?method=createParkingParty&amp;personID=<bean:write name="person" property="externalId"/></bean:define>
 							<html:link page="<%= url %>"><bean:message key="link.create.external.person" /></html:link>
 						</td>
 					</logic:notPresent>

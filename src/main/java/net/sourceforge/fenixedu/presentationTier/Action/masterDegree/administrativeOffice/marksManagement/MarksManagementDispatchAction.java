@@ -67,7 +67,7 @@ public class MarksManagementDispatchAction extends FenixDispatchAction {
 
         try {
 
-            degreeCurricularPlans = ReadCPlanFromChosenMasterDegree.run(Integer.valueOf(masterDegreeId));
+            degreeCurricularPlans = ReadCPlanFromChosenMasterDegree.run(masterDegreeId);
 
         } catch (NonExistingServiceException e) {
             errors.add("noDegreeCurricularPlan", new ActionError("error.masterDegree.noDegreeCurricularPlan"));
@@ -91,7 +91,7 @@ public class MarksManagementDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         List curricularCourseList = null;
         try {
-            curricularCourseList = ReadCurricularCoursesByDegreeCurricularPlan.run(Integer.valueOf(degreeCurricularPlanId));
+            curricularCourseList = ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanId);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -113,7 +113,7 @@ public class MarksManagementDispatchAction extends FenixDispatchAction {
         try {
             listEnrolmentEvaluation =
                     ReadStudentMarksListByCurricularCourse.runReadStudentMarksListByCurricularCourse(userView,
-                            Integer.valueOf(curricularCourseId), null);
+                            curricularCourseId, null);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         } catch (NonExistingServiceException e) {

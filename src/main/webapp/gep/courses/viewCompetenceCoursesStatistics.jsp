@@ -58,7 +58,7 @@
 	<logic:present name="executionYears" >		
 		<bean:message key="label.gep.chooseExecutionYear" bundle="GEP_RESOURCES" />: 
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearID" property="executionYearID">
-			<html:options collection="executionYears" property="idInternal"
+			<html:options collection="executionYears" property="externalId"
 				labelProperty="year" />
 		</html:select>	
 		<br/>

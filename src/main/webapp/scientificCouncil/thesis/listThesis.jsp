@@ -72,25 +72,25 @@
 
             <fr:property name="link(approve)" value="/scientificCouncilManageThesis.do?method=reviewProposal"/>
             <fr:property name="key(approve)" value="link.scientificCouncil.view.proposal"/>
-            <fr:property name="param(approve)" value="idInternal/thesisID"/>
+            <fr:property name="param(approve)" value="externalId/thesisID"/>
             <fr:property name="order(approve)" value="1"/>
             <fr:property name="visibleIf(approve)" value="submitted"/>
 
             <fr:property name="link(disapprove)" value="/scientificCouncilManageThesis.do?method=reviewProposal"/>
             <fr:property name="key(disapprove)" value="link.scientificCouncil.review.proposal"/>
-            <fr:property name="param(disapprove)" value="idInternal/thesisID"/>
+            <fr:property name="param(disapprove)" value="externalId/thesisID"/>
             <fr:property name="order(disapprove)" value="2"/>
             <fr:property name="visibleIf(disapprove)" value="approved"/>
 
             <fr:property name="link(approveDiscussion)" value="/scientificCouncilManageThesis.do?method=reviewThesis"/>
             <fr:property name="key(approveDiscussion)" value="link.scientificCouncil.approve.discussion"/>
-            <fr:property name="param(approveDiscussion)" value="idInternal/thesisID"/>
+            <fr:property name="param(approveDiscussion)" value="externalId/thesisID"/>
             <fr:property name="order(approveDiscussion)" value="3"/>
             <fr:property name="visibleIf(approveDiscussion)" value="confirmed"/>
 
             <fr:property name="link(view)" value="/scientificCouncilManageThesis.do?method=viewThesis"/>
             <fr:property name="key(view)" value="link.scientificCouncil.evaluated.view"/>
-            <fr:property name="param(view)" value="idInternal/thesisID"/>
+            <fr:property name="param(view)" value="externalId/thesisID"/>
             <fr:property name="order(view)" value="4"/>
 
             <fr:property name="sortParameter" value="sortBy"/>

@@ -19,6 +19,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/viewStudentsByTutor", module = "teacher")
 @Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
@@ -52,10 +53,9 @@ public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchActio
 
     public ActionForward editStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Student student = rootDomainObject.readStudentByOID(Integer.valueOf(request.getParameter("studentID")));
+        Student student = AbstractDomainObject.fromExternalId(request.getParameter("studentID"));
 
-        Registration registration =
-                rootDomainObject.readRegistrationByOID(Integer.valueOf(request.getParameter("registrationID")));
+        Registration registration = AbstractDomainObject.fromExternalId(request.getParameter("registrationID"));
         TutorshipLog tutorshipLog = registration.getActiveTutorship().getTutorshipLog();
 
         request.setAttribute("tutor", getLoggedPerson(request));

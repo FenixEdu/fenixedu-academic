@@ -22,8 +22,8 @@
 	</ul>
 </fr:hasMessages>
 
-<bean:define id="processId" name="process" property="idInternal" />
-<bean:define id="degreeId" name="degree" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
+<bean:define id="degreeId" name="degree" property="externalId" />
 
 <fr:form action='<%="/caseHandlingSecondCycleCandidacyProcess.do?processId=" + processId.toString() + "&amp;degreeId=" + degreeId.toString() %>'>
  	<html:hidden property="method" value="executeIntroduceCandidacyResults" />

@@ -68,7 +68,7 @@
 </academic:allowed>
 
 <logic:equal name="academicServiceRequest" property="downloadPossible" value="true">
-	<html:link action="/documentRequestsManagement.do?method=downloadDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="idInternal">
+	<html:link action="/documentRequestsManagement.do?method=downloadDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="externalId">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.print"/>
 	</html:link>
 </logic:equal>
@@ -99,8 +99,8 @@
 
 <logic:equal name="canRevertToProcessingState" value="true">
 	<fr:form action="/academicServiceRequestsManagement.do?method=revertRequestToProcessingState">
-		<input type="hidden" name="academicServiceRequestId" value="<%= academicServiceRequest.getIdInternal().toString() %>" />
-		<input type="hidden" name="registrationID" value="<%= academicServiceRequest.getIdInternal().toString() %>" />
+		<input type="hidden" name="academicServiceRequestId" value="<%= academicServiceRequest.getExternalId().toString() %>" />
+		<input type="hidden" name="registrationID" value="<%= academicServiceRequest.getExternalId().toString() %>" />
 		<input type="hidden" name="backAction" value="<%= request.getParameter("backAction") %>" />
 		<input type="hidden" name="backMethod" value="<%= request.getParameter("backMethod") %>" />
 		
@@ -114,9 +114,9 @@
 
 <bean:define id="url" name="url" type="java.lang.String"/>
 <html:form action="<%=url%>">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.academicServiceRequestId" property="academicServiceRequestId" value="<%= academicServiceRequest.getIdInternal().toString() %>"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationID" property="registrationID" value="<%= academicServiceRequest.getRegistration().getIdInternal().toString() %>"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationID" property="registrationID" value="<%= academicServiceRequest.getRegistration().getIdInternal().toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.academicServiceRequestId" property="academicServiceRequestId" value="<%= academicServiceRequest.getExternalId().toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationID" property="registrationID" value="<%= academicServiceRequest.getRegistration().getExternalId().toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationID" property="registrationID" value="<%= academicServiceRequest.getRegistration().getExternalId().toString() %>"/>
 	
 	<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="back" /></html:submit>
 </html:form>

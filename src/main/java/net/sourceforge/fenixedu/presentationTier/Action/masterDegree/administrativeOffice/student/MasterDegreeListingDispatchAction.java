@@ -58,9 +58,9 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         // Get the Chosen Master Degree
-        Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
+        String masterDegreeID = request.getParameter("degreeID");
         if (masterDegreeID == null) {
-            masterDegreeID = (Integer) request.getAttribute("degreeID");
+            masterDegreeID = (String) request.getAttribute("degreeID");
         }
 
         List result = null;
@@ -98,7 +98,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
         IUserView userView = getUserView(request);
 
         // Get the Selected Degree Curricular Plan
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+        String degreeCurricularPlanID = request.getParameter("curricularPlanID");
 
         List result = null;
 
@@ -109,7 +109,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         } catch (NonExistingServiceException e) {
-            Integer degreeID = new Integer(request.getParameter("degreeID"));
+            String degreeID = request.getParameter("degreeID");
             request.setAttribute("degreeID", degreeID);
 
             ActionErrors errors = new ActionErrors();

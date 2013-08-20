@@ -40,6 +40,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.util.NumberUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -54,6 +55,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.spreadsheet.Formula;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
@@ -84,7 +86,7 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
         Collection<ExecutionYear> executionYears = rootDomainObject.getExecutionYears();
         List filteredExecutionYears = filterExecutionYears(executionYears);
@@ -98,28 +100,28 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward viewDetailedCreditsReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, InvalidPeriodException {
+            HttpServletResponse response) throws FenixServiceException, InvalidPeriodException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer fromExecutionYearID = Integer.parseInt(dynaForm.getString("fromExecutionYearID"));
-        Integer untilExecutionYearID = Integer.parseInt(dynaForm.getString("untilExecutionYearID"));
-        Integer departmentID = (Integer) dynaForm.get("departmentID");
+        String fromExecutionYearID = dynaForm.getString("fromExecutionYearID");
+        String untilExecutionYearID = dynaForm.getString("untilExecutionYearID");
+        String departmentID = (String) dynaForm.get("departmentID");
 
         getDetailedTeachersCreditsMap(request, userView, fromExecutionYearID, untilExecutionYearID, departmentID);
         return mapping.findForward("showCreditsReport");
     }
 
     private Map<Department, Map<Unit, List>> getDetailedTeachersCreditsMap(HttpServletRequest request, IUserView userView,
-            Integer fromExecutionYearID, Integer untilExecutionYearID, Integer departmentID) throws InvalidPeriodException,
+            String fromExecutionYearID, String untilExecutionYearID, String departmentID) throws InvalidPeriodException,
             FenixServiceException {
 
         request.setAttribute("fromExecutionYearID", fromExecutionYearID);
         request.setAttribute("untilExecutionYearID", untilExecutionYearID);
 
-        ExecutionYear fromExecutionYear = rootDomainObject.readExecutionYearByOID(fromExecutionYearID);
-        ExecutionYear untilExecutionYear = rootDomainObject.readExecutionYearByOID(untilExecutionYearID);
+        ExecutionYear fromExecutionYear = AbstractDomainObject.fromExternalId(fromExecutionYearID);
+        ExecutionYear untilExecutionYear = AbstractDomainObject.fromExternalId(untilExecutionYearID);
 
         ExecutionSemester fromExecutionPeriod = fromExecutionYear.getExecutionSemesterFor(1);
         ExecutionSemester untilExecutionPeriod = untilExecutionYear.getExecutionSemesterFor(2);
@@ -131,7 +133,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         List<TeacherCreditsReportDTO> teacherCreditsReportList = new ArrayList<TeacherCreditsReportDTO>();
         Map<Department, List<TeacherCreditsReportDTO>> teachersCreditsByDepartment =
                 new HashMap<Department, List<TeacherCreditsReportDTO>>();
-        if (departmentID == 0) {
+        if (StringUtils.isEmpty(departmentID)) {
             Collection<Department> departments = rootDomainObject.getDepartments();
             for (Department department : departments) {
                 Unit unit = department.getDepartmentUnit();
@@ -139,15 +141,15 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                         ReadTeachersCreditsResumeByPeriodAndUnit.run(unit, fromExecutionPeriod, untilExecutionPeriod);
                 teachersCreditsByDepartment.put(department, teacherCreditsReportList);
             }
-            request.setAttribute("departmentID", 0);
+            request.setAttribute("departmentID", null);
         } else {
-            Department department = rootDomainObject.readDepartmentByOID(departmentID);
+            Department department = AbstractDomainObject.fromExternalId(departmentID);
             Unit departmentUnit = department.getDepartmentUnit();
             teacherCreditsReportList =
                     ReadTeachersCreditsResumeByPeriodAndUnit.run(departmentUnit, fromExecutionPeriod, untilExecutionPeriod);
             teachersCreditsByDepartment.put(department, teacherCreditsReportList);
             request.setAttribute("department", department);
-            request.setAttribute("departmentID", department.getIdInternal());
+            request.setAttribute("departmentID", department.getExternalId());
         }
 
         if (teachersCreditsByDepartment != null && !teachersCreditsByDepartment.isEmpty()) {
@@ -182,15 +184,14 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward viewGlobalCreditsReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, InvalidPeriodException,
-            ParseException {
+            HttpServletResponse response) throws FenixServiceException, InvalidPeriodException, ParseException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer fromExecutionYearID = Integer.parseInt(dynaForm.getString("fromExecutionYearID"));
-        Integer untilExecutionYearID = Integer.parseInt(dynaForm.getString("untilExecutionYearID"));
-        Integer departmentID = (Integer) dynaForm.get("departmentID");
+        String fromExecutionYearID = dynaForm.getString("fromExecutionYearID");
+        String untilExecutionYearID = dynaForm.getString("untilExecutionYearID");
+        String departmentID = (String) dynaForm.get("departmentID");
 
         getGlobalDepartmentCreditsMap(request, userView, fromExecutionYearID, untilExecutionYearID, departmentID);
 
@@ -255,15 +256,14 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward exportGlobalToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException,  InvalidPeriodException,
-            ParseException {
+            HttpServletResponse response) throws FenixServiceException, InvalidPeriodException, ParseException {
 
-        final Integer fromExecutionYearID = Integer.parseInt(request.getParameter("fromExecutionYearID"));
-        final Integer untilExecutionYearID = Integer.parseInt(request.getParameter("untilExecutionYearID"));
-        final Integer departmentID = Integer.parseInt(request.getParameter("departmentID"));
+        final String fromExecutionYearID = request.getParameter("fromExecutionYearID");
+        final String untilExecutionYearID = request.getParameter("untilExecutionYearID");
+        final String departmentID = request.getParameter("departmentID");
 
-        final ExecutionYear beginExecutionYear = rootDomainObject.readExecutionYearByOID(fromExecutionYearID);
-        final ExecutionYear endExecutionYear = rootDomainObject.readExecutionYearByOID(untilExecutionYearID);
+        final ExecutionYear beginExecutionYear = AbstractDomainObject.fromExternalId(fromExecutionYearID);
+        final ExecutionYear endExecutionYear = AbstractDomainObject.fromExternalId(untilExecutionYearID);
         final ExecutionSemester beginExecutionSemester;
         final ExecutionSemester endExecutionSemester = endExecutionYear.getExecutionSemesterFor(2);
         if (beginExecutionYear.getPreviousExecutionYear().equals(
@@ -274,10 +274,10 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         }
 
         Set<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
-        if (departmentID == 0) {
+        if (departmentID == null) {
             departments.addAll(rootDomainObject.getDepartments());
         } else {
-            departments.add(rootDomainObject.readDepartmentByOID(departmentID));
+            departments.add(AbstractDomainObject.<Department> fromExternalId(departmentID));
         }
 
         SheetData<Department> data = new SheetData<Department>(departments) {
@@ -346,14 +346,14 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     }
 
     private SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> getGlobalDepartmentCreditsMap(
-            HttpServletRequest request, IUserView userView, Integer fromExecutionYearID, Integer untilExecutionYearID,
-            Integer departmentID) throws ParseException, InvalidPeriodException, FenixServiceException {
+            HttpServletRequest request, IUserView userView, String fromExecutionYearID, String untilExecutionYearID,
+            String departmentID) throws ParseException, InvalidPeriodException, FenixServiceException {
 
         request.setAttribute("fromExecutionYearID", fromExecutionYearID);
         request.setAttribute("untilExecutionYearID", untilExecutionYearID);
 
-        ExecutionYear fromExecutionYear = rootDomainObject.readExecutionYearByOID(fromExecutionYearID);
-        ExecutionYear untilExecutionYear = rootDomainObject.readExecutionYearByOID(untilExecutionYearID);
+        ExecutionYear fromExecutionYear = AbstractDomainObject.fromExternalId(fromExecutionYearID);
+        ExecutionYear untilExecutionYear = AbstractDomainObject.fromExternalId(untilExecutionYearID);
 
         ExecutionSemester fromExecutionPeriod = null;
         if (fromExecutionYear.getPreviousExecutionYear().equals(
@@ -374,7 +374,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> departmentTotalCredits =
                 new TreeMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>>(new BeanComparator("code"));
 
-        if (departmentID == 0) {
+        if (departmentID == null) {
             Collection<Department> departments = rootDomainObject.getDepartments();
             for (Department department : departments) {
                 Unit unit = department.getDepartmentUnit();
@@ -382,16 +382,16 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                         ReadDepartmentTotalCreditsByPeriod.run(unit, fromExecutionPeriod, untilExecutionPeriod);
                 departmentTotalCredits.put(department, departmentPeriodTotalCredits);
             }
-            request.setAttribute("departmentID", 0);
+            request.setAttribute("departmentID", null);
         } else {
-            Department department = rootDomainObject.readDepartmentByOID(departmentID);
+            Department department = AbstractDomainObject.fromExternalId(departmentID);
             Unit departmentUnit = department.getDepartmentUnit();
             departmentPeriodTotalCredits =
                     ReadDepartmentTotalCreditsByPeriod.run(departmentUnit, fromExecutionPeriod, untilExecutionPeriod);
 
             departmentTotalCredits.put(department, departmentPeriodTotalCredits);
             request.setAttribute("department", department);
-            request.setAttribute("departmentID", department.getIdInternal());
+            request.setAttribute("departmentID", department.getExternalId());
         }
 
         setTotals(request, untilExecutionYear, departmentTotalCredits);
@@ -400,13 +400,13 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException,  InvalidPeriodException {
+            HttpServletResponse response) throws FenixServiceException, InvalidPeriodException {
 
         IUserView userView = UserView.getUser();
 
-        Integer fromExecutionYearID = Integer.parseInt(request.getParameter("fromExecutionYearID"));
-        Integer untilExecutionYearID = Integer.parseInt(request.getParameter("untilExecutionYearID"));
-        Integer departmentID = Integer.parseInt(request.getParameter("departmentID"));
+        String fromExecutionYearID = request.getParameter("fromExecutionYearID");
+        String untilExecutionYearID = request.getParameter("untilExecutionYearID");
+        String departmentID = request.getParameter("departmentID");
 
         Map<Department, Map<Unit, List>> teachersCreditsByDepartment =
                 getDetailedTeachersCreditsMap(request, userView, fromExecutionYearID, untilExecutionYearID, departmentID);
@@ -528,14 +528,14 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             if (!executionYear.getBeginDateYearMonthDay().isBefore(executionYear0304.getBeginDateYearMonthDay())
                     && !executionYear.isAfter(lastExecutionYear)) {
                 String label = executionYear.getYear();
-                filteredExecutionYears.add(new LabelValueBean(label, executionYear.getIdInternal().toString()));
+                filteredExecutionYears.add(new LabelValueBean(label, executionYear.getExternalId().toString()));
             }
         }
         Collections.sort(filteredExecutionYears, new BeanComparator("label"));
         return filteredExecutionYears;
     }
 
-    private String getFileName(Date date) throws  FenixServiceException {
+    private String getFileName(Date date) throws FenixServiceException {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int day = calendar.get(Calendar.DAY_OF_MONTH);

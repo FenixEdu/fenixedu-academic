@@ -33,7 +33,7 @@ margin: 0;
 	<h3 class="mbottom05">
 		<bean:message key="title.evaluationMethod"/>
 	</h3>
-	<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=evaluationMethod&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+	<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=evaluationMethod&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>
 
 	<fr:edit name="executionCourse" property="evaluationMethod"
 			schema="net.sourceforge.fenixedu.domain.EvaluationMethod"

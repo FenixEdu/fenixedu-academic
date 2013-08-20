@@ -23,7 +23,7 @@
 	</logic:equal>
 	<logic:notEqual name="infoEvaluationListSize" value="0">	
 		<logic:iterate id="evaluation" name="infoEvaluationList">	
-			<bean:define id="evaluationCode" name="evaluation" property="idInternal"/>			
+			<bean:define id="evaluationCode" name="evaluation" property="externalId"/>			
 			<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.EXAM_STRING %>">
 				<br />
 				<table width="90%" class="infotable"> 	

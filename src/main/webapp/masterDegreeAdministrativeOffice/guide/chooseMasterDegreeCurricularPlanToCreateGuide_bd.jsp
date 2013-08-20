@@ -18,7 +18,7 @@
 	<bean:message key="label.masterDegree.administrativeOffice.curricularPlans" /><br/>
  	<logic:iterate id="degreeCurricularPlan" name="masterDegreeCPlanList">
     	<bean:define id="degreeCurricularPlanLink">
-    		<bean:write name="link"/><bean:write name="degreeCurricularPlan" property="idInternal"/>
+    		<bean:write name="link"/><bean:write name="degreeCurricularPlan" property="externalId"/>
     	</bean:define>
     	<html:link page='<%= pageContext.findAttribute("degreeCurricularPlanLink").toString() %>'>
 			<bean:write name="degreeCurricularPlan" property="infoDegree.nome"/> - 

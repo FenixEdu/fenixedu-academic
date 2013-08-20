@@ -51,7 +51,7 @@ public class ManageCaseStudyChoices extends FenixAction {
             Integer id = new Integer(idString);
             for (Iterator innerIterator = cases.iterator(); innerIterator.hasNext();) {
                 InfoCaseStudy infoCaseStudy = (InfoCaseStudy) innerIterator.next();
-                if ((id.equals(infoCaseStudy.getIdInternal()))) {
+                if ((id.equals(infoCaseStudy.getExternalId()))) {
                     extractedCases.add(infoCaseStudy);
                     break;
                 }
@@ -68,7 +68,7 @@ public class ManageCaseStudyChoices extends FenixAction {
             for (Iterator innerIterator = casesIDs.iterator(); innerIterator.hasNext();) {
                 String idString = (String) innerIterator.next();
                 Integer id = new Integer(idString);
-                if ((id.equals(infoCaseStudy.getIdInternal()))) {
+                if ((id.equals(infoCaseStudy.getExternalId()))) {
                     found = true;
                     break;
                 }
@@ -143,7 +143,7 @@ public class ManageCaseStudyChoices extends FenixAction {
         return destiny;
     }
 
-    public InfoSeminaryWithEquivalencies readSeminaryById(IUserView userView, Integer id) throws FenixActionException {
+    public InfoSeminaryWithEquivalencies readSeminaryById(IUserView userView, String id) throws FenixActionException {
         InfoSeminaryWithEquivalencies seminary = null;
         try {
             seminary = GetSeminary.runGetSeminary(id);
@@ -176,16 +176,16 @@ public class ManageCaseStudyChoices extends FenixAction {
         String motivation = request.getParameter("motivation");
         String submition = request.getParameter("submition");
         IUserView userView = getUserView(request);
-        Integer equivalencyID = null;
-        Integer themeID = null;
+        String equivalencyID = null;
+        String themeID = null;
         if (equivalencyIDString == null) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }
         try {
-            equivalencyID = new Integer(equivalencyIDString);
+            equivalencyID = equivalencyIDString;
             /* struts translates null values to the string "null". bad thing. */
             if (themeIDString != null && !themeIDString.equals("null")) {
-                themeID = new Integer(themeIDString);
+                themeID = themeIDString;
             }
         } catch (Exception ex) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));

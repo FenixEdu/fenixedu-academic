@@ -285,13 +285,13 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
 
     @Override
     public String getViewStudentProgrammeLink() {
-        return "/student.do?method=visualizeRegistration&amp;registrationID=" + getRegistration().getIdInternal();
+        return "/student.do?method=visualizeRegistration&amp;registrationID=" + getRegistration().getExternalId();
     }
 
     @Override
     public String getReceivedActionLink() {
         return "/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId="
-                + getIdInternal();
+                + getExternalId();
     }
 
     @Override

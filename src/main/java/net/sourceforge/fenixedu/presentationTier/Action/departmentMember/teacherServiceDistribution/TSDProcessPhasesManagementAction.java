@@ -58,7 +58,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
 
         String name = (String) dynaForm.get("name");
 
-        CreateTSDProcessPhase.runCreateTSDProcessPhase(tsdProcess.getIdInternal(), name);
+        CreateTSDProcessPhase.runCreateTSDProcessPhase(tsdProcess.getExternalId(), name);
 
         return loadTSDProcessPhases(mapping, form, request, response);
     }
@@ -71,7 +71,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
 
         TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
 
-        SetCurrentTSDProcessPhase.runSetCurrentTSDProcessPhase(selectedTSDProcessPhase.getIdInternal());
+        SetCurrentTSDProcessPhase.runSetCurrentTSDProcessPhase(selectedTSDProcessPhase.getExternalId());
 
         return loadTSDProcessPhases(mapping, form, request, response);
     }
@@ -83,7 +83,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
 
         TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
 
-        CloseTSDProcessPhase.runCloseTSDProcessPhase(selectedTSDProcessPhase.getIdInternal());
+        CloseTSDProcessPhase.runCloseTSDProcessPhase(selectedTSDProcessPhase.getExternalId());
 
         return loadTSDProcessPhases(mapping, form, request, response);
     }
@@ -95,7 +95,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
 
         TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
 
-        OpenTSDProcessPhase.runOpenTSDProcessPhase(selectedTSDProcessPhase.getIdInternal());
+        OpenTSDProcessPhase.runOpenTSDProcessPhase(selectedTSDProcessPhase.getExternalId());
 
         return loadTSDProcessPhases(mapping, form, request, response);
     }
@@ -107,7 +107,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
 
         TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
 
-        DeleteTSDProcessPhase.runDeleteTSDProcessPhase(selectedTSDProcessPhase.getIdInternal());
+        DeleteTSDProcessPhase.runDeleteTSDProcessPhase(selectedTSDProcessPhase.getExternalId());
 
         return loadTSDProcessPhases(mapping, form, request, response);
     }
@@ -120,7 +120,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
         TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
         Boolean isPublished = (Boolean) dynaForm.get("isPublished");
 
-        SetPublishedStateOnTSDProcessPhase.runSetPublishedStateOnTSDProcessPhase(selectedTSDProcessPhase.getIdInternal(),
+        SetPublishedStateOnTSDProcessPhase.runSetPublishedStateOnTSDProcessPhase(selectedTSDProcessPhase.getExternalId(),
                 isPublished);
 
         return loadTSDProcessPhases(mapping, form, request, response);
@@ -146,7 +146,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer tsdProcessId = getFromRequestAndSetOnFormTSDProcessId(request, dynaForm);
+        String tsdProcessId = getFromRequestAndSetOnFormTSDProcessId(request, dynaForm);
 
         dynaForm.set("dataManagementOption", COPY_LAST_YEAR_REAL_DATA);
 
@@ -176,11 +176,11 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
 
         if (dataManagementOption.equals(COPY_LAST_YEAR_REAL_DATA)) {
             CopyLastYearRealDataToTSDProcessPhase.runCopyLastYearRealDataToTSDProcessPhase(tsdProcess.getCurrentTSDProcessPhase()
-                    .getIdInternal());
+                    .getExternalId());
         } else if (dataManagementOption.equals(COPY_PREVIOUS_PHASE_DATA)) {
-            Integer tsdProcessPhaseId = (Integer) dynaForm.get("tsdProcessPhase");
+            String tsdProcessPhaseId = (String) dynaForm.get("tsdProcessPhase");
             CopyTSDProcessPhaseDataToTSDProcessPhase.runCopyTSDProcessPhaseDataToTSDProcessPhase(tsdProcessPhaseId, tsdProcess
-                    .getCurrentTSDProcessPhase().getIdInternal());
+                    .getCurrentTSDProcessPhase().getExternalId());
         }
 
         dynaForm.set("dataManagementOption", SUCCESSFUL_VALUATION);
@@ -193,7 +193,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer tsdProcessId = getFromRequestAndSetOnFormTSDProcessId(request, dynaForm);
+        String tsdProcessId = getFromRequestAndSetOnFormTSDProcessId(request, dynaForm);
 
         TSDProcess tsdProcess = getTSDProcess(userView, dynaForm);
 
@@ -226,7 +226,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
         request.setAttribute("tsdProcessPhaseList", tsdProcessPhases);
 
         if (!tsdProcessPhases.isEmpty()) {
-            dynaForm.set("tsdProcessPhase", tsdProcessPhases.get(0).getIdInternal());
+            dynaForm.set("tsdProcessPhase", tsdProcessPhases.get(0).getExternalId());
         }
 
         return showTSDProcessPhaseDataManagementOptions(mapping, form, request, response);
@@ -236,23 +236,17 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
         dynaForm.set("tsdProcessPhase", null);
     }
 
-    private Integer getFromRequestAndSetOnFormTSDProcessId(HttpServletRequest request, DynaActionForm dynaForm) {
-        Integer tsdProcessId = new Integer(request.getParameter("tsdProcess"));
+    private String getFromRequestAndSetOnFormTSDProcessId(HttpServletRequest request, DynaActionForm dynaForm) {
+        String tsdProcessId = request.getParameter("tsdProcess");
         dynaForm.set("tsdProcess", tsdProcessId);
         return tsdProcessId;
     }
 
     private TSDProcess getTSDProcess(IUserView userView, DynaActionForm dynaForm) {
-        Integer tsdProcessId = (Integer) dynaForm.get("tsdProcess");
-        TSDProcess tsdProcess = rootDomainObject.readTSDProcessByOID(tsdProcessId);
-
-        return tsdProcess;
+        return getDomainObject(dynaForm, "tsdProcess");
     }
 
-    private TSDProcessPhase getSelectedTSDProcessPhase(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException {
-        Integer selectedTSDProcessPhaseId = (Integer) dynaForm.get("tsdProcessPhase");
-        TSDProcessPhase selectedTSDProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(selectedTSDProcessPhaseId);
-
-        return selectedTSDProcessPhase;
+    private TSDProcessPhase getSelectedTSDProcessPhase(IUserView userView, DynaActionForm dynaForm) {
+        return getDomainObject(dynaForm, "tsdProcessPhase");
     }
 }

@@ -1006,8 +1006,8 @@ public abstract class Event extends Event_Base {
 
     private AccountingTransactionDetailDTO createAccountingTransactionDetailForTransfer(final AccountingTransaction transaction) {
         final String comments =
-                transaction.getEvent().getClass().getName() + ":" + transaction.getEvent().getIdInternal() + ","
-                        + transaction.getClass().getName() + ":" + transaction.getIdInternal();
+                transaction.getEvent().getClass().getName() + ":" + transaction.getEvent().getExternalId() + ","
+                        + transaction.getClass().getName() + ":" + transaction.getExternalId();
 
         return new AccountingTransactionDetailDTO(transaction.getTransactionDetail().getWhenRegistered(), PaymentMode.CASH,
                 comments);

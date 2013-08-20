@@ -18,7 +18,7 @@
 
 <br/>
 
-<bean:define id="candidacyID" name="candidacy" property="idInternal" />
+<bean:define id="candidacyID" name="candidacy" property="externalId" />
 <logic:equal name="canChangePersonalData" value="true">
 	<html:link action="<%="/changePersonalData.do?method=prepare&amp;candidacyID=" + candidacyID%>"><bean:message  key="link.changePersonalData"/></html:link>
 	<br/>

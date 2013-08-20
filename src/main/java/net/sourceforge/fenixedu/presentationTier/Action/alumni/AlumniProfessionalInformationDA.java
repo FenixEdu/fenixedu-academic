@@ -128,7 +128,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
     }
 
     protected Job getJob(HttpServletRequest request) {
-        return rootDomainObject.readJobByOID(getIntegerFromRequest(request, "jobId"));
+        return getDomainObject(request, "jobId");
     }
 
 }

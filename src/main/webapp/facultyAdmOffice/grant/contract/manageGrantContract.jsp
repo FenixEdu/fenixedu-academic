@@ -63,27 +63,27 @@
                 </logic:equal>
             </td>
             <td class="listClasses">
-                    <bean:define id="idContract" name="infoGrantContract" property="idInternal"/>
+                    <bean:define id="idContract" name="infoGrantContract" property="externalId"/>
                     <html:link page='<%= "/editGrantContract.do?method=prepareEditGrantContractForm&amp;idContract=" + idContract + "&amp;loaddb=1" %>' > 
                         <bean:message key="link.grant.contract.edit" />
                     </html:link>        
             </td>
             <td class="listClasses">
-                    <bean:define id="idContract" name="infoGrantContract" property="idInternal"/>
-                    <bean:define id="idGrantOwner" name="infoGrantContract" property="grantOwnerInfo.idInternal"/>
+                    <bean:define id="idContract" name="infoGrantContract" property="externalId"/>
+                    <bean:define id="idGrantOwner" name="infoGrantContract" property="grantOwnerInfo.externalId"/>
                     <html:link page='<%= "/manageGrantSubsidy.do?method=prepareManageGrantSubsidyForm&amp;idContract=" + idContract %>' > 
                         <bean:message key="link.manage.grant.subsidy" />
                     </html:link>        
             </td>
 			<td class="listClasses">
-                    <bean:define id="idContract" name="infoGrantContract" property="idInternal"/>
-                    <bean:define id="idGrantOwner" name="infoGrantContract" property="grantOwnerInfo.idInternal"/>
+                    <bean:define id="idContract" name="infoGrantContract" property="externalId"/>
+                    <bean:define id="idGrantOwner" name="infoGrantContract" property="grantOwnerInfo.externalId"/>
                     <html:link page='<%= "/manageGrantContractRegime.do?method=prepareManageGrantContractRegime&amp;idContract=" + idContract %>' > 
                         <bean:message key="link.manage.grant.contract.regime" />
                     </html:link>        
             </td>
             <td class="listClasses">
-	            <bean:define id="idContract" name="infoGrantContract" property="idInternal"/>
+	            <bean:define id="idContract" name="infoGrantContract" property="externalId"/>
 	            <html:link page='<%= "/editGrantInsurance.do?method=prepareEditGrantInsuranceForm&amp;idContract=" + idContract %>' > 
 	                <bean:message key="link.grant.insurance.edit" />
 	            </html:link>        
@@ -102,7 +102,7 @@
 
 <%--
 <bean:message key="message.grant.contract.creation"/>:&nbsp;
-<html:link page='<%= "/editGrantContract.do?method=prepareEditGrantContractForm&amp;idInternal=" + request.getAttribute("idInternal").toString() %>'>
+<html:link page='<%= "/editGrantContract.do?method=prepareEditGrantContractForm&amp;externalId=" + request.getAttribute("externalId").toString() %>'>
 	<bean:message key="link.grant.contract.create"/>
 </html:link>
  --%>
@@ -111,7 +111,7 @@
 <html:form action="/manageGrantOwner" style="display:inline">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantOwnerForm"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value='<%= request.getAttribute("idInternal").toString() %>'/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId" value='<%= request.getAttribute("externalId").toString() %>'/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 		<bean:message key="button.manageGrantOwner"/>
 	</html:submit>

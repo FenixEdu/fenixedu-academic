@@ -40,8 +40,8 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction {
 
         final IUserView userView = getUserView(request);
 
-        final Integer executionCourseCode = Integer.valueOf(request.getParameter("objectCode"));
-        final Integer writtenEvaluationCode = Integer.valueOf(request.getParameter("evaluationCode"));
+        final String executionCourseCode = request.getParameter("objectCode");
+        final String writtenEvaluationCode = request.getParameter("evaluationCode");
 
         SiteView siteView = null;
         try {

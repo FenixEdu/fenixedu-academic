@@ -22,25 +22,25 @@ import org.joda.time.format.PeriodFormatterBuilder;
 public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject {
 
     public class ExecutionCourseTeacherServiceDTO {
-        private Integer executionCourseIdInternal;
+        private final String executionCourseExternalId;
 
-        private String executionCourseName;
+        private final String executionCourseName;
 
-        private Integer hoursSpentByTeacher;
+        private final Integer hoursSpentByTeacher;
 
-        private Duration timeSpentByTeacher;
+        private final Duration timeSpentByTeacher;
 
-        private Map<Integer, String> courseDegreesList;
+        private final Map<String, String> courseDegreesList;
 
-        private String executionPeriodName;
+        private final String executionPeriodName;
 
-        private Map<Integer, Set<String>> executionYearsSet;
+        private final Map<String, Set<String>> executionYearsSet;
 
-        public ExecutionCourseTeacherServiceDTO(Integer idInternal, String name, Integer hours, Duration timeSpentByTeacher,
-                Map<Integer, String> executionCourseDegreesNameMap, Map<Integer, Set<String>> executionYearsMap, String periodName) {
+        public ExecutionCourseTeacherServiceDTO(String externalId, String name, Integer hours, Duration timeSpentByTeacher,
+                Map<String, String> executionCourseDegreesNameMap, Map<String, Set<String>> executionYearsMap, String periodName) {
             super();
 
-            this.executionCourseIdInternal = idInternal;
+            this.executionCourseExternalId = externalId;
             this.hoursSpentByTeacher = hours;
             this.timeSpentByTeacher = timeSpentByTeacher;
             this.executionCourseName = name;
@@ -49,8 +49,8 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
             this.courseDegreesList = executionCourseDegreesNameMap;
         }
 
-        public Integer getExecutionCourseIdInternal() {
-            return executionCourseIdInternal;
+        public String getExecutionCourseExternalId() {
+            return executionCourseExternalId;
         }
 
         public String getExecutionCourseName() {
@@ -61,7 +61,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
             return hoursSpentByTeacher;
         }
 
-        public Map<Integer, String> getCourseDegreesList() {
+        public Map<String, String> getCourseDegreesList() {
             return courseDegreesList;
         }
 
@@ -78,17 +78,17 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 
             finalString.append("(");
 
-            Set<Integer> degreeIdSet = courseDegreesList.keySet();
+            Set<String> degreeIdSet = courseDegreesList.keySet();
 
-            Iterator<Integer> iteratorDegreeIdSet = degreeIdSet.iterator();
+            Iterator<String> iteratorDegreeIdSet = degreeIdSet.iterator();
 
             if (iteratorDegreeIdSet.hasNext()) {
-                Integer firstDegreeIdInternal = iteratorDegreeIdSet.next();
+                String firstDegreeExternalId = iteratorDegreeIdSet.next();
 
-                finalString.append(courseDegreesList.get(firstDegreeIdInternal));
+                finalString.append(courseDegreesList.get(firstDegreeExternalId));
                 finalString.append(" (");
 
-                Set<String> firstCurricularYearsSet = executionYearsSet.get(firstDegreeIdInternal);
+                Set<String> firstCurricularYearsSet = executionYearsSet.get(firstDegreeExternalId);
 
                 Iterator<String> iteratorFirstCurricularYearsSet = firstCurricularYearsSet.iterator();
 
@@ -108,12 +108,12 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
                 while (iteratorDegreeIdSet.hasNext()) {
                     finalString.append(", ");
 
-                    Integer degreeIdInternal = iteratorDegreeIdSet.next();
+                    String degreeExternalId = iteratorDegreeIdSet.next();
 
-                    finalString.append(courseDegreesList.get(degreeIdInternal));
+                    finalString.append(courseDegreesList.get(degreeExternalId));
                     finalString.append(" (");
 
-                    Set<String> curricularYearsSet = executionYearsSet.get(degreeIdInternal);
+                    Set<String> curricularYearsSet = executionYearsSet.get(degreeExternalId);
 
                     Iterator<String> iteratorCurricularYearsSet = curricularYearsSet.iterator();
 
@@ -153,7 +153,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 
         private String functionName;
 
-        private Double credits;
+        private final Double credits;
 
         TeacherCreditsInfoDTO(Set<PersonContractSituation> exemptionTypes, Double credits) {
             this.exemptionTypes = exemptionTypes;
@@ -179,17 +179,17 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
     }
 
     public class TeacherDistributionServiceEntryDTO implements Comparable {
-        private Integer teacherIdInternal;
+        private final String teacherExternalId;
 
-        private String teacherId;
+        private final String teacherId;
 
-        private String teacherCategory;
+        private final String teacherCategory;
 
-        private String teacherName;
+        private final String teacherName;
 
         private Double teacherRequiredHours;
 
-        private Double teacherAccumulatedCredits;
+        private final Double teacherAccumulatedCredits;
 
         List<ExecutionCourseTeacherServiceDTO> executionCourseTeacherServiceList;
 
@@ -197,11 +197,11 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 
         List<TeacherCreditsInfoDTO> exemptionSituationList;
 
-        public TeacherDistributionServiceEntryDTO(Integer internal, String teacherId, String category, String name, Double hours,
+        public TeacherDistributionServiceEntryDTO(String internal, String teacherId, String category, String name, Double hours,
                 Double accumulatedCredits) {
             this.teacherId = teacherId;
             teacherCategory = category;
-            teacherIdInternal = internal;
+            teacherExternalId = internal;
             teacherName = name;
             teacherRequiredHours = hours;
             teacherAccumulatedCredits = accumulatedCredits;
@@ -221,8 +221,8 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
             return teacherCategory;
         }
 
-        public Integer getTeacherIdInternal() {
-            return teacherIdInternal;
+        public String getTeacherExternalId() {
+            return teacherExternalId;
         }
 
         public String getTeacherName() {
@@ -331,13 +331,13 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
         }
     }
 
-    private Map<Integer, TeacherDistributionServiceEntryDTO> teachersMap;
+    private final Map<String, TeacherDistributionServiceEntryDTO> teachersMap;
 
     public DistributionTeacherServicesByTeachersDTO() {
-        teachersMap = new HashMap<Integer, TeacherDistributionServiceEntryDTO>();
+        teachersMap = new HashMap<String, TeacherDistributionServiceEntryDTO>();
     }
 
-    public void addTeacher(Integer key, String teacherId, String category, String name, Double hours, Double accumulatedCredits) {
+    public void addTeacher(String key, String teacherId, String category, String name, Double hours, Double accumulatedCredits) {
         TeacherDistributionServiceEntryDTO t =
                 new TeacherDistributionServiceEntryDTO(key, teacherId, category, name, hours, accumulatedCredits);
 
@@ -346,18 +346,18 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
         }
     }
 
-    public void addExecutionCourseToTeacher(Integer keyTeacher, Integer executionCourseIdInternal, String executionCourseName,
-            Integer hours, Duration timeSpentByTeacher, Map<Integer, String> executionCourseDegreesNameSet,
-            Map<Integer, Set<String>> curricularYearsSet, String periodName) {
+    public void addExecutionCourseToTeacher(String keyTeacher, String executionCourseExternalId, String executionCourseName,
+            Integer hours, Duration timeSpentByTeacher, Map<String, String> executionCourseDegreesNameSet,
+            Map<String, Set<String>> curricularYearsSet, String periodName) {
         ExecutionCourseTeacherServiceDTO executionCourse =
-                new ExecutionCourseTeacherServiceDTO(executionCourseIdInternal, executionCourseName, hours, timeSpentByTeacher,
+                new ExecutionCourseTeacherServiceDTO(executionCourseExternalId, executionCourseName, hours, timeSpentByTeacher,
                         executionCourseDegreesNameSet, curricularYearsSet, periodName);
 
         teachersMap.get(keyTeacher).addExecutionCourse(executionCourse);
 
     }
 
-    public void addHoursToTeacher(Integer keyTeacher, double hours) {
+    public void addHoursToTeacher(String keyTeacher, double hours) {
         TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
 
         if (teacher != null) {
@@ -365,15 +365,15 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
         }
     }
 
-    public boolean isTeacherPresent(Integer keyTeacher) {
+    public boolean isTeacherPresent(String keyTeacher) {
         return teachersMap.containsKey((keyTeacher));
     }
 
-    public Map<Integer, TeacherDistributionServiceEntryDTO> getTeachersMap() {
+    public Map<String, TeacherDistributionServiceEntryDTO> getTeachersMap() {
         return teachersMap;
     }
 
-    public void addManagementFunctionToTeacher(Integer keyTeacher, String managementFunction, Double credits) {
+    public void addManagementFunctionToTeacher(String keyTeacher, String managementFunction, Double credits) {
         TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
 
         if (teacher != null) {
@@ -381,7 +381,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
         }
     }
 
-    public void addExemptionSituationToTeacher(Integer keyTeacher, Set<PersonContractSituation> exemptionTypes, Double credits) {
+    public void addExemptionSituationToTeacher(String keyTeacher, Set<PersonContractSituation> exemptionTypes, Double credits) {
         TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
 
         if (teacher != null) {

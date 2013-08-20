@@ -17,7 +17,7 @@
 	<br />
 </html:messages>
 
-<bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
+<bean:define id="parentProcessId" name="parentProcess" property="externalId" />
 
 <fr:form action='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?userAction=createCandidacy&parentProcessId=" + parentProcessId.toString() %>' id="over23CandidacyForm">
 	<input type="hidden" id="methodId" name="method" value="createNewProcess"/>
@@ -64,7 +64,7 @@
 				<tr>
 					<td><bean:write name="degree" property="presentationName" /> - <bean:write name="degree" property="sigla" /></td>
 					<td>
-						<bean:define id="degreeId" name="degree" property="idInternal" />
+						<bean:define id="degreeId" name="degree" property="externalId" />
 						<html:hidden property="degreeToDelete" value="<%= degreeId.toString() %>" />
 						<html:submit onclick="this.form.skipValidation.value='true';this.form.method.value='removeDegreeFromCandidacy';return true;"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES" /></html:submit>
 					</td>

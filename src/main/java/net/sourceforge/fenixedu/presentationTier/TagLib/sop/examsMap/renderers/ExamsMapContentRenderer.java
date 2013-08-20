@@ -68,10 +68,10 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
                             + infoExecutionCourse.getInfoExecutionPeriod().getName() + "&amp;eYName="
                             + infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear() + "&amp;season="
                             + infoExam.getSeason().getseason() + "&amp;" + PresentationConstants.EXECUTION_PERIOD_OID + "="
-                            + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
+                            + infoExecutionCourse.getInfoExecutionPeriod().getExternalId() + "&amp;"
                             + PresentationConstants.EXECUTION_DEGREE_OID + "="
-                            + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
-                            + PresentationConstants.EXECUTION_COURSE_OID + "=" + infoExecutionCourse.getIdInternal()
+                            + examsMap.getInfoExecutionDegree().getExternalId() + "&amp;"
+                            + PresentationConstants.EXECUTION_COURSE_OID + "=" + infoExecutionCourse.getExternalId()
                             + getCurricularYearsArgs() + "'>");
 
                     if (isOnValidWeekDay) {
@@ -82,7 +82,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
                 } else if (typeUser.equals("public")) {
                     strBuffer.append("<a href='executionCourse.do?method=firstPage&amp;executionCourseID="
-                            + infoExecutionCourse.getIdInternal() + "'>");
+                            + infoExecutionCourse.getExternalId() + "'>");
                     strBuffer.append(courseInitials);
                 }
                 strBuffer.append("</a>");
