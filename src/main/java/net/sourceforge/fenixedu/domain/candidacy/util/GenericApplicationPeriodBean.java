@@ -7,14 +7,15 @@ import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class GenericApplicationPeriodBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private MultiLanguageString title;
-    private MultiLanguageString description;
+    private MultiLanguageString title = new MultiLanguageString(Language.en, "");
+    private MultiLanguageString description = new MultiLanguageString(Language.en, "");
     private DateTime start;
     private DateTime end;
 
