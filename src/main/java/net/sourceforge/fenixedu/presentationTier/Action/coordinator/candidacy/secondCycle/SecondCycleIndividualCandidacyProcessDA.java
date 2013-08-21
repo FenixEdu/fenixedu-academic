@@ -39,8 +39,13 @@ public class SecondCycleIndividualCandidacyProcessDA extends
             HttpServletResponse response) {
         final String degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
-        request.setAttribute("seriesGrade", getProcess(request).getCandidacy()
-                .getSecondCycleIndividualCandidacySeriesGradeForDegree(degreeCurricularPlan.getDegree()));
+        if (getProcess(request).getCandidacy().getSecondCycleIndividualCandidacySeriesGradeForDegree(
+                degreeCurricularPlan.getDegree()) != null) {
+            request.setAttribute("seriesGrade", getProcess(request).getCandidacy()
+                    .getSecondCycleIndividualCandidacySeriesGradeForDegree(degreeCurricularPlan.getDegree()));
+        } else {
+            request.setAttribute("seriesGrade", getProcess(request).getCandidacy().getSecondCycleIndividualCandidacySeriesGrade());
+        }
         return super.listProcessAllowedActivities(mapping, form, request, response);
     }
 
