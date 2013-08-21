@@ -473,16 +473,6 @@
                   <form-property type="java.lang.String" name="periodGradeSubmissionNormalSeasonSecondSemesterEnd"></form-property>
                   <form-property type="java.lang.String" name="periodGradeSubmissionSpecialSeasonEnd"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="curricularCourseEquivalenciesForm">
-                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="degreeID"></form-property>
-                  <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
-                  <form-property type="java.lang.String" name="curricularCourseID"></form-property>
-                  <form-property type="java.lang.String" name="oldDegreeID"></form-property>
-                  <form-property type="java.lang.String" name="oldDegreeCurricularPlanID"></form-property>
-                  <form-property type="java.lang.String" name="oldCurricularCourseID"></form-property>
-                  <form-property type="java.lang.String" name="curricularCourseEquivalencyID"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="equivalencesForm">
                   <form-property type="java.lang.String" name="method"></form-property>
                   <form-property type="java.lang.String" name="studentNumber"></form-property>
