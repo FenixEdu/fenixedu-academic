@@ -5,13 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import pt.ist.fenixWebFramework.services.Service;
-
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationLetterOfRecomentation;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class GenericApplicationUploadBean implements Serializable {
 
@@ -88,16 +87,19 @@ public class GenericApplicationUploadBean implements Serializable {
     }
 
     @Service
-    public void uploadTo(final GenericApplicationRecomentation recomentation) {
+    public GenericApplicationLetterOfRecomentation uploadTo(final GenericApplicationRecomentation recomentation) {
         try {
             final byte[] content = readStreamContents();
-            if (recomentation.hasLetterOfRecomentation()) {
-                recomentation.getLetterOfRecomentation().delete();
-            }                
-            new GenericApplicationLetterOfRecomentation(recomentation, displayName, fileName, content);
+            if (content != null && content.length > 0) {
+                if (recomentation.hasLetterOfRecomentation()) {
+                    recomentation.getLetterOfRecomentation().delete();
+                }                
+                return new GenericApplicationLetterOfRecomentation(recomentation, displayName, fileName, content);
+            }
         } catch (final IOException ex) {
             throw new Error(ex);
         }
+        return null;
     }
 
 }

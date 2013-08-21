@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile;
+import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationLetterOfRecomentation;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation;
 import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationPeriodBean;
 import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationRecommendationBean;
@@ -207,9 +208,11 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
                 uploadBean.setDisplayName(BundleUtil.getStringFromResourceBundle("resources.CandidateResources",
                         "label.recommendation.document"));
             } else {
-                uploadBean.uploadTo(recomentation);
-                RenderUtils.invalidateViewState();
-                request.setAttribute("recommendationSaved", Boolean.TRUE);
+                final GenericApplicationLetterOfRecomentation file = uploadBean.uploadTo(recomentation);
+                if (file != null) {
+                    RenderUtils.invalidateViewState();
+                    request.setAttribute("recommendationSaved", Boolean.TRUE);
+                }
             }
             request.setAttribute("uploadBean", uploadBean);
             request.setAttribute("recomentation", recomentation);
