@@ -28,8 +28,10 @@
 
 <logic:present name="recommendationSaved">
 	<br/>
-	<div class="infoop5">
-		<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.saved"/>
+	<div id="savedMessage">
+		<div class="infoop5">
+			<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.saved"/>
+		</div>
 	</div>
 </logic:present>
 
@@ -121,3 +123,14 @@
 	<p><em><bean:message key="message.candidacy.upload.pdf.documents" bundle="CANDIDATE_RESOURCES"/></em></p>
 	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
 </fr:form>
+
+<logic:present name="recommendationSaved">
+	<script>
+		$(document).hover(function(){
+			$('#savedMessage').fadeOut();
+		});
+		$('input[type=file]').on('click focusin', function() {
+			$('#savedMessage').fadeOut();
+		});
+	</script>
+</logic:present>
