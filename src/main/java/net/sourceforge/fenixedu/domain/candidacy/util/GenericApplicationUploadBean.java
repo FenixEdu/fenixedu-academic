@@ -77,13 +77,16 @@ public class GenericApplicationUploadBean implements Serializable {
     }
 
     @Service
-    public void uploadTo(final GenericApplication application) {
+    public GenericApplicationFile uploadTo(final GenericApplication application) {
         try {
             final byte[] content = readStreamContents();
-            new GenericApplicationFile(application, displayName, fileName, content);
+            if (content != null && content.length > 0) {
+                return new GenericApplicationFile(application, displayName, fileName, content);
+            }
         } catch (final IOException ex) {
             throw new Error(ex);
         }
+        return null;
     }
 
     @Service

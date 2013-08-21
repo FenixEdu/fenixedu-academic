@@ -14,7 +14,7 @@
 
 <% final GenericApplication genericApplication = (GenericApplication) request.getAttribute("application"); %>
 
-<bean:define id="unsavedChangesMessage"><bean:message bundle="CANDIDATE_RESOURCES" key="label.application.unsaved.changes"/></bean:define>
+<bean:define id="unsavedChangesMessage" type="java.lang.String"><bean:message bundle="CANDIDATE_RESOURCES" key="label.application.unsaved.changes"/></bean:define>
 
 <script src="https://rawgithub.com/timrwood/moment/2.0.0/moment.js"></script>
 <script>
@@ -26,7 +26,7 @@
 
    	function toggleByIdWithChangeCheck(id) {
    		if (fieldChanged) {
-   			alert("<%= unsavedChangesMessage %>");
+   			alert("<%= unsavedChangesMessage.replace('\n', ' ') %>");
    		}
    		$(id).toggle();
 	}
@@ -520,7 +520,8 @@
 		<bean:message bundle="CANDIDATE_RESOURCES" key="label.add.document"/>
 	</a>
 
-	<fr:form id="genericApplicationDocumentUploadForm" action="/genericApplications.do" encoding="multipart/form-data" style="display: none;">
+	<% final String uploadBeanStyle = request.getAttribute("hasUploadFileError") == null ? "display: none;" : ""; %>
+	<fr:form id="genericApplicationDocumentUploadForm" action="/genericApplications.do" encoding="multipart/form-data" style="<%= uploadBeanStyle %>">
 		<input type="hidden" name="method" value="uploadDocument"/>
 		<input type="hidden" name="applicationExternalId" value="<%= genericApplication.getExternalId() %>"/>
 		<input type="hidden" name="confirmationCode" value="<%= genericApplication.getConfirmationCode() %>"/>

@@ -130,8 +130,12 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         final String confirmationCode = (String) getFromRequest(request, "confirmationCode");
         if (application != null && confirmationCode != null && application.getConfirmationCode() != null
                 && application.getConfirmationCode().equals(confirmationCode)) {
-            uploadBean.uploadTo(application);
-            RenderUtils.invalidateViewState();
+            final GenericApplicationFile file = uploadBean.uploadTo(application);
+            if (file != null) {
+                RenderUtils.invalidateViewState();
+            } else {
+                request.setAttribute("hasUploadFileError", Boolean.TRUE);
+            }
             return confirmEmail(mapping, form, request, response);
         }
         request.setAttribute("invalidOrIncorrectConfirmationCode", Boolean.TRUE);
