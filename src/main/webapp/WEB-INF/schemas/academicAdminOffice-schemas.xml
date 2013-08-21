@@ -1970,3 +1970,8 @@
 		<property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${person.externalId}"/>	
 	</slot>		
 </schema>
+
+<schema name="SibsPaymentsReportBean.search" type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.accounting.reports.ExportSibsPaymentsReport$SibsPaymentsReportBean" bundle="MANAGER_RESOURCES">
+	<slot name="year" key="label.reports.year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="month" key="label.reports.month" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
