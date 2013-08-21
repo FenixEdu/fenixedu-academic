@@ -2019,6 +2019,8 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String name;
         PersistentGroupMembersType type;
     }
+    
+    class accessControl.RoleCustomGroup extends .pt.ist.bennu.core.domain.groups.CustomGroup;
 
     class accounting.Account  {
         AccountType accountType;
@@ -13088,6 +13090,13 @@ relation PersistentGroupMembersUnit {
     accessControl.PersistentGroupMembers playsRole persistentGroups {
         multiplicity *;
     }
+}
+
+relation RoleCustomGroupRole {
+    Role playsRole role {
+        multiplicity 1..1;
+    }
+    accessControl.RoleCustomGroup playsRole roleCustomGroup;
 }
 
 relation PersonAccountPerson {
