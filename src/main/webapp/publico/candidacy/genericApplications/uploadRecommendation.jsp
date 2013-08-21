@@ -66,7 +66,10 @@
 		</td>
 		<td>
 			<% if (genericRecomentation.hasLetterOfRecomentation()) { %>
-				<%= genericRecomentation.getLetterOfRecomentation().getFilename() %>
+				<a href="<%= request.getContextPath() +  "/publico/genericApplications.do?method=downloadRecomendationFile&fileExternalId=" 
+							+ genericRecomentation.getLetterOfRecomentation().getExternalId() + "&confirmationCode=" + genericRecomentation.getConfirmationCode() %>">
+					<%= genericRecomentation.getLetterOfRecomentation().getFilename() %>
+				</a>
 			<% } %>
 		</td>
 	</tr>

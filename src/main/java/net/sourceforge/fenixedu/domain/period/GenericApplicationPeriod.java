@@ -63,4 +63,10 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
         return new GenericApplication(this, email);
     }
 
+    public SortedSet<GenericApplication> getOrderedGenericApplicationSet() {
+        final SortedSet<GenericApplication> result = new TreeSet<GenericApplication>(GenericApplication.COMPARATOR_BY_APPLICATION_NUMBER);
+        result.addAll(getGenericApplicationSet());
+        return result;
+    }
+
 }

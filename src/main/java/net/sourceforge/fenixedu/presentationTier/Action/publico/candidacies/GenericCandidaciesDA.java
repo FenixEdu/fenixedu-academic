@@ -104,6 +104,18 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         return listApplicationPeriods(mapping, form, request, response);
     }
 
+    public ActionForward viewApplication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final GenericApplication application = getDomainObject(request, "applicationId");
+        final IUserView userView = AccessControl.getUserView();
+        if (application != null && userView != null && userView.hasRoleType(RoleType.MANAGER)) {
+            request.setAttribute("application", application);
+            return mapping.findForward("genericApplications.confirmEmail");
+        }
+        request.setAttribute("invalidOrIncorrectConfirmationCode", Boolean.TRUE);
+        return listApplicationPeriods(mapping, form, request, response);
+    }
+
     public ActionForward saveApplication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         RenderUtils.invalidateViewState();
@@ -131,9 +143,32 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         final GenericApplication application = getDomainObject(request, "applicationExternalId");
         final String confirmationCode = (String) getFromRequest(request, "confirmationCode");
         final GenericApplicationFile file = getDomainObject(request, "fileExternalId");
-        if (application != null && confirmationCode != null && application.getConfirmationCode() != null
-                && application.getConfirmationCode().equals(confirmationCode)
-                && file != null && file.getGenericApplication() == application) {
+        final IUserView userView = AccessControl.getUserView();
+        if (application != null && file != null && file.getGenericApplication() == application
+                && ((confirmationCode != null && application.getConfirmationCode() != null && application.getConfirmationCode().equals(confirmationCode))
+                        || userView != null && userView.hasRoleType(RoleType.MANAGER))) {
+            response.setContentType(file.getMimeType());
+            response.addHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
+            response.setContentLength(file.getSize());
+            final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+            dos.write(file.getContents());
+            dos.close();
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_BAD_REQUEST));
+            response.getWriter().close();
+        }
+        return null;
+    }
+
+    public ActionForward downloadRecomendationFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        final String confirmationCode = (String) getFromRequest(request, "confirmationCode");
+        final GenericApplicationLetterOfRecomentation file = getDomainObject(request, "fileExternalId");
+        final IUserView userView = AccessControl.getUserView();
+        if (file != null && file.getRecomentation() != null && file.getRecomentation().getConfirmationCode() != null
+                && ((userView != null && userView.hasRoleType(RoleType.MANAGER))
+                        || file.getRecomentation().getConfirmationCode().equals(confirmationCode))) {
             response.setContentType(file.getMimeType());
             response.addHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
             response.setContentLength(file.getSize());

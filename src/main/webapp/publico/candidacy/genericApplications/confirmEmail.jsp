@@ -117,19 +117,24 @@
 				<bean:message bundle="CANDIDATE_RESOURCES" key="label.full.name"/>
 			</td>
 			<td>
-				<fr:edit id="genericApplicationFormName" name="application">
-					<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-						<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-							<fr:property name="size" value="50"/>
-						</fr:slot>
-					</fr:schema>
-					<fr:layout name="flow">
-						<fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-					<fr:destination name="invalid" path="<%= callbackUrl %>" />
-					<fr:destination name="cancel" path="<%= callbackUrl %>" />
-				</fr:edit>
-				<div id="emptyname" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				<logic:present name="uploadBean">
+					<fr:edit id="genericApplicationFormName" name="application">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+							<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:property name="size" value="50"/>
+							</fr:slot>
+						</fr:schema>
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+						</fr:layout>
+						<fr:destination name="invalid" path="<%= callbackUrl %>" />
+						<fr:destination name="cancel" path="<%= callbackUrl %>" />
+					</fr:edit>
+					<div id="emptyname" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				</logic:present>
+				<logic:notPresent name="uploadBean">
+					<%= genericApplication.getName() %>
+				</logic:notPresent>
 			</td>
 		</tr>
 		<tr>
@@ -154,17 +159,22 @@
 				<bean:message bundle="CANDIDATE_RESOURCES" key="label.gender"/>
 			</td>
 			<td>
-				<fr:edit id="genericApplicationFormGender" name="application">
-					<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-						<fr:slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-					</fr:schema>
-					<fr:layout name="flow">
-						<fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-					<fr:destination name="invalid" path="<%= callbackUrl %>" />
-					<fr:destination name="cancel" path="<%= callbackUrl %>" />
-				</fr:edit>
-				<div id="emptygender" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				<logic:present name="uploadBean">
+					<fr:edit id="genericApplicationFormGender" name="application">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+							<fr:slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+						</fr:schema>
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+						</fr:layout>
+						<fr:destination name="invalid" path="<%= callbackUrl %>" />
+						<fr:destination name="cancel" path="<%= callbackUrl %>" />
+					</fr:edit>
+					<div id="emptygender" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				</logic:present>
+				<logic:notPresent name="uploadBean">
+					<%= genericApplication.getGender() == null ? "" : genericApplication.getGender().getLocalizedName() %>
+				</logic:notPresent>
 			</td>
 		</tr>
 		<tr class="personalInformation">
@@ -172,27 +182,32 @@
 				<bean:message bundle="CANDIDATE_RESOURCES" key="label.dateOfBirth"/>
 			</td>
 			<td>
-				<fr:edit id="genericApplicationFormDateOfBirth" name="application">
-					<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-						<fr:slot name="dateOfBirthYearMonthDay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.AdvancedDateValidator">
-								<fr:property name="validationPeriod" value="PAST"/>
-								<fr:property name="bundle" value="CANDIDATE_RESOURCES"/>
-								<fr:property name="message" value="error.birth.date.not.less.actual.date"/>
-							</fr:validator>
-							<fr:property name="size" value="10"/>
-							<fr:property name="maxLength" value="10"/>
-						</fr:slot>
-					</fr:schema>
-					<fr:layout name="flow">
-						<fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-					<fr:destination name="invalid" path="<%= callbackUrl %>" />
-					<fr:destination name="cancel" path="<%= callbackUrl %>" />
-				</fr:edit>
-				<div id="emptydateOfBirthYearMonthDay" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
-				<div id="badDateFormatdateOfBirthYearMonthDay" class="error" style="display: none;">O formato deve ser dd/MM/yyyy</div>
+				<logic:present name="uploadBean">
+					<fr:edit id="genericApplicationFormDateOfBirth" name="application">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+							<fr:slot name="dateOfBirthYearMonthDay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.AdvancedDateValidator">
+									<fr:property name="validationPeriod" value="PAST"/>
+									<fr:property name="bundle" value="CANDIDATE_RESOURCES"/>
+									<fr:property name="message" value="error.birth.date.not.less.actual.date"/>
+								</fr:validator>
+								<fr:property name="size" value="10"/>
+								<fr:property name="maxLength" value="10"/>
+							</fr:slot>
+						</fr:schema>
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+						</fr:layout>
+						<fr:destination name="invalid" path="<%= callbackUrl %>" />
+						<fr:destination name="cancel" path="<%= callbackUrl %>" />
+					</fr:edit>
+					<div id="emptydateOfBirthYearMonthDay" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+					<div id="badDateFormatdateOfBirthYearMonthDay" class="error" style="display: none;">O formato deve ser dd/MM/yyyy</div>
+				</logic:present>
+				<logic:notPresent name="uploadBean">
+					<%= genericApplication.getDateOfBirthYearMonthDay() == null ? "" : genericApplication.getDateOfBirthYearMonthDay().toString("dd/MM/yyyy") %>
+				</logic:notPresent>
 			</td>
 		</tr>
 		<tr class="personalInformation">
@@ -200,36 +215,41 @@
 				<bean:message bundle="CANDIDATE_RESOURCES" key="label.identificationNumber"/>
 			</td>
 			<td>
-				<fr:edit id="genericApplicationFormGenderIdNumber" name="application">
-					<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-						<fr:slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-							<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
-								<fr:property name="type" value="character"/>
-								<fr:property name="length" value="50"/>
-							</fr:validator>
-							<fr:property name="size" value="12"/>
-							<fr:property name="maxLength" value="50"/>
-						</fr:slot>
-					</fr:schema>
-					<fr:layout name="flow">
-						<fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-					<fr:destination name="invalid" path="<%= callbackUrl %>" />
-					<fr:destination name="cancel" path="<%= callbackUrl %>" />
-				</fr:edit>
-				<fr:edit id="genericApplicationFormGenderIdDocType" name="application">
-					<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-						<fr:slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-					</fr:schema>
-					<fr:layout name="flow">
-						<fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-					<fr:destination name="invalid" path="<%= callbackUrl %>" />
-					<fr:destination name="cancel" path="<%= callbackUrl %>" />
-				</fr:edit>
-				<div id="emptydocumentIdNumber" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
-				<div id="emptyidDocumentType" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				<logic:present name="uploadBean">
+					<fr:edit id="genericApplicationFormGenderIdNumber" name="application">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+							<fr:slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+									<fr:property name="type" value="character"/>
+									<fr:property name="length" value="50"/>
+								</fr:validator>
+								<fr:property name="size" value="12"/>
+								<fr:property name="maxLength" value="50"/>
+							</fr:slot>
+						</fr:schema>
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+						</fr:layout>
+						<fr:destination name="invalid" path="<%= callbackUrl %>" />
+						<fr:destination name="cancel" path="<%= callbackUrl %>" />
+					</fr:edit>
+					<fr:edit id="genericApplicationFormGenderIdDocType" name="application">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+							<fr:slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+						</fr:schema>
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+						</fr:layout>
+						<fr:destination name="invalid" path="<%= callbackUrl %>" />
+						<fr:destination name="cancel" path="<%= callbackUrl %>" />
+					</fr:edit>
+					<div id="emptydocumentIdNumber" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+					<div id="emptyidDocumentType" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				</logic:present>
+				<logic:notPresent name="uploadBean">
+					<%= genericApplication.getDocumentIdNumber() %> &nbsp;&nbsp;&nbsp; <%= genericApplication.getIdDocumentType() == null ? "" : genericApplication.getIdDocumentType().getLocalizedName() %>
+				</logic:notPresent>
 			</td>
 		</tr>
 		<tr class="personalInformation">
@@ -237,22 +257,27 @@
 				<bean:message bundle="CANDIDATE_RESOURCES" key="label.nationality"/>
 			</td>
 			<td>
-				<fr:edit id="genericApplicationFormGenderNationality" name="application">
-					<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-						<fr:slot name="nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
-								layout="menu-select">
-							<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
-							<fr:property name="format" value="${countryNationality}" />
-							<fr:property name="sortBy" value="countryNationality"/>
-						</fr:slot>
-					</fr:schema>
-					<fr:layout name="flow">
-						<fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-					<fr:destination name="invalid" path="<%= callbackUrl %>" />
-					<fr:destination name="cancel" path="<%= callbackUrl %>" />
-				</fr:edit>
-				<div id="emptynationality" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				<logic:present name="uploadBean">
+					<fr:edit id="genericApplicationFormGenderNationality" name="application">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+							<fr:slot name="nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
+									layout="menu-select">
+								<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
+								<fr:property name="format" value="${countryNationality}" />
+								<fr:property name="sortBy" value="countryNationality"/>
+							</fr:slot>
+						</fr:schema>
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+						</fr:layout>
+						<fr:destination name="invalid" path="<%= callbackUrl %>" />
+						<fr:destination name="cancel" path="<%= callbackUrl %>" />
+					</fr:edit>
+					<div id="emptynationality" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				</logic:present>
+				<logic:notPresent name="uploadBean">
+					<%= genericApplication.getNationality() == null ? "" : genericApplication.getNationality().getCountryNationality() %>
+				</logic:notPresent>
 			</td>
 		</tr>
 		<tr class="personalInformation">
@@ -260,24 +285,29 @@
 				<bean:message bundle="CANDIDATE_RESOURCES" key="label.fiscalCode"/>
 			</td>
 			<td>
-				<fr:edit id="genericApplicationFormGenderFiscalCode" name="application">
-					<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-						<fr:slot name="fiscalCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-							<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
-								<fr:property name="type" value="character"/>
-								<fr:property name="length" value="50"/>
-							</fr:validator>			 	
-							<fr:property name="size" value="20" />
-							<fr:property name="maxLength" value="50" />
-						</fr:slot>
-					</fr:schema>
-					<fr:layout name="flow">
-						<fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-					<fr:destination name="invalid" path="<%= callbackUrl %>" />
-					<fr:destination name="cancel" path="<%= callbackUrl %>" />
-				</fr:edit>
-				<div id="emptyfiscalCode" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				<logic:present name="uploadBean">
+					<fr:edit id="genericApplicationFormGenderFiscalCode" name="application">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+							<fr:slot name="fiscalCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+									<fr:property name="type" value="character"/>
+									<fr:property name="length" value="50"/>
+								</fr:validator>			 	
+								<fr:property name="size" value="20" />
+								<fr:property name="maxLength" value="50" />
+							</fr:slot>
+						</fr:schema>
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+						</fr:layout>
+						<fr:destination name="invalid" path="<%= callbackUrl %>" />
+						<fr:destination name="cancel" path="<%= callbackUrl %>" />
+					</fr:edit>
+					<div id="emptyfiscalCode" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				</logic:present>
+				<logic:notPresent name="uploadBean">
+					<%= genericApplication.getFiscalCode() %>
+				</logic:notPresent>
 			</td>
 		</tr>
 		<tr class="personalInformation">
@@ -285,24 +315,29 @@
 				<bean:message bundle="CANDIDATE_RESOURCES" key="label.address"/>
 			</td>
 			<td>
-				<fr:edit id="genericApplicationFormGenderAddress" name="application">
-					<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-						<fr:slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-							<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
-								<fr:property name="type" value="character"/>
-								<fr:property name="length" value="100"/>
-							</fr:validator>			 	
-							<fr:property name="size" value="50" />
-							<fr:property name="maxLength" value="100" />
-						</fr:slot>
-					</fr:schema>
-					<fr:layout name="flow">
-						<fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-					<fr:destination name="invalid" path="<%= callbackUrl %>" />
-					<fr:destination name="cancel" path="<%= callbackUrl %>" />
-				</fr:edit>
-				<div id="emptyaddress" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				<logic:present name="uploadBean">
+					<fr:edit id="genericApplicationFormGenderAddress" name="application">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+							<fr:slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+									<fr:property name="type" value="character"/>
+									<fr:property name="length" value="100"/>
+								</fr:validator>			 	
+								<fr:property name="size" value="50" />
+								<fr:property name="maxLength" value="100" />
+							</fr:slot>
+						</fr:schema>
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+						</fr:layout>
+						<fr:destination name="invalid" path="<%= callbackUrl %>" />
+						<fr:destination name="cancel" path="<%= callbackUrl %>" />
+					</fr:edit>
+					<div id="emptyaddress" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				</logic:present>
+				<logic:notPresent name="uploadBean">
+					<%= genericApplication.getAddress() %>
+				</logic:notPresent>				
 			</td>
 		</tr>
 		<tr class="personalInformation">
@@ -312,42 +347,47 @@
 				<bean:message bundle="CANDIDATE_RESOURCES" key="label.area"/>
 			</td>
 			<td>
-				<fr:edit id="genericApplicationFormGenderAreaCode" name="application">
-					<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-						<fr:slot name="areaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-							<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
-								<fr:property name="type" value="character"/>
-								<fr:property name="length" value="20"/>
-							</fr:validator>			 	
-							<fr:property name="size" value="10" />
-							<fr:property name="maxLength" value="20" />
-						</fr:slot>
-					</fr:schema>
-					<fr:layout name="flow">
-						<fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-					<fr:destination name="invalid" path="<%= callbackUrl %>" />
-					<fr:destination name="cancel" path="<%= callbackUrl %>" />
-				</fr:edit>
-				<fr:edit id="genericApplicationFormGenderArea" name="application">
-					<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-						<fr:slot name="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-							<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
-								<fr:property name="type" value="character"/>
-								<fr:property name="length" value="50"/>
-							</fr:validator>			 	
-							<fr:property name="size" value="20" />
-							<fr:property name="maxLength" value="50" />
-						</fr:slot>
-					</fr:schema>
-					<fr:layout name="flow">
-						<fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-					<fr:destination name="invalid" path="<%= callbackUrl %>" />
-					<fr:destination name="cancel" path="<%= callbackUrl %>" />
-				</fr:edit>
-				<div id="emptyareaCode" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
-				<div id="emptyarea" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				<logic:present name="uploadBean">
+					<fr:edit id="genericApplicationFormGenderAreaCode" name="application">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+							<fr:slot name="areaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+									<fr:property name="type" value="character"/>
+									<fr:property name="length" value="20"/>
+								</fr:validator>			 	
+								<fr:property name="size" value="10" />
+								<fr:property name="maxLength" value="20" />
+							</fr:slot>
+						</fr:schema>
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+						</fr:layout>
+						<fr:destination name="invalid" path="<%= callbackUrl %>" />
+						<fr:destination name="cancel" path="<%= callbackUrl %>" />
+					</fr:edit>
+					<fr:edit id="genericApplicationFormGenderArea" name="application">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+							<fr:slot name="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+									<fr:property name="type" value="character"/>
+									<fr:property name="length" value="50"/>
+								</fr:validator>			 	
+								<fr:property name="size" value="20" />
+								<fr:property name="maxLength" value="50" />
+							</fr:slot>
+						</fr:schema>
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+						</fr:layout>
+						<fr:destination name="invalid" path="<%= callbackUrl %>" />
+						<fr:destination name="cancel" path="<%= callbackUrl %>" />
+					</fr:edit>
+					<div id="emptyareaCode" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+					<div id="emptyarea" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				</logic:present>
+				<logic:notPresent name="uploadBean">
+					<%= genericApplication.getAreaCode() %> <%= genericApplication.getArea() %>
+				</logic:notPresent>
 			</td>
 		</tr>
 		<tr class="personalInformation">
@@ -355,35 +395,45 @@
 				<bean:message bundle="CANDIDATE_RESOURCES" key="label.phone"/>
 			</td>
 			<td>
-				<fr:edit id="genericApplicationFormGenderPhone" name="application">
-					<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-						<fr:slot name="telephoneContact" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            					<fr:property name="regexp" value="(\+?\d{4,15})?"/>
-            					<fr:property name="message" value="error.phone.invalidFormat"/>
-            					<fr:property name="key" value="true"/>
-            					<fr:property name="bundle" value="CANDIDATE_RESOURCES"/>
-            					<fr:property name="isKey" value="true"/>
-							</fr:validator>			 	
-							<fr:property name="size" value="15" />
-							<fr:property name="maxLength" value="15" />
-						</fr:slot>
-					</fr:schema>
-					<fr:layout name="flow">
-						<fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-					<fr:destination name="invalid" path="<%= callbackUrl %>" />
-					<fr:destination name="cancel" path="<%= callbackUrl %>" />
-				</fr:edit>
-				<div id="emptytelephoneContact" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				<logic:present name="uploadBean">
+					<fr:edit id="genericApplicationFormGenderPhone" name="application">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+							<fr:slot name="telephoneContact" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            						<fr:property name="regexp" value="(\+?\d{4,15})?"/>
+            						<fr:property name="message" value="error.phone.invalidFormat"/>
+            						<fr:property name="key" value="true"/>
+            						<fr:property name="bundle" value="CANDIDATE_RESOURCES"/>
+            						<fr:property name="isKey" value="true"/>
+								</fr:validator>			 	
+								<fr:property name="size" value="15" />
+								<fr:property name="maxLength" value="15" />
+							</fr:slot>
+						</fr:schema>
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+						</fr:layout>
+						<fr:destination name="invalid" path="<%= callbackUrl %>" />
+						<fr:destination name="cancel" path="<%= callbackUrl %>" />
+					</fr:edit>
+					<div id="emptytelephoneContact" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+				</logic:present>
+				<logic:notPresent name="uploadBean">
+					<%= genericApplication.getTelephoneContact() %>
+				</logic:notPresent>
 			</td>
 		</tr>
 	</table>
-	<p>
-		<html:submit onclick="return validateInput();">
-			<bean:message key="button.save" bundle="APPLICATION_RESOURCES"/>
-		</html:submit>
-	</p>
+	<logic:present name="uploadBean">
+		<p>
+			<html:submit onclick="return validateInput();">
+				<bean:message key="button.save" bundle="APPLICATION_RESOURCES"/>
+			</html:submit>
+		</p>
+	</logic:present>
+	<logic:notPresent name="uploadBean">
+		<br/>
+	</logic:notPresent>
 </fr:form>
 
 <h3><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h3>
@@ -392,7 +442,7 @@
 	<div><bean:message key="label.documentation.none" bundle="CANDIDATE_RESOURCES"/></div>
 	<br/>
 <% } else { %>
-<bean:define id="downloadUrl">/publico/genericApplications.do?method=downloadFile&applicationExternalId=<%= genericApplication.getExternalId() %>&confirmationCode=<%= genericApplication.getConfirmationCode() %></bean:define>
+<bean:define id="downloadUrl">/publico/genericApplications.do?method=downloadFile&applicationExternalId=<%= genericApplication.getExternalId() %><logic:present name="uploadBean">&confirmationCode=<%= genericApplication.getConfirmationCode() %></logic:present></bean:define>
 <bean:define id="deleteUrl">/publico/genericApplications.do?method=deleteFile&applicationExternalId=<%= genericApplication.getExternalId() %>&confirmationCode=<%= genericApplication.getConfirmationCode() %></bean:define>
 <bean:define id="confirmDeleteMessage"><bean:message bundle="CANDIDATE_RESOURCES" key="label.confirm.delete.file"/></bean:define>
 <table class="tstyle2 thlight thcenter mtop15">
@@ -409,8 +459,10 @@
 		<th>
 			<bean:message bundle="CANDIDATE_RESOURCES" key="label.checksum"/>
 		</th>
-		<th>
-		</th>
+		<logic:present name="uploadBean">
+			<th>
+			</th>
+		</logic:present>
 	</tr>
 <%
 	for (final GenericApplicationFile file : genericApplication.getGenericApplicationFileSet()) {
@@ -430,12 +482,14 @@
 			<td style="color: gray;">
 				<%= file.getChecksumAlgorithm() %>: <%= file.getChecksum() %>
 			</td>
-			<td>
-				<a href="<%= request.getContextPath() +  deleteUrl + "&fileExternalId=" + file.getExternalId() %>"
-						onclick="return confirm('<%= confirmDeleteMessage %>');">
-					<bean:message bundle="CANDIDATE_RESOURCES" key="label.delete"/>
-				</a>
-			</td>
+			<logic:present name="uploadBean">
+				<td>
+					<a href="<%= request.getContextPath() +  deleteUrl + "&fileExternalId=" + file.getExternalId() %>"
+							onclick="return confirm('<%= confirmDeleteMessage %>');">
+						<bean:message bundle="CANDIDATE_RESOURCES" key="label.delete"/>
+					</a>
+				</td>
+			</logic:present>
 		</tr>
 <%
 	}
@@ -443,40 +497,41 @@
 </table>
 <% } %>
 
-<a href="#" onclick="toggleById('#genericApplicationDocumentUploadForm');">
-	<bean:message bundle="CANDIDATE_RESOURCES" key="label.add.document"/>
-</a>
+<logic:present name="uploadBean">
+	<a href="#" onclick="toggleById('#genericApplicationDocumentUploadForm');">
+		<bean:message bundle="CANDIDATE_RESOURCES" key="label.add.document"/>
+	</a>
 
-<fr:form id="genericApplicationDocumentUploadForm" action="/genericApplications.do" encoding="multipart/form-data" style="display: none;">
-	<input type="hidden" name="method" value="uploadDocument"/>
-	<input type="hidden" name="applicationExternalId" value="<%= genericApplication.getExternalId() %>"/>
-	<input type="hidden" name="confirmationCode" value="<%= genericApplication.getConfirmationCode() %>"/>
+	<fr:form id="genericApplicationDocumentUploadForm" action="/genericApplications.do" encoding="multipart/form-data" style="display: none;">
+		<input type="hidden" name="method" value="uploadDocument"/>
+		<input type="hidden" name="applicationExternalId" value="<%= genericApplication.getExternalId() %>"/>
+		<input type="hidden" name="confirmationCode" value="<%= genericApplication.getConfirmationCode() %>"/>
 
-	<fr:edit id="genericApplicationDocumentUploadFormFile" name="uploadBean">
-		<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUploadBean">
-			<fr:slot name="displayName" key="label.description" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:property name="size" value="50" />
-				<fr:property name="maxLength" value="50" />
-			</fr:slot>
-			<fr:slot name="stream" key="label.candidacy.document.file">
-    			<fr:property name="fileNameSlot" value="fileName"/>
-    			<fr:property name="fileSizeSlot" value="fileSize"/>
-				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
-					<fr:property name="maxSize" value="3698688"/>
-					<fr:property name="acceptedExtensions" value="pdf" />
-					<fr:property name="acceptedTypes" value="application/pdf" />
-				</fr:validator>
-  			</fr:slot>
-		</fr:schema>
-		<fr:layout>
-			<fr:property name="classes" value="tstyle2 thcenter mtop15"/>
-		</fr:layout>
-	</fr:edit>
-	<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
-	<p><em><bean:message key="message.candidacy.upload.pdf.documents" bundle="CANDIDATE_RESOURCES"/></em></p>
-	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
-</fr:form>
-
+		<fr:edit id="genericApplicationDocumentUploadFormFile" name="uploadBean">
+			<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUploadBean">
+				<fr:slot name="displayName" key="label.description" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="size" value="50" />
+					<fr:property name="maxLength" value="50" />
+				</fr:slot>
+				<fr:slot name="stream" key="label.candidacy.document.file">
+    				<fr:property name="fileNameSlot" value="fileName"/>
+    				<fr:property name="fileSizeSlot" value="fileSize"/>
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+						<fr:property name="maxSize" value="3698688"/>
+						<fr:property name="acceptedExtensions" value="pdf" />
+						<fr:property name="acceptedTypes" value="application/pdf" />
+					</fr:validator>
+  				</fr:slot>
+			</fr:schema>
+			<fr:layout>
+				<fr:property name="classes" value="tstyle2 thcenter mtop15"/>
+			</fr:layout>
+		</fr:edit>
+		<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
+		<p><em><bean:message key="message.candidacy.upload.pdf.documents" bundle="CANDIDATE_RESOURCES"/></em></p>
+		<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
+	</fr:form>
+</logic:present>
 
 <h3><bean:message key="label.recommendations" bundle="CANDIDATE_RESOURCES"/></h3>
 
@@ -484,7 +539,6 @@
 	<div><bean:message key="label.recommendations.none" bundle="CANDIDATE_RESOURCES"/></div>
 	<br/>
 <% } else { %>
-<bean:define id="downloadRecommendationUrl">/publico/genericApplications.do?method=downloadRecommendationFile&applicationExternalId=<%= genericApplication.getExternalId() %>&confirmationCode=<%= genericApplication.getConfirmationCode() %></bean:define>
 <bean:define id="resendRequestUrl">/publico/genericApplications.do?method=resendRecommendationRequest&applicationExternalId=<%= genericApplication.getExternalId() %>&confirmationCode=<%= genericApplication.getConfirmationCode() %></bean:define>
 <table class="tstyle2 thlight thcenter mtop15">
 	<tr>
@@ -500,8 +554,18 @@
 		<th>
 			<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document"/>
 		</th>
-		<th>
-		</th>
+		<logic:present name="recommendationBean">
+			<th>
+			</th>
+		</logic:present>
+		<logic:notPresent name="recommendationBean">
+			<th>
+				<bean:message bundle="CANDIDATE_RESOURCES" key="label.size.in.bytes"/>
+			</th>
+			<th>
+				<bean:message bundle="CANDIDATE_RESOURCES" key="label.checksum"/>
+			</th>
+		</logic:notPresent>
 	</tr>
 <%
 	for (final GenericApplicationRecomentation recomentation : genericApplication.getGenericApplicationRecomentationSet()) {
@@ -516,20 +580,41 @@
 			<td>
 				<%= recomentation.getEmail() %>
 			</td>
-			<td>
-				<% if (recomentation.hasLetterOfRecomentation()) { %>
-					<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document.submitted"/>
-				<% } else { %>
-					<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document.request.sent"/>
-				<% } %>
-			</td>
-			<td>
-				<% if (!recomentation.hasLetterOfRecomentation()) { %>
-					<a href="<%= request.getContextPath() +  resendRequestUrl + "&recomentationId=" + recomentation.getExternalId() %>">
-						<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.request.resend"/>
-					</a>
-				<% } %>
-			</td>
+			<logic:present name="recommendationBean">
+				<td>
+					<% if (recomentation.hasLetterOfRecomentation()) { %>
+						<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document.submitted"/>
+					<% } else { %>
+						<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document.request.sent"/>
+					<% } %>
+				</td>
+				<td>
+					<% if (!recomentation.hasLetterOfRecomentation()) { %>
+						<a href="<%= request.getContextPath() +  resendRequestUrl + "&recomentationId=" + recomentation.getExternalId() %>">
+							<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.request.resend"/>
+						</a>
+					<% } %>
+				</td>
+			</logic:present>
+			<logic:notPresent name="recommendationBean">
+				<td>
+					<% if (recomentation.hasLetterOfRecomentation()) { %>
+						<a href="<%= request.getContextPath() +  "/publico/genericApplications.do?method=downloadRecomendationFile&fileExternalId=" + recomentation.getLetterOfRecomentation().getExternalId() %>">
+							<%= recomentation.getLetterOfRecomentation().getFilename() %>
+						</a>
+					<% } %>
+				</td>
+				<td>
+					<% if (recomentation.hasLetterOfRecomentation()) { %>
+						<%= recomentation.getLetterOfRecomentation().getSize() %>
+					<% } %>	
+				</td>
+				<td style="color: gray;">
+					<% if (recomentation.hasLetterOfRecomentation()) { %>
+						<%= recomentation.getLetterOfRecomentation().getChecksumAlgorithm() %>: <%= recomentation.getLetterOfRecomentation().getChecksum() %>
+					<% } %>
+				</td>
+			</logic:notPresent>
 		</tr>
 <%
 	}
@@ -537,48 +622,44 @@
 </table>
 <% } %>
 
-<a href="#" onclick="toggleById('#genericApplicationRecommendationForm');">
-	<bean:message bundle="CANDIDATE_RESOURCES" key="label.request.recommendation"/>
-</a>
+<logic:present name="recommendationBean">
+	<a href="#" onclick="toggleById('#genericApplicationRecommendationForm');">
+		<bean:message bundle="CANDIDATE_RESOURCES" key="label.request.recommendation"/>
+	</a>
 
-<fr:form id="genericApplicationRecommendationForm" action="/genericApplications.do" encoding="multipart/form-data" style="display: none;">
-	<input type="hidden" name="method" value="requestRecommendation"/>
-	<input type="hidden" name="applicationExternalId" value="<%= genericApplication.getExternalId() %>"/>
-	<input type="hidden" name="confirmationCode" value="<%= genericApplication.getConfirmationCode() %>"/>
+	<fr:form id="genericApplicationRecommendationForm" action="/genericApplications.do" encoding="multipart/form-data" style="display: none;">
+		<input type="hidden" name="method" value="requestRecommendation"/>
+		<input type="hidden" name="applicationExternalId" value="<%= genericApplication.getExternalId() %>"/>
+		<input type="hidden" name="confirmationCode" value="<%= genericApplication.getConfirmationCode() %>"/>
 
-	<fr:edit id="recommendationBean" name="recommendationBean">
-		<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUploadBean">
-			<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:property name="size" value="50"/>
-			</fr:slot>
-			<fr:slot name="email" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:property name="size" value="50"/>
-			</fr:slot>
-			<fr:slot name="institution" key="label.recommendation.institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:property name="size" value="50"/>
-			</fr:slot>
-		</fr:schema>
-		<fr:layout>
-			<fr:property name="classes" value="tstyle2 thcenter mtop15"/>
-		</fr:layout>
-	</fr:edit>
-	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
-</fr:form>
+		<fr:edit id="recommendationBean" name="recommendationBean">
+			<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUploadBean">
+				<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="size" value="50"/>
+				</fr:slot>
+				<fr:slot name="email" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="size" value="50"/>
+				</fr:slot>
+				<fr:slot name="institution" key="label.recommendation.institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="size" value="50"/>
+				</fr:slot>
+			</fr:schema>
+			<fr:layout>
+				<fr:property name="classes" value="tstyle2 thcenter mtop15"/>
+			</fr:layout>
+		</fr:edit>
+		<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
+	</fr:form>
+</logic:present>
 
-
-<script>
-	<%
-		if (genericApplication.getGender() != null && genericApplication.getDateOfBirthYearMonthDay() != null
-				&& genericApplication.getDocumentIdNumber() != null && !genericApplication.getDocumentIdNumber().isEmpty()
-				&& genericApplication.getIdDocumentType() != null && genericApplication.getNationality() != null
-				&& genericApplication.getFiscalCode() != null && !genericApplication.getFiscalCode().isEmpty()
-				&& genericApplication.getAddress() != null && !genericApplication.getAddress().isEmpty()
-				&& genericApplication.getAreaCode() != null && !genericApplication.getAreaCode().isEmpty()
-				&& genericApplication.getArea() != null && !genericApplication.getArea().isEmpty()
-				&& genericApplication.getTelephoneContact() != null && !genericApplication.getTelephoneContact().isEmpty()) {
-	%>
-		toggleById('.personalInformation');
-	<%
-		}
-	%>
-</script>
+<logic:present name="uploadBean">
+	<script>
+		<%
+			if (genericApplication.isAllPersonalInformationFilled()) {
+		%>
+				toggleById('.personalInformation');
+		<%
+			}
+		%>
+	</script>
+</logic:present>

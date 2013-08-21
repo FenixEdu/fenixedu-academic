@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplication"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
@@ -123,3 +124,64 @@
 		</html:submit>
 	</form>
 </logic:notPresent>
+
+<%
+	if (userView != null && userView.hasRoleType(RoleType.MANAGER)) {
+%>
+		<table class="tstyle2 thlight thcenter mtop15">
+			<tr>
+				<th>
+					<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.number"/>
+				</th>
+				<th>
+					<bean:message bundle="CANDIDATE_RESOURCES" key="label.full.name"/>
+				</th>
+				<th>
+					<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.candidate.email"/>
+				</th>
+				<th width="150px;">
+					<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.has.personal.information"/>
+				</th>
+				<th width="150px;">
+					<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.number.of.documents"/>
+				</th>
+				<th width="150px;">
+					<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.letters.of.recomendation.requested"/>
+				</th>
+				<th width="150px;">
+					<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.letters.of.recomendation.available"/>
+				</th>
+				<th>
+				</th>
+			</tr>
+			<% for (final GenericApplication genericApplication : genericApplicationPeriod.getOrderedGenericApplicationSet()) { %>
+				<tr>
+					<td>
+						<a href="<%= request.getContextPath() + "/publico/genericApplications.do?method=viewApplication&applicationId=" + genericApplication.getExternalId() %>">
+							<%= genericApplication.getApplicationNumber() %>
+						</a>
+					</td>
+					<td>
+						<%= genericApplication.getName() %>
+					</td>
+					<td>
+						<%= genericApplication.getEmail() %>
+					</td>
+					<td class="center">
+						<bean:message bundle="RENDERER_RESOURCES" key="<%= Boolean.valueOf(genericApplication.isAllPersonalInformationFilled()).toString().toUpperCase() %>"/>
+					</td>
+					<td class="center">
+						<%= genericApplication.getGenericApplicationFileCount() %>
+					</td>
+					<td class="center">
+						<%= genericApplication.getGenericApplicationRecomentationCount() %>
+					</td>
+					<td class="center">
+						<%= genericApplication.getAvailableGenericApplicationRecomentationCount() %>
+					</td>
+				</tr>
+			<% } %>
+		</table>
+<%
+	}
+%>
