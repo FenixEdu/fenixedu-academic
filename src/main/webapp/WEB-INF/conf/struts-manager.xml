@@ -507,18 +507,6 @@
                   <form-property type="java.lang.String[]" name="selectedExternalCurricularCourses"></form-property>
                   <form-property type="java.lang.String[]" name="externalEnrolmentsToDelete"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="markSheetManagementForm">
-                  <form-property type="java.lang.Integer" name="epID"></form-property>
-                  <form-property type="java.lang.Integer" name="dID"></form-property>
-                  <form-property type="java.lang.Integer" name="dcpID"></form-property>
-                  <form-property type="java.lang.Integer" name="ccID"></form-property>
-                  <form-property type="java.lang.Integer" name="msID"></form-property>
-                  <form-property type="java.lang.String" name="tn"></form-property>
-                  <form-property type="java.lang.String" name="ed"></form-property>
-                  <form-property type="java.lang.String" name="mss"></form-property>
-                  <form-property type="java.lang.String" name="mst"></form-property>
-                  <form-property type="java.lang.Integer[]" name="evaluationsToRemove"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="deleteregistrationActualInfoForm">
                   <form-property type="java.lang.String" name="method"></form-property>
                   <form-property type="java.lang.String" name="registrationId"></form-property>
