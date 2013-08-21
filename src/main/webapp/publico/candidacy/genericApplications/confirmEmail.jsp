@@ -14,9 +14,20 @@
 
 <% final GenericApplication genericApplication = (GenericApplication) request.getAttribute("application"); %>
 
+<bean:define id="unsavedChangesMessage"><bean:message bundle="CANDIDATE_RESOURCES" key="label.application.unsaved.changes"/></bean:define>
+
 <script src="https://rawgithub.com/timrwood/moment/2.0.0/moment.js"></script>
 <script>
+	var fieldChanged = false;
+
    	function toggleById(id) {
+   		$(id).toggle();
+	}
+
+   	function toggleByIdWithChangeCheck(id) {
+   		if (fieldChanged) {
+   			alert("<%= unsavedChangesMessage %>");
+   		}
    		$(id).toggle();
 	}
 
@@ -70,6 +81,13 @@
    		if (!validateInputField("telephoneContact")) { allIsOk = false; };
    		return allIsOk;
 	}
+
+   	function addChangeListnerToInputField(type, field) {
+   		var fieldName = "<%= GenericApplication.class.getName() + ":" + genericApplication.getExternalId() %>" + ":" + field;
+   		$(type + '[name$="' + fieldName + '"]').change(function() {
+   			fieldChanged = true;
+        });
+   	}
 </script>
 
 
@@ -498,7 +516,7 @@
 <% } %>
 
 <logic:present name="uploadBean">
-	<a href="#" onclick="toggleById('#genericApplicationDocumentUploadForm');">
+	<a href="#" onclick="toggleByIdWithChangeCheck('#genericApplicationDocumentUploadForm');">
 		<bean:message bundle="CANDIDATE_RESOURCES" key="label.add.document"/>
 	</a>
 
@@ -623,7 +641,7 @@
 <% } %>
 
 <logic:present name="recommendationBean">
-	<a href="#" onclick="toggleById('#genericApplicationRecommendationForm');">
+	<a href="#" onclick="toggleByIdWithChangeCheck('#genericApplicationRecommendationForm');">
 		<bean:message bundle="CANDIDATE_RESOURCES" key="label.request.recommendation"/>
 	</a>
 
@@ -661,5 +679,16 @@
 		<%
 			}
 		%>
+		addChangeListnerToInputField("input", "name");
+		addChangeListnerToInputField("select", "gender");
+		addChangeListnerToInputField("input", "dateOfBirthYearMonthDay");
+		addChangeListnerToInputField("input", "documentIdNumber");
+		addChangeListnerToInputField("select", "idDocumentType");
+		addChangeListnerToInputField("select", "nationality");
+		addChangeListnerToInputField("input", "fiscalCode");
+		addChangeListnerToInputField("input", "address");
+		addChangeListnerToInputField("input", "areaCode");
+		addChangeListnerToInputField("input", "area");
+		addChangeListnerToInputField("input", "telephoneContact");
 	</script>
 </logic:present>
