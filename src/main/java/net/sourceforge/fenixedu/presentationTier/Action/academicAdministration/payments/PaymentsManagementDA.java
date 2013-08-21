@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping.PaymentCode
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -41,8 +42,30 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
+@Mapping(path = "/paymentsManagement", module = "academicAdministration")
+@Forwards({
+        @Forward(name = "searchPersons", path = "/academicAdministration/payments/events/searchPersons.jsp"),
+        @Forward(name = "showEvents", path = "/academicAdministration/payments/events/showEvents.jsp"),
+        @Forward(name = "editCancelEventJustification",
+                path = "/academicAdministration/payments/events/editCancelEventJustification.jsp"),
+        @Forward(name = "showPaymentsForEvent", path = "/academicAdministration/payments/events/showPaymentsForEvent.jsp"),
+        @Forward(name = "chooseTargetEventForPaymentsTransfer",
+                path = "/academicAdministration/payments/events/chooseTargetEventForPaymentsTransfer.jsp"),
+        @Forward(name = "annulTransaction", path = "/academicAdministration/payments/events/annulTransaction.jsp"),
+        @Forward(name = "showOperations", path = "/academicAdministration/payments/showOperations.jsp"),
+        @Forward(name = "showReceipts", path = "/academicAdministration/payments/receipts/showReceipts.jsp"),
+        @Forward(name = "showReceipt", path = "/academicAdministration/payments/receipts/showReceipt.jsp"),
+        @Forward(name = "depositAmount", path = "/academicAdministration/payments/events/depositAmount.jsp"),
+        @Forward(name = "viewCodes", path = "/academicAdministration/payments/codes/viewCodes.jsp"),
+        @Forward(name = "createPaymentCodeMapping", path = "/academicAdministration/payments/codes/createPaymentCodeMapping.jsp"),
+        @Forward(name = "changePaymentPlan", path = "/academicAdministration/payments/events/changePaymentPlan.jsp"),
+        @Forward(name = "viewEventsForCancellation",
+                path = "/academicAdministration/payments/events/viewEventsForCancellation.jsp") })
 public class PaymentsManagementDA extends FenixDispatchAction {
 
     public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -288,10 +311,14 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     public ActionForward showOperations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        request.setAttribute("permission", true);
+        request.setAttribute("permission", getPermissionForAcademicAdministration(getPerson(request)));
         request.setAttribute("person", getPerson(request));
 
         return mapping.findForward("showOperations");
+    }
+
+    private boolean getPermissionForAcademicAdministration(Person person) {
+        return AcademicPredicates.MANAGE_STUDENT_PAYMENTS_ADV.evaluate(person);
     }
 
     public ActionForward showReceipts(ActionMapping mapping, ActionForm form, HttpServletRequest request,

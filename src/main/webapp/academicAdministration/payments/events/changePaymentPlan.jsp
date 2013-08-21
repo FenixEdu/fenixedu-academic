@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-MANAGER_PAYMENTS_EVENTS_ changePaymentPlan
 <h2><bean:message key="label.change.paymentPlan" bundle="APPLICATION_RESOURCES" /></h2>
 
 <logic:messagesPresent message="true">

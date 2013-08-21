@@ -4,8 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-MANAGER_PAYMENTS_EVENTS_ editCancelEventJustification
-
 <h2><bean:message key="label.payments.cancelEvent"
 	bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
