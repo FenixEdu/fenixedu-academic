@@ -3,6 +3,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="pt.ist.bennu.core.domain.User" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" %>
+<%@ page import="pt.ist.bennu.core.security.Authenticate" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -39,7 +40,7 @@
 		<br/>
 		<br/>
 		<%
-			User userView = (User) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
+			User userView = Authenticate.getUser();
 			if(userView.getUsername().startsWith("D"))
 			{
 				InfoStudentCurricularPlan infoScp = (InfoStudentCurricularPlan) ((List) studentCPList).get(0);

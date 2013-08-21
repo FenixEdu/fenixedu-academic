@@ -14,7 +14,7 @@
 		<title><bean:message key="private.student.view.timetable" bundle="TITLES_RESOURCES"/></title>
 	</head>
 	<body>
-		<logic:present name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>">
+		<logic:present name="USER_SESSION_ATTRIBUTE">
 		
 			<div class="mbottom2" style="font-size: 0.85em; margin-left: 3em;">
 				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: <bean:write name="person" property="name"/> </p>

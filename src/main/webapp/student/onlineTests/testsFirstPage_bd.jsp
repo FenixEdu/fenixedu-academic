@@ -3,6 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@ page import="pt.ist.bennu.core.security.Authenticate" %>
 
 <em class="invisible"><bean:message key="title.student.portalTitle"/></em>
 <h2 class="mbottom15"><bean:message key="link.tests"/></h2>
@@ -30,7 +31,7 @@
 						<td><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
 						<td class="acenter">
 							<% 
-							net.sourceforge.fenixedu.applicationTier.User user = (net.sourceforge.fenixedu.applicationTier.User) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
+							pt.ist.bennu.core.domain.User user = Authenticate.getUser();
 							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(student.toString());
 								if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 							<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
@@ -68,7 +69,7 @@
 						<td><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
 						<td class="acenter">
 							<% 
-							net.sourceforge.fenixedu.applicationTier.User user = (net.sourceforge.fenixedu.applicationTier.User) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
+							pt.ist.bennu.core.domain.User user = Authenticate.getUser();
 							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(student.toString());
 								if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 							<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
@@ -109,7 +110,7 @@
 					<td><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
 					<td class="acenter">
 						<% 
-						net.sourceforge.fenixedu.applicationTier.User user = (net.sourceforge.fenixedu.applicationTier.User) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
+						pt.ist.bennu.core.domain.User user = Authenticate.getUser();
 						net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
 							if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 						<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
@@ -146,7 +147,7 @@
 			<td><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
 			<td class="acenter">
 				<% 
-				net.sourceforge.fenixedu.applicationTier.User user = (net.sourceforge.fenixedu.applicationTier.User) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
+				pt.ist.bennu.core.domain.User user = Authenticate.getUser();
 				net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
 					if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 				<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>

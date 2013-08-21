@@ -33,8 +33,8 @@
 		</li>
 		
 		<%-- BIG HACK :) - temporary --%>
-		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" 
-				property="person.istUsername" value="ist12760">
+		<logic:equal name="USER_SESSION_ATTRIBUTE" 
+				property="user.username" value="ist12760">
 
 			<li class="navheader">
 				<bean:message key="label.phd.ist.epfl.collaboration.type" bundle="PHD_RESOURCES" />

@@ -17,7 +17,7 @@
 		<th></th>
 	</tr>
 	
-<logic:iterate id="candidacy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.candidacies">
+<logic:iterate id="candidacy" name="USER_SESSION_ATTRIBUTE" property="user.person.candidacies">
 	<logic:notEmpty name="candidacy" property="candidacySituations">
 	<bean:define id="externalId" name="candidacy" property="externalId" />
 	<tr>
