@@ -278,15 +278,6 @@
 	<definition name="df.executionCourseManagement.seperateExecutionCourse" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/seperateExecutionCourse.jsp" />
 	</definition>
-	<definition name="df.executionCourseManagement.chooseDegreeType" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/chooseDegreeType.jsp" />
-	</definition>
-	<definition name="df.executionCourseManagement.chooseDegreeCurricularPlans" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/chooseDegreeCurricularPlans.jsp" />
-	</definition>
-	<definition name="df.executionCourseManagement.createExecutionCoursesSuccess" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/createExecutionCoursesSuccess.jsp" />
-	</definition>
 	<!-- ist150958: obsolete -->
 	<definition name="df.executionCourseManagement.listExecutionCourseActions" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/listExecutionCourseActions.jsp" />

@@ -115,13 +115,6 @@
                   <form-property type="java.lang.Integer" name="destinationExecutionCourseId"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="createExecutionCoursesForm">
-                  <form-property type="java.lang.String" name="degreeType"></form-property>
-                  <form-property type="java.lang.String[]" name="degreeCurricularPlansIDs"></form-property>
-                  <form-property type="java.lang.String" name="executionPeriodID"></form-property>
-                  <form-property type="java.lang.String" name="method"></form-property>
-                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="sepeateExecutionCourseForm">
                   <form-property type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="destinationExecutionDegreeId"></form-property>

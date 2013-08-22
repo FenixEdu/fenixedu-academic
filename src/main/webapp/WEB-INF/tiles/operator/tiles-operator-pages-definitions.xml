@@ -242,15 +242,6 @@
 		<put name="body" value="/manager/chooseExecutionCoursesForExecutionCourseMerge.jsp" />
 	</definition>
 	
-	<definition name="df.executionCourseManagement.chooseDegreeType" extends="df.executionCourseManagement.page.firstPage" >
-		<put name="body" value="/manager/executionCourseManagement/chooseDegreeType.jsp" />
-	</definition>
-	<definition name="df.executionCourseManagement.chooseDegreeCurricularPlans" extends="df.executionCourseManagement.page.firstPage" >
-		<put name="body" value="/manager/executionCourseManagement/chooseDegreeCurricularPlans.jsp" />
-	</definition>
-	<definition name="df.executionCourseManagement.createExecutionCoursesSuccess" extends="df.executionCourseManagement.page.firstPage" >
-		<put name="body" value="/manager/executionCourseManagement/createExecutionCoursesSuccess.jsp" />
-	</definition>
 	<definition name="df.executionCourseManagement.seperateExecutionCourse" extends="df.executionCourseManagement.page.firstPage" >
 		<put name="body" value="/manager/executionCourseManagement/seperateExecutionCourse.jsp" />
 	</definition>

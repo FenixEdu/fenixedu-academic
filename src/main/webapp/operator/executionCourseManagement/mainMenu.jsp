@@ -22,10 +22,5 @@
 				<bean:message key="label.manager.executionCourseManagement.join.executionCourse" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-		<li>
-			<html:link page="/createExecutionCourses.do?method=chooseDegreeType">
-				<bean:message key="link.manager.createExecutionCourses" bundle="MANAGER_RESOURCES" />
-			</html:link>
-		</li>
-    
+   
 </ul>
