@@ -85,7 +85,7 @@ public class Country extends Country_Base {
             if (!country.getName().equalsIgnoreCase(PORTUGAL)) {
                 result.add(country);
             } else {
-                if (country.getNationality().equalsIgnoreCase(NATIONALITY_PORTUGUESE)) {
+                if (country.getCountryNationality().getContent(Language.pt).equalsIgnoreCase(NATIONALITY_PORTUGUESE)) {
                     result.add(country);
                 }
             }

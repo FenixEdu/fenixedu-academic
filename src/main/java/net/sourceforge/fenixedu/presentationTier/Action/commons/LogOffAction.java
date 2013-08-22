@@ -24,7 +24,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.bennu.core.util.ConfigurationManager.CasConfig;
-import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/logoff")
@@ -52,8 +51,7 @@ public class LogOffAction extends Action {
             Authenticate.logout(session);
             result = new ActionForward("/loginPage.jsp");
         }
-        // this way, we always put the locale as the default we want
-        I18NFilter.setDefaultLocale(request, request.getSession());
+
         return result;
     }
 
