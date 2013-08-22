@@ -217,10 +217,7 @@
 		<put name="body" value="/manager/executionCourseManagement/welcomeScreen.jsp" />
         <put name="navLocal" value="/operator/executionCourseManagement/mainMenu.jsp" />
 	</definition>
-	<definition name="df.executionCourseManagement.page.insertExecutionCourse" extends="df.executionCourseManagement.page.firstPage" >
-		<put name="body" value="/manager/executionCourseManagement/insertExecutionCourse.jsp" />
-	</definition>
-	
+
 	<definition name="df.executionCourseManagement.prepareEditECChooseExecutionPeriod" extends="df.executionCourseManagement.page.firstPage" >
 		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecutionPeriod.jsp" />
 	</definition>	

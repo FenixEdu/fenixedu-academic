@@ -12,11 +12,6 @@
 	</li>
 		
 	<li class="navheader"><bean:message key="label.manager.executionCourseManagement" bundle="MANAGER_RESOURCES" /></li>
-		<li>
-			<html:link page="/insertExecutionCourse.do?method=prepareInsertExecutionCourse">
-				<bean:message key="label.manager.executionCourseManagement.insert.executionCourse" bundle="MANAGER_RESOURCES" />
-			</html:link>
-		</li>
     	<li>
 			<html:link page="/editExecutionCourseChooseExPeriod.do?method=prepareEditExecutionCourse" module="/manager">
 				<bean:message key="label.manager.executionCourseManagement.edit.executionCourse" bundle="MANAGER_RESOURCES" />

@@ -84,15 +84,6 @@
                   <form-property type="java.lang.String" name="degreeType"></form-property>
                   <form-property type="java.lang.String" name="enrolmentPeriodClass"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="insertExecutionCourseForm">
-                  <form-property type="java.lang.String" name="name"></form-property>
-                  <form-property type="java.lang.String" name="code"></form-property>
-                  <form-property type="java.lang.String" name="semester"></form-property>
-                  <form-property type="java.lang.String" name="comment"></form-property>
-                  <form-property type="java.lang.String" name="executionPeriodId"></form-property>
-                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="entryPhase"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="executionCourseForm">
                   <form-property type="java.lang.String" name="name"></form-property>
                   <form-property type="java.lang.String" name="code"></form-property>

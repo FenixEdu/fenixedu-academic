@@ -239,9 +239,6 @@
         <!-- <put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 -->
 	</definition>
-	<definition name="df.executionCourseManagement.page.insertExecutionCourse" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/insertExecutionCourse.jsp" />
-	</definition>	
 	
 	<!-- ist150958: obsolete -->
 	<definition name="df.executionCourseManagement.prepareEditECChooseExecutionPeriod" extends="definition.manager.masterPage" >
