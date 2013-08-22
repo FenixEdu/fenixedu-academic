@@ -10,10 +10,13 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 
 public class SendReceptionEmailBean implements java.io.Serializable {
 
     private boolean includeOnlyProcessWithNoReceptionEmail;
+    private MobilityProgram mobilityProgram;
     private List<MobilityIndividualApplicationProcess> subjectProcesses;
     private MobilityApplicationProcess mobilityApplicationProcess;
 
@@ -27,13 +30,14 @@ public class SendReceptionEmailBean implements java.io.Serializable {
 
     public SendReceptionEmailBean(final MobilityApplicationProcess mobilityApplicationProcess) {
         this.mobilityApplicationProcess = mobilityApplicationProcess;
-        this.includeOnlyProcessWithNoReceptionEmail = true;
-        this.emailSubject =
-                mobilityApplicationProcess.getCandidacyPeriod().getEmailTemplateFor(MobilityEmailTemplateType.IST_RECEPTION)
-                        .getSubject();
-        this.emailBody =
-                mobilityApplicationProcess.getCandidacyPeriod().getEmailTemplateFor(MobilityEmailTemplateType.IST_RECEPTION)
-                        .getBody();
+        includeOnlyProcessWithNoReceptionEmail = true;
+        mobilityProgram = MobilityProgram.getByRegistrationAgreement(RegistrationAgreement.ERASMUS);
+        emailSubject =
+                mobilityApplicationProcess.getCandidacyPeriod()
+                        .getEmailTemplateFor(mobilityProgram, MobilityEmailTemplateType.IST_RECEPTION).getSubject();
+        emailBody =
+                mobilityApplicationProcess.getCandidacyPeriod()
+                        .getEmailTemplateFor(mobilityProgram, MobilityEmailTemplateType.IST_RECEPTION).getBody();
     }
 
     public void removeProcess(MobilityIndividualApplicationProcess individualCandidacyProcess) {
@@ -47,7 +51,6 @@ public class SendReceptionEmailBean implements java.io.Serializable {
     public void retrieveProcesses() {
         subjectProcesses = new ArrayList<MobilityIndividualApplicationProcess>();
 
-        int i = 0;
         for (IndividualCandidacyProcess child : mobilityApplicationProcess.getChildProcesses()) {
             MobilityIndividualApplicationProcess individualCandidacyProcess = (MobilityIndividualApplicationProcess) child;
 
@@ -56,6 +59,10 @@ public class SendReceptionEmailBean implements java.io.Serializable {
             }
 
             if (includeOnlyProcessWithNoReceptionEmail && individualCandidacyProcess.isStudentNotifiedWithReceptionEmail()) {
+                continue;
+            }
+
+            if (individualCandidacyProcess.getMobilityProgram() != mobilityProgram) {
                 continue;
             }
 
@@ -69,6 +76,20 @@ public class SendReceptionEmailBean implements java.io.Serializable {
 
     public void setIncludeOnlyProcessWithNoReceptionEmail(boolean includeOnlyProcessWithNoReceptionEmail) {
         this.includeOnlyProcessWithNoReceptionEmail = includeOnlyProcessWithNoReceptionEmail;
+    }
+
+    public MobilityProgram getMobilityProgram() {
+        return mobilityProgram;
+    }
+
+    public void setMobilityProgram(MobilityProgram mobilityProgram) {
+        this.mobilityProgram = mobilityProgram;
+        emailSubject =
+                mobilityApplicationProcess.getCandidacyPeriod()
+                        .getEmailTemplateFor(mobilityProgram, MobilityEmailTemplateType.IST_RECEPTION).getSubject();
+        emailBody =
+                mobilityApplicationProcess.getCandidacyPeriod()
+                        .getEmailTemplateFor(mobilityProgram, MobilityEmailTemplateType.IST_RECEPTION).getBody();
     }
 
     public List<MobilityIndividualApplicationProcess> getSubjectProcesses() {

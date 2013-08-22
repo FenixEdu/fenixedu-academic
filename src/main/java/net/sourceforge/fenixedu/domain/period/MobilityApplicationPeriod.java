@@ -274,6 +274,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
         return getEmailTemplateFor(mobilityProgram, type);
     }
 
+    @Deprecated
     public boolean hasEmailTemplateFor(final MobilityEmailTemplateType type) {
         MobilityProgram mobilityProgram = getMobilityPrograms().iterator().next();
         return hasEmailTemplateFor(mobilityProgram, type);

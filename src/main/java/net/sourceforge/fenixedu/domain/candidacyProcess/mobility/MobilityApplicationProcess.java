@@ -189,6 +189,17 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
         return result;
     }
 
+    public List<MobilityIndividualApplicationProcess> getValidMobilityIndividualCandidacies(MobilityProgram mobilityProgram) {
+        final List<MobilityIndividualApplicationProcess> result = new ArrayList<MobilityIndividualApplicationProcess>();
+        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+            final MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) child;
+            if (process.isCandidacyValid() && process.getMobilityProgram() == mobilityProgram) {
+                result.add(process);
+            }
+        }
+        return result;
+    }
+
     public List<MobilityIndividualApplicationProcess> getValidErasmusIndividualCandidacies(final Degree degree) {
         if (degree == null) {
             return Collections.emptyList();

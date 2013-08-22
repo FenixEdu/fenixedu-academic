@@ -159,7 +159,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward executeInsertMobilityQuota(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         MobilityApplicationProcess process = getProcess(request);
         ErasmusVacancyBean bean = getErasmusVacancyBean();
 
@@ -185,7 +185,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward executeRemoveVacancy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         MobilityQuota quota = getDomainObject(request, "vacancyExternalId");
 
         if (quota.hasAnyApplications()) {
@@ -212,7 +212,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward executeAssignCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         ErasmusCoordinatorBean bean = getErasmusCoordinatorBean();
 
         try {
@@ -232,7 +232,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward executeRemoveTeacherFromCoordinators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         MobilityCoordinator coordinator = getErasmusCoordinator(request);
 
         executeActivity(getProcess(request), "RemoveTeacherFromCoordinators", new ErasmusCoordinatorBean(coordinator));
@@ -257,7 +257,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward executeSendEmailToMissingRequiredDocumentsProcesses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         executeActivity(getProcess(request), "SendEmailToMissingRequiredDocumentsProcesses", null);
 
@@ -316,7 +316,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward editReceptionEmailMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         executeActivity(getProcess(request), "EditReceptionEmailMessage", getRenderedSendReceptionEmailBean());
 
         return prepareExecuteSendReceptionEmail(mapping, form, request, response);
@@ -339,7 +339,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward sendReceptionEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
         executeActivity(getProcess(request), "SendReceptionEmail", bean);
 
@@ -361,7 +361,8 @@ public class ErasmusCandidacyProcessDA extends
         RenderUtils.invalidateViewState("send.reception.email.bean");
         RenderUtils.invalidateViewState("send.reception.email.bean.edit");
 
-        request.setAttribute("validIndividualProcesses", getProcess(request).getValidErasmusIndividualCandidacies());
+        request.setAttribute("validIndividualProcesses",
+                getProcess(request).getValidMobilityIndividualCandidacies(bean.getMobilityProgram()));
         request.setAttribute("sendReceptionEmailBean", bean);
 
         setSelectedIndividualProcesses((ErasmusCandidacyProcessForm) actionForm, bean);

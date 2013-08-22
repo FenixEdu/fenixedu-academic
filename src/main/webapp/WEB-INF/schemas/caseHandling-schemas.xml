@@ -2824,6 +2824,9 @@
 	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="personalDetails.name" key="label.name" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" bundle="CANDIDATE_RESOURCES"/>
+	<slot name="mobilityProgram" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<property name="format" value="${registrationAgreement.description}" />
+	</slot>
 	<slot name="validatedByGri" key="label.erasmus.validated.by.gri" />
 	<slot name="validatedByMobilityCoordinator" key="label.erasmus.validated.by.coordinator" />
 	<slot name="mostRecentSentEmailAcceptedStudentActionWhenOccured" key="label.erasmus.last.sent.email.to.accepted.candidate" bundle="CANDIDATE_RESOURCES" layout="null-as-label"/>
