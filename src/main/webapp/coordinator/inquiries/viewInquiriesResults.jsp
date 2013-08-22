@@ -137,7 +137,7 @@
                 <img src="<%=request.getContextPath()%>/images/icon_email.gif"/>
             </html:link>
             
-            <logic:present role="PEDAGOGICAL_COUNCIL">
+            <logic:present role="role(PEDAGOGICAL_COUNCIL)">
 	            <bean:define id="professorshipID" name="professorship" property="oid"/>
 		    	<html:link page="<%= "/viewInquiriesResults.do?method=showOthersTeacherCourses&professorshipID=" +  professorshipID%>">
 		        	(<bean:message key="label.inquiries.courses.other" bundle="INQUIRIES_RESOURCES"/>)

@@ -12,7 +12,7 @@
 	request.setAttribute("userView", userView);
 %>
 
-<logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
+<logic:present role="role(DEPARTMENT_ADMINISTRATIVE_OFFICE)">
 	<ul>
 		<li class="navheader">
 			<bean:message key="link.group.view.title"/>
@@ -36,7 +36,7 @@
 	</ul>
 	
 	<ul>
-		<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+		<logic:present role="role(DEPARTMENT_CREDITS_MANAGER)">
 
 			<li class="navheader">
 				<strong><bean:message key="link.group.teacher.title"/></strong>

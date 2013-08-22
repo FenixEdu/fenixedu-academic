@@ -7,7 +7,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean" %>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.providers.PhdManageEnrolmentsExecutionSemestersProvider"%>
 
-<logic:present role="COORDINATOR">
+<logic:present role="role(COORDINATOR)">
 
 <em><bean:message key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.manage.enrolments" bundle="PHD_RESOURCES" /></h2>

@@ -71,7 +71,7 @@
 	}
 %>
 
-<logic:present role="RESEARCHER">
+<logic:present role="role(RESEARCHER)">
 	<ul style="margin-top: 0.75em;">
 		<li class="navheader"><bean:message key="researcher.find.an.expert" bundle="RESEARCHER_RESOURCES"/></li>
 		<li><html:link page="/researcherManagement.do?method=prepare"><bean:message key="label.options" bundle="RESEARCHER_RESOURCES"/></html:link></li>

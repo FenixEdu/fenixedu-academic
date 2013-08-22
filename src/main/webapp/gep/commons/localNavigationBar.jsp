@@ -109,7 +109,7 @@
 		</html:link>
 	</li>
 	
-	<logic:present role="MANAGER">
+	<logic:present role="role(MANAGER)">
 	<li class="navheader">
 		<bean:message key="title.personal.ingression.data.viewer" bundle="GEP_RESOURCES" />
 	</li>

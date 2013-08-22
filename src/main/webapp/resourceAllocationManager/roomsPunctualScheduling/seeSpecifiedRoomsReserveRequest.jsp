@@ -9,7 +9,7 @@
 <em><bean:message key="link.rooms.reserve.management" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="view.rooms.reserve.request.title" bundle="SOP_RESOURCES"/></h2>
 
-<logic:present role="RESOURCE_ALLOCATION_MANAGER">
+<logic:present role="role(RESOURCE_ALLOCATION_MANAGER)">
 
 	<logic:messagesPresent message="true">
 		<p>

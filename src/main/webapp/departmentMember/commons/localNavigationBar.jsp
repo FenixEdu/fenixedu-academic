@@ -7,7 +7,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ page import="pt.ist.bennu.core.domain.User"%>
 
-<logic:present role="DEPARTMENT_MEMBER">
+<logic:present role="role(DEPARTMENT_MEMBER)">
 
 	<ul>	
 		<li class="navheader"><bean:message key="label.teacher"/></li>

@@ -4,7 +4,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
 
-<logic:present role="MANAGER,OPERATOR">
+<logic:present role="(role(MANAGER) | role(OPERATOR))">
 
 	<h2><bean:message key="label.manage.department.degrees" bundle="MANAGER_RESOURCES"/></h2>
 

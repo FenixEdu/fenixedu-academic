@@ -115,7 +115,7 @@
 												<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 												<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
 											</h:outputLink>
-											<logic:present role="SCIENTIFIC_COUNCIL,BOLONHA_MANAGER">
+											<logic:present role="(role(SCIENTIFIC_COUNCIL) | role(BOLONHA_MANAGER))">
 												<h:outputText value=" , "/>
 												<h:outputLink value="transferCompetenceCourse.faces">
 													<h:outputText value="#{scouncilBundle['transfer']}"/>

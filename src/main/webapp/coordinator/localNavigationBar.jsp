@@ -9,7 +9,7 @@
 
 <ul>
 	<li class="navheader"><bean:message  key="label.coordinator.management"/></li>
-	<logic:present role="COORDINATOR">
+	<logic:present role="role(COORDINATOR)">
 		<li>
 			<html:link page="/index.do"><bean:message  key="label.coordinator.degrees"/></html:link>
 		</li>
@@ -19,7 +19,7 @@
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound"/>
 		</html:link>
 	</li>
-	<logic:present role="COORDINATOR">
+	<logic:present role="role(COORDINATOR)">
 		<li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
 		<li>
 			<html:link page="/phdIndividualProgramProcess.do?method=manageProcesses">

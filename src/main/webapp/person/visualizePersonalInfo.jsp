@@ -7,7 +7,7 @@
 
 <html:xhtml/>
 
-<logic:present role="PERSON">
+<logic:present role="role(PERSON)">
 <bean:define id="person" name="USER_SESSION_ATTRIBUTE" property="user.person"/>
 
 <em><bean:message key="label.person.main.title" /></em>

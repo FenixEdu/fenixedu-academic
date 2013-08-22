@@ -4,7 +4,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 	
 	<bean:define id="bean" name="bean" />
 	<bean:define id="type" name="bean" property="type" />

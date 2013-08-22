@@ -8,7 +8,7 @@
 
 <em><bean:message bundle="SOP_RESOURCES" key="title.resourceAllocationManager.management"/></em>
 
-<logic:present role="RESOURCE_ALLOCATION_MANAGER">
+<logic:present role="role(RESOURCE_ALLOCATION_MANAGER)">
 	
 	<logic:messagesPresent message="true">
 		<p>

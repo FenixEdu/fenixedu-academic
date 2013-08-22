@@ -14,7 +14,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement"%><html:xhtml/>
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>

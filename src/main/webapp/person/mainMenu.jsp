@@ -36,13 +36,13 @@
 	<!-- Vigilancy link for people who do not have ROLE TEACHER -->
 
 	<logic:notEmpty name="USER_SESSION_ATTRIBUTE" property="user.person.vigilantWrappers">
-		<logic:notPresent role="TEACHER">
+		<logic:notPresent role="role(TEACHER)">
 	 		<li class="navheader"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></li>
 			<li><html:link  page="/vigilancy/vigilantManagement.do?method=prepareMap"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></html:link></li>
 		</logic:notPresent>
 	</logic:notEmpty>
 
-	<logic:present role="MANAGER">
+	<logic:present role="role(MANAGER)">
 		<li class="navheader"><bean:message key="label.person.system.configuration"/></li>
 		<logic:notEqual name="USER_SESSION_ATTRIBUTE" property="user.username" value="ist24518"> 
 			<logic:notEqual name="USER_SESSION_ATTRIBUTE" property="user.username" value="ist24421">

@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<logic:present role="ALUMNI">
+<logic:present role="role(ALUMNI)">
 
 	<em><bean:message key="administrative.office.services" bundle="STUDENT_RESOURCES"/></em>
 	<h2><bean:message key="label.prices" bundle="STUDENT_RESOURCES"/></h2>

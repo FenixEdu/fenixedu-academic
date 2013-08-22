@@ -53,7 +53,7 @@
 				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
 				<fr:property name="order(view)" value="1" />
 
-				<logic:present role="MANAGER">
+				<logic:present role="role(MANAGER)">
 					<fr:property name="link(delete)" value="/manageCardGeneration.do?method=deletePersonCard"/>
 					<fr:property name="key(delete)" value="label.delete" />
 					<fr:property name="param(delete)" value="OID/cardGenerationEntryId" />

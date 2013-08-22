@@ -22,7 +22,7 @@ padding: 0;
 
 <h2><bean:message key="label.teachingInquiries.studentInquiriesResults" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<logic:present role="PERSON">
+<logic:present role="role(PERSON)">
 	<bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
 
 	<table class="tstyle2 thwhite thleft tdleft thlight">
@@ -68,7 +68,7 @@ padding: 0;
 	</table>
 </logic:present>
 
-<logic:notPresent role="PERSON">
+<logic:notPresent role="role(PERSON)">
 	<bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
 	<br/>
 	<br/>

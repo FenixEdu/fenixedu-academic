@@ -10,7 +10,7 @@
 <em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message key="label.access.groups.management" bundle="SPACE_RESOURCES"/></h2>
 
-<logic:present role="SPACE_MANAGER">
+<logic:present role="role(SPACE_MANAGER)">
 	<logic:notEmpty name="selectedSpaceInformation">
 		
 		<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>

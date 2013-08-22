@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:xhtml/>
 
-<logic:present role="SPACE_MANAGER">
+<logic:present role="role(SPACE_MANAGER)">
 	<ul>
 		<li>
 			<html:link page="/index.do">

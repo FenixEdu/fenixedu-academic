@@ -39,7 +39,7 @@
 					<bean:message bundle="CARD_GENERATION_RESOURCES" name="cardGenerationProblem" property="descriptionKey" arg0="<%= arg %>"/>
 				</td>
 				<td>
-					<logic:present role="MANAGER">
+					<logic:present role="role(MANAGER)">
 						<bean:define id="urlDeleteProblem" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationProblem&amp;cardGenerationProblemID=<bean:write name="cardGenerationProblem" property="externalId"/></bean:define>
 						<html:link page="<%= urlDeleteProblem %>" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 							<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.problem.delete"/>
@@ -63,7 +63,7 @@
 				<bean:message bundle="CARD_GENERATION_RESOURCES" name="cardGenerationProblem" property="descriptionKey" arg0="<%= arg %>"/>
 			</td>
 			<td>
-				<logic:present role="MANAGER">
+				<logic:present role="role(MANAGER)">
 					<bean:define id="urlDeleteProblem" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationProblem&amp;cardGenerationProblemID=<bean:write name="cardGenerationProblem" property="externalId"/></bean:define>
 					<html:link page="<%= urlDeleteProblem %>" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 						<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.problem.delete"/>
@@ -78,7 +78,7 @@
 			<bean:define id="cardGenerationEntry" name="cardGenerationEntryX" toScope="request"/>
 			<jsp:include page="cardGenerationEntry.jsp"/>
 
-			<logic:present role="MANAGER">
+			<logic:present role="role(MANAGER)">
 				<bean:define id="urlDeleteEntry" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationEntry&amp;cardGenerationProblemID=<bean:write name="cardGenerationProblem" property="externalId"/>&amp;cardGenerationEntryID=<bean:write name="cardGenerationEntryX" property="externalId"/></bean:define>
 				<html:link page="<%= urlDeleteEntry %>" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 					<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.entry.delete"/>
@@ -129,7 +129,7 @@
 		<bean:define id="cardGenerationEntry" name="cardGenerationEntryX" toScope="request"/>
 		<jsp:include page="cardGenerationEntry.jsp"/>
 
-		<logic:present role="MANAGER">
+		<logic:present role="role(MANAGER)">
 			<bean:define id="urlDeleteEntry" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationEntry&amp;cardGenerationProblemID=<bean:write name="cardGenerationProblem" property="externalId"/>&amp;cardGenerationEntryID=<bean:write name="cardGenerationEntryX" property="externalId"/></bean:define>
 			<html:link page="<%= urlDeleteEntry %>" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 				<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.entry.delete"/>

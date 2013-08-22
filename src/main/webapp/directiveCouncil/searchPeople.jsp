@@ -6,6 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <html:xhtml/>
 
-<logic:present role="DIRECTIVE_COUNCIL">
+<logic:present role="role(DIRECTIVE_COUNCIL)">
 	<li><html:link page="/searchPeople.do?method=downloadActiveStudentList"><bean:message key="link.list.students.with.active.registration" /></html:link></li>
 </logic:present>

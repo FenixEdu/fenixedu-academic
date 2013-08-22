@@ -45,7 +45,7 @@
 	<li><html:link page="/evaluation/examsIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.exams"/></html:link></li>
 	</logic:equal>
 	
-	<logic:present role="TEACHER">
+	<logic:present role="role(TEACHER)">
 		<logic:equal name="professorshipPermissions" property="evaluationFinal" value="true">
 		<li><html:link page="/evaluation/finalEvaluationIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.finalEvaluation"/></html:link><br/></li>
 		</logic:equal>

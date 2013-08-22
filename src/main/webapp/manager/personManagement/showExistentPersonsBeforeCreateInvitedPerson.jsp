@@ -7,7 +7,7 @@
 
 <h2><bean:message key="create.invited.person.title" bundle="MANAGER_RESOURCES"/></h2>
 
-<logic:present role="MANAGER,OPERATOR">
+<logic:present role="(role(MANAGER) | role(OPERATOR))">
 
 	<logic:notEmpty name="createdPerson">
 		<b><bean:message key="label.invitedPerson.created.with.success" bundle="MANAGER_RESOURCES"/>:</b>

@@ -10,7 +10,7 @@
 
 <html:xhtml/>
 
-<logic:present role="PEDAGOGICAL_COUNCIL">
+<logic:present role="role(PEDAGOGICAL_COUNCIL)">
 
 	<h2><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 	

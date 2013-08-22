@@ -15,7 +15,7 @@
 
 <h2><bean:message key="label.teachingInquiries.studentInquiriesResults" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<logic:present role="PERSON">
+<logic:present role="role(PERSON)">
 	<br/>
 	
 	<bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
@@ -77,7 +77,7 @@
 
 </logic:present>
 
-<logic:notPresent role="PERSON">
+<logic:notPresent role="role(PERSON)">
 	<bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
 	<br/>
 	<br/>

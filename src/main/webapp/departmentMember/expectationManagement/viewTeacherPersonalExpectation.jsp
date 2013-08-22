@@ -9,7 +9,7 @@
 <h2><bean:message key="link.personalExpectationsManagement" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h2>
 
 
-<logic:present role="DEPARTMENT_MEMBER">
+<logic:present role="role(DEPARTMENT_MEMBER)">
 	
 	<logic:messagesPresent message="true">
 		<p>

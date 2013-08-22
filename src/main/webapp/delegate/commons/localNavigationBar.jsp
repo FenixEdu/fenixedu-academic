@@ -6,7 +6,7 @@
 
 <bean:define id="userView" name="USER_SESSION_ATTRIBUTE"/>
 
-<logic:present role="DELEGATE">
+<logic:present role="role(DELEGATE)">
 	<ul>
 		<%--<li>
 			<html:link page="/readCurricularCourses.do">

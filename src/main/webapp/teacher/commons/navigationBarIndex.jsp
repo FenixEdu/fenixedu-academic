@@ -63,7 +63,7 @@
   		<bean:message key="link.manage.publications"/>
   	</html:link>  
   </li>--%>
-	<logic:present role="TEACHER">
+	<logic:present role="role(TEACHER)">
 	<li><html:link
 		href="<%= request.getContextPath() + "/teacher/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare" %>">
 		<bean:message key="link.curriculumHistoric.consult"
