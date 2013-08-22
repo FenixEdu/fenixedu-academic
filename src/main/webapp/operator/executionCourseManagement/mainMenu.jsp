@@ -17,10 +17,5 @@
 				<bean:message key="label.manager.executionCourseManagement.edit.executionCourse" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-		<li>
-			<html:link page="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod">
-				<bean:message key="label.manager.executionCourseManagement.join.executionCourse" bundle="MANAGER_RESOURCES" />
-			</html:link>
-		</li>
-   
+
 </ul>

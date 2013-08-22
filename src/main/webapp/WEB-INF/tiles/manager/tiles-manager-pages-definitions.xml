@@ -215,14 +215,6 @@
 		<put name="body" value="/manager/viewPersonsWithRole_bd.jsp" />
 	</definition>
 
-	<!-- ========== EXECUTION COURSE MERGE ========== -->
-	<definition name="df.page.chooseDegreesForExecutionCourseMerge" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/chooseDegreesForExecutionCourseMerge.jsp" />
-	</definition>
-	<definition name="df.page.chooseExecutionCoursesForExecutionCourseMerge" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/chooseExecutionCoursesForExecutionCourseMerge.jsp" />
-	</definition>	
-
 	<!-- ========== Manage Coordinators ============= -->
 	<definition name="manageCoordinators" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/manageCoordinators.jsp" />

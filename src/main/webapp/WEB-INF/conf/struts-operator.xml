@@ -255,10 +255,6 @@
                   <forward path="df.executionCourseManagement.viewExecutionCourse" name="viewExecutionCourse"></forward>
             </action>
             <!-- ========== Merge Execution Courses ========== -->
-            <action validate="false" scope="request" parameter="method" path="/chooseDegreesForExecutionCourseMerge" type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction" name="chooseDegreesForExecutionCourseMerge">
-                  <forward path="df.page.chooseDegreesForExecutionCourseMerge" name="chooseDegreesAndExecutionPeriod"></forward>
-                  <forward path="df.page.chooseExecutionCoursesForExecutionCourseMerge" name="chooseExecutionCourses"></forward>
-            </action>
             <action validate="false" scope="request" parameter="method" input="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod" path="/mergeExecutionCoursesForm" type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction" name="mergeExecutionCoursesForm">
                   <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="error.cannot.merge.execution.course.with.itself" type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$SourceAndDestinationAreTheSameException"></exception>
                   <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="error.duplicate.shift.names" type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$DuplicateShiftNameException"></exception>
