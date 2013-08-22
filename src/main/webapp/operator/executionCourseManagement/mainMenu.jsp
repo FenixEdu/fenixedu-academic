@@ -23,11 +23,6 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/executionCourseManagement/createCourseReportsForExecutionPeriod.faces" module="/manager">
-				<bean:message key="link.manager.createCourseReports" bundle="MANAGER_RESOURCES" />
-			</html:link>
-		</li>
-		<li>
 			<html:link page="/createExecutionCourses.do?method=chooseDegreeType">
 				<bean:message key="link.manager.createExecutionCourses" bundle="MANAGER_RESOURCES" />
 			</html:link>
