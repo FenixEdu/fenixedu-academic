@@ -1,7 +1,4 @@
-/**
- * 
- */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
+package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,13 +25,21 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
 
-/**
- * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
- */
+@Mapping(module = "academicAdministration", path = "/createExecutionCourses",
+        input = "/createExecutionCourses.do?method=chooseDegreeType", attribute = "createExecutionCoursesForm",
+        formBean = "createExecutionCoursesForm", scope = "request", parameter = "method")
+@Forwards(value = {
+        @Forward(name = "chooseDegreeCurricularPlans",
+                path = "/academicAdministration/executionCourseManagement/chooseDegreeCurricularPlans.jsp"),
+        @Forward(name = "chooseDegreeType", path = "/academicAdministration/executionCourseManagement/chooseDegreeType.jsp"),
+        @Forward(name = "createExecutionCoursesSuccess",
+                path = "/academicAdministration/executionCourseManagement/createExecutionCoursesSuccess.jsp") })
 public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseDegreeType(ActionMapping mapping, ActionForm form, HttpServletRequest request,

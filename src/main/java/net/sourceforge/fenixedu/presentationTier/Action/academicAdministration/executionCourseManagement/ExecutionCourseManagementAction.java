@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
+package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,10 +9,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-/**
- * @author Fernanda Quitério 16/Dez/2003
- * 
- */
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(module = "academicAdministration", path = "/executionCourseManagementStart", scope = "session", parameter = "method")
+@Forwards(value = { @Forward(name = "mainPage", path = "/academicAdministration/executionCourseManagement/welcomeScreen.jsp"),
+        @Forward(name = "firstPage", path = "/academicAdministration/executionCourseManagement/welcomeScreen.jsp") })
 public class ExecutionCourseManagementAction extends FenixDispatchAction {
     public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {

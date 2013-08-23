@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
+package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,12 +34,17 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
-/**
- * @author Fernanda Quitério 17/Dez/2003
- * 
- */
+@Mapping(module = "academicAdministration", path = "/insertExecutionCourse", attribute = "insertExecutionCourseForm",
+        formBean = "insertExecutionCourseForm", scope = "request", parameter = "method")
+@Forwards({
+        @Forward(name = "firstPage", path = "/academicAdministration/executionCourseManagement/welcomeScreen.jsp"),
+        @Forward(name = "insertExecutionCourse",
+                path = "/academicAdministration/executionCourseManagement/insertExecutionCourse.jsp") })
 public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

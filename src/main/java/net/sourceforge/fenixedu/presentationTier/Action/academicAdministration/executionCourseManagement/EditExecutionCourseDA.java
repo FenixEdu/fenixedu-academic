@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
+package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +10,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@Mapping(path = "/editExecutionCourseChooseExPeriod", module = "academicAdministration")
+@Forwards({
+        @Forward(name = "editChooseExecutionPeriod",
+                path = "/academicAdministration/executionCourseManagement/editChooseExecutionPeriod.jsp"),
+        @Forward(name = "editChooseCourseAndYear",
+                path = "/academicAdministration/executionCourseManagement/editChooseCourseAndYear.jsp"),
+        @Forward(name = "editExecutionCourse",
+                path = "/academicAdministration/executionCourseManagement/listExecutionCourseActions.jsp") })
 public class EditExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward prepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,

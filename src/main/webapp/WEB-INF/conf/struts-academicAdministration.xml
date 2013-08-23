@@ -37,7 +37,7 @@
         </form-bean>
         <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="markSheetSendMailForm">
               <form-property type="java.lang.String" name="method"></form-property>
-              <form-property type="java.lang.Integer[]" name="markSheetIDs"></form-property>
+              <form-property type="java.lang.String[]" name="markSheetIDs"></form-property>
         </form-bean>
 		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="printMarkSheetForm">
               <form-property type="java.lang.String" name="markSheet"></form-property>
@@ -107,15 +107,15 @@
         <!-- EXECUTION COURSE MANAGEMENT - CREATE EXECUTION COURSES - MIGRATED FROM MANAGER -->
 		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="createExecutionCoursesForm">
         	<form-property type="java.lang.String" name="degreeType"></form-property>
-			<form-property type="java.lang.Integer[]" name="degreeCurricularPlansIDs"></form-property>
-			<form-property type="java.lang.Integer" name="executionPeriodID"></form-property>
+			<form-property type="java.lang.String[]" name="degreeCurricularPlansIDs"></form-property>
+			<form-property type="java.lang.String" name="executionPeriodID"></form-property>
 			<form-property type="java.lang.String" name="method"></form-property>
 			<form-property initial="0" type="java.lang.Integer" name="page"></form-property>
 		</form-bean>
 		<!-- EXECUTION COURSE MANAGEMENT - MERGE EXECUTION COURSES - MIGRATED FROM MANAGER -->
 		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="mergeExecutionCoursesForm">
-			<form-property type="java.lang.Integer" name="sourceExecutionCourseId"></form-property>
-			<form-property type="java.lang.Integer" name="destinationExecutionCourseId"></form-property>
+			<form-property type="java.lang.String" name="sourceExecutionCourseId"></form-property>
+			<form-property type="java.lang.String" name="destinationExecutionCourseId"></form-property>
 			<form-property initial="0" type="java.lang.Integer" name="page"></form-property>
 		</form-bean>
 		<!-- EXECUTION COURSE MANAGEMENT - EDIT EXECUTION COURSES - MIGRATED FROM MANAGER -->
@@ -134,7 +134,7 @@
 			<form-property type="java.lang.String" name="curYear"></form-property>
 			<form-property type="java.lang.Boolean" name="executionCoursesNotLinked"></form-property>
 			<form-property type="java.lang.Integer" name="curricularCoursesListSize"></form-property>
-			<form-property type="java.lang.Integer[]" name="internalIds"></form-property>
+			<form-property type="java.lang.String[]" name="internalIds"></form-property>
 			<form-property initial="0" type="java.lang.Integer" name="page"></form-property>
 			<form-property type="java.lang.String" name="availableGradeSubmission"></form-property>
 			<form-property type="java.lang.String" name="entryPhase"></form-property>
@@ -142,8 +142,8 @@
 		<!-- EXECUTION COURSE MANAGEMENT - SEPARATE EXECUTION COURSES - MIGRATED FROM MANAGER -->
 		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="separateExecutionCourseForm">
 			<form-property type="java.lang.Integer" name="page"></form-property>
-			<form-property type="java.lang.Integer" name="originExecutionDegreeId"></form-property>
-			<form-property type="java.lang.Integer" name="curricularYearId"></form-property>
+			<form-property type="java.lang.String" name="originExecutionDegreeId"></form-property>
+			<form-property type="java.lang.String" name="curricularYearId"></form-property>
 			<form-property type="java.lang.String" name="destinationExecutionDegreeId"></form-property>
 			<form-property type="java.lang.String" name="destinationCurricularYear"></form-property>
 			<form-property type="java.lang.String" name="destinationExecutionCourseId"></form-property>

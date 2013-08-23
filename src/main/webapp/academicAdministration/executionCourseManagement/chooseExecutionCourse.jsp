@@ -52,7 +52,7 @@
 	<fr:form action="/announcementSwap.do?method=swap">
 		<fr:edit id="sessionBeanJSP" name="sessionBean" visible="false"/>
 		<fr:edit id="executionCourseBean" name="bean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.ExecutionCourseBean" bundle="MANAGER_RESOURCES">
+			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.ExecutionCourseBean" bundle="MANAGER_RESOURCES">
 				<fr:slot name="executionSemester" layout="menu-select-postback" key="label.manager.executionCourseManagement.executionPeriod">
 					<fr:property name="format" value="${qualifiedName}"/>
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"/>

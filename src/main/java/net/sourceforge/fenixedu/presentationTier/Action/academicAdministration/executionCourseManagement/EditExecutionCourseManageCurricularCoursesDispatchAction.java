@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
+package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,6 +41,9 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /*
@@ -48,6 +51,21 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  * @author Fernanda Quitério 23/Dez/2003
  *  
  */
+@Mapping(module = "academicAdministration", path = "/editExecutionCourseManageCurricularCourses",
+        input = "/editExecutionCourse.do?method=prepareEditExecutionCourse&page=0", attribute = "executionCourseForm",
+        formBean = "executionCourseForm", scope = "request", parameter = "method")
+@Forwards(
+        value = {
+                @Forward(name = "editExecutionCourse", path = "/editExecutionCourse.do?method=editExecutionCourse&page=0"),
+                @Forward(name = "listExecutionCourseActions",
+                        path = "/academicAdministration/executionCourseManagement/listExecutionCourseActions.jsp"),
+                @Forward(name = "manageCurricularSeparation",
+                        path = "/seperateExecutionCourse.do?method=manageCurricularSeparation"),
+                @Forward(name = "associateCurricularCourse",
+                        path = "/academicAdministration/executionCourseManagement/associateCurricularCourse.jsp"),
+                @Forward(
+                        name = "prepareAssociateCurricularCourseChooseDegreeCurricularPlan",
+                        path = "/academicAdministration/executionCourseManagement/prepareAssociateCurricularCourseChooseDegreeCurricularPlan.jsp") })
 public class EditExecutionCourseManageCurricularCoursesDispatchAction extends FenixDispatchAction {
 
     public ActionForward dissociateCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -117,7 +135,9 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         //destination attributes
         String executionCoursesNotLinked = RequestUtils.getAndSetStringToRequest(request, "executionCoursesNotLinked");
         if (StringUtils.isEmpty(executionCoursesNotLinked) || !Boolean.valueOf(executionCoursesNotLinked)) {
-            RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+            String curricularYearId = RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+            CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
+            request.setAttribute("curYear", curYear.getYear().toString());
             String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
             ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(originExecutionDegreeId);
             request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());
@@ -137,7 +157,9 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         //informative and destination attributes
         String executionCoursesNotLinked = RequestUtils.getAndSetStringToRequest(request, "executionCoursesNotLinked");
         if (StringUtils.isEmpty(executionCoursesNotLinked) || !Boolean.valueOf(executionCoursesNotLinked)) {
-            RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+            String curricularYearId = RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+            CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
+            request.setAttribute("curYear", curYear.getYear().toString());
             String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
             ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(originExecutionDegreeId);
             request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());

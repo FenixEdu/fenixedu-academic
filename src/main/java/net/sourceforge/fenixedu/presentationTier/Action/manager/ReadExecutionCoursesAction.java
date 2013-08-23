@@ -32,6 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Mapping(module = "manager", path = "/readExecutionCourses", input = "/readExecutionPeriods.do", scope = "request")
 @Forwards(value = { @Forward(name = "readExecutionCourses", path = "/manager/readExecutionCoursesByExecutionPeriod_bd.jsp",
         tileProperties = @Tile(navLocal = "/manager/executionCourseManagement/mainMenu.jsp")) })
+// ist150958: possibly unused
 public class ReadExecutionCoursesAction extends FenixAction {
 
     @Override
