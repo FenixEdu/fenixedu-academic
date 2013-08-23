@@ -6,14 +6,19 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
-
+						
 <logic:present name="announcements">
 	<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
 	<bean:define id="extraParameters" name="extraParameters" />
 	<bean:define id="announcementBoard" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
 	<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>		
+	
+	<html:link action="<%= contextPrefix + "method=viewBoards&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">
+		<bean:message key="messaging.back.label" bundle="MESSAGING_RESOURCES"/>
+	</html:link>	
 
-	<em><bean:message key="messaging.announcements.title.label" bundle="MESSAGING_RESOURCES"/></em>
+	<p><em><bean:write name="announcementBoard" property="name"/></em></p>
+
 	<h2><bean:write name="announcementBoard" property="name"/>
 
 	<span title="Really Simple Syndication" style="font-weight: normal; font-size: 0.7em;">
@@ -36,7 +41,7 @@
 			<logic:equal name="announcementBoard" property="currentUserWriter" value="true">
 			<li>
 				<html:link action="<%= contextPrefix + "method=addAnnouncement&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">
-					<bean:message key="label.createAnnouncement" bundle="MESSAGING_RESOURCES"/>
+					<bean:message key="label.create" bundle="MESSAGING_RESOURCES"/>
 				</html:link>
 			</li>
 			<li>
