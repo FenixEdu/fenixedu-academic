@@ -17,7 +17,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidMetadataException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
@@ -36,7 +35,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
@@ -59,6 +57,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
 
@@ -734,8 +733,6 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         try {
             DeleteExercise.runDeleteExercise(executionCourseId, metadataId);
         } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        } catch (ExcepcaoPersistencia e) {
             throw new FenixActionException(e);
         }
         request.setAttribute("successfulDeletion", "true");

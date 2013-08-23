@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteAnswer;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.GetStudentTest;
@@ -19,7 +18,6 @@ import net.sourceforge.fenixedu.domain.tests.AtomicQuestionState;
 import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewTest;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -28,6 +26,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -74,7 +73,7 @@ public class TestsStudentAction extends FenixDispatchAction {
     }
 
     public ActionForward viewTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException {
 
         NewTestGroup testGroup = getDomainObject(request, "oid");
 
@@ -87,7 +86,7 @@ public class TestsStudentAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteAnswer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, ExcepcaoPersistencia {
+            HttpServletResponse response) throws FenixServiceException {
 
         NewAtomicQuestion atomicQuestion = getDomainObject(request, "oid");
 
@@ -101,7 +100,7 @@ public class TestsStudentAction extends FenixDispatchAction {
     }
 
     public ActionForward giveUpQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, ExcepcaoPersistencia {
+            HttpServletResponse response) throws FenixServiceException {
 
         NewAtomicQuestion atomicQuestion = getDomainObject(request, "oid");
 
@@ -115,7 +114,7 @@ public class TestsStudentAction extends FenixDispatchAction {
     }
 
     public ActionForward answerQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, ExcepcaoPersistencia {
+            HttpServletResponse response) throws FenixServiceException {
         return this.viewTest(mapping, form, request, response);
     }
 

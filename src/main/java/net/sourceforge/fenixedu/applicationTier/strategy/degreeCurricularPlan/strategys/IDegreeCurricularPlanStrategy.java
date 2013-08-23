@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.s
 import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 /**
