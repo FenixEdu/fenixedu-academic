@@ -233,6 +233,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         }
 
         if (bean.getMobilityStudentDataBean().getApplyFor() != ErasmusApplyForSemesterType.SECOND_SEMESTER
+                && ExecutionYear.readCurrentExecutionYear().getNextExecutionYear() != null
                 && bean.getMobilityStudentDataBean()
                         .getDateOfArrival()
                         .isAfter(
