@@ -41,8 +41,6 @@
 				<td>
 					<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.title"/>
 				</td>
-				<td>
-				</td>
 			</tr>
 <%
 	    for (final GenericApplicationPeriod period : periods) {
@@ -57,24 +55,6 @@
 					<a href="<%= request.getContextPath() + "/publico/genericApplications.do?method=viewApplicationPeriod&applicationPeriodId=" + period.getExternalId() %>">
 						<%= period.getTitle().getContent() %>
 					</a>
-				</td>
-				<td>
-					<span id="<%= "createApplicationLink" + period.getExternalId() %>">
-					<html:link  href="#" onclick="<%= "toggleById('#createApplicationLink" + period.getExternalId() + "');toggleById('#createApplicationForm" + period.getExternalId() + "');" %>">
-						<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.create.application"/>
-					</html:link>
-					</span>
-					<form id="<%= "createApplicationForm" + period.getExternalId() %>" action="<%= request.getContextPath() + "/publico/genericApplications.do" %>"
-							style="display: none;">
-						<input type="hidden" name="method" value="createApplication"/>
-						<input type="hidden" name="periodOid" value="<%= period.getExternalId() %>"/>
-
-						<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.email.for.registry"/>
-						<input type="email" name="email" size="30"/>
-						<html:submit>
-							<bean:message key="button.send" bundle="APPLICATION_RESOURCES"/>
-						</html:submit>
-					</form>
 				</td>
 			</tr>
 <%

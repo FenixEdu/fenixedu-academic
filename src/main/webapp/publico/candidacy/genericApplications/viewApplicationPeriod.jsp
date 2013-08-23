@@ -21,7 +21,7 @@
 </script>
 
 <h2>
-	<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.periods"/>: <%= genericApplicationPeriod.getTitle().getContent() %>
+	<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.periods"/> <%= genericApplicationPeriod.getTitle().getContent() %>
 </h2>
 
 <br/>
@@ -38,7 +38,7 @@
 	if (userView != null && userView.hasRoleType(RoleType.MANAGER)) {
 %>
 	<br/>
-	<a href="#" onclick="toggleById('#createPeriodBlock');">
+	<a href="#" onclick="toggleById('#createPeriodBlock'); toggleById('#informationBlock');">
 		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.edit.application.period"/>
 	</a>
 	<div id="createPeriodBlock" style="display: none;">
@@ -87,6 +87,7 @@
 	<%= genericApplicationPeriod.getDescription() %>
 </div>
 
+<div id="informationBlock">
 <br/>
 
 <logic:present name="sentEmailForApplication">
@@ -97,15 +98,26 @@
 
 <logic:notPresent name="sentEmailForApplication">
 	<div id="<%= "createApplicationLink" + genericApplicationPeriod.getExternalId() %>">
-		<html:link  href="#" onclick="<%= "toggleById('#createApplicationLink" + genericApplicationPeriod.getExternalId() + "');toggleById('#createApplicationForm" + genericApplicationPeriod.getExternalId() + "');toggleById('#recreateApplicationLink" + genericApplicationPeriod.getExternalId() + "');" %>">
-			<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.create.application"/>
-		</html:link>
+	<form action="<%= request.getContextPath() + "/publico/genericApplications.do" %>">
+		<input type="hidden" name="method" value="createApplicationFromPeriodPage"/>
+		<input type="hidden" name="periodOid" value="<%= genericApplicationPeriod.getExternalId() %>"/>
+		<input type="hidden" name="applicationPeriodId" value="<%= genericApplicationPeriod.getExternalId() %>"/>
+
+		<bean:define id="suffix"><bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.create.application.inline"/></bean:define>
+		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.create.application.prefix"/>
+		<input type="email" name="email" size="30" placeholder="<%= suffix %>"/>
+		<html:submit>
+			<bean:message key="button.send" bundle="APPLICATION_RESOURCES"/>
+		</html:submit>
+		<br/>
+		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.create.application.suffix"/>
+	</form>
 	</div>
 
 	<div id="<%= "recreateApplicationLink" + genericApplicationPeriod.getExternalId() %>">
 		<br/>
 		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.forgot.confirmation.code"/>
-		<html:link  href="#" onclick="<%= "toggleById('#createApplicationLink" + genericApplicationPeriod.getExternalId() + "');toggleById('#createApplicationForm" + genericApplicationPeriod.getExternalId() + "');toggleById('#recreateApplicationLink" + genericApplicationPeriod.getExternalId() + "');" %>">
+		<html:link  href="#" onclick="<%= "toggleById('#createApplicationForm" + genericApplicationPeriod.getExternalId() + "');" %>">
 			<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.forgot.confirmation.code.here"/>
 		</html:link>
 		.
@@ -185,3 +197,5 @@
 <%
 	}
 %>
+
+</div>

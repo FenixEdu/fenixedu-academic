@@ -92,7 +92,7 @@
 
 
 <h2>
-	<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.periods"/>: <%= genericApplication.getGenericApplicationPeriod().getTitle().getContent() %>
+	<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.periods"/> <%= genericApplication.getGenericApplicationPeriod().getTitle().getContent() %>
 </h2>
 
 <br/>
@@ -221,7 +221,7 @@
 						<fr:destination name="cancel" path="<%= callbackUrl %>" />
 					</fr:edit>
 					<div id="emptydateOfBirthYearMonthDay" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
-					<div id="badDateFormatdateOfBirthYearMonthDay" class="error" style="display: none;">O formato deve ser dd/MM/yyyy</div>
+					<div id="badDateFormatdateOfBirthYearMonthDay" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.the.correct.format.is"/> dd/MM/yyyy</div>
 				</logic:present>
 				<logic:notPresent name="uploadBean">
 					<%= genericApplication.getDateOfBirthYearMonthDay() == null ? "" : genericApplication.getDateOfBirthYearMonthDay().toString("dd/MM/yyyy") %>
@@ -321,6 +321,7 @@
 						<fr:destination name="invalid" path="<%= callbackUrl %>" />
 						<fr:destination name="cancel" path="<%= callbackUrl %>" />
 					</fr:edit>
+					<html:img page="/images/icon_help.gif" module="" titleKey="label.fiscalCode.help" bundle="CANDIDATE_RESOURCES"/>
 					<div id="emptyfiscalCode" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
 				</logic:present>
 				<logic:notPresent name="uploadBean">
@@ -456,7 +457,12 @@
 
 <h3><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h3>
 
+<div class="infoop8">
+	<bean:message key="label.documentation.information" bundle="CANDIDATE_RESOURCES"/>
+</div>
+
 <% if (genericApplication.getGenericApplicationFileSet().isEmpty()) { %>
+	<br/>
 	<div><bean:message key="label.documentation.none" bundle="CANDIDATE_RESOURCES"/></div>
 	<br/>
 <% } else { %>
@@ -554,7 +560,13 @@
 
 <h3><bean:message key="label.recommendations" bundle="CANDIDATE_RESOURCES"/></h3>
 
+<div class="infoop8">
+	<bean:define id="letterMessage"><bean:message key="label.recommendations.information" bundle="CANDIDATE_RESOURCES"/></bean:define>
+	<%= letterMessage.toString().replace("\n", "<br/>") %>
+</div>
+
 <% if (genericApplication.getGenericApplicationRecomentationSet().isEmpty()) { %>
+	<br/>
 	<div><bean:message key="label.recommendations.none" bundle="CANDIDATE_RESOURCES"/></div>
 	<br/>
 <% } else { %>
@@ -642,6 +654,7 @@
 <% } %>
 
 <logic:present name="recommendationBean">
+<% if (genericApplication.getName() != null && genericApplication.getName().length() > 0) { %>
 	<a href="#" onclick="toggleByIdWithChangeCheck('#genericApplicationRecommendationForm');">
 		<bean:message bundle="CANDIDATE_RESOURCES" key="label.request.recommendation"/>
 	</a>
@@ -653,6 +666,9 @@
 
 		<fr:edit id="recommendationBean" name="recommendationBean">
 			<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUploadBean">
+				<fr:slot name="title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="size" value="10"/>
+				</fr:slot>
 				<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 				</fr:slot>
@@ -669,6 +685,7 @@
 		</fr:edit>
 		<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
 	</fr:form>
+<% } %>
 </logic:present>
 
 <logic:present name="uploadBean">

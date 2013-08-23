@@ -48,7 +48,7 @@ public class GenericApplication extends GenericApplication_Base {
                         getGenericApplicationPeriod().getTitle().getContent());
         final String body =
                 BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "label.application.email.body",
-                        getApplicationNumber(), generateConfirmationLink());
+                        getApplicationNumber(), generateConfirmationLink(), getGenericApplicationPeriod().getTitle().getContent());
         new Message(getRootDomainObject().getSystemSender(), getEmail(), subject, body);
     }
 

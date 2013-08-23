@@ -6730,6 +6730,7 @@ class candidacy.GenericApplication {
 }
 
 class candidacy.GenericApplicationRecomentation {
+	String title;
 	String name;
 	String institution;
 	String email;

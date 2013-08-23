@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class GenericApplicationRecomentation extends GenericApplicationRecomentation_Base {
 
-    public GenericApplicationRecomentation(GenericApplication application, String name, String institution, String email) {
+    public GenericApplicationRecomentation(GenericApplication application, String title, String name, String institution, String email) {
         setRootDomainObject(RootDomainObject.getInstance());
         final String confirmationCode =
                 DigestUtils.sha512Hex(getEmail() + System.currentTimeMillis() + hashCode()
@@ -22,6 +22,7 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
         setEmail(email);
         setGenericApplication(application);
         setInstitution(institution);
+        setTitle(title);
         setName(name);
         sendEmailForRecommendation();
     }
@@ -33,7 +34,7 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
                         "label.application.recomentation.email.subject", getGenericApplication().getName());
         final String body =
                 BundleUtil.getStringFromResourceBundle("resources.CandidateResources",
-                        "label.application.recomentation.email.body", getGenericApplication().getName(), getGenericApplication()
+                        "label.application.recomentation.email.body", getTitle(), getName(), getGenericApplication().getName(), getGenericApplication()
                                 .getGenericApplicationPeriod().getTitle().getContent(), generateConfirmationLink());
 
         new Message(getRootDomainObject().getSystemSender(), getEmail(), subject, body);

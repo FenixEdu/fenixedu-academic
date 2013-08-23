@@ -10,11 +10,20 @@ public class GenericApplicationRecommendationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    protected String title;
     protected String name;
     protected String institution;
     protected String email;
 
     public GenericApplicationRecommendationBean() {
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getName() {
@@ -43,7 +52,7 @@ public class GenericApplicationRecommendationBean implements Serializable {
 
     @Service
     public void requestRecommendation(final GenericApplication application) {
-        new GenericApplicationRecomentation(application, name, institution, email);
+        new GenericApplicationRecomentation(application, title, name, institution, email);
     }
 
 }
