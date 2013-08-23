@@ -1,7 +1,12 @@
 package net.sourceforge.fenixedu.webServices.jersey;
 
-
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.GET;
@@ -14,344 +19,815 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoViewRoomSchedule;
-import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationBean;
+import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder;
+import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
+import net.sourceforge.fenixedu.domain.AdHocEvaluation;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
-import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRoom;
-import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.WebAddress;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
+import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
+import net.sourceforge.fenixedu.domain.resource.Resource;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Building;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Floor;
 import net.sourceforge.fenixedu.domain.space.Room;
-import net.sourceforge.fenixedu.domain.space.RoomInformation;
 import net.sourceforge.fenixedu.domain.space.Space;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Path("/public/v1")
 public class JerseyPublic {
 
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	@Path("hello")
-	public String hellofenix() {
-		return "Hello! Public V1";
-	}
+    private final static String MediaTypeJsonUtf8 = "application/json; charset=utf-8";
 
+    private static final SimpleDateFormat dataFormatDay = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat dataFormatHour = new SimpleDateFormat("HH:mm");
 
+    private static final DateTimeFormatter formatDay = DateTimeFormat.forPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter formatHour = DateTimeFormat.forPattern("HH:mm");
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("degrees")
-	public static String degrees() {
-		JSONArray infos = new JSONArray();
-		for (Degree degree : Degree.readBolonhaDegrees()) {
-			if (degree.isBolonhaMasterOrDegree()) {
-				JSONObject degreeInfo = new JSONObject();
-				degreeInfo.put("oid", degree.getExternalId());
-				degreeInfo.put("name", degree.getPresentationName());
-				degreeInfo.put("degreeType", degree.getDegreeTypeName());
-				infos.add(degreeInfo);
-			}
-		}
-		return infos.toJSONString();
-	}
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("hello")
+    public String hellofenix() {
+        return "Hello! Public V1";
+    }
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("degrees/{oid}")
-	public static String degreesByOid(@PathParam("oid") String oid) {
-		JSONArray jsonResult = new JSONArray();
-		Degree degree = getDomainObject(oid);
-		if (degree.isBolonhaMasterOrDegree()) {
-			JSONObject degreeMainInfo = new JSONObject();
+    @GET
+    @Produces(MediaTypeJsonUtf8)
+    @Path("about")
+    public static String about() {
+        JSONObject jsonAbout = new JSONObject();
+        jsonAbout.put("news", "http://www.ist.utl.pt/pt/noticias/rss");
+        jsonAbout.put("events", "http://www.ist.utl.pt/pt/eventos/rss");
+        return jsonAbout.toJSONString();
+    }
 
-			degreeMainInfo.put("oid", degree.getExternalId());
-			degreeMainInfo.put("name", degree.getPresentationName());
-			degreeMainInfo.put("degreeType", degree.getDegreeTypeName());
-			degreeMainInfo.put("degreeSigla", degree.getSigla());
+    @GET
+    @Produces(MediaTypeJsonUtf8)
+    @Path("degrees")
+    public static String degrees() {
+        JSONArray infos = new JSONArray();
+        for (Degree degree : Degree.readBolonhaDegrees()) {
+            if (degree.isBolonhaMasterOrDegree()) {
+                JSONObject degreeInfo = new JSONObject();
+                degreeInfo.put("id", degree.getExternalId());
+                degreeInfo.put("name", degree.getPresentationName());
+                degreeInfo.put("degreeType", degree.getDegreeTypeName());
+                infos.add(degreeInfo);
+            }
+        }
+        return infos.toJSONString();
+    }
 
-			DegreeInfo degreeInfo = degree.getDegreeInfoFor(ExecutionYear.readCurrentExecutionYear());
+    private static String mls(MultiLanguageString mls) {
+        if (mls == null) {
+            return StringUtils.EMPTY;
+        }
+        return mls.getContent();
+    }
 
-			if (degreeInfo != null) {
-				JSONObject degreeSecondaryInfo = new JSONObject();
+    @GET
+    @Produces(MediaTypeJsonUtf8)
+    @Path("degrees/{oid}")
+    public static String degreesByOid(@PathParam("oid") String oid, @QueryParam("year") String year) {
+        JSONObject jsonResult = new JSONObject();
+        JSONArray teachersArray = new JSONArray();
+        Degree degree = getDomainObject(oid);
+        ExecutionYear executionYear = getExecutionYear(year);
 
-				degreeSecondaryInfo.put("name", degreeInfo.getName());
-				degreeSecondaryInfo.put("description", degreeInfo.getDescription());
-				degreeSecondaryInfo.put("objectives", degreeInfo.getDegreeInfoFuture().getObjectives());
-				degreeSecondaryInfo.put("designfor", degreeInfo.getDegreeInfoFuture().getDesignedFor());
-				degreeSecondaryInfo.put("requisites", degreeInfo.getDegreeInfoCandidacy().getAccessRequisites());
+        if (degree.isBolonhaMasterOrDegree()) {
+            JSONObject degreeMainInfo = new JSONObject();
 
-				degreeMainInfo.put("secundaryInfo", degreeSecondaryInfo);
-			}
-			jsonResult.add(degreeMainInfo);
-		}
-		return jsonResult.toJSONString();
-	}
+            degreeMainInfo.put("id", degree.getExternalId());
+            degreeMainInfo.put("name", degree.getPresentationName());
+            degreeMainInfo.put("degreeType", degree.getDegreeTypeName());
+            degreeMainInfo.put("degreeSigla", degree.getSigla());
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("degrees/{oid}/courses")
-	public static String coursesByODegreesId(@PathParam("oid") String oid) {
-		JSONArray jsonResult = new JSONArray();
-		Degree degree = getDomainObject(oid);
+            DegreeInfo degreeInfo = degree.getDegreeInfoFor(executionYear);
 
-		ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+            if (degreeInfo != null) {
+                JSONObject degreeSecondaryInfo = new JSONObject();
 
-		if (degree.isBolonhaMasterOrDegree()) {
+                degreeSecondaryInfo.put("name", degreeInfo.getName());
+                degreeSecondaryInfo.put("description", mls(degreeInfo.getDescription()));
+                degreeSecondaryInfo.put("objectives", mls(degreeInfo.getObjectives()));
+                degreeSecondaryInfo.put("designfor", mls(degreeInfo.getDesignedFor()));
+                degreeSecondaryInfo.put("requisites", mls(degreeInfo.getDegreeInfoCandidacy().getAccessRequisites()));
+                degreeSecondaryInfo.put("profissionalExits", mls(degreeInfo.getProfessionalExits()));
+                degreeSecondaryInfo.put("history", mls(degreeInfo.getHistory()));
+                degreeSecondaryInfo.put("operationRegime", mls(degreeInfo.getOperationalRegime()));
+                degreeSecondaryInfo.put("gratuity", mls(degreeInfo.getGratuity()));
+                degreeSecondaryInfo.put("secundaryInfo", degreeSecondaryInfo);
+            }
+            jsonResult.put("degreeSecondaryInfo", degreeMainInfo);
 
-			Set<CurricularCourse> degreeCurricularCourses = degree.getAllCurricularCourses(executionYear);
-			for (CurricularCourse cc : degreeCurricularCourses) {
-				JSONObject degreeInfo = new JSONObject();
-				degreeInfo.put("acronym", cc.getAcronym());
-				degreeInfo.put("credits", cc.getEctsCredits());
-				degreeInfo.put("name", cc.getName());
-				degreeInfo.put("oid", cc.getExternalId());
-				jsonResult.add(degreeInfo);
-			}
+            Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYear);
+            if (responsibleCoordinatorsTeachers.isEmpty()) {
+                responsibleCoordinatorsTeachers = degree.getCurrentResponsibleCoordinatorsTeachers();
+            }
 
-		}
-		return jsonResult.toJSONString();
-	}
+            for (Teacher teacher : responsibleCoordinatorsTeachers) {
+                JSONObject teacherInfo = new JSONObject();
+                teacherInfo.put("teacherName", teacher.getPerson().getName());
+                teacherInfo.put("teacherIstId", teacher.getPerson().getIstUsername());
+                teacherInfo.put("mail", getTeacherPublicMail(teacher));
+                teacherInfo.put("url", getTeacherPublicWebAddress(teacher));
+                teachersArray.add(teacherInfo);
+            }
+            jsonResult.put("teachers", teachersArray);
+        }
+        return jsonResult.toJSONString();
+    }
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("courses/{oid}/")
-	public static String coursesByOid(@PathParam("oid") String oid, @QueryParam("sem") String sem, @QueryParam("year") String year) {
-		JSONObject jsonResult = new JSONObject();
-		CurricularCourse curricularCourse = getDomainObject(oid);
-		
-		ExecutionSemester executionSemester = getExecutionSemester(sem, year);
-		
-		jsonResult.put("acronym", curricularCourse.getAcronym());
-		jsonResult.put("name", curricularCourse.getName());
-		jsonResult.put("credits", curricularCourse.getEctsCredits());
-		jsonResult.put("evaluation", curricularCourse.getEvaluationMethod());
-		jsonResult.put("program", curricularCourse.getProgram());
+    private static JSONArray getTeacherPublicMail(Teacher teacher) {
+        JSONArray mailArray = new JSONArray();
+        if (teacher != null) {
+            for (EmailAddress emailAddress : teacher.getPerson().getEmailAddresses()) {
+                if (emailAddress.getVisibleToPublic()) {
+                    JSONObject mailObj = new JSONObject();
+                    mailObj.put("url", emailAddress.getPresentationValue());
+                    mailArray.add(mailObj);
+                }
+            }
+        }
+        return mailArray;
+    }
 
-		jsonResult.put("totalStudents", curricularCourse.getTotalEnrolmentStudentNumber(executionSemester));
-		jsonResult.put("firstTimeStudents", curricularCourse.getNumberOfStudentsWithFirstEnrolmentIn(executionSemester));
-		jsonResult.put("secondTimeStudents", curricularCourse.getSecondTimeEnrolmentStudentNumber(executionSemester));
+    private static JSONArray getTeacherPublicWebAddress(Teacher teacher) {
+        JSONArray urlArray = new JSONArray();
+        if (teacher != null) {
+            for (WebAddress webAddress : teacher.getPerson().getWebAddresses()) {
+                if (webAddress.getVisibleToPublic()) {
+                    JSONObject urlObj = new JSONObject();
+                    urlObj.put("url", webAddress.getUrl());
+                    urlArray.add(urlObj);
+                }
+            }
+        }
+        return urlArray;
+    }
 
-		return jsonResult.toJSONString();
-	}
+    @GET
+    @Produces(MediaTypeJsonUtf8)
+    @Path("degrees/{oid}/courses")
+    public static String coursesByODegreesId(@PathParam("oid") String oid, @QueryParam("year") String year) {
+        JSONArray jsonResult = new JSONArray();
+        Degree degree = getDomainObject(oid);
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("courses/{oid}/groups")
-	public static String groupsCoursesByOid(@PathParam("oid") String oid, @QueryParam("sem") String sem, @QueryParam("year") String year) {
-		JSONObject jsonResult = new JSONObject();
-		CurricularCourse curricularCourse = getDomainObject(oid);
+        ExecutionYear executionYear = getExecutionYear(year);
 
-		ExecutionSemester executionSemester = getExecutionSemester(sem, year);
-		
-		List<ExecutionCourse> executionCourse = curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester);
+        ExecutionSemester[] executionSemesters = executionYear.getExecutionPeriods().toArray(new ExecutionSemester[0]);
 
-		List<StudentGroup> studentGroups = null;
+        final Set<ExecutionCourseView> executionCourses = new HashSet<ExecutionCourseView>();
+        for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+            if (degreeCurricularPlan.isActive()) {
+                degreeCurricularPlan.addExecutionCourses(executionCourses, executionSemesters);
+            }
+        }
 
-		return jsonResult.toJSONString();
-	}
+        if (degree.isBolonhaMasterOrDegree()) {
+            for (ExecutionCourseView executionCourseView : executionCourses) {
+                ExecutionCourse ec = executionCourseView.getExecutionCourse();
+                JSONObject degreeInfo = new JSONObject();
+                degreeInfo.put("acronym", ec.getSigla());
+                degreeInfo.put("credits", getCredits(ec, degree));
+                degreeInfo.put("name", ec.getName());
+                degreeInfo.put("id", ec.getExternalId());
+                degreeInfo.put("year", ec.getExecutionYear().getName());
+                degreeInfo.put("semester", ec.getExecutionPeriod().getName());
+                jsonResult.add(degreeInfo);
+            }
+        }
+        return jsonResult.toJSONString();
+    }
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("courses/{oid}/students")
-	public static String studentsCoursesByOid(@PathParam("oid") String oid, @QueryParam("sem") String sem, @QueryParam("year") String year) {
+    private static String getCredits(ExecutionCourse ec, Degree degree) {
+        for (CurricularCourse curricularCourse : ec.getAssociatedCurricularCourses()) {
+            if (degree.equals(curricularCourse.getDegree())) {
+                return curricularCourse.getEctsCredits().toString();
+            }
+        }
+        return "N/A";
+    }
 
-		JSONObject jsonResult = new JSONObject();
-		CurricularCourse curricularCourse = getDomainObject(oid);
+    private static String getServerLink() {
+        String serverLink;
+        final String appName = PropertiesManager.getProperty("http.host");
+        final String appContext = PropertiesManager.getProperty("app.context");
+        final String httpPort = PropertiesManager.getProperty("http.port");
+        final String httpProtocol = PropertiesManager.getProperty("http.protocol");
 
-		ExecutionSemester executionSemester = getExecutionSemester(sem, year);
+        if (StringUtils.isEmpty(httpPort)) {
+            serverLink = String.format("%s://%s/", httpProtocol, appName);
+        } else {
+            serverLink = String.format("%s://%s:%s/", httpProtocol, appName, httpPort);
+        }
+        if (!StringUtils.isEmpty(appContext)) {
+            serverLink += appContext;
+        }
+        serverLink = StringUtils.removeEnd(serverLink, "/");
+        return serverLink;
+    }
 
-		List<ExecutionCourse> executionCourse = curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester);
+    @GET
+    @Produces(MediaTypeJsonUtf8)
+    @Path("courses/{oid}/")
+    public static String coursesByOid(@PathParam("oid") String oid) {
+        JSONObject jsonResult = new JSONObject();
+        ExecutionCourse executionCourse = getDomainObject(oid);
+        jsonResult.put("acronym", executionCourse.getSigla());
+        jsonResult.put("name", executionCourse.getName());
+        jsonResult.put("evaluation", executionCourse.getEvaluationMethodText());
+        jsonResult.put("year", executionCourse.getExecutionYear().getName());
+        jsonResult.put("semester", executionCourse.getExecutionPeriod().getName());
 
-		for (ExecutionCourse ex : executionCourse) {
-			jsonResult.put("enrolmentNumber", ex.getTotalEnrolmentStudentNumber());
-			jsonResult.put("name", ex.getName());
-			jsonResult.put("semester", executionSemester.getSemester());
-			jsonResult.put("year", executionSemester.getYear());
+        Map<CompetenceCourse, Set<CurricularCourse>> curricularCourses =
+                executionCourse.getCurricularCoursesIndexedByCompetenceCourse();
 
-			JSONArray jsonProfessors = new JSONArray();
-			for (Professorship professor : ex.getProfessorshipsSortedAlphabetically()) {
-				JSONObject jsonStudentInfo = new JSONObject();
-				PersonInformationBean pib = new PersonInformationBean(professor.getTeacher().getPerson());
-				jsonStudentInfo.put("name", professor.getTeacher().getPerson().getName());
-				jsonStudentInfo.put("istId", professor.getTeacher().getPerson().getIstUsername());
-				jsonProfessors.add(jsonStudentInfo);
-			}
-			jsonResult.put("professorInformation", jsonProfessors);
+        JSONArray jsonMoreInfo = new JSONArray();
+        for (Map.Entry<CompetenceCourse, Set<CurricularCourse>> entry : curricularCourses.entrySet()) {
+            JSONObject jsonCompetence = new JSONObject();
 
-			JSONArray jsonStudents = new JSONArray();
-			for (Enrolment enrolment : ex.getActiveEnrollments()) {
-				JSONObject jsonStudentInfo = new JSONObject();
-				jsonStudentInfo.put("name", enrolment.getStudent().getName());
-				jsonStudentInfo.put("grade", enrolment.getGrade().getIntegerValue());
-				jsonStudentInfo.put("istId", enrolment.getPerson().getIstUsername());
-				jsonStudents.add(jsonStudentInfo);
-			}
-			jsonResult.put("studentInformation", jsonStudents);
-		}
+            jsonCompetence.put("name", entry.getKey().getName());
+            jsonCompetence.put("program", entry.getKey().getProgram());
 
-		return jsonResult.toJSONString();
-	}
+            JSONArray jsonBiblio = new JSONArray();
+            for (BibliographicReference bibliographicReference : entry.getKey().getBibliographicReferences()
+                    .getBibliographicReferencesSortedByOrder()) {
+                JSONObject jsonBiblioInfo = new JSONObject();
+                jsonBiblioInfo.put("author", bibliographicReference.getAuthors());
+                jsonBiblioInfo.put("reference", bibliographicReference.getReference());
+                jsonBiblioInfo.put("title", bibliographicReference.getTitle());
+                jsonBiblioInfo.put("year", bibliographicReference.getYear());
+                jsonBiblioInfo.put("type", bibliographicReference.getType().getName());
+                jsonBiblioInfo.put("url", bibliographicReference.getUrl());
+                jsonBiblio.add(jsonBiblioInfo);
+            }
 
+            jsonCompetence.put("bibliographicReferences", jsonBiblio);
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("buildings")
-	public static String buildings() {
-		JSONArray jsonResult = new JSONArray();
-		for(Building building: Space.getAllActiveBuildings()) {
-			JSONObject jsonBuildingInfo = new JSONObject();
-			jsonBuildingInfo.put("oid",building.getExternalId());
-			jsonBuildingInfo.put("name",building.getNameWithCampus());
-			jsonResult.add(jsonBuildingInfo);
-		}		
-		return jsonResult.toJSONString();
-	}
+            JSONArray jsonDegreesArray = new JSONArray();
+            for (CurricularCourse curricularCourse : entry.getValue()) {
+                JSONObject jsonDegreesInfo = new JSONObject();
+                jsonDegreesInfo.put("name", curricularCourse.getDegree().getPresentationName());
+                jsonDegreesInfo.put("acronym", curricularCourse.getAcronym());
+                jsonDegreesArray.add(jsonDegreesInfo);
+            }
+            jsonCompetence.put("degrees", jsonDegreesArray);
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("buildings/{oid}")
-	public static String buildingsByOid(@PathParam("oid") String oid) {
-		JSONObject jsonResult = new JSONObject();		
-		Building building = Space.fromExternalId(oid);
+            jsonMoreInfo.add(jsonCompetence);
 
-		JSONArray jsonResultFloor = new JSONArray();		
-		JSONArray jsonResultRooms = new JSONArray();		
+        }
 
-		jsonResult.put("name", building.getNameWithCampus());
-		jsonResult.put("campus", building.getSpaceCampus().getName());
+        jsonResult.put("moreInfo", jsonMoreInfo);
+        jsonResult.put("numberOfStudents", executionCourse.getAttendsCount());
 
-		for(Space space : building.getContainedSpaces()) {
-			JSONObject jsonBuildingInfo = new JSONObject();
-			jsonBuildingInfo.put("oid",space.getExternalId());
-			jsonBuildingInfo.put("name",space.getSpaceInformation().getPresentationName());
+        //TODO change getIdInternal to ExternalID
+        jsonResult.put(
+                "announcementLink",
+                getServerLink().concat("/external/announcementsRSS.do?announcementBoardId=").concat(
+                        executionCourse.getBoard().getIdInternal().toString()));
 
-			for(Space rooms : space.getContainedSpaces()) {
-				JSONObject jsonRoomInfo = new JSONObject();
-				jsonRoomInfo.put("oid",rooms.getExternalId());
-				jsonRoomInfo.put("name", rooms.getSpaceInformation().getPresentationName());
-				jsonResultRooms.add(jsonRoomInfo);
+        jsonResult.put("summaryLink",
+                getServerLink().concat("/publico/summariesRSS.do?id=").concat(executionCourse.getIdInternal().toString()));
+        return jsonResult.toJSONString();
+    }
 
-			}
-			jsonResultFloor.add(jsonBuildingInfo);
-		}		
-		jsonResult.put("floors", jsonResultFloor);
-		jsonResult.put("rooms", jsonResultRooms);
+    @GET
+    @Produces(MediaTypeJsonUtf8)
+    @Path("courses/{oid}/groups")
+    public static String groupsCoursesByOid(@PathParam("oid") String oid) {
+        JSONObject jsonResult = new JSONObject();
 
-		return jsonResult.toJSONString();		
-	}
+        ExecutionCourse executionCourse = getDomainObject(oid);
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("floors/{oid}")
-	public static String floorByOid(@PathParam("oid") String oid) {
-		JSONObject jsonResult = new JSONObject();		
-		Floor floor = Space.fromExternalId(oid);
+        jsonResult.put("courseName", executionCourse.getName());
+        jsonResult.put("year", executionCourse.getExecutionYear().getName());
+        jsonResult.put("semester", executionCourse.getExecutionPeriod().getName());;
 
-		jsonResult.put("oid", floor.getExternalId());
-		jsonResult.put("building", floor.getSpaceBuilding().getSpaceInformation().getPresentationName());
-		jsonResult.put("campus", floor.getSpaceCampus().getSpaceInformation().getPresentationName());
-		jsonResult.put("floor", floor.getSpaceFloor().getSpaceInformation().getPresentationName());
+        JSONArray jsonGroupInfo = new JSONArray();
 
-		JSONArray jsonResultRooms = new JSONArray();		
+        for (Grouping grouping : executionCourse.getGroupings()) {
+            JSONObject jsonGroupType = new JSONObject();
 
-		for(Space space : floor.getContainedSpaces()) {
-			JSONObject jsonBuildingInfo = new JSONObject();
-			jsonBuildingInfo.put("oid",space.getExternalId());
-			jsonBuildingInfo.put("name",space.getSpaceInformation().getPresentationName());
-			jsonResultRooms.add(jsonBuildingInfo);
-		}		
-		jsonResult.put("rooms", jsonResultRooms);
+            jsonGroupType.put("groupingName", grouping.getName());
 
-		return jsonResult.toJSONString();		
-	}
+            jsonGroupType.put("groupingDescription", grouping.getProjectDescription());
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("rooms/{oid}")
-	public static String roomsByOid(@PathParam("oid") String oid) {
-		JSONObject jsonResult = new JSONObject();		
-		Room room = Space.fromExternalId(oid);
+            JSONArray jsonGroupNumber = new JSONArray();
 
-		jsonResult.put("oid", room.getExternalId());
-		jsonResult.put("building", room.getSpaceBuilding().getSpaceInformation().getPresentationName());
-		jsonResult.put("campus", room.getSpaceCampus().getSpaceInformation().getPresentationName());
-		jsonResult.put("floor", room.getSpaceFloor().getSpaceInformation().getPresentationName());
-		jsonResult.put("normal_capacity", room.getNormalCapacity());
-		jsonResult.put("exam_capacity", room.getExamCapacity());
+            for (StudentGroup studentGroup : grouping.getStudentGroupsOrderedByGroupNumber()) {
+                JSONObject jsonGroupNumberInfo = new JSONObject();
+                jsonGroupNumberInfo.put("groupNumber", studentGroup.getGroupNumber());
+                JSONArray jsonGroupStudents = new JSONArray();
 
-		//jsonResult.put("exam_capacity", room.getWrittenEvaluationEnrolments());	
+                for (Attends attends : studentGroup.getAttends()) {
+                    JSONObject jsonStudent = new JSONObject();
+                    jsonStudent.put("studentIstId", attends.getRegistration().getNumber());
+                    jsonStudent.put("studentName", attends.getRegistration().getPerson().getName());
+                    jsonGroupStudents.add(jsonStudent);
+                }
+                jsonGroupNumberInfo.put("students", jsonGroupStudents);
+                jsonGroupNumber.add(jsonGroupNumberInfo);
+            }
+            jsonGroupType.put("groupNumberInfo", jsonGroupNumber);
 
+            jsonGroupInfo.add(jsonGroupType);
+        }
 
-		ExecutionSemester executionSemester = ExecutionSemester.readBySemesterAndExecutionYear(1, "2012/2013");
-		/*
-		for(WrittenEvaluationEnrolment writtenEvaluation : room.getWrittenEvaluationEnrolments()) {
-		}
-		 */
-		JSONArray jsonSchedule = new JSONArray();		
-		for(Lesson lesson : room.getAssociatedLessons(executionSemester.getAcademicInterval())) {
-			JSONObject jsonLesson = new JSONObject();
-			jsonLesson.put("begin", lesson.getBeginHourMinuteSecond());
-			jsonLesson.put("end", lesson.getEndHourMinuteSecond());
-			jsonLesson.put("weekday", lesson.getWeekDay());
-			jsonLesson.put("course", lesson.getExecutionCourse().getName());
-			jsonSchedule.add(jsonLesson);
-		}
-		jsonResult.put("lesson", jsonSchedule);
+        jsonResult.put("groupingInfo", jsonGroupInfo);
+        return jsonResult.toJSONString();
+    }
 
+    @GET
+    @Produces(MediaTypeJsonUtf8)
+    @Path("courses/{oid}/students")
+    public static String studentsCoursesByOid(@PathParam("oid") String oid) {
 
-		return jsonResult.toJSONString();		
-	}
+        JSONObject jsonResult = new JSONObject();
+        ExecutionCourse executionCourse = getDomainObject(oid);
 
+        jsonResult.put("enrolmentNumber", executionCourse.getTotalEnrolmentStudentNumber());
+        jsonResult.put("name", executionCourse.getName());
+        jsonResult.put("semester", executionCourse.getExecutionYear().getName());
+        jsonResult.put("year", executionCourse.getExecutionPeriod().getName());
 
-	@SuppressWarnings("unchecked")
-	private static <T extends DomainObject> T getDomainObject(String externalId) {
-		try {
-			return (T) AbstractDomainObject.fromExternalId(externalId);
-		} catch (Throwable t) {
-			throw new WebApplicationException(Response.status(Status.NOT_FOUND).entity(externalId).build());
-		}
-	}
+        JSONArray jsonStudents = new JSONArray();
+        for (final Attends attends : executionCourse.getAttendsSet()) {
+            JSONObject jsonStudentInfo = new JSONObject();
+            jsonStudentInfo.put("studentNumber", attends.getRegistration().getNumber());
+            jsonStudentInfo.put("studentName", attends.getRegistration().getName());
+            jsonStudentInfo.put("studentDegree", attends.getRegistration().getDegreeCurricularPlanName());
 
-	
-	private static ExecutionSemester getExecutionSemester(String sem, String year) {
-		//sem  int 1 || 2
-		//year String "2012/2013"
-		
-		ExecutionSemester executionSemester;
+            JSONArray jsonEvaluation = new JSONArray();
 
-		boolean isBlank = StringUtils.isBlank(sem) || StringUtils.isBlank(year);
-		if (!isBlank) {
-			int semester;
-			try {
-				semester = Integer.parseInt(sem);
-			} catch (NumberFormatException e) {
-				semester = 0;
-			}
-			executionSemester = ExecutionSemester.readBySemesterAndExecutionYear(semester, year);
-			if(executionSemester == null) {
-				executionSemester = ExecutionSemester.readActualExecutionSemester();
-			}			
-		} else {
-			executionSemester = ExecutionSemester.readActualExecutionSemester();
-		}
-		return executionSemester;
-	}
+            for (final Mark mark : attends.getAssociatedMarksSet()) {
+                JSONObject jsonEvaluationInfo = new JSONObject();
+                if (mark.getEvaluation().getPublishmentMessage() != null) {
+                    jsonEvaluationInfo.put("evaluation", mark.getEvaluation().getPresentationName());
+                    jsonEvaluationInfo.put("mark", mark.getPublishedMark());
+                    jsonEvaluation.add(jsonEvaluationInfo);
+                }
+            }
+            jsonStudentInfo.put("evaluation", jsonEvaluation);
+            jsonStudents.add(jsonStudentInfo);
+        }
+        jsonResult.put("students", jsonStudents);
+        return jsonResult.toJSONString();
+    }
+
+    @GET
+    @Produces(MediaTypeJsonUtf8)
+    @Path("courses/{oid}/evaluation")
+    public static String evaluationCoursesByOid(@PathParam("oid") String oid, @QueryParam("sem") String sem,
+            @QueryParam("year") String year) {
+
+        ExecutionCourse executionCourse = getDomainObject(oid);
+        JSONArray jsonEvaluation = new JSONArray();
+
+        for (Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+            if (evaluation instanceof WrittenEvaluation) {
+                jsonEvaluation.add(getWrittenEvaluationJSON((WrittenEvaluation) evaluation));
+            } else if (evaluation instanceof Project) {
+                jsonEvaluation.add(getProjectEvaluationJSON((Project) evaluation));
+            } else if (evaluation instanceof OnlineTest) {
+                jsonEvaluation.add(getOnlineTestJSON((OnlineTest) evaluation));
+            } else if (evaluation instanceof AdHocEvaluation) {
+                jsonEvaluation.add(getAdhocEvaluationJSON((AdHocEvaluation) evaluation));
+            }
+        }
+        return jsonEvaluation.toJSONString();
+    }
+
+    private static JSONObject getAdhocEvaluationJSON(AdHocEvaluation adHocEvaluation) {
+        JSONObject jsonEvaluationInfo = new JSONObject();
+
+        jsonEvaluationInfo.put("name", adHocEvaluation.getPresentationName());
+        jsonEvaluationInfo.put("type", adHocEvaluation.getEvaluationType().toString());
+        jsonEvaluationInfo.put("description", adHocEvaluation.getDescription());
+
+        return jsonEvaluationInfo;
+    }
+
+    private static JSONObject getOnlineTestJSON(OnlineTest onlineTest) {
+        JSONObject jsonEvaluationInfo = new JSONObject();
+
+        jsonEvaluationInfo.put("name", onlineTest.getPresentationName());
+        jsonEvaluationInfo.put("type", onlineTest.getEvaluationType().toString());
+
+        return jsonEvaluationInfo;
+    }
+
+    private static JSONObject getProjectEvaluationJSON(Project projectEvaluation) {
+        JSONObject jsonEvaluationInfo = new JSONObject();
+
+        jsonEvaluationInfo.put("name", projectEvaluation.getPresentationName());
+        jsonEvaluationInfo.put("type", projectEvaluation.getEvaluationType().toString());
+
+        if (projectEvaluation.getProjectBeginDateTime() != null) {
+            jsonEvaluationInfo.put("beginningDay", formatDay.print(projectEvaluation.getProjectBeginDateTime()));
+            jsonEvaluationInfo.put("beginningTime", formatHour.print(projectEvaluation.getProjectBeginDateTime()));
+
+        }
+        if (projectEvaluation.getProjectEndDateTime() != null) {
+            jsonEvaluationInfo.put("endDay", formatDay.print(projectEvaluation.getProjectEndDateTime()));
+            jsonEvaluationInfo.put("endTime", formatHour.print(projectEvaluation.getProjectEndDateTime()));
+
+        }
+        return jsonEvaluationInfo;
+    }
+
+    private static JSONObject getWrittenEvaluationJSON(WrittenEvaluation writtenEvaluation) {
+        JSONObject jsonEvaluationInfo = new JSONObject();
+
+        jsonEvaluationInfo.put("name", writtenEvaluation.getPresentationName());
+        jsonEvaluationInfo.put("type", writtenEvaluation.getEvaluationType().toString());
+
+        jsonEvaluationInfo.put("day", dataFormatDay.format(writtenEvaluation.getDay().getTime()));
+
+        jsonEvaluationInfo.put("beginningTime", dataFormatHour.format(writtenEvaluation.getBeginning().getTime()));
+        jsonEvaluationInfo.put("endTime", dataFormatHour.format(writtenEvaluation.getEnd().getTime()));
+
+        jsonEvaluationInfo.put("rooms", writtenEvaluation.getAssociatedRoomsAsString());
+
+        jsonEvaluationInfo.put("isEnrolmentPeriod", writtenEvaluation.getIsInEnrolmentPeriod());
+
+        if (writtenEvaluation.getEnrollmentBeginDay() != null) {
+            jsonEvaluationInfo.put("enrollmentBeginDay",
+                    dataFormatDay.format(writtenEvaluation.getEnrollmentBeginDay().getTime()));
+        }
+        if (writtenEvaluation.getEnrollmentBeginTime() != null) {
+            jsonEvaluationInfo.put("enrollmentBeginTime",
+                    dataFormatHour.format(writtenEvaluation.getEnrollmentBeginTime().getTime()));
+        }
+        if (writtenEvaluation.getEnrollmentEndDay() != null) {
+            jsonEvaluationInfo.put("enrollmentEndDay", dataFormatDay.format(writtenEvaluation.getEnrollmentEndDay().getTime()));
+        }
+        if (writtenEvaluation.getEnrollmentEndTime() != null) {
+            jsonEvaluationInfo
+                    .put("enrollmentEndTime", dataFormatHour.format(writtenEvaluation.getEnrollmentEndTime().getTime()));
+        }
+        return jsonEvaluationInfo;
+    }
+
+    @GET
+    @Produces(MediaTypeJsonUtf8)
+    @Path("courses/{oid}/schedule")
+    public static String scheduleCoursesByOid(@PathParam("oid") String oid) {
+
+        ExecutionCourse executionCourse = getDomainObject(oid);
+
+        JSONObject jsonResult = new JSONObject();
+        JSONArray jsonSchedule = new JSONArray();
+        JSONArray jsonPeriod = new JSONArray();
+
+        jsonResult.put("name", executionCourse.getName());
+        jsonResult.put("year", executionCourse.getExecutionYear().getName());
+        jsonResult.put("semester", executionCourse.getExecutionPeriod().getName());
+
+        for (OccupationPeriod occupationPeriod : executionCourse.getLessonPeriods()) {
+            JSONObject jsonPeriodInfo = new JSONObject();
+            if (occupationPeriod.getStartDate() != null) {
+                jsonPeriodInfo.put("start", dataFormatDay.format(occupationPeriod.getStartDate().getTime()));
+            }
+            if (occupationPeriod.getEndDate() != null) {
+                jsonPeriodInfo.put("end", dataFormatDay.format(occupationPeriod.getEndDate().getTime()));
+            }
+            jsonPeriod.add(jsonPeriodInfo);
+        }
+
+        for (Lesson lesson : executionCourse.getLessons()) {
+            JSONObject jsonScheduleInfo = new JSONObject();
+            jsonScheduleInfo.put("weekday", lesson.getWeekDay().getName());
+            jsonScheduleInfo.put("lessonType", lesson.getShift().getShiftTypesCodePrettyPrint());
+            jsonScheduleInfo.put("start", dataFormatHour.format(lesson.getInicio().getTime()));
+            jsonScheduleInfo.put("end", dataFormatHour.format(lesson.getFim().getTime()));
+
+            if (lesson.hasSala()) {
+                AllocatableSpace sala = lesson.getSala();
+                jsonScheduleInfo.put("roomId", sala.getExternalId());
+                jsonScheduleInfo.put("roomName", sala.getSpaceInformation().getPresentationName());
+                jsonScheduleInfo.put("roomDescription", sala.getCompleteIdentification());
+            }
+            jsonSchedule.add(jsonScheduleInfo);
+        }
+
+        jsonResult.put("schedule", jsonSchedule);
+        jsonResult.put("period", jsonPeriod);
+        return jsonResult.toJSONString();
+    }
+
+    @GET
+    @Produces(MediaTypeJsonUtf8)
+    @Path("spaces")
+    public static String spaces() {
+        JSONArray jsonResult = new JSONArray();
+        for (Campus campus : Space.getAllCampus()) {
+            JSONObject jsonBuildingInfo = new JSONObject();
+            jsonBuildingInfo.put("id", campus.getExternalId());
+            jsonBuildingInfo.put("name", campus.getName());
+            jsonResult.add(jsonBuildingInfo);
+        }
+        return jsonResult.toJSONString();
+    }
+
+    @GET
+    @Produces(MediaTypeJsonUtf8)
+    @Path("spaces/{oid}")
+    public static String spacesByOid(@PathParam("oid") String oid, @QueryParam("day") String day) {
+        JSONObject jsonResult = new JSONObject();
+
+        Resource resource = Resource.fromExternalId(oid);
+
+        if (resource.isCampus()) {
+            Campus campus = (Campus) resource;
+            jsonResult.put("name", campus.getName());
+            jsonResult.put("id", campus.getExternalId());
+            jsonResult.put("type", "campus");
+            jsonResult.put("moreInfo", getCampusInfo(campus));
+
+        } else if (resource.isBuilding()) {
+            Building building = (Building) resource;
+            jsonResult.put("name", building.getNameWithCampus());
+            jsonResult.put("campus", building.getSpaceCampus().getName());
+            jsonResult.put("id", building.getExternalId());
+            jsonResult.put("type", "building");
+            jsonResult.put("moreInfo", getBuildingInfo(building));
+
+        } else if (resource.isFloor()) {
+            Floor floor = (Floor) resource;
+            jsonResult.put("id", floor.getExternalId());
+            jsonResult.put("building", floor.getSpaceBuilding().getSpaceInformation().getPresentationName());
+            jsonResult.put("campus", floor.getSpaceCampus().getSpaceInformation().getPresentationName());
+            jsonResult.put("floor", floor.getSpaceFloor().getSpaceInformation().getPresentationName());
+            jsonResult.put("moreInfo", getFloorInfo(floor));
+        } else if (resource.isRoom()) {
+            Room room = (Room) resource;
+            jsonResult.put("id", room.getExternalId());
+            jsonResult.put("name", room.getSpaceInformation().getPresentationName());
+            jsonResult.put("description", room.getSpaceInformation().getDescription());
+            jsonResult.put("building", room.getSpaceBuilding().getSpaceInformation().getPresentationName());
+            jsonResult.put("campus", room.getSpaceCampus().getSpaceInformation().getPresentationName());
+            jsonResult.put("floor", room.getSpaceFloor().getSpaceInformation().getPresentationName());
+            jsonResult.put("normalCapacity", room.getNormalCapacity());
+            jsonResult.put("examCapacity", room.getExamCapacity());
+            jsonResult.put("moreInfo", getRoomInfo(room, getRoomDay(day)));
+        }
+        return jsonResult.toJSONString();
+    }
+
+    private static JSONArray getCampusInfo(Campus campu) {
+        JSONArray jsonResul = new JSONArray();
+        for (Building building : Space.getAllActiveBuildings()) {
+            JSONObject jsonBuildingInfo = new JSONObject();
+            jsonBuildingInfo.put("id", building.getExternalId());
+            jsonBuildingInfo.put("name", building.getNameWithCampus());
+            jsonResul.add(jsonBuildingInfo);
+        }
+        return jsonResul;
+
+    }
+
+    private static JSONObject getBuildingInfo(Building building) {
+        JSONObject jsonResult = new JSONObject();
+        JSONArray jsonResultFloor = new JSONArray();
+        JSONArray jsonResultRooms = new JSONArray();
+
+        for (Space space : building.getContainedSpaces()) {
+            JSONObject jsonBuildingInfo = new JSONObject();
+            jsonBuildingInfo.put("floorId", space.getExternalId());
+            jsonBuildingInfo.put("floorName", space.getSpaceInformation().getPresentationName());
+
+            for (Space rooms : space.getContainedSpaces()) {
+                JSONObject jsonRoomInfo = new JSONObject();
+                jsonRoomInfo.put("roomId", rooms.getExternalId());
+                jsonRoomInfo.put("roomName", rooms.getSpaceInformation().getPresentationName());
+                jsonResultRooms.add(jsonRoomInfo);
+            }
+            jsonResultFloor.add(jsonBuildingInfo);
+        }
+        jsonResult.put("floors", jsonResultFloor);
+        jsonResult.put("rooms", jsonResultRooms);
+
+        return jsonResult;
+    }
+
+    private static JSONObject getFloorInfo(Floor floor) {
+        JSONObject jsonResult = new JSONObject();
+        JSONArray jsonResultRooms = new JSONArray();
+
+        for (Space space : floor.getContainedSpaces()) {
+            JSONObject jsonBuildingInfo = new JSONObject();
+            jsonBuildingInfo.put("spaceId", space.getExternalId());
+            jsonBuildingInfo.put("spaceName", space.getSpaceInformation().getPresentationName());
+            jsonResultRooms.add(jsonBuildingInfo);
+        }
+        jsonResult.put("rooms", jsonResultRooms);
+
+        return jsonResult;
+    }
+
+    private static JSONObject getRoomInfo(Room room, Calendar rightNow) {
+        JSONObject jsonResult = new JSONObject();
+        JSONArray jsonSchedule = new JSONArray();
+
+        InfoSiteRoomTimeTable bodyComponent = new InfoSiteRoomTimeTable();
+        RoomSiteComponentBuilder builder = new RoomSiteComponentBuilder();
+
+        jsonResult.put("day", dataFormatDay.format(rightNow.getTime()));
+        try {
+            builder.getComponent(bodyComponent, rightNow, room, null);
+            for (Object occupation : bodyComponent.getInfoShowOccupation()) {
+                InfoShowOccupation showOccupation = (InfoShowOccupation) occupation;
+
+                JSONObject jsonOccupationInfo = new JSONObject();
+
+                if (showOccupation instanceof InfoLesson) {
+                    InfoLesson lesson = (InfoLesson) showOccupation;
+                    InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
+                    jsonOccupationInfo.put("sigla", infoExecutionCourse.getSigla());
+
+                    jsonOccupationInfo.put("start", dataFormatHour.format(lesson.getInicio().getTime()));
+                    jsonOccupationInfo.put("end", dataFormatHour.format(lesson.getFim().getTime()));
+                    jsonOccupationInfo.put("weekday", lesson.getDiaSemana().getDiaSemanaString());
+
+                    jsonOccupationInfo.put("info", lesson.getInfoShift().getShiftTypesCodePrettyPrint());
+                    jsonOccupationInfo.put("type", "lesson");
+
+                } else if (showOccupation instanceof InfoLessonInstance) {
+                    InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
+                    InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
+                    jsonOccupationInfo.put("sigla", infoExecutionCourse.getSigla());
+
+                    jsonOccupationInfo.put("start", dataFormatHour.format(lesson.getInicio().getTime()));
+                    jsonOccupationInfo.put("end", dataFormatHour.format(lesson.getFim().getTime()));
+                    jsonOccupationInfo.put("weekday", lesson.getDiaSemana().getDiaSemanaString());
+
+                    jsonOccupationInfo.put("info", lesson.getInfoShift().getShiftTypesCodePrettyPrint());
+                    jsonOccupationInfo.put("type", "lesson");
+
+                } else if (showOccupation instanceof InfoExam) {
+                    InfoExam infoExam = (InfoExam) showOccupation;
+                    JSONArray jsonSiglaArr = new JSONArray();
+                    for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
+                        InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
+                        JSONObject jsonSigla = new JSONObject();
+                        jsonSigla.put("sigla", infoEC.getSigla());
+                        jsonSiglaArr.add(jsonSigla);
+                    }
+                    jsonOccupationInfo.put("siglaList", jsonSiglaArr);
+                    jsonOccupationInfo.put("season", infoExam.getSeason().getSeason());
+
+                    jsonOccupationInfo.put("start", infoExam.getBeginningHour());
+                    jsonOccupationInfo.put("end", infoExam.getEndHour());
+                    jsonOccupationInfo.put("weekday", infoExam.getDiaSemana().getDiaSemanaString());
+
+                    jsonOccupationInfo.put("type", "exam");
+
+                } else if (showOccupation instanceof InfoWrittenTest) {
+                    InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
+                    JSONArray jsonSiglaArr = new JSONArray();
+                    for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
+                        InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
+                        JSONObject jsonSigla = new JSONObject();
+                        jsonSigla.put("sigla", infoEC.getSigla());
+                        jsonSiglaArr.add(jsonSigla);
+                    }
+                    jsonOccupationInfo.put("siglaList", jsonSiglaArr);
+                    jsonOccupationInfo.put("description", infoWrittenTest.getDescription());
+
+                    jsonOccupationInfo.put("start", dataFormatHour.format(infoWrittenTest.getInicio().getTime()));
+                    jsonOccupationInfo.put("end", dataFormatHour.format(infoWrittenTest.getFim().getTime()));
+                    jsonOccupationInfo.put("weekday", infoWrittenTest.getDiaSemana().getDiaSemanaString());
+
+                    jsonOccupationInfo.put("type", "test");
+
+                } else if (showOccupation instanceof InfoGenericEvent) {
+
+                    InfoGenericEvent infoGenericEvent = (InfoGenericEvent) showOccupation;
+                    jsonOccupationInfo.put("description", infoGenericEvent.getDescription());
+                    jsonOccupationInfo.put("title", infoGenericEvent.getTitle());
+
+                    jsonOccupationInfo.put("start", dataFormatHour.format(infoGenericEvent.getInicio().getTime()));
+                    jsonOccupationInfo.put("end", dataFormatHour.format(infoGenericEvent.getFim().getTime()));
+                    jsonOccupationInfo.put("weekday", infoGenericEvent.getDiaSemana().getDiaSemanaString());
+
+                    jsonOccupationInfo.put("type", "event");
+
+                }
+                jsonSchedule.add(jsonOccupationInfo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw newApplicationError(Status.INTERNAL_SERVER_ERROR, "berserk!", "something went wrong");
+        }
+        jsonResult.put("schedule", jsonSchedule);
+        return jsonResult;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T extends DomainObject> T getDomainObject(String externalId) {
+        try {
+            T domainObject = (T) AbstractDomainObject.fromExternalId(externalId);
+            if (domainObject == null) {
+                throw newApplicationError(Status.NOT_FOUND, "id not found", "id not found");
+            }
+            return domainObject;
+        } catch (NumberFormatException nfe) {
+            throw newApplicationError(Status.BAD_REQUEST, "invalid id", "invalid id");
+        }
+    }
+
+    private static WebApplicationException newApplicationError(Status status, String error, String description) {
+        JSONObject errorObject = new JSONObject();
+        errorObject.put("error", error);
+        errorObject.put("description", description);
+        return new WebApplicationException(Response.status(status).entity(errorObject.toJSONString()).build());
+    }
+
+    private static Calendar getRoomDay(String day) {
+        Calendar rightNow = Calendar.getInstance();
+        Date date = null;
+        try {
+            if (!StringUtils.isBlank(day)) {
+                date = dataFormatDay.parse(day);
+                rightNow.setTime(date);
+            }
+        } catch (ParseException e1) {
+        }
+        return rightNow;
+    }
+
+    private static ExecutionSemester getExecutionSemester(String sem, String year) {
+        ExecutionSemester executionSemester;
+
+        boolean isBlank = StringUtils.isBlank(sem) || StringUtils.isBlank(year);
+        if (!isBlank) {
+            int semester;
+            try {
+                semester = Integer.parseInt(sem);
+            } catch (NumberFormatException e) {
+                semester = 0;
+            }
+            executionSemester = ExecutionSemester.readBySemesterAndExecutionYear(semester, year);
+            if (executionSemester == null) {
+                executionSemester = ExecutionSemester.readActualExecutionSemester();
+            }
+        } else {
+            executionSemester = ExecutionSemester.readActualExecutionSemester();
+        }
+        return executionSemester;
+    }
+
+    private static ExecutionYear getExecutionYear(String year) {
+        ExecutionYear executionYear;
+
+        boolean isBlank = StringUtils.isBlank(year);
+        if (!isBlank) {
+            executionYear = ExecutionYear.readExecutionYearByName(year);
+            if (executionYear == null) {
+                executionYear = ExecutionYear.readCurrentExecutionYear();
+            }
+        } else {
+            executionYear = ExecutionYear.readCurrentExecutionYear();
+        }
+        return executionYear;
+    }
 }
