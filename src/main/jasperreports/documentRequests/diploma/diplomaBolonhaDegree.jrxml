@@ -165,7 +165,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{finalAverageDescription}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-32" x="59" y="647" width="468" height="18"/>
+				<reportElement key="textField-32" x="59" y="610" width="468" height="18"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -178,20 +178,20 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{day}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="staticText-19" x="126" y="715" width="141" height="16"/>
-				<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single" markup="none">
+				<reportElement key="staticText-19" x="88" y="682" width="200" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Regular" size="8" isBold="false" isItalic="false" pdfFontName="QUAD____.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{president}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-1" x="109" y="711" width="156" height="1"/>
+				<reportElement key="line-1" x="109" y="678" width="156" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-3" x="327" y="711" width="156" height="1"/>
+				<reportElement key="line-3" x="327" y="678" width="156" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
@@ -202,7 +202,7 @@
 				</reportElement>
 			</break>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-34" x="360" y="715" width="92" height="16"/>
+				<reportElement key="textField-34" x="360" y="682" width="92" height="16"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{theRector}]]></textFieldExpression>
 			</textField>
