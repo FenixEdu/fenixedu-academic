@@ -34,5 +34,4 @@ public class ExternalApplication extends ExternalApplication_Base {
         }
         return null;
     }
-
 }
