@@ -84,26 +84,6 @@
                   <form-property type="java.lang.String" name="degreeType"></form-property>
                   <form-property type="java.lang.String" name="enrolmentPeriodClass"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="executionCourseForm">
-                  <form-property type="java.lang.String" name="name"></form-property>
-                  <form-property type="java.lang.String" name="code"></form-property>
-                  <form-property type="java.lang.String" name="semester"></form-property>
-                  <form-property type="java.lang.String" name="comment"></form-property>
-                  <form-property type="java.lang.String" name="executionPeriod"></form-property>
-                  <form-property type="java.lang.String" name="executionPeriodId"></form-property>
-                  <form-property type="java.lang.String" name="executionDegree"></form-property>
-                  <form-property type="java.lang.String" name="executionDegreeId"></form-property>
-                  <form-property type="java.lang.String" name="executionCourseId"></form-property>
-                  <form-property type="java.lang.String" name="degreeCurricularPlan"></form-property>
-                  <form-property type="java.lang.String" name="degreeCurricularPlanId"></form-property>
-                  <form-property type="java.lang.String" name="curYear"></form-property>
-                  <form-property type="java.lang.Boolean" name="executionCoursesNotLinked"></form-property>
-                  <form-property type="java.lang.Integer" name="curricularCoursesListSize"></form-property>
-                  <form-property type="java.lang.Integer[]" name="internalIds"></form-property>
-                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="availableGradeSubmission"></form-property>
-                  <form-property type="java.lang.String" name="entryPhase"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="chooseDegreesForExecutionCourseMerge">
                   <form-property type="java.lang.Integer" name="sourceDegreeId"></form-property>
                   <form-property type="java.lang.Integer" name="destinationDegreeId"></form-property>
@@ -114,14 +94,6 @@
                   <form-property type="java.lang.Integer" name="sourceExecutionCourseId"></form-property>
                   <form-property type="java.lang.Integer" name="destinationExecutionCourseId"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-            </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="sepeateExecutionCourseForm">
-                  <form-property type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="destinationExecutionDegreeId"></form-property>
-                  <form-property type="java.lang.String" name="destinationCurricularYear"></form-property>
-                  <form-property type="java.lang.String" name="destinationExecutionCourseID"></form-property>
-                  <form-property type="java.lang.String[]" name="shiftIdsToTransfer"></form-property>
-                  <form-property type="java.lang.String[]" name="curricularCourseIdsToTransfer"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="executionDegreesManagementForm">
                   <form-property type="java.lang.String" name="method"></form-property>
@@ -242,18 +214,6 @@
             </action>
             <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
             <!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
-            <action input="/editExecutionCourseChooseExDegree.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0" scope="request" name="executionCourseForm" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction" path="/editExecutionCourseChooseExDegree">
-                  <forward path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" name="prepareEditECChooseExecDegreeAndCurYear"></forward>
-                  <forward path="df.executionCourseManagement.prepareEditExecutionCourse" name="prepareEditExecutionCourse"></forward>
-                  <forward path="df.executionCourseManagement.editExecutionCourse" name="editExecutionCourse"></forward>
-            </action>
-            <action input="/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0" scope="request" name="executionCourseForm" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction" path="/editExecutionCourse">
-                  <forward path="df.executionCourseManagement.prepareEditECChooseExecutionPeriod" name="prepareEditECChooseExecutionPeriod"></forward>
-                  <forward path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" name="prepareEditECChooseExecDegreeAndCurYear"></forward>
-                  <forward path="df.executionCourseManagement.prepareEditExecutionCourse" name="prepareEditExecutionCourse"></forward>
-                  <forward path="df.executionCourseManagement.editExecutionCourse" name="editExecutionCourse"></forward>
-                  <forward path="df.executionCourseManagement.viewExecutionCourse" name="viewExecutionCourse"></forward>
-            </action>
             <!-- ========== Merge Execution Courses ========== -->
             <action validate="false" scope="request" parameter="method" input="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod" path="/mergeExecutionCoursesForm" type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction" name="mergeExecutionCoursesForm">
                   <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="error.cannot.merge.execution.course.with.itself" type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$SourceAndDestinationAreTheSameException"></exception>

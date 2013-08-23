@@ -283,12 +283,6 @@
                   <form-property type="java.lang.String" name="degreeId"></form-property>
                   <form-property type="java.lang.String" name="degreeCurricularPlanId"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="executionCourseTransferCurricularCourseForm">
-                  <form-property type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="destinationExecutionDegreeId"></form-property>
-                  <form-property type="java.lang.String" name="curricularYear"></form-property>
-                  <form-property type="java.lang.String" name="destinationExecutionCourseId"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="separateExecutionCourseForm">
                   <form-property type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="originExecutionDegreeId"></form-property>
@@ -630,21 +624,6 @@
                   <forward path="manageCoordinators" name="manageCoordinators"></forward>
             </action>
             <!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
-            <!-- ist150958: POSSIBLY OBSOLETE -->
-            <action input="/editExecutionCourseChooseExDegree.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0" scope="request" name="executionCourseForm" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction" path="/editExecutionCourseChooseExDegree">
-                  <forward path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" name="prepareEditECChooseExecDegreeAndCurYear"></forward>
-                  <forward path="df.executionCourseManagement.prepareEditExecutionCourse" name="prepareEditExecutionCourse"></forward>
-                  <forward path="df.executionCourseManagement.editExecutionCourse" name="editExecutionCourse"></forward>
-            </action>
-             <!-- ist150958: OBSOLETE Manager to AcademicAdmin migration  -->
-            <action input="/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0" scope="request" name="executionCourseForm" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction" path="/editExecutionCourse">
-                  <forward path="df.executionCourseManagement.prepareEditECChooseExecutionPeriod" name="prepareEditECChooseExecutionPeriod"></forward>
-                  <forward path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" name="prepareEditECChooseExecDegreeAndCurYear"></forward>
-                  <forward path="df.executionCourseManagement.prepareEditExecutionCourse" name="prepareEditExecutionCourse"></forward>
-                  <forward path="df.executionCourseManagement.editExecutionCourse" name="editExecutionCourse"></forward>
-                  <forward path="df.executionCourseManagement.viewExecutionCourse" name="viewExecutionCourse"></forward>
-                  <forward path="df.executionCourseManagement.listExecutionCourseActions" name="listExecutionCourseActions"></forward>
-            </action>
             <!-- ========== PERSON MANAGEMENT ========== -->
             <action input="findPerson" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction" path="/personManagement">
                   <forward path="firstPage" name="firstPage"></forward>

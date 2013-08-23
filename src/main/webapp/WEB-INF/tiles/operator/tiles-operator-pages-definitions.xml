@@ -213,32 +213,6 @@
 	</definition>
 	
 	<!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
-	<definition name="df.executionCourseManagement.page.firstPage" extends="definition.operator.two-column" >
-		<put name="body" value="/manager/executionCourseManagement/welcomeScreen.jsp" />
-        <put name="navLocal" value="/operator/executionCourseManagement/mainMenu.jsp" />
-	</definition>
-
-	<definition name="df.executionCourseManagement.prepareEditECChooseExecutionPeriod" extends="df.executionCourseManagement.page.firstPage" >
-		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecutionPeriod.jsp" />
-	</definition>	
-	<definition name="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" extends="df.executionCourseManagement.page.firstPage" >
-		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecDegreeAndCurYear.jsp" />
-	</definition>
-	<definition name="df.executionCourseManagement.prepareEditExecutionCourse" extends="df.executionCourseManagement.page.firstPage" >
-		<put name="body" value="/manager/executionCourseManagement/prepareEditExecutionCourse.jsp" />
-	</definition>	
-	<definition name="df.executionCourseManagement.editExecutionCourse" extends="df.executionCourseManagement.page.firstPage" >
-		<put name="body" value="/manager/executionCourseManagement/editExecutionCourse.jsp" />
-	</definition>
-	<definition name="df.executionCourseManagement.viewExecutionCourse" extends="df.executionCourseManagement.page.firstPage" >
-		<put name="body" value="/manager/executionCourseManagement/viewExecutionCourse.jsp" />
-	</definition>
-	
-	<!-- ========== EXECUTION COURSE MERGE ========== -->
-	<definition name="df.executionCourseManagement.seperateExecutionCourse" extends="df.executionCourseManagement.page.firstPage" >
-		<put name="body" value="/manager/executionCourseManagement/seperateExecutionCourse.jsp" />
-	</definition>
-	
 	<!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->
 	<definition name="df.executionDegreeManagement.firstPage" extends="definition.operator.two-column" >
 		<put name="body" value="/manager/executionDegreesManagement/welcomeScreen.jsp" />

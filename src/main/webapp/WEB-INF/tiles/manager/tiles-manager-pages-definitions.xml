@@ -134,11 +134,6 @@
 	<definition name="df.page.confirmPasswordChange" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/password/confirmPasswordChange_bd.jsp" />
 	</definition>
-	<definition name="df.page.read-execution-periods-to-choose" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/readExecutionPeriods_bd.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
-	</definition>
-	
 
 	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 	<definition name="df.page.manage-execution-periods" extends="definition.manager.masterPage" >
@@ -226,55 +221,6 @@
 	</definition>
 
 	<!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
-	<definition name="df.executionCourseManagement.page.firstPage" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/welcomeScreen.jsp" />
-        <!-- <put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
--->
-	</definition>
-	
-	<!-- ist150958: obsolete -->
-	<definition name="df.executionCourseManagement.prepareEditECChooseExecutionPeriod" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecutionPeriod.jsp" />
-	</definition>	
-	
-	<!-- ist150958: obsolete -->
-	<definition name="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecDegreeAndCurYear.jsp" />
-	</definition>	
-
-	<definition name="df.executionCourseManagement.showCreatedSites" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/showCreatedSites.jsp" />
-	</definition>	
-	
-	<!-- ist150958: obsolete -->
-	<definition name="df.executionCourseManagement.prepareEditExecutionCourse" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/prepareEditExecutionCourse.jsp" />
-	</definition>
-	<!-- ist150958: obsolete -->
-	<definition name="df.executionCourseManagement.editExecutionCourse" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/editExecutionCourse.jsp" />
-	</definition>
-	<!-- ist150958: obsolete -->
-	<definition name="df.executionCourseManagement.viewExecutionCourse" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/viewExecutionCourse.jsp" />
-	</definition>
-	<definition name="df.executionCourseManagement.prepareAssociateCurricularCourseChooseDegreeCurricularPlan" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/prepareAssociateCurricularCourseChooseDegreeCurricularPlan.jsp" />
-	</definition>	
-	<definition name="df.executionCourseManagement.associateCurricularCourse" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/associateCurricularCourse.jsp" />
-	</definition>	
-	<definition name="df.executionCourseManagement.transferCurricularCourse" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/transferCurricularCourse.jsp" />
-	</definition>
-	<definition name="df.executionCourseManagement.seperateExecutionCourse" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/seperateExecutionCourse.jsp" />
-	</definition>
-	<!-- ist150958: obsolete -->
-	<definition name="df.executionCourseManagement.listExecutionCourseActions" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionCourseManagement/listExecutionCourseActions.jsp" />
-	</definition>
-
 	<!-- ========== FIND PERSON MANAGEMENT ========== -->
 	<definition name="firstPage" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/welcomeScreen.jsp" />

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
+package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +32,25 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério 19/Dez/2003
  * 
  */
+@Mapping(path = "/editExecutionCourse", module = "academicAdministration",
+        input = "/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0", scope = "request",
+        parameter = "method", attribute = "executionCourseForm", formBean = "executionCourseForm")
+@Forwards({
+        @Forward(name = "editExecutionCourse", path = "/academicAdministration/executionCourseManagement/editExecutionCourse.jsp"),
+        @Forward(name = "viewExecutionCourse", path = "/academicAdministration/executionCourseManagement/viewExecutionCourse.jsp"),
+        @Forward(name = "listExecutionCourseActions",
+                path = "/academicAdministration/executionCourseManagement/listExecutionCourseActions.jsp") })
 public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
+
     public ActionForward editExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
@@ -243,5 +255,4 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
         return objectId;
     }
-
 }

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.manager;
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.ExecutionCourseBean;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.ExecutionCourseBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
 public class ExecutionCourseProvider extends AbstractDomainObjectProvider {

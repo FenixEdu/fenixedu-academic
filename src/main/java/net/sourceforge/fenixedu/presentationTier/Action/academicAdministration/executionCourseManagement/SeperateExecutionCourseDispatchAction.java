@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
+package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement;
 
 import java.util.Collections;
 import java.util.List;
@@ -37,13 +37,24 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
-/**
- * 
- * @author Luis Cruz
- * 
- */
+@Mapping(module = "academicAdministration", path = "/seperateExecutionCourse",
+        input = "/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&page=0",
+        attribute = "separateExecutionCourseForm", formBean = "separateExecutionCourseForm", scope = "request",
+        parameter = "method")
+@Forwards(value = {
+        @Forward(name = "returnFromTransfer",
+                path = "/academicAdministration/executionCourseManagement/listExecutionCourseActions.jsp"),
+        @Forward(name = "manageCurricularSeparation",
+                path = "/academicAdministration/executionCourseManagement/manageCurricularSeparation.jsp"),
+        @Forward(name = "showTransferPage",
+                path = "/academicAdministration/executionCourseManagement/transferCurricularCourses.jsp"),
+        @Forward(name = "showSeparationPage",
+                path = "/academicAdministration/executionCourseManagement/separateExecutionCourse.jsp") })
 public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareTransfer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -381,4 +392,5 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         Shift shift = AbstractDomainObject.fromExternalId(id);
         return shift.getPresentationName();
     }
+
 }
