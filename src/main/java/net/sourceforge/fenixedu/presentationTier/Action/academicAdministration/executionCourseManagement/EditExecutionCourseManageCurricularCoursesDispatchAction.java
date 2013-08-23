@@ -135,7 +135,9 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         //destination attributes
         String executionCoursesNotLinked = RequestUtils.getAndSetStringToRequest(request, "executionCoursesNotLinked");
         if (StringUtils.isEmpty(executionCoursesNotLinked) || !Boolean.valueOf(executionCoursesNotLinked)) {
-            RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+            String curricularYearId = RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+            CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
+            request.setAttribute("curYear", curYear.getYear().toString());
             String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
             ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(originExecutionDegreeId);
             request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());
@@ -155,7 +157,9 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         //informative and destination attributes
         String executionCoursesNotLinked = RequestUtils.getAndSetStringToRequest(request, "executionCoursesNotLinked");
         if (StringUtils.isEmpty(executionCoursesNotLinked) || !Boolean.valueOf(executionCoursesNotLinked)) {
-            RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+            String curricularYearId = RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+            CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
+            request.setAttribute("curYear", curYear.getYear().toString());
             String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
             ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(originExecutionDegreeId);
             request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());

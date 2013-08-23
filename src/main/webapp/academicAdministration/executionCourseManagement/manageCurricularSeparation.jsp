@@ -51,7 +51,7 @@
 <bean:define id="notLinkedCoursesParameter" value="" /> <%-- bean redefined ahead --%>
 <logic:notEqual name="sessionBean" property="chooseNotLinked" value="true">
 	<bean:define id="curricularYearName">
-		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= pageContext.findAttribute("curricularYearId") + ".ordinal.short" %>"/>
+		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= pageContext.findAttribute("curYear") + ".ordinal.short" %>"/>
 		<bean:message bundle="ENUMERATION_RESOURCES" key="YEAR" />
 	</bean:define>
 	<bean:define id="degreeAndYearParameter"

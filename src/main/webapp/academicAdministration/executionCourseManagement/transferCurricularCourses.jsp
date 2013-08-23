@@ -35,7 +35,7 @@
 	<bean:define id="executionCourseName" name="infoExecutionCourse" property="nome"/>
 	<bean:define id="executionPeriodName" name="infoExecutionCourse" property="infoExecutionPeriod.executionPeriod.qualifiedName"/>
 	<bean:define id="curricularYearName">
-		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= pageContext.findAttribute("curricularYearId") + ".ordinal.short" %>"/>
+		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= pageContext.findAttribute("curYear") + ".ordinal.short" %>"/>
 		<bean:message bundle="ENUMERATION_RESOURCES" key="YEAR" />
 	</bean:define>
 

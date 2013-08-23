@@ -32,7 +32,7 @@
 <bean:define id="executionCoursesNotLinkedValue" value="<%= pageContext.findAttribute("executionCoursesNotLinked").toString() %>" />
 <logic:notEqual name="executionCoursesNotLinked" value="true">
 	<bean:define id="curricularYearName">
-		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= pageContext.findAttribute("curricularYearId") + ".ordinal.short" %>"/>
+		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= pageContext.findAttribute("curYear") + ".ordinal.short" %>"/>
 		<bean:message bundle="ENUMERATION_RESOURCES" key="YEAR" />
 	</bean:define>
 </logic:notEqual>
