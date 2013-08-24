@@ -43,3 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create TestScope relation to ExecutionCourse" createTestScopeRelation.sql
+execute "DomainObjectActionLog changes" domainObjectActionLogChanges.sql
+execute "Add title column to letter of recomendations." updates.sql
