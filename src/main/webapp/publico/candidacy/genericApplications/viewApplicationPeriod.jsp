@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.User"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplication"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
@@ -34,12 +35,15 @@
 </p>
 
 <%
-	final IUserView userView = AccessControl.getUserView();
-	if (userView != null && userView.hasRoleType(RoleType.MANAGER)) {
+	if (genericApplicationPeriod.isCurrentUserAllowedToMange()) {
 %>
 	<br/>
 	<a href="#" onclick="toggleById('#createPeriodBlock'); toggleById('#informationBlock');">
 		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.edit.application.period"/>
+	</a>
+	|
+	<a href="#" onclick="toggleById('#manageMembersBlock'); toggleById('#informationBlock');">
+		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.manage.members"/>
 	</a>
 	<div id="createPeriodBlock" style="display: none;">
 	<br/>
@@ -72,6 +76,59 @@
 		<p class="mtop15">
 			<html:submit>
 				<bean:message key="button.edit" bundle="APPLICATION_RESOURCES"/>
+			</html:submit>
+		</p>
+	</fr:form>
+	</div>
+	<br/>
+	<div id="manageMembersBlock" style="display: none;">
+	<h3>
+		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.manage.members.list"/>
+	</h3>
+	<%
+		if (genericApplicationPeriod.getManagerCount() == 0) {
+	%>
+			<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.manage.members.none"/>
+			<br/>
+			<br/>
+	<%
+		} else {
+	%>
+			<ul>
+				<% for (final User user : genericApplicationPeriod.getManagerSet()) { %>
+					<li>
+						<%= user.getPerson().getPresentationName() %>
+						&nbsp;&nbsp;
+						<a href="<%= request.getContextPath() +  "/publico/genericApplications.do?method=removeManager&applicationPeriodId=" + genericApplicationPeriod.getExternalId() + "&userId=" + user.getExternalId() %>">
+							<bean:message key="button.remove" bundle="APPLICATION_RESOURCES"/>
+						</a>
+					</li>
+				<% } %>
+			</ul>
+	<%
+		}
+	%>
+	<fr:form id="genericApplicationRecommendationForm" action="/genericApplications.do" encoding="multipart/form-data">
+		<input type="hidden" name="method" value="addManager"/>
+		<input type="hidden" name="applicationPeriodId" value="<%= genericApplicationPeriod.getExternalId() %>"/>
+
+		<fr:edit id="genericApplicationUserBean" name="genericApplicationUserBean">
+			<fr:schema type="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUserBean" bundle="CANDIDATE_RESOURCES">
+				<fr:slot name="username" key="label.username" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+   					<fr:property name="size" value="12"/>
+				</fr:slot>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="thlight thleft"/>
+		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+			<fr:destination name="invalid" path="<%= "/genericApplications.do?method=viewApplicationPeriod&applicationPeriodId=" + genericApplicationPeriod.getExternalId() %>" />
+			<fr:destination name="cancel" path="<%= "/genericApplications.do?method=viewApplicationPeriod&applicationPeriodId=" + genericApplicationPeriod.getExternalId() %>" />
+		</fr:edit>
+
+		<p class="mtop15">
+			<html:submit>
+				<bean:message key="button.add" bundle="APPLICATION_RESOURCES"/>
 			</html:submit>
 		</p>
 	</fr:form>
@@ -138,7 +195,7 @@
 </logic:notPresent>
 
 <%
-	if (userView != null && userView.hasRoleType(RoleType.MANAGER)) {
+	if (genericApplicationPeriod.isCurrentUserAllowedToMange()) {
 %>
 		<table class="tstyle2 thlight thcenter mtop15">
 			<tr>
@@ -199,3 +256,10 @@
 %>
 
 </div>
+
+<logic:present name="changedManagerList">
+	<script>
+		toggleById('#manageMembersBlock');
+		toggleById('#informationBlock');
+	</script>
+</logic:present>

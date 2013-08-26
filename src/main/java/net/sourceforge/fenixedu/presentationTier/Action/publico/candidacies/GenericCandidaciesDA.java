@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationLetterOfRecomentation;
@@ -15,6 +16,7 @@ import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation
 import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationPeriodBean;
 import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationRecommendationBean;
 import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUploadBean;
+import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUserBean;
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -59,6 +61,11 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         final GenericApplicationPeriod applicationPeriod = getDomainObject(request, "applicationPeriodId");
         request.setAttribute("applicationPeriod", applicationPeriod);
 
+        if (applicationPeriod.isCurrentUserAllowedToMange()) {
+            final GenericApplicationUserBean genericApplicationUserBean = new GenericApplicationUserBean(applicationPeriod);
+            request.setAttribute("genericApplicationUserBean", genericApplicationUserBean);
+        }
+
         return mapping.findForward("genericApplications.viewApplicationPeriod");
     }
 
@@ -67,6 +74,23 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         final GenericApplicationPeriodBean bean = getRenderedObject("genericApplicationPeriodBean");
         bean.createNewPeriod();
         return listApplicationPeriods(mapping, form, request, response);
+    }
+
+    public ActionForward addManager(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final GenericApplicationUserBean bean = getRenderedObject("genericApplicationUserBean");
+        bean.addManagerUser();
+        request.setAttribute("changedManagerList", Boolean.TRUE);
+        return viewApplicationPeriod(mapping, form, request, response);
+    }
+
+    public ActionForward removeManager(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final GenericApplicationPeriod applicationPeriod = getDomainObject(request, "applicationPeriodId");
+        final User user = getDomainObject(request, "userId");
+        applicationPeriod.removeManagerService(user);
+        request.setAttribute("changedManagerList", Boolean.TRUE);
+        return viewApplicationPeriod(mapping, form, request, response);
     }
 
     public void justCreateApplication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -107,8 +131,7 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
     public ActionForward viewApplication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final GenericApplication application = getDomainObject(request, "applicationId");
-        final IUserView userView = AccessControl.getUserView();
-        if (application != null && userView != null && userView.hasRoleType(RoleType.MANAGER)) {
+        if (application != null && application.getGenericApplicationPeriod().isCurrentUserAllowedToMange()) {
             request.setAttribute("application", application);
             return mapping.findForward("genericApplications.confirmEmail");
         }
@@ -147,10 +170,9 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         final GenericApplication application = getDomainObject(request, "applicationExternalId");
         final String confirmationCode = (String) getFromRequest(request, "confirmationCode");
         final GenericApplicationFile file = getDomainObject(request, "fileExternalId");
-        final IUserView userView = AccessControl.getUserView();
         if (application != null && file != null && file.getGenericApplication() == application
                 && ((confirmationCode != null && application.getConfirmationCode() != null && application.getConfirmationCode().equals(confirmationCode))
-                        || userView != null && userView.hasRoleType(RoleType.MANAGER))) {
+                        || application.getGenericApplicationPeriod().isCurrentUserAllowedToMange())) {
             response.setContentType(file.getMimeType());
             response.addHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
             response.setContentLength(file.getSize());
@@ -169,9 +191,8 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
             HttpServletResponse response) throws IOException {
         final String confirmationCode = (String) getFromRequest(request, "confirmationCode");
         final GenericApplicationLetterOfRecomentation file = getDomainObject(request, "fileExternalId");
-        final IUserView userView = AccessControl.getUserView();
         if (file != null && file.getRecomentation() != null && file.getRecomentation().getConfirmationCode() != null
-                && ((userView != null && userView.hasRoleType(RoleType.MANAGER))
+                && ((file.getRecomentation().getGenericApplication().getGenericApplicationPeriod().isCurrentUserAllowedToMange())
                         || file.getRecomentation().getConfirmationCode().equals(confirmationCode))) {
             response.setContentType(file.getMimeType());
             response.addHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");

@@ -4,9 +4,13 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -28,8 +32,8 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
         }
     };
 
-    public GenericApplicationPeriod(final MultiLanguageString title, final MultiLanguageString description,
-            final DateTime start, final DateTime end) {
+    public GenericApplicationPeriod(final MultiLanguageString title, final MultiLanguageString description, final DateTime start,
+            final DateTime end) {
         super();
         setTitle(title);
         setDescription(description);
@@ -42,7 +46,8 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
     }
 
     public static SortedSet<GenericApplicationPeriod> getPeriods() {
-        final SortedSet<GenericApplicationPeriod> result = new TreeSet<GenericApplicationPeriod>(GenericApplicationPeriod.COMPARATOR_BY_DATES);
+        final SortedSet<GenericApplicationPeriod> result =
+                new TreeSet<GenericApplicationPeriod>(GenericApplicationPeriod.COMPARATOR_BY_DATES);
         for (final CandidacyPeriod candidacyPeriod : RootDomainObject.getInstance().getCandidacyPeriods()) {
             if (candidacyPeriod instanceof GenericApplicationPeriod) {
                 result.add((GenericApplicationPeriod) candidacyPeriod);
@@ -64,9 +69,23 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
     }
 
     public SortedSet<GenericApplication> getOrderedGenericApplicationSet() {
-        final SortedSet<GenericApplication> result = new TreeSet<GenericApplication>(GenericApplication.COMPARATOR_BY_APPLICATION_NUMBER);
+        final SortedSet<GenericApplication> result =
+                new TreeSet<GenericApplication>(GenericApplication.COMPARATOR_BY_APPLICATION_NUMBER);
         result.addAll(getGenericApplicationSet());
         return result;
+    }
+
+    @Service
+    public void removeManagerService(final User user) {
+        if (isCurrentUserAllowedToMange()) {
+            removeManager(user);
+        }
+    }
+
+    public boolean isCurrentUserAllowedToMange() {
+        final IUserView userView = AccessControl.getUserView();
+        return userView != null
+                && (userView.hasRoleType(RoleType.MANAGER) || getManagerSet().contains(userView.getPerson().getUser()));
     }
 
 }

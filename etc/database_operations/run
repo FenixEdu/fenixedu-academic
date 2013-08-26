@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Add indirection table to generic application subdomain." updates.sql

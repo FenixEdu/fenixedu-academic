@@ -20684,3 +20684,11 @@ relation GenericApplicationRecomentationGenericApplicationLetterOfRecomentation 
 	candidacy.GenericApplicationLetterOfRecomentation playsRole letterOfRecomentation;
 }
 
+relation GenericApplicationPeriodManager {
+	period.GenericApplicationPeriod playsRole managedGenericApplicationPeriod {
+		multiplicity *;
+	}
+	User playsRole manager {
+		multiplicity *;
+	}
+}

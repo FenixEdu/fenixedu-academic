@@ -2,7 +2,10 @@ package net.sourceforge.fenixedu.domain.candidacy.util;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
@@ -56,8 +59,11 @@ public class GenericApplicationPeriodBean implements Serializable {
 
     @Service
     public void createNewPeriod() {
-        if (title != null && title.hasContent() && start != null && end != null) {
-            new GenericApplicationPeriod(title, description, start, end);
+        final IUserView userView = AccessControl.getUserView();
+        if (userView != null && userView.hasRoleType(RoleType.MANAGER)) {        
+            if (title != null && title.hasContent() && start != null && end != null) {
+                new GenericApplicationPeriod(title, description, start, end);
+            }
         }
     }
 
