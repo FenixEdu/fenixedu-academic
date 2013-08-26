@@ -74,7 +74,7 @@
    		if (!validateInputField("documentIdNumber")) { allIsOk = false; };
    		if (!validateSelectField("idDocumentType")) { allIsOk = false; };
    		if (!validateSelectField("nationality")) { allIsOk = false; };
-   		if (!validateInputField("fiscalCode")) { allIsOk = false; };
+   		// if (!validateInputField("fiscalCode")) { allIsOk = false; };
    		if (!validateInputField("address")) { allIsOk = false; };
    		if (!validateInputField("areaCode")) { allIsOk = false; };
    		if (!validateInputField("area")) { allIsOk = false; };
