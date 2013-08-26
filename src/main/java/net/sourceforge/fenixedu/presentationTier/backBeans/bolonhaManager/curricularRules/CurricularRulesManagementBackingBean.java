@@ -466,9 +466,9 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         if (getViewState().getAttribute("selectedDegreeID") == null) {
             if (getCurricularRule() != null && getCurricularRule() instanceof AnyCurricularCourse) {
                 AnyCurricularCourse anyCurricularCourse = (AnyCurricularCourse) getCurricularRule();
-                setSelectedDegreeID(anyCurricularCourse.getDegree() != null ? anyCurricularCourse.getDegree().getExternalId() : null);
+                setSelectedDegreeID(anyCurricularCourse.getDegree() != null ? anyCurricularCourse.getDegree().getExternalId() : NO_SELECTION_STRING);
             } else {
-                setSelectedDegreeID(null);
+                setSelectedDegreeID(NO_SELECTION_STRING);
             }
         }
         return (String) getViewState().getAttribute("selectedDegreeID");
@@ -483,9 +483,9 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             if (getCurricularRule() != null && getCurricularRule() instanceof AnyCurricularCourse) {
                 AnyCurricularCourse anyCurricularCourse = (AnyCurricularCourse) getCurricularRule();
                 setSelectedDepartmentUnitID(anyCurricularCourse.getDepartmentUnit() != null ? anyCurricularCourse
-                        .getDepartmentUnit().getExternalId() : null);
+                        .getDepartmentUnit().getExternalId() : NO_SELECTION_STRING);
             } else {
-                setSelectedDepartmentUnitID(null);
+                setSelectedDepartmentUnitID(NO_SELECTION_STRING);
             }
         }
         return (String) getViewState().getAttribute("selectedDepartmentUnitID");
@@ -554,7 +554,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public String getEndExecutionPeriodID() {
         if (getViewState().getAttribute("endExecutionPeriodID") == null && getCurricularRule() != null) {
-            setEndExecutionPeriodID((getCurricularRule().getEnd() == null) ? null : getCurricularRule().getEnd().getExternalId());
+            setEndExecutionPeriodID((getCurricularRule().getEnd() == null) ? NO_SELECTION_STRING : getCurricularRule().getEnd()
+                    .getExternalId());
         }
         return (String) getViewState().getAttribute("endExecutionPeriodID");
     }
