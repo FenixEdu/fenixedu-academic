@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -14,7 +13,7 @@ public class CountryProvider implements DataProvider {
     @Override
     public Object provide(Object source, Object currentValue) {
         final Set<Country> countrySet = new TreeSet<Country>(Country.COMPARATOR_BY_NAME);
-        countrySet.addAll(RootDomainObject.readAllDomainObjects(Country.class));
+        countrySet.addAll(Country.readDistinctCountries());
         return countrySet;
     }
 

@@ -281,8 +281,8 @@
 							<fr:slot name="nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 									layout="menu-select">
 								<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
-								<fr:property name="format" value="${countryNationality}" />
-								<fr:property name="sortBy" value="countryNationality"/>
+								<fr:property name="format" value="${localizedName}" />
+								<fr:property name="sortBy" value="localizedName"/>
 							</fr:slot>
 						</fr:schema>
 						<fr:layout name="flow">
@@ -321,7 +321,10 @@
 						<fr:destination name="invalid" path="<%= callbackUrl %>" />
 						<fr:destination name="cancel" path="<%= callbackUrl %>" />
 					</fr:edit>
-					<html:img page="/images/icon_help.gif" module="" titleKey="label.fiscalCode.help" bundle="CANDIDATE_RESOURCES"/>
+					<html:img page="/images/icon_help.gif" module="" titleKey="label.fiscalCode.help" bundle="CANDIDATE_RESOURCES" onclick="toggleById('#fiscalCodeHelpExplanation');"/>
+					<div id="fiscalCodeHelpExplanation" class="infoop4" style="display: none;">
+						<pre><bean:message key="label.fiscalCode.help" bundle="CANDIDATE_RESOURCES"/></pre>
+					</div>
 					<div id="emptyfiscalCode" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
 				</logic:present>
 				<logic:notPresent name="uploadBean">
