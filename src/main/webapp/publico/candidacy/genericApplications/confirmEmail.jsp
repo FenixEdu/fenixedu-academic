@@ -308,7 +308,7 @@
 				<logic:present name="uploadBean">
 					<fr:edit id="genericApplicationFormGenderFiscalCode" name="application">
 						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-							<fr:slot name="fiscalCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+							<fr:slot name="fiscalCode">
 								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 									<fr:property name="type" value="character"/>
 									<fr:property name="length" value="50"/>
