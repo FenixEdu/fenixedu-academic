@@ -97,8 +97,10 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
             HttpServletResponse response) {
         final GenericApplicationPeriod period = getDomainObject(request, "periodOid");
         final String email = (String) getFromRequest(request, "email");
-        final GenericApplication application = period.createApplication(email);
-        request.setAttribute("sentEmailForApplication", application);
+        if (period != null && email != null) {
+            final GenericApplication application = period.createApplication(email);
+            request.setAttribute("sentEmailForApplication", application);
+        }
     }
 
     public ActionForward createApplication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
