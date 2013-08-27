@@ -13,7 +13,7 @@
                   <form-property type="java.lang.String" name="select"></form-property>
                   <form-property type="java.lang.String" name="studentNumber"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-                  <form-property initial="0" type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
                   <form-property type="java.lang.String" name="organizedBy"></form-property>
                   <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
                   <form-property type="java.lang.String" name="viewType"></form-property>

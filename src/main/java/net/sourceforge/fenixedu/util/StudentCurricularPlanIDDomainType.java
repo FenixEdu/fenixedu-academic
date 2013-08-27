@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.util;
 
 public class StudentCurricularPlanIDDomainType extends FenixUtil {
-    public static final int ALL_TYPE = -1;
+    public static final String ALL_TYPE = "-1";
 
-    public static final int NEWEST_TYPE = -2;
+    public static final String NEWEST_TYPE = "-2";
 
     public static final String ALL_STRING = "Todos os planos curriculares";
 
@@ -15,33 +15,19 @@ public class StudentCurricularPlanIDDomainType extends FenixUtil {
     public static final StudentCurricularPlanIDDomainType NEWEST = new StudentCurricularPlanIDDomainType(
             StudentCurricularPlanIDDomainType.NEWEST_TYPE);
 
-    private Integer id;
+    private String id;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer idType) {
+    public void setId(String idType) {
         id = idType;
-    }
-
-    public void setId(int idType) {
-        id = new Integer(idType);
-    }
-
-    public StudentCurricularPlanIDDomainType(int idType) {
-        super();
-        setId(idType);
-    }
-
-    public StudentCurricularPlanIDDomainType(Integer idType) {
-        super();
-        setId(idType);
     }
 
     public StudentCurricularPlanIDDomainType(String idType) {
         super();
-        setId(Integer.parseInt(idType));
+        setId(idType);
     }
 
     @Override

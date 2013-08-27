@@ -212,8 +212,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
             actionForm.set("organizedBy", organizedBy);
         }
 
-        if (request.getParameter("degreeCurricularPlanID") == null
-                || Integer.valueOf(request.getParameter("degreeCurricularPlanID")) == 0) {
+        if (StringUtils.isEmpty(request.getParameter("degreeCurricularPlanID"))) {
             return mapping.findForward("ShowStudentCurriculum");
         } else {
             request.setAttribute("degreeCurricularPlanID", request.getParameter("degreeCurricularPlanID"));
