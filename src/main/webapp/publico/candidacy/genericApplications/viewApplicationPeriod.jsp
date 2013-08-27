@@ -22,7 +22,9 @@
 </script>
 
 <h2>
-	<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.periods"/> <%= genericApplicationPeriod.getTitle().getContent() %>
+	<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.periods"/>
+	<br/>
+	<%= genericApplicationPeriod.getTitle().getContent() %>
 </h2>
 
 <br/>

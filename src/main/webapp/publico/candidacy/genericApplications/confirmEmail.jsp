@@ -92,7 +92,9 @@
 
 
 <h2>
-	<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.periods"/> <%= genericApplication.getGenericApplicationPeriod().getTitle().getContent() %>
+	<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.periods"/>
+	<br/>
+	<%= genericApplication.getGenericApplicationPeriod().getTitle().getContent() %>
 </h2>
 
 <br/>
