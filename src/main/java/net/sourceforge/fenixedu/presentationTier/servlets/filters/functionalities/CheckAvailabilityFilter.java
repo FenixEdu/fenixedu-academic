@@ -72,18 +72,21 @@ public class CheckAvailabilityFilter implements Filter {
 
         final FilterFunctionalityContext functionalityContext = getContextAttibute(httpServletRequest);
 
+        // If we are not dealing with a functionality, just keep going
         if (functionalityContext == null || functionalityContext.getSelectedContent() == null
                 || functionalityContext.hasBeenForwarded || isActionRequest(httpServletRequest)) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
 
+        // We are dealing with a functionality, check if the user has permission
+        // to access it
+
         Content content = functionalityContext.getSelectedContent();
 
-        if (content != null && !content.isAvailable(functionalityContext)) {
+        if (!isAvailable(functionalityContext)) {
             if (functionalityContext.getLastContentInPath(Site.class) == null
                     || !((content instanceof Section) || (content instanceof Item))) {
-
                 showUnathorizedPage(content, httpServletRequest, httpServletResponse);
                 return;
             }
@@ -95,6 +98,16 @@ public class CheckAvailabilityFilter implements Filter {
             // Manually handle exceptions in functionalities
             exceptionHandler.handle(httpServletRequest, httpServletResponse, t);
         }
+    }
+
+    private boolean isAvailable(FilterFunctionalityContext functionalityContext) {
+        for (Content content : functionalityContext.getSelectedContents()) {
+            if (!content.isAvailable(functionalityContext)) {
+                return false;
+            }
+        }
+        // If all filters passed, content is available
+        return true;
     }
 
     private boolean isActionRequest(final HttpServletRequest httpServletRequest) {
