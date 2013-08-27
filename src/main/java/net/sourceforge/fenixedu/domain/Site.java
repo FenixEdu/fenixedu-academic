@@ -134,8 +134,7 @@ public abstract class Site extends Site_Base {
     }
 
     public MetaDomainObjectPortal getTemplate() {
-        MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(this.getClass());
-        return metaDomainObject == null ? null : (MetaDomainObjectPortal) metaDomainObject.getAssociatedPortal();
+        return MetaDomainObjectPortal.getPortal(this.getClass());
     }
 
     public boolean isTemplateAvailable() {
@@ -282,9 +281,9 @@ public abstract class Site extends Site_Base {
     @Override
     public Collection<Node> getOrderedChildrenNodes() {
         List<Node> nodes = new ArrayList<Node>();
-        MetaDomainObject template = MetaDomainObject.getMeta(this.getClass());
-        if (template != null && template.isPortalAvailable()) {
-            nodes.addAll(template.getAssociatedPortal().getOrderedChildrenNodes());
+        MetaDomainObjectPortal template = getTemplate();
+        if (template != null) {
+            nodes.addAll(template.getOrderedChildrenNodes());
         }
         nodes.addAll(new TreeSet<Node>(super.getChildren()));
         return nodes;
@@ -293,9 +292,9 @@ public abstract class Site extends Site_Base {
     @Override
     public Set<Node> getChildren() {
         Set<Node> nodes = new HashSet<Node>();
-        MetaDomainObject template = MetaDomainObject.getMeta(this.getClass());
-        if (template != null && template.isPortalAvailable()) {
-            nodes.addAll(template.getAssociatedPortal().getChildren());
+        MetaDomainObjectPortal template = getTemplate();
+        if (template != null) {
+            nodes.addAll(template.getChildren());
         }
         nodes.addAll(super.getChildren());
         return nodes;

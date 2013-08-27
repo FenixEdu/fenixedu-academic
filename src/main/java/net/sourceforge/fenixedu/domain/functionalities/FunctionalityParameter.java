@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import pt.ist.bennu.core.domain.Bennu;
 
 /**
@@ -24,13 +23,7 @@ public class FunctionalityParameter extends FunctionalityParameter_Base {
         setName(name);
     }
 
-    public FunctionalityParameter(Functionality functionality, String name, MetaDomainObject type) {
-        this(functionality, name);
-        setType(type);
-    }
-
     public void delete() {
-        setType(null);
         setFunctionality(null);
         setRootDomainObject(null);
 
@@ -45,11 +38,6 @@ public class FunctionalityParameter extends FunctionalityParameter_Base {
     @Deprecated
     public boolean hasBennu() {
         return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
     }
 
     @Deprecated

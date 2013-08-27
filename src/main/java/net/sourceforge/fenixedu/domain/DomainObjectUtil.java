@@ -903,12 +903,6 @@ public final class DomainObjectUtil {
                 return Bennu.getInstance().getThemesSet();
             }
         });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.MetaDomainObject.class.getName(), new DomainObjectReader() {
-            @Override
-            public java.util.Set readAllDomainObjects() {
-                return Bennu.getInstance().getMetaDomainObjectsSet();
-            }
-        });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.log.CurriculumLineLog.class.getName(), new DomainObjectReader() {
             @Override
             public java.util.Set readAllDomainObjects() {

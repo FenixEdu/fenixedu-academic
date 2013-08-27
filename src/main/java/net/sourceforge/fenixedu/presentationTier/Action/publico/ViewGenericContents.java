@@ -7,17 +7,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.security.Authenticate;
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
@@ -25,6 +21,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -135,9 +133,7 @@ public class ViewGenericContents extends FenixDispatchAction {
     }
 
     private String getType(HttpServletRequest request) {
-        MetaDomainObjectPortal portal = getPortal(request);
-        String type = portal.getMetaDomainObject().getType();
-        return type;
+        return getPortal(request).getType();
     }
 
     private FilterFunctionalityContext getContext(HttpServletRequest request) {
@@ -165,8 +161,7 @@ public class ViewGenericContents extends FenixDispatchAction {
 
     private MetaDomainObjectPortal getPortal(HttpServletRequest request) {
         FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-        return (MetaDomainObjectPortal) MetaDomainObject.getMeta(context.getLastContentInPath(Site.class).getClass())
-                .getAssociatedPortal();
+        return MetaDomainObjectPortal.getPortal(context.getLastContentInPath(Site.class).getClass());
     }
 
     private void prepareProtectedItems(HttpServletRequest request, User userView, Collection<Item> items,

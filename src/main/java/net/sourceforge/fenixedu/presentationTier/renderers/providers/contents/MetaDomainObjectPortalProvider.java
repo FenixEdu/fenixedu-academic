@@ -1,10 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.contents;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
-import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -19,14 +14,7 @@ public class MetaDomainObjectPortalProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        List<MetaDomainObjectPortal> portals = new ArrayList<MetaDomainObjectPortal>();
-
-        for (MetaDomainObject metaDomainObject : Bennu.getInstance().getMetaDomainObjectsSet()) {
-            if (metaDomainObject.isPortalAvailable()) {
-                portals.add((MetaDomainObjectPortal) metaDomainObject.getAssociatedPortal());
-            }
-        }
-        return portals;
+        return Bennu.getInstance().getMetaDomainObjectPortalSet();
     }
 
 }

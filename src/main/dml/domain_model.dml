@@ -6371,10 +6371,6 @@ class elections.DelegateElectionCandidacyPeriod extends elections.DelegateElecti
 class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionPeriod {
 }
 
-    class MetaDomainObject  {
-        String type;
-    }
-
     class contents.Content  {
         String contentId;
         DateTime creationDate;
@@ -6450,6 +6446,7 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
             }
 
             class contents.MetaDomainObjectPortal extends contents.Portal {
+                String type;
             }
 
             class contents.ContentJump extends contents.Portal {
@@ -17948,13 +17945,6 @@ relation PersonSantanderPIN {
 	cardGeneration.SantanderPIN playsRole santanderPIN;
 }
 
-relation MetaDomainObjectRootDomainObject {
-    .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
-    MetaDomainObject playsRole metaDomainObjects {
-        multiplicity *;
-    }
-}
-
 relation ContentHasCreator {
     Person playsRole creator;
     contents.Content playsRole createdContents {
@@ -18015,13 +18005,6 @@ relation FunctionalityHasParameters {
     }
 }
 
-relation FunctionalityParameterType {
-    MetaDomainObject playsRole type;
-    functionalities.FunctionalityParameter playsRole functionalityParameters {
-                multiplicity *;
-        }
-}
-
 relation RootModule {
     .pt.ist.bennu.core.domain.Bennu playsRole moduleRootDomainObject;
     functionalities.Module playsRole rootModule;
@@ -18046,18 +18029,18 @@ relation RootDomainObjectFunctionalityParameter {
         }
 }
 
-relation MetaDomainObjectPortalMetaDomainObject {
-    contents.MetaDomainObjectPortal playsRole portals {
-                multiplicity *;
-        }
-    MetaDomainObject playsRole metaDomainObject;
-}
-
 relation ExecutionPathRootDomainObject {
         .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
         functionalities.ExecutionPath playsRole executionPaths {
                 multiplicity *;
         }
+}
+
+relation MetaDomainObjectPortalBennu {
+    .pt.ist.bennu.core.domain.Bennu playsRole bennu;
+    contents.MetaDomainObjectPortal playsRole metaDomainObjectPortal {
+        multiplicity *;
+    }
 }
 
 relation PortalPool {

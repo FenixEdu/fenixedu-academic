@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.content.CreateMetaDomainObectTypes;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
@@ -90,15 +89,6 @@ public class FenixInitializer implements ServletContextListener {
 
         } catch (Throwable e) {
             throw new Error("Error reading actual execution period!", e);
-        }
-
-        try {
-            long start = System.currentTimeMillis();
-            CreateMetaDomainObectTypes.run();
-            long end = System.currentTimeMillis();
-            logger.info("CreateMetaDomainObectTypes: " + (end - start) + "ms.");
-        } catch (Throwable throwable) {
-            throw new Error("Error creating MetaDomainObject!", throwable);
         }
 
         try {
