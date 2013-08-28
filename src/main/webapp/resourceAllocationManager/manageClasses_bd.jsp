@@ -29,10 +29,10 @@
 		<span class="error"><!-- Error messages go here --><html:errors /></span>
 	</p>
 
-   	<bean:define id="degree" type="net.sourceforge.fenixedu.domain.Degree" name="executionDegreeD" property="degreeCurricularPlan.degree"/>
-   	<bean:define id="curricularYear" type="java.lang.Integer" name="curricularYearOID"/>
+   	<bean:define id="degree" type="net.sourceforge.fenixedu.domain.Degree" name="executionDegreeD" property="degreeCurricularPlan.degree"/>   	
+   	<bean:define id="curricularYear" type="java.lang.Integer" 
+   		name="<%= PresentationConstants.CURRICULAR_YEAR %>" property="year"/>	
    	<%= degree.constructSchoolClassPrefix(curricularYear) %>
-
 
 	   	<html:text bundle="HTMLALT_RESOURCES" altKey="text.className" property="className"/>
 	   	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbuttonSmall">
