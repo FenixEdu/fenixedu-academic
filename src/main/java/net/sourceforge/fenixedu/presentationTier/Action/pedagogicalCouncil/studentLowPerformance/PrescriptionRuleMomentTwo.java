@@ -27,8 +27,8 @@ class PrescriptionRuleMomentTwo extends PrescriptionRuleGenericMoment {
     }
 
     @Override
-    public ExecutionYear getRegistrationStart() {
-        return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear();
+    public ExecutionYear getRegistrationStart(ExecutionYear executionYear) {
+        return executionYear.getPreviousExecutionYear();
     }
 
 }

@@ -27,8 +27,8 @@ class PrescriptionRuleThreeEntries extends PrescriptionRuleGeneric {
     }
 
     @Override
-    public ExecutionYear getRegistrationStart() {
-        return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear();
+    public ExecutionYear getRegistrationStart(ExecutionYear executionYear) {
+        return executionYear.getPreviousExecutionYear().getPreviousExecutionYear();
     }
 
 }

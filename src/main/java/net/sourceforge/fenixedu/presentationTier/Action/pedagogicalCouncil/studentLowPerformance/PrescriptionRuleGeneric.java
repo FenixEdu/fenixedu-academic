@@ -12,7 +12,8 @@ class PrescriptionRuleGeneric extends AbstractPrescriptionRule {
     }
 
     @Override
-    public boolean isPrescript(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary) {
+    public boolean isPrescript(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary,
+            ExecutionYear executionYear) {
         return ects.compareTo(getMinimumEcts()) < 0
                 && numberOfEntriesStudentInSecretary == getNumberOfEntriesStudentInSecretary();
     }
@@ -33,9 +34,8 @@ class PrescriptionRuleGeneric extends AbstractPrescriptionRule {
     }
 
     @Override
-    public ExecutionYear getRegistrationStart() {
-        return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear()
-                .getPreviousExecutionYear();
+    public ExecutionYear getRegistrationStart(ExecutionYear executionYear) {
+        return executionYear.getPreviousExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear();
     }
 
 }
