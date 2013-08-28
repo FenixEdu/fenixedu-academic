@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,8 +20,12 @@ public class ExecutionPeriodsForDismissalsStudentCurricularPlanProvider implemen
     public Object provide(Object source, Object currentValue) {
         final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
         final StudentCurricularPlan studentCurricularPlan = ((IStudentCurricularPlanBean) source).getStudentCurricularPlan();
-        result.addAll(ExecutionSemester.readExecutionPeriodsInTimePeriod(studentCurricularPlan.getStartDate(), Calendar
-                .getInstance().getTime()));
+        ExecutionSemester scpSemester = studentCurricularPlan.getStartExecutionPeriod();
+        while (!scpSemester.isCurrent()) {
+            result.add(scpSemester);
+            scpSemester = scpSemester.getNextExecutionPeriod();
+        }
+        result.add(scpSemester); //add the current semester
         Collections.sort(result, new ReverseComparator());
         return result;
     }
