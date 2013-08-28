@@ -7,10 +7,10 @@
 
 <ul>
 	<logic:present name="executionCourse">
-		<bean:define id="executionCourseID" name="executionCourse" property="externalId" />
+		<bean:define id="executionCourseID" name="executionCourse" property="externalId"/>
 	</logic:present>
 	<logic:notPresent name="executionCourse">
-		<bean:define id="executionCourseID" name="executionCourseID"/>
+		<bean:define id="executionCourseID" name="executionCourseID" type="java.lang.String"/>
 		<%
 			final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 			request.setAttribute("executionCourse", executionCourse);
