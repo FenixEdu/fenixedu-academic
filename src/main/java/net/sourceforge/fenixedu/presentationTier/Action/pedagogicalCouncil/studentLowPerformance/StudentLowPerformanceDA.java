@@ -29,13 +29,15 @@ public class StudentLowPerformanceDA extends FenixDispatchAction {
     public ActionForward viewStudentsState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        PrescriptionBean prescriptionBean = getContextBean(request);
-        if (prescriptionBean.getSelectedPrescriptionEnum() == null) {
+        PrescriptionBean prescriptionBean = getRenderedObject(PRESCRIPTION_BEAN);
+        if (prescriptionBean == null || prescriptionBean.getSelectedPrescriptionEnum() == null
+                || prescriptionBean.getExecutionYear() == null) {
             return viewJobs(mapping, actionForm, request, response, null);
         }
         TutorshipStudentLowPerformanceQueueJob job =
-                TutorshipStudentLowPerformanceQueueJob.createTutorshipStudentLowPerformanceQueueJob(prescriptionBean
-                        .getSelectedPrescriptionEnum());
+                TutorshipStudentLowPerformanceQueueJob.createTutorshipStudentLowPerformanceQueueJob(
+                        prescriptionBean.getSelectedPrescriptionEnum(), prescriptionBean.getExecutionYear());
+        RenderUtils.invalidateViewState(PRESCRIPTION_BEAN);
         return viewJobs(mapping, actionForm, request, response, job);
 
     }

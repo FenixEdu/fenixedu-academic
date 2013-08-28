@@ -12,11 +12,11 @@ abstract class PrescriptionRuleGenericMoment extends AbstractPrescriptionRule {
     }
 
     @Override
-    public boolean isPrescript(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary) {
+    public boolean isPrescript(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary,
+            ExecutionYear executionYear) {
         return ects.compareTo(getMinimumEcts()) < 0
                 && numberOfEntriesStudentInSecretary == getNumberOfEntriesStudentInSecretary()
-                && isForAdmission(registration.getIngression())
-                && registration.isFullRegime(ExecutionYear.readCurrentExecutionYear());
+                && isForAdmission(registration.getIngression()) && registration.isFullRegime(executionYear);
     }
 
     protected boolean isForAdmission(Ingression ingression) {

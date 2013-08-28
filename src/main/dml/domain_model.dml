@@ -15862,6 +15862,13 @@ relation TutorshipTutorshipSummaries {
     }
 }
 
+relation TutorshipStudentLowPerformanceExecutionYear {
+	ExecutionYear playsRole executionYear;
+	TutorshipStudentLowPerformanceQueueJob playsRole tutorshipStudentLowPerformanceQueueJob {
+    	multiplicity *;
+    }
+}
+
 relation TutorshipSummaryPeriodExecutionSemester {
 	TutorshipSummaryPeriod playsRole tutorshipSummaryPeriod;
 	ExecutionSemester playsRole executionSemester;
@@ -16936,6 +16943,7 @@ relation TSDTeacherTeacherServiceDistribution {
         multiplicity *;
     }
 }
+
 
 relation InstitutionUnitDegreeDesignation {
 	organizationalStructure.Unit playsRole institutionUnit {

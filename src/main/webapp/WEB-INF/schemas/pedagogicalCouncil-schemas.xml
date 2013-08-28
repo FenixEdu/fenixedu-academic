@@ -939,10 +939,17 @@
     	<property name="destination" value="viewStudentsState"/>
     	<property name="eachLayout" value=""/>
     </slot>
+     <slot name="executionYear" key="label.curricularYear" layout="menu-select-postback"  bundle="PEDAGOGICAL_COUNCIL">       
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+    	<property name="destination" value="viewStudentsState"/>
+    	<property name="format" value="${name}" />
+    	<property name="eachLayout" value=""/>
+    </slot>
 </schema>
 
 <schema name="tutorship.tutorate.student.lowPerformance.latestJobs" type="net.sourceforge.fenixedu.domain.TutorshipStudentLowPerformanceQueueJob"  bundle="PEDAGOGICAL_COUNCIL">
 	<slot name="prescriptionEnum"  key="label.tutorship.lowPerformance.request.request"/> 
+	<slot name="executionYear.name"  key="label.curricularYear"/> 
 	<slot name="requestDate" key="label.tutorship.lowPerformance.request.requestDate"/>
 	<slot name="person.name" key="label.tutorship.lowPerformance.request.personName"/>
 </schema>
