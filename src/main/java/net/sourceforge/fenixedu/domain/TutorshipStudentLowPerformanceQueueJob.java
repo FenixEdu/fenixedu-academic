@@ -28,9 +28,10 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
         super();
     }
 
-    public TutorshipStudentLowPerformanceQueueJob(PrescriptionEnum prescriptionEnum) {
+    public TutorshipStudentLowPerformanceQueueJob(PrescriptionEnum prescriptionEnum, ExecutionYear executionYear) {
         super();
         setPrescriptionEnum(prescriptionEnum);
+        setExecutionYear(executionYear);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
                 AbstractPrescriptionRule.readPrescriptionRules(getPrescriptionEnum());
         for (AbstractPrescriptionRule abstractPrescriptionRule : prescriptionRules) {
 
-            for (Registration registration : abstractPrescriptionRule.getRegistrationStart().getStudents()) {
+            for (Registration registration : abstractPrescriptionRule.getRegistrationStart(getExecutionYear()).getStudents()) {
                 if (isValidRegistration(registration)) {
                     StudentLowPerformanceBean s = calcStudentCycleLowPerformanceBean(registration, abstractPrescriptionRules);
                     if (s != null) {
@@ -122,8 +123,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 
     private int getNumberOfEntriesStudentInSecretary(Registration registration) {
         int numberOfEntriesStudentInSecretary = 0;
-        for (ExecutionYear execYear : ExecutionYear.readExecutionYears(registration.getStartExecutionYear(),
-                ExecutionYear.readCurrentExecutionYear())) {
+        for (ExecutionYear execYear : ExecutionYear.readExecutionYears(registration.getStartExecutionYear(), getExecutionYear())) {
             RegistrationState registrationState = registration.getLastRegistrationState(execYear);
             if (registrationState != null && registrationState.isActive()) {
                 numberOfEntriesStudentInSecretary += 1;
@@ -136,7 +136,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
     private boolean isLowPerformanceStudent(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary,
             List<AbstractPrescriptionRule> prescriptionRules) {
         for (AbstractPrescriptionRule prescriptionRule : prescriptionRules) {
-            if ((prescriptionRule.isPrescript(registration, ects, numberOfEntriesStudentInSecretary))) {
+            if ((prescriptionRule.isPrescript(registration, ects, numberOfEntriesStudentInSecretary, getExecutionYear()))) {
                 return true;
             }
         }
@@ -148,7 +148,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
     }
 
     private String parcialStudent(Registration registration) {
-        return (registration.isPartialRegime(ExecutionYear.readCurrentExecutionYear()) ? "Estudante Parcial" + ";" : "");
+        return (registration.isPartialRegime(getExecutionYear()) ? "Estudante Parcial" + ";" : "");
     }
 
     private String flunkedStudent(List<Registration> registrations) {
@@ -236,9 +236,9 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 
     @Service
     public static TutorshipStudentLowPerformanceQueueJob createTutorshipStudentLowPerformanceQueueJob(
-            PrescriptionEnum prescriptionEnum) {
+            PrescriptionEnum prescriptionEnum, ExecutionYear executionYear) {
         final TutorshipStudentLowPerformanceQueueJob tutorshipStudentLowPerformanceQueueJob =
-                new TutorshipStudentLowPerformanceQueueJob(prescriptionEnum);
+                new TutorshipStudentLowPerformanceQueueJob(prescriptionEnum, executionYear);
         return tutorshipStudentLowPerformanceQueueJob;
     }
 }
