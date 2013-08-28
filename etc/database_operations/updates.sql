@@ -40,3 +40,54 @@ alter table `APP_USER_SESSION` add `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, add
 
 -- Inserted at 2013-08-19T16:24:50.891+01:00
 
+
+
+
+-- Inserted at 2013-08-21T10:26:54.249Z
+
+alter table `FILE` add `OID_RECOMENTATION` bigint unsigned, add `OID_GENERIC_APPLICATION` bigint unsigned, add index (OID_GENERIC_APPLICATION);
+alter table `CANDIDACY_PERIOD` add `DESCRIPTION` text, add `PERIOD_NUMBER` int(11), add `TITLE` text;
+create table `GENERIC_APPLICATION_RECOMENTATION` (`OID` bigint unsigned, `NAME` text, `OID_DOMAIN_META_OBJECT` bigint unsigned, `OID_GENERIC_APPLICATION` bigint unsigned, `INSTITUTION` text, `EMAIL` text, `OID_LETTER_OF_RECOMENTATION` bigint unsigned, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `CONFIRMATION_CODE` text, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_GENERIC_APPLICATION), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
+alter table `EXTERNAL_APPLICATION` add `SECRET` text;
+alter table `APP_USER_SESSION` add `REFRESH_TOKEN` text, add `CODE_EXPIRATION_DATE` timestamp NULL default NULL, add `OID_USER` bigint unsigned, add `OID_APPLICATION` bigint unsigned, add `CODE` text, add index (OID_USER), add index (OID_APPLICATION);
+create table `GENERIC_APPLICATION_COMMENT` (`OID` bigint unsigned, `OID_DOMAIN_META_OBJECT` bigint unsigned, `OID_GENERIC_APPLICATION` bigint unsigned, `COMMENT` text, `CREATED` timestamp NULL default NULL, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_GENERIC_APPLICATION), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
+create table `GENERIC_APPLICATION` (`MARITAL_STATUS` text, `EMISSION_LOCATION_OF_DOCUMENT_ID` text, `OID` bigint unsigned, `AREA_CODE` text, `APPLICATION_NUMBER` text, `OID_NATIONALITY` bigint unsigned, `PROFESSION` text, `EMAIL` text, `FISCAL_CODE` text, `ID_INTERNAL` int(11) NOT NULL auto_increment, `EMISSION_DATE_OF_DOCUMENT_ID_YEAR_MONTH_DAY` text, `AREA_OF_AREA_CODE` text, `NAME` text, `AREA` text, `EXPIRATION_DATE_OF_DOCUMENT_ID_YEAR_MONTH_DAY` text, `DOCUMENT_ID_NUMBER` text, `ADDRESS` text, `TELEPHONE_CONTACT` text, `CONFIRMATION_CODE` text, `ID_DOCUMENT_TYPE` text, `CANDIDATE_OBSERVATIONS` text, `OID_DOMAIN_META_OBJECT` bigint unsigned, `GENDER` text, `DATE_OF_BIRTH_YEAR_MONTH_DAY` text, `OID_GENERIC_APPLICATION_PERIOD` bigint unsigned, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, primary key (ID_INTERNAL), index (OID), index (OID_NATIONALITY), index (OID_GENERIC_APPLICATION_PERIOD), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
+
+
+
+-- Inserted at 2013-08-21T10:30:38.457Z
+
+alter table `FILE` add `OID_RECOMENTATION` bigint unsigned, add `OID_GENERIC_APPLICATION` bigint unsigned, add index (OID_GENERIC_APPLICATION);
+alter table `CANDIDACY_PERIOD` add `DESCRIPTION` text, add `PERIOD_NUMBER` int(11), add `TITLE` text;
+create table `GENERIC_APPLICATION_RECOMENTATION` (`OID` bigint unsigned, `NAME` text, `OID_DOMAIN_META_OBJECT` bigint unsigned, `OID_GENERIC_APPLICATION` bigint unsigned, `INSTITUTION` text, `EMAIL` text, `OID_LETTER_OF_RECOMENTATION` bigint unsigned, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `CONFIRMATION_CODE` text, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_GENERIC_APPLICATION), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
+alter table `EXTERNAL_APPLICATION` add `SECRET` text;
+alter table `APP_USER_SESSION` add `REFRESH_TOKEN` text, add `CODE_EXPIRATION_DATE` timestamp NULL default NULL, add `OID_USER` bigint unsigned, add `OID_APPLICATION` bigint unsigned, add `CODE` text, add index (OID_USER), add index (OID_APPLICATION);
+create table `GENERIC_APPLICATION_COMMENT` (`OID` bigint unsigned, `OID_DOMAIN_META_OBJECT` bigint unsigned, `OID_GENERIC_APPLICATION` bigint unsigned, `COMMENT` text, `CREATED` timestamp NULL default NULL, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_GENERIC_APPLICATION), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
+create table `GENERIC_APPLICATION` (`MARITAL_STATUS` text, `EMISSION_LOCATION_OF_DOCUMENT_ID` text, `OID` bigint unsigned, `AREA_CODE` text, `APPLICATION_NUMBER` text, `OID_NATIONALITY` bigint unsigned, `PROFESSION` text, `EMAIL` text, `FISCAL_CODE` text, `ID_INTERNAL` int(11) NOT NULL auto_increment, `EMISSION_DATE_OF_DOCUMENT_ID_YEAR_MONTH_DAY` text, `AREA_OF_AREA_CODE` text, `NAME` text, `AREA` text, `EXPIRATION_DATE_OF_DOCUMENT_ID_YEAR_MONTH_DAY` text, `DOCUMENT_ID_NUMBER` text, `ADDRESS` text, `TELEPHONE_CONTACT` text, `CONFIRMATION_CODE` text, `ID_DOCUMENT_TYPE` text, `CANDIDATE_OBSERVATIONS` text, `OID_DOMAIN_META_OBJECT` bigint unsigned, `GENDER` text, `DATE_OF_BIRTH_YEAR_MONTH_DAY` text, `OID_GENERIC_APPLICATION_PERIOD` bigint unsigned, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, primary key (ID_INTERNAL), index (OID), index (OID_NATIONALITY), index (OID_GENERIC_APPLICATION_PERIOD), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
+
+
+
+-- Inserted at 2013-08-21T18:25:21.514Z
+
+alter table `EXTERNAL_APPLICATION` add `SECRET` text;
+alter table `APP_USER_SESSION` add `REFRESH_TOKEN` text, add `CODE_EXPIRATION_DATE` timestamp NULL default NULL, add `OID_USER` bigint unsigned, add `OID_APPLICATION` bigint unsigned, add `CODE` text, add index (OID_USER), add index (OID_APPLICATION);
+
+
+
+-- Inserted at 2013-08-21T20:17:08.707Z
+
+alter table `EXTERNAL_APPLICATION` add `SECRET` text;
+alter table `APP_USER_SESSION` add `REFRESH_TOKEN` text, add `CODE_EXPIRATION_DATE` timestamp NULL default NULL, add `OID_USER` bigint unsigned, add `OID_APPLICATION` bigint unsigned, add `CODE` text, add index (OID_USER), add index (OID_APPLICATION);
+
+
+
+-- Inserted at 2013-08-23T11:34:41.720Z
+
+alter table `EXTERNAL_APPLICATION` add `SECRET` text;
+alter table `APP_USER_SESSION` add `REFRESH_TOKEN` text, add `CODE_EXPIRATION_DATE` timestamp NULL default NULL, add `OID_USER` bigint unsigned, add `OID_APPLICATION` bigint unsigned, add `CODE` text, add index (OID_USER), add index (OID_APPLICATION);
+
+
+
+-- Inserted at 2013-08-25T15:26:40.404Z
+
+alter table `APP_USER_SESSION` add `DEVICE_ID` text;

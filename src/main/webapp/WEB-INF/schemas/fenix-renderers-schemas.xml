@@ -768,18 +768,27 @@
 			<property name="eachLayout" value="values"></property>
 			<property name="eachSchema" value="my.scopes.schema"></property>
 		</slot>
-		<slot name="url"/>
+		<slot name="url" key="label.application.url"/>
+	</schema>
+	
+		<schema name="my.list.sessions" type="net.sourceforge.fenixedu.domain.AppUserSession" bundle="APPLICATION_RESOURCES">
+		<slot name="deviceId"/>
+		<slot name="application.name" key="label.application.name"/>
+		<slot name="application.url" key="label.application.url"/>
+		<slot name="application.scopes" layout="list" key="label.application.scopes">
+			<property name="eachLayout" value="values"></property>
+			<property name="eachSchema" value="my.scopes.schema"></property>
+		</slot>
 	</schema>
 	
 		<schema name="my.list.ownedapps" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
 		<slot name="name"/>
-		<slot name="oid"/>
 		<slot name="secret"/>
 		<slot name="scopes" layout="list">
 			<property name="eachLayout" value="values"></property>
 			<property name="eachSchema" value="my.scopes.schema"></property>
 		</slot>
-		<slot name="url"/>
+		<slot name="url" key="label.application.url"/>
 	</schema>
 	
 	     <schema name="my.schema.confirm.app"  type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">

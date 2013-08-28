@@ -88,6 +88,7 @@ public class OAuthAction extends FenixDispatchAction {
 
         String clientId = request.getParameter("client_id");
         String redirectUrl = request.getParameter("redirect_uri");
+        String deviceId = request.getParameter("device_id");
 
         ExternalApplication clientApplication = getExternalApplication(clientId);
 
@@ -99,7 +100,7 @@ public class OAuthAction extends FenixDispatchAction {
             String code = oauthIssuerImpl.authorizationCode();
 
             User user = person.getUser();
-            createAppUserSession(clientApplication, code, user);
+            createAppUserSession(clientApplication, code, user, deviceId);
 
             OAuthResponse resp =
                     OAuthASResponse.authorizationResponse(request, HttpServletResponse.SC_FOUND).location(applicationUrl)
@@ -115,11 +116,12 @@ public class OAuthAction extends FenixDispatchAction {
     }
 
     @Service
-    private void createAppUserSession(ExternalApplication clientApplication, String code, User user) {
+    private void createAppUserSession(ExternalApplication clientApplication, String code, User user, String deviceId) {
         clientApplication.addUser(user);
         AppUserSession appUserSession = new AppUserSession();
         appUserSession.setCode(code);
         appUserSession.setUser(user);
+        appUserSession.setDeviceId(deviceId);
         clientApplication.addAppUserSession(appUserSession);
     }
 

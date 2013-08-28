@@ -20789,6 +20789,7 @@ class AppUserSession {
 	String accessToken;
 	String refreshToken;
 	DateTime expirationDate;
+	String deviceId;
 }    
      
 relation RootDomainObjectApps {

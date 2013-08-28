@@ -13,10 +13,9 @@
 </h2>
 
 
-
-	<logic:present name="authApps">
+<logic:present name="authApps">
 		<logic:iterate id="app" name="authApps" type="net.sourceforge.fenixedu.domain.ExternalApplication">
 		<fr:view name="app" layout="tabular" schema="my.list.apps"/>
-		<p><a href="<%= "externalAuth.do?method=removeAuth&oid=" + app.getExternalId()%>">Remover</a>
+		<p><a href="<%= "externalAuth.do?method=displayAppUserSessions&oid=" + app.getExternalId()%>"> Ver autorizações </a>
 		</logic:iterate>
 	</logic:present>

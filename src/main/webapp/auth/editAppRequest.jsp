@@ -18,12 +18,10 @@
 
 <logic:present name="apps">
 <logic:iterate id="app" name="apps" type="net.sourceforge.fenixedu.domain.ExternalApplication">
-		<fr:edit id="edit"
-		name="app"
+		<fr:edit id="edit" name="app"
 			type="net.sourceforge.fenixedu.domain.ExternalApplication"
-			schema="my.schema.edit.app" action="/externalAuth?method=listApps">
+			schema="my.schema.edit.app" 
+			action="<%= "/externalAuth?method=revokeEditedAppAuth&editedApp=" + app.getExternalId() %>">
 		</fr:edit>
-		
 	</logic:iterate>
-
 </logic:present>
