@@ -36,6 +36,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -147,7 +148,9 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 
         List<Professorship> professorshipList = ((Person) AbstractDomainObject.fromExternalId(personId)).getProfessorships();
 
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(((String) actionForm.get("executionYearId")));
+        String executionYearID = (String) actionForm.get("executionYearId");
+        ExecutionYear executionYear =
+                (!StringUtils.isEmpty(executionYearID) ? (ExecutionYear) AbstractDomainObject.fromExternalId(executionYearID) : null);
         if (executionYear == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         }
