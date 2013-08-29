@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -30,11 +29,13 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class CourseGroup extends CourseGroup_Base {
 
     static public List<CourseGroup> readCourseGroups() {
         final List<CourseGroup> result = new ArrayList<CourseGroup>();
-        for (final DegreeModule degreeModule : Bennu.getInstance().getDegreeModules()) {
+        for (final DegreeModule degreeModule : Bennu.getInstance().getDegreeModulesSet()) {
             if (degreeModule instanceof CourseGroup) {
                 result.add((CourseGroup) degreeModule);
             }
@@ -103,7 +104,8 @@ public class CourseGroup extends CourseGroup_Base {
     public void delete() {
         if (getCanBeDeleted()) {
             super.delete();
-            for (; !getParticipatingContextCurricularRules().isEmpty(); getParticipatingContextCurricularRules().iterator().next().delete()) {
+            for (; !getParticipatingContextCurricularRules().isEmpty(); getParticipatingContextCurricularRules().iterator()
+                    .next().delete()) {
                 ;
             }
             setRootDomainObject(null);
@@ -134,7 +136,8 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-        return hasAnyParentContexts() ? getParentContexts().iterator().next().getParentCourseGroup().getParentDegreeCurricularPlan() : null;
+        return hasAnyParentContexts() ? getParentContexts().iterator().next().getParentCourseGroup()
+                .getParentDegreeCurricularPlan() : null;
     }
 
     public List<Context> getChildContexts(Class<? extends DegreeModule> clazz) {

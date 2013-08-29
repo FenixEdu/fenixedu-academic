@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -84,6 +83,7 @@ import org.joda.time.YearMonthDay;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class Student extends Student_Base {
@@ -140,7 +140,7 @@ public class Student extends Student_Base {
     }
 
     public static Student readStudentByNumber(final Integer number) {
-        for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbers()) {
+        for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbersSet()) {
             if (studentNumber.getNumber().equals(number)) {
                 return studentNumber.getStudent();
             }
@@ -316,7 +316,7 @@ public class Student extends Student_Base {
 
     public static Integer generateStudentNumber() {
         int nextNumber = 0;
-        for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbers()) {
+        for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbersSet()) {
             if (studentNumber.getNumber().intValue() < 100000 && studentNumber.getNumber().intValue() > nextNumber) {
                 nextNumber = studentNumber.getNumber().intValue();
             }

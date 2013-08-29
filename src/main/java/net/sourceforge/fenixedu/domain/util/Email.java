@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.util;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.utl.ist.fenix.tools.util.StringAppender;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,17 +25,12 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.util.email.MessageId;
 import net.sourceforge.fenixedu.domain.util.email.MessageTransportResult;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.ist.bennu.core.util.ConfigurationManager;
-import pt.ist.bennu.email.util.EmailAddressList;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class Email extends Email_Base {
 

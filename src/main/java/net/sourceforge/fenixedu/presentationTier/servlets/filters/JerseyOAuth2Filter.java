@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -16,12 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.OAuthProperties;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.AuthScope;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken.FenixOAuthTokenException;
 import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyPackageResourceConfig;
@@ -30,6 +26,10 @@ import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
 import org.apache.amber.oauth2.common.message.OAuthResponse.OAuthErrorResponseBuilder;
 import org.apache.commons.lang.StringUtils;
+
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.security.UserSession;
 
 @WebFilter(urlPatterns = "/api/fenix/*")
 public class JerseyOAuth2Filter implements Filter {
@@ -64,7 +64,7 @@ public class JerseyOAuth2Filter implements Filter {
             try {
                 filterChain.doFilter(request, response);
             } finally {
-                UserView.setUser(null);
+                Authenticate.setUser((UserSession) null);
             }
         }
     }
@@ -74,7 +74,7 @@ public class JerseyOAuth2Filter implements Filter {
         if (allowIstIds() && currentUserIsManager()) {
             String istId = request.getParameter("_istid_");
             if (!StringUtils.isBlank(istId)) {
-                User user = User.readUserByUserUId(istId);
+                User user = Login.readUserByUserUId(istId);
                 if (user != null) {
                     authenticateUser(request, user);
                     return true;
@@ -87,7 +87,7 @@ public class JerseyOAuth2Filter implements Filter {
     }
 
     private boolean currentUserIsManager() {
-        IUserView userview = UserView.getUser();
+        User userview = Authenticate.getUser();
         if (userview == null) {
             return false;
         }
@@ -148,7 +148,7 @@ public class JerseyOAuth2Filter implements Filter {
     }
 
     private void authenticateUser(final HttpServletRequest request, User foundUser) {
-        UserView.setUser(Authenticate.mockUser(foundUser.getPerson(), request.getRequestURL().toString()));
+        Authenticate.setUser(foundUser);
     }
 
     private boolean validScope(AppUserSession appUserSession, String uri) throws IOException, ServletException {

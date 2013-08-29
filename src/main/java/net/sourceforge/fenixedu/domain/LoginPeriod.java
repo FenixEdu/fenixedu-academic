@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class LoginPeriod extends LoginPeriod_Base {
 
     public static final Comparator<LoginPeriod> COMPARATOR_BY_BEGIN_DATE = new Comparator<LoginPeriod>() {
@@ -58,6 +60,7 @@ public class LoginPeriod extends LoginPeriod_Base {
         final YearMonthDay end = getEndDate();
         return start != null && (end == null || !start.isAfter(end));
     }
+
     @Deprecated
     public boolean hasLogin() {
         return getLogin() != null;

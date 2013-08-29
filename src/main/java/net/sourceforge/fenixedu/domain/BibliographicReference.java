@@ -8,6 +8,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class BibliographicReference extends BibliographicReference_Base {
 
     public static final Comparator<BibliographicReference> COMPARATOR_BY_ORDER = new Comparator<BibliographicReference>() {
@@ -88,6 +90,7 @@ public class BibliographicReference extends BibliographicReference_Base {
     public boolean isOptional() {
         return getOptional() == null || getOptional();
     }
+
     @Deprecated
     public boolean hasExecutionCourse() {
         return getExecutionCourse() != null;

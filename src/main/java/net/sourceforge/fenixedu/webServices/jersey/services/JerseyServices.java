@@ -24,11 +24,10 @@ import javax.ws.rs.core.Response.Status;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.File;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -51,6 +50,8 @@ import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -101,11 +102,11 @@ public class JerseyServices {
             roles = new RoleType[0];
         }
         final StringBuilder builder = new StringBuilder();
-        for (final User user : RootDomainObject.getInstance().getUsersSet()) {
-            if (!StringUtils.isEmpty(user.getUserUId())) {
+        for (final User user : Bennu.getInstance().getUsersSet()) {
+            if (!StringUtils.isEmpty(user.getUsername())) {
                 final Person person = user.getPerson();
                 if (roles.length == 0 || person.hasAnyRole(roles)) {
-                    builder.append(user.getUserUId());
+                    builder.append(user.getUsername());
                     builder.append("\t");
                     builder.append(person.getName());
                     builder.append("\t");
@@ -122,14 +123,14 @@ public class JerseyServices {
     @Path("readAllEmails")
     public static String readAllEmails() {
         final StringBuilder builder = new StringBuilder();
-        for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+        for (final Party party : Bennu.getInstance().getPartysSet()) {
             if (party.isPerson()) {
                 final Person person = (Person) party;
                 final String email = person.getEmailForSendingEmails();
                 if (email != null) {
                     final User user = person.getUser();
                     if (user != null) {
-                        final String username = user.getUserUId();
+                        final String username = user.getUsername();
                         builder.append(username);
                         builder.append("\t");
                         builder.append(email);
@@ -146,10 +147,10 @@ public class JerseyServices {
     @Produces(MediaType.APPLICATION_JSON)
     public String readUsers() {
         JSONArray users = new JSONArray();
-        for (final User user : RootDomainObject.getInstance().getUsersSet()) {
-            if (!StringUtils.isEmpty(user.getUserUId()) && user.hasPerson()) {
+        for (final User user : Bennu.getInstance().getUsersSet()) {
+            if (!StringUtils.isEmpty(user.getUsername()) && user.getPerson() != null) {
                 JSONObject json = new JSONObject();
-                json.put("istId", user.getUserUId());
+                json.put("istId", user.getUsername());
                 json.put("name", user.getPerson().getName());
                 if (user.getPerson().getEmailForSendingEmails() != null) {
                     json.put("email", user.getPerson().getEmailForSendingEmails());
@@ -198,14 +199,14 @@ public class JerseyServices {
         JSONArray researchers = new JSONArray();
 
         final Map<User, Set<Unit>> researchUnitMap = new HashMap<User, Set<Unit>>();
-        for (final User user : RootDomainObject.getInstance().getUsersSet()) {
+        for (final User user : Bennu.getInstance().getUsersSet()) {
             Person person = user.getPerson();
-            if (!StringUtils.isEmpty(user.getUserUId()) && person != null
+            if (!StringUtils.isEmpty(user.getUsername()) && person != null
                     && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
                 researchUnitMap.put(user, new HashSet<Unit>());
             }
         }
-        for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+        for (final Party party : Bennu.getInstance().getPartysSet()) {
             if (party instanceof ResearchUnit) {
                 final ResearchUnit unit = (ResearchUnit) party;
                 for (final Teacher teacher : unit.getAllTeachers()) {
@@ -223,10 +224,10 @@ public class JerseyServices {
         for (final Entry<User, Set<Unit>> entry : researchUnitMap.entrySet()) {
             final User user = entry.getKey();
             final Person person = user.getPerson();
-            if (!StringUtils.isEmpty(user.getUserUId()) && person != null
+            if (!StringUtils.isEmpty(user.getUsername()) && person != null
                     && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
                 JSONObject json = new JSONObject();
-                json.put("istId", user.getUserUId());
+                json.put("istId", user.getUsername());
 
                 JSONArray array = new JSONArray();
                 for (Unit unit : entry.getValue()) {
@@ -341,8 +342,7 @@ public class JerseyServices {
     public static String readPhdThesis() {
         JSONArray infos = new JSONArray();
 
-        for (PhdIndividualProgramProcessNumber phdProcessNumber : RootDomainObject.getInstance()
-                .getPhdIndividualProcessNumbersSet()) {
+        for (PhdIndividualProgramProcessNumber phdProcessNumber : Bennu.getInstance().getPhdIndividualProcessNumbersSet()) {
             PhdIndividualProgramProcess phdProcess = phdProcessNumber.getProcess();
             if (phdProcess.isConcluded()) {
                 JSONObject phdInfo = new JSONObject();
@@ -378,7 +378,7 @@ public class JerseyServices {
 
         }
 
-        for (Thesis t : RootDomainObject.getInstance().getThesesSet()) {
+        for (Thesis t : Bennu.getInstance().getThesesSet()) {
             if (t.isEvaluated()) {
                 JSONObject mscInfo = new JSONObject();
                 mscInfo.put("id", t.getExternalId());
@@ -416,9 +416,9 @@ public class JerseyServices {
         Person clientPerson = null;
         //set users
         try {
-            photoPerson = User.readUserByUserUId(photoUsername).getPerson();
+            photoPerson = Login.readUserByUserUId(photoUsername).getPerson();
             if (!clientUsername.equals("NoUser")) {
-                clientPerson = User.readUserByUserUId(clientUsername).getPerson();
+                clientPerson = Login.readUserByUserUId(clientUsername).getPerson();
             }
         } catch (NullPointerException e) {
             throw new WebApplicationException(Status.BAD_REQUEST);
@@ -459,7 +459,7 @@ public class JerseyServices {
     @POST
     @Path("role/developer/{istid}")
     public static Response addDeveloperRole(@PathParam("istid") String istid) {
-        User user = User.readUserByUserUId(istid);
+        User user = Login.readUserByUserUId(istid);
         if (user != null && user.getPerson() != null) {
             if (user.getPerson().getPersonRole(RoleType.DEVELOPER) == null) {
                 addDeveloper(user);

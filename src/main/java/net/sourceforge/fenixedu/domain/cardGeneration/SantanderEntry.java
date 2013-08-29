@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 
 import org.joda.time.DateTime;
 
@@ -41,7 +42,7 @@ public class SantanderEntry extends SantanderEntry_Base {
     }
 
     public static SantanderEntry readByUsernameAndCategory(String username, String category) {
-        for (SantanderEntry entry : RootDomainObject.getInstance().getSantanderEntriesSet()) {
+        for (SantanderEntry entry : Bennu.getInstance().getSantanderEntriesSet()) {
             if (entry
                     .getLine()
                     .subSequence(1 + 10 + 15 + 15 + 40 + 50 + 50 + 8 + 30 + 10 + 10 + 9 + 16 + 10,

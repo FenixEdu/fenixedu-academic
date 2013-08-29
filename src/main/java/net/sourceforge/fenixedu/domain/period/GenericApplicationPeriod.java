@@ -4,17 +4,17 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -85,9 +85,9 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
     }
 
     public boolean isCurrentUserAllowedToMange() {
-        final IUserView userView = AccessControl.getUserView();
+        final User userView = Authenticate.getUser();
         return userView != null
-                && (userView.hasRoleType(RoleType.MANAGER) || getManagerSet().contains(userView.getPerson().getUser()));
+                && (userView.getPerson().hasRole(RoleType.MANAGER) || getManagerSet().contains(userView.getPerson().getUser()));
     }
 
     @Deprecated

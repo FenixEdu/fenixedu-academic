@@ -20814,21 +20814,21 @@ relation PictureFile {
 
 
 relation RootDomainObjectApps {
-    RootDomainObject playsRole rootDomainObject;  
+    .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;  
   	ExternalApplication playsRole apps {
   		multiplicity *;
   	}
 }
  
 relation RootDomainObjectAuthScope {
-    RootDomainObject playsRole rootDomainObject;  
+    .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;  
   	AuthScope playsRole authScopes {
   		multiplicity *;
   	}
 }
   
 relation AppAuthor {
-	User playsRole author {
+	.pt.ist.bennu.core.domain.User playsRole author {
 		multiplicity 1;
 	}
 	ExternalApplication playsRole ownedApp {
@@ -20858,7 +20858,7 @@ relation UserAppAuthorization {
 	AppUserAuthorization playsRole appUserAuthorization {
 		multiplicity *;
 	}
-	User playsRole user {
+	.pt.ist.bennu.core.domain.User playsRole user {
 		multiplicity 1;
 	}
 }

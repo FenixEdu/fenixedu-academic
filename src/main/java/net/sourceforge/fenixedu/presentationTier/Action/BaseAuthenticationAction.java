@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PendingRequest;
@@ -298,10 +299,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     private ActionForward handleSessionCreationAndForwardToPendingTeachingReductionService(HttpServletRequest request,
-            IUserView userView, HttpSession session) {
-        createNewSession(request, session, userView);
+            User userView, HttpSession session) {
         final List<Content> contents = new ArrayList<Content>();
-        RootDomainObject.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "departamento/departamento");
+        Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "departamento/departamento");
         final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
         request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
 
@@ -395,9 +395,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             }
 
             final String requestChecksumParameter = pendingRequest.getRequestChecksumParameter();
-            
+
             if (url.contains("/external/") && requestChecksumParameter == null) { //TODO: check if it is necessary
-            	return true;
+                return true;
             }
             return GenericChecksumRewriter.calculateChecksum(url).equals(requestChecksumParameter);
         } catch (Exception ex) {

@@ -12,10 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreditNoteEntryDTO;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -28,11 +26,15 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.util.ConfigurationManager;
+
 public class Receipt extends Receipt_Base {
 
     public static final String GENERIC_CONTRIBUTOR_PARTY_NUMBER = " ";
 
-    private static final Integer MIN_YEAR_TO_CREATE_RECEIPTS = ConfigurationManager.getIntegerProperty("receipt.min.year.to.create");
+    private static final Integer MIN_YEAR_TO_CREATE_RECEIPTS = ConfigurationManager
+            .getIntegerProperty("receipt.min.year.to.create");
 
     private static final Map<Integer, String> NUMBER_SERIES_BY_YEAR = new HashMap<Integer, String>();
 
@@ -256,7 +258,7 @@ public class Receipt extends Receipt_Base {
 
     public static List<Receipt> getReceiptsFor(int year) {
         final List<Receipt> result = new ArrayList<Receipt>();
-        for (final Receipt receipt : Bennu.getInstance().getReceipts()) {
+        for (final Receipt receipt : Bennu.getInstance().getReceiptsSet()) {
             if (receipt.getYear().intValue() == year) {
                 result.add(receipt);
             }

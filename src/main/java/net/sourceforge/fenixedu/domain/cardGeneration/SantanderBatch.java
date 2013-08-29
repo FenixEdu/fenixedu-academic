@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import edu.emory.mathcs.backport.java.util.Collections;
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 public class SantanderBatch extends SantanderBatch_Base {
 
@@ -89,7 +89,7 @@ public class SantanderBatch extends SantanderBatch_Base {
             visibleLine += SantanderSequenceNumberGenerator.decodeSantanderPIN(entryLine.getPerson().getSantanderPIN());
 
             // Update line with the institutions own PIN
-            visibleLine += PropertiesManager.getProperty("app.institution.PIN");
+            visibleLine += ConfigurationManager.getProperty("app.institution.PIN");
 
             visibleLine += line.substring(315);
 

@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.webServices.jersey.api;
 
-import pt.ist.fenixframework.Atomic;
-
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashSet;
@@ -11,12 +9,14 @@ import java.util.Set;
 import javax.ws.rs.Path;
 
 import net.sourceforge.fenixedu.domain.AuthScope;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -60,7 +60,7 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
 
     @Atomic
     private static void removeUnusedAuthScopes() {
-        final Set<AuthScope> authScopes = RootDomainObject.getInstance().getAuthScopesSet();
+        final Set<AuthScope> authScopes = Bennu.getInstance().getAuthScopesSet();
         ImmutableSet<String> authScopesNames = FluentIterable.from(authScopes).transform(new Function<AuthScope, String>() {
 
             @Override
