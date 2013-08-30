@@ -76,33 +76,39 @@
 	</fr:view>
 	
 	<br />
-	<strong>Informação de seriação:</strong>
-	<fr:view name="seriesGrade" >
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacySeriesGrade">
-			<fr:slot name="degree.name" key="label.candidacy.degree">
-			</fr:slot>
-			<fr:slot name="professionalExperience" key="label.candidacy.professionalExperience">
-			</fr:slot>
-			<fr:slot name="affinity" key="label.candidacy.affinity">
-			</fr:slot>
-			<fr:slot name="degreeNature" key="label.candidacy.degreeNature">
-			</fr:slot>
-			<fr:slot name="candidacyGrade" key="label.candidacy.grade">
-			</fr:slot>
-			<fr:slot name="interviewGrade" key="label.candidacy.interviewGrade">
-			</fr:slot>
-			<fr:slot name="seriesCandidacyGrade" key="label.candidacy.seriesGrade">
-			</fr:slot>
-			<fr:slot name="state" key="label.candidacy.state">
-			</fr:slot>
-			<fr:slot name="notes" key="label.candidacy.notes">
-			</fr:slot>
-		</fr:schema>
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,,"/>
-		</fr:layout> 
-	</fr:view>
+	<strong><bean:message key="label.candidacy.seriesGrade.information" bundle="APPLICATION_RESOURCES" />:</strong>
+	<logic:notEmpty name="seriesGrade">
+		<fr:view name="seriesGrade" >
+			<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacySeriesGrade">
+				<fr:slot name="degree.name" key="label.candidacy.degree">
+				</fr:slot>
+				<fr:slot name="professionalExperience" key="label.candidacy.professionalExperience">
+				</fr:slot>
+				<fr:slot name="affinity" key="label.candidacy.affinity">
+				</fr:slot>
+				<fr:slot name="degreeNature" key="label.candidacy.degreeNature">
+				</fr:slot>
+				<fr:slot name="candidacyGrade" key="label.candidacy.grade">
+				</fr:slot>
+				<fr:slot name="interviewGrade" key="label.candidacy.interviewGrade">
+				</fr:slot>
+				<fr:slot name="seriesCandidacyGrade" key="label.candidacy.seriesGrade">
+				</fr:slot>
+				<fr:slot name="state" key="label.candidacy.state">
+				</fr:slot>
+				<fr:slot name="notes" key="label.candidacy.notes">
+				</fr:slot>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+		        <fr:property name="columnClasses" value="width12em,,"/>
+			</fr:layout> 
+		</fr:view>
+	</logic:notEmpty>
+	<logic:empty name="seriesGrade">
+		</br><bean:message key="label.candidacy.seriesGrade.notPresent" bundle="APPLICATION_RESOURCES" />
+	</logic:empty>
+	
 	
 	<logic:present role="MANAGER">
 	<%-- show public candidacy access information --%>
