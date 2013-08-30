@@ -198,8 +198,9 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
         manageLessonForm.set("horaFim", "" + infoLesson.getFim().get(Calendar.HOUR_OF_DAY));
         manageLessonForm.set("minutosFim", "" + infoLesson.getFim().get(Calendar.MINUTE));
 
-        if (infoLesson.getInfoRoomOccupation() != null) {
-            manageLessonForm.set("nomeSala", "" + infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
+        final AllocatableSpace allocatableSpace = infoLesson.getAllocatableSpace();
+        if (allocatableSpace != null) {
+            manageLessonForm.set("nomeSala", "" + allocatableSpace.getNome());
         }
 
         if (infoLesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
@@ -351,11 +352,13 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
                 return mapping.getInputForward();
             }
 
-            if (action != null && action.equals("edit")
-                    && ((InfoLesson) request.getAttribute(PresentationConstants.LESSON)).getInfoRoomOccupation() != null) {
-
-                emptyRoomsList.add(infoLesson.getInfoRoomOccupation().getInfoRoom());
-                manageLessonForm.set("nomeSala", infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
+            if (action != null && action.equals("edit")) {
+                final InfoLesson il = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
+                final AllocatableSpace allocatableSpace = il.getAllocatableSpace();
+                if (allocatableSpace != null) {
+                    emptyRoomsList.add(infoLesson.getInfoRoomOccupation().getInfoRoom());
+                    manageLessonForm.set("nomeSala", infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
+                }
             }
 
             Collections.sort(emptyRoomsList);

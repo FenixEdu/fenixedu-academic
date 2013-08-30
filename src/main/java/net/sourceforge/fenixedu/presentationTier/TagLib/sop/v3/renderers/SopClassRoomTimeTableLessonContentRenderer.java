@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
 /**
  * @author jpvl
  */
-public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
+public class SopClassRoomTimeTableLessonContentRenderer extends LessonSlotContentRenderer {
 
     @Override
     public StringBuilder render(String context, LessonSlot lessonSlot) {
@@ -71,4 +71,5 @@ public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotCon
 
         return strBuffer;
     }
+
 }

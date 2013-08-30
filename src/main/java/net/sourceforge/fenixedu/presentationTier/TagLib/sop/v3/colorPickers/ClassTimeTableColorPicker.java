@@ -7,6 +7,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -24,6 +25,9 @@ public class ClassTimeTableColorPicker extends ColorPicker {
         }
         if (infoShowOccupation instanceof InfoLessonInstance) {
             return key((InfoLessonInstance) infoShowOccupation);
+        }
+        if (infoShowOccupation instanceof InfoLessonInstanceAggregation) {
+            return key((InfoLessonInstanceAggregation) infoShowOccupation);
         }
         if (infoShowOccupation instanceof InfoWrittenEvaluation) {
             return key((InfoWrittenEvaluation) infoShowOccupation);
@@ -44,6 +48,10 @@ public class ClassTimeTableColorPicker extends ColorPicker {
 
     private String key(final InfoLessonInstance infoLessonInstance) {
         return key(infoLessonInstance.getLessonInstance().getLesson());
+    }
+
+    private String key(final InfoLessonInstanceAggregation infoLessonInstanceAggregation) {
+        return infoLessonInstanceAggregation.getShift().getExecutionCourse().getExternalId();
     }
 
     private String key(final InfoWrittenEvaluation infoWrittenEvaluation) {

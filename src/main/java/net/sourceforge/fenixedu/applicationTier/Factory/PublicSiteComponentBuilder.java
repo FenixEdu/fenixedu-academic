@@ -6,7 +6,6 @@
 package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -15,14 +14,13 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteClasses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -96,12 +94,7 @@ public class PublicSiteComponentBuilder {
 
         for (Object element : shiftList) {
             Shift shift = (Shift) element;
-            List lessonList = shift.getAssociatedLessons();
-            Iterator lessonIterator = lessonList.iterator();
-            while (lessonIterator.hasNext()) {
-                Lesson elem = (Lesson) lessonIterator.next();
-                infoLessonList.add(InfoLesson.newInfoFromDomain(elem));
-            }
+            infoLessonList.addAll(InfoLessonInstanceAggregation.getAggregations(shift));
         }
         component.setInfoExecutionPeriod(infoExecutionPeriod);
 

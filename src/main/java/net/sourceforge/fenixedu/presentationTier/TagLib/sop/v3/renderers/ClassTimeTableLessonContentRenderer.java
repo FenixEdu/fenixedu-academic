@@ -7,13 +7,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.FrequencyType;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 
 /**
  * @author jpvl
  */
-public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
+public class ClassTimeTableLessonContentRenderer extends LessonSlotContentRenderer {
 
     @Override
     public StringBuilder render(String context, LessonSlot lessonSlot) {
@@ -34,19 +35,20 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
             strBuffer.append("'>").append("<abbr title='").append(ec.getNome()).append("'>").append(ec.getSigla())
                     .append("</abbr>").append("</a>");
             strBuffer.append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
-            if (lesson.getInfoRoomOccupation() != null) {
+            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            if (allocatableSpace != null) {
                 strBuffer.append(" <a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=")
-                        .append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("&amp;objectCode=")
+                        .append(allocatableSpace.getNome()).append("&amp;objectCode=")
                         .append(infoExecutionCourse.getInfoExecutionPeriod().getExternalId()).append("&amp;executionPeriodOID=")
                         .append(infoExecutionCourse.getInfoExecutionPeriod().getExternalId()).append("&amp;shift=true")
-                        .append("'>").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
+                        .append("'>").append(allocatableSpace.getNome()).append("</a>");
             }
 
-            if (lesson.getInfoRoomOccupation() != null && lesson.getInfoRoomOccupation().getFrequency() != null
-                    && lesson.getInfoRoomOccupation().getFrequency().equals(FrequencyType.BIWEEKLY)) {
-                strBuffer.append("&nbsp;&nbsp;[Q]");
-            }
+//            if (allocatableSpace != null && lesson.getInfoRoomOccupation().getFrequency() != null
+//                    && lesson.getInfoRoomOccupation().getFrequency().equals(FrequencyType.BIWEEKLY)) {
+//                strBuffer.append("&nbsp;&nbsp;[Q]");
+//            }
         } else if (showOccupation instanceof InfoLessonInstance) {
 
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;

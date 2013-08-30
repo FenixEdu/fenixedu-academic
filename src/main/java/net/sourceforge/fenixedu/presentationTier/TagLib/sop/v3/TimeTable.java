@@ -11,6 +11,7 @@ import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.struts.Globals;
 import org.apache.struts.util.RequestUtils;
@@ -99,8 +100,8 @@ public class TimeTable {
 
         DayColumn dayColumn = (DayColumn) this.days.get(dayIndex);
 
-        int startIndex = getHourIndex(infoShowOccupation.getInicio(), this.minimumHourInMinutes, this.slotSize.intValue());
-        int endIndex = getHourIndex(infoShowOccupation.getFim(), this.minimumHourInMinutes, this.slotSize.intValue());
+        int startIndex = getHourIndex(infoShowOccupation.getBeginHourMinuteSecond(), this.minimumHourInMinutes, this.slotSize.intValue());
+        int endIndex = getHourIndex(infoShowOccupation.getEndHourMinuteSecond(), this.minimumHourInMinutes, this.slotSize.intValue());
 
         /* break lesson in slots */
         for (int hourIndex = startIndex; hourIndex < endIndex; hourIndex++) {
@@ -171,8 +172,8 @@ public class TimeTable {
         return dayIndex;
     }
 
-    public static int getHourIndex(Calendar time, int minimumHourInMinutes, int slotSize) {
-        int hourInMinutes = getMinutes(time);
+    public static int getHourIndex(HourMinuteSecond hms, int minimumHourInMinutes, int slotSize) {
+        int hourInMinutes = getMinutes(hms);
         return (hourInMinutes - minimumHourInMinutes) / slotSize;
     }
 
@@ -182,8 +183,12 @@ public class TimeTable {
      * @param calendar
      * @return int
      */
-    public static int getMinutes(Calendar time) {
-        return time.get(Calendar.HOUR_OF_DAY) * 60 + time.get(Calendar.MINUTE);
+    public static int getMinutes(final HourMinuteSecond hms) {
+        return hms.getHour() * 60 + hms.getMinuteOfHour();
+    }
+
+    public static int getMinutes(final Calendar cal) {
+        return cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
     }
 
     /**

@@ -91,4 +91,9 @@ public class DiaSemana extends FenixUtil {
         DateTime dateTime = date.toDateTimeAtMidnight();
         return dateTime.getDayOfWeek() == 7 ? 1 : dateTime.getDayOfWeek() + 1;
     }
+
+    public static DiaSemana fromJodaWeekDay(int jodaWeekDay) {
+        final int i = jodaWeekDay == 7 ? 1 : jodaWeekDay + 1;
+        return new DiaSemana(i);
+    }
 }

@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCa
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentFirstTimeCycleInquiryBean;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
@@ -222,7 +223,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         }
 
         if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SCHEDULE) {
-            final List<InfoLesson> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
+            final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
             request.setAttribute("person", getCandidacy(request).getPerson());
             request.setAttribute("infoLessons", infoLessons);
             return mapping.findForward("printSchedule");
@@ -260,7 +261,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
                             .getAvailablePaymentCodes()));
             request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
 
-            final List<InfoLesson> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
+            final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
             request.setAttribute("infoLessons", infoLessons);
 
             return mapping.findForward("printAllDocuments");

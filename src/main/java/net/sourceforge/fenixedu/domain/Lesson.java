@@ -35,6 +35,7 @@ import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.joda.time.Minutes;
+import org.joda.time.Weeks;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -1132,4 +1133,34 @@ public class Lesson extends Lesson_Base {
         }
         return intervals;
     }
+
+    public String getOccurrenceWeeksAsString() {
+        final SortedSet<Integer> weeks = new TreeSet<Integer>();
+
+        final ExecutionCourse executionCourse = getExecutionCourse();
+        final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
+        final YearMonthDay lastPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getRight();
+        for (final Interval interval : getAllLessonIntervals()) {
+            final Integer week = Weeks.weeksBetween(firstPossibleLessonDay, interval.getStart().toLocalDate()).getWeeks() + 1;
+            weeks.add(week);
+        }
+
+        final StringBuilder builder = new StringBuilder();
+        final Integer[] weeksA = weeks.toArray(new Integer[0]);
+        for (int i = 0; i < weeksA.length; i++) {
+            if (i == 0) {
+                builder.append(weeksA[i]);
+            } else if (i == weeksA.length - 1 || ((int) weeksA[i]) + 1 != ((int) weeksA[i + 1])) {
+                final String seperator = ((int) weeksA[i - 1]) + 1 == ((int) weeksA[i])
+                        ? " - " : ", ";
+                builder.append(seperator);
+                builder.append(weeksA[i]);                    
+            } else if (((int) weeksA[i - 1]) + 1 !=  (int) weeksA[i]) {
+                builder.append(", ");
+                builder.append(weeksA[i]);                
+            }
+        }
+        return builder.toString();
+    }
+
 }

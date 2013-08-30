@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
 /**
  * @author jpvl
  */
-public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
+public class RoomTimeTableLessonContentRenderer extends LessonSlotContentRenderer {
 
     @Override
     public StringBuilder render(String context, LessonSlot lessonSlot) {

@@ -7,13 +7,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.FrequencyType;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSlotContentRenderer {
+public class ClassTimeTableWithoutLinksLessonContentRenderer extends LessonSlotContentRenderer {
 
     @Override
     public StringBuilder render(String context, LessonSlot lessonSlot) {
@@ -38,8 +39,9 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSl
 
                 strBuffer.append("(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 
-                if (lesson.getInfoRoomOccupation() != null) {
-                    strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+                final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+                if (allocatableSpace != null) {
+                    strBuffer.append(allocatableSpace.getNome());
                 }
 
                 if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
@@ -119,4 +121,5 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSl
 
         return strBuffer;
     }
+
 }

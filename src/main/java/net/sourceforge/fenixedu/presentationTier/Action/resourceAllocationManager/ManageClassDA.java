@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManage
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoveShifts;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverTurno;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -125,8 +125,6 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
     public ActionForward viewSchedule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
-
         InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
         // Fill out the form with the name of the class
@@ -136,7 +134,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         // Place list of lessons in request
 
         /** InfoLesson List */
-        List<InfoLesson> lessonList = LerAulasDeTurma.run(infoClass);
+        List<InfoLessonInstanceAggregation> lessonList = LerAulasDeTurma.run(infoClass);
 
         request.setAttribute(PresentationConstants.LESSON_LIST_ATT, lessonList);
 

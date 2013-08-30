@@ -425,9 +425,8 @@
 			<logic:iterate id="lesson" name="shift" property="associatedLessons">
 				<tr>
 					<td style="text-align:center">
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<bean:message bundle="STUDENT_RESOURCES" key="label.week" />: 
+						<bean:write name="lesson" property="occurrenceWeeksAsString" />
 					</td>
 					<td style="text-align:center">
 						<bean:write name="shift" property="shiftTypesPrettyPrint" />								

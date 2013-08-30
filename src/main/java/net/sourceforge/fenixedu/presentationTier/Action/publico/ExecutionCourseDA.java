@@ -16,12 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.StudentInquiriesCourseResultBean;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.YearDelegateCourseInquiryDTO;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -30,7 +31,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -222,9 +222,11 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
     public ActionForward schedule(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         final ExecutionCourse executionCourse = getExecutionCourse(request);
         if (hasPermissionToViewSchedule(executionCourse)) {
-            final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>();
-            for (final Lesson lesson : executionCourse.getLessons()) {
-                infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
+            final List<InfoLessonInstanceAggregation> infoLessons = new ArrayList<InfoLessonInstanceAggregation>();
+            for (final CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
+                for (final Shift shift : courseLoad.getShiftsSet()) {
+                    infoLessons.addAll(InfoLessonInstanceAggregation.getAggregations(shift));
+                }
             }
             request.setAttribute("infoLessons", infoLessons);
         }

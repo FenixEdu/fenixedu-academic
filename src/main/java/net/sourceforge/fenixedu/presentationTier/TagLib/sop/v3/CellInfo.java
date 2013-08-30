@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 public class CellInfo {
 
@@ -51,8 +52,9 @@ public class CellInfo {
                 buffer = buffer.append(infoLesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
                 buffer = buffer.append(" (").append(infoLesson.getInfoShift().getShiftTypesCodePrettyPrint());
                 buffer = buffer.append(") ");
-                if (infoLesson.getInfoRoomOccupation() != null) {
-                    buffer = buffer.append(infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
+                final AllocatableSpace allocatableSpace = infoLesson.getAllocatableSpace();
+                if (allocatableSpace != null) {
+                    buffer = buffer.append(allocatableSpace.getNome());
                 }
                 if (iterator.hasNext()) {
                     buffer.append("<br/>");

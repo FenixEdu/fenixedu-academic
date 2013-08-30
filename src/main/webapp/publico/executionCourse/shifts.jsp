@@ -15,7 +15,7 @@
 		<th rowspan="2">
 			<bean:message key="property.turno"/>
 		</th>
-		<th colspan="4">
+		<th colspan="5">
 			<bean:message key="label.lesson"/>
 		</th>
 		<th rowspan="2">
@@ -23,6 +23,9 @@
 		</th>
 	</tr>
 	<tr>
+		<th>
+			<bean:message key="label.weeks"/>
+		</th>
 		<th>
 			<bean:message key="label.day"/>
 		</th>
@@ -42,6 +45,9 @@
 			<tr>
 				<td rowspan="<%= shift.getAssociatedLessons().size() %>">
 					<bean:write name="shift" property="nome"/>
+				</td>
+				<td >
+					<bean:write name="lesson" property="occurrenceWeeksAsString" />
 				</td>
 				<td >
 					<bean:write name="lesson" property="diaSemana"/>
@@ -72,6 +78,9 @@
 		</logic:iterate>		
 		<logic:iterate id="lesson" name="shift" property="associatedLessons" offset="1">
 			<tr>
+				<td>
+					<bean:write name="lesson" property="occurrenceWeeksAsString" />
+				</td>
 				<td>
 					<bean:write name="lesson" property="diaSemana"/> &nbsp;
 				</td>

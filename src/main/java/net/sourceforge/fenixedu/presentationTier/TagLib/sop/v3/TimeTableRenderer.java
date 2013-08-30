@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ClassTimeTableWithoutLinksLessonContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ShiftEnrollmentTimeTableLessonContentRenderer;
@@ -133,22 +132,23 @@ public class TimeTableRenderer {
                         strBuffer.append(getSlotCssClass(infoLessonWrapper, hourIndex));
                         strBuffer.append("' ");
                         if (infoLessonWrapper != null) {
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("k:mm");
-                            Calendar start =
-                                    infoLessonWrapper.getLessonSlot().getInfoLessonWrapper().getInfoShowOccupation().getInicio();
-                            Calendar end =
-                                    infoLessonWrapper.getLessonSlot().getInfoLessonWrapper().getInfoShowOccupation().getFim();
-                            String startLabel = dateFormat.format(start.getTime());
-                            String endLabel = dateFormat.format(end.getTime());
-                            strBuffer.append(" title='").append(startLabel).append("-").append(endLabel).append("'");
+                            final InfoShowOccupation occupation =
+                                    infoLessonWrapper.getLessonSlot().getInfoLessonWrapper().getInfoShowOccupation();
+                            strBuffer.append(" title='")
+                                    .append(this.lessonSlotContentRenderer.renderTitleText(infoLessonWrapper.getLessonSlot()))
+                                .append("'");
                         }
                         strBuffer.append(">");
 
                         String contextPath = ((HttpServletRequest) pageContext.getRequest()).getContextPath();
+                        // if infolessonwrapper start and end are the same...
                         if ((infoLessonWrapper != null) && (infoLessonWrapper.getLessonSlot().getStartIndex() == hourIndex)) {
                             final HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
                             final String context = request.getContextPath();
                             strBuffer.append(this.lessonSlotContentRenderer.render(context, infoLessonWrapper.getLessonSlot()));
+                            if (getSlotCssClass(infoLessonWrapper, hourIndex).equalsIgnoreCase("period-single-slot")) {
+                                strBuffer.append(this.lessonSlotContentRenderer.renderSecondLine(context, infoLessonWrapper.getLessonSlot()));
+                            }
                             if (this.lessonSlotContentRenderer instanceof ShiftEnrollmentTimeTableLessonContentRenderer) {
                                 if (getSlotCssClass(infoLessonWrapper, hourIndex).equalsIgnoreCase("period-single-slot")) {
                                     LessonSlotContentRendererShift lessonSlotContentRendererShift =
@@ -159,6 +159,11 @@ public class TimeTableRenderer {
                                 slotLessons.put(slotIndex + "-" + dayIndex, infoLessonWrapper);
                             }
                         } else {
+                            if (infoLessonWrapper != null && !infoLessonWrapper.isSecondRowAlreadyAppended()) {
+                                final HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+                                final String context = request.getContextPath();
+                                strBuffer.append(this.lessonSlotContentRenderer.renderSecondLine(context, infoLessonWrapper.getLessonSlot()));
+                            }
                             if (this.lessonSlotContentRenderer instanceof ShiftEnrollmentTimeTableLessonContentRenderer
                                     && getSlotCssClass((InfoLessonWrapper) slotLessons.get(slotIndex + "-" + dayIndex), hourIndex)
                                             .equalsIgnoreCase("period-last-slot")) {

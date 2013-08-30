@@ -131,7 +131,7 @@ public final class RenderTimeTableTag extends TagSupport {
 
     private boolean hasLessonBefore8(final List<InfoShowOccupation> infoLessonList) {
         for (final InfoShowOccupation infoShowOccupation : infoLessonList) {
-            if (infoShowOccupation.getInicio().get(Calendar.HOUR_OF_DAY) < 8) {
+            if (infoShowOccupation.getFirstHourOfDay() < 8) {
                 return true;
             }
         }

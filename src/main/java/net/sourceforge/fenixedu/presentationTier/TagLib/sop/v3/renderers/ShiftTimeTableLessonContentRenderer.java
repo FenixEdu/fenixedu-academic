@@ -6,13 +6,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 
 /**
  * @author jpvl
  */
-public class ShiftTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
+public class ShiftTimeTableLessonContentRenderer extends LessonSlotContentRenderer {
 
     @Override
     public StringBuilder render(String context, LessonSlot lessonSlot) {
@@ -27,11 +28,12 @@ public class ShiftTimeTableLessonContentRenderer implements LessonSlotContentRen
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
             strBuffer.append("(");
             strBuffer.append(lesson.getInfoShift().getShiftTypesPrettyPrint()).append(")");
-            if (lesson.getInfoRoomOccupation() != null) {
+            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            if (allocatableSpace != null) {
                 strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
-                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("'>");
-                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
+                strBuffer.append(allocatableSpace.getNome()).append("'>");
+                strBuffer.append(allocatableSpace.getNome()).append("</a>");
             }
 
         } else if (showOccupation instanceof InfoLessonInstance) {
@@ -41,11 +43,12 @@ public class ShiftTimeTableLessonContentRenderer implements LessonSlotContentRen
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
             strBuffer.append("(");
             strBuffer.append(lesson.getShiftTypesPrettyPrint()).append(")");
-            if (lesson.getInfoRoomOccupation() != null) {
+            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            if (allocatableSpace != null) {
                 strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
-                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("'>");
-                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
+                strBuffer.append(allocatableSpace.getNome()).append("'>");
+                strBuffer.append(allocatableSpace.getNome()).append("</a>");
             }
 
         } else if (showOccupation instanceof InfoExam) {

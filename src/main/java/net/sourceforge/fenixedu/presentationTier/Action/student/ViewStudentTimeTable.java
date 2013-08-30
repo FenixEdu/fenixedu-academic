@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -62,7 +62,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
     public static ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping,
             HttpServletRequest request) throws FenixActionException, FenixServiceException {
 
-        List<InfoLesson> infoLessons = ReadStudentTimeTable.run(registration);
+        List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(registration);
 
         request.setAttribute("person", registration.getPerson());
         request.setAttribute("infoLessons", infoLessons);

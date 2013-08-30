@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 
-public class SpaceManagerRoomTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
+public class SpaceManagerRoomTimeTableLessonContentRenderer extends LessonSlotContentRenderer {
 
     private static final ResourceBundle spaceManagerResourceBundle = ResourceBundle.getBundle("resources.SpaceResources",
             new Locale("pt"));

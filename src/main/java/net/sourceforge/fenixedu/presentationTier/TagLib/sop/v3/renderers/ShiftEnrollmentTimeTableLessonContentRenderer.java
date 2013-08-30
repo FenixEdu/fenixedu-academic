@@ -3,20 +3,27 @@
  */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
+import org.joda.time.LocalDate;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRendererShift;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlotContentRendererShift {
+public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotContentRendererShift {
     private String studentID;
 
     private String application;
@@ -38,7 +45,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
 
     @Override
     public StringBuilder render(String context, LessonSlot lessonSlot) {
-        StringBuilder strBuffer = new StringBuilder();
+        StringBuilder strBuffer = super.render(context, lessonSlot);
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
         if (showOccupation instanceof InfoLesson) {
@@ -62,13 +69,11 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
 
-            if (lesson.getInfoRoomOccupation() != null) {
-                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            if (allocatableSpace != null) {
+                strBuffer.append(allocatableSpace.getNome());
             }
             strBuffer.append("</span>");
-
-            return strBuffer;
-
         } else if (showOccupation instanceof InfoLessonInstance) {
 
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
@@ -84,7 +89,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
                 strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
             }
             strBuffer.append("<a href=\"").append(context);
-            strBuffer.append(infoExecutionCourse.getExecutionCourse().getSite().getReversePath());
+            strBuffer.append(site.getReversePath());
             strBuffer.append("\">");
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
 
@@ -92,11 +97,70 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
             }
             strBuffer.append("</span>");
+        } else if (showOccupation instanceof InfoLessonInstanceAggregation) {
+            final InfoLessonInstanceAggregation infoLessonInstanceAggregation = (InfoLessonInstanceAggregation) showOccupation;
 
-            return strBuffer;
+            final ExecutionCourse executionCourse = infoLessonInstanceAggregation.getShift().getExecutionCourse();
+            final Site site = executionCourse.getSite();
+
+            strBuffer.append("<span class=\"float-left\">");
+            // CONTENT / CHECKSUM prefixes have to be right before <a> tag
+            if (site.isPublic()) {
+                strBuffer
+                        .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+            } else {
+                strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+            }
+            strBuffer.append("<a href=\"").append(context);
+            strBuffer.append(site.getReversePath());
+            strBuffer.append("\">");
+            strBuffer.append(executionCourse.getSigla()).append("</a>");
+            strBuffer.append("&nbsp;").append("&nbsp;(").append(infoLessonInstanceAggregation.getShift().getShiftTypesCodePrettyPrint())
+                    .append(")&nbsp;");
+
+            final AllocatableSpace allocatableSpace = infoLessonInstanceAggregation.getAllocatableSpace();
+            if (allocatableSpace != null) {
+                strBuffer.append(allocatableSpace.getNome());
+            }
+            strBuffer.append("</span>");
         }
 
-        return new StringBuilder("");
+        return strBuffer;
+    }
+
+    @Override
+    public String renderSecondLine(final String context, final LessonSlot lessonSlot) {
+        final StringBuilder builder = new StringBuilder();
+        final InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
+        if (showOccupation instanceof InfoLessonInstanceAggregation) {
+            final InfoLessonInstanceAggregation infoLessonInstanceAggregation = (InfoLessonInstanceAggregation) showOccupation;
+            if (!infoLessonInstanceAggregation.availableInAllWeeks()) {
+                builder.append("<span>");
+                builder.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "label.weeks"));
+                builder.append(": &nbsp;&nbsp;");
+                builder.append(infoLessonInstanceAggregation.prettyPrintWeeks());
+                builder.append("&nbsp;");
+                builder.append("</span>");
+            }
+        }
+        builder.append(super.renderSecondLine(context, lessonSlot));
+        return builder.toString();
+    }
+
+    @Override
+    public String renderTitleText(final LessonSlot lessonSlot) {
+        final StringBuilder builder = new StringBuilder(super.renderTitleText(lessonSlot));
+
+        final InfoShowOccupation occupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
+        if (occupation instanceof InfoLessonInstanceAggregation) {
+            final InfoLessonInstanceAggregation aggregation = (InfoLessonInstanceAggregation) occupation;
+            for (final LocalDate localDate : aggregation.getDates()) {
+                builder.append('\n');
+                builder.append(localDate.toString("yyyy-MM-dd"));
+            }
+        }
+
+        return builder.toString();
     }
 
     @Override
@@ -105,11 +169,14 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
         if (showOccupation instanceof InfoLesson) {
             InfoLesson lesson = (InfoLesson) showOccupation;
-            strBuffer.append(getURL(lesson, context));
+            strBuffer.append(getURL(lesson.getInfoShift().getShift(), context));
             strBuffer.append("<img src=\"").append(context).append("/images/").append(getImage()).append("\"/>").append("</a>");
-            return strBuffer;
+        } else if (showOccupation instanceof InfoLessonInstanceAggregation) {
+            final InfoLessonInstanceAggregation infoLessonInstanceAggregation = (InfoLessonInstanceAggregation) showOccupation;
+            strBuffer.append(getURL(infoLessonInstanceAggregation.getShift(), context));
+            strBuffer.append("<img src=\"").append(context).append("/images/").append(getImage()).append("\"/>").append("</a>");
         }
-        return strBuffer.append("");
+        return strBuffer;
     }
 
     /**
@@ -134,7 +201,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
      * @param lesson
      * @return
      */
-    private StringBuilder getURL(InfoLesson lesson, String context) {
+    private StringBuilder getURL(final Shift shift, String context) {
         StringBuilder strBuffer = new StringBuilder();
 
         if (getAction().equalsIgnoreCase("add")) {
@@ -151,7 +218,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
                             + "/resourceAllocationManager/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&registrationOID=");
         }
 
-        strBuffer.append(getStudentID()).append("&shiftId=").append(lesson.getInfoShift().getExternalId());
+        strBuffer.append(getStudentID()).append("&shiftId=").append(shift.getExternalId());
         strBuffer.append("&classId=").append(getClassID()).append("&executionCourseID=").append(getExecutionCourseID())
                 .append("\">");
         return strBuffer;

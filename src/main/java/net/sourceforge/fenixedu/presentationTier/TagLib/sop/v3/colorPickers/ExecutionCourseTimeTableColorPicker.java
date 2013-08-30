@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -17,6 +18,9 @@ public class ExecutionCourseTimeTableColorPicker extends ColorPicker {
         }
         if (infoShowOccupation instanceof InfoLessonInstance) {
             return key((InfoLessonInstance) infoShowOccupation);
+        }
+        if (infoShowOccupation instanceof InfoLessonInstanceAggregation) {
+            return key((InfoLessonInstanceAggregation) infoShowOccupation);
         }
         if (infoShowOccupation instanceof InfoWrittenEvaluation) {
             return key((InfoWrittenEvaluation) infoShowOccupation);
@@ -33,6 +37,10 @@ public class ExecutionCourseTimeTableColorPicker extends ColorPicker {
 
     private String key(final InfoLesson infoLesson) {
         return key(infoLesson.getLesson());
+    }
+
+    private String key(final InfoLessonInstanceAggregation aggregation) {
+        return aggregation.getShift().getExternalId();
     }
 
     private String key(final InfoLessonInstance infoLessonInstance) {
