@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
+import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
 
 import org.apache.commons.fileupload.FileUpload;
 import org.slf4j.Logger;
@@ -113,7 +114,13 @@ public class FenixInitializer implements ServletContextListener {
         registerContentInjectionRewriter();
         registerUncaughtExceptionHandler();
 
+        initializeFenixAPI();
+
         logger.info("Fenix initialized successfully");
+    }
+
+    private void initializeFenixAPI() {
+        FenixJerseyAPIConfig.initialize();
     }
 
     @Override

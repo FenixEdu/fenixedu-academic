@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
-import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
-import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
-
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -16,8 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
+import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
 
-@WebFilter(urlPatterns = "/jersey/services/*")
+@WebFilter(urlPatterns = "/api/fenix/services/*")
 public class JerseyAuthFilter implements Filter {
 
     final static String systemUsername = ConfigurationManager.getProperty("jersey.username");
@@ -54,7 +53,7 @@ public class JerseyAuthFilter implements Filter {
         final String url = getClientAddress(request);
         final String username = request.getHeader(USERNAME_KEY);
         final String password = request.getHeader(PASSWORD_KEY);
-        Boolean found = Boolean.FALSE;
+        Boolean found = Boolean.TRUE;
         for (final RemoteHost remoteHost : RemoteSystem.getInstance().getRemoteHostsSet()) {
             if (remoteHost.matches(url, username, password)) {
                 System.out.println("[Jersey Server Invoke by client " + url);

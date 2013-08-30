@@ -26,10 +26,10 @@
 
 	<li class="navheader"><bean:message key="oauthapps.label"  /></li>
  	<li><html:link page="/externalApps.do?method=manageAuthorizations"><bean:message key="oauthapps.label.manage.authorizations"  bundle="APPLICATION_RESOURCES"/></html:link></li>
- 	<logic:present role="DEVELOPER">
+ 	<logic:present role="role(DEVELOPER)">
  		<li><html:link page="/externalApps.do?method=manageApplications"><bean:message key="oauthapps.label.manage.applications"  bundle="APPLICATION_RESOURCES"/></html:link></li>
  	</logic:present>
-	<logic:present role="MANAGER">
+	<logic:present role="role(MANAGER)">
 		<li><html:link page="/externalApps.do?method=viewAllApplications"><bean:message key="oauthapps.label.manage.all.applications"  bundle="APPLICATION_RESOURCES"/></html:link></li>
 	</logic:present>
 		

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.webServices.jersey.api;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.Path;
@@ -24,19 +23,17 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
-import com.sun.jersey.api.core.PackagesResourceConfig;
 
-public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
+public class FenixJerseyAPIConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FenixJerseyPackageResourceConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FenixJerseyAPIConfig.class);
 
     public static Multimap<String, String> scopePathsMap = HashMultimap.create();
 
     public static Set<String> publicScopes = new HashSet<>();
 
-    public FenixJerseyPackageResourceConfig(Map<String, Object> props) {
-        super(props);
-        searchForAPIFenixScope();
+    public static void initialize() {
+        searchForAPIFenixScope(FenixAPIv1.class);
         registerAuthScopes();
     }
 
@@ -79,11 +76,11 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
         }
     }
 
-    private void searchForAPIFenixScope() {
-        for (Class<?> clazz : getRootResourceClasses()) {
-            Path pathAnnotation = clazz.getAnnotation(Path.class);
+    private static void searchForAPIFenixScope(Class<?> apiClass) {
+        if (apiClass != null) {
+            Path pathAnnotation = apiClass.getAnnotation(Path.class);
             if (pathAnnotation != null) {
-                for (Method method : clazz.getMethods()) {
+                for (Method method : apiClass.getMethods()) {
                     Path methodPathAnnotation = method.getAnnotation(Path.class);
                     FenixAPIScope apiScopeAnnotation = method.getAnnotation(FenixAPIScope.class);
                     if (apiScopeAnnotation != null) {
@@ -111,7 +108,7 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
                     }
                 }
             } else {
-                LOGGER.debug("No path for class {}", clazz.getName());
+                LOGGER.debug("No api class");
             }
         }
     }

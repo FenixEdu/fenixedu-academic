@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken.FenixOAuthTokenException;
-import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyPackageResourceConfig;
+import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
 
 import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
@@ -31,7 +31,7 @@ import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.bennu.core.security.UserSession;
 
-@WebFilter(urlPatterns = "/api/fenix/*")
+@WebFilter(urlPatterns = "/api/fenix/v1/*")
 public class JerseyOAuth2Filter implements Filter {
 
     final static String ACCESS_TOKEN = "access_token";
@@ -106,9 +106,10 @@ public class JerseyOAuth2Filter implements Filter {
     private Boolean checkAccessToken(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
             ServletException {
 
-        final String uri = StringUtils.removeStart(request.getRequestURI(), request.getContextPath() + request.getServletPath());
+        final String uri =
+                StringUtils.removeStart(request.getRequestURI(), request.getContextPath() + request.getServletPath() + "/fenix/");
 
-        if (FenixJerseyPackageResourceConfig.isPublicScope(uri)) {
+        if (FenixJerseyAPIConfig.isPublicScope(uri)) {
             return true;
         }
 
@@ -153,7 +154,7 @@ public class JerseyOAuth2Filter implements Filter {
 
     private boolean validScope(AppUserSession appUserSession, String uri) throws IOException, ServletException {
         uri = StringUtils.removeStart(StringUtils.removeEnd(uri, "/"), "/");
-        AuthScope scope = FenixJerseyPackageResourceConfig.getScope(uri);
+        AuthScope scope = FenixJerseyAPIConfig.getScope(uri);
         if (scope != null) {
             if (appUserSession.getAppUserAuthorization().getApplication().getScopesSet().contains(scope)) {
                 return true;
