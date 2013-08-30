@@ -53,7 +53,7 @@ public class AEISTUserInformationDA extends ExternalInterfaceDispatchAction {
                             && dataAuthorizationStudentsAssociation.getAuthorizationChoice().isForStudentsAssociation()) {
                         final JSONObject jsonObject = new JSONObject();
                         jsonObject.put("email", person.getEmailForSendingEmails());
-                        jsonObject.put("degree", registration.getDegreeCurricularPlanName());
+                        jsonObject.put("degree", registration.getLastDegreeCurricularPlan().getDegree().getSigla());
                         jsonObject.put("name", person.getName());
                         jsonObject.put("birthdate", person.getDateOfBirthYearMonthDay().toString());
                         jsonObject.put("address", person.getAddress());
