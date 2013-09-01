@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
+import org.apache.commons.httpclient.HttpStatus;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -27,11 +28,17 @@ public abstract class InformaRSSAction extends FenixAction {
             final HttpServletResponse response) throws Exception {
         final String encoding = System.getProperty("file.encoding", PropertiesManager.DEFAULT_CHARSET);
         final ChannelIF channel = getRSSChannel(request);
-        response.setContentType("text/xml; charset=" + encoding);
-        final PrintWriter writer = response.getWriter();
-        final ChannelExporterIF exporter = new RSS_2_0_Exporter(writer, encoding);
-        exporter.write(channel);
-        response.flushBuffer();
+        if (channel != null) {
+            response.setContentType("text/xml; charset=" + encoding);
+            final PrintWriter writer = response.getWriter();
+            final ChannelExporterIF exporter = new RSS_2_0_Exporter(writer, encoding);
+            exporter.write(channel);
+            response.flushBuffer();
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_NOT_FOUND));
+            response.getWriter().close();            
+        }
         return null;
     }
 

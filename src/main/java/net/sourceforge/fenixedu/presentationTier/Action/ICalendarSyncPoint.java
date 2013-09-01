@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.student.ICalStudentTimeTable;
 
+import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.lang.CharEncoding;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -31,6 +32,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/iCalendarSync", module = "external")
@@ -131,28 +133,33 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
             throw new FenixActionException("error.expecting.parameter.not.found");
         }
 
-        User user = User.readUserByUserUId(userId);
-        Registration registration = AbstractDomainObject.fromExternalId(regId);
+        final DomainObject object = AbstractDomainObject.fromExternalId(regId);
+        if (object instanceof Registration) {
+            User user = User.readUserByUserUId(userId);
+            Registration registration = (Registration) object;
 
-        if (user.getPrivateKeyValidity() != null) {
-            if (payload.equals(ICalStudentTimeTable.calculatePayload(method, registration, user))) {
-                if (user.getPrivateKeyValidity().isBeforeNow()) {
-                    returnError(httpServletResponse, "private.key.validity.expired");
-                } else {
-                    if (user.getPerson().hasRole(RoleType.STUDENT)) {
-
-                        encodeAndTransmitResponse(httpServletResponse,
-                                getCalendar(method, user, user.getPrivateKeyValidity(), request));
-
+            if (user.getPrivateKeyValidity() != null) {
+                if (payload.equals(ICalStudentTimeTable.calculatePayload(method, registration, user))) {
+                    if (user.getPrivateKeyValidity().isBeforeNow()) {
+                        returnError(httpServletResponse, "private.key.validity.expired");
                     } else {
-                        returnError(httpServletResponse, "user.is.not.student");
+                        if (user.getPerson().hasRole(RoleType.STUDENT)) {
+
+                            encodeAndTransmitResponse(httpServletResponse,
+                                    getCalendar(method, user, user.getPrivateKeyValidity(), request));
+
+                        } else {
+                            returnError(httpServletResponse, "user.is.not.student");
+                        }
                     }
+                } else {
+                    returnError(httpServletResponse, "payload.checksum.doesnt.match");
                 }
             } else {
-                returnError(httpServletResponse, "payload.checksum.doesnt.match");
+                returnError(httpServletResponse, "key.not.found");
             }
         } else {
-            returnError(httpServletResponse, "key.not.found");
+            returnError(httpServletResponse, "invalid.request");
         }
     }
 
