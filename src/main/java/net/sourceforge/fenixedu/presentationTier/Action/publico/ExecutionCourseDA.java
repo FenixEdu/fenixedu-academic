@@ -51,6 +51,7 @@ import net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
 import net.sourceforge.fenixedu.util.PeriodState;
 
+import org.apache.commons.httpclient.HttpStatus;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -59,6 +60,7 @@ import org.apache.struts.util.RequestUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ExecutionCourseDA extends SiteVisualizationDA {
@@ -73,7 +75,15 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 
         ExecutionCourse executionCourse = null;
         if (executionCourseIDString != null) {
-            executionCourse = AbstractDomainObject.fromExternalId(executionCourseIDString);
+            final DomainObject object = AbstractDomainObject.fromExternalId(executionCourseIDString);
+            if (object instanceof ExecutionCourse) {
+                executionCourse = (ExecutionCourse) object;
+            } else {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_BAD_REQUEST));
+                response.getWriter().close();
+                return null;
+            }
         } else {
             ExecutionCourseSite site =
                     (ExecutionCourseSite) AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();

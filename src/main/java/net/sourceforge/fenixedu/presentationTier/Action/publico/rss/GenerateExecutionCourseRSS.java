@@ -22,9 +22,9 @@ public abstract class GenerateExecutionCourseRSS extends InformaRSSAction {
     @Override
     protected ChannelIF getRSSChannel(final HttpServletRequest request) throws Exception {
         final String id = request.getParameter("id");
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(id);
-
-        if (executionCourse != null) {
+        final DomainObject object = AbstractDomainObject.fromExternalId(id);
+        if (object != null && object instanceof ExecutionCourse) {
+            final ExecutionCourse executionCourse = (ExecutionCourse) object;
             final String executionCourseName = executionCourse.getNome();
             final ChannelBuilder builder = new ChannelBuilder();
             final ChannelIF channel = builder.createChannel(executionCourseName);
