@@ -65,7 +65,7 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException {
 
         try {
-            executeFactoryMethod(new RegistrationStateDeleter(Integer.valueOf(request.getParameter("registrationStateId"))));
+            executeFactoryMethod(new RegistrationStateDeleter(request.getParameter("registrationStateId")));
             addActionMessage(request, "message.success.state.delete");
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());

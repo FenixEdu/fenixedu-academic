@@ -877,7 +877,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             HttpServletResponse response) throws FenixActionException {
         String objectCode = getObjectCode(request);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
         InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(objectCode);
         InfoExecutionPeriod infoExecutionPeriod = infoExecutionCourse.getInfoExecutionPeriod();
@@ -885,7 +884,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
 
         ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
-        readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCode, null);
+        readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCodeString, null);
 
         if (((InfoSiteShiftsAndGroups) shiftsAndGroupsView).getInfoGrouping() == null) {
             ActionErrors actionErrors = new ActionErrors();
