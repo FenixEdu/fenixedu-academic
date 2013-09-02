@@ -224,7 +224,9 @@ public class Person extends Person_Base {
         String oldName = getPartyName() == null ? null : getPartyName().getPreferedContent();
 
         MultiLanguageString partyName = super.getPartyName();
-        partyName = partyName == null ? new MultiLanguageString(Language.getDefaultLanguage(), formattedName) : partyName.with(Language.getDefaultLanguage(), formattedName);
+        partyName =
+                partyName == null ? new MultiLanguageString(Language.getDefaultLanguage(), formattedName) : partyName.with(
+                        Language.getDefaultLanguage(), formattedName);
 
         super.setPartyName(partyName);
 
@@ -543,7 +545,7 @@ public class Person extends Person_Base {
         }
 
         if (personDTO.getPhoto() != null) {
-            setPersonalPhoto(new Photograph(ContentType.JPG, new ByteArray(personDTO.getPhoto()), PhotoType.INSTITUTIONAL));
+            setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.JPG, new ByteArray(personDTO.getPhoto())));
         }
 
         final PhysicalAddressData physicalAddress = new PhysicalAddressData();
@@ -1425,11 +1427,11 @@ public class Person extends Person_Base {
                 && !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()
                 && !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
                 && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
-                && !hasAnyGuides() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides()
-                && !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations()
-                && !hasAnyParticipations() && !hasAnyBoards() && !hasAnyPersonFunctions()
-                && (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard() && !hasAnyCardGenerationEntries()
-                && !hasAnyInternalParticipants() && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
+                && !hasAnyGuides() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides() && !hasAnyPayedReceipts()
+                && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations()
+                && !hasAnyBoards() && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable())
+                && !hasLibraryCard() && !hasAnyCardGenerationEntries() && !hasAnyInternalParticipants()
+                && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
     }
 
     private boolean hasParking() {

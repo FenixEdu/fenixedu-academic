@@ -20,9 +20,9 @@ public class UploadOwnPhoto {
 
     @Checked("RolePredicates.PERSON_PREDICATE")
     @Service
-    static public void run(byte[] contents, byte[] compressed, ContentType contentType) {
+    static public void run(byte[] contents, ContentType contentType) {
         Person person = AccessControl.getPerson();
-        person.setPersonalPhoto(new Photograph(contentType, new ByteArray(contents), new ByteArray(compressed), PhotoType.USER));
+        person.setPersonalPhoto(new Photograph(PhotoType.USER, contentType, new ByteArray(contents)));
     }
 
     /**
@@ -37,8 +37,8 @@ public class UploadOwnPhoto {
      */
     @Service
     static public void upload(final PhotographUploadBean photo, final Person person) throws FileNotFoundException, IOException {
-        person.setPersonalPhoto(new Photograph(ContentType.getContentType(photo.getContentType()), new ByteArray(photo
-                .getFileInputStream()), new ByteArray(photo.getCompressedInputStream()), PhotoType.USER));
+        person.setPersonalPhoto(new Photograph(PhotoType.USER, ContentType.getContentType(photo.getContentType()), new ByteArray(
+                photo.getFileInputStream())));
 
     }
 }

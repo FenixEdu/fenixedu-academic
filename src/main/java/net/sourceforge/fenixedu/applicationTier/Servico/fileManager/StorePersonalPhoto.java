@@ -21,28 +21,26 @@ import pt.ist.fenixWebFramework.services.Service;
 public class StorePersonalPhoto {
     @Checked("RolePredicates.OPERATOR_PREDICATE")
     @Service
-    public static void run(byte[] contents, byte[] compressed, ContentType contentType, String personUsername)
-            throws ExcepcaoInexistente {
+    public static void run(byte[] contents, ContentType contentType, String personUsername) throws ExcepcaoInexistente {
         Person person = Person.readPersonByUsername(personUsername);
 
         if (person == null) {
             throw new ExcepcaoInexistente("Unknown Person !!");
         }
 
-        storePersonalPhoto(contents, compressed, contentType, person);
+        storePersonalPhoto(contents, contentType, person);
     }
 
-    private static void storePersonalPhoto(byte[] contents, byte[] compressed, ContentType contentType, Person person) {
-        person.setPersonalPhoto(new Photograph(contentType, new ByteArray(contents), new ByteArray(compressed),
-                PhotoType.INSTITUTIONAL));
+    private static void storePersonalPhoto(byte[] contents, ContentType contentType, Person person) {
+        person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, contentType, new ByteArray(contents)));
     }
 
     @Checked("AcademicPredicates.MANAGE_PHD_PROCESSES")
     @Service
     static public void uploadPhoto(final PhotographUploadBean photoBean, final Person person) throws FileNotFoundException,
             IOException {
-        person.setPersonalPhoto(new Photograph(ContentType.getContentType(photoBean.getContentType()), new ByteArray(photoBean
-                .getFileInputStream()), new ByteArray(photoBean.getCompressedInputStream()), PhotoType.INSTITUTIONAL));
+        person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.getContentType(photoBean.getContentType()),
+                new ByteArray(photoBean.getFileInputStream())));
 
     }
 }

@@ -122,7 +122,7 @@ public class SubmitPhotoAction extends FenixDispatchAction {
         if (person == null) {
             throw new DomainException("error.operatorPhotoUpload.invalid.username");
         }
-        person.setPersonalPhoto(new Photograph(ContentType.getContentType(photo.getContentType()), new ByteArray(photo
-                .getFileInputStream()), new ByteArray(photo.getCompressedInputStream()), PhotoType.INSTITUTIONAL));
+        person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.getContentType(photo.getContentType()),
+                new ByteArray(photo.getFileInputStream())));
     }
 }

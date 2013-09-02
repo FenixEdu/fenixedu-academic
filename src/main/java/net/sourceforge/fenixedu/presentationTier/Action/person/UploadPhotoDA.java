@@ -126,7 +126,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
 
         UploadOwnPhoto.run(new ByteArray(photo.getFileInputStream()).getBytes(),
-                new ByteArray(photo.getCompressedInputStream()).getBytes(), ContentType.getContentType(photo.getContentType()));
+                ContentType.getContentType(photo.getContentType()));
         return mapping.findForward("visualizePersonalInformation");
     }
 

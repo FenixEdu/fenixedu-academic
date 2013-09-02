@@ -45,6 +45,8 @@ enum net.sourceforge.fenixedu.domain.PartyClassification                        
 enum net.sourceforge.fenixedu.domain.PhotoState                                                                           as PhotoState;
 enum net.sourceforge.fenixedu.domain.PhotoType                                                                            as PhotoType;
 enum net.sourceforge.fenixedu.domain.PhotographContentSize                                                                as PhotographContentSize;
+enum net.sourceforge.fenixedu.domain.photograph.AspectRatio																  as AspectRatio;
+enum net.sourceforge.fenixedu.domain.photograph.PictureSize																  as PictureSize;
 enum net.sourceforge.fenixedu.domain.PrescriptionEnum                                                                     as PrescriptionEnum;
 enum net.sourceforge.fenixedu.domain.ProfessionType                                                                       as ProfessionType;
 enum net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType                                                   as ProfessionalSituationConditionType;
@@ -1276,6 +1278,21 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class PhotographContent  {
         PhotographContentSize size;
         ByteArray content;
+    }
+    
+    class photograph.Picture {
+    	Integer width;
+    	Integer height;
+    	ContentType pictureFileFormat;
+    	ByteArray pictureData;
+    }
+    
+    class photograph.PictureOriginal extends photograph.Picture {
+    }
+    
+    class photograph.PictureAvatar extends photograph.Picture {
+    	AspectRatio aspectRatio;
+    	PictureSize pictureSize;
     }
 
     class File  {
@@ -11868,6 +11885,18 @@ relation PhotographContent {
     PhotographContent playsRole content {
         multiplicity *;
     }
+}
+
+relation PhotographOriginal {
+	Photograph playsRole photograph;
+	photograph.PictureOriginal playsRole original;
+}
+
+relation PhotographAvatars {
+	Photograph playsRole photograph;
+	photograph.PictureAvatar playsRole avatars {
+		multiplicity *;
+	}
 }
 
 relation FileTagging {

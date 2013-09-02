@@ -18,6 +18,11 @@ import javax.imageio.ImageWriter;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.photograph.AspectRatio;
+import net.sourceforge.fenixedu.domain.photograph.Picture;
+import net.sourceforge.fenixedu.domain.photograph.PictureAvatar;
+import net.sourceforge.fenixedu.domain.photograph.PictureOriginal;
+import net.sourceforge.fenixedu.domain.photograph.PictureSize;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
@@ -47,12 +52,13 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     private static final String REJECTION_MAIL_BODY_KEY = "photo.email.body.rejection";
 
-    public Photograph() {
+    private Photograph() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setSubmission(new DateTime());
     }
 
+    @Deprecated
     public Photograph(ContentType contentType, ByteArray content, ByteArray compressed, PhotoType photoType) {
         this();
         setContentType(contentType);
@@ -63,8 +69,16 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         }
     }
 
+    @Deprecated
     public Photograph(ContentType contentType, ByteArray content, PhotoType photoType) {
         this(contentType, content, compressImage(content.getBytes(), contentType), photoType);
+    }
+
+    public Photograph(PhotoType photoType, ContentType contentType, ByteArray original) {
+        this();
+        setPhotoType(photoType);
+        new PictureOriginal(this, original, contentType);
+        PictureAvatar.createAvatars(this, original);
     }
 
     @Override
@@ -138,10 +152,12 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         super.setPrevious(previous);
     }
 
+    @Deprecated
     public byte[] getContents() {
         return getContents(PhotographContentSize.DOC_SIZE);
     }
 
+    @Deprecated
     public byte[] getContents(PhotographContentSize size) {
         for (PhotographContent content : getContentSet()) {
             if (content.getSize().equals(size)) {
@@ -177,6 +193,32 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         super.deleteDomainObject();
     }
 
+    public PictureAvatar getAvatar(AspectRatio aspectRatio, PictureSize pictureSize) {
+        for (PictureAvatar avatar : getAvatars()) {
+            if (avatar.getAspectRatio() == aspectRatio && avatar.getPictureSize() == pictureSize) {
+                return avatar;
+            }
+        }
+        throw new DomainException("error.photograph.avatarMissing");
+    }
+
+    public byte[] getCustomAvatar(int xRatio, int yRatio, int width, int height) {
+        BufferedImage image, transformed, scaled;
+        image = Picture.readImage(getOriginal().getPictureData());
+        transformed = Picture.transform(image, xRatio, yRatio);
+        scaled = Picture.fitTo(transformed, width, height);
+        return Picture.writeImage(scaled, getOriginal().getPictureFileFormat()).getBytes();
+    }
+
+    public byte[] getCustomAvatar(AspectRatio aspectRatio, int width, int height) {
+        return getCustomAvatar(aspectRatio.getXRatio(), aspectRatio.getYRatio(), width, height);
+    }
+
+    public byte[] getCustomAvatar(int width, int height) {
+        return getCustomAvatar(width, height, width, height);
+    }
+
+    @Deprecated
     static private ByteArray compressImage(byte[] content, ContentType contentType) {
         BufferedImage image;
         try {
