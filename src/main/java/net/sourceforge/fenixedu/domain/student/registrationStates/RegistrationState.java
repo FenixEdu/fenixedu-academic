@@ -274,9 +274,9 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
     public static class RegistrationStateDeleter extends VariantBean implements FactoryExecutor {
 
-        public RegistrationStateDeleter(Integer externalId) {
+        public RegistrationStateDeleter(String externalId) {
             super();
-            setInteger(externalId);
+            setString(externalId);
         }
 
         @Override
