@@ -218,7 +218,13 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     }
 
     public String getDegreeAndInstitutionName() {
-        return getDegreeDesignation() + " / " + getInstitution().getName();
+        String institutionName = null;
+        if (hasInstitution()) {
+            institutionName = getInstitution().getName();
+        } else {
+            institutionName = getPrecedentInstitution().getName();
+        }
+        return getDegreeDesignation() + " / " + institutionName;
     }
 
     public void delete() {
