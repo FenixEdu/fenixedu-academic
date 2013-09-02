@@ -64,7 +64,7 @@ public class GenericApplication extends GenericApplication_Base {
     public boolean isAllPersonalInformationFilled() {
         return getGender() != null && getDateOfBirthYearMonthDay() != null && getDocumentIdNumber() != null
                 && !getDocumentIdNumber().isEmpty() && getIdDocumentType() != null && getNationality() != null
-                && getFiscalCode() != null && !getFiscalCode().isEmpty() && getAddress() != null && !getAddress().isEmpty()
+                /* && getFiscalCode() != null && !getFiscalCode().isEmpty() */ && getAddress() != null && !getAddress().isEmpty()
                 && getAreaCode() != null && !getAreaCode().isEmpty() && getArea() != null && !getArea().isEmpty()
                 && getTelephoneContact() != null && !getTelephoneContact().isEmpty();
     }
