@@ -189,29 +189,21 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     }
 
     private ActionForward prepareShiftEnrolmentInformation(ActionMapping mapping, HttpServletRequest request,
-            final Registration registration, final ExecutionSemester executionSemester) {
+            final Registration registration, final ExecutionSemester executionSemester) throws FenixServiceException {
 
-        try {
+        final List<ShiftToEnrol> shiftsToEnrol = ReadShiftsToEnroll.runReadShiftsToEnroll(registration);
 
-            final List<ShiftToEnrol> shiftsToEnrol = ReadShiftsToEnroll.runReadShiftsToEnroll(registration);
+        request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts",
+                registration.getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionSemester));
 
-            request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts",
-                    registration.getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionSemester));
+        request.setAttribute("shiftsToEnrolFromEnroledExecutionCourses", getShiftsToEnrolByEnroledState(shiftsToEnrol, true));
+        request.setAttribute("shiftsToEnrolFromUnenroledExecutionCourses", getShiftsToEnrolByEnroledState(shiftsToEnrol, false));
 
-            request.setAttribute("shiftsToEnrolFromEnroledExecutionCourses", getShiftsToEnrolByEnroledState(shiftsToEnrol, true));
-            request.setAttribute("shiftsToEnrolFromUnenroledExecutionCourses",
-                    getShiftsToEnrolByEnroledState(shiftsToEnrol, false));
+        final List<Shift> studentShifts = registration.getShiftsFor(executionSemester);
+        request.setAttribute("studentShifts", studentShifts);
+        sortStudentShifts(studentShifts);
 
-            final List<Shift> studentShifts = registration.getShiftsFor(executionSemester);
-            request.setAttribute("studentShifts", studentShifts);
-            sortStudentShifts(studentShifts);
-
-            return mapping.findForward("showShiftsEnrollment");
-
-        } catch (FenixServiceException e) {
-            addActionMessage(request, e.getMessage());
-            return mapping.getInputForward();
-        }
+        return mapping.findForward("showShiftsEnrollment");
     }
 
     private void sortStudentShifts(List<Shift> studentShifts) {
@@ -232,7 +224,9 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
             final ExecutionSemester executionSemester, final List<ExecutionDegree> executionDegrees) {
 
         final String executionDegreeIdChosen = (String) form.get("degree");
-        final ExecutionDegree executionDegreeChosen = AbstractDomainObject.fromExternalId(executionDegreeIdChosen);
+        final ExecutionDegree executionDegreeChosen =
+                (!StringUtils.isEmpty(executionDegreeIdChosen) ? (ExecutionDegree) AbstractDomainObject
+                        .fromExternalId(executionDegreeIdChosen) : null);
         if (executionDegreeChosen != null && executionDegreeChosen.getExecutionYear() == executionSemester.getExecutionYear()) {
             return executionDegreeChosen;
         } else {
