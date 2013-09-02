@@ -51,7 +51,7 @@ public class AddClassesDA extends FenixShiftAndExecutionCourseAndExecutionDegree
 
         List classOIDs = new ArrayList();
         for (String selectedClasse : selectedClasses) {
-            classOIDs.add(new Integer(selectedClasse));
+            classOIDs.add(selectedClasse);
         }
 
         try {
