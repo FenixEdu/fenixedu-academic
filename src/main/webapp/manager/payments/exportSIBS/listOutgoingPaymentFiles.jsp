@@ -31,7 +31,7 @@
 	
 		<fr:property name="sortParameter" value="sortBy"/>
         <fr:property name="sortUrl" value="/exportSIBSPayments.do?method=listOutgoingPaymentsFile" />
-	    <fr:property name="sortBy" value="filename=desc"/>
+	    <fr:property name="sortBy" value="uploadTime=desc"/>
 		<fr:property name="sortableSlots" value="filename, uploadTime, successfulSentDateTime" />
 		
 		<fr:link label="label.sibs.outgoing.payment.file.detail,MANAGER_RESOURCES" name="detail" 
