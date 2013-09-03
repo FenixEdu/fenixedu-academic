@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjecti
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.util.PeriodState;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
@@ -150,7 +151,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
 
     public CurricularYear getCurricularYear() {
         final String curricularYearID = getCurricularYearID();
-        if (curricularYearID != null) {
+        if (!StringUtils.isEmpty(curricularYearID)) {
             return AbstractDomainObject.fromExternalId(curricularYearID);
         } else {
             return null;
