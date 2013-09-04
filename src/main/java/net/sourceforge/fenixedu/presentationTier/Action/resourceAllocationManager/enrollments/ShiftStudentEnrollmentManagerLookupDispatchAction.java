@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.WriteSt
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -189,13 +189,13 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
         final IUserView userView = getUserView(request);
 
-        final List infoClasslessons =
+        final List<InfoShowOccupation> infoClasslessons =
                 ReadClassTimeTableByStudent.runReadClassTimeTableByStudent(registration, schoolClass, executionCourse);
 
         request.setAttribute("infoClasslessons", infoClasslessons);
         request.setAttribute("infoClasslessonsEndTime", Integer.valueOf(getEndTime(infoClasslessons)));
 
-        final List infoLessons = ReadStudentTimeTable.run(registration);
+        final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(registration);
         request.setAttribute("person", registration.getPerson());
         request.setAttribute("infoLessons", infoLessons);
         request.setAttribute("infoLessonsEndTime", Integer.valueOf(getEndTime(infoLessons)));
@@ -247,11 +247,11 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         }
     }
 
-    private int getEndTime(List<InfoLesson> infoLessons) {
+    private int getEndTime(List<InfoShowOccupation> infoShowOccupations) {
         int endTime = 0;
-        for (final InfoLesson infoLesson : infoLessons) {
-            int tempEnd = infoLesson.getFim().get(Calendar.HOUR_OF_DAY);
-            if (infoLesson.getFim().get(Calendar.MINUTE) > 0) {
+        for (final InfoShowOccupation infoShowOccupation : infoShowOccupations) {
+            int tempEnd = infoShowOccupation.getFim().get(Calendar.HOUR_OF_DAY);
+            if (infoShowOccupation.getFim().get(Calendar.MINUTE) > 0) {
                 tempEnd = tempEnd + 1;
             }
             if (endTime < tempEnd) {
