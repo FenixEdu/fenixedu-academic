@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
@@ -36,6 +37,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 @Forwards({ @Forward(name = "showAuthorizationPage", path = "showAuthorizationPage"),
         @Forward(name = "oauthErrorPage", path = "/auth/oauthErrorPage.jsp") })
 public class OAuthAction extends FenixDispatchAction {
+
+    private final static String ACCESS_TOKEN_EXPIRATION = PropertiesManager
+            .getProperty("fenix.api.oauth.access.token.timeout.seconds");
 
     private static class OAuthNotFoundException extends Exception {
 
@@ -190,7 +194,7 @@ public class OAuthAction extends FenixDispatchAction {
 
         OAuthResponse r =
                 OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
-                        .setExpiresIn("3600").setRefreshToken(refreshToken).buildJSONMessage();
+                        .setExpiresIn(ACCESS_TOKEN_EXPIRATION).setRefreshToken(refreshToken).buildJSONMessage();
 
         response.setStatus(r.getResponseStatus());
         PrintWriter pw = response.getWriter();
@@ -225,7 +229,7 @@ public class OAuthAction extends FenixDispatchAction {
 
         OAuthResponse r =
                 OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
-                        .setExpiresIn("3600").buildJSONMessage();
+                        .setExpiresIn(ACCESS_TOKEN_EXPIRATION).buildJSONMessage();
 
         response.setStatus(r.getResponseStatus());
         PrintWriter pw = response.getWriter();

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -35,6 +36,10 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 
 abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
@@ -827,26 +832,35 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
                 hourMinuteSecond.getHour(), hourMinuteSecond.getMinuteOfHour(), hourMinuteSecond.getSecondOfMinute(), 0);
     }
 
+    /* If registration is null, get all events generically for evaluation not contextualized to a particular student.*/
     protected List<EventBean> getAllEvents(String description, Registration registration, String scheme, String serverName,
             int serverPort) {
         List<EventBean> result = new ArrayList<EventBean>();
         String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort);
 
         String courseName = "";
+        Collection<ExecutionCourse> associatedCourses;
         ExecutionCourse executionCourse = null;
-        if (this.getAttendingExecutionCoursesFor(registration).size() > 1) {
-            Iterator<ExecutionCourse> it = this.getAttendingExecutionCoursesFor(registration).iterator();
-            for (executionCourse = it.next(); it.hasNext(); executionCourse = it.next()) {
-                if (it.hasNext()) {
-                    courseName += executionCourse.getSigla() + "; ";
-                } else {
-                    courseName += executionCourse.getSigla();
-                }
-            }
+
+        if (registration == null) {
+            associatedCourses = getAssociatedExecutionCoursesSet();
         } else {
-            courseName = this.getAttendingExecutionCoursesFor(registration).get(0).getNome();
-            executionCourse = this.getAttendingExecutionCoursesFor(registration).get(0);
+            associatedCourses = this.getAttendingExecutionCoursesFor(registration);
         }
+
+        if (associatedCourses.size() > 1) {
+            courseName =
+                    Joiner.on("; ").join(
+                            FluentIterable.from(associatedCourses).transform(new Function<ExecutionCourse, String>() {
+                                public String apply(ExecutionCourse executionCourse) {
+                                    return executionCourse.getSigla();
+                                }
+                            }));
+        } else {
+            courseName = associatedCourses.iterator().next().getNome();
+        }
+
+        executionCourse = associatedCourses.iterator().next();
 
         if (this.getEnrollmentBeginDayDateYearMonthDay() != null) {
             DateTime enrollmentBegin =
@@ -854,16 +868,16 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
             DateTime enrollmentEnd =
                     convertTimes(this.getEnrollmentEndDayDateYearMonthDay(), this.getEnrollmentEndTimeDateHourMinuteSecond());
 
-            result.add(new EventBean("Inicio das inscri��es para " + description + " : " + courseName, enrollmentBegin,
-                    enrollmentBegin.plusHours(1), false, "Sistema F�nix", url + "/privado", null));
+            result.add(new EventBean("Inicio das inscrições para " + description + " : " + courseName, enrollmentBegin,
+                    enrollmentBegin.plusHours(1), false, "Sistema Fénix", url + "/privado", null));
 
-            result.add(new EventBean("Fim das inscri��es para " + description + " : " + courseName, enrollmentEnd.minusHours(1),
-                    enrollmentEnd, false, "Sistema F�nix", url + "/privado", null));
+            result.add(new EventBean("Fim das inscrições para " + description + " : " + courseName, enrollmentEnd.minusHours(1),
+                    enrollmentEnd, false, "Sistema Fénix", url + "/privado", null));
         }
 
         String room = "";
 
-        if (registration.getRoomFor(this) != null) {
+        if (registration != null && registration.getRoomFor(this) != null) {
             room = registration.getRoomFor(this).getName();
         } else {
             for (WrittenEvaluationSpaceOccupation weSpaceOcupation : this.getWrittenEvaluationSpaceOccupations()) {

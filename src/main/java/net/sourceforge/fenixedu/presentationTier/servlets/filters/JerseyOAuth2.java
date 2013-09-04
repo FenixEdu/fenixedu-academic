@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToke
 import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
 import org.apache.amber.oauth2.common.message.OAuthResponse.OAuthErrorResponseBuilder;
+import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.security.UserView;
 
@@ -54,22 +55,30 @@ public class JerseyOAuth2 implements Filter {
     private Boolean checkAccessControl(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
             ServletException {
 
-        final String accessToken = request.getHeader(ACCESS_TOKEN);
+        String accessToken = request.getHeader(ACCESS_TOKEN);
+
+        if (StringUtils.isBlank(accessToken)) {
+            accessToken = request.getParameter(ACCESS_TOKEN);
+        }
 
         try {
             FenixOAuthToken fenixAccessToken = FenixOAuthToken.parse(accessToken);
             AppUserSession appUserSession = fenixAccessToken.getAppUserSession();
 
+            //TODO por isto
+            /*
             if (!appUserSession.matchesAccessToken(accessToken)) {
                 sendError(response, "accessTokenInvalid", "Access Token doesn't match.");
                 return false;
             }
 
+            
             if (!appUserSession.isAccessTokenValid()) {
                 sendError(response, "accessTokenExpired",
                         "The access has expired. Please use the refresh token endpoint to generate a new one.");
                 return false;
             }
+            */
 
             User foundUser = appUserSession.getUser();
             Authenticate as = new Authenticate();

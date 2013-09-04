@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -94,23 +95,72 @@ public class JerseyPublic {
     @Path("about")
     public static String about() {
         JSONObject jsonAbout = new JSONObject();
-        jsonAbout.put("news", "http://www.ist.utl.pt/pt/noticias/rss");
-        jsonAbout.put("events", "http://www.ist.utl.pt/pt/eventos/rss");
+        jsonAbout.put("newsRss", PropertiesManager.getProperty("fenix.api.news.rss.url"));
+        jsonAbout.put("eventsRss", PropertiesManager.getProperty("fenix.api.events.rss.url"));
         return jsonAbout.toJSONString();
     }
 
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("degrees")
-    public static String degrees() {
+    public static String degrees(@QueryParam("year") String year) {
         JSONArray infos = new JSONArray();
+
+        ExecutionYear executionYear = getExecutionYear(year);
         for (Degree degree : Degree.readBolonhaDegrees()) {
             if (degree.isBolonhaMasterOrDegree()) {
-                JSONObject degreeInfo = new JSONObject();
-                degreeInfo.put("id", degree.getExternalId());
-                degreeInfo.put("name", degree.getPresentationName());
-                degreeInfo.put("degreeType", degree.getDegreeTypeName());
-                infos.add(degreeInfo);
+
+                JSONArray teachersArray = new JSONArray();
+                JSONObject degreeSecondaryInfo = new JSONObject();
+                JSONObject degreeCampus = new JSONObject();
+
+                JSONObject degreeMainInfo = new JSONObject();
+
+                degreeMainInfo.put("degreeId", degree.getExternalId());
+                degreeMainInfo.put("degreeName", degree.getPresentationName());
+                degreeMainInfo.put("degreeType", degree.getDegreeTypeName());
+                degreeMainInfo.put("degreeSigla", degree.getSigla());
+                degreeMainInfo.put("degreeTypeName", degree.getDegreeType().getFilteredName());
+
+                for (Campus campus : degree.getCampus(executionYear)) {
+                    degreeCampus.put("degreeCampusName", campus.getName());
+                }
+                degreeMainInfo.put("degreeCampus", degreeCampus);
+
+                DegreeInfo degreeInfo = degree.getDegreeInfoFor(executionYear);
+
+                if (degreeInfo != null) {
+
+                    degreeSecondaryInfo.put("degreeInfoName", mls(degreeInfo.getName()));
+                    degreeSecondaryInfo.put("degreeInfoDescription", mls(degreeInfo.getDescription()));
+                    degreeSecondaryInfo.put("degreeInfoObjectives", mls(degreeInfo.getObjectives()));
+                    degreeSecondaryInfo.put("degreeInfoDesignFor", mls(degreeInfo.getDesignedFor()));
+                    degreeSecondaryInfo.put("degreeInfoRequisites",
+                            mls(degreeInfo.getDegreeInfoCandidacy().getAccessRequisites()));
+                    degreeSecondaryInfo.put("degreeInfoProfissionalExits", mls(degreeInfo.getProfessionalExits()));
+                    degreeSecondaryInfo.put("degreeInfoHistory", mls(degreeInfo.getHistory()));
+                    degreeSecondaryInfo.put("degreeInfoOperationRegime", mls(degreeInfo.getOperationalRegime()));
+                    degreeSecondaryInfo.put("degreeInfoGratuity", mls(degreeInfo.getGratuity()));
+                    degreeSecondaryInfo.put("degreeInfoLinks", mls(degreeInfo.getLinks()));
+                }
+                degreeMainInfo.put("degreeInfo", degreeSecondaryInfo);
+
+                Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYear);
+
+                if (responsibleCoordinatorsTeachers.isEmpty()) {
+                    responsibleCoordinatorsTeachers = degree.getCurrentResponsibleCoordinatorsTeachers();
+                }
+
+                for (Teacher teacher : responsibleCoordinatorsTeachers) {
+                    JSONObject teacherInfo = new JSONObject();
+                    teacherInfo.put("teacherName", teacher.getPerson().getName());
+                    teacherInfo.put("teacherIstId", teacher.getPerson().getIstUsername());
+                    teacherInfo.put("teacherMail", getTeacherPublicMail(teacher));
+                    teacherInfo.put("teacherUrl", getTeacherPublicWebAddress(teacher));
+                    teachersArray.add(teacherInfo);
+                }
+                degreeMainInfo.put("teachers", teachersArray);
+                infos.add(degreeMainInfo);
             }
         }
         return infos.toJSONString();
@@ -135,8 +185,8 @@ public class JerseyPublic {
         if (degree.isBolonhaMasterOrDegree()) {
             JSONObject degreeMainInfo = new JSONObject();
 
-            degreeMainInfo.put("id", degree.getExternalId());
-            degreeMainInfo.put("name", degree.getPresentationName());
+            degreeMainInfo.put("degreeId", degree.getExternalId());
+            degreeMainInfo.put("degreeName", degree.getPresentationName());
             degreeMainInfo.put("degreeType", degree.getDegreeTypeName());
             degreeMainInfo.put("degreeSigla", degree.getSigla());
 
@@ -145,18 +195,19 @@ public class JerseyPublic {
             if (degreeInfo != null) {
                 JSONObject degreeSecondaryInfo = new JSONObject();
 
-                degreeSecondaryInfo.put("name", degreeInfo.getName());
-                degreeSecondaryInfo.put("description", mls(degreeInfo.getDescription()));
-                degreeSecondaryInfo.put("objectives", mls(degreeInfo.getObjectives()));
-                degreeSecondaryInfo.put("designfor", mls(degreeInfo.getDesignedFor()));
-                degreeSecondaryInfo.put("requisites", mls(degreeInfo.getDegreeInfoCandidacy().getAccessRequisites()));
-                degreeSecondaryInfo.put("profissionalExits", mls(degreeInfo.getProfessionalExits()));
-                degreeSecondaryInfo.put("history", mls(degreeInfo.getHistory()));
-                degreeSecondaryInfo.put("operationRegime", mls(degreeInfo.getOperationalRegime()));
-                degreeSecondaryInfo.put("gratuity", mls(degreeInfo.getGratuity()));
-                degreeSecondaryInfo.put("secundaryInfo", degreeSecondaryInfo);
+                degreeSecondaryInfo.put("degreeInfoName", mls(degreeInfo.getName()));
+                degreeSecondaryInfo.put("degreeInfoDescription", mls(degreeInfo.getDescription()));
+                degreeSecondaryInfo.put("degreeInfoObjectives", mls(degreeInfo.getObjectives()));
+                degreeSecondaryInfo.put("degreeInfoDesignFor", mls(degreeInfo.getDesignedFor()));
+                degreeSecondaryInfo.put("degreeInfoRequisites", mls(degreeInfo.getDegreeInfoCandidacy().getAccessRequisites()));
+                degreeSecondaryInfo.put("degreeInfoProfissionalExits", mls(degreeInfo.getProfessionalExits()));
+                degreeSecondaryInfo.put("degreeInfoHistory", mls(degreeInfo.getHistory()));
+                degreeSecondaryInfo.put("degreeInfoOperationRegime", mls(degreeInfo.getOperationalRegime()));
+                degreeSecondaryInfo.put("degreeInfoGratuity", mls(degreeInfo.getGratuity()));
+                degreeSecondaryInfo.put("degreeInfoLinks", mls(degreeInfo.getLinks()));
+                degreeMainInfo.put("degreeInfoSecundary", degreeSecondaryInfo);
             }
-            jsonResult.put("degreeSecondaryInfo", degreeMainInfo);
+            jsonResult.put("degreeInfo", degreeMainInfo);
 
             Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYear);
             if (responsibleCoordinatorsTeachers.isEmpty()) {
@@ -167,8 +218,8 @@ public class JerseyPublic {
                 JSONObject teacherInfo = new JSONObject();
                 teacherInfo.put("teacherName", teacher.getPerson().getName());
                 teacherInfo.put("teacherIstId", teacher.getPerson().getIstUsername());
-                teacherInfo.put("mail", getTeacherPublicMail(teacher));
-                teacherInfo.put("url", getTeacherPublicWebAddress(teacher));
+                teacherInfo.put("teacherMail", getTeacherPublicMail(teacher));
+                teacherInfo.put("teacherUrl", getTeacherPublicWebAddress(teacher));
                 teachersArray.add(teacherInfo);
             }
             jsonResult.put("teachers", teachersArray);
@@ -182,7 +233,7 @@ public class JerseyPublic {
             for (EmailAddress emailAddress : teacher.getPerson().getEmailAddresses()) {
                 if (emailAddress.getVisibleToPublic()) {
                     JSONObject mailObj = new JSONObject();
-                    mailObj.put("url", emailAddress.getPresentationValue());
+                    mailObj.put("mail", emailAddress.getPresentationValue());
                     mailArray.add(mailObj);
                 }
             }
@@ -226,10 +277,10 @@ public class JerseyPublic {
             for (ExecutionCourseView executionCourseView : executionCourses) {
                 ExecutionCourse ec = executionCourseView.getExecutionCourse();
                 JSONObject degreeInfo = new JSONObject();
-                degreeInfo.put("acronym", ec.getSigla());
-                degreeInfo.put("credits", getCredits(ec, degree));
-                degreeInfo.put("name", ec.getName());
-                degreeInfo.put("id", ec.getExternalId());
+                degreeInfo.put("courseAcronym", ec.getSigla());
+                degreeInfo.put("courseCredits", getCredits(ec, degree));
+                degreeInfo.put("courseName", ec.getName());
+                degreeInfo.put("courseId", ec.getExternalId());
                 degreeInfo.put("year", ec.getExecutionYear().getName());
                 degreeInfo.put("semester", ec.getExecutionPeriod().getName());
                 jsonResult.add(degreeInfo);
@@ -272,9 +323,9 @@ public class JerseyPublic {
     public static String coursesByOid(@PathParam("oid") String oid) {
         JSONObject jsonResult = new JSONObject();
         ExecutionCourse executionCourse = getDomainObject(oid);
-        jsonResult.put("acronym", executionCourse.getSigla());
-        jsonResult.put("name", executionCourse.getName());
-        jsonResult.put("evaluation", executionCourse.getEvaluationMethodText());
+        jsonResult.put("courseAcronym", executionCourse.getSigla());
+        jsonResult.put("courseName", executionCourse.getName());
+        jsonResult.put("courseEvaluation", executionCourse.getEvaluationMethodText());
         jsonResult.put("year", executionCourse.getExecutionYear().getName());
         jsonResult.put("semester", executionCourse.getExecutionPeriod().getName());
 
@@ -285,8 +336,7 @@ public class JerseyPublic {
         for (Map.Entry<CompetenceCourse, Set<CurricularCourse>> entry : curricularCourses.entrySet()) {
             JSONObject jsonCompetence = new JSONObject();
 
-            jsonCompetence.put("name", entry.getKey().getName());
-            jsonCompetence.put("program", entry.getKey().getProgram());
+            jsonCompetence.put("courseProgram", entry.getKey().getProgram());
 
             JSONArray jsonBiblio = new JSONArray();
             for (BibliographicReference bibliographicReference : entry.getKey().getBibliographicReferences()
@@ -306,8 +356,9 @@ public class JerseyPublic {
             JSONArray jsonDegreesArray = new JSONArray();
             for (CurricularCourse curricularCourse : entry.getValue()) {
                 JSONObject jsonDegreesInfo = new JSONObject();
-                jsonDegreesInfo.put("name", curricularCourse.getDegree().getPresentationName());
-                jsonDegreesInfo.put("acronym", curricularCourse.getAcronym());
+                jsonDegreesInfo.put("degreeId", curricularCourse.getDegree().getExternalId());
+                jsonDegreesInfo.put("degreeName", curricularCourse.getDegree().getPresentationName());
+                jsonDegreesInfo.put("degreeAcronym", curricularCourse.getAcronym());
                 jsonDegreesArray.add(jsonDegreesInfo);
             }
             jsonCompetence.put("degrees", jsonDegreesArray);
@@ -316,16 +367,25 @@ public class JerseyPublic {
 
         }
 
-        jsonResult.put("moreInfo", jsonMoreInfo);
-        jsonResult.put("numberOfStudents", executionCourse.getAttendsCount());
+        jsonResult.put("courseMoreInfo", jsonMoreInfo);
+        jsonResult.put("courseNumberOfStudents", executionCourse.getAttendsCount());
+
+        JSONArray teachersArray = new JSONArray();
+        for (Professorship professorship : executionCourse.getProfessorships()) {
+            JSONObject teacherInfo = new JSONObject();
+            teacherInfo.put("teacherName", professorship.getPerson().getName());
+            teacherInfo.put("teacherIstId", professorship.getPerson().getIstUsername());
+            teacherInfo.put("teacherMail", getTeacherPublicMail(professorship.getTeacher()));
+            teacherInfo.put("teacherUrl", getTeacherPublicWebAddress(professorship.getTeacher()));
+            teachersArray.add(teacherInfo);
+        }
+        jsonResult.put("teachers", teachersArray);
 
         //TODO change getIdInternal to ExternalID
-        jsonResult.put(
-                "announcementLink",
-                getServerLink().concat("/external/announcementsRSS.do?announcementBoardId=").concat(
-                        executionCourse.getBoard().getIdInternal().toString()));
+        jsonResult.put("courseAnnouncementLink", getServerLink().concat("/external/announcementsRSS.do?announcementBoardId=")
+                .concat(executionCourse.getBoard().getIdInternal().toString()));
 
-        jsonResult.put("summaryLink",
+        jsonResult.put("courseSummaryLink",
                 getServerLink().concat("/publico/summariesRSS.do?id=").concat(executionCourse.getIdInternal().toString()));
         return jsonResult.toJSONString();
     }
@@ -384,8 +444,8 @@ public class JerseyPublic {
         JSONObject jsonResult = new JSONObject();
         ExecutionCourse executionCourse = getDomainObject(oid);
 
-        jsonResult.put("enrolmentNumber", executionCourse.getTotalEnrolmentStudentNumber());
-        jsonResult.put("name", executionCourse.getName());
+        jsonResult.put("courseEnrolmentNumber", executionCourse.getTotalEnrolmentStudentNumber());
+        jsonResult.put("courseName", executionCourse.getName());
         jsonResult.put("semester", executionCourse.getExecutionYear().getName());
         jsonResult.put("year", executionCourse.getExecutionPeriod().getName());
 
@@ -395,6 +455,7 @@ public class JerseyPublic {
             jsonStudentInfo.put("studentNumber", attends.getRegistration().getNumber());
             jsonStudentInfo.put("studentName", attends.getRegistration().getName());
             jsonStudentInfo.put("studentDegree", attends.getRegistration().getDegreeCurricularPlanName());
+            jsonStudentInfo.put("studentDegreeId", attends.getRegistration().getDegree().getExternalId());
 
             JSONArray jsonEvaluation = new JSONArray();
 
@@ -416,8 +477,7 @@ public class JerseyPublic {
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("courses/{oid}/evaluation")
-    public static String evaluationCoursesByOid(@PathParam("oid") String oid, @QueryParam("sem") String sem,
-            @QueryParam("year") String year) {
+    public static String evaluationCoursesByOid(@PathParam("oid") String oid) {
 
         ExecutionCourse executionCourse = getDomainObject(oid);
         JSONArray jsonEvaluation = new JSONArray();
@@ -485,7 +545,15 @@ public class JerseyPublic {
         jsonEvaluationInfo.put("beginningTime", dataFormatHour.format(writtenEvaluation.getBeginning().getTime()));
         jsonEvaluationInfo.put("endTime", dataFormatHour.format(writtenEvaluation.getEnd().getTime()));
 
-        jsonEvaluationInfo.put("rooms", writtenEvaluation.getAssociatedRoomsAsString());
+        JSONArray jsonRoomArray = new JSONArray();
+        for (AllocatableSpace allocationSpace : writtenEvaluation.getAssociatedRooms()) {
+            JSONObject jsonRoomInfo = new JSONObject();
+            jsonRoomInfo.put("roomId", allocationSpace.getExternalId());
+            jsonRoomInfo.put("roomName", allocationSpace.getSpaceInformation().getPresentationName());
+            jsonRoomInfo.put("roomDescription", allocationSpace.getCompleteIdentification());
+            jsonRoomArray.add(jsonRoomInfo);
+        }
+        jsonEvaluationInfo.put("rooms", jsonRoomArray);
 
         jsonEvaluationInfo.put("isEnrolmentPeriod", writtenEvaluation.getIsInEnrolmentPeriod());
 
@@ -587,6 +655,8 @@ public class JerseyPublic {
             Building building = (Building) resource;
             jsonResult.put("name", building.getNameWithCampus());
             jsonResult.put("campus", building.getSpaceCampus().getName());
+            jsonResult.put("campusId", building.getSpaceCampus().getExternalId());
+
             jsonResult.put("id", building.getExternalId());
             jsonResult.put("type", "building");
             jsonResult.put("moreInfo", getBuildingInfo(building));
@@ -595,7 +665,9 @@ public class JerseyPublic {
             Floor floor = (Floor) resource;
             jsonResult.put("id", floor.getExternalId());
             jsonResult.put("building", floor.getSpaceBuilding().getSpaceInformation().getPresentationName());
+            jsonResult.put("buildingId", floor.getSpaceBuilding().getExternalId());
             jsonResult.put("campus", floor.getSpaceCampus().getSpaceInformation().getPresentationName());
+            jsonResult.put("campusId", floor.getSpaceCampus().getExternalId());
             jsonResult.put("floor", floor.getSpaceFloor().getSpaceInformation().getPresentationName());
             jsonResult.put("moreInfo", getFloorInfo(floor));
         } else if (resource.isRoom()) {
@@ -604,8 +676,12 @@ public class JerseyPublic {
             jsonResult.put("name", room.getSpaceInformation().getPresentationName());
             jsonResult.put("description", room.getSpaceInformation().getDescription());
             jsonResult.put("building", room.getSpaceBuilding().getSpaceInformation().getPresentationName());
+            jsonResult.put("buildingId", room.getSpaceBuilding().getExternalId());
             jsonResult.put("campus", room.getSpaceCampus().getSpaceInformation().getPresentationName());
+            jsonResult.put("campusId", room.getSpaceCampus().getExternalId());
             jsonResult.put("floor", room.getSpaceFloor().getSpaceInformation().getPresentationName());
+            jsonResult.put("floorId", room.getSpaceFloor().getExternalId());
+
             jsonResult.put("normalCapacity", room.getNormalCapacity());
             jsonResult.put("examCapacity", room.getExamCapacity());
             jsonResult.put("moreInfo", getRoomInfo(room, getRoomDay(day)));
@@ -655,8 +731,8 @@ public class JerseyPublic {
 
         for (Space space : floor.getContainedSpaces()) {
             JSONObject jsonBuildingInfo = new JSONObject();
-            jsonBuildingInfo.put("spaceId", space.getExternalId());
-            jsonBuildingInfo.put("spaceName", space.getSpaceInformation().getPresentationName());
+            jsonBuildingInfo.put("roomId", space.getExternalId());
+            jsonBuildingInfo.put("roomName", space.getSpaceInformation().getPresentationName());
             jsonResultRooms.add(jsonBuildingInfo);
         }
         jsonResult.put("rooms", jsonResultRooms);
@@ -682,7 +758,9 @@ public class JerseyPublic {
                 if (showOccupation instanceof InfoLesson) {
                     InfoLesson lesson = (InfoLesson) showOccupation;
                     InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-                    jsonOccupationInfo.put("sigla", infoExecutionCourse.getSigla());
+                    jsonOccupationInfo.put("courseSigla", infoExecutionCourse.getSigla());
+                    jsonOccupationInfo.put("courseName", infoExecutionCourse.getNome());
+                    jsonOccupationInfo.put("courseId", infoExecutionCourse.getExecutionCourse().getExternalId());
 
                     jsonOccupationInfo.put("start", dataFormatHour.format(lesson.getInicio().getTime()));
                     jsonOccupationInfo.put("end", dataFormatHour.format(lesson.getFim().getTime()));
@@ -694,7 +772,9 @@ public class JerseyPublic {
                 } else if (showOccupation instanceof InfoLessonInstance) {
                     InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
                     InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-                    jsonOccupationInfo.put("sigla", infoExecutionCourse.getSigla());
+                    jsonOccupationInfo.put("courseSigla", infoExecutionCourse.getSigla());
+                    jsonOccupationInfo.put("courseName", infoExecutionCourse.getNome());
+                    jsonOccupationInfo.put("courseId", infoExecutionCourse.getExecutionCourse().getExternalId());
 
                     jsonOccupationInfo.put("start", dataFormatHour.format(lesson.getInicio().getTime()));
                     jsonOccupationInfo.put("end", dataFormatHour.format(lesson.getFim().getTime()));
@@ -710,6 +790,8 @@ public class JerseyPublic {
                         InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
                         JSONObject jsonSigla = new JSONObject();
                         jsonSigla.put("sigla", infoEC.getSigla());
+                        jsonSigla.put("courseName", infoEC.getNome());
+                        jsonSigla.put("courseId", infoEC.getExecutionCourse().getExternalId());
                         jsonSiglaArr.add(jsonSigla);
                     }
                     jsonOccupationInfo.put("siglaList", jsonSiglaArr);
@@ -728,6 +810,8 @@ public class JerseyPublic {
                         InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
                         JSONObject jsonSigla = new JSONObject();
                         jsonSigla.put("sigla", infoEC.getSigla());
+                        jsonSigla.put("courseName", infoEC.getNome());
+                        jsonSigla.put("courseId", infoEC.getExecutionCourse().getExternalId());
                         jsonSiglaArr.add(jsonSigla);
                     }
                     jsonOccupationInfo.put("siglaList", jsonSiglaArr);
