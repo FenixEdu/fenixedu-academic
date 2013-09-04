@@ -3,15 +3,9 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
@@ -217,17 +211,7 @@ public class PersonInformationDTO {
     }
 
     private byte[] getJpegPhoto(final Photograph personalPhoto) {
-        if (personalPhoto.getContentType() != net.sourceforge.fenixedu.util.ContentType.JPG) {
-            try {
-                final BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(personalPhoto.getContents()));
-                final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "jpg", byteArrayOutputStream);
-                return byteArrayOutputStream.toByteArray();
-            } catch (IOException e) {
-                return null;
-            }
-        }
-        return personalPhoto.getContents();
+        return personalPhoto.getAvatar().exportAsJPEG();
     }
 
     public String getName() {

@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
+import net.sourceforge.fenixedu.domain.photograph.PictureAvatar;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -187,9 +188,10 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             Photograph personalPhoto = person.getPersonalPhoto();
             if (personalPhoto != null) {
                 try {
-                    response.setContentType(personalPhoto.getContentType().getMimeType());
+                    PictureAvatar avatar = personalPhoto.getAvatar();
+                    response.setContentType(avatar.getPictureFileFormat().getMimeType());
                     DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-                    dos.write(personalPhoto.getContents());
+                    dos.write(avatar.getBytes());
                     dos.close();
                 } catch (java.io.IOException e) {
                     throw new FenixActionException(e);

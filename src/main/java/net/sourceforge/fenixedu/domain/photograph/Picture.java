@@ -22,6 +22,10 @@ public abstract class Picture extends Picture_Base {
         super();
     }
 
+    public void delete() {
+        super.deleteDomainObject();
+    }
+
     public byte[] getBytes() {
         return getPictureData().getBytes();
     }
@@ -52,19 +56,19 @@ public abstract class Picture extends Picture_Base {
     }
 
     /**
-     * Executes an {@link AspectRatio} transformation. Note that it uses an RGBA color space
-     * making the resulting image not suitable to be rendered as a JPEG. Before rendering as JPEG
-     * apply a filler on the background.
+     * Executes an {@link AspectRatio} transformation by fitting the image to the new aspect ratio.
+     * Note that it uses an RGBA color space making the resulting image not suitable to be rendered
+     * as a JPEG. Before rendering as JPEG apply a filler on the background.
      * 
      * @param source
      * @param xRatio
      * @param yRatio
      * @return {@link BufferedImage}
      */
-    static public BufferedImage transform(BufferedImage source, int xRatio, int yRatio) {
+    static public BufferedImage transformFit(BufferedImage source, int xRatio, int yRatio) {
         int destW, destH;
         BufferedImage scaled, padded, finale;
-        if (source.getHeight() > source.getWidth()) {
+        if ((source.getWidth() / source.getHeight()) < (xRatio / yRatio)) {
             destH = source.getHeight();
             destW = (int) Math.round((destH * xRatio * 1.0) / (yRatio * 1.0));
             scaled = Scalr.resize(source, Method.QUALITY, Mode.FIT_TO_HEIGHT, destW, destH);
@@ -78,14 +82,54 @@ public abstract class Picture extends Picture_Base {
             scaled = Scalr.resize(source, Method.QUALITY, Mode.FIT_TO_WIDTH, destW, destH);
 
             int padding = (int) Math.round((destH - source.getHeight()) / 2.0);
-            padded = Scalr.pad(scaled, padding, new Color(255, 255, 255, 0));
+            padded = (padding != 0) ? Scalr.pad(scaled, padding, new Color(255, 255, 255, 0)) : scaled; //Scalr.pad() instead of ignoring padding = 0, it throws an Exception
             finale = Scalr.crop(padded, padding, 0, destW, destH);
         }
         return finale;
     }
 
-    static public BufferedImage transform(BufferedImage source, AspectRatio aspectRatio) {
-        return Picture.transform(source, aspectRatio.getXRatio(), aspectRatio.getYRatio());
+    /**
+     * Executes an {@link AspectRatio} transformation by zooming the image into the new aspect ratio.
+     * Note that it uses an RGBA color space making the resulting image not suitable to be rendered
+     * as a JPEG. Before rendering as JPEG apply a filler on the background.
+     * 
+     * @param source
+     * @param xRatio
+     * @param yRatio
+     * @return {@link BufferedImage}
+     */
+    static public BufferedImage transformZoom(BufferedImage source, int xRatio, int yRatio) {
+        int destW, destH;
+        BufferedImage scaled, finale;
+        if ((source.getWidth() / source.getHeight()) > (xRatio / yRatio)) {
+            destH = source.getHeight();
+            destW = (int) Math.round((destH * xRatio * 1.0) / (yRatio * 1.0));
+            scaled = Scalr.resize(source, Method.QUALITY, Mode.FIT_TO_WIDTH, destW, destH);
+
+            int padding = (int) Math.round((destW - source.getWidth()) / 2.0);
+            destW -= padding * 2;
+            finale = Scalr.crop(scaled, padding, 0, destW, destH);
+        } else {
+            destW = source.getWidth();
+            destH = (int) Math.round((destW * xRatio * 1.0) / (yRatio * 1.0));
+            scaled = Scalr.resize(source, Method.QUALITY, Mode.FIT_TO_HEIGHT, destW, destH);
+
+            int padding = (int) Math.round((destH - source.getHeight()) / 2.0);
+            destH -= padding * 2;
+            finale = Scalr.crop(scaled, 0, padding, destW, destH);
+        }
+        return finale;
+    }
+
+    static public BufferedImage transform(BufferedImage source, AspectRatio aspectRatio, PictureMode pictureMode) {
+        switch (pictureMode) {
+        case FIT:
+            return Picture.transformFit(source, aspectRatio.getXRatio(), aspectRatio.getYRatio());
+        case ZOOM:
+            return Picture.transformZoom(source, aspectRatio.getXRatio(), aspectRatio.getYRatio());
+        default:
+            return Picture.transformFit(source, aspectRatio.getXRatio(), aspectRatio.getYRatio());
+        }
     }
 
     static public BufferedImage fitTo(BufferedImage source, int width, int height) {

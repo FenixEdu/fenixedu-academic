@@ -46,6 +46,7 @@ enum net.sourceforge.fenixedu.domain.PhotoState                                 
 enum net.sourceforge.fenixedu.domain.PhotoType                                                                            as PhotoType;
 enum net.sourceforge.fenixedu.domain.PhotographContentSize                                                                as PhotographContentSize;
 enum net.sourceforge.fenixedu.domain.photograph.AspectRatio																  as AspectRatio;
+enum net.sourceforge.fenixedu.domain.photograph.PictureMode																  as PictureMode;
 enum net.sourceforge.fenixedu.domain.photograph.PictureSize																  as PictureSize;
 enum net.sourceforge.fenixedu.domain.PrescriptionEnum                                                                     as PrescriptionEnum;
 enum net.sourceforge.fenixedu.domain.ProfessionType                                                                       as ProfessionType;
@@ -1293,6 +1294,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class photograph.PictureAvatar extends photograph.Picture {
     	AspectRatio aspectRatio;
     	PictureSize pictureSize;
+    	PictureMode pictureMode;
     }
 
     class File  {

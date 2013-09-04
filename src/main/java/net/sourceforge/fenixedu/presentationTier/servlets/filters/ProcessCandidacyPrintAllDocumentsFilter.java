@@ -301,7 +301,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             map.put("fullName", person.getName());
 
             try {
-                map.put("photo", new ByteArrayInputStream(person.getPersonalPhotoEvenIfPending().getContents()));
+                map.put("photo", new ByteArrayInputStream(person.getPersonalPhotoEvenIfPending().getAvatar().getBytes()));
             } catch (Exception e) {
                 // nothing; print everything else
             }

@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.photograph.AspectRatio;
 import net.sourceforge.fenixedu.domain.photograph.Picture;
 import net.sourceforge.fenixedu.domain.photograph.PictureAvatar;
+import net.sourceforge.fenixedu.domain.photograph.PictureMode;
 import net.sourceforge.fenixedu.domain.photograph.PictureOriginal;
 import net.sourceforge.fenixedu.domain.photograph.PictureSize;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -79,6 +80,11 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         setPhotoType(photoType);
         new PictureOriginal(this, original, contentType);
         PictureAvatar.createAvatars(this, original);
+    }
+
+    @Override
+    public ContentType getContentType() {
+        throw new DomainException("error.photograph.illegalCall");
     }
 
     @Override
@@ -193,29 +199,44 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         super.deleteDomainObject();
     }
 
-    public PictureAvatar getAvatar(AspectRatio aspectRatio, PictureSize pictureSize) {
+    public PictureAvatar getAvatar(AspectRatio aspectRatio, PictureSize pictureSize, PictureMode pictureMode) {
         for (PictureAvatar avatar : getAvatars()) {
-            if (avatar.getAspectRatio() == aspectRatio && avatar.getPictureSize() == pictureSize) {
+            if (avatar.getAspectRatio() == aspectRatio && avatar.getPictureSize() == pictureSize
+                    && avatar.getPictureMode() == pictureMode) {
                 return avatar;
             }
         }
         throw new DomainException("error.photograph.avatarMissing");
     }
 
-    public byte[] getCustomAvatar(int xRatio, int yRatio, int width, int height) {
+    public PictureAvatar getAvatar() {
+        return getAvatar(AspectRatio.ª1_by_1, PictureSize.MEDIUM, PictureMode.FIT);
+    }
+
+    public byte[] getCustomAvatar(int xRatio, int yRatio, int width, int height, PictureMode pictureMode) {
         BufferedImage image, transformed, scaled;
         image = Picture.readImage(getOriginal().getPictureData());
-        transformed = Picture.transform(image, xRatio, yRatio);
+        switch (pictureMode) {
+        case FIT:
+            transformed = Picture.transformFit(image, xRatio, yRatio);
+            break;
+        case ZOOM:
+            transformed = Picture.transformZoom(image, xRatio, yRatio);
+            break;
+        default:
+            transformed = Picture.transformFit(image, xRatio, yRatio);
+            break;
+        }
         scaled = Picture.fitTo(transformed, width, height);
         return Picture.writeImage(scaled, getOriginal().getPictureFileFormat()).getBytes();
     }
 
-    public byte[] getCustomAvatar(AspectRatio aspectRatio, int width, int height) {
-        return getCustomAvatar(aspectRatio.getXRatio(), aspectRatio.getYRatio(), width, height);
+    public byte[] getCustomAvatar(AspectRatio aspectRatio, int width, int height, PictureMode pictureMode) {
+        return getCustomAvatar(aspectRatio.getXRatio(), aspectRatio.getYRatio(), width, height, pictureMode);
     }
 
-    public byte[] getCustomAvatar(int width, int height) {
-        return getCustomAvatar(width, height, width, height);
+    public byte[] getCustomAvatar(int width, int height, PictureMode pictureMode) {
+        return getCustomAvatar(width, height, width, height, pictureMode);
     }
 
     @Deprecated

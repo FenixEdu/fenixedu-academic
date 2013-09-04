@@ -14,12 +14,13 @@ public class PictureAvatar extends PictureAvatar_Base {
         super();
     }
 
-    private PictureAvatar(Photograph photograph, AspectRatio aspectRatio, PictureSize pictureSize, ByteArray pictureData,
-            int width, int height, ContentType pictureFileFormat) {
+    private PictureAvatar(Photograph photograph, AspectRatio aspectRatio, PictureSize pictureSize, PictureMode pictureMode,
+            ByteArray pictureData, int width, int height, ContentType pictureFileFormat) {
         this();
         setPhotograph(photograph);
         setAspectRatio(aspectRatio);
         setPictureSize(pictureSize);
+        setPictureMode(pictureMode);
         setPictureData(pictureData);
         setWidth(width);
         setHeight(height);
@@ -30,27 +31,39 @@ public class PictureAvatar extends PictureAvatar_Base {
         return getPhotograph().getRootDomainObject();
     }
 
-    public byte[] exportAsJPEG() {
+    public byte[] exportAsJPEG(Color color) {
         if (getPictureFileFormat() == ContentType.JPG) {
             return getPictureData().getBytes();
         }
         BufferedImage image = Picture.readImage(getPictureData());
         BufferedImage jpeg = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-        jpeg.createGraphics().drawImage(image, 0, 0, Color.BLACK, null);
+        jpeg.createGraphics().drawImage(image, 0, 0, color, null);
         return Picture.writeImage(jpeg, ContentType.JPG).getBytes();
+    }
+
+    public byte[] exportAsJPEG() {
+        return exportAsJPEG(Color.WHITE);
     }
 
     static public void createAvatars(Photograph photograph, ByteArray original) {
         BufferedImage image = Picture.readImage(original);
-        for (AspectRatio aspectRatio : AspectRatio.values()) {
-            BufferedImage adjustedImage = Picture.transform(image, aspectRatio);
-            for (PictureSize pictureSize : PictureSize.values()) {
-                BufferedImage avatar = Picture.fitTo(adjustedImage, pictureSize);
-                new PictureAvatar(photograph, aspectRatio, pictureSize, Picture.writeImage(avatar, ContentType.PNG),
-                        avatar.getWidth(), avatar.getHeight(), ContentType.PNG);
-            }
+        for (PictureMode pictureMode : PictureMode.values()) {
+            for (AspectRatio aspectRatio : AspectRatio.values()) {
+                BufferedImage adjustedImage = Picture.transform(image, aspectRatio, pictureMode);
+                for (PictureSize pictureSize : PictureSize.values()) {
+                    BufferedImage avatar = Picture.fitTo(adjustedImage, pictureSize);
+                    new PictureAvatar(photograph, aspectRatio, pictureSize, pictureMode, Picture.writeImage(avatar,
+                            ContentType.PNG), avatar.getWidth(), avatar.getHeight(), ContentType.PNG);
+                }
 
+            }
         }
+    }
+
+    @Override
+    public void delete() {
+        removePhotograph();
+        super.delete();
     }
 
 }
