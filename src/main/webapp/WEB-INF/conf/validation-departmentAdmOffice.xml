@@ -173,16 +173,16 @@
    		</form>
 		<!-- ================================================================ -->    	   								
     	<form name="teacherExecutionCourseForm">
-			<field property="executionPeriodId" depends="required,integer" page="1">
-				<msg name="integer" key="errors.required"/>
+			<field property="executionPeriodId" depends="required, string" page="1">
+				<msg name="string" key="errors.required"/>
 				<arg0 key="label.property.executionPeriod" />
 			</field>
-			<field property="executionDegreeId" depends="required,integer" page="2">
-				<msg name="integer" key="errors.required"/>
+			<field property="executionDegreeId" depends="required, string" page="2">
+				<msg name="string" key="errors.required"/>
 				<arg0 key="label.property.executionDegree" />
 			</field>
-			<field property="executionCourseId" depends="required,integer" page="3">
-				<msg name="integer" key="errors.required"/>
+			<field property="executionCourseId" depends="required, string" page="3">
+				<msg name="string" key="errors.required"/>
 				<arg0 key="label.property.executionCourse" />
 			</field>
     	</form>
