@@ -28,7 +28,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteStudentGroupMembers {
 
-    protected Boolean run(String executionCourseID, String studentGroupID, Integer groupPropertiesID, List studentUsernames)
+    protected Boolean run(String executionCourseID, String studentGroupID, String groupPropertiesID, List studentUsernames)
             throws FenixServiceException {
 
         final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupID);
@@ -77,8 +77,8 @@ public class DeleteStudentGroupMembers {
     private static final DeleteStudentGroupMembers serviceInstance = new DeleteStudentGroupMembers();
 
     @Service
-    public static Boolean runDeleteStudentGroupMembers(String executionCourseID, String studentGroupID,
-            Integer groupPropertiesID, List studentUsernames) throws FenixServiceException, NotAuthorizedException {
+    public static Boolean runDeleteStudentGroupMembers(String executionCourseID, String studentGroupID, String groupPropertiesID,
+            List studentUsernames) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID, studentGroupID, groupPropertiesID, studentUsernames);
     }

@@ -21,8 +21,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertStudentGroupMembers {
 
-    protected Boolean run(String executionCourseID, String studentGroupID, Integer groupPropertiesID,
-            List<String> studentUsernames) throws FenixServiceException {
+    protected Boolean run(String executionCourseID, String studentGroupID, String groupPropertiesID, List<String> studentUsernames)
+            throws FenixServiceException {
 
         final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupID);
         if (studentGroup == null) {
@@ -71,8 +71,8 @@ public class InsertStudentGroupMembers {
     private static final InsertStudentGroupMembers serviceInstance = new InsertStudentGroupMembers();
 
     @Service
-    public static Boolean runInsertStudentGroupMembers(String executionCourseID, String studentGroupID,
-            Integer groupPropertiesID, List<String> studentUsernames) throws FenixServiceException, NotAuthorizedException {
+    public static Boolean runInsertStudentGroupMembers(String executionCourseID, String studentGroupID, String groupPropertiesID,
+            List<String> studentUsernames) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID, studentGroupID, groupPropertiesID, studentUsernames);
     }

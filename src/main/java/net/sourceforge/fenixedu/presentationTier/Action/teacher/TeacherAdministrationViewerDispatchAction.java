@@ -952,9 +952,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             error = new ActionError("error.noGroup");
             actionErrors.add("error.noGroup", error);
             saveErrors(request, actionErrors);
-            if (shiftCodeString != null) {
-                Integer shiftCode = new Integer(shiftCodeString);
-                request.setAttribute("shiftCode", shiftCode);
+            if (!StringUtils.isEmpty(shiftCodeString)) {
+                request.setAttribute("shiftCode", shiftCodeString);
             }
             return viewShiftsAndGroups(mapping, form, request, response);
         } catch (InvalidArgumentsServiceException e) {
@@ -1397,9 +1396,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
         if (infoGroupProperties == null) {
             String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-            Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
             ISiteComponent viewGroupProperties = new InfoSiteGrouping();
-            SiteView siteView = readSiteView(request, viewGroupProperties, null, groupPropertiesCode, null);
+            SiteView siteView = readSiteView(request, viewGroupProperties, null, groupPropertiesCodeString, null);
             infoGroupProperties = ((InfoSiteGrouping) siteView.getComponent()).getInfoGrouping();
         }
         return infoGroupProperties;
@@ -1977,12 +1975,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String shiftCodeString = request.getParameter("shiftCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-        Integer shiftCode = new Integer(shiftCodeString);
         ISiteComponent viewShifts = new InfoSiteShifts();
         TeacherAdministrationSiteView shiftsView =
-                (TeacherAdministrationSiteView) readSiteView(request, viewShifts, null, groupPropertiesCode, studentGroupCode);
+                (TeacherAdministrationSiteView) readSiteView(request, viewShifts, null, groupPropertiesCodeString,
+                        studentGroupCodeString);
         if (((InfoSiteShifts) shiftsView.getComponent()) == null) {
             ActionErrors actionErrors = new ActionErrors();
             ActionError error = null;
@@ -2026,7 +2022,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             }
             request.setAttribute("shiftsList", shiftsList);
         }
-        if (shiftCode != null) {
+        if (!StringUtils.isEmpty(shiftCodeString)) {
             request.setAttribute("shift", oldInfoShift);
         }
         return mapping.findForward("editStudentGroupShift");
@@ -2101,12 +2097,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-
         ISiteComponent viewShifts = new InfoSiteShifts();
         TeacherAdministrationSiteView shiftsView =
-                (TeacherAdministrationSiteView) readSiteView(request, viewShifts, null, groupPropertiesCode, studentGroupCode);
+                (TeacherAdministrationSiteView) readSiteView(request, viewShifts, null, groupPropertiesCodeString,
+                        studentGroupCodeString);
         if (((InfoSiteShifts) shiftsView.getComponent()) == null) {
             ActionErrors actionErrors = new ActionErrors();
             ActionError error = null;
@@ -2287,14 +2281,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward prepareEditStudentGroupsShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupProperties = new Integer(groupPropertiesCodeString);
         String shiftCodeString = request.getParameter("shiftCode");
-        Integer shiftCode = new Integer(shiftCodeString);
 
         ISiteComponent infoSiteStudentGroupAndStudents = new InfoSiteStudentGroupAndStudents();
         TeacherAdministrationSiteView siteView =
-                (TeacherAdministrationSiteView) readSiteView(request, infoSiteStudentGroupAndStudents, null, groupProperties,
-                        shiftCode);
+                (TeacherAdministrationSiteView) readSiteView(request, infoSiteStudentGroupAndStudents, null,
+                        groupPropertiesCodeString, shiftCodeString);
 
         InfoSiteStudentGroupAndStudents component = (InfoSiteStudentGroupAndStudents) siteView.getComponent();
 
@@ -2375,12 +2367,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String objectCode = getObjectCode(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
         DynaActionForm insertStudentGroupForm = (DynaActionForm) form;
         List<String> studentUsernames = Arrays.asList((String[]) insertStudentGroupForm.get("studentsToInsert"));
 
         try {
-            InsertStudentGroupMembers.runInsertStudentGroupMembers(objectCode, studentGroupCodeString, groupPropertiesCode,
+            InsertStudentGroupMembers.runInsertStudentGroupMembers(objectCode, studentGroupCodeString, groupPropertiesCodeString,
                     studentUsernames);
         } catch (ExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
@@ -2419,12 +2410,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String objectCode = getObjectCode(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
         DynaActionForm deleteStudentGroupForm = (DynaActionForm) form;
         List studentUsernames = Arrays.asList((String[]) deleteStudentGroupForm.get("studentsToRemove"));
 
         try {
-            DeleteStudentGroupMembers.runDeleteStudentGroupMembers(objectCode, studentGroupCodeString, groupPropertiesCode,
+            DeleteStudentGroupMembers.runDeleteStudentGroupMembers(objectCode, studentGroupCodeString, groupPropertiesCodeString,
                     studentUsernames);
         } catch (ExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
