@@ -66,11 +66,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 
         String shiftCodeString = request.getParameter("shiftCode");
 
-        Integer shiftCode = null;
-        if (shiftCodeString != null) {
-            shiftCode = new Integer(shiftCodeString);
-        }
-
         try {
 
             VerifyStudentGroupAtributes.run(groupPropertiesCodeString, shiftCodeString, null, userView.getUtilizador(),
@@ -142,7 +137,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
         }
         request.setAttribute("groupNumber", studentsNotEnroled.getGroupNumber());
         request.setAttribute("groupPropertiesCode", groupPropertiesCodeString);
-        request.setAttribute("shiftCode", shiftCode);
+        request.setAttribute("shiftCode", shiftCodeString);
         request.setAttribute("infoUserStudent", studentsNotEnroled.getInfoUserStudent());
         request.setAttribute("infoGrouping", studentsNotEnroled.getInfoGrouping());
 
