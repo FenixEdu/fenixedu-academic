@@ -45,3 +45,4 @@ function executeWithTempFile() {
 
 
 execute "Update santander stuff." updates.sql
+execute "Creating PICTURE table." updatePhotograph.sql
