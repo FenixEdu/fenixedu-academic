@@ -20754,3 +20754,10 @@ relation SantanderEntrySantanderPhotoEntry {
 	cardGeneration.SantanderPhotoEntry playsRole previous;
 	cardGeneration.SantanderPhotoEntry playsRole next;
 }
+
+relation PhotographSantanderPhotoEntry {
+	Photograph playsRole photograph; 
+	cardGeneration.SantanderPhotoEntry playsRole santanderPhotoEntry {
+		multiplicity *;
+	}
+}
