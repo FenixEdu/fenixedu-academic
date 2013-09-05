@@ -60,6 +60,15 @@ public class PictureAvatar extends PictureAvatar_Base {
         }
     }
 
+    static public void createAvatar(Photograph photograph, ByteArray original, PictureMode pictureMode, AspectRatio aspectRatio,
+            PictureSize pictureSize) {
+        BufferedImage image = Picture.readImage(original);
+        BufferedImage adjustedImage = Picture.transform(image, aspectRatio, pictureMode);
+        BufferedImage avatar = Picture.fitTo(adjustedImage, pictureSize);
+        new PictureAvatar(photograph, aspectRatio, pictureSize, pictureMode, Picture.writeImage(avatar, ContentType.PNG),
+                avatar.getWidth(), avatar.getHeight(), ContentType.PNG);
+    }
+
     @Override
     public void delete() {
         removePhotograph();

@@ -68,13 +68,13 @@ public abstract class Picture extends Picture_Base {
     static public BufferedImage transformFit(BufferedImage source, int xRatio, int yRatio) {
         int destW, destH;
         BufferedImage scaled, padded, finale;
-        if ((source.getWidth() / source.getHeight()) < (xRatio / yRatio)) {
+        if ((1.0 * source.getWidth() / source.getHeight()) < (1.0 * xRatio / yRatio)) {
             destH = source.getHeight();
             destW = (int) Math.round((destH * xRatio * 1.0) / (yRatio * 1.0));
             scaled = Scalr.resize(source, Method.QUALITY, Mode.FIT_TO_HEIGHT, destW, destH);
 
             int padding = (int) Math.round((destW - source.getWidth()) / 2.0);
-            padded = Scalr.pad(scaled, padding, new Color(255, 255, 255, 0));
+            padded = (padding != 0) ? Scalr.pad(scaled, padding, new Color(255, 255, 255, 0)) : scaled;
             finale = Scalr.crop(padded, 0, padding, destW, destH);
         } else {
             destW = source.getWidth();
@@ -101,22 +101,20 @@ public abstract class Picture extends Picture_Base {
     static public BufferedImage transformZoom(BufferedImage source, int xRatio, int yRatio) {
         int destW, destH;
         BufferedImage scaled, finale;
-        if ((source.getWidth() / source.getHeight()) > (xRatio / yRatio)) {
+        if ((1.0 * source.getWidth() / source.getHeight()) > (1.0 * xRatio / yRatio)) {
             destH = source.getHeight();
             destW = (int) Math.round((destH * xRatio * 1.0) / (yRatio * 1.0));
-            scaled = Scalr.resize(source, Method.QUALITY, Mode.FIT_TO_WIDTH, destW, destH);
+            //scaled = Scalr.resize(source, Method.QUALITY, Mode.FIT_TO_WIDTH, destW, destH);
 
-            int padding = (int) Math.round((destW - source.getWidth()) / 2.0);
-            destW -= padding * 2;
-            finale = Scalr.crop(scaled, padding, 0, destW, destH);
+            int padding = (int) Math.round((source.getWidth() - destW) / 2.0);
+            finale = Scalr.crop(source, padding, 0, destW, destH);
         } else {
             destW = source.getWidth();
             destH = (int) Math.round((destW * xRatio * 1.0) / (yRatio * 1.0));
-            scaled = Scalr.resize(source, Method.QUALITY, Mode.FIT_TO_HEIGHT, destW, destH);
+            //scaled = Scalr.resize(source, Method.QUALITY, Mode.FIT_TO_HEIGHT, destW, destH);
 
-            int padding = (int) Math.round((destH - source.getHeight()) / 2.0);
-            destH -= padding * 2;
-            finale = Scalr.crop(scaled, 0, padding, destW, destH);
+            int padding = (int) Math.round((source.getHeight() - destH) / 2.0);
+            finale = Scalr.crop(source, 0, padding, destW, destH);
         }
         return finale;
     }

@@ -23,4 +23,10 @@ public class PictureOriginal extends PictureOriginal_Base {
         return getPhotograph().getRootDomainObject();
     }
 
+    @Override
+    public void delete() {
+        removePhotograph();
+        super.delete();
+    }
+
 }

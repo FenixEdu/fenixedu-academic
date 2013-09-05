@@ -83,8 +83,10 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     }
 
     @Override
+    @Deprecated
     public ContentType getContentType() {
-        throw new DomainException("error.photograph.illegalCall");
+        return super.getContentType();
+        //throw new DomainException("error.photograph.illegalCall");
     }
 
     @Override
@@ -211,6 +213,19 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     public PictureAvatar getAvatar() {
         return getAvatar(AspectRatio.ª1_by_1, PictureSize.MEDIUM, PictureMode.FIT);
+    }
+
+    public boolean hasAvatar(AspectRatio aspectRatio, PictureSize pictureSize, PictureMode pictureMode) {
+        try {
+            getAvatar(aspectRatio, pictureSize, pictureMode);
+        } catch (DomainException de) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean hasAvatar() {
+        return hasAvatar(AspectRatio.ª1_by_1, PictureSize.MEDIUM, PictureMode.FIT);
     }
 
     public byte[] getCustomAvatar(int xRatio, int yRatio, int width, int height, PictureMode pictureMode) {
