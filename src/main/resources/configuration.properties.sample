@@ -690,6 +690,10 @@ padding=0.025
 xAxisOffset=0.075
 yAxisOffset=0.3
 
+fenix.api.news.rss.url=http://www.ist.utl.pt/pt/noticias/rss
+fenix.api.events.rss.url=http://www.ist.utl.pt/pt/eventos/rss
+fenix.api.oauth.access.token.timeout.seconds=3600
+
 #
 #
 #
