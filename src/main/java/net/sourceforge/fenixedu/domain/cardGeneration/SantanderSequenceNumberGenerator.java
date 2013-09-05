@@ -11,25 +11,26 @@ public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGen
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setSequenceNumber(0);
+        setPhotoSequenceNumber(0);
     }
 
     private static SantanderSequenceNumberGenerator getInstance() {
-        SantanderSequenceNumberGenerator instance;
-        List<SantanderSequenceNumberGenerator> instances = RootDomainObject.getInstance().getSantanderSequenceNumberGenerators();
+        final List<SantanderSequenceNumberGenerator> instances = RootDomainObject.getInstance().getSantanderSequenceNumberGenerators();
         if (instances.size() > 1) {
             throw new DomainException("santanderSequenceNumberGenerator.more.than.one.instances.exist");
         }
-        if (instances.size() == 0) {
-            instance = new SantanderSequenceNumberGenerator();
-        } else {
-            instance = instances.iterator().next();
-        }
-        return instance;
+        return instances.size() == 0 ? new SantanderSequenceNumberGenerator() : instances.iterator().next();
     }
 
     public static int getNewSequenceNumber() {
         Integer seqNumber = getInstance().getSequenceNumber();
         getInstance().setSequenceNumber(++seqNumber);
+        return seqNumber;
+    }
+
+    public static int getNewPhotoSequenceNumber() {
+        Integer seqNumber = getInstance().getPhotoSequenceNumber();
+        getInstance().setPhotoSequenceNumber(++seqNumber);
         return seqNumber;
     }
 

@@ -735,12 +735,18 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     
     class cardGeneration.SantanderSequenceNumberGenerator  {
     	Integer sequenceNumber;
+    	Integer photoSequenceNumber;
     }
     
     class cardGeneration.SantanderEntry  {
     	String line;
     	DateTime created;
     }
+
+	class cardGeneration.SantanderPhotoEntry {
+		Integer sequenceNumber;
+		DateTime whenGenerated;
+	}
     
     class cardGeneration.SantanderProblem  {
     	String descriptionKey;
@@ -20699,4 +20705,21 @@ relation GenericApplicationPeriodManager {
 	User playsRole manager {
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectSantanderPhotoEntry {
+	RootDomainObject playsRole rootDomainObject; 
+	cardGeneration.SantanderPhotoEntry playsRole santanderPhotoEntry {
+		multiplicity *;
+	}
+}
+
+relation SantanderEntryPerson {
+	Person playsRole person; 
+	cardGeneration.SantanderPhotoEntry playsRole santanderPhotoEntry;
+}
+
+relation SantanderEntrySantanderPhotoEntry {
+	cardGeneration.SantanderPhotoEntry playsRole previous;
+	cardGeneration.SantanderPhotoEntry playsRole next;
 }
