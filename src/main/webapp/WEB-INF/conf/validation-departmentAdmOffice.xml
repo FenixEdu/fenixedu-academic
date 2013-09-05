@@ -358,8 +358,8 @@
     	</form>
     	
     	<form name="tsdCourseForm">
-			<field property="tsdCurricularCourseArray" depends="integerArray" page="2">
-				<msg name="integerArray" key="errors.teacherServiceDistribution.selectOneElement"/>
+			<field property="tsdCurricularCourseArray" depends="stringArray" page="2">
+				<msg name="stringArray" key="errors.teacherServiceDistribution.selectOneElement"/>
 				<arg0 key="label.teacherServiceDistribution.course"/>
 			</field>
 		</form>
@@ -549,10 +549,10 @@
 		<field property="title" depends="required" page="2">
 			<arg0 key="finalWorkInformationForm.title" resource="true"/>
 		</field>
-		<field property="orientatorOID" depends="required,integer" page="2">
+		<field property="orientatorOID" depends="required,string" page="2">
 			<arg0 key="finalWorkInformationForm.orientatorOID" resource="true"/>
 		</field>
-		<field property="coorientatorOID" depends="integer" page="2">
+		<field property="coorientatorOID" depends="string" page="2">
 			<arg0 key="finalWorkInformationForm.coorientatorOID" resource="true"/>
 		</field>
 		<field property="responsibleCreditsPercentage" depends="required,integer" page="2">

@@ -45,7 +45,7 @@
 	</form>	
 	
 	<form name="generatePasswordsForCandidaciesForm">
-		<field property="executionDegreeId" depends="integer" page="1" />
+		<field property="executionDegreeId" depends="string" page="1" />
 	</form>
   	  	
    </formset>

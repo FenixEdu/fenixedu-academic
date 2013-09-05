@@ -35,7 +35,7 @@
     
     <!-- Validation for Execution Course Form -->
     <form name="chooseExecutionCourseForm">
-      <field property="objectCode" depends="required, integer">
+      <field property="objectCode" depends="required, string">
         <msg name="required" key="error.execution.course.not.found"/>
         <arg0 key="property.context.course"/>
       </field>

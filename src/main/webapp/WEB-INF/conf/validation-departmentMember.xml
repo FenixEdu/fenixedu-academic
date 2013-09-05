@@ -216,8 +216,8 @@
     	</form>
     	
     	<form name="tsdCourseForm">
-			<field property="tsdCurricularCourseArray" depends="integerArray" page="2">
-				<msg name="integerArray" key="errors.teacherServiceDistribution.selectOneElement"/>
+			<field property="tsdCurricularCourseArray" depends="stringArray" page="2">
+				<msg name="stringArray" key="errors.teacherServiceDistribution.selectOneElement"/>
 				<arg0 key="label.teacherServiceDistribution.course"/>
 			</field>
 		</form>

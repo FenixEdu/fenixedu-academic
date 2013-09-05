@@ -40,10 +40,10 @@
 	</form>
 
 	<form name="changShiftOfStudents">
-		<field property="oldShiftId" depends="required, integer" page="1">
+		<field property="oldShiftId" depends="required, string" page="1">
 			<arg0 key="property.old.shift"/>
 		</field>
-		<field property="newShiftId" depends="integer" page="1">
+		<field property="newShiftId" depends="string" page="1">
 			<arg0 key="property.new.shift"/>
 		</field>
 	</form>
@@ -655,7 +655,7 @@
 
     <!-- Validation for Schedule Context -->
     <form name="chooseScheduleContextForm">
-      <field property="executionDegreeOID" depends="required, integer" page="1">
+      <field property="executionDegreeOID" depends="required, string" page="1">
         <arg0 key="property.context.degree" />
       </field>
       <field property="curricularYear" depends="required, integer, intRange" page="1">
@@ -755,7 +755,7 @@
         <field property="executionPeriodOID" depends="required" page="1">
 	        <arg0 key="property.executionPeriod" resource="true"/>
         </field>
-      <field property="executionDegreeOID" depends="integer" page="1">
+      <field property="executionDegreeOID" depends="string" page="1">
         <arg0 key="property.context.degree" />
       </field>
       <field property="curricularYearOID" depends="integer,intRange" page="1">
@@ -812,7 +812,7 @@
 
 	<!-- Validation for chooseDegreeAndYearContextForm Form -->
     <form name="showExamsManagementForm">
-      <field property="executionDegree" depends="required, integer" page="1">
+      <field property="executionDegree" depends="required, string" page="1">
         <arg0 key="property.context.degree" />
       </field>
 

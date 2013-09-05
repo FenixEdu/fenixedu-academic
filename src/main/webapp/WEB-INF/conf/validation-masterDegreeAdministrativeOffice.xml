@@ -54,7 +54,7 @@
         <arg0 key="label.specialization" />
       </field>
 
-      <field property="executionDegreeOID" depends="required, integer" page="1">
+      <field property="executionDegreeOID" depends="required, string" page="1">
         <arg0 key="label.degree" />
       </field>
 
@@ -690,12 +690,8 @@
 			<field property="name" depends="required" page="1">
 				<arg0 key="label.masterDegree.administrativeOffice.name" />
 			</field>
-			<field property="institutionID" depends="required, integer, floatGreater" page="1">
+			<field property="institutionID" depends="required, string" page="1">
 				<arg0 key="label.masterDegree.administrativeOffice.externalPersonInstitution" />		        
-		       	<var>
-					<var-name>value</var-name>
-					<var-value>0</var-value>
-				</var>
 			</field>			
 			<field property="address" depends="required" page="1">
 			 	<arg0 key="label.masterDegree.administrativeOffice.address" />
