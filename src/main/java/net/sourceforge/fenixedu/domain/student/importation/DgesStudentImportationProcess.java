@@ -4,7 +4,9 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryWithInstallmentDTO;
@@ -17,6 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
+import net.sourceforge.fenixedu.domain.TutorshipIntention;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
@@ -47,6 +50,7 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DgesStudentImportationProcess extends DgesStudentImportationProcess_Base {
 
@@ -115,6 +119,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
     public void importCandidates() {
 
+        Language.setDefaultLocale(new Locale("pt"));
         final List<DegreeCandidateDTO> degreeCandidateDTOs =
                 parseDgesFile(getDgesStudentImportationFile().getContents(), getUniversityAcronym(), getEntryPhase());
 
@@ -124,6 +129,38 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
                 degreeCandidateDTOs.size()));
 
         createDegreeCandidacies(employee, degreeCandidateDTOs);
+        distributeTutorshipIntentions(degreeCandidateDTOs);
+    }
+
+    private void distributeTutorshipIntentions(List<DegreeCandidateDTO> degreeCandidateDTOs) {
+        HashMap<ExecutionDegree, Integer> studentsPerExecution = new HashMap<ExecutionDegree, Integer>();
+        for (final DegreeCandidateDTO degreeCandidateDTO : degreeCandidateDTOs) {
+            final ExecutionDegree executionDegree =
+                    degreeCandidateDTO.getExecutionDegree(getExecutionYear(), getDgesStudentImportationForCampus());
+            Integer numberOfStudents = studentsPerExecution.get(executionDegree);
+            if (numberOfStudents != null) {
+                numberOfStudents++;
+            } else {
+                numberOfStudents = 1;
+            }
+            studentsPerExecution.put(executionDegree, numberOfStudents);
+        }
+
+        for (ExecutionDegree executionDegree : studentsPerExecution.keySet()) {
+            int numberOfStudents = studentsPerExecution.get(executionDegree);
+            int numberOfTutors = executionDegree.getTutorshipIntentions().size();
+            if (numberOfTutors > 0) {
+                int exceedingStudents = numberOfStudents % numberOfTutors;
+                int studentPerTutor = numberOfStudents / numberOfTutors;
+                for (TutorshipIntention tutorshipIntention : executionDegree.getTutorshipIntentions()) {
+                    tutorshipIntention.setMaxStudentsToTutor(studentPerTutor);
+                    if (exceedingStudents > 0) {
+                        tutorshipIntention.setMaxStudentsToTutor(tutorshipIntention.getMaxStudentsToTutor() + 1);
+                        exceedingStudents--;
+                    }
+                }
+            }
+        }
     }
 
     private void createDegreeCandidacies(final Employee employee, final List<DegreeCandidateDTO> degreeCandidateDTOs) {

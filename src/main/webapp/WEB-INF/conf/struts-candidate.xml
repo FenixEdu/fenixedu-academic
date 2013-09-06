@@ -24,7 +24,6 @@
                   <forward path="degreeCandidacy.fill.data" name="fillData"></forward>
                   <forward path="degreeCandidacy.show.data" name="showData"></forward>
                   <forward path="degreeCandidacy.show.operation.finished" name="showOperationFinished"></forward>
-                  <forward path="degreeCandidacy.fill.inquiry" name="firstTimeCyleInquiry"></forward>
                   <forward path="/../commons/student/timeTable/classTimeTable.jsp" name="printSchedule"></forward>
                   <forward path="/degree/printRegistrationDeclaration.jsp" name="printRegistrationDeclaration"></forward>
                   <forward path="/degree/printSystemAccessData.jsp" name="printSystemAccessData"></forward>

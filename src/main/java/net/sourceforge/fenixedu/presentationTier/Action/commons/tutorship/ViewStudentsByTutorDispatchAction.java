@@ -42,14 +42,12 @@ public abstract class ViewStudentsByTutorDispatchAction extends FenixDispatchAct
                     ExecutionYear.getExecutionYearByDate(tutorship.getStudentCurricularPlan().getRegistration().getStartDate());
             if (!tutorship.getStudentCurricularPlan().getRegistration().isCanceled()) {
                 if (tutorshipsMapByEntryYear.containsKey(entryYear)) {
-                    List<Tutorship> studentsByEntryYearList = tutorshipsMapByEntryYear.get(entryYear).getStudentsList();
-                    studentsByEntryYearList.add(tutorship);
-                    Collections.sort(studentsByEntryYearList, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
-                    tutorshipsMapByEntryYear.get(entryYear).setStudentsList(studentsByEntryYearList);
+                    StudentsByTutorBean studentsByTutorBean = tutorshipsMapByEntryYear.get(entryYear);
+                    studentsByTutorBean.getStudentsList().add(tutorship);
+                    Collections.sort(studentsByTutorBean.getStudentsList(), Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
                 } else {
                     List<Tutorship> studentsByEntryYearList = new ArrayList<Tutorship>();
                     studentsByEntryYearList.add(tutorship);
-                    Collections.sort(studentsByEntryYearList, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
                     StudentsByTutorBean studentsByTutorBean =
                             new StudentsByTutorBean(tutorship.getTeacher(), entryYear, studentsByEntryYearList);
                     tutorshipsMapByEntryYear.put(entryYear, studentsByTutorBean);

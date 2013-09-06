@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
@@ -37,7 +37,7 @@ public class TransferTutorship extends TutorshipManagement {
 
         List<TutorshipErrorBean> studentsWithErrors = new ArrayList<TutorshipErrorBean>();
 
-        YearMonthDay currentDate = new YearMonthDay();
+        LocalDate currentDate = new LocalDate();
 
         Partial tutorshipEndDateDueToTransfer =
                 new Partial(new DateTimeFieldType[] { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() }, new int[] {
@@ -60,7 +60,7 @@ public class TransferTutorship extends TutorshipManagement {
 
                     // 2� Create new Tutorship
 
-                    createTutorship(teacher, registration.getActiveStudentCurricularPlan(), bean.getTutorshipEndMonth()
+                    Tutorship.createTutorship(teacher, registration.getActiveStudentCurricularPlan(), bean.getTutorshipEndMonth()
                             .getNumberOfMonth(), bean.getTutorshipEndYear());
 
                 } catch (FenixServiceException ex) {

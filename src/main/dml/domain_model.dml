@@ -1917,6 +1917,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
 	class TutorshipIntention  {
 		AcademicInterval academicInterval (REQUIRED);
+		Integer maxStudentsToTutor;
 	}
 
     class Tutorship  {

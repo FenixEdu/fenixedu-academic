@@ -9,7 +9,7 @@
 <bean:define id="currentFormPosition" name="operation" property="currentFormPosition" />
 <bean:define id="totalForms" name="operation" property="totalForms" type="java.lang.Integer"/>
 <h2>
-	<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/> (<bean:write name="currentFormPosition"/>/<%= String.valueOf(totalForms + 1) %>)
+	<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/> (<bean:write name="currentFormPosition"/>/<bean:write name="totalForms"/>)
 </h2>
 
 <h3 class="mtop15">

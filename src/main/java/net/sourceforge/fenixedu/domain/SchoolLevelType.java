@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 import com.google.common.collect.Lists;
@@ -255,6 +255,6 @@ public enum SchoolLevelType implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-        return ResourceBundle.getBundle("resources.EnumerationResources").getString(getQualifiedName());
+        return BundleUtil.getEnumName(this);
     }
 }

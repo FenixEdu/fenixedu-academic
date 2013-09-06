@@ -28,5 +28,12 @@
 		<div align="center">
 			<app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE %>" application="<%= request.getContextPath() %>"/>
 		</div> 
+		<logic:present name="tutor">
+			<div style="text-align: left">
+				<strong><bean:message key="label.tutor" bundle="APPLICATION_RESOURCES"/></strong><br/>
+				<bean:write name="tutor" property="name"/><br/>
+				<bean:write name="tutor" property="defaultEmailAddressValue"/>
+			</div>
+		</logic:present>
 	</body>
 </html:html>

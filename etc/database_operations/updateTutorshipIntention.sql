@@ -1,0 +1,1 @@
+alter table `TUTORSHIP_INTENTION` add `MAX_STUDENTS_TO_TUTOR` int(11);

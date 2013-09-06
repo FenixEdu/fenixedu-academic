@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacy.workflow;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Attends;
@@ -12,6 +14,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.domain.TutorshipIntention;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.MeasurementTest;
@@ -21,11 +26,18 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class RegistrationOperation extends CandidacyOperation {
 
     static private final long serialVersionUID = 1L;
+    static private final List<String> DEGREES_WITHOUT_AUTOMATIC_TUTOR_DISTRIBUTION = new ArrayList<String>();
+
+    static {
+        DEGREES_WITHOUT_AUTOMATIC_TUTOR_DISTRIBUTION.add("MEMec");
+        DEGREES_WITHOUT_AUTOMATIC_TUTOR_DISTRIBUTION.add("MEC");
+    }
 
     public RegistrationOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
         super(roleTypes, candidacy);
@@ -37,7 +49,29 @@ public class RegistrationOperation extends CandidacyOperation {
         final Registration registration = createRegistration();
         enrolStudentInCurricularCourses(executionDegree, registration);
         associateShiftsFor(registration);
-        assignMeasurementTestShift(registration);
+        //assignMeasurementTestShift(registration);
+        associateTutor(registration);
+    }
+
+    private void associateTutor(Registration registration) {
+        if (!DEGREES_WITHOUT_AUTOMATIC_TUTOR_DISTRIBUTION.contains(registration.getDegree().getSigla())) {
+            Teacher teacher = getAvailableTutorTeacher();
+            if (teacher != null) {
+                StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
+                Tutorship.createTutorship(teacher, scp, new LocalDate().getMonthOfYear(),
+                        Tutorship.getLastPossibleTutorshipYear());
+            }
+        }
+    }
+
+    private Teacher getAvailableTutorTeacher() {
+        for (TutorshipIntention tutorshipIntention : getExecutionDegree().getTutorshipIntentions()) {
+            if (tutorshipIntention.getMaxStudentsToTutor() > 0) {
+                tutorshipIntention.setMaxStudentsToTutor(tutorshipIntention.getMaxStudentsToTutor() - 1);
+                return tutorshipIntention.getTeacher();
+            }
+        }
+        return null;
     }
 
     private void assignMeasurementTestShift(Registration registration) {

@@ -10,7 +10,7 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 public class InquiryAboutYieldingPersonalDataForm extends Form {
 
     private StudentPersonalDataAuthorizationChoice personalDataAuthorizationChoice;
-    private boolean personalDataAuthorizationForStudentsAssociation;
+    private boolean personalDataAuthorizationForStudentsAssociation = true;
 
     public InquiryAboutYieldingPersonalDataForm() {
         super();

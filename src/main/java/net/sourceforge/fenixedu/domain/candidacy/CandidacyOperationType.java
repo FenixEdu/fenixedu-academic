@@ -6,8 +6,6 @@ public enum CandidacyOperationType {
 
     REGISTRATION,
 
-    FIRST_TIME_CYLE_INQUIRY,
-
     PRINT_SCHEDULE,
 
     PRINT_REGISTRATION_DECLARATION,

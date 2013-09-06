@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
@@ -39,8 +40,8 @@ public class InsertTutorship extends TutorshipManagement {
 
         validateTutorship(registration);
 
-        createTutorship(teacher, registration.getActiveStudentCurricularPlan(), bean.getTutorshipEndMonth().getNumberOfMonth(),
-                bean.getTutorshipEndYear());
+        Tutorship.createTutorship(teacher, registration.getActiveStudentCurricularPlan(), bean.getTutorshipEndMonth()
+                .getNumberOfMonth(), bean.getTutorshipEndYear());
     }
 
     public List<TutorshipErrorBean> run(String executionDegreeID, StudentsByEntryYearBean bean) throws FenixServiceException {
@@ -69,7 +70,7 @@ public class InsertTutorship extends TutorshipManagement {
 
                 validateTutorship(registration);
 
-                createTutorship(teacher, studentCurricularPlan, bean.getTutorshipEndMonth().getNumberOfMonth(),
+                Tutorship.createTutorship(teacher, studentCurricularPlan, bean.getTutorshipEndMonth().getNumberOfMonth(),
                         bean.getTutorshipEndYear());
 
             } catch (FenixServiceException ex) {

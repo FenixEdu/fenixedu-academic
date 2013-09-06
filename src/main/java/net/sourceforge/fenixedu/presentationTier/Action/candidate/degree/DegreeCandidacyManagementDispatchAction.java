@@ -18,9 +18,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.ExecuteStateOp
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentFirstTimeCycleInquiryBean;
+import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents;
@@ -32,7 +31,6 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintAllDocumentsOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm;
-import net.sourceforge.fenixedu.domain.inquiries.Student1rstCycleInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
@@ -69,12 +67,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         request.setAttribute("operations", operations);
 
         request.setAttribute("person", getUserView(request).getPerson());
-        if (getCandidacy(request).getExecutionDegree().getCampus().isCampusTaguspark()) {
+        if (candidacy.getExecutionDegree().getCampus().isCampusTaguspark()) {
             request.setAttribute("isInTaguspark", "true");
-        }
-
-        if (candidacy.isConcluded() && !candidacy.getRegistration().hasInquiryStudentCycleAnswer()) {
-            return processInquiry(candidacy, mapping, request);
         }
         return mapping.findForward("showCandidacyDetails");
     }
@@ -89,8 +83,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         request.setAttribute("candidacy", getCandidacy(request));
         request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 
-        if (operation != null && operation.isInput()
-                && !operation.getType().equals(CandidacyOperationType.FIRST_TIME_CYLE_INQUIRY)) {
+        if (operation != null && operation.isInput()) {
             LogFirstTimeCandidacyTimestamp.logTimestamp(getCandidacy(request), FirstTimeCandidacyStage.STARTED_FILLING_FORMS);
             request.setAttribute("currentForm", operation.moveToNextForm());
             return mapping.findForward("fillData");
@@ -123,74 +116,19 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         } else {
             final StudentCandidacy candidacy = getCandidacy(request);
             if (candidacy.isConcluded()) {
+                request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
+                request.setAttribute("candidacyID", candidacy.getExternalId());
 
-                if (candidacy.getRegistration().hasInquiryStudentCycleAnswer()) {
+                addActionMessage(request, "warning.candidacy.process.is.already.concluded");
 
-                    request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
-                    request.setAttribute("candidacyID", candidacy.getExternalId());
-
-                    addActionMessage(request, "warning.candidacy.process.is.already.concluded");
-
-                    return showCandidacyDetails(mapping, actionForm, request, response);
-
-                } else {
-                    return processInquiry(candidacy, mapping, request);
-                }
+                return showCandidacyDetails(mapping, actionForm, request, response);
             }
 
             executeOperation(mapping, actionForm, request, response, operation);
             LogFirstTimeCandidacyTimestamp.logTimestamp(candidacy, FirstTimeCandidacyStage.FINISHED_FILLING_FORMS);
 
-            return processInquiry(candidacy, mapping, request);
-        }
-    }
-
-    private ActionForward processInquiry(StudentCandidacy candidacy, ActionMapping mapping, HttpServletRequest request) {
-        Student1rstCycleInquiryTemplate currentTemplate = Student1rstCycleInquiryTemplate.getCurrentTemplate();
-        if (candidacy.getRegistration().hasInquiryStudentCycleAnswer()) {
             return new ActionForward(buildSummaryPdfGeneratorURL(request, candidacy), true);
         }
-        StudentFirstTimeCycleInquiryBean studentInquiryBean =
-                new StudentFirstTimeCycleInquiryBean(currentTemplate, candidacy.getRegistration());
-        studentInquiryBean.setCandidacy(candidacy);
-        request.setAttribute("studentInquiryBean", studentInquiryBean);
-
-        return mapping.findForward("firstTimeCyleInquiry");
-    }
-
-    public ActionForward saveInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        final StudentFirstTimeCycleInquiryBean studentInquiryBean = getRenderedObject("studentInquiryBean");
-
-        if (!studentInquiryBean.getRegistration().hasInquiryStudentCycleAnswer()) {
-            RenderUtils.invalidateViewState();
-            String validationResult = studentInquiryBean.validateInquiry();
-            if (!Boolean.valueOf(validationResult)) {
-                if (!validationResult.equalsIgnoreCase("false")) {
-                    addActionMessage(request, "error.inquiries.fillInQuestion", validationResult);
-                } else {
-                    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
-                }
-                request.setAttribute("studentInquiryBean", studentInquiryBean);
-                return actionMapping.findForward("firstTimeCyleInquiry");
-            }
-            studentInquiryBean.saveAnswers();
-
-            LogFirstTimeCandidacyTimestamp.logTimestamp(studentInquiryBean.getCandidacy(),
-                    FirstTimeCandidacyStage.FINISHED_FILLING_INQUIRY);
-        }
-        return new ActionForward(buildSummaryPdfGeneratorURL(request, studentInquiryBean.getCandidacy()), true);
-    }
-
-    public ActionForward postBackStudentInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final StudentFirstTimeCycleInquiryBean studentInquiryBean = getRenderedObject("studentInquiryBean");
-        studentInquiryBean.setGroupsVisibility();
-        RenderUtils.invalidateViewState();
-
-        request.setAttribute("studentInquiryBean", studentInquiryBean);
-        return actionMapping.findForward("firstTimeCyleInquiry");
     }
 
     private boolean validateCurrentForm(HttpServletRequest request) {
@@ -244,25 +182,30 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
             return mapping.findForward("printMeasurementTestDate");
 
         } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_ALL_DOCUMENTS) {
-            request.setAttribute("candidacy", getCandidacy(request));
-            request.setAttribute("registration", getCandidacy(request).getRegistration());
-            request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
-            request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
-            request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
+            StudentCandidacy candidacy = getCandidacy(request);
+            request.setAttribute("candidacy", candidacy);
+            request.setAttribute("registration", candidacy.getRegistration());
+            request.setAttribute("executionYear", candidacy.getExecutionDegree().getExecutionYear());
+            request.setAttribute("person", candidacy.getRegistration().getPerson());
+            request.setAttribute("campus", candidacy.getRegistration().getCampus().getName());
             request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
-                    administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodes()));
-            request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)
-                    .getAvailablePaymentCodes()));
-            request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request)
-                    .getAvailablePaymentCodes()));
+                    administrativeOfficeFeeAndInsurancePaymentCode(candidacy.getAvailablePaymentCodes()));
+            request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(candidacy.getAvailablePaymentCodes()));
+            request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(candidacy.getAvailablePaymentCodes()));
             request.setAttribute(
                     "firstInstallmentEndDate",
-                    calculateFirstInstallmentEndDate(getCandidacy(request).getRegistration(), getCandidacy(request)
+                    calculateFirstInstallmentEndDate(candidacy.getRegistration(), getCandidacy(request)
                             .getAvailablePaymentCodes()));
             request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
 
-            final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
+            final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(candidacy.getRegistration());
             request.setAttribute("infoLessons", infoLessons);
+
+            List<Tutorship> activeTutorships = candidacy.getRegistration().getStudent().getActiveTutorships();
+            if (!activeTutorships.isEmpty()) {
+                Tutorship tutorship = activeTutorships.iterator().next();
+                request.setAttribute("tutor", tutorship.getTeacher().getPerson());
+            }
 
             return mapping.findForward("printAllDocuments");
 

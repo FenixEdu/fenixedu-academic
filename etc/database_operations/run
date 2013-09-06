@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add maximum students slot column" updateTutorshipIntention.sql
 

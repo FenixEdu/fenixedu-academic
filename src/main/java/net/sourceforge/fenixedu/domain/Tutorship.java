@@ -53,13 +53,61 @@ public class Tutorship extends Tutorship_Base {
     // Tutorship maximum period, in years
     public static final int TUTORSHIP_MAX_PERIOD = 2;
 
-    public Tutorship(Teacher teacher, Partial tutorshipStartDate, Partial tutorshipEndDate) {
+    private Tutorship(Teacher teacher, Partial tutorshipStartDate, Partial tutorshipEndDate, StudentCurricularPlan scp) {
         super();
-
         setRootDomainObject(RootDomainObject.getInstance());
         setTeacher(teacher);
+        setStudentCurricularPlan(scp);
         setStartDate(tutorshipStartDate);
         setEndDate(tutorshipEndDate);
+    }
+
+    public static void createTutorship(Teacher teacher, StudentCurricularPlan scp, Integer endMonth, Integer endYear) {
+        LocalDate currentDate = new LocalDate();
+
+        Partial tutorshipStartDate =
+                new Partial(new DateTimeFieldType[] { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() }, new int[] {
+                        currentDate.year().get(), currentDate.monthOfYear().get() });
+
+        Partial tutorshipEndDate =
+                new Partial(new DateTimeFieldType[] { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() }, new int[] {
+                        endYear, endMonth });
+        Tutorship tutorship = new Tutorship(teacher, tutorshipStartDate, tutorshipEndDate, scp);
+
+        TutorshipLog tutorshipLog = new TutorshipLog();
+        if (scp.getRegistration() != null && scp.getRegistration().getStudentCandidacy() != null
+                && scp.getRegistration().getStudentCandidacy().getPlacingOption() != null) {
+            switch (scp.getRegistration().getStudentCandidacy().getPlacingOption()) {
+            case 1: {
+                tutorshipLog.setOptionNumberDegree(Option.ONE);
+                break;
+            }
+            case 2: {
+                tutorshipLog.setOptionNumberDegree(Option.TWO);
+                break;
+            }
+            case 3: {
+                tutorshipLog.setOptionNumberDegree(Option.THREE);
+                break;
+            }
+            case 4: {
+                tutorshipLog.setOptionNumberDegree(Option.FOUR);
+                break;
+            }
+            case 5: {
+                tutorshipLog.setOptionNumberDegree(Option.FIVE);
+                break;
+            }
+            case 6: {
+                tutorshipLog.setOptionNumberDegree(Option.SIX);
+                break;
+            }
+            default: {
+                tutorshipLog.setOptionNumberDegree(null);
+            }
+            }
+        }
+        tutorship.setTutorshipLog(tutorshipLog);
     }
 
     public void delete() {
@@ -111,7 +159,7 @@ public class Tutorship extends Tutorship_Base {
     }
 
     public static int getLastPossibleTutorshipYear() {
-        YearMonthDay currentDate = new YearMonthDay();
+        LocalDate currentDate = new LocalDate();
         return currentDate.getYear() + TUTORSHIP_MAX_PERIOD;
     }
 
