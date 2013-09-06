@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
-import org.joda.time.YearMonthDay;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -90,7 +89,7 @@ public class DegreeInfo extends DegreeInfo_Base {
             return true;
         }
         if (getExecutionYear().isCurrent()) {
-            return new YearMonthDay().isBefore(getExecutionYear().getFirstExecutionPeriod().getBeginDateYearMonthDay());
+            return true;
         }
         return false;
     }

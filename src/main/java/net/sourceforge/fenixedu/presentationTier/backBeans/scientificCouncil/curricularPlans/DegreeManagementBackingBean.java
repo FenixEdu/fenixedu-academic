@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
-import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -430,7 +429,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             return true;
         }
         if (getSelectedExecutionYear().isCurrent()) {
-            return new YearMonthDay().isBefore(getSelectedExecutionYear().getFirstExecutionPeriod().getBeginDateYearMonthDay());
+            return true;
         }
         return false;
     }
