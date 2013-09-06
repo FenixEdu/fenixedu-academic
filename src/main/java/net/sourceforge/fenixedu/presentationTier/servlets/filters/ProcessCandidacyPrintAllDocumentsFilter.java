@@ -33,10 +33,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.cardGeneration.SantanderPhotoEntry;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -45,6 +43,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.SimpleHtmlSerializer;
 import org.htmlcleaner.TagNode;
+import org.joda.time.DateTime;
 import org.joda.time.DurationFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
@@ -70,7 +69,6 @@ import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfStamper;
 
 public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
-    private static final String CGD_PDF_PATH = "/CGD_FORM.pdf";
     private static final String SANTANDER_APPLICATION_PDF_PATH = "/SANTANDER_APPLICATION_FORM.pdf";
     private static final String SANTANDER_APPLICATION_CARD_PDF_PATH = "/SANTANDER_APPLICATION_CARD_FORM.pdf";
     private static final String BPI_AEIST_CARD_PDF_PATH = "/BPI_AEIST_CARD_FORM.pdf";
@@ -79,83 +77,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     private static final String BPI_PERSONAL_INFORMATION_PDF_PATH = "/BPI_PERSONAL_INFORMATION_FORM.pdf";
     private static final String ACADEMIC_ADMIN_SHEET_REPORT_PATH = "/reports/processOpeningAndUpdating.jasper";
     private ServletContext servletContext;
-
-    private class CGDPdfFiller {
-        AcroFields form;
-
-        public ByteArrayOutputStream getFilledPdf(Person person) throws IOException, DocumentException {
-            InputStream istream = getClass().getResourceAsStream(CGD_PDF_PATH);
-            PdfReader reader = new PdfReader(istream);
-            reader.getAcroForm().remove(PdfName.SIGFLAGS);
-            reader.selectPages("1,3,4"); // updated to new cgd form since page 2 is blank
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            PdfStamper stamper = new PdfStamper(reader, output);
-            form = stamper.getAcroFields();
-
-            final Student student = person.getStudent();
-            final Registration registration = findRegistration(student);
-
-            setField("T_NomeComp", person.getName());
-            setField("T_Email", person.getInstitutionalEmailAddressValue());
-
-            if (person.isFemale()) {
-                setField("RB8", "Yes"); // female checkbox
-            } else if (person.isMale()) {
-                setField("RB2", "Yes"); // male checkbox
-            }
-
-            setField("Cod_data_1", person.getDateOfBirthYearMonthDay().toString(DateTimeFormat.forPattern("ddMMyyyy")));
-            setField("NIF1", person.getSocialSecurityNumber());
-            setField("CB_EstCivil01", person.getMaritalStatus().getPresentationName());
-            setField("T_DocIdent", person.getDocumentIdNumber());
-
-            YearMonthDay emissionDate = person.getEmissionDateOfDocumentIdYearMonthDay();
-            if (emissionDate != null) {
-                setField("Cod_data_2", emissionDate.toString(DateTimeFormat.forPattern("ddMMyyyy")));
-            }
-            setField("Cod_data_3",
-                    person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("ddMMyyyy")));
-
-            setField("T_NomeMae", person.getNameOfMother());
-            setField("T_NomePai", person.getNameOfFather());
-            setField("T_NatFreg", person.getParishOfBirth());
-            setField("T_NatConc", person.getDistrictSubdivisionOfBirth());
-
-            setField("T_PaisRes", person.getCountryOfResidence().getName());
-            setField("T_Nacion", person.getCountryOfBirth().getCountryNationality().toString());
-            setField("T_Morada01", person.getAddress());
-            setField("T_Telef", person.getDefaultPhoneNumber());
-
-            String postalCode = person.getPostalCode();
-            int dashIndex = postalCode.indexOf('-');
-            setField("T_CodPos01", postalCode.substring(0, 4));
-            String last3Numbers = person.getPostalCode().substring(dashIndex + 1, dashIndex + 4);
-            setField("T_CodPos02", last3Numbers);
-
-            setField("T_Localid02", person.getAreaOfAreaCode());
-            setField("T_Telem", person.getDefaultMobilePhoneNumber());
-            setField("T_Freguesia", person.getParishOfResidence());
-            setField("T_Concelho", person.getDistrictSubdivisionOfResidence());
-
-            setField("T_CodCur", registration.getDegree().getMinistryCode());
-            setField("T_Curso", CardGenerationEntry.normalizeDegreeName(registration.getDegree()));
-            setField("T_CodEstEns", Campus.getUniversityCode(registration.getLastDegreeCurricularPlan().getCurrentCampus()));
-            setField("T_EstEns", "Instituto Superior Técnico");
-            setField("T_NumAL", student.getStudentNumber().getNumber().toString());
-            setField("T_GrauEns", CardGenerationEntry.normalizeDegreeType12(registration.getDegreeType()));
-            setField("CB2", "");
-
-            stamper.setFormFlattening(true);
-            stamper.close();
-            return output;
-        }
-
-        private void setField(String fieldName, String fieldContent) throws IOException, DocumentException {
-            if (fieldContent != null) {
-                form.setField(fieldName, fieldContent);
-            }
-        }
-    }
 
     private class SantanderPdfFiller {
         AcroFields form;
@@ -256,23 +177,22 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             PdfStamper stamper = new PdfStamper(reader, output);
             form = stamper.getAcroFields();
 
-            setField("StudentNumber", person.getStudent().getNumber().toString());
+            setField("StudentIdentification", person.getIstUsername());
             setField("Phone", person.getDefaultMobilePhoneNumber());
             setField("Email", person.getInstitutionalEmailAddressValue());
-            setField("CurrentDate", new LocalDate().toString(DateTimeFormat.forPattern("dd/MM/yyyy HH:mm")));
+            setField("CurrentDate", new DateTime().toString(DateTimeFormat.forPattern("dd/MM/yyyy HH:mm")));
 
             SantanderPhotoEntry photoEntryForPerson =
                     SantanderPhotoEntry.getOrCreatePhotoEntryForPerson(candidacy.getRegistration().getPerson());
-            setField("Sequence", photoEntryForPerson.getSequenceNumber().toString());
+            setField("Sequence", photoEntryForPerson.getPhotoIdentifier());
 
             try {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                BarcodeImageHandler.writeJPEG(BarcodeFactory.createCodabar(photoEntryForPerson.getSequenceNumber().toString()),
-                        baos);
+                BarcodeImageHandler.writeJPEG(BarcodeFactory.createCode39(photoEntryForPerson.getPhotoIdentifier(), false), baos);
                 Jpeg sequenceBarcodeImg = new Jpeg(baos.toByteArray());
                 float[] sequenceFieldPositions = form.getFieldPositions("SequenceBarcode"); // 1-lowerleftX, 2-lly, 3-upperRightX, 4-ury
                 sequenceBarcodeImg.setAbsolutePosition(sequenceFieldPositions[1], sequenceFieldPositions[2]);
-                sequenceBarcodeImg.scalePercent(30);
+                sequenceBarcodeImg.scalePercent(45);
                 stamper.getOverContent(1).addImage(sequenceBarcodeImg);
             } catch (OutputException e) {
                 e.printStackTrace();
@@ -282,12 +202,12 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
             try {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                BarcodeImageHandler.writeJPEG(BarcodeFactory.createCodabar(person.getStudent().getNumber().toString()), baos);
-                Jpeg studentNumberBarcodeImg = new Jpeg(baos.toByteArray());
-                float[] studentNumberFieldPositions = form.getFieldPositions("StudentNumberBarcode"); // 1-lowerleftX, 2-lly, 3-upperRightX, 4-ury
-                studentNumberBarcodeImg.setAbsolutePosition(studentNumberFieldPositions[1], studentNumberFieldPositions[2]);
-                studentNumberBarcodeImg.scalePercent(25);
-                stamper.getOverContent(1).addImage(studentNumberBarcodeImg);
+                BarcodeImageHandler.writeJPEG(BarcodeFactory.createCode128(person.getIstUsername()), baos);
+                Jpeg studentIdBarcodeImg = new Jpeg(baos.toByteArray());
+                float[] studentIdFieldPositions = form.getFieldPositions("StudentIdentificationBarcode"); // 1-lowerleftX, 2-lly, 3-upperRightX, 4-ury
+                studentIdBarcodeImg.setAbsolutePosition(studentIdFieldPositions[1], studentIdFieldPositions[2]);
+                studentIdBarcodeImg.scalePercent(30);
+                stamper.getOverContent(1).addImage(studentIdBarcodeImg);
             } catch (OutputException e) {
                 e.printStackTrace();
             } catch (BarcodeException be) {
@@ -297,6 +217,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             Jpeg photo = new Jpeg(photoEntryForPerson.getPhotoAsByteArray());
             float[] photoFieldPositions = form.getFieldPositions("Photo"); // 1-lowerleftX, 2-lly, 3-upperRightX, 4-ury
             photo.setAbsolutePosition(photoFieldPositions[1], photoFieldPositions[2]);
+            photo.scalePercent(95);
             stamper.getOverContent(1).addImage(photo);
 
             stamper.setFormFlattening(true);
