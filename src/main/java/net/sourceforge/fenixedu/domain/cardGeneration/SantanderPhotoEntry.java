@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.photograph.PictureSize;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class SantanderPhotoEntry extends SantanderPhotoEntry_Base {
 
     public SantanderPhotoEntry(final Person person, final Photograph photograph) {
@@ -27,6 +29,7 @@ public class SantanderPhotoEntry extends SantanderPhotoEntry_Base {
         setSequenceNumber(SantanderSequenceNumberGenerator.getNewPhotoSequenceNumber());
     }
 
+    @Service
     public static SantanderPhotoEntry getOrCreatePhotoEntryForPerson(final Person person) {
         final Photograph personalPhoto = person.getPersonalPhoto();
         if (personalPhoto != null) {
@@ -53,6 +56,18 @@ public class SantanderPhotoEntry extends SantanderPhotoEntry_Base {
         final Photograph photograph = getPhotograph();
         final PictureAvatar avatar = photograph.getAvatar(AspectRatio.ª9_by_10, PictureSize.LARGE, PictureMode.FIT);
         return avatar.exportAsJPEG(Color.BLACK);
+    }
+
+    public String getPhotoIdentifier() {
+        return makeZeroPaddedNumber(42, 5) + "E" + getSequenceNumber();
+    }
+
+    private static String makeZeroPaddedNumber(int number, int size) {
+        if (String.valueOf(number).length() > size) {
+            throw new NumberFormatException("Number has more digits than allocated room.");
+        }
+        String format = "%0" + size + "d";
+        return String.format(format, number);
     }
 
 }
