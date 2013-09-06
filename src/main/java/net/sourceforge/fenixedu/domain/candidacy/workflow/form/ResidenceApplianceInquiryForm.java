@@ -50,4 +50,9 @@ public class ResidenceApplianceInquiryForm extends Form {
     public String getFormName() {
         return "label.candidacy.workflow.residenceApplianceForm";
     }
+
+    @Override
+    public String getFormDescription() {
+        return "label.candidacy.workflow.residenceApplianceForm.description";
+    }
 }
