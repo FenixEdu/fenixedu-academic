@@ -58,4 +58,16 @@ public class SantanderPhotoEntry extends SantanderPhotoEntry_Base {
         return avatar.exportAsJPEG(Color.BLACK);
     }
 
+    public String getPhotoIdentifier() {
+        return makeZeroPaddedNumber(42, 5) + "E" + getSequenceNumber();
+    }
+
+    private static String makeZeroPaddedNumber(int number, int size) {
+        if (String.valueOf(number).length() > size) {
+            throw new NumberFormatException("Number has more digits than allocated room.");
+        }
+        String format = "%0" + size + "d";
+        return String.format(format, number);
+    }
+
 }
