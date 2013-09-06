@@ -59,7 +59,7 @@ public class SantanderPhotoEntry extends SantanderPhotoEntry_Base {
     }
 
     public String getPhotoIdentifier() {
-        return makeZeroPaddedNumber(42, 5) + "E" + getSequenceNumber();
+        return makeZeroPaddedNumber(42, 5) + "E" + makeZeroPaddedNumber(getSequenceNumber(), 6);
     }
 
     private static String makeZeroPaddedNumber(int number, int size) {
