@@ -215,7 +215,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
                 Jpeg studentIdBarcodeImg = new Jpeg(baos.toByteArray());
                 float[] studentIdFieldPositions = form.getFieldPositions("StudentIdentificationBarcode"); // 1-lowerleftX, 2-lly, 3-upperRightX, 4-ury
                 studentIdBarcodeImg.setAbsolutePosition(studentIdFieldPositions[1], studentIdFieldPositions[2]);
-                studentIdBarcodeImg.scalePercent(30);
+                studentIdBarcodeImg.scalePercent(45);
                 stamper.getOverContent(1).addImage(studentIdBarcodeImg);
             } catch (OutputException e) {
                 e.printStackTrace();
