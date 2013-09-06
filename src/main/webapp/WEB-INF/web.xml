@@ -284,6 +284,10 @@
 		<url-pattern>/candidate/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
+		<filter-name>ProcessCandidacyPrintAllDocumentsFilter</filter-name>
+		<url-pattern>/publico/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
 		<filter-name>AnnualTeachingCreditsDocumentFilter</filter-name>
 		<url-pattern>/scientificCouncil/annualTeachingCreditsDocument.do</url-pattern>
 	</filter-mapping>

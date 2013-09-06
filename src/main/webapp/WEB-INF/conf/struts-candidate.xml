@@ -38,6 +38,7 @@
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
       <message-resources null="false" parameter="resources.CandidateResources"></message-resources>
+      <message-resources null="false" key="CANDIDATE_RESOURCES" parameter="resources.CandidateResources"></message-resources>
       <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
