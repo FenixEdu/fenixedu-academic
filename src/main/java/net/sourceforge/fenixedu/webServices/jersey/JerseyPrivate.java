@@ -66,6 +66,7 @@ public class JerseyPrivate {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("hello")
+    @FenixAPIScope("info")
     public String hellofenix() {
         return "Hello! Private V1";
     }

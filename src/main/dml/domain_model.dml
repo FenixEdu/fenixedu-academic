@@ -20777,11 +20777,11 @@ class ExternalApplication  {
         String secret;
         String url;
     }
-    
+
 class AuthScope  {
-        String name;
-        String endpoints; //should be a list?
-    }
+        String name (REQUIRED);
+        String endpoints (REQUIRED);
+}
     
 class AppUserSession {
 	String code;
@@ -20804,7 +20804,7 @@ relation RootDomainObjectAuthScope {
   	AuthScope playsRole authScopes {
   		multiplicity *;
   	}
- }
+}
   
 relation AppAuthor {
 	User playsRole author {
@@ -20829,7 +20829,7 @@ relation PermissionsScope {
 		multiplicity *;
 	}
 	ExternalApplication playsRole app {
-		multiplicity 1;
+		multiplicity *;
 	}
 }
 

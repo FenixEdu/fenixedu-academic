@@ -91,3 +91,8 @@ alter table `APP_USER_SESSION` add `REFRESH_TOKEN` text, add `CODE_EXPIRATION_DA
 -- Inserted at 2013-08-25T15:26:40.404Z
 
 alter table `APP_USER_SESSION` add `DEVICE_ID` text;
+
+
+
+-- Inserted at 2013-09-05T20:05:42.313+01:00
+

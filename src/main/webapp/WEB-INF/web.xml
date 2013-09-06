@@ -366,10 +366,19 @@
 	<servlet>
 		<servlet-name>Jersey Web Application</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+<!-- 		<init-param> -->
+<!-- 			<param-name>com.sun.jersey.config.property.packages</param-name> -->
+<!-- 			<param-value>net.sourceforge.fenixedu.webServices.jersey</param-value> -->
+<!-- 		</init-param> -->
+		<init-param>
+			<param-name>com.sun.jersey.config.property.resourceConfigClass</param-name>			
+			<param-value>net.sourceforge.fenixedu.webServices.jersey.FenixJerseyPackageResourceConfig</param-value>
+		</init-param>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
 			<param-value>net.sourceforge.fenixedu.webServices.jersey</param-value>
 		</init-param>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<!-- Servlet Mapping -->

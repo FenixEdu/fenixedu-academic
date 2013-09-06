@@ -71,4 +71,8 @@ public class AppUserSession extends AppUserSession_Base {
         setApplication(null);
         deleteDomainObject();
     }
+    public void invalidate() {
+        // TODO notify user
+        delete();
+    }
 }
