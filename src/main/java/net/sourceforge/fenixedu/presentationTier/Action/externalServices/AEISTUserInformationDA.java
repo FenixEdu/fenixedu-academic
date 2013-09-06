@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentDataShareAuthorization;
+import net.sourceforge.fenixedu.domain.student.StudentDataShareStudentsAssociationAuthorization;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -47,10 +48,21 @@ public class AEISTUserInformationDA extends ExternalInterfaceDispatchAction {
             if (person != null) {
                 Registration registration = person.getStudent().getLastActiveRegistration();
                 if (registration != null) {
-                    StudentDataShareAuthorization dataAuthorizationStudentsAssociation =
-                            registration.getStudent().getActivePersonalDataAuthorization();
-                    if (dataAuthorizationStudentsAssociation != null
-                            && dataAuthorizationStudentsAssociation.getAuthorizationChoice().isForStudentsAssociation()) {
+                    boolean allowAccess = false;
+                    StudentDataShareStudentsAssociationAuthorization dataStudentsAssociationAuthorization =
+                            registration.getStudent().getStudentPersonalDataStudentsAssociationAuthorization();
+                    if (dataStudentsAssociationAuthorization != null
+                            && dataStudentsAssociationAuthorization.getAuthorizationChoice().isForStudentsAssociation()) {
+                        allowAccess = true;
+                    } else {
+                        StudentDataShareAuthorization dataAuthorizationStudentsAssociation =
+                                registration.getStudent().getActivePersonalDataAuthorization();
+                        allowAccess =
+                                dataAuthorizationStudentsAssociation != null
+                                        && dataAuthorizationStudentsAssociation.getAuthorizationChoice()
+                                                .isForStudentsAssociation();
+                    }
+                    if (allowAccess) {
                         final JSONObject jsonObject = new JSONObject();
                         jsonObject.put("email", person.getEmailForSendingEmails());
                         jsonObject.put("degree", registration.getLastDegreeCurricularPlan().getDegree().getSigla());

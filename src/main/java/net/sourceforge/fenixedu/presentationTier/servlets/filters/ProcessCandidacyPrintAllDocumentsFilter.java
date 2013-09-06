@@ -38,8 +38,8 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.SimpleHtmlSerializer;
 import org.htmlcleaner.TagNode;
@@ -141,7 +141,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
                 break;
             }
             setField("topmostSubform[0].Page1[0].Telemovel[0]", person.getDefaultMobilePhoneNumber());
-            setField("topmostSubform[0].Page1[0].E-mail[0]", person.getInstitutionalEmailAddressValue());
+            setField("topmostSubform[0].Page1[0].E-mail[0]", getMail(person));
             setField("topmostSubform[0].Page1[0].Moradaprincipal[0]", person.getAddress());
             setField("topmostSubform[0].Page1[0].localidade[0]", person.getAreaOfAreaCode());
             String postalCode = person.getPostalCode();
@@ -179,7 +179,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
             setField("StudentIdentification", person.getIstUsername());
             setField("Phone", person.getDefaultMobilePhoneNumber());
-            setField("Email", person.getInstitutionalEmailAddressValue());
+            setField("Email", getMail(person));
             setField("CurrentDate", new DateTime().toString(DateTimeFormat.forPattern("dd/MM/yyyy HH:mm")));
 
             SantanderPhotoEntry photoEntryForPerson =
@@ -270,7 +270,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             String last3Numbers = postalCode.substring(dashIndex + 1, dashIndex + 4);
             setField("Código Postal_5", last3Numbers);
             setField("Móvel", person.getDefaultMobilePhoneNumber());
-            setField("E-mail", person.getInstitutionalEmailAddressValue());
+            setField("E-mail", getMail(person));
 
             YearMonthDay emissionDate = person.getEmissionDateOfDocumentIdYearMonthDay();
             if (emissionDate != null) {
@@ -384,6 +384,15 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             if (fieldContent != null) {
                 form.setField(fieldName, fieldContent);
             }
+        }
+    }
+
+    private String getMail(Person person) {
+        if (person.hasInstitutionalEmailAddress()) {
+            return person.getInstitutionalEmailAddressValue();
+        } else {
+            String emailForSendingEmails = person.getEmailForSendingEmails();
+            return emailForSendingEmails != null ? emailForSendingEmails : StringUtils.EMPTY;
         }
     }
 
@@ -589,7 +598,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             map.put("locality", person.getAreaOfAreaCode());
             map.put("cellphoneNumber", person.getDefaultMobilePhoneNumber());
             map.put("telephoneNumber", person.getDefaultPhoneNumber());
-            map.put("emailAddress", person.getInstitutionalEmailAddressValue());
+            map.put("emailAddress", getMail(person));
             map.put("currentDate", new java.text.SimpleDateFormat("'Lisboa, 'dd' de 'MMMM' de 'yyyy", new java.util.Locale("PT",
                     "pt")).format(new java.util.Date()));
         } catch (NullPointerException e) {

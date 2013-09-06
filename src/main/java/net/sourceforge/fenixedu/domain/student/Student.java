@@ -369,6 +369,15 @@ public class Student extends Student_Base {
         new StudentDataShareStudentsAssociationAuthorization(this, authorization);
     }
 
+    public StudentDataShareStudentsAssociationAuthorization getStudentPersonalDataStudentsAssociationAuthorization() {
+        for (StudentDataShareAuthorization shareAuthorization : getStudentDataShareAuthorizationSet()) {
+            if (shareAuthorization instanceof StudentDataShareStudentsAssociationAuthorization) {
+                return (StudentDataShareStudentsAssociationAuthorization) shareAuthorization;
+            }
+        }
+        return null;
+    }
+
     public boolean hasFilledAuthorizationInformationInCurrentExecutionYear() {
         return getActivePersonalDataAuthorization() != null
                 && getActivePersonalDataAuthorization().getSince().isAfter(
@@ -763,8 +772,7 @@ public class Student extends Student_Base {
         Map<Registration, Set<DistributedTest>> result = new HashMap<Registration, Set<DistributedTest>>();
         for (final Registration registration : getRegistrationsSet()) {
             for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
-                if (studentTestQuestion.getDistributedTest().getTestScope().getExecutionCourse()
-                                .equals(executionCourse)) {
+                if (studentTestQuestion.getDistributedTest().getTestScope().getExecutionCourse().equals(executionCourse)) {
                     Set<DistributedTest> tests = result.get(registration);
                     if (tests == null) {
                         tests = new HashSet<DistributedTest>();
@@ -773,7 +781,7 @@ public class Student extends Student_Base {
                     result.put(registration, tests);
                 }
             }
-        } 
+        }
         return result;
     }
 
