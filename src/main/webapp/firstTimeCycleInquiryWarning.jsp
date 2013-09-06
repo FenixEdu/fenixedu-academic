@@ -18,7 +18,7 @@
 		<div id="container">
 			<% 
 				LocalDate now = new LocalDate();
-				LocalDate limitDate = new LocalDate(2012, 12, 1);
+				LocalDate limitDate = new LocalDate(2013, 12, 1);
 			%>
 			<div id="dotist_id">
 				<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"

@@ -184,20 +184,29 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
             SantanderPhotoEntry photoEntryForPerson =
                     SantanderPhotoEntry.getOrCreatePhotoEntryForPerson(candidacy.getRegistration().getPerson());
-            setField("Sequence", photoEntryForPerson.getPhotoIdentifier());
+            if (photoEntryForPerson != null) {
+                setField("Sequence", photoEntryForPerson.getPhotoIdentifier());
 
-            try {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                BarcodeImageHandler.writeJPEG(BarcodeFactory.createCode39(photoEntryForPerson.getPhotoIdentifier(), false), baos);
-                Jpeg sequenceBarcodeImg = new Jpeg(baos.toByteArray());
-                float[] sequenceFieldPositions = form.getFieldPositions("SequenceBarcode"); // 1-lowerleftX, 2-lly, 3-upperRightX, 4-ury
-                sequenceBarcodeImg.setAbsolutePosition(sequenceFieldPositions[1], sequenceFieldPositions[2]);
-                sequenceBarcodeImg.scalePercent(45);
-                stamper.getOverContent(1).addImage(sequenceBarcodeImg);
-            } catch (OutputException e) {
-                e.printStackTrace();
-            } catch (BarcodeException be) {
-                be.printStackTrace();
+                try {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    BarcodeImageHandler.writeJPEG(BarcodeFactory.createCode39(photoEntryForPerson.getPhotoIdentifier(), false),
+                            baos);
+                    Jpeg sequenceBarcodeImg = new Jpeg(baos.toByteArray());
+                    float[] sequenceFieldPositions = form.getFieldPositions("SequenceBarcode"); // 1-lowerleftX, 2-lly, 3-upperRightX, 4-ury
+                    sequenceBarcodeImg.setAbsolutePosition(sequenceFieldPositions[1], sequenceFieldPositions[2]);
+                    sequenceBarcodeImg.scalePercent(45);
+                    stamper.getOverContent(1).addImage(sequenceBarcodeImg);
+                } catch (OutputException e) {
+                    e.printStackTrace();
+                } catch (BarcodeException be) {
+                    be.printStackTrace();
+                }
+
+                Jpeg photo = new Jpeg(photoEntryForPerson.getPhotoAsByteArray());
+                float[] photoFieldPositions = form.getFieldPositions("Photo"); // 1-lowerleftX, 2-lly, 3-upperRightX, 4-ury
+                photo.setAbsolutePosition(photoFieldPositions[1], photoFieldPositions[2]);
+                photo.scalePercent(95);
+                stamper.getOverContent(1).addImage(photo);
             }
 
             try {
@@ -213,12 +222,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             } catch (BarcodeException be) {
                 be.printStackTrace();
             }
-
-            Jpeg photo = new Jpeg(photoEntryForPerson.getPhotoAsByteArray());
-            float[] photoFieldPositions = form.getFieldPositions("Photo"); // 1-lowerleftX, 2-lly, 3-upperRightX, 4-ury
-            photo.setAbsolutePosition(photoFieldPositions[1], photoFieldPositions[2]);
-            photo.scalePercent(95);
-            stamper.getOverContent(1).addImage(photo);
 
             stamper.setFormFlattening(true);
             stamper.close();
