@@ -93,7 +93,7 @@ public class JerseyPublic {
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("about")
-    public static String about() {
+    public String about() {
         JSONObject jsonAbout = new JSONObject();
         jsonAbout.put("newsRss", PropertiesManager.getProperty("fenix.api.news.rss.url"));
         jsonAbout.put("eventsRss", PropertiesManager.getProperty("fenix.api.events.rss.url"));
@@ -103,7 +103,7 @@ public class JerseyPublic {
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("degrees")
-    public static String degrees(@QueryParam("year") String year) {
+    public String degrees(@QueryParam("year") String year) {
         JSONArray infos = new JSONArray();
 
         ExecutionYear executionYear = getExecutionYear(year);
@@ -166,7 +166,7 @@ public class JerseyPublic {
         return infos.toJSONString();
     }
 
-    private static String mls(MultiLanguageString mls) {
+    private String mls(MultiLanguageString mls) {
         if (mls == null) {
             return StringUtils.EMPTY;
         }
@@ -176,7 +176,7 @@ public class JerseyPublic {
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("degrees/{oid}")
-    public static String degreesByOid(@PathParam("oid") String oid, @QueryParam("year") String year) {
+    public String degreesByOid(@PathParam("oid") String oid, @QueryParam("year") String year) {
         JSONObject jsonResult = new JSONObject();
         JSONArray teachersArray = new JSONArray();
         Degree degree = getDomainObject(oid);
@@ -227,7 +227,7 @@ public class JerseyPublic {
         return jsonResult.toJSONString();
     }
 
-    private static JSONArray getTeacherPublicMail(Teacher teacher) {
+    private JSONArray getTeacherPublicMail(Teacher teacher) {
         JSONArray mailArray = new JSONArray();
         if (teacher != null) {
             for (EmailAddress emailAddress : teacher.getPerson().getEmailAddresses()) {
@@ -241,7 +241,7 @@ public class JerseyPublic {
         return mailArray;
     }
 
-    private static JSONArray getTeacherPublicWebAddress(Teacher teacher) {
+    private JSONArray getTeacherPublicWebAddress(Teacher teacher) {
         JSONArray urlArray = new JSONArray();
         if (teacher != null) {
             for (WebAddress webAddress : teacher.getPerson().getWebAddresses()) {
@@ -258,7 +258,7 @@ public class JerseyPublic {
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("degrees/{oid}/courses")
-    public static String coursesByODegreesId(@PathParam("oid") String oid, @QueryParam("year") String year) {
+    public String coursesByODegreesId(@PathParam("oid") String oid, @QueryParam("year") String year) {
         JSONArray jsonResult = new JSONArray();
         Degree degree = getDomainObject(oid);
 
@@ -289,7 +289,7 @@ public class JerseyPublic {
         return jsonResult.toJSONString();
     }
 
-    private static String getCredits(ExecutionCourse ec, Degree degree) {
+    private String getCredits(ExecutionCourse ec, Degree degree) {
         for (CurricularCourse curricularCourse : ec.getAssociatedCurricularCourses()) {
             if (degree.equals(curricularCourse.getDegree())) {
                 return curricularCourse.getEctsCredits().toString();
@@ -298,7 +298,7 @@ public class JerseyPublic {
         return "N/A";
     }
 
-    private static String getServerLink() {
+    private String getServerLink() {
         String serverLink;
         final String appName = PropertiesManager.getProperty("http.host");
         final String appContext = PropertiesManager.getProperty("app.context");
@@ -320,7 +320,7 @@ public class JerseyPublic {
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("courses/{oid}/")
-    public static String coursesByOid(@PathParam("oid") String oid) {
+    public String coursesByOid(@PathParam("oid") String oid) {
         JSONObject jsonResult = new JSONObject();
         ExecutionCourse executionCourse = getDomainObject(oid);
         jsonResult.put("courseAcronym", executionCourse.getSigla());
@@ -393,7 +393,7 @@ public class JerseyPublic {
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("courses/{oid}/groups")
-    public static String groupsCoursesByOid(@PathParam("oid") String oid) {
+    public String groupsCoursesByOid(@PathParam("oid") String oid) {
         JSONObject jsonResult = new JSONObject();
 
         ExecutionCourse executionCourse = getDomainObject(oid);
@@ -439,7 +439,7 @@ public class JerseyPublic {
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("courses/{oid}/students")
-    public static String studentsCoursesByOid(@PathParam("oid") String oid) {
+    public String studentsCoursesByOid(@PathParam("oid") String oid) {
 
         JSONObject jsonResult = new JSONObject();
         ExecutionCourse executionCourse = getDomainObject(oid);
@@ -477,7 +477,7 @@ public class JerseyPublic {
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("courses/{oid}/evaluation")
-    public static String evaluationCoursesByOid(@PathParam("oid") String oid) {
+    public String evaluationCoursesByOid(@PathParam("oid") String oid) {
 
         ExecutionCourse executionCourse = getDomainObject(oid);
         JSONArray jsonEvaluation = new JSONArray();
@@ -496,7 +496,7 @@ public class JerseyPublic {
         return jsonEvaluation.toJSONString();
     }
 
-    private static JSONObject getAdhocEvaluationJSON(AdHocEvaluation adHocEvaluation) {
+    private JSONObject getAdhocEvaluationJSON(AdHocEvaluation adHocEvaluation) {
         JSONObject jsonEvaluationInfo = new JSONObject();
 
         jsonEvaluationInfo.put("name", adHocEvaluation.getPresentationName());
@@ -506,7 +506,7 @@ public class JerseyPublic {
         return jsonEvaluationInfo;
     }
 
-    private static JSONObject getOnlineTestJSON(OnlineTest onlineTest) {
+    private JSONObject getOnlineTestJSON(OnlineTest onlineTest) {
         JSONObject jsonEvaluationInfo = new JSONObject();
 
         jsonEvaluationInfo.put("name", onlineTest.getPresentationName());
@@ -515,7 +515,7 @@ public class JerseyPublic {
         return jsonEvaluationInfo;
     }
 
-    private static JSONObject getProjectEvaluationJSON(Project projectEvaluation) {
+    private JSONObject getProjectEvaluationJSON(Project projectEvaluation) {
         JSONObject jsonEvaluationInfo = new JSONObject();
 
         jsonEvaluationInfo.put("name", projectEvaluation.getPresentationName());
@@ -534,7 +534,7 @@ public class JerseyPublic {
         return jsonEvaluationInfo;
     }
 
-    private static JSONObject getWrittenEvaluationJSON(WrittenEvaluation writtenEvaluation) {
+    private JSONObject getWrittenEvaluationJSON(WrittenEvaluation writtenEvaluation) {
         JSONObject jsonEvaluationInfo = new JSONObject();
 
         jsonEvaluationInfo.put("name", writtenEvaluation.getPresentationName());
@@ -578,7 +578,7 @@ public class JerseyPublic {
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("courses/{oid}/schedule")
-    public static String scheduleCoursesByOid(@PathParam("oid") String oid) {
+    public String scheduleCoursesByOid(@PathParam("oid") String oid) {
 
         ExecutionCourse executionCourse = getDomainObject(oid);
 
@@ -625,7 +625,7 @@ public class JerseyPublic {
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("spaces")
-    public static String spaces() {
+    public String spaces() {
         JSONArray jsonResult = new JSONArray();
         for (Campus campus : Space.getAllCampus()) {
             JSONObject jsonBuildingInfo = new JSONObject();
@@ -639,7 +639,7 @@ public class JerseyPublic {
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("spaces/{oid}")
-    public static String spacesByOid(@PathParam("oid") String oid, @QueryParam("day") String day) {
+    public String spacesByOid(@PathParam("oid") String oid, @QueryParam("day") String day) {
         JSONObject jsonResult = new JSONObject();
 
         Resource resource = Resource.fromExternalId(oid);
@@ -689,7 +689,7 @@ public class JerseyPublic {
         return jsonResult.toJSONString();
     }
 
-    private static JSONArray getCampusInfo(Campus campu) {
+    private JSONArray getCampusInfo(Campus campu) {
         JSONArray jsonResul = new JSONArray();
         for (Building building : Space.getAllActiveBuildings()) {
             JSONObject jsonBuildingInfo = new JSONObject();
@@ -701,7 +701,7 @@ public class JerseyPublic {
 
     }
 
-    private static JSONObject getBuildingInfo(Building building) {
+    private JSONObject getBuildingInfo(Building building) {
         JSONObject jsonResult = new JSONObject();
         JSONArray jsonResultFloor = new JSONArray();
         JSONArray jsonResultRooms = new JSONArray();
@@ -725,7 +725,7 @@ public class JerseyPublic {
         return jsonResult;
     }
 
-    private static JSONObject getFloorInfo(Floor floor) {
+    private JSONObject getFloorInfo(Floor floor) {
         JSONObject jsonResult = new JSONObject();
         JSONArray jsonResultRooms = new JSONArray();
 
@@ -740,7 +740,7 @@ public class JerseyPublic {
         return jsonResult;
     }
 
-    private static JSONObject getRoomInfo(Room room, Calendar rightNow) {
+    private JSONObject getRoomInfo(Room room, Calendar rightNow) {
         JSONObject jsonResult = new JSONObject();
         JSONArray jsonSchedule = new JSONArray();
 
@@ -847,7 +847,7 @@ public class JerseyPublic {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T extends DomainObject> T getDomainObject(String externalId) {
+    private <T extends DomainObject> T getDomainObject(String externalId) {
         try {
             T domainObject = (T) AbstractDomainObject.fromExternalId(externalId);
             if (domainObject == null) {
@@ -859,14 +859,14 @@ public class JerseyPublic {
         }
     }
 
-    private static WebApplicationException newApplicationError(Status status, String error, String description) {
+    private WebApplicationException newApplicationError(Status status, String error, String description) {
         JSONObject errorObject = new JSONObject();
         errorObject.put("error", error);
         errorObject.put("description", description);
         return new WebApplicationException(Response.status(status).entity(errorObject.toJSONString()).build());
     }
 
-    private static Calendar getRoomDay(String day) {
+    private Calendar getRoomDay(String day) {
         Calendar rightNow = Calendar.getInstance();
         Date date = null;
         try {
@@ -879,7 +879,7 @@ public class JerseyPublic {
         return rightNow;
     }
 
-    private static ExecutionSemester getExecutionSemester(String sem, String year) {
+    private ExecutionSemester getExecutionSemester(String sem, String year) {
         ExecutionSemester executionSemester;
 
         boolean isBlank = StringUtils.isBlank(sem) || StringUtils.isBlank(year);
@@ -900,7 +900,7 @@ public class JerseyPublic {
         return executionSemester;
     }
 
-    private static ExecutionYear getExecutionYear(String year) {
+    private ExecutionYear getExecutionYear(String year) {
         ExecutionYear executionYear;
 
         boolean isBlank = StringUtils.isBlank(year);

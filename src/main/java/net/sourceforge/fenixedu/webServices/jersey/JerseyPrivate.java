@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.webServices.jersey;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +20,8 @@ import net.fortuna.ical4j.model.Calendar;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.ExecutionPeriodStatisticsBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -25,15 +30,21 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.util.icalendar.CalendarFactory;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.fop.fo.Status;
 import org.joda.time.format.DateTimeFormat;
@@ -41,7 +52,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import pt.ist.fenixWebFramework.rendererExtensions.util.RendererMessageResourceProvider;
+import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.net.HttpHeaders;
@@ -49,14 +60,34 @@ import com.google.common.net.HttpHeaders;
 @Path("/private/v1")
 public class JerseyPrivate {
 
+    public final static String PERSONAL_SCOPE = "personal info";
+    public final static String CURRICULUM_SCOPE = "curriculum";
+    public final static String SCHEDULE_SCOPE = "schedule info";
+    public final static String REGISTRATIONS_SCOPE = "registrations";
+    public final static String CURRICULAR_SCOPE = "curricular";
     //private final static String istID = "ist158444";
-    private static final SimpleDateFormat dataFormatDay = new SimpleDateFormat("dd/MM/yyyy");
-    private static final SimpleDateFormat dataFormatHour = new SimpleDateFormat("HH:mm");
+    //private static final SimpleDateFormat dataFormatDay = new SimpleDateFormat("dd/MM/yyyy");
+    //private static final SimpleDateFormat dataFormatHour = new SimpleDateFormat("HH:mm");
 
     private static final DateTimeFormatter formatDay = DateTimeFormat.forPattern("dd/MM/yyyy");
     private static final DateTimeFormatter formatHour = DateTimeFormat.forPattern("HH:mm");
 
-    private static String mls(MultiLanguageString mls) {
+    private List<Evaluation> evaluationsWithEnrolmentPeriodOpened;
+    private List<Evaluation> evaluationsWithEnrolmentPeriodClosed;
+    protected Integer evaluationType;
+    private ExecutionSemester executionSemester;
+    private Map<Integer, String> studentRooms;
+    private List<Evaluation> notEnroledEvaluations;
+    private List<Evaluation> enroledEvaluations;
+    private List<Evaluation> evaluationsWithoutEnrolmentPeriod;
+    private Map<Integer, List<ExecutionCourse>> executionCourses;
+    private Map<Integer, Boolean> enroledEvaluationsForStudent;
+
+    protected static final Integer ALL = Integer.valueOf(0);
+    protected static final Integer EXAMS = Integer.valueOf(1);
+    protected static final Integer WRITTENTESTS = Integer.valueOf(2);
+
+    private String mls(MultiLanguageString mls) {
         if (mls == null) {
             return StringUtils.EMPTY;
         }
@@ -131,7 +162,7 @@ public class JerseyPrivate {
         return jsonResult.toJSONString();
     }
 
-    private static JSONArray getInformation(List<String> list) {
+    private JSONArray getInformation(List<String> list) {
         JSONArray jsonArray = new JSONArray();
         for (String string : list) {
             JSONObject jsonInfo = new JSONObject();
@@ -142,11 +173,11 @@ public class JerseyPrivate {
 
     }
 
+    //@Scope(CURRICULAR_SCOPE)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("person/courses/")
-    public static String personCourses(@QueryParam("sem") String sem, @QueryParam("year") String year,
-            @QueryParam("istid") String istid) {
+    public String personCourses(@QueryParam("sem") String sem, @QueryParam("year") String year, @QueryParam("istid") String istid) {
 /*
         if (UserView.getUser() != null) {
             istid = UserView.getUser().getUsername();
@@ -196,50 +227,25 @@ public class JerseyPrivate {
         return jsonResult.toJSONString();
     }
 
-    /*
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("person/schedule/")
-    public static String personSchedule() {
-
-        final Person person = Person.readPersonByUsername("ist164216");
-
-        PersonInformationBean pib = new PersonInformationBean(person);
-
-        JSONArray jsonLessons = new JSONArray();
-
-        for (EnrolledLessonBean enrolledLessonBean : pib.getLessonsSchedule()) {
-            JSONObject jsonLessonInfo = new JSONObject();
-            jsonLessonInfo.put("course", enrolledLessonBean.getCourseAcronym());
-            jsonLessonInfo.put("lesson_type", enrolledLessonBean.getLessonType());
-            jsonLessonInfo.put("weekday", enrolledLessonBean.getWeekDay());
-            jsonLessonInfo.put("room", enrolledLessonBean.getRoom());
-            jsonLessonInfo.put("time_begin", enrolledLessonBean.getBegin());
-            jsonLessonInfo.put("time_end", enrolledLessonBean.getEnd());
-            jsonLessons.add(jsonLessonInfo);
-        }
-        return jsonLessons.toJSONString();
-    }
-     */
-
+    //@Scope(SCHEDULE_SCOPE)
     @GET
     @Path("person/calendar/evaluations")
-    public static Response calendarEvaluation(@QueryParam("istid") String istid, @QueryParam("format") String format,
+    public Response calendarEvaluation(@QueryParam("istid") String istid, @QueryParam("format") String format,
             @Context HttpServletRequest httpRequest) {
 
         if ("calendar".equals(format)) {
             final String serverName = httpRequest.getServerName();
             final int serverPort = httpRequest.getServerPort();
             final String serverScheme = httpRequest.getScheme();
-            return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, "text/calendar; charset=utf-8")
-                    .entity(evaluationCalendarICal(istid, serverScheme, serverScheme, serverPort)).build();
+            String evaluationCalendarICal = evaluationCalendarICal(istid, serverScheme, serverName, serverPort);
+            return Response.ok(evaluationCalendarICal, "text/calendar;charset=UTF-8").build();
         } else {
-            return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, "application/json; charset=utf-8")
+            return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, "application/json; charset=UTF-8")
                     .entity(evaluationCalendarJson(istid)).build();
         }
     }
 
-    private static String evaluationCalendarICal(String istid, String serverScheme, String serverName, int serverPort) {
+    private String evaluationCalendarICal(String istid, String serverScheme, String serverName, int serverPort) {
         final User user = User.readUserByUserUId(istid);
         ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
 
@@ -251,7 +257,7 @@ public class JerseyPrivate {
         return createCalendar.toString();
     }
 
-    private static String evaluationCalendarJson(String istid) {
+    private String evaluationCalendarJson(String istid) {
         JSONObject jsonResult = new JSONObject();
         final User user = User.readUserByUserUId(istid);
         if (user == null) {
@@ -284,24 +290,24 @@ public class JerseyPrivate {
         return jsonResult.toJSONString();
     }
 
+    //@Scope(SCHEDULE_SCOPE)
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("person/calendar/classes")
-    public static Response calendarClasses(@QueryParam("istid") String istid, @QueryParam("format") String format,
+    public Response calendarClasses(@QueryParam("istid") String istid, @QueryParam("format") String format,
             @Context HttpServletRequest httpRequest) {
         if ("calendar".equals(format)) {
             final String serverName = httpRequest.getServerName();
             final int serverPort = httpRequest.getServerPort();
             final String serverScheme = httpRequest.getScheme();
-            return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, "text/calendar; charset=utf-8")
-                    .entity(classesCalendarICal(istid, serverScheme, serverScheme, serverPort)).build();
+            String classesCalendarICal = classesCalendarICal(istid, serverScheme, serverName, serverPort);
+            return Response.ok(classesCalendarICal, "text/calendar; charset=UTF-8").build();
         } else {
-            return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, "application/json; charset=utf-8")
+            return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, "application/json; charset=UTF-8")
                     .entity(classesCalendarJson(istid)).build();
         }
     }
 
-    private static String classesCalendarICal(String istid, String serverScheme, String serverName, int serverPort) {
+    private String classesCalendarICal(String istid, String serverScheme, String serverName, int serverPort) {
         final User user = User.readUserByUserUId(istid);
         ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
 
@@ -313,7 +319,7 @@ public class JerseyPrivate {
         return createCalendar.toString();
     }
 
-    private static String classesCalendarJson(String istid) {
+    private String classesCalendarJson(String istid) {
 
         JSONObject jsonResult = new JSONObject();
         final User user = User.readUserByUserUId(istid);
@@ -346,9 +352,10 @@ public class JerseyPrivate {
         return jsonResult.toJSONString();
     }
 
+    //@Scope(CURRICULUM_SCOPE)
     @GET
     @Path("person/curriculum")
-    public static String personCurriculum(@QueryParam("istid") String istid) {
+    public String personCurriculum(@QueryParam("istid") String istid) {
 
         Person person = Person.readPersonByIstUsername(istid);
 
@@ -357,7 +364,7 @@ public class JerseyPrivate {
         return jsonResult.toJSONString();
     }
 
-    private static JSONArray getStudentStatistics(List<Registration> registrations) {
+    private JSONArray getStudentStatistics(List<Registration> registrations) {
 
         JSONArray jsonCurricularPlan = new JSONArray();
         JSONArray jsonExecutionSemester = new JSONArray();
@@ -392,7 +399,7 @@ public class JerseyPrivate {
         return jsonCurricularPlan;
     }
 
-    public static JSONObject getRegistrationInfo(ExecutionSemester executionSemester, StudentCurricularPlan studentCurricularPlan) {
+    public JSONObject getRegistrationInfo(ExecutionSemester executionSemester, StudentCurricularPlan studentCurricularPlan) {
         JSONObject jsonexecutionPeriodStatisticsBean = new JSONObject();
         JSONArray jsonexecutionCourseStatisticsBean = new JSONArray();
 
@@ -425,9 +432,20 @@ public class JerseyPrivate {
         return jsonexecutionPeriodStatisticsBean;
     }
 
+    private List<Event> calculateNotPayedEvents(final Person person) {
+
+        final List<Event> result = new ArrayList<Event>();
+
+        result.addAll(person.getNotPayedEventsPayableOn(null, false));
+        result.addAll(person.getNotPayedEventsPayableOn(null, true));
+
+        return result;
+    }
+
+    //@Scope(PERSONAL_SCOPE)
     @GET
     @Path("person/payments")
-    public static String personPayments(@QueryParam("istid") String istid) {
+    public String personPayments(@QueryParam("istid") String istid) {
 
         JSONObject jsonResult = new JSONObject();
 
@@ -435,48 +453,166 @@ public class JerseyPrivate {
         JSONArray jsonNotPayed = new JSONArray();
 
         Properties props = new Properties();
-        props.setProperty("application", "APPLICATION_RESOURCES");
-        props.setProperty("enum", "ENUMERATION_RESOURCES");
-        props.setProperty("default", "APPLICATION_RESOURCES");
-        RendererMessageResourceProvider provider = new RendererMessageResourceProvider(props);
+        props.setProperty("application", "resources.ApplicationResources");
+        props.setProperty("enum", "resources.EnumerationResources");
+        props.setProperty("default", "resources.ApplicationResources");
+        DefaultResourceBundleProvider provider = new DefaultResourceBundleProvider(props);
         Person person = Person.readPersonByIstUsername(istid);
         for (Entry entry : person.getPayments()) {
             JSONObject paymentInfo = new JSONObject();
 
             paymentInfo.put("amount", entry.getOriginalAmount().getAmountAsString());
             paymentInfo.put("name", entry.getPaymentMode().getName());
-            //System.out.println("-- " + entry.getDescription().toString(provider));
-            //System.out.println("-- " + entry.getAccountingTransaction().getDescriptionForEntryType(entry.getEntryType()));
+            paymentInfo.put("description", entry.getDescription().toString(provider));
             paymentInfo.put("date", formatDay.print(entry.getWhenRegistered()));
             jsonPayments.add(paymentInfo);
 
         }
 
-        for (Event entry : person.getNotPayedEvents()) {
-            JSONObject notPayedInfo = new JSONObject();
+        List<Event> notPayedEvents = calculateNotPayedEvents(person);
+        notPayedEvents.get(0).getNonProcessedPaymentCodes();
 
-            notPayedInfo.put("total", entry.getTotalAmountToPay());
-            notPayedInfo.put("codes", entry.getPaymentCodesCount());
-            notPayedInfo.put("amountToPay", entry.getAmountToPay());
-            jsonNotPayed.add(notPayedInfo);
-            //System.out.println("-- " + entry.getDescription());
+        for (Event event : notPayedEvents) {
+
+            for (AccountingEventPaymentCode accountingEventPaymentCode : event.getNonProcessedPaymentCodes()) {
+                JSONObject notPayedInfo = new JSONObject();
+
+                notPayedInfo.put("description", accountingEventPaymentCode.getDescription());
+                notPayedInfo.put("startDate", formatDay.print(accountingEventPaymentCode.getStartDate()));
+                notPayedInfo.put("endDate", formatDay.print(accountingEventPaymentCode.getEndDate()));
+                notPayedInfo.put("entity", accountingEventPaymentCode.getEntityCode());
+                notPayedInfo.put("reference", accountingEventPaymentCode.getFormattedCode());
+                notPayedInfo.put("amount", accountingEventPaymentCode.getMaxAmount().getAmountAsString());
+                jsonNotPayed.add(notPayedInfo);
+            }
         }
         jsonResult.put("payments", jsonPayments);
         jsonResult.put("notPayed", jsonNotPayed);
         return jsonResult.toString();
     }
 
+    //@Scope(REGISTRATIONS_SCOPE)
     @GET
     @Path("person/evaluations")
-    public static String evaluations(@QueryParam("istid") String istid) {
+    public String evaluations(@QueryParam("istid") String istid) {
         JSONObject jsonResult = new JSONObject();
 
         Person person = Person.readPersonByIstUsername(istid);
+        processEvaluations(person.getStudent());
+
+        for (Evaluation evaluation : evaluationsWithEnrolmentPeriodClosed) {
+            evaluation.getPresentationName();
+            evaluation.getEvaluationType().toString();
+            evaluation.getExternalId();
+            for (ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
+                executionCourse.getName();
+            }
+        }
+        for (Evaluation evaluation : evaluationsWithEnrolmentPeriodOpened) {
+            evaluation.getPresentationName();
+            evaluation.getEvaluationType().toString();
+            evaluation.getExternalId();
+            for (ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
+                executionCourse.getName();
+            }
+        }
 
         return null;
     }
 
-    public static boolean isTeacher(String istId) {
+    public Integer getEvaluationType() {
+        if (this.evaluationType == null) {
+            this.evaluationType = ALL;
+        }
+        return this.evaluationType;
+    }
+
+    public String getEvaluationTypeString() {
+        final Integer type = getEvaluationType();
+        if (type != null && type.equals(EXAMS)) {
+            return "net.sourceforge.fenixedu.domain.Exam";
+        } else if (type != null && type.equals(WRITTENTESTS)) {
+            return "net.sourceforge.fenixedu.domain.WrittenTest";
+        }
+        return "";
+    }
+
+    public Map<Integer, String> getStudentRooms() {
+        if (this.studentRooms == null) {
+            this.studentRooms = new HashMap<Integer, String>();
+        }
+        return this.studentRooms;
+    }
+
+    public List<Evaluation> getEvaluationsWithoutEnrolmentPeriod() {
+        if (this.evaluationsWithoutEnrolmentPeriod == null) {
+            this.evaluationsWithoutEnrolmentPeriod = new ArrayList();
+        }
+        return this.evaluationsWithoutEnrolmentPeriod;
+    }
+
+    public Map<Integer, Boolean> getEnroledEvaluationsForStudent() {
+        if (this.enroledEvaluationsForStudent == null) {
+            this.enroledEvaluationsForStudent = new HashMap<Integer, Boolean>();
+        }
+        return this.enroledEvaluationsForStudent;
+    }
+
+    public Map<Integer, List<ExecutionCourse>> getExecutionCourses() {
+        if (this.executionCourses == null) {
+            this.executionCourses = new HashMap<Integer, List<ExecutionCourse>>();
+        }
+        return this.executionCourses;
+    }
+
+    private void processEvaluations(Student student) {
+        this.evaluationsWithEnrolmentPeriodClosed = new ArrayList();
+        this.evaluationsWithEnrolmentPeriodOpened = new ArrayList();
+
+        final String evaluationType = getEvaluationTypeString();
+        for (final Registration registration : student.getRegistrations()) {
+
+            if (!registration.hasStateType(getExecutionSemester("", ""), RegistrationStateType.REGISTERED)) {
+                continue;
+            }
+
+            for (final WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(getExecutionSemester("", ""))) {
+                if (writtenEvaluation instanceof Exam) {
+                    final Exam exam = (Exam) writtenEvaluation;
+                    if (!exam.isExamsMapPublished()) {
+                        continue;
+                    }
+                }
+
+                if (writtenEvaluation.getClass().getName().equals(evaluationType)) {
+                    try {
+                        if (writtenEvaluation.isInEnrolmentPeriod()) {
+                            this.evaluationsWithEnrolmentPeriodOpened.add(writtenEvaluation);
+                        } else {
+                            this.evaluationsWithEnrolmentPeriodClosed.add(writtenEvaluation);
+                            final AllocatableSpace room = registration.getRoomFor(writtenEvaluation);
+                            getStudentRooms().put(writtenEvaluation.getIdInternal(), room != null ? room.getNome() : "-");
+                        }
+                    } catch (final DomainException e) {
+                        getEvaluationsWithoutEnrolmentPeriod().add(writtenEvaluation);
+                        final AllocatableSpace room = registration.getRoomFor(writtenEvaluation);
+                        getStudentRooms().put(writtenEvaluation.getIdInternal(), room != null ? room.getNome() : "-");
+                    } finally {
+                        getEnroledEvaluationsForStudent().put(writtenEvaluation.getIdInternal(),
+                                Boolean.valueOf(registration.isEnroledIn(writtenEvaluation)));
+                        getExecutionCourses().put(writtenEvaluation.getIdInternal(),
+                                writtenEvaluation.getAttendingExecutionCoursesFor(registration));
+                    }
+                }
+            }
+        }
+
+        Collections.sort(this.evaluationsWithEnrolmentPeriodClosed, new BeanComparator("dayDate"));
+        Collections.sort(this.evaluationsWithEnrolmentPeriodOpened, new BeanComparator("dayDate"));
+        Collections.sort(getEvaluationsWithoutEnrolmentPeriod(), new BeanComparator("dayDate"));
+    }
+
+    public boolean isTeacher(String istId) {
         Teacher teacher = Teacher.readByIstId(istId);
         if (teacher != null) {
             return true;
@@ -493,7 +629,7 @@ public class JerseyPrivate {
         return false;
     }
 
-    private static ExecutionSemester getExecutionSemester(String sem, String year) {
+    private ExecutionSemester getExecutionSemester(String sem, String year) {
         ExecutionSemester executionSemester;
 
         boolean isBlank = StringUtils.isBlank(sem) || StringUtils.isBlank(year);
@@ -514,7 +650,7 @@ public class JerseyPrivate {
         return executionSemester;
     }
 
-    private static ExecutionYear getExecutionYear(String year) {
+    private ExecutionYear getExecutionYear(String year) {
         //year String "2012/2013"
 
         ExecutionYear executionYear;
