@@ -119,7 +119,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
     public void importCandidates() {
 
-        Language.setDefaultLocale(new Locale("pt"));
+        Language.setDefaultLocale(new Locale("pt", "PT"));
         final List<DegreeCandidateDTO> degreeCandidateDTOs =
                 parseDgesFile(getDgesStudentImportationFile().getContents(), getUniversityAcronym(), getEntryPhase());
 

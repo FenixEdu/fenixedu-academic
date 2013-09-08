@@ -9,8 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
-import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -370,7 +368,6 @@ public class DegreeCandidateDTO implements IFileLine {
     public Person createPerson() {
         final Person person = new Person(getName(), getGender(), getDocumentIdNumber(), IDDocumentType.IDENTITY_CARD);
 
-        person.setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(person)));
         person.setMaritalStatus(MaritalStatus.SINGLE);
         person.setDateOfBirthYearMonthDay(getDateOfBirth());
         person.setIdentificationDocumentSeriesNumber(getDocumentCheckDigit());
