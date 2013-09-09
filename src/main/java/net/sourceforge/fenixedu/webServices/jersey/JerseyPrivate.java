@@ -74,7 +74,8 @@ public class JerseyPrivate {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("person")
-    public static String person(@QueryParam("istid") String istid) {
+    @FenixAPIScope("info")
+    public String person(@QueryParam("istid") String istid) {
 
         /*
         if (UserView.getUser() != null) {

@@ -96,3 +96,24 @@ alter table `APP_USER_SESSION` add `DEVICE_ID` text;
 
 -- Inserted at 2013-09-05T20:05:42.313+01:00
 
+
+
+
+-- Inserted at 2013-09-07T02:45:51.464+01:00
+
+alter table `PARTY` add `OID_SANTANDER_PHOTO_ENTRY` bigint unsigned;
+create table `PERMISSIONS_SCOPE` (`OID_AUTH_SCOPE` bigint unsigned, `OID_EXTERNAL_APPLICATION` bigint unsigned, primary key (OID_AUTH_SCOPE, OID_EXTERNAL_APPLICATION), index (OID_AUTH_SCOPE), index (OID_EXTERNAL_APPLICATION)) ENGINE=InnoDB, character set utf8;
+create table `AUTH_SCOPE` (`OID` bigint unsigned, `NAME` text, `OID_DOMAIN_META_OBJECT` bigint unsigned, `ENDPOINTS` text, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
+create table `SANTANDER_PHOTO_ENTRY` (`OID_PHOTOGRAPH` bigint unsigned, `OID` bigint unsigned, `SEQUENCE_NUMBER` int(11), `OID_NEXT` bigint unsigned, `OID_DOMAIN_META_OBJECT` bigint unsigned, `WHEN_GENERATED` timestamp NULL default NULL, `OID_PERSON` bigint unsigned, `OID_PREVIOUS` bigint unsigned, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_PHOTOGRAPH), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
+create table `PICTURE` (`OID_PHOTOGRAPH` bigint unsigned, `OID` bigint unsigned, `PICTURE_DATA` blob, `OID_DOMAIN_META_OBJECT` bigint unsigned, `PICTURE_MODE` text, `ASPECT_RATIO` text, `HEIGHT` int(11), `PICTURE_FILE_FORMAT` text, `PICTURE_SIZE` text, `OJB_CONCRETE_CLASS` varchar(255) NOT NULL DEFAULT '', `WIDTH` int(11), `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_PHOTOGRAPH)) ENGINE=InnoDB, character set utf8;
+create table `EXTERNAL_APPLICATION` (`OID` bigint unsigned, `NAME` text, `OID_DOMAIN_META_OBJECT` bigint unsigned, `OID_AUTHOR` bigint unsigned, `URL` text, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `SECRET` text, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_AUTHOR), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
+create table `APP_USER_SESSION` (`EXPIRATION_DATE` timestamp NULL default NULL, `REFRESH_TOKEN` text, `OID` bigint unsigned, `ACCESS_TOKEN` text, `CODE_EXPIRATION_DATE` timestamp NULL default NULL, `OID_DOMAIN_META_OBJECT` bigint unsigned, `OID_USER` bigint unsigned, `OID_APPLICATION` bigint unsigned, `DEVICE_ID` text, `CODE` text, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_USER), index (OID_APPLICATION)) ENGINE=InnoDB, character set utf8;
+alter table `TUTORSHIP_INTENTION` add `MAX_STUDENTS_TO_TUTOR` int(11);
+create table `USER_APP_PERMISSIONS` (`OID_EXTERNAL_APPLICATION` bigint unsigned, `OID_USER` bigint unsigned, primary key (OID_EXTERNAL_APPLICATION, OID_USER), index (OID_EXTERNAL_APPLICATION), index (OID_USER)) ENGINE=InnoDB, character set utf8;
+alter table `PHOTOGRAPH` add `OID_ORIGINAL` bigint unsigned;
+alter table `SANTANDER_SEQUENCE_NUMBER_GENERATOR` add `PHOTO_SEQUENCE_NUMBER` int(11);
+
+
+
+-- Inserted at 2013-09-07T02:48:50.796+01:00
+

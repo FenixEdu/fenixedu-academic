@@ -32,8 +32,8 @@ public class AppUserSession extends AppUserSession_Base {
     }
 
     public boolean isAccessTokenValid() {
-        return getAccessToken().equals(accessToken) && getExpirationDate().plusMinutes(60).isAfterNow();
-   }
+        return getExpirationDate().plusMinutes(60).isAfterNow();
+    }
 
     public boolean matchesRefreshToken(String refreshToken) {
         if (StringUtils.isBlank(getRefreshToken()) || StringUtils.isBlank(refreshToken)) {
@@ -71,6 +71,7 @@ public class AppUserSession extends AppUserSession_Base {
         setApplication(null);
         deleteDomainObject();
     }
+
     public void invalidate() {
         // TODO notify user
         delete();

@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.webServices.jersey.FenixJerseyPackageResourceConfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,9 +112,15 @@ public class StartupServlet extends HttpServlet {
             loadRoles();
             startContactValidationServices();
             initScheduler();
+            setupFenixAPIJerseyScopes();
         } finally {
             Transaction.forceFinish();
         }
+    }
+
+    @Service
+    private void setupFenixAPIJerseyScopes() {
+        FenixJerseyPackageResourceConfig.registerAuthScopes();
     }
 
     private void startContactValidationServices() {

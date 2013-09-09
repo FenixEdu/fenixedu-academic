@@ -33,7 +33,7 @@ public class AuthScope extends AuthScope_Base {
     }
 
     public Collection<String> getJerseyEndpoints() {
-        return Arrays.asList(getEndpoints().split("|"));
+        return Arrays.asList(getEndpoints().split("\\|"));
     }
 
     public void changeJerseyEndpoints(Collection<String> endpoints) {

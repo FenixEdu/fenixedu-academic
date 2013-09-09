@@ -23,19 +23,18 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FenixJerseyPackageResourceConfig.class);
 
-    public static Multimap<String, String> map = HashMultimap.create();
+    public static Multimap<String, String> scopePathsMap = HashMultimap.create();
 
     public FenixJerseyPackageResourceConfig(Map<String, Object> props) {
         super(props);
         searchForAPIFenixScope();
-        registerAuthScopes();
     }
 
     @Service
-    private void registerAuthScopes() {
-        for (String scopeName : map.keySet()) {
+    public static final void registerAuthScopes() {
+        for (String scopeName : scopePathsMap.keySet()) {
             AuthScope authScope = AuthScope.getAuthScope(scopeName);
-            Collection<String> endpoints = map.get(scopeName);
+            Collection<String> endpoints = scopePathsMap.get(scopeName);
             if (authScope == null) {
                 authScope = new AuthScope();
                 authScope.setName(scopeName);
@@ -59,7 +58,7 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
                             String methodPath = ends(methodPathAnnotation.value());
                             String absolutePath = Joiner.on("/").join(path, methodPath);
                             String scopeName = apiScopeAnnotation.value();
-                            map.put(scopeName, absolutePath);
+                            scopePathsMap.put(scopeName, absolutePath);
                             LOGGER.debug("add {} to scope {}", absolutePath, scopeName);
                         } else {
                             LOGGER.debug("No path for method {}", method.getName());
@@ -76,5 +75,14 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
 
     private static String ends(String path) {
         return StringUtils.removeStart(StringUtils.removeEnd(path, "/"), "/");
+    }
+
+    public static AuthScope getScope(String endpoint) {
+        for (String scopeName : scopePathsMap.keySet()) {
+            if (scopePathsMap.values().contains(endpoint)) {
+                return AuthScope.getAuthScope(scopeName);
+            }
+        }
+        return null;
     }
 }
