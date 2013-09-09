@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -40,7 +41,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
 
         List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
         if (registrations.size() == 1) {
-            return forwardToShowTimeTable(registrations.get(0), mapping, request);
+            return forwardToShowTimeTable(registrations.get(0), mapping, request, null);
         } else {
             request.setAttribute("registrations", registrations);
             return mapping.findForward("chooseRegistration");
@@ -50,23 +51,23 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
     public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
-        return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request);
+        return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request, null);
     }
 
     protected ActionForward forwardToShowTimeTableForSupervisor(Registration registration, ActionMapping mapping,
             HttpServletRequest request) throws FenixActionException, FenixServiceException {
 
-        return forwardToShowTimeTable(registration, mapping, request);
+        return forwardToShowTimeTable(registration, mapping, request, null);
     }
 
     public static ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping,
-            HttpServletRequest request) throws FenixActionException, FenixServiceException {
-
-        List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(registration);
+            HttpServletRequest request, ExecutionSemester executionSemester) throws FenixActionException, FenixServiceException {
+        List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(registration, executionSemester);
 
         request.setAttribute("person", registration.getPerson());
         request.setAttribute("infoLessons", infoLessons);
         request.setAttribute("registrationId", registration.getExternalId());
+        request.setAttribute("executionSemesterId", executionSemester.getExternalId());
         return mapping.findForward("showTimeTable");
     }
 
