@@ -82,6 +82,7 @@ public class PersonalInformationForm extends Form {
         this.profession = profession;
         this.socialSecurityNumber = socialSecurityNumber;
         this.username = username;
+        this.professionType = ProfessionType.OTHER;
         this.professionalCondition = ProfessionalSituationConditionType.STUDENT;
         this.grantOwnerType = GrantOwnerType.STUDENT_WITHOUT_SCHOLARSHIP;
         this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
