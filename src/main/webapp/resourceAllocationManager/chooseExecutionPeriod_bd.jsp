@@ -95,8 +95,9 @@
 		</span></p>
 	</logic:empty>
 	<logic:notEmpty name="registrations">
+		<bean:define name="timeTableExecutionSemester" id="timeTableExecutionSemester" type="net.sourceforge.fenixedu.domain.ExecutionSemester"/> 
 		<logic:iterate id="registration" name="registrations">
-			<html:link page="/chooseExecutionPeriod.do?method=chooseStudentById" paramId="registrationId" paramName="registration" paramProperty="externalId">
+			<html:link page="<%= "/chooseExecutionPeriod.do?method=chooseStudentById&executionSemesterId=" + timeTableExecutionSemester.getExternalId() %>" paramId="registrationId" paramName="registration" paramProperty="externalId">
 				<bean:write name="registration" property="student.person.name"/> - <bean:write name="registration" property="degreeNameWithDegreeCurricularPlanName"/>
 			</html:link>
 			<br/>

@@ -136,6 +136,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
                 request.setAttribute("toEditScheduleRegistrations", registrations);
             } else {
                 request.setAttribute("registrations", registrations);
+                request.setAttribute("timeTableExecutionSemester", executionInterval);
             }
 
         }
@@ -145,9 +146,12 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 
     public ActionForward chooseStudentById(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+
         final Registration registration = getDomainObject(request, "registrationId");
+        final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterId");
+
         request.setAttribute("registration", registration);
-        return ViewStudentTimeTable.forwardToShowTimeTable(registration, mapping, request);
+        return ViewStudentTimeTable.forwardToShowTimeTable(registration, mapping, request, executionSemester);
     }
 
     public ActionForward toggleFirstYearShiftsCapacity(ActionMapping mapping, ActionForm form, HttpServletRequest request,

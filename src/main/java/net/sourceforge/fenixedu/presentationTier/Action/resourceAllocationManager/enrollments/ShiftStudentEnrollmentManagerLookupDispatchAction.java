@@ -195,7 +195,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         request.setAttribute("infoClasslessons", infoClasslessons);
         request.setAttribute("infoClasslessonsEndTime", Integer.valueOf(getEndTime(infoClasslessons)));
 
-        final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(registration);
+        final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(registration, null);
         request.setAttribute("person", registration.getPerson());
         request.setAttribute("infoLessons", infoLessons);
         request.setAttribute("infoLessonsEndTime", Integer.valueOf(getEndTime(infoLessons)));
