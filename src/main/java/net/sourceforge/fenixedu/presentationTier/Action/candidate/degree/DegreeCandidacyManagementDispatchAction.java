@@ -161,7 +161,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         }
 
         if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SCHEDULE) {
-            final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
+            final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration(), null);
             request.setAttribute("person", getCandidacy(request).getPerson());
             request.setAttribute("infoLessons", infoLessons);
             return mapping.findForward("printSchedule");
@@ -198,7 +198,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
                             .getAvailablePaymentCodes()));
             request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
 
-            final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(candidacy.getRegistration());
+            final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(candidacy.getRegistration(), null);
             request.setAttribute("infoLessons", infoLessons);
 
             List<Tutorship> activeTutorships = candidacy.getRegistration().getStudent().getActiveTutorships();
