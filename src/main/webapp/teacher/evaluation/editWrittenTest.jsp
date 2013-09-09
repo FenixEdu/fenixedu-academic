@@ -24,6 +24,7 @@
 			value="#{bundle['message.evaluation.not.editable']}" escape="false"/>
 
 		<h:outputText value="<table class='tstyle5 thlight thright'>" escape="false"/>
+<%--
 			<h:outputText value="<tr>" escape="false"/>
 				<h:outputText value="<th>" escape="false"/>				
 					<h:outputText value="#{bundle['label.date']}:" escape="false"/>
@@ -41,7 +42,6 @@
 					<h:outputText value=" <i>#{bundle['label.date.instructions.small']}</i>" escape="false"/>
 				<h:outputText value="</td>" escape="false"/>
 			<h:outputText value="</tr>" escape="false"/>
-
 
 			<h:outputText value="<tr>" escape="false"/>
 				<h:outputText value="<th>" escape="false"/>
@@ -87,6 +87,7 @@
 					<h:inputText alt="#{htmlAltBundle['inputText.description']}" required="true" maxlength="120" size="15" value="#{evaluationManagementBackingBean.description}"/>
 				<h:outputText value="</td>" escape="false"/>
 			<h:outputText value="</tr>" escape="false"/>
+ --%>
 			
 			<h:outputText value="<tr>" escape="false"/>
 				<h:outputText value="<th>" escape="false"/>
@@ -104,11 +105,13 @@
 		
 		<h:outputText value="<p>" escape="false"/>
 			<h:commandButton alt="#{htmlAltBundle['commandButton.edit']}" action="#{evaluationManagementBackingBean.editWrittenTest}" value="#{bundle['button.edit']}"/>
+<%--
 			<h:commandButton alt="#{htmlAltBundle['commandButton.test']}" 	immediate="true"
 								value="#{bundle['link.delete.written.test']}" 
 								action="#{evaluationManagementBackingBean.deleteWrittenTest}" 
 								title="#{bundle['link.delete.written.test']}" 
 								onclick="return confirm('#{bundle['message.confirm.written.test']}')"/>
+ --%>
 			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" value="#{bundle['button.cancel']}"/>				
 		<h:outputText value="</p>" escape="false"/>
 	</h:form>

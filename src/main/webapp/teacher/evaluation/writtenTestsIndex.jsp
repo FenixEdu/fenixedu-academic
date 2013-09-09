@@ -14,12 +14,14 @@
 		<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
 		<h:outputText value="<h2>#{bundle['title.evaluation.WrittenTests']}</h2>" escape="false" />
 
+<%--
 		<h:outputFormat value="<ul class='mvert15'><li>" escape="false"/>
 			<h:commandLink action="enterCreateWrittenTest">
 				<h:outputFormat value="#{bundle['link.create.written.test']}" escape="false"/>
 			</h:commandLink>
 		<h:outputFormat value="</li></ul>" escape="false"/>
-		
+ --%>
+
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/>" escape="false" />
 
