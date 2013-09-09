@@ -195,7 +195,7 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
     }
 
     private Attends getAttends(HttpServletRequest request) {
-        return getDomainObject(request, "projectId");
+        return getDomainObject(request, "attendsId");
     }
 
 }
