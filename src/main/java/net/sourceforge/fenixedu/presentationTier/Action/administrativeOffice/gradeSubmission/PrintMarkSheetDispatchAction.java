@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
@@ -75,7 +76,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
     private DegreeCurricularPlan getDegreeCurricularPlan(DynaActionForm form) {
         final String dcpID = form.getString("dcpID");
-        return AbstractDomainObject.fromExternalId(dcpID);
+        return !StringUtils.isEmpty(dcpID) ? (DegreeCurricularPlan) AbstractDomainObject.fromExternalId(dcpID) : null;
     }
 
     private ActionForward choosePrinterMarkSheetsWeb(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
