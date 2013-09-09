@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.enrollments;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -250,10 +249,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     private int getEndTime(List<InfoShowOccupation> infoShowOccupations) {
         int endTime = 0;
         for (final InfoShowOccupation infoShowOccupation : infoShowOccupations) {
-            int tempEnd = infoShowOccupation.getFim().get(Calendar.HOUR_OF_DAY);
-            if (infoShowOccupation.getFim().get(Calendar.MINUTE) > 0) {
-                tempEnd = tempEnd + 1;
-            }
+            int tempEnd = infoShowOccupation.getLastHourOfDay();
             if (endTime < tempEnd) {
                 endTime = tempEnd;
             }
