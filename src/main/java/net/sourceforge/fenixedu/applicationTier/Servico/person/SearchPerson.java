@@ -95,7 +95,7 @@ public class SearchPerson implements Serializable {
                 role = Role.getRoleByRoleType(RoleType.valueOf(roleType));
             }
 
-            if (degreeId != null) {
+            if (!StringUtils.isEmpty(degreeId)) {
                 degree = AbstractDomainObject.fromExternalId(degreeId);
             }
 
@@ -103,7 +103,7 @@ public class SearchPerson implements Serializable {
                 degreeType = DegreeType.valueOf(degreeTypeString);
             }
 
-            if (departmentId != null) {
+            if (!StringUtils.isEmpty(departmentId)) {
                 department = AbstractDomainObject.fromExternalId(departmentId);
             }
         }
