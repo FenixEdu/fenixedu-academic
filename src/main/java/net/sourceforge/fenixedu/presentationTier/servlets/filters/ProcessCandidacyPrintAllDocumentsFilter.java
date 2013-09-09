@@ -316,14 +316,14 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             setField("Nome", person.getName());
             setField("topmostSubform[0].Page1[0].Datavalidade[0]",
                     person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
-            setField("dia_1", String.valueOf(person.getExpirationDateOfDocumentIdYearMonthDay().getDayOfMonth()));
-            setField("Mês_1", String.valueOf(person.getExpirationDateOfDocumentIdYearMonthDay().getMonthOfYear()));
-            setField("Ano_1", String.valueOf(person.getExpirationDateOfDocumentIdYearMonthDay().getYear()));
+            setField("dia", String.valueOf(person.getExpirationDateOfDocumentIdYearMonthDay().getDayOfMonth()));
+            setField("Mês", String.valueOf(person.getExpirationDateOfDocumentIdYearMonthDay().getMonthOfYear()));
+            setField("Ano", String.valueOf(person.getExpirationDateOfDocumentIdYearMonthDay().getYear()));
 
             LocalDate today = new LocalDate();
-            setField("dia", String.valueOf(today.getDayOfMonth()));
-            setField("Mês", String.valueOf(today.getMonthOfYear()));
-            setField("Ano", String.valueOf(today.getYear()));
+            setField("dia_1", String.valueOf(today.getDayOfMonth()));
+            setField("Mês_1", String.valueOf(today.getMonthOfYear()));
+            setField("Ano_1", String.valueOf(today.getYear()));
 
             stamper.setFormFlattening(true);
             stamper.close();
