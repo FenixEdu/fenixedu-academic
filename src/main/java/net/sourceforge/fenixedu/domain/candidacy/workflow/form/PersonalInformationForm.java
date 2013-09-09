@@ -7,6 +7,9 @@ import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ProfessionType;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
+import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -102,7 +105,18 @@ public class PersonalInformationForm extends Form {
         final List<LabelFormatter> result = new ArrayList<LabelFormatter>();
 
         checkGrantOwnerType(result);
+        validateSocialSecurityNumber(result);
         return result;
+    }
+
+    private void validateSocialSecurityNumber(List<LabelFormatter> result) {
+        final Party party = PartySocialSecurityNumber.readPartyBySocialSecurityNumber(socialSecurityNumber);
+        final User user = User.readUserByUserUId(username);
+        if (party != null && party != user.getPerson()) {
+            result.add(new LabelFormatter().appendLabel(
+                    "error.candidacy.workflow.PersonalInformationForm.socialSecurityNumber.already.exists",
+                    "application"));            
+        }
     }
 
     private void checkGrantOwnerType(final List<LabelFormatter> result) {
