@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
@@ -145,4 +147,46 @@ public class JerseyServices {
         return infos.toJSONString();
     }
 
+    @SuppressWarnings("unchecked")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("readPhdThesis")
+    public static String readPhdThesis() {
+        JSONArray infos = new JSONArray();
+        for (PhdIndividualProgramProcessNumber phdProcessNumber : RootDomainObject.getInstance().getPhdIndividualProcessNumbers()) {
+            PhdIndividualProgramProcess phdProcess = phdProcessNumber.getProcess();
+            if (phdProcess.isConcluded()) {
+                JSONObject phdInfo = new JSONObject();
+                phdInfo.put("author", phdProcess.getPerson().getUsername());
+                phdInfo.put("title", phdProcess.getThesisTitle());
+
+                JSONArray schools = new JSONArray();
+                switch (phdProcess.getCollaborationType()) {
+                case NONE:
+                case WITH_SUPERVISION:
+                case ERASMUS_MUNDUS:
+                case OTHER:
+                    schools.add("Instituto Superior Técnico");
+                    break;
+                default:
+                    schools.add("Instituto Superior Técnico");
+                    schools.add(phdProcess.getCollaborationType().getLocalizedName());
+                }
+                phdInfo.put("schools", schools);
+
+                phdInfo.put("year", phdProcess.getConclusionDate().year().getAsShortText());
+
+                phdInfo.put("month", phdProcess.getConclusionDate().monthOfYear().getAsShortText());
+
+                try {
+                    phdInfo.put("url", phdProcess.getThesisProcess().getProvisionalThesisDocument().getDownloadUrl());
+                } catch (NullPointerException e) {
+                }
+
+                infos.add(phdInfo);
+            }
+
+        }
+        return infos.toJSONString();
+    }
 }
