@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -57,7 +58,9 @@
 		
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.StudentContextSelectionBean">
 			<fr:slot name="number" key="label.student.username.or.number"/>
+		<logic:notPresent name="noEditionAllowed">
 			<fr:slot name="toEdit" key="label.edit.schedule"/>
+		</logic:notPresent>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />

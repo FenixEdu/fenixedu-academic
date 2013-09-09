@@ -101,6 +101,11 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
                 academicCalendarEntry = academicCalendarEntry.getParentEntry();
             }
         }
+
+        if (!executionSemester.isCurrent()) {
+            request.setAttribute("noEditionAllowed", true);
+        }
+
         return mapping.findForward("showForm");
     }
 
