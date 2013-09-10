@@ -25,10 +25,13 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     public static Comparator<CandidacySituation> DATE_COMPARATOR = new Comparator<CandidacySituation>() {
         @Override
         public int compare(CandidacySituation leftCandidacySituation, CandidacySituation rightCandidacySituation) {
-            int comparationResult =
-                    leftCandidacySituation.getSituationDate().compareTo(rightCandidacySituation.getSituationDate());
-            return (comparationResult == 0) ? leftCandidacySituation.getExternalId().compareTo(
-                    rightCandidacySituation.getExternalId()) : comparationResult;
+            int comparationResult = leftCandidacySituation.getSituationDate().compareTo(rightCandidacySituation.getSituationDate());
+            if (comparationResult == 0) {
+                final CandidacySituationType leftType = leftCandidacySituation.getCandidacySituationType();
+                final CandidacySituationType rightType = rightCandidacySituation.getCandidacySituationType();
+                return leftType.compareTo(rightType);               
+            }
+            return comparationResult;
         }
     };
 
