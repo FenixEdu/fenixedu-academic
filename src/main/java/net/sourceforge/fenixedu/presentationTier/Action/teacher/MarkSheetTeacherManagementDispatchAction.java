@@ -86,7 +86,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
                 checkIfCanSubmitMarksToAnyCurricularCourse(submissionBean.getAllCurricularCourses(), submissionBean
                         .getExecutionCourse().getExecutionPeriod(), request, actionMessages);
         calculateMarksToSubmit(request, submissionBean);
-
+        request.setAttribute("executionCourse", submissionBean.getExecutionCourse());
         if (submissionBean.getMarksToSubmit().isEmpty()) {
             addMessage(
                     request,
