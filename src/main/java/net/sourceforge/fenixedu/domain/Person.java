@@ -514,8 +514,12 @@ public class Person extends Person_Base {
             setGender(personDTO.getGender().equalsIgnoreCase("m") ? Gender.MALE : Gender.FEMALE);
         }
 
-        setIdentificationDocumentExtraDigit(personDTO.getIdentificationDocumentExtraDigit().replaceAll("\\s", "")); //remove white spaces
-        setIdentificationDocumentSeriesNumber(personDTO.getIdentificationDocumentSeriesNumber().replaceAll("\\s", "")); //remove white spaces
+        if (personDTO.getIdentificationDocumentExtraDigit() != null) {
+            setIdentificationDocumentExtraDigit(personDTO.getIdentificationDocumentExtraDigit().replaceAll("\\s", "")); //remove white spaces
+        }
+        if (personDTO.getIdentificationDocumentSeriesNumber() != null) {
+            setIdentificationDocumentSeriesNumber(personDTO.getIdentificationDocumentSeriesNumber().replaceAll("\\s", "")); //remove white spaces
+        }
 
         if (!StringUtils.isEmpty(personDTO.getDocumentIdEmissionLocation())) {
             setEmissionLocationOfDocumentId(personDTO.getDocumentIdEmissionLocation());
