@@ -41,7 +41,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
 
         List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
         if (registrations.size() == 1) {
-            return forwardToShowTimeTable(registrations.get(0), mapping, request, null);
+            return forwardToShowTimeTable(registrations.get(0), mapping, request, ExecutionSemester.readActualExecutionSemester());
         } else {
             request.setAttribute("registrations", registrations);
             return mapping.findForward("chooseRegistration");
@@ -51,13 +51,14 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
     public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
-        return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request, null);
+        return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request,
+                ExecutionSemester.readActualExecutionSemester());
     }
 
     protected ActionForward forwardToShowTimeTableForSupervisor(Registration registration, ActionMapping mapping,
             HttpServletRequest request) throws FenixActionException, FenixServiceException {
 
-        return forwardToShowTimeTable(registration, mapping, request, null);
+        return forwardToShowTimeTable(registration, mapping, request, ExecutionSemester.readActualExecutionSemester());
     }
 
     public static ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping,
