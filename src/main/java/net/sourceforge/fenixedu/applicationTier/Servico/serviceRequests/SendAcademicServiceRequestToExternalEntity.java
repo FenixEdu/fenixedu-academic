@@ -76,7 +76,7 @@ public class SendAcademicServiceRequestToExternalEntity {
         academicServiceRequest.sendToExternalEntity(sendDate, justification);
 
         if (academicServiceRequest instanceof EquivalencePlanRequest) {
-            //sendRequestDataToExternal(academicServiceRequest);
+            sendRequestDataToExternal(academicServiceRequest);
         }
     }
 
