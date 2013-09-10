@@ -60,7 +60,7 @@ public class IMDCandidacy extends IMDCandidacy_Base {
             operations.add(new PrintScheduleOperation(Collections.singleton(RoleType.STUDENT), this));
             operations.add(new PrintRegistrationDeclarationOperation(Collections.singleton(RoleType.STUDENT), this));
             operations.add(new PrintSystemAccessDataOperation(Collections.singleton(RoleType.STUDENT), this));
-            operations.add(new PrintUnder23TransportsDeclarationOperation(RoleType.STUDENT, this));
+            //operations.add(new PrintUnder23TransportsDeclarationOperation(RoleType.STUDENT, this));
             //operations.add(new PrintMeasurementTestDateOperation(RoleType.STUDENT, this));
             operations.add(new PrintAllDocumentsOperation(RoleType.STUDENT, this));
             break;
