@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -12,10 +13,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class RegisteredDegreeCandidaciesWithApplyForResidence {
 
@@ -31,7 +34,8 @@ public class RegisteredDegreeCandidaciesWithApplyForResidence {
         final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
 
         for (StudentCandidacy studentCandidacy : degreeCandidacies) {
-            if (studentCandidacy.getApplyForResidence() != null && studentCandidacy.getApplyForResidence()) {
+            if ((studentCandidacy.getApplyForResidence() != null && studentCandidacy.getApplyForResidence())
+                    || !StringUtils.isEmpty(studentCandidacy.getNotesAboutResidenceAppliance())) {
                 result.add(studentCandidacy);
             }
         }
@@ -68,6 +72,7 @@ public class RegisteredDegreeCandidaciesWithApplyForResidence {
         spreadsheet.setHeader("Email pessoal");
         spreadsheet.setHeader("Telefone");
         spreadsheet.setHeader("Telemovel");
+        spreadsheet.setHeader("Candidatou-se");
         spreadsheet.setHeader("Nota sobre Candidatura");
     }
 
@@ -88,6 +93,8 @@ public class RegisteredDegreeCandidaciesWithApplyForResidence {
         row.setCell(getPersonalEmailAddress(person));
         row.setCell(getPhone(person));
         row.setCell(getMobilePhone(person));
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+        row.setCell(bundle.getString(candidacy.getApplyForResidence() ? "label.yes" : "label.no"));
         row.setCell(candidacy.getNotesAboutResidenceAppliance().replaceAll("\n", " ").replaceAll("\r", " "));
     }
 
