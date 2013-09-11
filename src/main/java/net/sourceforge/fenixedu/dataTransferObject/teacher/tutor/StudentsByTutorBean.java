@@ -40,9 +40,7 @@ public class StudentsByTutorBean implements Serializable {
     }
 
     public List<Tutorship> getStudentsList() {
-        List<Tutorship> students = new ArrayList<Tutorship>();
-        students.addAll(studentsList);
-        return students;
+        return studentsList;
     }
 
     public List<Tutorship> getActiveTutorshipsMatchingEntryYear() {
