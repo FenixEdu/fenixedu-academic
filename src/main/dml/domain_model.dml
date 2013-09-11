@@ -755,6 +755,10 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     	String descriptionKey;
         String arg;
     }
+    
+    class cardGeneration.SantanderPIN {
+    	String encryptedPIN;
+    }
 
     class CompetenceCourse  {
         String code;
@@ -17868,6 +17872,11 @@ relation PersonSantanderEntry {
 	cardGeneration.SantanderEntry playsRole santanderEntries {
 		multiplicity *;
 	}
+}
+
+relation PersonSantanderPIN {
+	Person playsRole person;
+	cardGeneration.SantanderPIN playsRole santanderPIN;
 }
 
 relation MetaDomainObjectRootDomainObject {

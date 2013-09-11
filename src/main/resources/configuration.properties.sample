@@ -65,6 +65,12 @@ barra.loginUrl=https://barra.ist.utl.pt/login
 #---------------------------------------------------------------
 google.analytics.snippet=
 
+#---------------------------------------------------
+# Configurations for Institution ID Card Generation
+#---------------------------------------------------
+app.institution.PIN = 0000
+app.institution.AES128.secretKey = aa0bbfaf79654df4
+
 #
 #
 #------------------------------------------------------------------------------

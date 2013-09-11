@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creating new table to store the individual Santander PIN codes" createSantanderPIN.sql
 
