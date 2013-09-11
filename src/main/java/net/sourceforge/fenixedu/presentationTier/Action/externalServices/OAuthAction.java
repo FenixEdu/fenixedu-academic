@@ -96,7 +96,6 @@ public class OAuthAction extends FenixDispatchAction {
 
         ExternalApplication clientApplication = getExternalApplication(clientId);
 
-        String applicationUrl = clientApplication.getUrl();
         if (!clientApplication.matchesUrl(redirectUrl)) {
             return null;
         }
@@ -107,8 +106,8 @@ public class OAuthAction extends FenixDispatchAction {
             createAppUserSession(clientApplication, code, user, deviceId);
 
             OAuthResponse resp =
-                    OAuthASResponse.authorizationResponse(request, HttpServletResponse.SC_FOUND).location(applicationUrl)
-                            .setCode(code).buildQueryMessage();
+                    OAuthASResponse.authorizationResponse(request, HttpServletResponse.SC_FOUND)
+                            .location(clientApplication.getRedirectUrl()).setCode(code).buildQueryMessage();
 
             response.sendRedirect(resp.getLocationUri());
         } catch (OAuthSystemException e) {
@@ -120,13 +119,12 @@ public class OAuthAction extends FenixDispatchAction {
     }
 
     @Service
-    private void createAppUserSession(ExternalApplication clientApplication, String code, User user, String deviceId) {
-        clientApplication.addUser(user);
+    private void createAppUserSession(ExternalApplication application, String code, User user, String deviceId) {
         AppUserSession appUserSession = new AppUserSession();
+        appUserSession.setApplication(application);
         appUserSession.setCode(code);
         appUserSession.setUser(user);
         appUserSession.setDeviceId(deviceId);
-        clientApplication.addAppUserSession(appUserSession);
     }
 
     public void userCancelation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -31,7 +30,6 @@ import pt.ist.fenixWebFramework.security.UserView;
 public class JerseyOAuth2 implements Filter {
 
     final static String ACCESS_TOKEN = "access_token";
-    private static OAuthErrorResponseBuilder builder = new OAuthErrorResponseBuilder(401);
 
     @Override
     public void destroy() {
@@ -51,10 +49,9 @@ public class JerseyOAuth2 implements Filter {
             try {
                 filterChain.doFilter(request, response);
             } finally {
-
+                UserView.setUser(null);
             }
         }
-
     }
 
     @Override
@@ -75,7 +72,9 @@ public class JerseyOAuth2 implements Filter {
             AppUserSession appUserSession = fenixAccessToken.getAppUserSession();
             final String uri = request.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH).replace("/jersey/", "");
 
-            validateScope(response, appUserSession, uri);
+            if (!validScope(response, appUserSession, uri)) {
+                sendError(response, "invalidScope", "Application doesn't have permissions to this endpoint.");
+            }
 
             if (!appUserSession.matchesAccessToken(accessToken)) {
                 sendError(response, "accessTokenInvalid", "Access Token doesn't match.");
@@ -89,6 +88,7 @@ public class JerseyOAuth2 implements Filter {
             }
 
             User foundUser = appUserSession.getUser();
+
             Authenticate as = new Authenticate();
             UserView.setUser(as.mock(foundUser.getPerson(), request.toString()));
 
@@ -101,28 +101,26 @@ public class JerseyOAuth2 implements Filter {
         return false;
     }
 
-    private void validateScope(final HttpServletResponse response, AppUserSession appUserSession, final String uri)
+    private boolean validScope(final HttpServletResponse response, AppUserSession appUserSession, final String uri)
             throws IOException, ServletException {
-        List<AuthScope> appScopes = appUserSession.getApplication().getScopes();
         AuthScope scope = FenixJerseyPackageResourceConfig.getScope(uri);
-
         if (scope != null) {
-            if (!appScopes.contains(scope)) {
-                sendError(response, "invalidScope", "Application doesn't have permissions to this endpoint's scope");
+            if (!appUserSession.getApplication().getScopes().contains(scope)) {
+                return false;
             }
         }
+        return true;
     }
 
     private static void sendError(final HttpServletResponse response, String error, String errorDescription) throws IOException,
             ServletException {
         OAuthResponse errorResponse;
         try {
-            errorResponse = builder.setError(error).setErrorDescription(errorDescription).buildJSONMessage();
+            errorResponse =
+                    new OAuthErrorResponseBuilder(401).setError(error).setErrorDescription(errorDescription).buildJSONMessage();
             response.setStatus(errorResponse.getResponseStatus());
             PrintWriter pw = response.getWriter();
             pw.print(errorResponse.getBody());
-            pw.flush();
-            pw.close();
         } catch (OAuthSystemException e) {
             throw new ServletException(e);
         }

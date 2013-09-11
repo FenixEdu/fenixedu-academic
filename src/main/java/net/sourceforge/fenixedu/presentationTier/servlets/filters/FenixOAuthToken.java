@@ -4,13 +4,18 @@ import net.sourceforge.fenixedu.domain.AppUserSession;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.pstm.VersionNotAvailableException;
 
 import com.google.common.base.Joiner;
 
 public class FenixOAuthToken {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FenixOAuthToken.class);
 
     private final AppUserSession appUserSession;
     private final String nounce;
@@ -40,13 +45,22 @@ public class FenixOAuthToken {
         String appUserSessionExternalId = accessTokenBuilder[0];
         String accessToken = accessTokenBuilder[1];
 
-        System.out.println("AccessToken: " + accessTokenDecoded);
-        System.out.println("[0] AppUserSesson ID: " + appUserSessionExternalId);
-        System.out.println("[1] Random: " + accessTokenBuilder[1]);
+        LOGGER.info("AccessToken: {}", accessTokenDecoded);
+        LOGGER.info("[0] AppUserSesson ID: {}", appUserSessionExternalId);
+        LOGGER.info("[1] Random: {}", accessTokenBuilder[1]);
 
         AppUserSession appUserSession = appUserSession(appUserSessionExternalId);
 
         if (appUserSession == null) {
+            throw new FenixOAuthTokenException();
+        }
+
+        try {
+            // Dirty check to see if appUserSession still exists due fenix-framework limitations.
+            // When using fromExternalId fenix-framework creates a shallow objects with that id.
+            // On following requests to object's methods it will throw a VersionNotAvailableException if the object was deleted.
+            appUserSession.getApplication();
+        } catch (VersionNotAvailableException vnae) {
             throw new FenixOAuthTokenException();
         }
 

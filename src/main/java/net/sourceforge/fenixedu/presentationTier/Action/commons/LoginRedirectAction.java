@@ -63,6 +63,11 @@ public class LoginRedirectAction extends Action {
             throws Exception {
         try {
             if (reconstructURL(request)) {
+                String url = (String) request.getAttribute("url");
+                if (url.contains("oauth")) {
+                    response.sendRedirect(url);
+                    return null;
+                }
                 return mapping.findForward("show-redirect-page");
             }
         } catch (Exception e) {

@@ -11,4 +11,5 @@ build.properties.slave
 configuration.properties.fenix
 configuration.properties.localhost
 /target
-
+src/main/resources/fonts/*arial
+src/main/resources/fonts/*Arial

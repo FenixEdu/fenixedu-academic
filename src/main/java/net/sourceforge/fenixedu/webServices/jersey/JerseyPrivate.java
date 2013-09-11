@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
@@ -52,6 +51,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -60,14 +60,12 @@ import com.google.common.net.HttpHeaders;
 @Path("/private/v1")
 public class JerseyPrivate {
 
-    public final static String PERSONAL_SCOPE = "personal info";
-    public final static String CURRICULUM_SCOPE = "curriculum";
-    public final static String SCHEDULE_SCOPE = "schedule info";
-    public final static String REGISTRATIONS_SCOPE = "registrations";
+    public final static String PERSONAL_SCOPE = "info";
+    public final static String SCHEDULE_SCOPE = "schedule";
+    public final static String ENROLMENTS_SCOPE = "enrollments";
     public final static String CURRICULAR_SCOPE = "curricular";
-    //private final static String istID = "ist158444";
-    //private static final SimpleDateFormat dataFormatDay = new SimpleDateFormat("dd/MM/yyyy");
-    //private static final SimpleDateFormat dataFormatHour = new SimpleDateFormat("HH:mm");
+
+    private final static String JSON_UTF8 = "application/json; charset=utf-8";
 
     private static final DateTimeFormatter formatDay = DateTimeFormat.forPattern("dd/MM/yyyy");
     private static final DateTimeFormatter formatHour = DateTimeFormat.forPattern("HH:mm");
@@ -97,28 +95,24 @@ public class JerseyPrivate {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("hello")
-    @FenixAPIScope("info")
+    @FenixAPIScope(PERSONAL_SCOPE)
     public String hellofenix() {
         return "Hello! Private V1";
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(JSON_UTF8)
     @Path("person")
-    @FenixAPIScope("info")
-    public String person(@QueryParam("istid") String istid) {
+    @FenixAPIScope(PERSONAL_SCOPE)
+    public String person() {
 
-        /*
-        if (UserView.getUser() != null) {
-            istid = UserView.getUser().getUsername();
-        }
-         */
         JSONObject jsonResult = new JSONObject();
 
         JSONArray jsonArrayRole = new JSONArray();
-        final Person person = Person.readPersonByUsername(istid);
 
-        if (isTeacher(istid)) {
+        final Person person = getPerson();
+
+        if (isTeacher(person)) {
             JSONObject jsonRoleInfo = new JSONObject();
             jsonRoleInfo.put("roleName", "TEACHING");
             jsonArrayRole.add(jsonRoleInfo);
@@ -162,6 +156,16 @@ public class JerseyPrivate {
         return jsonResult.toJSONString();
     }
 
+    private Person getPerson() {
+        User user = UserView.getUser();
+        if (user != null) {
+            if (user.getPerson() != null) {
+                return user.getPerson();
+            }
+        }
+        return null;
+    }
+
     private JSONArray getInformation(List<String> list) {
         JSONArray jsonArray = new JSONArray();
         for (String string : list) {
@@ -173,17 +177,13 @@ public class JerseyPrivate {
 
     }
 
-    //@Scope(CURRICULAR_SCOPE)
+    @FenixAPIScope(CURRICULAR_SCOPE)
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(JSON_UTF8)
     @Path("person/courses/")
-    public String personCourses(@QueryParam("sem") String sem, @QueryParam("year") String year, @QueryParam("istid") String istid) {
-/*
-        if (UserView.getUser() != null) {
-            istid = UserView.getUser().getUsername();
-        }
- */
-        final Person person = Person.readPersonByIstUsername(istid);
+    public String personCourses(@QueryParam("sem") String sem, @QueryParam("year") String year) {
+
+        final Person person = getPerson();
         JSONObject jsonResult = new JSONObject();
 
         if (person == null) {
@@ -192,7 +192,6 @@ public class JerseyPrivate {
 
         PersonInformationBean pib = new PersonInformationBean(person);
         ExecutionSemester executionSemester = getExecutionSemester(sem, year);
-        jsonResult.put("istid", istid);
         jsonResult.put("year", executionSemester.getYear());
         jsonResult.put("semester", executionSemester.getSemester());
 
@@ -227,39 +226,39 @@ public class JerseyPrivate {
         return jsonResult.toJSONString();
     }
 
-    //@Scope(SCHEDULE_SCOPE)
+    @FenixAPIScope(SCHEDULE_SCOPE)
     @GET
     @Path("person/calendar/evaluations")
-    public Response calendarEvaluation(@QueryParam("istid") String istid, @QueryParam("format") String format,
-            @Context HttpServletRequest httpRequest) {
+    public Response calendarEvaluation(@QueryParam("format") String format, @Context HttpServletRequest httpRequest) {
+        final Person person = getPerson();
 
         if ("calendar".equals(format)) {
             final String serverName = httpRequest.getServerName();
             final int serverPort = httpRequest.getServerPort();
             final String serverScheme = httpRequest.getScheme();
-            String evaluationCalendarICal = evaluationCalendarICal(istid, serverScheme, serverName, serverPort);
+
+            String evaluationCalendarICal = evaluationCalendarICal(person, serverScheme, serverName, serverPort);
             return Response.ok(evaluationCalendarICal, "text/calendar;charset=UTF-8").build();
         } else {
             return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, "application/json; charset=UTF-8")
-                    .entity(evaluationCalendarJson(istid)).build();
+                    .entity(evaluationCalendarJson(person)).build();
         }
     }
 
-    private String evaluationCalendarICal(String istid, String serverScheme, String serverName, int serverPort) {
-        final User user = User.readUserByUserUId(istid);
+    private String evaluationCalendarICal(Person person, String serverScheme, String serverName, int serverPort) {
         ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
 
-        List<EventBean> listEventBean = calendarSyncPoint.getExams(user, serverScheme, serverName, serverPort);
-        listEventBean.addAll(calendarSyncPoint.getTeachingExams(user, serverScheme, serverName, serverPort));
+        List<EventBean> listEventBean = calendarSyncPoint.getExams(person.getUser(), serverScheme, serverName, serverPort);
+        listEventBean.addAll(calendarSyncPoint.getTeachingExams(person.getUser(), serverScheme, serverName, serverPort));
 
         Calendar createCalendar = CalendarFactory.createCalendar(listEventBean);
 
         return createCalendar.toString();
     }
 
-    private String evaluationCalendarJson(String istid) {
+    private String evaluationCalendarJson(Person person) {
         JSONObject jsonResult = new JSONObject();
-        final User user = User.readUserByUserUId(istid);
+        final User user = person.getUser();
         if (user == null) {
             return jsonResult.toJSONString();
         }
@@ -290,39 +289,38 @@ public class JerseyPrivate {
         return jsonResult.toJSONString();
     }
 
-    //@Scope(SCHEDULE_SCOPE)
+    @FenixAPIScope(SCHEDULE_SCOPE)
     @GET
     @Path("person/calendar/classes")
-    public Response calendarClasses(@QueryParam("istid") String istid, @QueryParam("format") String format,
-            @Context HttpServletRequest httpRequest) {
+    public Response calendarClasses(@QueryParam("format") String format, @Context HttpServletRequest httpRequest) {
+        Person person = getPerson();
         if ("calendar".equals(format)) {
             final String serverName = httpRequest.getServerName();
             final int serverPort = httpRequest.getServerPort();
             final String serverScheme = httpRequest.getScheme();
-            String classesCalendarICal = classesCalendarICal(istid, serverScheme, serverName, serverPort);
+            String classesCalendarICal = classesCalendarICal(person, serverScheme, serverName, serverPort);
             return Response.ok(classesCalendarICal, "text/calendar; charset=UTF-8").build();
         } else {
-            return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, "application/json; charset=UTF-8")
-                    .entity(classesCalendarJson(istid)).build();
+            return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, JSON_UTF8).entity(classesCalendarJson(person))
+                    .build();
         }
     }
 
-    private String classesCalendarICal(String istid, String serverScheme, String serverName, int serverPort) {
-        final User user = User.readUserByUserUId(istid);
+    private String classesCalendarICal(Person person, String serverScheme, String serverName, int serverPort) {
         ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
 
-        List<EventBean> listEventBean = calendarSyncPoint.getClasses(user, serverScheme, serverName, serverPort);
-        listEventBean.addAll(calendarSyncPoint.getTeachingClasses(user, serverScheme, serverName, serverPort));
+        List<EventBean> listEventBean = calendarSyncPoint.getClasses(person.getUser(), serverScheme, serverName, serverPort);
+        listEventBean.addAll(calendarSyncPoint.getTeachingClasses(person.getUser(), serverScheme, serverName, serverPort));
 
         Calendar createCalendar = CalendarFactory.createCalendar(listEventBean);
 
         return createCalendar.toString();
     }
 
-    private String classesCalendarJson(String istid) {
+    private String classesCalendarJson(Person person) {
 
         JSONObject jsonResult = new JSONObject();
-        final User user = User.readUserByUserUId(istid);
+        final User user = person.getUser();
         if (user == null) {
             return jsonResult.toJSONString();
         }
@@ -352,12 +350,13 @@ public class JerseyPrivate {
         return jsonResult.toJSONString();
     }
 
-    //@Scope(CURRICULUM_SCOPE)
+    @FenixAPIScope(CURRICULAR_SCOPE)
     @GET
     @Path("person/curriculum")
-    public String personCurriculum(@QueryParam("istid") String istid) {
+    @Produces(JSON_UTF8)
+    public String personCurriculum() {
 
-        Person person = Person.readPersonByIstUsername(istid);
+        Person person = getPerson();
 
         JSONArray jsonResult = getStudentStatistics(person.getStudent().getRegistrations());
 
@@ -442,10 +441,11 @@ public class JerseyPrivate {
         return result;
     }
 
-    //@Scope(PERSONAL_SCOPE)
+    @FenixAPIScope(PERSONAL_SCOPE)
     @GET
     @Path("person/payments")
-    public String personPayments(@QueryParam("istid") String istid) {
+    @Produces(JSON_UTF8)
+    public String personPayments() {
 
         JSONObject jsonResult = new JSONObject();
 
@@ -457,7 +457,7 @@ public class JerseyPrivate {
         props.setProperty("enum", "resources.EnumerationResources");
         props.setProperty("default", "resources.ApplicationResources");
         DefaultResourceBundleProvider provider = new DefaultResourceBundleProvider(props);
-        Person person = Person.readPersonByIstUsername(istid);
+        Person person = getPerson();
         for (Entry entry : person.getPayments()) {
             JSONObject paymentInfo = new JSONObject();
 
@@ -491,13 +491,14 @@ public class JerseyPrivate {
         return jsonResult.toString();
     }
 
-    //@Scope(REGISTRATIONS_SCOPE)
+    @FenixAPIScope(ENROLMENTS_SCOPE)
     @GET
     @Path("person/evaluations")
-    public String evaluations(@QueryParam("istid") String istid) {
+    @Produces(JSON_UTF8)
+    public String evaluations() {
         JSONObject jsonResult = new JSONObject();
 
-        Person person = Person.readPersonByIstUsername(istid);
+        Person person = getPerson();
         processEvaluations(person.getStudent());
 
         for (Evaluation evaluation : evaluationsWithEnrolmentPeriodClosed) {
@@ -612,13 +613,7 @@ public class JerseyPrivate {
         Collections.sort(getEvaluationsWithoutEnrolmentPeriod(), new BeanComparator("dayDate"));
     }
 
-    public boolean isTeacher(String istId) {
-        Teacher teacher = Teacher.readByIstId(istId);
-        if (teacher != null) {
-            return true;
-        }
-
-        Person person = Person.readPersonByIstUsername(istId);
+    public boolean isTeacher(Person person) {
         if (person == null) {
             return false;
         }
@@ -626,6 +621,7 @@ public class JerseyPrivate {
         if (person.getProfessorshipsCount() != 0) {
             return true;
         }
+
         return false;
     }
 

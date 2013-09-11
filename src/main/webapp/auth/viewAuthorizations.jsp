@@ -19,15 +19,12 @@
 <bean:define id="appOid" name="applicationOid" scope="request"/>
 
 <logic:present name="authSessions">
-		<logic:iterate id="authSession" name="authSessions" type="net.sourceforge.fenixedu.domain.AppUserSession">
-		<fr:view name="authSession" layout="tabular" schema="my.list.sessions"/>
-		<p><a href="<%= "externalAuth.do?method=removeAuth&oid=" + authSession.getApplication().getExternalId() + "&deviceId=" + authSession.getDeviceId()%>">Remover</a>
-		</logic:iterate>
-		
-			<p><a href="<%= "externalAuth.do?method=removeAllAuths&appOid=" + appOid %>">Remover todas as autorizações</a>
-			
-		
-	</logic:present>
+		<fr:view name="authSessions" schema="view.oauthapps.authorizations"/>
+			<fr:layout name="tabular">
+				
+			</fr:layout>
+		</fr:view>		
+</logic:present>
 	
 	
 	

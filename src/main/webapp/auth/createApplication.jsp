@@ -13,13 +13,9 @@
 
 <em><bean:message key="label.person.main.title" /></em>
 <h2>
-	<bean:message key="label.auth" bundle="APPLICATION_RESOURCES" />
+	<bean:message key="label.oauthapps.create.application" bundle="APPLICATION_RESOURCES" />
 </h2>
 
-<logic:present name="user">
-		<fr:create id="create"
-			type="net.sourceforge.fenixedu.domain.ExternalApplication"
-			schema="my.schema.create.app" action="/externalAuth?method=listApps">
-			<fr:hidden slot="author" name="user"/>
-		</fr:create>
-</logic:present>
+<fr:create type="net.sourceforge.fenixedu.domain.ExternalApplication" id="create" schema="oauthapps.create.app" action="/externalAuth.do?method=createApplication">
+
+</fr:create>

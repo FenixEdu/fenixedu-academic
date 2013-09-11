@@ -14,14 +14,14 @@ public class AppUserSession extends AppUserSession_Base {
     @Override
     public void setCode(String code) {
         super.setCode(code);
-        setCodeExpirationDate(new DateTime());
+        setCreationDate(new DateTime());
     }
 
     public boolean matchesCode(String code) {
         if (StringUtils.isBlank(getCode()) || StringUtils.isBlank(code)) {
             return false;
         }
-        return getCode().equals(code) && getCodeExpirationDate().plusMinutes(1).isAfterNow();
+        return getCode().equals(code) && getCreationDate().plusMinutes(1).isAfterNow();
     }
 
     public boolean matchesAccessToken(String accessToken) {
@@ -44,7 +44,7 @@ public class AppUserSession extends AppUserSession_Base {
 
     public void resetCode() {
         setCode(null);
-        setCodeExpirationDate(null);
+        setCreationDate(null);
     }
 
     public String getUsername() {
@@ -66,6 +66,7 @@ public class AppUserSession extends AppUserSession_Base {
         resetCode();
     }
 
+    @Service
     public void delete() {
         setUser(null);
         setApplication(null);

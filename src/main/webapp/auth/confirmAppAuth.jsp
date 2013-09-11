@@ -15,5 +15,5 @@
 
 
 	<logic:present name="app">
-		<fr:view name="app" layout="tabular" schema="my.list.apps"/>
+		<fr:view name="app" layout="tabular" schema="view.oauthapps.apps"/>
 	</logic:present>

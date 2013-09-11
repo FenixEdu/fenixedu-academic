@@ -20773,10 +20773,13 @@ relation PhotographSantanderPhotoEntry {
 }
 
 class ExternalApplication  {
-        String name;
-        String secret;
-        String url;
-    }
+        String name (REQUIRED);
+        String secret (REQUIRED);
+        String redirectUrl (REQUIRED);
+        String description (REQUIRED);
+        String siteUrl;
+        bytearray logo;
+}
 
 class AuthScope  {
         String name (REQUIRED);
@@ -20784,8 +20787,8 @@ class AuthScope  {
 }
     
 class AppUserSession {
+	DateTime creationDate;
 	String code;
-	DateTime codeExpirationDate;
 	String accessToken;
 	String refreshToken;
 	DateTime expirationDate;
@@ -20797,7 +20800,7 @@ relation RootDomainObjectApps {
   	ExternalApplication playsRole apps {
   		multiplicity *;
   	}
- }
+}
  
 relation RootDomainObjectAuthScope {
     RootDomainObject playsRole rootDomainObject;  
@@ -20810,20 +20813,11 @@ relation AppAuthor {
 	User playsRole author {
 		multiplicity 1;
 	}
-	ExternalApplication playsRole appOwned {
+	ExternalApplication playsRole ownedApp {
 		multiplicity *;
 	}
 }
 		
-relation UserAppPermissions {
-	User playsRole user {
-		multiplicity *;
-	}
-	ExternalApplication playsRole appAuthorized {
-		multiplicity *;
-	}
-}
-      
 relation PermissionsScope {
 	AuthScope playsRole scopes {
 		multiplicity *;

@@ -39,7 +39,9 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
                 authScope = new AuthScope();
                 authScope.setName(scopeName);
                 authScope.setJerseyEndpoints(endpoints);
+                LOGGER.info("add scope {} with endpoints {}", scopeName, Joiner.on(",").join(endpoints));
             } else {
+                LOGGER.info("scope exists {}, change jersey endpoints {}", scopeName, Joiner.on(",").join(endpoints));
                 authScope.changeJerseyEndpoints(endpoints);
             }
         }
@@ -79,7 +81,7 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
 
     public static AuthScope getScope(String endpoint) {
         for (String scopeName : scopePathsMap.keySet()) {
-            if (scopePathsMap.values().contains(endpoint)) {
+            if (scopePathsMap.get(scopeName).contains(endpoint)) {
                 return AuthScope.getAuthScope(scopeName);
             }
         }

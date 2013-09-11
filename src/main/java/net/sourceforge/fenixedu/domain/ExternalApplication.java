@@ -21,7 +21,7 @@ public class ExternalApplication extends ExternalApplication_Base {
     }
 
     public boolean matchesUrl(String redirectUrl) {
-        return !StringUtils.isBlank(redirectUrl) && redirectUrl.equals(getUrl());
+        return !StringUtils.isBlank(redirectUrl) && redirectUrl.equals(getRedirectUrl());
     }
 
     public boolean matches(String redirectUrl, String secret) {

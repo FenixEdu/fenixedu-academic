@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -23,254 +22,118 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
-@Mapping(module = "person", path = "/externalAuth")
-@Forwards(value = { @Forward(name = "registerApp", path = "/auth/registerAppRequest.jsp"),
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableSet;
+
+@Mapping(module = "person", path = "/externalApps")
+@Forwards(value = { @Forward(name = "createApplication", path = "/auth/createApplication.jsp"),
         @Forward(name = "editApp", path = "/auth/editAppRequest.jsp"),
-        @Forward(name = "externalAuthApp", path = "/auth/externalAppRequest.jsp"),
+        @Forward(name = "manageAuthorizations", path = "/auth/manageAuthorizations.jsp"),
         @Forward(name = "returnKeys", path = "/auth/returnkeys.jsp"),
-        @Forward(name = "myApps", path = "/auth/showOwnedApps.jsp"),
-        @Forward(name = "mySessions", path = "/auth/showAuthSessions.jsp")
+        @Forward(name = "manageApplications", path = "/auth/manageApplications.jsp"),
+        @Forward(name = "viewAuthorizations", path = "/auth/viewAuthorizations.jsp")
 
 })
 public class AuthDispatchAction extends FenixDispatchAction {
 
-    public ActionForward allowExternalApp(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    private User getUser() {
+        IUserView user = UserView.getUser();
+        return user.getPerson().getUser();
+    }
+
+    /** This will list the applications which you grant access */
+    public ActionForward manageAuthorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
-        Person p = userView.getPerson();
-        List<ExternalApplication> authApps = p.getUser().getAppAuthorized();
+        User user = getUser();
+
+        ImmutableSet<ExternalApplication> authApps =
+                FluentIterable.from(user.getAppUserSessionSet()).transform(new Function<AppUserSession, ExternalApplication>() {
+
+                    @Override
+                    public ExternalApplication apply(AppUserSession appUserSession) {
+                        return appUserSession.getApplication();
+                    }
+                }).toSet();
 
         request.setAttribute("authApps", authApps);
 
-        System.out.println("-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("authApps size: " + (authApps != null ? authApps.size() : 0));
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-        return mapping.findForward("externalAuthApp");
+        return mapping.findForward("manageAuthorizations");
     }
 
-    public ActionForward registerExternalApp(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward revokeApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
-        User user = userView.getPerson().getUser();
+        User user = getUser();
+        ExternalApplication application = getDomainObject(request, "appOid");
 
-        request.setAttribute("user", user);
+        revokeAllAuthorizations(user, application);
 
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("number of existent apps: " + RootDomainObject.getInstance().getApps().size());
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-        return mapping.findForward("registerApp");
-    }
-
-    public ActionForward editApp(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        IUserView userView = UserView.getUser();
-        User user = userView.getPerson().getUser();
-        List<ExternalApplication> apps = user.getAppOwned();
-
-        request.setAttribute("apps", apps);
-
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("number of owned apps: " + (apps != null ? apps.size() : 0));
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-        return mapping.findForward("editApp");
+        return manageAuthorizations(mapping, actionForm, request, response);
 
     }
 
     @Service
-    public ActionForward revokeEditedAppAuth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    private void revokeAllAuthorizations(User user, ExternalApplication application) {
+        Set<AppUserSession> sessions = new HashSet<AppUserSession>(user.getAppUserSessionSet());
 
-        IUserView userView = UserView.getUser();
-        User user = userView.getPerson().getUser();
-
-        String editedAppOid = request.getParameter("editedApp");
-        ExternalApplication editedApp = AbstractDomainObject.fromExternalId(editedAppOid);
-
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("Edited App: " + editedApp.getName());
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-        List<AppUserSession> sessions = new ArrayList<AppUserSession>(editedApp.getAppUserSession());
-        for (AppUserSession s : sessions) {
-            s.delete();
-        }
-
-        List<ExternalApplication> appsOwned = user.getAppOwned();
-        request.setAttribute("appsOwned", appsOwned);
-
-        return mapping.findForward("myApps");
-
-    }
-
-    public ActionForward listApps(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        IUserView userView = UserView.getUser();
-        Person p = userView.getPerson();
-
-        List<ExternalApplication> appsOwned = p.getUser().getAppOwned();
-        request.setAttribute("appsOwned", appsOwned);
-
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("User: " + p.getUsername());
-        System.out.println("appsOwned size: " + (appsOwned != null ? appsOwned.size() : 0));
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-        return mapping.findForward("myApps");
-    }
-
-    public ActionForward displayAppUserSessions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        IUserView userView = UserView.getUser();
-        Person p = userView.getPerson();
-
-        String appOid = request.getParameter("oid");
-        ExternalApplication app = AbstractDomainObject.fromExternalId(appOid);
-
-        List<AppUserSession> authSessions = new ArrayList<AppUserSession>();
-
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("App: " + app.getName());
-        System.out.println("user: " + p.getUsername());
-        System.out.println("app.getAppUserSession() size: " + app.getAppUserSession().size());
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-        for (AppUserSession appSession : app.getAppUserSession()) {
-            System.out.println("### app session !null ? " + (appSession != null) + "");
-            System.out.println("### app session user !null ? " + (appSession.getUser() != null) + "");
-            if (appSession.getUser().equals(p.getUser())) {
-                System.out.println("### equals " + appSession.getUsername() + " - " + p.getUsername());
-                authSessions.add(appSession);
+        for (AppUserSession session : sessions) {
+            if (session.getApplication().equals(application)) {
+                session.delete();
             }
         }
-
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("sessions: " + authSessions.size());
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-        request.setAttribute("authSessions", authSessions);
-        request.setAttribute("applicationOid", appOid);
-
-        return mapping.findForward("mySessions");
     }
 
-    @Service
+    public ActionForward manageApplications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        request.setAttribute("appsOwned", getUser().getOwnedAppSet());
+
+        return mapping.findForward("manageApplications");
+    }
+
+    /** This will show individual authorizations */
+
+    public ActionForward viewAuthorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        Person p = getUser().getPerson();
+
+        final ExternalApplication app = getDomainObject(request, "appOid");
+
+        Set<AppUserSession> authSessions =
+                FluentIterable.from(p.getUser().getAppUserSessionSet()).filter(new Predicate<AppUserSession>() {
+
+                    @Override
+                    public boolean apply(AppUserSession appUserSession) {
+                        return appUserSession.getApplication().equals(app);
+                    }
+
+                }).toSet();
+
+        request.setAttribute("authorizations", authSessions);
+        request.setAttribute("appOid", app.getExternalId());
+
+        return mapping.findForward("viewAuthorizations");
+    }
+
     public ActionForward removeAuth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
-        Person p = userView.getPerson();
-        User u = p.getUser();
+        AppUserSession appUserSession = getDomainObject(request, "authorizationOid");
+        String appExternalId = appUserSession.getApplication().getExternalId();
 
-        String oid = request.getParameter("oid");
-        ExternalApplication app = AbstractDomainObject.fromExternalId(oid);
+        appUserSession.delete();
 
-        String deviceId = request.getParameter("deviceId");
-
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("oid: " + oid);
-        System.out.println("deviceId: " + deviceId);
-        System.out.println("sessionsAuth size: "
-                + (p.getUser().getAppUserSession() != null ? p.getUser().getAppUserSession().size() : 0));
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-        List<AppUserSession> appUserSessions = u.getAppUserSession();
-
-        for (AppUserSession aus : appUserSessions) {
-            if (aus.getApplication().equals(app) && aus.getDeviceId().equals(deviceId)) {
-                System.out.println("######  founded #####");
-                appUserSessions.remove(aus);
-                u.removeAppUserSession(aus);
-                aus.getApplication().removeAppUserSession(aus);
-                aus.delete();
-                break;
-            }
-        }
-
-        List<ExternalApplication> authApps = p.getUser().getAppAuthorized();
-        request.setAttribute("authApps", authApps);
-
-        return mapping.findForward("externalAuthApp");
+        request.setAttribute("appOid", appExternalId);
+        return viewAuthorizations(mapping, actionForm, request, response);
     }
-
-    @Service
-    public ActionForward removeAllAuths(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    
+    public ActionForward prepareCreateApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        IUserView userView = UserView.getUser();
-        Person p = userView.getPerson();
-        User u = p.getUser();
-
-        String oid = request.getParameter("appOid");
-        ExternalApplication app = AbstractDomainObject.fromExternalId(oid);
-
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("app: " + app.getName());
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-        List<AppUserSession> appUserSessions = u.getAppUserSession();
-
-        for (AppUserSession aus : appUserSessions) {
-            if (aus.getApplication().equals(app)) {
-                System.out.println("######  founded #####");
-                appUserSessions.remove(aus);
-                u.removeAppUserSession(aus);
-                aus.getApplication().removeAppUserSession(aus);
-                aus.delete();
-            }
-        }
-
-        List<ExternalApplication> authApps = p.getUser().getAppAuthorized();
-        request.setAttribute("authApps", authApps);
-
-        return mapping.findForward("externalAuthApp");
-    }
-
-    /*
-     * method used only for testing, allowing to add an owned app to the user's allowedApps list
-     */
-    @Service
-    public ActionForward addAuth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        IUserView userView = UserView.getUser();
-        Person p = userView.getPerson();
-
-        String oid = request.getParameter("oid");
-        ExternalApplication app = AbstractDomainObject.fromExternalId(oid);
-
-        String deviceId = request.getParameter("deviceId");
-
-        List<ExternalApplication> authApps = p.getUser().getAppAuthorized();
-        request.setAttribute("authApps", authApps);
-
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("oid: " + oid);
-        System.out.println("AppsAuth size: " + (authApps != null ? authApps.size() : 0));
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-        app.addUser(p.getUser());
-        p.getUser().getAppAuthorized().add(app);
-
-        AppUserSession aus = new AppUserSession();
-        aus.setApplication(app);
-        aus.setUser(p.getUser());
-        aus.setDeviceId(deviceId);
-
-        p.getUser().addAppUserSession(aus);
-        app.addAppUserSession(aus);
-
-        request.setAttribute("authApps", authApps);
-
-        return mapping.findForward("externalAuthApp");
+    	return mapping.findForward("createApplication");
     }
 }

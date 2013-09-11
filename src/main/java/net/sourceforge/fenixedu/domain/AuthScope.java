@@ -4,15 +4,14 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 
 public class AuthScope extends AuthScope_Base {
 
-    public final static String PERSONAL_SCOPE = "personal info";
-    public final static String CURRICULUM_SCOPE = "curriculum";
-    public final static String SCHEDULE_SCOPE = "schedule info";
-    public final static String REGISTRATIONS_SCOPE = "registrations";
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthScope.class);
 
     public AuthScope() {
         super();
@@ -48,6 +47,7 @@ public class AuthScope extends AuthScope_Base {
 
     private void notifyAllAppsScopeHasChanged() {
         for (ExternalApplication app : getAppSet()) {
+            LOGGER.info("scopes of app {} changed", getName());
             app.scopeHasChanged();
         }
     }

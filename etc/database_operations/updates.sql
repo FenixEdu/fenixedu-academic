@@ -117,3 +117,31 @@ alter table `SANTANDER_SEQUENCE_NUMBER_GENERATOR` add `PHOTO_SEQUENCE_NUMBER` in
 
 -- Inserted at 2013-09-07T02:48:50.796+01:00
 
+
+
+
+-- Inserted at 2013-09-10T15:36:01.200+01:00
+
+alter table `EXTERNAL_APPLICATION` add `LOGO` blob, add `DESCRIPTION` text, add `SITE_URL` text, add `CALLBACK_URL` text;
+
+
+
+-- Inserted at 2013-09-10T15:57:53.175+01:00
+
+
+
+
+-- Inserted at 2013-09-10T16:23:34.776+01:00
+
+alter table `EXTERNAL_APPLICATION` add `REDIRECT_URL` text;
+
+
+
+-- Inserted at 2013-09-10T16:36:00.689+01:00
+
+
+
+
+-- Inserted at 2013-09-10T16:53:01.528+01:00
+
+alter table `APP_USER_SESSION` add `CREATION_DATE` timestamp NULL default NULL;
