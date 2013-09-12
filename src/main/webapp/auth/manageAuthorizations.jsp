@@ -9,7 +9,7 @@
 
 <em><bean:message key="label.person.main.title" /></em>
 <h2>
-	<bean:message key="label.oauthapps.manage.authorizations" bundle="APPLICATION_RESOURCES" />
+	<bean:message key="oauthapps.label.manage.authorizations" bundle="APPLICATION_RESOURCES" />
 </h2>
 
 
@@ -20,11 +20,11 @@
 				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
 				
 				<fr:property name="linkFormat(viewAuthorizations)" value="<%= "/externalApps.do?method=viewAuthorizations&appOid=${externalId}" %>" />
-				<fr:property name="key(viewAuthorizations)" value="label.oauthapps.view.authorizations"/>
+				<fr:property name="key(viewAuthorizations)" value="oauthapps.label.view.authorizations"/>
 				<fr:property name="bundle(viewAuthorizations)" value="APPLICATION_RESOURCES"/>
 				
 				<fr:property name="linkFormat(revokeApplication)" value="<%= "/externalApps.do?method=revokeApplication&appOid=${externalId}" %>" />
-				<fr:property name="key(revokeApplication)" value="label.oauthapps.revoke.application"/>
+				<fr:property name="key(revokeApplication)" value="oauthapps.label.revoke.application"/>
 				<fr:property name="bundle(revokeApplication)" value="APPLICATION_RESOURCES"/>
 				
 			</fr:layout>
@@ -32,5 +32,9 @@
 <%-- 		<p><a href="<%= "externalApps.do?method=displayAppUserSessions&oid=" + app.getExternalId()%>"> Ver autorizações </a> --%>
 </logic:notEmpty>
 <logic:empty name="authApps">
-	<bean:message key="label.oauthapps.no.authorizations" bundle="APPLICATION_RESOURCES" />
+	<bean:message key="oauthapps.label.no.authorizations" bundle="APPLICATION_RESOURCES" />
 </logic:empty>
+
+<script type="text/javascript">
+		$("table img").width("75px").height("75px");
+</script>

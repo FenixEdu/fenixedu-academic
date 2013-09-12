@@ -1,31 +1,47 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<h2>Confirmar Autorização - Teste</h2>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 
-<!--
-http://localhost:8080/fenix/external/oauth.do?method=getUserPermission&contentContextPath_PATH=/pessoal/pessoal&_request_checksum_=ebf8ba2ebb6645de4caa9241dd6f359912fd8a58
--->
-
-
-<logic:present name="app">
-	<fr:view name="app" layout="tabular" schema="my.schema.confirm.app" />
-</logic:present>
-
-
-<fr:form action="/oauth.do?method=userConfirmation">
-<input name="client_id" value="<%= request.getParameter("client_id") %>" type="hidden">
-<input name="redirect_uri" value="<%= request.getParameter("redirect_uri") %>" type="hidden">
-	<html:submit>
-		<bean:message key="button.submit" />
-	</html:submit>
-</fr:form>
-
-
-<fr:form action="/oauth.do?method=userCancelation">
-	<html:submit>
-		<bean:message key="button.cancel" />
-	</html:submit>
-	</p>
-</fr:form>
+<bean:define id="siteURL" name="application" property="siteUrl"/>
+<bean:define id="appOid" name="application" property="externalId"/>
+<bean:define id="appName" name="application" property="name" type="java.lang.String"/>
+<html>
+	<head>
+		<title>Fenix OAuth API - Autorização</title>
+		<link rel="stylesheet/less" type="text/css" href=" <%= request.getContextPath() + "/CSS/authstyle.less" %>" />
+		<script type="text/javascript" src="<%= request.getContextPath() + "/javaScript/less-1.4.1.min.js"%>"></script>
+	</head>
+	<body>
+		<div class="auth-request-wrapper">
+			<div class="auth-app-details">
+				<h2><bean:message key="oauthapps.label.authorization.question"  arg0="<%= appName %>" bundle="APPLICATION_RESOURCES"></bean:message></h2>
+				<p><bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.authorization.scopes"/></p>
+				<ul>
+					<logic:iterate id="scope" name="application" property="scopes">
+						<li><bean:write name="scope" property="name"/> </li>
+					</logic:iterate>
+				</ul>
+				<div class="button-group">
+					<fr:form action="/oauth.do?method=userConfirmation">
+						<input name="client_id" value="<%= request.getParameter("client_id") %>" type="hidden">
+						<input name="redirect_uri" value="<%= request.getParameter("redirect_uri") %>" type="hidden">
+						<button class="btn btn-authorize"><bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.authorization.yes"/></button>
+					</fr:form>
+					<fr:form action="/oauth.do?method=userCancelation">
+						<button class="btn btn-default"><bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.authorization.no"/></button>
+					</fr:form>
+				</div>
+			</div>
+			<div class="auth-app-info">
+				<img class="app-thumbnail" src="<%= request.getContextPath() + "/person/externalApps.do?method=appLogo&amp;contentContextPath_PATH=/pessoal/pessoal&amp;appOid=" + appOid %>" />
+				<h2><bean:write name="application" property="name"/></h2>
+				<code><a href="<%= siteURL %>"><%= siteURL %></a></code>
+				<p>
+					<bean:write name="application" property="description"/> 
+				</p>
+			</div>
+		</div>
+	</body>
+</html>

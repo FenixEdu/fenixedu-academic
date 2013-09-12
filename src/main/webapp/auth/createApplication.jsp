@@ -13,9 +13,11 @@
 
 <em><bean:message key="label.person.main.title" /></em>
 <h2>
-	<bean:message key="label.oauthapps.create.application" bundle="APPLICATION_RESOURCES" />
+	<bean:message key="oauthapps.label.create.application" bundle="APPLICATION_RESOURCES" />
 </h2>
 
-<fr:create type="net.sourceforge.fenixedu.domain.ExternalApplication" id="create" schema="oauthapps.create.app" action="/externalAuth.do?method=createApplication">
-
+<fr:create type="net.sourceforge.fenixedu.domain.ExternalApplication" id="create" schema="oauthapps.create.app" action="/externalApps.do?method=createApplication">
+	<fr:hidden slot="author" name="currentUser"/>
+	<fr:destination name="success" path="/externalApps.do?method=manageApplications" />
+	<fr:destination name="cancel" path="/externalApps.do?method=manageApplications" />
 </fr:create>

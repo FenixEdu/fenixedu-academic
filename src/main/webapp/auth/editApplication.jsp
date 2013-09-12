@@ -13,15 +13,10 @@
 
 <em><bean:message key="label.person.main.title" /></em>
 <h2>
-	<bean:message key="label.auth" bundle="APPLICATION_RESOURCES" />
+	<bean:message key="oauthapps.title.edit.application" bundle="APPLICATION_RESOURCES" />
 </h2>
 
-<logic:present name="apps">
-<logic:iterate id="app" name="apps" type="net.sourceforge.fenixedu.domain.ExternalApplication">
-		<fr:edit id="edit" name="app"
-			type="net.sourceforge.fenixedu.domain.ExternalApplication"
-			schema="my.schema.edit.app" 
-			action="<%= "/externalAuth?method=revokeEditedAppAuth&editedApp=" + app.getExternalId() %>">
-		</fr:edit>
-	</logic:iterate>
-</logic:present>
+<fr:edit id="edit" name="application" type="net.sourceforge.fenixedu.domain.ExternalApplication" schema="oauthapps.create.app">
+	<fr:destination name="success" path="/externalApps.do?method=manageApplications" />
+	<fr:destination name="cancel" path="/externalApps.do?method=manageApplications" />
+</fr:edit>

@@ -60,7 +60,7 @@ public class OAuthAction extends FenixDispatchAction {
             try {
                 ExternalApplication clientApplication = getExternalApplication(clientId);
                 if (clientApplication.matchesUrl(redirectUrl)) {
-                    request.setAttribute("app", clientApplication);
+                    request.setAttribute("application", clientApplication);
                     return mapping.findForward("showAuthorizationPage");
                 }
                 throw new OAuthNotFoundException();

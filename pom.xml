@@ -178,7 +178,7 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>8.1.10.v20130312</version>
 				<configuration>
-					<reload>manual</reload>
+					<scanIntervalSeconds>-1</scanIntervalSeconds>
 					<stopKey>foo</stopKey>
 					<stopPort>9999</stopPort>
 					<encoding>UTF-8</encoding>

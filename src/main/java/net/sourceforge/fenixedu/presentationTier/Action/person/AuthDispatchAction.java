@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +15,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -30,7 +34,7 @@ import com.google.common.collect.ImmutableSet;
 
 @Mapping(module = "person", path = "/externalApps")
 @Forwards(value = { @Forward(name = "createApplication", path = "/auth/createApplication.jsp"),
-        @Forward(name = "editApp", path = "/auth/editAppRequest.jsp"),
+        @Forward(name = "editApplication", path = "/auth/editApplication.jsp"),
         @Forward(name = "manageAuthorizations", path = "/auth/manageAuthorizations.jsp"),
         @Forward(name = "returnKeys", path = "/auth/returnkeys.jsp"),
         @Forward(name = "manageApplications", path = "/auth/manageApplications.jsp"),
@@ -76,6 +80,17 @@ public class AuthDispatchAction extends FenixDispatchAction {
 
     }
 
+    public ActionForward deleteApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ExternalApplication application = getDomainObject(request, "appOid");
+
+        application.delete();
+
+        return manageApplications(mapping, actionForm, request, response);
+
+    }
+
     @Service
     private void revokeAllAuthorizations(User user, ExternalApplication application) {
         Set<AppUserSession> sessions = new HashSet<AppUserSession>(user.getAppUserSessionSet());
@@ -114,13 +129,14 @@ public class AuthDispatchAction extends FenixDispatchAction {
 
                 }).toSet();
 
+        request.setAttribute("logo", Base64.encodeBase64String(app.getLogo()));
         request.setAttribute("authorizations", authSessions);
-        request.setAttribute("appOid", app.getExternalId());
+        request.setAttribute("application", app);
 
         return mapping.findForward("viewAuthorizations");
     }
 
-    public ActionForward removeAuth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward revokeAuth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
         AppUserSession appUserSession = getDomainObject(request, "authorizationOid");
@@ -131,9 +147,41 @@ public class AuthDispatchAction extends FenixDispatchAction {
         request.setAttribute("appOid", appExternalId);
         return viewAuthorizations(mapping, actionForm, request, response);
     }
-    
+
+    public ActionForward createApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return manageApplications(mapping, actionForm, request, response);
+    }
+
     public ActionForward prepareCreateApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-    	return mapping.findForward("createApplication");
+        request.setAttribute("currentUser", getUser());
+        return mapping.findForward("createApplication");
     }
+
+    public ActionForward prepareEditApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ExternalApplication app = getDomainObject(request, "appOid");
+        request.setAttribute("application", app);
+        return mapping.findForward("editApplication");
+    }
+
+    public ActionForward appLogo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final ExternalApplication app = getDomainObject(request, "appOid");
+
+        response.setContentType("image");
+        ServletOutputStream outputStream = response.getOutputStream();
+        byte[] logo = app.getLogo();
+        if (logo != null && logo.length > 0) {
+            outputStream.write(logo);
+        } else {
+            InputStream placeholder = getClass().getResourceAsStream("/externalAppPlaceholder.jpg");
+            IOUtils.copy(placeholder, outputStream);
+        }
+        outputStream.flush();
+        response.flushBuffer();
+        return null;
+    }
+
 }

@@ -1,18 +1,23 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ExternalApplication extends ExternalApplication_Base {
 
     public ExternalApplication() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-        setSecret(RandomStringUtils.randomAlphanumeric(128));
+        setSecret(RandomStringUtils.randomAlphanumeric(115));
     }
 
     public void setScopes(List<AuthScope> scopes) {
@@ -43,4 +48,31 @@ public class ExternalApplication extends ExternalApplication_Base {
             appUserSession.invalidate();
         }
     }
+
+    public FileInputStream getLogoStream() {
+        return null;
+    }
+
+    public void setLogoStream(FileInputStream stream) {
+        try {
+            if (stream != null) {
+                setLogo(IOUtils.toByteArray(stream));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Service
+    public void delete() {
+        setRootDomainObject(null);
+        setAuthor(null);
+        getScopes().clear();
+        Set<AppUserSession> sessions = new HashSet<AppUserSession>(getAppUserSessionSet());
+        for (AppUserSession session : sessions) {
+            session.delete();
+        }
+        deleteDomainObject();
+    }
+
 }

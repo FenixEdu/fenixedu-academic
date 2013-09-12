@@ -8,36 +8,46 @@
 	prefix="logic"%>
 
 <html:xhtml />
+
 <%@ page
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 
 <em><bean:message key="label.person.main.title" /></em>
 <h2>
-	<bean:message key="label.oauthapps.manage.applications" bundle="APPLICATION_RESOURCES" />
+	<bean:message key="oauthapps.label.manage.applications" bundle="APPLICATION_RESOURCES" />
 </h2>
 
-
+<div class="infoop2" style="width:500px;">
+	Nesta secção estão listadas as suas aplicações registadas no sistema Fénix.
+</div>
 
 <logic:notEmpty name="appsOwned">
-		<fr:view name="appsOwned" schema="oauthapps.view.ownedapps">
+		<fr:view name="appsOwned" schema="oauthapps.view.apps">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thcenter thcenter"/>
 				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, tdcenter, tdcenter"/>
 				
-				<fr:property name="linkFormat(editApplication)" value="<%= "/externalApps.do?method=editApplication&appOid=${externalId}" %>" />
-				<fr:property name="key(editApplication)" value="label.oauthapps.edit.application"/>
+				<fr:property name="linkFormat(editApplication)" value="<%= "/externalApps.do?method=prepareEditApplication&appOid=${externalId}" %>" />
+				<fr:property name="key(editApplication)" value="oauthapps.label.edit.application"/>
 				<fr:property name="bundle(editApplication)" value="APPLICATION_RESOURCES"/>
 				
+				<fr:property name="linkFormat(deleteApplication)" value="<%= "/externalApps.do?method=deleteApplication&appOid=${externalId}" %>" />
+				<fr:property name="key(deleteApplication)" value="oauthapps.label.delete.application"/>
+				<fr:property name="bundle(deleteApplication)" value="APPLICATION_RESOURCES"/>
 			</fr:layout>
 		</fr:view>
 </logic:notEmpty>
 
 <logic:empty name="appsOwned">
-	<bean:message key="label.oauthapps.no.apps" bundle="APPLICATION_RESOURCES" />
+	<bean:message key="oauthapps.label.no.apps" bundle="APPLICATION_RESOURCES" />
 </logic:empty>
 
 <p>
 	<html:link page="/externalApps.do?method=prepareCreateApplication">
-		<bean:message key="label.oauthapps.create.application" bundle="APPLICATION_RESOURCES"/>
+		<bean:message key="oauthapps.label.create.application" bundle="APPLICATION_RESOURCES"/>
 	</html:link>
 </p>
+
+<script type="text/javascript">
+		$("table img").width("75px").height("75px");
+</script>

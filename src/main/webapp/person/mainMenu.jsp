@@ -23,9 +23,9 @@
     <li><html:link page="/manageHomepage.do?method=options" titleKey="link.homepage.options"><bean:message key="link.homepage.options"  /></html:link></li>
     <li><html:link page="/manageHomepage.do?method=sections" titleKey="link.manage.homepage.content"><bean:message key="link.manage.homepage.content" /></html:link></li>
 
-	<li class="navheader"><bean:message key="label.oauthapps"  /></li>
- 	<li><html:link page="/externalApps.do?method=manageAuthorizations"><bean:message key="label.oauthapps.manage.authorizations"  bundle="APPLICATION_RESOURCES"/></html:link></li>
-	<li><html:link page="/externalApps.do?method=manageApplications"><bean:message key="label.oauthapps.manage.applications"  bundle="APPLICATION_RESOURCES"/></html:link></li>
+	<li class="navheader"><bean:message key="oauthapps.label"  /></li>
+ 	<li><html:link page="/externalApps.do?method=manageAuthorizations"><bean:message key="oauthapps.label.manage.authorizations"  bundle="APPLICATION_RESOURCES"/></html:link></li>
+	<li><html:link page="/externalApps.do?method=manageApplications"><bean:message key="oauthapps.label.manage.applications"  bundle="APPLICATION_RESOURCES"/></html:link></li>
 		
 
 	<!-- Vigilancy link for people who do not have ROLE TEACHER -->
