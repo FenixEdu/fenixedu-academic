@@ -773,7 +773,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
                 }
             }
         } else {
-            variationCode = null;
+            variationCode = "-1";
         }
 
         request.setAttribute("objectCode", executionCourseId);
