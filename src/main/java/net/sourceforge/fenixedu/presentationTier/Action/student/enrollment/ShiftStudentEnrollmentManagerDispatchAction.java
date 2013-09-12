@@ -191,7 +191,13 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     private ActionForward prepareShiftEnrolmentInformation(ActionMapping mapping, HttpServletRequest request,
             final Registration registration, final ExecutionSemester executionSemester) throws FenixServiceException {
 
-        final List<ShiftToEnrol> shiftsToEnrol = ReadShiftsToEnroll.runReadShiftsToEnroll(registration);
+        final List<ShiftToEnrol> shiftsToEnrol;
+        try {
+            shiftsToEnrol = ReadShiftsToEnroll.runReadShiftsToEnroll(registration);
+        } catch (FenixServiceException exception) {
+            addActionMessage(request, exception.getMessage());
+            return mapping.getInputForward();
+        }
 
         request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts",
                 registration.getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionSemester));
