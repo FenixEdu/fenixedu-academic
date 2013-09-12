@@ -26,9 +26,9 @@ import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
-import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -108,7 +108,9 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
             if (shifts != null) {
                 List<Shift> list = new ArrayList<Shift>();
                 for (String shift : shifts.split(":")) {
-                    list.add(AbstractDomainObject.<Shift> fromExternalId(shift));
+                    if (!StringUtils.isEmpty(shift)) {
+                        list.add(AbstractDomainObject.<Shift> fromExternalId(shift));
+                    }
                 }
                 searchExecutionCourseAttendsBean.setShifts(list);
             }
