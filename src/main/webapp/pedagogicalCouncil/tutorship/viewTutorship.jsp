@@ -48,9 +48,8 @@
 
 					<fr:property name="sortBy" value="teacher.teacherId" />
 				</fr:slot>
-				<fr:slot name="tutorship.startDate" key="label.tutorship.view.begin.date"readOnly="true"/>
-				<fr:slot name="endDate" key="label.tutorship.view.end.date"
-					layout="year-month">
+				<fr:slot name="tutorship.startDate" key="label.tutorship.view.begin.date" readOnly="true"/>
+				<fr:slot name="endDate" key="label.tutorship.view.end.date"	layout="year-month">
 					<validator
 						class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 						<fr:property name="dateFormat" value="MM/yyyy" />
@@ -74,9 +73,7 @@
 		</html:link>
 		<p>
 			<html:submit property="create"><bean:message key="label.submit.edit" bundle="PEDAGOGICAL_COUNCIL"/></html:submit>
-		</p>
-		
-</fr:form>
-
+		</p>		
+	</fr:form>
 
 </logic:present>
