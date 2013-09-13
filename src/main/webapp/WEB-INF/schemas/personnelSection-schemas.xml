@@ -154,6 +154,23 @@
 			<property name="contextRelative" value="false"/>
 			<property name="imageFormat" value="/externalApps.do?method=appLogo&amp;appOid=${externalId}"/>
 	</slot>
+	<slot name="name" key="oauthapps.label.app.name" />
+	<slot name="description" layout="longText" key="oauthapps.label.app.description"/>
+	<slot name="scopes" layout="flowLayout">
+		<property name="eachLayout" value="values"></property>
+		<property name="eachSchema" value="oauthapps.view.scope"></property>
+		<property name="htmlSeparator" value=", "></property>
+	</slot>
+	<slot name="siteUrl" key="oauthapps.label.app.site.url" />
+</schema>
+
+<schema name="oauthapps.view.app.details" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
+	<slot name="this" key="oauthapps.label.app.logo" layout="view-as-image">
+			<property name="useParent" value="false"/>
+			<property name="moduleRelative" value="true"/>
+			<property name="contextRelative" value="false"/>
+			<property name="imageFormat" value="/externalApps.do?method=appLogo&amp;appOid=${externalId}"/>
+	</slot>
 	<slot name="externalId" key="oauthapps.label.app.client.id" />
 	<slot name="secret" key="oauthapps.label.app.client.secret" />
 	<slot name="name" key="oauthapps.label.app.name" />

@@ -20,7 +20,7 @@
 
 <h2></h2>
 
-<fr:view name="application" layout="tabular" schema="oauthapps.view.apps" type="net.sourceforge.fenixedu.domain.ExternalApplication">
+<fr:view name="application" layout="tabular" schema="oauthapps.view.app.details" type="net.sourceforge.fenixedu.domain.ExternalApplication">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight thright"/>
 	</fr:layout>
@@ -51,5 +51,7 @@
 	</html:link>
 </p>
 	
-	
+<script type="text/javascript">
+		$("table img").width("75px").height("75px");
+</script>
 	

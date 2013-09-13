@@ -22,7 +22,7 @@
 </div>
 
 <logic:notEmpty name="appsOwned">
-		<fr:view name="appsOwned" schema="oauthapps.view.apps">
+		<fr:view name="appsOwned" schema="oauthapps.view.app.details">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thcenter thcenter"/>
 				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, tdcenter, tdcenter"/>
