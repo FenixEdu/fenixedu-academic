@@ -28,8 +28,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadQuestionImage {
 
     @Service
-    public static String run(String exerciseId, Integer metadataCode, Integer imageId, Integer feedbackId, Integer itemIndex,
-            String path) throws FenixServiceException {
+    public static String run(String exerciseId, Integer imageId, Integer feedbackId, Integer itemIndex, String path)
+            throws FenixServiceException {
         Question question = AbstractDomainObject.fromExternalId(exerciseId);
         if (question != null) {
             if (question.getSubQuestions() == null || question.getSubQuestions().size() == 0) {

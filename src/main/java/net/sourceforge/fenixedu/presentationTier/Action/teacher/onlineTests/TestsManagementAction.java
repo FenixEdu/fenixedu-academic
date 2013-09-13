@@ -127,7 +127,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String information = request.getParameter("information");
         String testCode = null;
         try {
-            InsertTest.runInsertTest(executionCourseId, title, information);
+            testCode = InsertTest.runInsertTest(executionCourseId, title, information);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -142,7 +142,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String testCode = getStringFromRequest(request, "testCode");
         String newTestCode = null;
         try {
-            InsertTestAsNewTest.runInsertTestAsNewTest(executionCourseId, testCode);
+            newTestCode = InsertTestAsNewTest.runInsertTestAsNewTest(executionCourseId, testCode);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -392,7 +392,6 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String studentCode = getStringFromRequest(request, "studentCode");
         final String optionShuffle = request.getParameter("optionShuffle");
         final String testCode = getStringFromRequest(request, "testCode");
-        final Integer metadataCode = getCodeFromRequest(request, "metadataCode");
         final Integer itemIndex = getCodeFromRequest(request, "item");
         final Integer feedbackCode = getCodeFromRequest(request, "feedbackCode");
         final String path = getServlet().getServletContext().getRealPath("/");
@@ -414,7 +413,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         } else {
 
             try {
-                img = ReadQuestionImage.run(exerciseCode, metadataCode, imgCode, feedbackCode, itemIndex, path);
+                img = ReadQuestionImage.run(exerciseCode, imgCode, feedbackCode, itemIndex, path);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }

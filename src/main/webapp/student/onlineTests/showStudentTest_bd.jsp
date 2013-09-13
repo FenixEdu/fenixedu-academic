@@ -17,7 +17,7 @@
 		<bean:define id="question" name="testQuestion" property="question" type="net.sourceforge.fenixedu.domain.onlineTests.Question"/>
 		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
 		<bean:define id="testScope" name="distributedTest" property="testScope"/>
-		<bean:define id="domainObject" name="testScope" property="domainObject"/>
+		<bean:define id="domainObject" name="testScope" property="executionCourse"/>
 		<bean:define id="objectCode" name="domainObject" property="externalId"/>
 		<bean:define id="questionCode" name="question" property="externalId"/>
 		<bean:define id="questionOrder" name="testQuestion" property="testQuestionOrder"/>

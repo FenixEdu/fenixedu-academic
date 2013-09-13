@@ -85,7 +85,7 @@
 		</table>
 	</logic:notEmpty>
 </logic:present>
-
+<%--
 <logic:present name="testToDoList">
 	<logic:notEmpty name="testToDoList">
 		<h3 class="mbottom05"><bean:message key="link.toDoTests"/></h3>
@@ -161,4 +161,6 @@
 		</logic:iterate>
 	</logic:notEmpty>
 </logic:present>
+
 </table>
+ --%>
