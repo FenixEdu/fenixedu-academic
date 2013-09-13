@@ -3719,30 +3719,19 @@ public class Registration extends Registration_Base {
     }
 
     private boolean hasBeenSeniorForTheLastTwoConsecutiveYears(ExecutionYear executionYear) {
-        if (!isSeniorLastYear(executionYear)) {
+        if (!isSenior(executionYear)) {
             return false;
         }
-        if (!isSeniorTwoYearsAgo(executionYear)) {
+        if (!isSenior(executionYear.getPreviousExecutionYear())) {
             return false;
         }
 
         return true;
     }
 
-    private boolean isSeniorLastYear(ExecutionYear executionYear) {
+    private boolean isSenior(ExecutionYear executionYear) {
         for (SeniorStatute seniorStatute : getSeniorStatuteSet()) {
             if (seniorStatute.isValidOnAnyExecutionPeriodFor(executionYear.getPreviousExecutionYear())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isSeniorTwoYearsAgo(ExecutionYear executionYear) {
-        ExecutionYear previousYear = executionYear.getPreviousExecutionYear();
-
-        for (SeniorStatute seniorStatute : getSeniorStatuteSet()) {
-            if (seniorStatute.isValidOnAnyExecutionPeriodFor(previousYear.getPreviousExecutionYear())) {
                 return true;
             }
         }

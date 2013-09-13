@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.cardGeneration;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -62,8 +63,22 @@ public class SantanderBatch extends SantanderBatch_Base {
         }
         StringBuilder fileBuilder = new StringBuilder(1500000);
         buildHeader(fileBuilder);
-        for (SantanderEntry line : getSantanderEntries()) {
-            fileBuilder.append(line.getLine());
+        for (SantanderEntry entryLine : getSantanderEntries()) {
+            String line = entryLine.getLine();
+            String visibleLine = line.substring(0, 307);
+
+            //Update line with the persons Santander PIN
+            if (entryLine.getPerson().getSantanderPIN() == null) {
+                SantanderSequenceNumberGenerator.generateSantanderPIN(entryLine.getPerson());
+            }
+            visibleLine += SantanderSequenceNumberGenerator.decodeSantanderPIN(entryLine.getPerson().getSantanderPIN());
+
+            // Update line with the institutions own PIN
+            visibleLine += PropertiesManager.getProperty("app.institution.PIN");
+
+            visibleLine += line.substring(315);
+
+            fileBuilder.append(visibleLine);
         }
         buildTrailer(fileBuilder);
         return fileBuilder.toString();

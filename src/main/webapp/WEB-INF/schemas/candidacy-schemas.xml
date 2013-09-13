@@ -871,9 +871,11 @@
 </schema>
 
 <schema name="ResidenceApplianceInquiryForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceApplianceInquiryForm" bundle="CANDIDATE_RESOURCES">
-	<slot name="toApplyForResidence" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="toApplyForResidence" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="radio">
 		<property name="bundle" value="APPLICATION_RESOURCES" />
-		<property name="bodyText" value="label.true" />
+		<property name="trueLabel" value="label.true" />
+		<property name="falseLabel" value="label.false" />
+		<property name="classes" value="nobullet liinline"/>
 	</slot>
     <slot name="notesAboutApplianceForResidence" layout="longText">
     	<property name="columns" value="50" />

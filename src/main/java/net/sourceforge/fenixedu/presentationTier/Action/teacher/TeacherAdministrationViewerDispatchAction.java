@@ -2453,11 +2453,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward viewAttendsSet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         String groupingOIDString = request.getParameter("groupPropertiesCode");
-        Integer groupingOID = Integer.valueOf(groupingOIDString);
 
         ISiteComponent viewAttendsSet = new InfoSiteGrouping();
         TeacherAdministrationSiteView result =
-                (TeacherAdministrationSiteView) readSiteView(request, viewAttendsSet, null, groupingOID, null);
+                (TeacherAdministrationSiteView) readSiteView(request, viewAttendsSet, null, groupingOIDString, null);
 
         if (request.getParameter("showPhotos") == null) {
             request.setAttribute("showPhotos", "false");

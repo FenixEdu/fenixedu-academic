@@ -11,7 +11,7 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ResidenceApplianceInquiryForm extends Form {
 
-    private boolean isToApplyForResidence;
+    private boolean isToApplyForResidence = false;
 
     private String notesAboutApplianceForResidence;
 
