@@ -19,10 +19,13 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Path("/services")
 public class JerseyServices {
@@ -150,9 +153,10 @@ public class JerseyServices {
     @SuppressWarnings("unchecked")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("readPhdThesis")
+    @Path("readThesis")
     public static String readPhdThesis() {
         JSONArray infos = new JSONArray();
+
         for (PhdIndividualProgramProcessNumber phdProcessNumber : RootDomainObject.getInstance().getPhdIndividualProcessNumbers()) {
             PhdIndividualProgramProcess phdProcess = phdProcessNumber.getProcess();
             if (phdProcess.isConcluded()) {
@@ -182,11 +186,34 @@ public class JerseyServices {
                     phdInfo.put("url", phdProcess.getThesisProcess().getProvisionalThesisDocument().getDownloadUrl());
                 } catch (NullPointerException e) {
                 }
-
+                phdInfo.put("type", "phdthesis");
                 infos.add(phdInfo);
             }
 
         }
+
+        for (Thesis t : RootDomainObject.getInstance().getTheses()) {
+            if (t.isEvaluated()) {
+                JSONObject mscInfo = new JSONObject();
+                mscInfo.put("author", t.getStudent().getPerson().getUsername());
+                String title = t.getFinalFullTitle().getContent(Language.en);
+                if (title == null) {
+                    title = t.getFinalFullTitle().getContent(Language.pt);
+                }
+                mscInfo.put("title", title);
+                mscInfo.put("year", t.getDiscussed().year().getAsShortText());
+                mscInfo.put("month", t.getDiscussed().monthOfYear().getAsShortText());
+
+                JSONArray schools = new JSONArray();
+                schools.add("Instituto Superior Técnico");
+                mscInfo.put("schools", schools);
+
+                mscInfo.put("url", t.getDissertation().getDownloadUrl());
+                mscInfo.put("type", "mastersthesis");
+                infos.add(mscInfo);
+            }
+        }
         return infos.toJSONString();
+
     }
 }
