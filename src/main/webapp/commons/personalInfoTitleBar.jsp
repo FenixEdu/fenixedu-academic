@@ -1,6 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
 <logic:notPresent name="USER_SESSION_ATTRIBUTE">
 	<% response.sendRedirect(response.encodeRedirectURL("http://www.google.com")); %>
@@ -10,8 +10,8 @@
 
 
 <%--
-<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
-<%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="str" %>
 -
 <dt:format pattern="dd.MM.yyyy"><dt:currentTime/></dt:format>
 --%>

@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
 <bean:define id="siteActionName" value="/researchSite/viewResearchUnitSite.do" toScope="request"/>
 <bean:define id="siteContextParam" value="siteID" toScope="request"/>

@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <tiles:insert definition="definition.public.mainPage" beanName="" flush="true">
 	<tiles:put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 	<tiles:put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />

@@ -1,1 +1,1 @@
-<%@ page language="java" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %><bean:write name="isAlive"/>
+<%@ page language="java" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %><bean:write name="isAlive"/>

@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <tiles:insert definition="df.layout.two-column" beanName="" flush="true">
   <tiles:put name="title" value="private.resourcemanagement.schedules.executiondates.listrooms" />
   <tiles:put name="bundle" value="TITLES_RESOURCES" />

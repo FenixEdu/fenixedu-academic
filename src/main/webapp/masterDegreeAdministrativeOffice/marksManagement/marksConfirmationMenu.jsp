@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <tiles:insert definition="df.layout.two-column.posGrad" beanName="" flush="true">
   <tiles:put name="title" value="Secretaria de Pós-Graduação165" />
   <tiles:put name="serviceName" value="Secretaria de Pós-Graduação" />

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
 <h3><bean:message key="title.site.announcements.departmentChannels" bundle="WEBSITEMANAGER_RESOURCES"/></h3>
 
