@@ -104,7 +104,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     }
 
     public ISiteComponent getComponent(ISiteComponent component, ExecutionCourseSite site, ISiteComponent commonComponent,
-            Object obj1, Object obj2) throws FenixServiceException {
+            String obj1, String obj2) throws FenixServiceException {
 
         if (component instanceof InfoSiteCommon) {
             return getInfoSiteCommon((InfoSiteCommon) component, site);
@@ -117,27 +117,27 @@ public class TeacherAdministrationSiteComponentBuilder {
         } else if (component instanceof InfoSitePrograms) {
             return getInfoSitePrograms((InfoSitePrograms) component, site);
         } else if (component instanceof InfoCurriculum) {
-            return getInfoCurriculum((InfoCurriculum) component, site, (String) obj1);
+            return getInfoCurriculum((InfoCurriculum) component, site, obj1);
         } else if (component instanceof InfoSiteTeachers) {
-            return getInfoSiteTeachers((InfoSiteTeachers) component, site, (String) obj2);
+            return getInfoSiteTeachers((InfoSiteTeachers) component, site, obj2);
         } else if (component instanceof InfoSiteEvaluation) {
             return getInfoSiteEvaluation((InfoSiteEvaluation) component, site);
         } else if (component instanceof InfoSiteExam) {
             return getInfoSiteExam((InfoSiteExam) component, site);
         } else if (component instanceof InfoSiteEvaluationExecutionCourses) {
-            return getInfoSiteEvaluationExecutionCourses((InfoSiteEvaluationExecutionCourses) component, site, (String) obj1);
+            return getInfoSiteEvaluationExecutionCourses((InfoSiteEvaluationExecutionCourses) component, site, obj1);
         } else if (component instanceof InfoSiteRootSections) {
             return getInfoSiteRootSections((InfoSiteRootSections) component, site);
         } else if (component instanceof InfoEvaluation) {
-            return getInfoEvaluation((InfoEvaluation) component, site, (String) obj1);
+            return getInfoEvaluation((InfoEvaluation) component, site, obj1);
         } else if (component instanceof InfoSiteSection) {
-            return getInfoSiteSection((InfoSiteSection) component, site, (String) obj1);
+            return getInfoSiteSection((InfoSiteSection) component, site, obj1);
         } else if (component instanceof InfoSiteRegularSections) {
-            return getInfoSiteRegularSections((InfoSiteRegularSections) component, site, (String) obj1);
+            return getInfoSiteRegularSections((InfoSiteRegularSections) component, site, obj1);
         } else if (component instanceof InfoSiteSections) {
-            return getInfoSiteSections((InfoSiteSections) component, site, (String) obj1);
+            return getInfoSiteSections((InfoSiteSections) component, site, obj1);
         } else if (component instanceof InfoSiteItems) {
-            return getInfoSiteItems((InfoSiteItems) component, site, (String) obj1);
+            return getInfoSiteItems((InfoSiteItems) component, site, obj1);
         } else if (component instanceof InfoSiteProjects) {
             return getInfoSiteProjects((InfoSiteProjects) component, site);
         } else if (component instanceof InfoSiteNewProjectProposals) {
@@ -145,15 +145,15 @@ public class TeacherAdministrationSiteComponentBuilder {
         } else if (component instanceof InfoSiteSentedProjectProposalsWaiting) {
             return getInfoSiteSentedProjectProposalsWaiting((InfoSiteSentedProjectProposalsWaiting) component, site);
         } else if (component instanceof InfoSiteShiftsAndGroups) {
-            return getInfoSiteShiftsAndGroups((InfoSiteShiftsAndGroups) component, (String) obj1);
+            return getInfoSiteShiftsAndGroups((InfoSiteShiftsAndGroups) component, obj1);
         } else if (component instanceof InfoSiteStudentGroup) {
-            return getInfoSiteStudentGroup((InfoSiteStudentGroup) component, (String) obj1);
+            return getInfoSiteStudentGroup((InfoSiteStudentGroup) component, obj1);
         } else if (component instanceof InfoSiteGrouping) {
-            return getInfoSiteGroupProperties((InfoSiteGrouping) component, (String) obj1);
+            return getInfoSiteGroupProperties((InfoSiteGrouping) component, obj1);
         } else if (component instanceof InfoSiteShifts) {
-            return getInfoSiteShifts((InfoSiteShifts) component, (String) obj1, (String) obj2);
+            return getInfoSiteShifts((InfoSiteShifts) component, obj1, obj2);
         } else if (component instanceof InfoSiteStudentGroupAndStudents) {
-            return getInfoSiteStudentGroupAndStudents((InfoSiteStudentGroupAndStudents) component, (String) obj1, (String) obj2);
+            return getInfoSiteStudentGroupAndStudents((InfoSiteStudentGroupAndStudents) component, obj1, obj2);
         }
         return null;
     }

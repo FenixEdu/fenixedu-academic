@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGenerator_Base {
 
@@ -49,6 +50,7 @@ public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGen
         return String.format("%0" + numberOfDigits + "d", pin);
     }
 
+    @Service
     public static SantanderPIN generateSantanderPIN(Person person) {
         String pin = generatePIN(4);
         try {

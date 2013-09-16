@@ -18,7 +18,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class TeacherAdministrationSiteComponentService {
 
     protected TeacherAdministrationSiteView run(String infoExecutionCourseCode, ISiteComponent commonComponent,
-            ISiteComponent bodyComponent, Object obj1, Object obj2) throws FenixServiceException {
+            ISiteComponent bodyComponent, String obj1, String obj2) throws FenixServiceException {
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourseCode);
         final ExecutionCourseSite site = executionCourse.getSite();
@@ -38,7 +38,7 @@ public class TeacherAdministrationSiteComponentService {
 
     @Service
     public static TeacherAdministrationSiteView runTeacherAdministrationSiteComponentService(String infoExecutionCourseCode,
-            ISiteComponent commonComponent, ISiteComponent bodyComponent, Object obj1, Object obj2) throws FenixServiceException {
+            ISiteComponent commonComponent, ISiteComponent bodyComponent, String obj1, String obj2) throws FenixServiceException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute();
         return serviceInstance.run(infoExecutionCourseCode, commonComponent, bodyComponent, obj1, obj2);
     }
