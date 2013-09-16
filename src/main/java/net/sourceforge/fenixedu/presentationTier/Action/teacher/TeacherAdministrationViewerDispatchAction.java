@@ -655,8 +655,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         SiteManagementActionMapping siteManagementActionMapping = (SiteManagementActionMapping) mapping;
         ISiteComponent siteComponent = getSiteComponentForValidationError(siteManagementActionMapping);
         String infoExecutionCourseCode = null;
-        Object obj1 = null;
-        Object obj2 = null;
+        String obj1 = null;
+        String obj2 = null;
         if (siteComponent instanceof InfoSiteItems) {
             obj1 = getItemCode(request);
         } else if (siteComponent instanceof InfoSiteTeachers) {
@@ -707,7 +707,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, String infoExecutionCourseCode,
-            Object obj1, Object obj2) throws FenixActionException {
+            String obj1, String obj2) throws FenixActionException {
 
         String objectCode = null;
         if (infoExecutionCourseCode == null) {

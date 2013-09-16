@@ -140,9 +140,8 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
         ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
-        readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCode, null);
+        readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCodeString, null);
 
         // TODO: this semester and curricular year list needs to be refactored
         // in order to incorporate masters
@@ -345,7 +344,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
     }
 
     private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, String infoExecutionCourseCode,
-            Object obj1, Object obj2) throws FenixActionException {
+            String obj1, String obj2) throws FenixActionException {
         if (infoExecutionCourseCode == null) {
             infoExecutionCourseCode = getObjectCode(request);
         }
