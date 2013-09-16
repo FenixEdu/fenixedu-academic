@@ -15,12 +15,17 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Path("/services")
 public class JerseyServices {
@@ -145,4 +150,70 @@ public class JerseyServices {
         return infos.toJSONString();
     }
 
+    @SuppressWarnings("unchecked")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("readThesis")
+    public static String readPhdThesis() {
+        JSONArray infos = new JSONArray();
+
+        for (PhdIndividualProgramProcessNumber phdProcessNumber : RootDomainObject.getInstance().getPhdIndividualProcessNumbers()) {
+            PhdIndividualProgramProcess phdProcess = phdProcessNumber.getProcess();
+            if (phdProcess.isConcluded()) {
+                JSONObject phdInfo = new JSONObject();
+                phdInfo.put("author", phdProcess.getPerson().getUsername());
+                phdInfo.put("title", phdProcess.getThesisTitle());
+
+                JSONArray schools = new JSONArray();
+                switch (phdProcess.getCollaborationType()) {
+                case NONE:
+                case WITH_SUPERVISION:
+                case ERASMUS_MUNDUS:
+                case OTHER:
+                    schools.add("Instituto Superior Técnico");
+                    break;
+                default:
+                    schools.add("Instituto Superior Técnico");
+                    schools.add(phdProcess.getCollaborationType().getLocalizedName());
+                }
+                phdInfo.put("schools", schools);
+
+                phdInfo.put("year", phdProcess.getConclusionDate().year().getAsShortText());
+
+                phdInfo.put("month", phdProcess.getConclusionDate().monthOfYear().getAsShortText());
+
+                try {
+                    phdInfo.put("url", phdProcess.getThesisProcess().getProvisionalThesisDocument().getDownloadUrl());
+                } catch (NullPointerException e) {
+                }
+                phdInfo.put("type", "phdthesis");
+                infos.add(phdInfo);
+            }
+
+        }
+
+        for (Thesis t : RootDomainObject.getInstance().getTheses()) {
+            if (t.isEvaluated()) {
+                JSONObject mscInfo = new JSONObject();
+                mscInfo.put("author", t.getStudent().getPerson().getUsername());
+                String title = t.getFinalFullTitle().getContent(Language.en);
+                if (title == null) {
+                    title = t.getFinalFullTitle().getContent(Language.pt);
+                }
+                mscInfo.put("title", title);
+                mscInfo.put("year", t.getDiscussed().year().getAsShortText());
+                mscInfo.put("month", t.getDiscussed().monthOfYear().getAsShortText());
+
+                JSONArray schools = new JSONArray();
+                schools.add("Instituto Superior Técnico");
+                mscInfo.put("schools", schools);
+
+                mscInfo.put("url", t.getDissertation().getDownloadUrl());
+                mscInfo.put("type", "mastersthesis");
+                infos.add(mscInfo);
+            }
+        }
+        return infos.toJSONString();
+
+    }
 }
