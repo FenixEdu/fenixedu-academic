@@ -90,7 +90,7 @@ public class JerseyOAuth2 implements Filter {
             User foundUser = appUserSession.getUser();
 
             Authenticate as = new Authenticate();
-            UserView.setUser(as.mock(foundUser.getPerson(), request.toString()));
+            UserView.setUser(as.mock(foundUser.getPerson(), request.getRequestURL().toString()));
 
             return true;
 
