@@ -35,7 +35,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "external", path = "/oauth", scope = "request", parameter = "method")
 @Forwards({ @Forward(name = "showAuthorizationPage", path = "showAuthorizationPage"),
-        @Forward(name = "oauthErrorPage", path = "/auth/oauthErrorPage.jsp") })
+        @Forward(name = "oauthErrorPage", path = "oauthErrorPage") })
 public class OAuthAction extends FenixDispatchAction {
 
     private final static String ACCESS_TOKEN_EXPIRATION = PropertiesManager
@@ -72,12 +72,17 @@ public class OAuthAction extends FenixDispatchAction {
     }
 
     private ExternalApplication getExternalApplication(String clientId) throws OAuthNotFoundException {
-        //check if it is a number
-        DomainObject domainObject = AbstractDomainObject.fromExternalId(clientId);
-        if (domainObject == null || !(domainObject instanceof ExternalApplication)) {
+        try {
+
+            Long.parseLong(clientId);
+            DomainObject domainObject = AbstractDomainObject.fromExternalId(clientId);
+            if (domainObject == null || !(domainObject instanceof ExternalApplication)) {
+                throw new OAuthNotFoundException();
+            }
+            return (ExternalApplication) domainObject;
+        } catch (NumberFormatException nfe) {
             throw new OAuthNotFoundException();
         }
-        return (ExternalApplication) domainObject;
     }
 
     // http://localhost:8080/ciapl/external/oauth.do?method=userConfirmation&...
