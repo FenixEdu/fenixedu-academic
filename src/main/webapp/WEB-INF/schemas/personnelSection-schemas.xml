@@ -228,11 +228,7 @@
 		<property name="sortBy" value="name=desc" />
 		<property name="selectAllShown" value="true" />
 	</slot>
-	<slot name="redirectUrl" key="oauthapps.label.app.redirect.url">
-		<validator class="pt.ist.utl.fenix.utils.UrlValidator">
-			<property name="required" value="true"/>
-		</validator>
-	</slot>
+	<slot name="redirectUrl" key="oauthapps.label.app.redirect.url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="oauthapps.confirm.app" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
