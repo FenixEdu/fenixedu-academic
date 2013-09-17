@@ -709,6 +709,9 @@
 								<include>**/*.properties</include>
 								<include>images/**/*.*</include>
 							</includes>
+							<excludes>
+								<exclude>THIS_EXCLUDE_IS_JUST_HERE_BECAUSE_SCRIPTS_NEED_BASE_CLASSES</exclude>
+							</excludes>
 						</configuration>
 					</plugin>
 					<plugin>
