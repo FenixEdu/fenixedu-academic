@@ -196,4 +196,69 @@ public class PersonContractSituation extends PersonContractSituation_Base {
         Integer daysBetween = interval.toPeriod(PeriodType.days()).getDays();
         return (daysBetween == null || daysBetween >= 90);
     }
+    @Deprecated
+    public boolean hasModifiedDate() {
+        return getModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasStep() {
+        return getStep() != null;
+    }
+
+    @Deprecated
+    public boolean hasContractSituation() {
+        return getContractSituation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCategoryGiafId() {
+        return getProfessionalCategoryGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnulationDate() {
+        return getAnulationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasImportationDate() {
+        return getImportationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCategory() {
+        return getProfessionalCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasContractSituationGiafId() {
+        return getContractSituationGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasGiafProfessionalData() {
+        return getGiafProfessionalData() != null;
+    }
+
 }

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AlumniSearchBean extends AlumniMailSendToBean {
 
@@ -84,11 +84,9 @@ public class AlumniSearchBean extends AlumniMailSendToBean {
         final String finalYear = values[3];
 
         ExecutionYear first =
-                (firstYear.equals("null") ? ExecutionYear.readFirstExecutionYear() : AbstractDomainObject
-                        .<ExecutionYear> fromExternalId(firstYear));
+                (firstYear.equals("null") ? ExecutionYear.readFirstExecutionYear() : FenixFramework.<ExecutionYear> getDomainObject(firstYear));
         ExecutionYear last =
-                (finalYear.equals("null") ? ExecutionYear.readLastExecutionYear() : AbstractDomainObject
-                        .<ExecutionYear> fromExternalId(finalYear));
+                (finalYear.equals("null") ? ExecutionYear.readLastExecutionYear() : FenixFramework.<ExecutionYear> getDomainObject(finalYear));
 
         if (values[0].equals("null")) {
             return new AlumniSearchBean(values[1], first, last);

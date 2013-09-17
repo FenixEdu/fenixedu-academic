@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.precedences;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
@@ -49,7 +50,7 @@ public class InfoPrecedenceWithRestrictions extends InfoPrecedence {
         return infoPrecedenceWithRestrictions;
     }
 
-    private List getInfoRestrictionsList(List<Restriction> restrictions) {
+    private List getInfoRestrictionsList(Collection<Restriction> restrictions) {
         List<InfoRestriction> infoRestrictions = new ArrayList();
 
         for (Restriction restriction : restrictions) {

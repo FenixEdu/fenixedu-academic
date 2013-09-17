@@ -33,4 +33,69 @@ public class PersonFunctionsAccumulation extends PersonFunctionsAccumulation_Bas
                 && (getEndDate() == null || !getBeginDate().isAfter(getEndDate())) && getProfessionalRegime() != null;
     }
 
+    @Deprecated
+    public boolean hasProfessionalRegimeGiafId() {
+        return getProfessionalRegimeGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnulationDate() {
+        return getAnulationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasHours() {
+        return getHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasFunctionsAccumulation() {
+        return getFunctionsAccumulation() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasGiafProfessionalData() {
+        return getGiafProfessionalData() != null;
+    }
+
+    @Deprecated
+    public boolean hasModifiedDate() {
+        return getModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalRegime() {
+        return getProfessionalRegime() != null;
+    }
+
+    @Deprecated
+    public boolean hasImportationDate() {
+        return getImportationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasFunctionsAccumulationGiafId() {
+        return getFunctionsAccumulationGiafId() != null;
+    }
+
 }

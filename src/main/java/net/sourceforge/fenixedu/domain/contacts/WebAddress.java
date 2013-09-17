@@ -148,4 +148,5 @@ public class WebAddress extends WebAddress_Base {
     public void logDelete(Person person) {
         logDeleteAux(person, "label.partyContacts.WebAddress");
     }
+
 }

@@ -1,18 +1,17 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.RoomSubdivision.RoomSubdivisionFactoryEditor;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class RoomSubdivisionInformation extends RoomSubdivisionInformation_Base {
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created roomSubdivision information", parameters = { "identification",
             "roomSubdivision", "begin", "end" })
     public RoomSubdivisionInformation(String identification, RoomSubdivision roomSubdivision, YearMonthDay begin, YearMonthDay end) {
@@ -22,18 +21,18 @@ public class RoomSubdivisionInformation extends RoomSubdivisionInformation_Base 
         setFirstTimeInterval(begin, end);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited roomSubdivision information", parameters = { "identification",
             "begin", "end" })
     public void editRoomSubdivisionCharacteristics(String identification, YearMonthDay begin, YearMonthDay end) {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation);
         editTimeInterval(begin, end);
         setIdentification(identification);
     }
 
     @Override
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted roomSubdivision information", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation);
         super.delete();
     }
 
@@ -72,4 +71,10 @@ public class RoomSubdivisionInformation extends RoomSubdivisionInformation_Base 
     public RoomClassification getRoomClassification() {
         return getSpace().getSuroundingSpace().getSpaceInformation().getRoomClassification();
     }
+
+    @Deprecated
+    public boolean hasIdentification() {
+        return getIdentification() != null;
+    }
+
 }

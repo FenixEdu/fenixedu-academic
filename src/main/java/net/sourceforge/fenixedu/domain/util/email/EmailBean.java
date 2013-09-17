@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -172,7 +172,7 @@ public class EmailBean implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Service
+    @Atomic
     public Message send() {
         final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 
@@ -195,7 +195,7 @@ public class EmailBean implements Serializable {
         return new Message(getSender(), getReplyTos(), getRecipients(), getSubject(), message.toString(), bccs, htmlMessage);
     }
 
-    @Service
+    @Atomic
     public void removeRecipients() {
         for (Recipient recipient : getRecipients()) {
             getSender().removeRecipients(recipient);

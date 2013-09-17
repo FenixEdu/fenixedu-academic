@@ -29,11 +29,11 @@ public class UnitFileTag extends UnitFileTag_Base {
     }
 
     public void delete() {
-        if (getTaggedFilesCount() > 0) {
+        if (getTaggedFilesSet().size() > 0) {
             throw new DomainException("error.cannot.delete.tag.with.files");
         }
-        removeUnit();
-        removeRootDomainObject();
+        setUnit(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -45,4 +45,30 @@ public class UnitFileTag extends UnitFileTag_Base {
         tags.remove(this);
         return tags;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.UnitFile> getTaggedFiles() {
+        return getTaggedFilesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTaggedFiles() {
+        return !getTaggedFilesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

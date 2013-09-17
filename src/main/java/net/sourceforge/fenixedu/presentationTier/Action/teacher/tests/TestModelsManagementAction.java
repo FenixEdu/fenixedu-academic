@@ -35,7 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -148,7 +148,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
         if (modelRestrictionIds != null) {
             for (String atomicRestrictionIdParameter : modelRestrictionIds) {
                 NewModelRestriction atomicRestriction =
-                        (NewModelRestriction) AbstractDomainObject.fromExternalId(atomicRestrictionIdParameter);
+                        (NewModelRestriction) FenixFramework.getDomainObject(atomicRestrictionIdParameter);
                 modelRestrictions.add(atomicRestriction);
             }
         }
@@ -207,7 +207,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
             return null;
         }
 
-        return (NewModelRestriction) AbstractDomainObject.fromExternalId(modelRestrictionId);
+        return (NewModelRestriction) FenixFramework.getDomainObject(modelRestrictionId);
     }
 
     public ActionForward unselectRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,

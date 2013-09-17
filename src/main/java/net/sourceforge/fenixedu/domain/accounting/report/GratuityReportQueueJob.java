@@ -9,11 +9,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
@@ -332,7 +332,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
         }
 
         public boolean hasReceipts() {
-            return transaction.getToAccountEntry().getReceiptsCount() > 0;
+            return transaction.getToAccountEntry().getReceiptsSet().size() > 0;
         }
 
         public String[] getReceiptContributorsNameForOtherParties() {
@@ -365,7 +365,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 
         if (GratuityReportQueueJobType.DATE_INTERVAL.equals(getType())) {
             executionYearList = new ArrayList<ExecutionYear>();
-            executionYearList.addAll(RootDomainObject.readAllDomainObjects(ExecutionYear.class));
+            executionYearList.addAll(DomainObjectUtil.readAllDomainObjects(ExecutionYear.class));
         } else if (GratuityReportQueueJobType.EXECUTION_YEAR.equals(getType())) {
             executionYearList = Collections.singletonList(getExecutionYear());
         }
@@ -465,4 +465,25 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
     public static boolean canRequestReportGeneration() {
         return QueueJob.getUndoneJobsForClass(GratuityReportQueueJob.class).isEmpty();
     }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

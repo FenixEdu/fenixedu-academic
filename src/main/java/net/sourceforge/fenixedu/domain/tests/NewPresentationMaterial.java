@@ -24,16 +24,16 @@ public abstract class NewPresentationMaterial extends NewPresentationMaterial_Ba
     }
 
     private Integer getNewPosition() {
-        return this.getTestElement().getPresentationMaterialsCount();
+        return this.getTestElement().getPresentationMaterialsSet().size();
     }
 
     public void delete() {
         NewTestElement testElement = this.getTestElement();
-        this.removeTestElement();
+        this.setTestElement(null);
 
         testElement.resortPresentationMaterials();
 
-        this.removeRootDomainObject();
+        this.setRootDomainObject(null);
 
         this.deleteDomainObject();
     }
@@ -45,7 +45,7 @@ public abstract class NewPresentationMaterial extends NewPresentationMaterial_Ba
 
     @Override
     public boolean isLast() {
-        return this.getPosition() == this.getTestElement().getPresentationMaterialsCount();
+        return this.getPosition() == this.getTestElement().getPresentationMaterialsSet().size();
     }
 
     @Override
@@ -75,5 +75,25 @@ public abstract class NewPresentationMaterial extends NewPresentationMaterial_Ba
     public abstract NewPresentationMaterialType getPresentationMaterialType();
 
     public abstract NewPresentationMaterial copy();
+
+    @Deprecated
+    public boolean hasInline() {
+        return getInline() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestElement() {
+        return getTestElement() != null;
+    }
+
+    @Deprecated
+    public boolean hasPosition() {
+        return getPosition() != null;
+    }
 
 }

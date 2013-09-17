@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 
 public class EctsInstitutionConversionTable extends EctsInstitutionConversionTable_Base {
@@ -39,7 +39,7 @@ public class EctsInstitutionConversionTable extends EctsInstitutionConversionTab
         return getSchool().getRootDomainObject();
     }
 
-    @Service
+    @Atomic
     public static void createConversionTable(Unit instituition, AcademicInterval year, String[] table) {
         EctsInstitutionConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(instituition);
         EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
@@ -53,8 +53,13 @@ public class EctsInstitutionConversionTable extends EctsInstitutionConversionTab
 
     @Override
     public void delete() {
-        removeSchool();
+        setSchool(null);
         super.delete();
+    }
+
+    @Deprecated
+    public boolean hasSchool() {
+        return getSchool() != null;
     }
 
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <h1 class="cnone">
 	<fr:view name="site" property="unit.nameWithAcronym"/>

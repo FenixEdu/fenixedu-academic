@@ -20,6 +20,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.FenixFramework;
 
 public abstract class AbstractManageThesisDA extends FenixDispatchAction {
 
@@ -111,7 +112,7 @@ public abstract class AbstractManageThesisDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception;
 
     protected DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        return DegreeCurricularPlan.fromExternalId(request.getParameter("degreeCurricularPlanID"));
+        return FenixFramework.getDomainObject(request.getParameter("degreeCurricularPlanID"));
     }
 
     public ActionForward selectPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

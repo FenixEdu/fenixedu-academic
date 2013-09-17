@@ -5,9 +5,9 @@
 package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.State;
@@ -64,7 +64,7 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
     }
 
     public static Integer generateReimbursementGuideNumber() {
-        List<ReimbursementGuide> reimbursementGuides = RootDomainObject.getInstance().getReimbursementGuides();
+        Collection<ReimbursementGuide> reimbursementGuides = RootDomainObject.getInstance().getReimbursementGuides();
 
         return (reimbursementGuides.isEmpty()) ? Integer.valueOf(1) : Collections.max(reimbursementGuides, NUMBER_COMPARATOR)
                 .getNumber() + 1;
@@ -87,6 +87,46 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
         } else {
             setCreationYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry> getReimbursementGuideEntries() {
+        return getReimbursementGuideEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReimbursementGuideEntries() {
+        return !getReimbursementGuideEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation> getReimbursementGuideSituations() {
+        return getReimbursementGuideSituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReimbursementGuideSituations() {
+        return !getReimbursementGuideSituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasCreationYearMonthDay() {
+        return getCreationYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasGuide() {
+        return getGuide() != null;
     }
 
 }

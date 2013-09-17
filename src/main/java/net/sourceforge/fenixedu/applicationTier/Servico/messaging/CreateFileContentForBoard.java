@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -63,7 +63,7 @@ public class CreateFileContentForBoard extends FileContentService {
 
     private static final CreateFileContentForBoard serviceInstance = new CreateFileContentForBoard();
 
-    @Service
+    @Atomic
     public static void runCreateFileContentForBoard(AnnouncementBoard board, File file, String originalFilename, String displayName, Group permittedGroup, Person person) throws FenixServiceException, DomainException, IOException  {
         serviceInstance.run(board, file, originalFilename, displayName, permittedGroup, person);
     }

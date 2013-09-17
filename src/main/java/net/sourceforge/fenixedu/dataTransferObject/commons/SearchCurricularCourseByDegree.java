@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyCon
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * This class provides the degrees for the StandaloneIndividualCandidacy
@@ -51,8 +51,8 @@ public class SearchCurricularCourseByDegree implements Serializable {
 
     public void setDegreeBean(DegreeByExecutionYearBean degreeBean) {
         this.degreeBean = degreeBean;
-        removeDegreeCurricularPlan();
-        removeCurricularCourseBean();
+        setDegreeCurricularPlan(null);
+        setCurricularCourseBean(null);
     }
 
     public boolean hasDegreeBean() {
@@ -64,12 +64,12 @@ public class SearchCurricularCourseByDegree implements Serializable {
     }
 
     public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-        if (hasDegreeBean() && getDegreeBean().getDegree().hasDegreeCurricularPlans(degreeCurricularPlan)) {
+        if (hasDegreeBean() && getDegreeBean().getDegree().getDegreeCurricularPlansSet().contains(degreeCurricularPlan)) {
             this.degreeCurricularPlan = degreeCurricularPlan;
         } else {
             this.degreeCurricularPlan = null;
         }
-        removeCurricularCourseBean();
+        setCurricularCourseBean(null);
     }
 
     public void removeDegreeCurricularPlan() {
@@ -129,8 +129,8 @@ public class SearchCurricularCourseByDegree implements Serializable {
                         return null;
                     }
                     final String[] values = key.split(":");
-                    final Degree degree = (Degree) AbstractDomainObject.fromOID(Long.valueOf(values[0]).longValue());
-                    final ExecutionYear year = (ExecutionYear) AbstractDomainObject.fromOID(Long.valueOf(values[1]).longValue());
+                    final Degree degree = FenixFramework.getDomainObject(values[0]);
+                    final ExecutionYear year = FenixFramework.getDomainObject(values[1]);
                     return new DegreeByExecutionYearBean(degree, year);
                 }
 

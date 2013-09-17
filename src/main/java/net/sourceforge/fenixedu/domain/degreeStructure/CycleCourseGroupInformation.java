@@ -5,7 +5,7 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -54,7 +54,7 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
         return getGraduatedTitle().getContent(Language.en);
     }
 
-    @Service
+    @Atomic
     public void edit(ExecutionYear editExecutionYear, String editGraduatedTitle, String editGraduatedTitleEn) {
         this.setExecutionYear(editExecutionYear);
         MultiLanguageString mls = this.getGraduatedTitle();
@@ -62,4 +62,24 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
         this.setGraduatedTitle(mls.with(Language.pt, editGraduatedTitle).with(Language.en, editGraduatedTitleEn));
         checkParameters();
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCycleCourseGroup() {
+        return getCycleCourseGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasGraduatedTitle() {
+        return getGraduatedTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyWithCaseStudyChoices;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -25,7 +25,7 @@ public class GetCandidacyById {
     protected InfoCandidacy run(String id) {
         InfoCandidacy infoCandidacy = null;
 
-        SeminaryCandidacy candidacy = AbstractDomainObject.fromExternalId(id);
+        SeminaryCandidacy candidacy = FenixFramework.getDomainObject(id);
         infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
 
         return infoCandidacy;
@@ -35,7 +35,7 @@ public class GetCandidacyById {
 
     private static final GetCandidacyById serviceInstance = new GetCandidacyById();
 
-    @Service
+    @Atomic
     public static InfoCandidacy runGetCandidacyById(String id) throws NotAuthorizedException {
         CandidacyAccessFilter.instance.execute(id);
         return serviceInstance.run(id);

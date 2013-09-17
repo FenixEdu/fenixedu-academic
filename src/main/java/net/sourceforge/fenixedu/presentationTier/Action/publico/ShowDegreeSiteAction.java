@@ -48,7 +48,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "publico", path = "/showDegreeSite", input = "/showDegrees.do?method=nonMaster",
         attribute = "viewDegreeEvaluationForm", formBean = "viewDegreeEvaluationForm", scope = "request", parameter = "method")
@@ -125,7 +125,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
             // coordinator call
             request.setAttribute("executionDegreeID", executionDegreeId);
 
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
             if (executionDegree == null || !executionDegree.getDegreeCurricularPlan().getDegree().equals(degree)) {
                 throw new FenixActionException();
             }
@@ -138,7 +138,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
             if (whenDegreeIsExecuted.isEmpty()) {
                 return currentExecutionYear;
             } else {
-                final ExecutionYear firstExecutionYear = whenDegreeIsExecuted.get(0);
+                final ExecutionYear firstExecutionYear = whenDegreeIsExecuted.iterator().next();
                 final ExecutionYear lastExecutionYear = whenDegreeIsExecuted.get(whenDegreeIsExecuted.size() - 1);
 
                 if (whenDegreeIsExecuted.contains(currentExecutionYear)) {
@@ -240,7 +240,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
         Boolean inEnglish = FenixContextDispatchAction.getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
 
-        List<InfoOldInquiriesSummary> allSummariesDegree = ReadOldIquiriesSummaryByDegreeID.run(degree.getExternalId());
+        Collection<InfoOldInquiriesSummary> allSummariesDegree = ReadOldIquiriesSummaryByDegreeID.run(degree.getExternalId());
 
         List<InfoExecutionPeriod> infoExecutionPeriods = ReadExecutionPeriods.run();
         List<InfoExecutionPeriod> executionPeriodList = new ArrayList<InfoExecutionPeriod>(infoExecutionPeriods);
@@ -391,7 +391,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
                 }
             }
         } else {
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoDegreeCurricularPlanList.get(0);
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoDegreeCurricularPlanList.iterator().next();
             request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
             return infoDegreeCurricularPlan;
         }
@@ -407,7 +407,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
             degree = site.getDegree();
         } else {
             String degreeId = FenixContextDispatchAction.getFromRequest("degreeID", request);
-            degree = AbstractDomainObject.fromExternalId(degreeId);
+            degree = FenixFramework.getDomainObject(degreeId);
         }
         if (degree != null) {
             request.setAttribute("degreeID", degree.getExternalId());

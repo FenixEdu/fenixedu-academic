@@ -8,7 +8,8 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.Resul
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -57,9 +58,9 @@ public class ResearchResultPatent extends ResearchResultPatent_Base {
                 url);
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setEditAll(String title, MultiLanguageString note, ResultPatentType patentType, ResultPatentStatus patentStatus,
             Partial registrationDate, Partial approvalDate, Country country, String local, String patentNumber, String url) {
+        check(this, ResultPredicates.writePredicate);
         checkRequiredParameters(title, registrationDate, approvalDate);
         fillAllAttributes(title, note, patentType, patentStatus, registrationDate, approvalDate, country, local, patentNumber,
                 url);
@@ -187,4 +188,34 @@ public class ResearchResultPatent extends ResearchResultPatent_Base {
         Partial approvalDate = getApprovalDate();
         return approvalDate.get(DateTimeFieldType.year());
     }
+    @Deprecated
+    public boolean hasPatentNumber() {
+        return getPatentNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasPatentStatus() {
+        return getPatentStatus() != null;
+    }
+
+    @Deprecated
+    public boolean hasLocal() {
+        return getLocal() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistrationDate() {
+        return getRegistrationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPatentType() {
+        return getPatentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovalDate() {
+        return getApprovalDate() != null;
+    }
+
 }

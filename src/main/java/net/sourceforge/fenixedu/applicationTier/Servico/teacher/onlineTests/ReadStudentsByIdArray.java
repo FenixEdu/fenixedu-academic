@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -22,8 +23,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -49,7 +50,7 @@ public class ReadStudentsByIdArray {
             throws FenixServiceException {
 
         List<InfoStudent> studentList = new ArrayList<InfoStudent>();
-        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -69,7 +70,7 @@ public class ReadStudentsByIdArray {
         for (LabelValueBean lvb : (ArrayList<LabelValueBean>) lavelValueBeanList) {
             if (!lvb.getLabel().equals(" (Ficha Fechada)")) {
                 Integer number = Integer.parseInt(lvb.getValue());
-                studentList.add(InfoStudent.newInfoFromDomain(Registration.readAllStudentsBetweenNumbers(number, number).get(0)));
+                studentList.add(InfoStudent.newInfoFromDomain(Registration.readAllStudentsBetweenNumbers(number, number).iterator().next()));
             }
         }
 
@@ -84,8 +85,8 @@ public class ReadStudentsByIdArray {
             if (shift2.equals(bundle.getString("label.allShifts"))) {
                 continue;
             }
-            Shift shift = AbstractDomainObject.fromExternalId(shift2);
-            List<Registration> studentList = shift.getStudents();
+            Shift shift = FenixFramework.getDomainObject(shift2);
+            Collection<Registration> studentList = shift.getStudents();
             for (Registration registration : studentList) {
                 InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
                 if (!infoStudentList.contains(infoStudent)
@@ -103,11 +104,11 @@ public class ReadStudentsByIdArray {
             String executionCourseId) throws FenixServiceException {
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
         List<InfoStudent> studentsList = new ArrayList<InfoStudent>();
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
 
         for (String student : students) {
             if (student.equals(bundle.getString("label.allStudents"))) {
-                List<Attends> attendList = executionCourse.getAttends();
+                Collection<Attends> attendList = executionCourse.getAttends();
                 for (Attends attend : attendList) {
                     InfoStudent infoStudent = InfoStudent.newInfoFromDomain(attend.getRegistration());
                     if (!studentsList.contains(infoStudent)
@@ -118,7 +119,7 @@ public class ReadStudentsByIdArray {
                 }
                 break;
             }
-            Registration registration = AbstractDomainObject.fromExternalId(student);
+            Registration registration = FenixFramework.getDomainObject(student);
             InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
             if (!studentsList.contains(infoStudent)) {
                 if (!studentsList.contains(infoStudent)
@@ -136,14 +137,14 @@ public class ReadStudentsByIdArray {
 
     private static final ReadStudentsByIdArray serviceInstance = new ReadStudentsByIdArray();
 
-    @Service
+    @Atomic
     public static List<InfoStudent> runReadStudentsByIdArray(String executionCourseId, String[] selected, Boolean insertByShifts)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, selected, insertByShifts);
     }
 
-    @Service
+    @Atomic
     public static List<InfoStudent> runReadStudentsByIdArray(String executionCourseId, String distributedTestId,
             String[] selected, Boolean insertByShifts) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

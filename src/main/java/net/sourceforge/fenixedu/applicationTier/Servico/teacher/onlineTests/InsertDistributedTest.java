@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
-import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -36,9 +35,8 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class InsertDistributedTest {
 
@@ -46,12 +44,12 @@ public class InsertDistributedTest {
             Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
             CorrectionAvailability correctionAvaiability, Boolean imsFeedback, List<InfoStudent> infoStudentList,
             String contextPath) throws FenixServiceException {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Test test = AbstractDomainObject.fromExternalId(testId);
+        Test test = FenixFramework.getDomainObject(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -78,7 +76,7 @@ public class InsertDistributedTest {
         return;
     }
 
-    public static class DistributedTestCreator extends Thread implements TransactionalCommand {
+    public static class DistributedTestCreator extends Thread {
 
         private final String executionCourseId;
 
@@ -126,21 +124,21 @@ public class InsertDistributedTest {
             this.userView = userView;
         }
 
+        @Atomic
         @Override
         public void run() {
             try {
                 UserView.setUser(userView);
-                Transaction.withTransaction(this);
+                doIt();
                 distributedTestId = tempDistributedTestId;
             } finally {
                 UserView.setUser(null);
             }
         }
 
-        @Override
         public void doIt() {
-            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
-            final Test test = AbstractDomainObject.fromExternalId(testId);
+            final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
+            final Test test = FenixFramework.getDomainObject(testId);
 
             DistributedTest distributedTest = new DistributedTest();
             distributedTest.setTitle(test.getTitle());
@@ -153,7 +151,7 @@ public class InsertDistributedTest {
             distributedTest.setTestType(testType);
             distributedTest.setCorrectionAvailability(correctionAvaiability);
             distributedTest.setImsFeedback(imsFeedback);
-            distributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
+            distributedTest.setNumberOfQuestions(test.getTestQuestionsSet().size());
 
             TestScope testScope = executionCourse.getTestScope();
 
@@ -199,11 +197,11 @@ public class InsertDistributedTest {
         }
 
         public TestQuestion getTestQuestion() {
-            return AbstractDomainObject.fromExternalId(testQuestionId);
+            return FenixFramework.getDomainObject(testQuestionId);
         }
 
         public Question getQuestion() {
-            return AbstractDomainObject.fromExternalId(questionId);
+            return FenixFramework.getDomainObject(questionId);
         }
     }
 
@@ -239,7 +237,7 @@ public class InsertDistributedTest {
         private List<Question> getQuestions(final TestQuestion testQuestion, final int numberOfStudents) {
             final List<Question> questions = new ArrayList<Question>();
             final Metadata metadata = testQuestion.getQuestion().getMetadata();
-            while (metadata.getQuestionsCount() > 0 && questions.size() < numberOfStudents) {
+            while (metadata.getQuestionsSet().size() > 0 && questions.size() < numberOfStudents) {
                 for (final Question question : metadata.getQuestionsSet()) {
                     if (question.getVisibility()) {
                         questions.add(question);
@@ -250,7 +248,7 @@ public class InsertDistributedTest {
         }
     }
 
-    public static class Distributor extends Thread implements TransactionalCommand {
+    public static class Distributor extends Thread {
 
         private final List<InfoStudent> infoStudentList;
 
@@ -268,14 +266,14 @@ public class InsertDistributedTest {
             this.replacedContextPath = replacedContextPath;
         }
 
+        @Atomic
         @Override
         public void run() {
-            Transaction.withTransaction(this);
+            doIt();
         }
 
-        @Override
         public void doIt() {
-            Test test = AbstractDomainObject.fromExternalId(testId);
+            Test test = FenixFramework.getDomainObject(testId);
 
             List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
             Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
@@ -305,7 +303,7 @@ public class InsertDistributedTest {
         }
     }
 
-    public static class DistributeForStudentThread extends Thread implements TransactionalCommand {
+    public static class DistributeForStudentThread extends Thread {
 
         private final String distributedTestId;
 
@@ -323,15 +321,15 @@ public class InsertDistributedTest {
             this.questionList = questionList;
         }
 
+        @Atomic
         @Override
         public void run() {
-            Transaction.withTransaction(this);
+            doIt();
         }
 
-        @Override
         public void doIt() {
-            final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
-            final Registration registration = AbstractDomainObject.fromExternalId(infoStudent.getExternalId());
+            final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
+            final Registration registration = FenixFramework.getDomainObject(infoStudent.getExternalId());
 
             for (final QuestionPair questionPair : questionList) {
                 final TestQuestion testQuestion = questionPair.getTestQuestion();
@@ -354,8 +352,8 @@ public class InsertDistributedTest {
                 if (question == null) {
                     throw new Error();
                 }
-                if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().get(0).getItemId() != null) {
-                    studentTestQuestion.setItemId(question.getSubQuestions().get(0).getItemId());
+                if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().iterator().next().getItemId() != null) {
+                    studentTestQuestion.setItemId(question.getSubQuestions().iterator().next().getItemId());
                 }
                 studentTestQuestion.setQuestion(question);
                 questionList.remove(question);
@@ -381,7 +379,7 @@ public class InsertDistributedTest {
 
     private static final InsertDistributedTest serviceInstance = new InsertDistributedTest();
 
-    @Service
+    @Atomic
     public static void runInsertDistributedTest(String executionCourseId, String testId, String testInformation,
             String evaluationTitle, Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour,
             TestType testType, CorrectionAvailability correctionAvaiability, Boolean imsFeedback,

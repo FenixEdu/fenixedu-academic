@@ -30,9 +30,9 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
     }
 
     public void delete() {
-        removeStudentCurricularPlan();
-        removeCurricularCourse();
-        removeRootDomainObject();
+        setStudentCurricularPlan(null);
+        setCurricularCourse(null);
+        setRootDomainObject(null);
         getEnrolments().clear();
         getExternalEnrolments().clear();
         super.deleteDomainObject();
@@ -78,6 +78,41 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
         Set<IEnrolment> res = new HashSet<IEnrolment>(getEnrolmentsSet());
         res.addAll(getExternalEnrolmentsSet());
         return res;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment> getExternalEnrolments() {
+        return getExternalEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExternalEnrolments() {
+        return !getExternalEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
+        return getEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolments() {
+        return !getEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCurricularPlan() {
+        return getStudentCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
     }
 
 }

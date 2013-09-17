@@ -55,7 +55,7 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
     private void applyRegistryCode() {
         RegistryCode code = getRegistryCode();
         if (code != null) {
-            if (!code.hasDocumentRequest(this)) {
+            if (!code.getDocumentRequestSet().contains(this)) {
                 code.addDocumentRequest(this);
             }
         } else {

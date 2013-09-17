@@ -53,4 +53,24 @@ public class InsuranceValue extends InsuranceValue_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateYearMonthDay() {
+        return getEndDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnnualValueBigDecimal() {
+        return getAnnualValueBigDecimal() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

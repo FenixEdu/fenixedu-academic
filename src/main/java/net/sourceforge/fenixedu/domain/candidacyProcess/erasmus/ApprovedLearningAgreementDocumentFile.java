@@ -13,7 +13,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgreementDocumentFile_Base {
@@ -47,18 +47,18 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
         init(path, filename, filename, null, contents, null);
     }
 
-    @Service
+    @Atomic
     public static ApprovedLearningAgreementDocumentFile createCandidacyDocument(byte[] contents, String filename,
             String processName, String documentIdNumber) {
         return new ApprovedLearningAgreementDocumentFile(contents, filename, obtainVirtualPath(processName, documentIdNumber));
     }
 
-    @Service
+    @Atomic
     public void markLearningAgreementViewed() {
         new ApprovedLearningAgreementExecutedAction(this, ExecutedActionType.VIEWED_APPROVED_LEARNING_AGREEMENT);
     }
 
-    @Service
+    @Atomic
     public void markLearningAgreementSent() {
         new ApprovedLearningAgreementExecutedAction(this, ExecutedActionType.SENT_APPROVED_LEARNING_AGREEMENT);
     }
@@ -92,7 +92,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     public ApprovedLearningAgreementExecutedAction getMostRecentSentLearningAgreementAction() {
         List<ApprovedLearningAgreementExecutedAction> executedActionList = getSentLearningAgreementActions();
 
-        return executedActionList.isEmpty() ? null : executedActionList.get(0);
+        return executedActionList.isEmpty() ? null : executedActionList.iterator().next();
     }
 
     public DateTime getMostRecentSentLearningAgreementActionWhenOccured() {
@@ -124,7 +124,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     public ApprovedLearningAgreementExecutedAction getMostRecentViewedLearningAgreementAction() {
         List<ApprovedLearningAgreementExecutedAction> executedActionList = getViewedLearningAgreementActions();
 
-        return executedActionList.isEmpty() ? null : executedActionList.get(0);
+        return executedActionList.isEmpty() ? null : executedActionList.iterator().next();
     }
 
     public DateTime getMostRecentViewedLearningAgreementActionWhenOccured() {
@@ -156,7 +156,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     public ApprovedLearningAgreementExecutedAction getMostRecentSentEmailAcceptedStudentAction() {
         List<ApprovedLearningAgreementExecutedAction> executedActionList = getSentEmailAcceptedStudentActions();
 
-        return executedActionList.isEmpty() ? null : executedActionList.get(0);
+        return executedActionList.isEmpty() ? null : executedActionList.iterator().next();
     }
 
     public DateTime getMostRecentSentEmailAcceptedStudentActionWhenOccured() {
@@ -178,4 +178,19 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     public boolean isAbleToSendEmailToAcceptStudent() {
         return getProcess().isStudentAccepted() && isMostRecent() && getCandidacyFileActive();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementExecutedAction> getExecutedActions() {
+        return getExecutedActionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutedActions() {
+        return !getExecutedActionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasMobilityIndividualApplication() {
+        return getMobilityIndividualApplication() != null;
+    }
+
 }

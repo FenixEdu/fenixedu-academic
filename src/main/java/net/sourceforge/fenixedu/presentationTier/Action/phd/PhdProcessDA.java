@@ -29,7 +29,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class PhdProcessDA extends PhdDA {
@@ -62,7 +62,7 @@ abstract public class PhdProcessDA extends PhdDA {
      */
     protected PhdProgramProcess getProcess(HttpServletRequest request) {
         final String processIdAttribute = (String) request.getAttribute("processId");
-        return AbstractDomainObject.fromExternalId(processIdAttribute != null ? processIdAttribute : (String) request
+        return FenixFramework.getDomainObject(processIdAttribute != null ? processIdAttribute : (String) request
                 .getParameter("processId"));
     }
 

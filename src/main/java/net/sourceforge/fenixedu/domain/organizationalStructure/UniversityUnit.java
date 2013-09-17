@@ -176,4 +176,24 @@ public class UniversityUnit extends UniversityUnit_Base {
     public String getFullPresentationName() {
         return getName();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy> getErasmusVacancy() {
+        return getErasmusVacancySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyErasmusVacancy() {
+        return !getErasmusVacancySet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement> getMobilityAgreements() {
+        return getMobilityAgreementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMobilityAgreements() {
+        return !getMobilityAgreementsSet().isEmpty();
+    }
+
 }

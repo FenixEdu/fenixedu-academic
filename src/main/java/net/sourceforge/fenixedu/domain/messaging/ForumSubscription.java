@@ -20,20 +20,43 @@ public class ForumSubscription extends ForumSubscription_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeForum();
-        removeRootDomainObject();
+        setPerson(null);
+        setForum(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
-    @Override
     public void removePerson() {
         super.setPerson(null);
     }
 
-    @Override
     public void removeForum() {
         super.setForum(null);
+    }
+
+    @Deprecated
+    public boolean hasFavorite() {
+        return getFavorite() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasForum() {
+        return getForum() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasReceivePostsByEmail() {
+        return getReceivePostsByEmail() != null;
     }
 
 }

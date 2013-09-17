@@ -6,9 +6,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério 28/10/2003
@@ -16,16 +17,16 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class EndCurricularCourseScope {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         if (!newInfoCurricularCourseScope.getEndDate().after(newInfoCurricularCourseScope.getBeginDate())) {
             throw new InvalidArgumentsServiceException();
         }
 
         CurricularCourseScope oldCurricularCourseScope =
-                AbstractDomainObject.fromExternalId(newInfoCurricularCourseScope.getExternalId());
+                FenixFramework.getDomainObject(newInfoCurricularCourseScope.getExternalId());
         if (oldCurricularCourseScope == null) {
             throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
         }

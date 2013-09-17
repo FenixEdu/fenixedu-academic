@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -15,9 +16,9 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public abstract class PartyContact extends PartyContact_Base {
 
@@ -25,7 +26,7 @@ public abstract class PartyContact extends PartyContact_Base {
         @Override
         public int compare(PartyContact contact, PartyContact otherContact) {
             int result = contact.getType().compareTo(otherContact.getType());
-            return (result == 0) ? AbstractDomainObject.COMPARATOR_BY_ID.compare(contact, otherContact) : result;
+            return (result == 0) ? DomainObjectUtil.COMPARATOR_BY_ID.compare(contact, otherContact) : result;
         }
     };
 
@@ -208,15 +209,15 @@ public abstract class PartyContact extends PartyContact_Base {
         return false;
     }
 
-    @Service
-    @Checked("RolePredicates.PARTY_CONTACT_PREDICATE")
+    @Atomic
     public void deleteWithoutCheckRules() {
+        check(this, RolePredicates.PARTY_CONTACT_PREDICATE);
         processDelete();
     }
 
-    @Service
-    @Checked("RolePredicates.PARTY_CONTACT_PREDICATE")
+    @Atomic
     public void delete() {
+        check(this, RolePredicates.PARTY_CONTACT_PREDICATE);
         if (isActiveAndValid()) {
             checkRulesToDelete();
         }
@@ -242,9 +243,9 @@ public abstract class PartyContact extends PartyContact_Base {
             }
         }
 
-        // removeResearcher();
-        // removeParty();
-        // removeRootDomainObject();
+        // setResearcher(null);
+        // setParty(null);
+        // setRootDomainObject(null);
         // super.deleteDomainObject();
     }
 
@@ -257,7 +258,7 @@ public abstract class PartyContact extends PartyContact_Base {
             final List<PartyContact> contacts = (List<PartyContact>) getParty().getPartyContacts(getClass());
             if (!contacts.isEmpty() && contacts.size() > 1) {
                 contacts.remove(this);
-                contacts.get(0).setDefaultContact(Boolean.TRUE);
+                contacts.iterator().next().setDefaultContact(Boolean.TRUE);
             }
         }
     }
@@ -270,7 +271,7 @@ public abstract class PartyContact extends PartyContact_Base {
         Set<PartyContact> contacts = new HashSet<PartyContact>();
 
         for (Class<? extends PartyContact> clazz : contactClasses) {
-            contacts.addAll(RootDomainObject.readAllDomainObjects(clazz));
+            contacts.addAll(DomainObjectUtil.readAllDomainObjects(clazz));
         }
 
         return contacts;
@@ -514,4 +515,80 @@ public abstract class PartyContact extends PartyContact_Base {
             }
         }
     }
+
+    @Deprecated
+    public boolean hasCurrentPartyContact() {
+        return getCurrentPartyContact() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasPartyContactValidation() {
+        return getPartyContactValidation() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDate() {
+        return getLastModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasActive() {
+        return getActive() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibleToPublic() {
+        return getVisibleToPublic() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibleToEmployees() {
+        return getVisibleToEmployees() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibleToTeachers() {
+        return getVisibleToTeachers() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibleToAlumni() {
+        return getVisibleToAlumni() != null;
+    }
+
+    @Deprecated
+    public boolean hasDefaultContact() {
+        return getDefaultContact() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibleToStudents() {
+        return getVisibleToStudents() != null;
+    }
+
+    @Deprecated
+    public boolean hasResearcher() {
+        return getResearcher() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrevPartyContact() {
+        return getPrevPartyContact() != null;
+    }
+
 }

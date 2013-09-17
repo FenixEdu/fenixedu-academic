@@ -29,10 +29,10 @@ public class NewParkingDocument extends NewParkingDocument_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeParkingParty();
-        removeParkingRequest();
-        removeVehicle();
+        setRootDomainObject(null);
+        setParkingParty(null);
+        setParkingRequest(null);
+        setVehicle(null);
         getParkingFile().delete();
         deleteDomainObject();
     }
@@ -51,6 +51,36 @@ public class NewParkingDocument extends NewParkingDocument_Base {
         filePath.addNode(new VirtualPathNode("Party" + party.getExternalId(), party.getName()));
         filePath.addNode(new VirtualPathNode("V" + vehicle.getExternalId(), "Vehicle ID"));
         return filePath;
+    }
+
+    @Deprecated
+    public boolean hasParkingFile() {
+        return getParkingFile() != null;
+    }
+
+    @Deprecated
+    public boolean hasParkingParty() {
+        return getParkingParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasParkingRequest() {
+        return getParkingRequest() != null;
+    }
+
+    @Deprecated
+    public boolean hasParkingDocumentType() {
+        return getParkingDocumentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasVehicle() {
+        return getVehicle() != null;
     }
 
 }

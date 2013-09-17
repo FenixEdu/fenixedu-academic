@@ -540,7 +540,7 @@ public class SeparationCyclesManagement {
         if (!curriculumModule.isLeaf()) {
             final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
             for (; curriculumGroup.hasAnyCurriculumModules();) {
-                deleteCurriculumModules(curriculumGroup.getCurriculumModules().get(0));
+                deleteCurriculumModules(curriculumGroup.getCurriculumModules().iterator().next());
             }
             curriculumGroup.delete();
         } else if (curriculumModule.isDismissal()) {

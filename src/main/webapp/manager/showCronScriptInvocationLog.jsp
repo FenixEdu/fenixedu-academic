@@ -1,8 +1,8 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-<%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="str" %>
 
 <logic:present name="cronScriptInvocation">
 	<fr:view name="cronScriptInvocation" property="cronScriptState"

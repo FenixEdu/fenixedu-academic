@@ -368,7 +368,7 @@ public class Teacher extends Teacher_Base {
 
     public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(ExecutionYear executionYear) {
         TeacherPersonalExpectation result = null;
-        List<TeacherPersonalExpectation> teacherPersonalExpectations = this.getTeacherPersonalExpectations();
+        Collection<TeacherPersonalExpectation> teacherPersonalExpectations = this.getTeacherPersonalExpectations();
         for (TeacherPersonalExpectation teacherPersonalExpectation : teacherPersonalExpectations) {
             if (teacherPersonalExpectation.getExecutionYear().equals(executionYear)) {
                 result = teacherPersonalExpectation;
@@ -515,7 +515,7 @@ public class Teacher extends Teacher_Base {
 
             if (masterDegreeThesisDataVersion.getCurrentState().getState() == State.ACTIVE) {
 
-                List<ExecutionDegree> executionDegrees =
+                Collection<ExecutionDegree> executionDegrees =
                         masterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan()
                                 .getDegreeCurricularPlan().getExecutionDegrees();
 
@@ -587,8 +587,8 @@ public class Teacher extends Teacher_Base {
                     } else if (internalPhdParticipant.getProcessForAssistantGuiding() != null) {
                         assistantGuidedTheses =
                                 assistantGuidedTheses
-                                        + (0.5 / internalPhdParticipant.getProcessForAssistantGuiding()
-                                                .getAssistantGuidingsCount());
+                                        + (0.5 / internalPhdParticipant.getProcessForAssistantGuiding().getAssistantGuidingsSet()
+                                                .size());
                     }
 
                 }
@@ -1075,7 +1075,7 @@ public class Teacher extends Teacher_Base {
         return returnValue;
     }
 
-    public boolean teachesAny(final List<ExecutionCourse> executionCourses, ExecutionYear executionYear) {
+    public boolean teachesAny(final Collection<ExecutionCourse> executionCourses, ExecutionYear executionYear) {
         for (final Professorship professorship : getProfessorships(executionYear)) {
             if (executionCourses.contains(professorship.getExecutionCourse())) {
                 return true;
@@ -1084,13 +1084,13 @@ public class Teacher extends Teacher_Base {
         return false;
     }
 
-    public boolean teachesAny(final List<ExecutionCourse> executionCourses) {
+    public boolean teachesAny(final Collection<ExecutionCourse> executionCourses) {
         return getPerson().teachesAny(executionCourses);
     }
 
     public void delete() {
         super.setPerson(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -1103,7 +1103,7 @@ public class Teacher extends Teacher_Base {
         for (Professorship professorship : getProfessorships(executionYear)) {
             Set<Shift> associatedShifts = professorship.getExecutionCourse().getAssociatedShifts();
             for (Shift shift : associatedShifts) {
-                List<Lesson> associatedLessons = shift.getAssociatedLessons();
+                Collection<Lesson> associatedLessons = shift.getAssociatedLessons();
                 for (Lesson lesson : associatedLessons) {
                     if (lesson.contains(interval)) {
                         return true;
@@ -1284,7 +1284,7 @@ public class Teacher extends Teacher_Base {
         if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
             return "D" + getPerson().getEmployee().getEmployeeNumber();
         } else {
-            return roleLoginAlias.get(0).getAlias();
+            return roleLoginAlias.iterator().next().getAlias();
         }
     }
 
@@ -1296,18 +1296,6 @@ public class Teacher extends Teacher_Base {
             }
         }
         return false;
-    }
-
-    public int getProfessorshipsCount() {
-        return getPerson().getProfessorshipsCount();
-    }
-
-    public boolean hasAnyProfessorships() {
-        return getPerson().hasAnyProfessorships();
-    }
-
-    public boolean hasProfessorship(Professorship professorship) {
-        return getPerson().hasProfessorships(professorship);
     }
 
     public Set<Professorship> getProfessorshipsSet() {
@@ -1322,12 +1310,12 @@ public class Teacher extends Teacher_Base {
         getPerson().removeProfessorships(professorship);
     }
 
-    public List<Professorship> getProfessorships() {
+    public Collection<Professorship> getProfessorships() {
         return getPerson().getProfessorships();
     }
 
     public Iterator<Professorship> getProfessorshipsIterator() {
-        return getPerson().getProfessorshipsIterator();
+        return getPerson().getProfessorships().iterator();
     }
 
     public TeacherCredits getTeacherCredits(ExecutionSemester executionSemester) {
@@ -1407,4 +1395,365 @@ public class Teacher extends Teacher_Base {
         }
         return result;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipIntention> getTutorshipIntention() {
+        return getTutorshipIntentionSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTutorshipIntention() {
+        return !getTutorshipIntentionSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherAuthorization> getAuthorization() {
+        return getAuthorizationSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAuthorization() {
+        return !getAuthorizationSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherService> getTeacherServices() {
+        return getTeacherServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherServices() {
+        return !getTeacherServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Orientation> getAssociatedOrientations() {
+        return getAssociatedOrientationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedOrientations() {
+        return !getAssociatedOrientationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent> getDegreeFinalProjectStudents() {
+        return getDegreeFinalProjectStudentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeFinalProjectStudents() {
+        return !getDegreeFinalProjectStudentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestGroup> getTestGroups() {
+        return getTestGroupsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTestGroups() {
+        return !getTestGroupsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime> getInstitutionWorkTimePeriods() {
+        return getInstitutionWorkTimePeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInstitutionWorkTimePeriods() {
+        return !getInstitutionWorkTimePeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeCandidate> getMasterDegreeCandidates() {
+        return getMasterDegreeCandidatesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMasterDegreeCandidates() {
+        return !getMasterDegreeCandidatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine> getManagementPositions() {
+        return getManagementPositionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyManagementPositions() {
+        return !getManagementPositionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.MarkSheet> getMarkSheets() {
+        return getMarkSheetsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMarkSheets() {
+        return !getMarkSheetsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits> getAnnualTeachingCredits() {
+        return getAnnualTeachingCreditsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAnnualTeachingCredits() {
+        return !getAnnualTeachingCreditsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.PublicationsNumber> getAssociatedPublicationsNumbers() {
+        return getAssociatedPublicationsNumbersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedPublicationsNumbers() {
+        return !getAssociatedPublicationsNumbersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
+        return getAssociatedSummariesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedSummaries() {
+        return !getAssociatedSummariesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Career> getAssociatedCareers() {
+        return getAssociatedCareersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedCareers() {
+        return !getAssociatedCareersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation> getTeacherPersonalExpectations() {
+        return getTeacherPersonalExpectationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherPersonalExpectations() {
+        return !getTeacherPersonalExpectationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.ExternalActivity> getAssociatedExternalActivities() {
+        return getAssociatedExternalActivitiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedExternalActivities() {
+        return !getAssociatedExternalActivitiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit> getExecutionCourseAudits() {
+        return getExecutionCourseAuditsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionCourseAudits() {
+        return !getExecutionCourseAuditsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisGuider() {
+        return getMasterDegreeThesisGuiderSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMasterDegreeThesisGuider() {
+        return !getMasterDegreeThesisGuiderSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Advise> getAdvises() {
+        return getAdvisesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAdvises() {
+        return !getAdvisesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisAssistentGuider() {
+        return getMasterDegreeThesisAssistentGuiderSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMasterDegreeThesisAssistentGuider() {
+        return !getMasterDegreeThesisAssistentGuiderSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCredits> getTeacherCredits() {
+        return getTeacherCreditsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherCredits() {
+        return !getTeacherCreditsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeProofVersion> getMasterDegreeProofsJury() {
+        return getMasterDegreeProofsJurySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMasterDegreeProofsJury() {
+        return !getMasterDegreeProofsJurySet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Tutorship> getTutorships() {
+        return getTutorshipsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTutorships() {
+        return !getTutorshipsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestModel> getTestModels() {
+        return getTestModelsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTestModels() {
+        return !getTestModelsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.OldPublication> getAssociatedOldPublications() {
+        return getAssociatedOldPublicationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedOldPublications() {
+        return !getAssociatedOldPublicationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup> getAppraiserExpectationEvaluationGroups() {
+        return getAppraiserExpectationEvaluationGroupsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAppraiserExpectationEvaluationGroups() {
+        return !getAppraiserExpectationEvaluationGroupsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher> getTSDRealTeachers() {
+        return getTSDRealTeachersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDRealTeachers() {
+        return !getTSDRealTeachersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultTeacher> getTeacherResults() {
+        return getTeacherResultsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherResults() {
+        return !getTeacherResultsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.ThesisSubject> getThesisSubjects() {
+        return getThesisSubjectsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyThesisSubjects() {
+        return !getThesisSubjectsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes> getAssociatedOldInquiriesTeachersRes() {
+        return getAssociatedOldInquiriesTeachersResSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedOldInquiriesTeachersRes() {
+        return !getAssociatedOldInquiriesTeachersResSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipSummary> getTutorshipSummaries() {
+        return getTutorshipSummariesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTutorshipSummaries() {
+        return !getTutorshipSummariesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator> getMobilityCoordinations() {
+        return getMobilityCoordinationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMobilityCoordinations() {
+        return !getMobilityCoordinationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup> getEvaluatedExpectationEvaluationGroups() {
+        return getEvaluatedExpectationEvaluationGroupsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEvaluatedExpectationEvaluationGroups() {
+        return !getEvaluatedExpectationEvaluationGroupsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine> getOtherTypeCreditLines() {
+        return getOtherTypeCreditLinesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOtherTypeCreditLines() {
+        return !getOtherTypeCreditLinesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasWeeklyOcupation() {
+        return getWeeklyOcupation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasServiceProviderRegime() {
+        return getServiceProviderRegime() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

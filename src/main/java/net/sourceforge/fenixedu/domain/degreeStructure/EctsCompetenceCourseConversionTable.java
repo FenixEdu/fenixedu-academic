@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 
 public class EctsCompetenceCourseConversionTable extends EctsCompetenceCourseConversionTable_Base {
@@ -25,7 +25,7 @@ public class EctsCompetenceCourseConversionTable extends EctsCompetenceCourseCon
         return getCompetenceCourse();
     }
 
-    @Service
+    @Atomic
     public static void createConversionTable(CompetenceCourse competence, AcademicInterval year, String[] table) {
         EctsCompetenceCourseConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(competence);
         EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
@@ -54,7 +54,12 @@ public class EctsCompetenceCourseConversionTable extends EctsCompetenceCourseCon
 
     @Override
     public void delete() {
-        removeCompetenceCourse();
+        setCompetenceCourse(null);
         super.delete();
     }
+    @Deprecated
+    public boolean hasCompetenceCourse() {
+        return getCompetenceCourse() != null;
+    }
+
 }

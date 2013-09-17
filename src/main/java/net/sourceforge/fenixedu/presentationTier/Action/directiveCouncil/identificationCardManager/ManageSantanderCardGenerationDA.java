@@ -20,12 +20,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "identificationCardManager", path = "/manageSantander", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -54,7 +54,7 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
 
     public ActionForward createBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(request.getParameter("executionYearEid"));
+        ExecutionYear executionYear = FenixFramework.getDomainObject(request.getParameter("executionYearEid"));
         ManageSantanderCardGenerationBean santanderBean;
 
         if (executionYear == null) {
@@ -77,8 +77,8 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
 
     public ActionForward downloadBatch(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
-        SantanderBatch santanderBatch = AbstractDomainObject.fromExternalId(request.getParameter("santanderBatchEid"));
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(request.getParameter("executionYearEid"));
+        SantanderBatch santanderBatch = FenixFramework.getDomainObject(request.getParameter("santanderBatchEid"));
+        ExecutionYear executionYear = FenixFramework.getDomainObject(request.getParameter("executionYearEid"));
         ManageSantanderCardGenerationBean santanderBean;
 
         try {
@@ -103,7 +103,7 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
 
     public ActionForward sendBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        SantanderBatch santanderBatch = AbstractDomainObject.fromExternalId(request.getParameter("santanderBatchEid"));
+        SantanderBatch santanderBatch = FenixFramework.getDomainObject(request.getParameter("santanderBatchEid"));
         Person requester = getUserView(request).getPerson();
         sealBatch(santanderBatch, requester);
         return downloadBatch(mapping, actionForm, request, response);
@@ -111,8 +111,8 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
 
     public ActionForward deleteBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        SantanderBatch santanderBatch = AbstractDomainObject.fromExternalId(request.getParameter("santanderBatchEid"));
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(request.getParameter("executionYearEid"));
+        SantanderBatch santanderBatch = FenixFramework.getDomainObject(request.getParameter("santanderBatchEid"));
+        ExecutionYear executionYear = FenixFramework.getDomainObject(request.getParameter("executionYearEid"));
         ManageSantanderCardGenerationBean santanderBean;
 
         destroyBatch(santanderBatch);
@@ -140,16 +140,16 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
         if (batches.isEmpty()) {
             return true;
         }
-        SantanderBatch lastCreatedBatch = batches.get(0);
+        SantanderBatch lastCreatedBatch = batches.iterator().next();
         return (lastCreatedBatch != null && lastCreatedBatch.getSent() != null);
     }
 
-    @Service
+    @Atomic
     private void createNewBatch(Person requester, ExecutionYear executionYear) {
         new SantanderBatch(requester, executionYear);
     }
 
-    @Service
+    @Atomic
     private void destroyBatch(SantanderBatch batch) {
         batch.delete();
     }
@@ -159,7 +159,7 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
         santanderBean.setAllowNewCreation(canCreateNewBatch(santanderBean.getExecutionYear()));
     }
 
-    @Service
+    @Atomic
     private void sealBatch(SantanderBatch santanderBatch, Person requester) {
         santanderBatch.setSequenceNumber(SantanderSequenceNumberGenerator.getNewSequenceNumber());
         santanderBatch.setSent(new DateTime());

@@ -28,7 +28,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
@@ -44,7 +44,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
         return showOldDegreeCurricularPlan(mapping, actionForm, request, degreeCurricularPlan.getExternalId());
     }
 
@@ -61,7 +61,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
             if (!infoExecutionDegreeList.isEmpty()) {
                 List<LabelValueBean> executionPeriodsLabelValueList = new ArrayList<LabelValueBean>();
-                infoExecutionDegree1 = infoExecutionDegreeList.get(0);
+                infoExecutionDegree1 = infoExecutionDegreeList.iterator().next();
                 executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionDegree1.getInfoExecutionYear().getYear(), ""
                         + infoExecutionDegree1.getInfoExecutionYear().getExternalId()));
 

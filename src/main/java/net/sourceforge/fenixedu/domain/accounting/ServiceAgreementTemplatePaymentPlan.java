@@ -2,16 +2,16 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public abstract class ServiceAgreementTemplatePaymentPlan extends ServiceAgreementTemplatePaymentPlan_Base {
 
     static {
-        ServiceAgreementTemplateServiceAgreementTemplatePaymentPlan
-                .addListener(new RelationAdapter<ServiceAgreementTemplatePaymentPlan, ServiceAgreementTemplate>() {
+        getRelationServiceAgreementTemplateServiceAgreementTemplatePaymentPlan().addListener(
+                new RelationAdapter<ServiceAgreementTemplate, ServiceAgreementTemplatePaymentPlan>() {
                     @Override
-                    public void beforeAdd(ServiceAgreementTemplatePaymentPlan paymentPlanToAdd,
-                            ServiceAgreementTemplate serviceAgreementTemplate) {
+                    public void beforeAdd(ServiceAgreementTemplate serviceAgreementTemplate,
+                            ServiceAgreementTemplatePaymentPlan paymentPlanToAdd) {
 
                         if (paymentPlanToAdd != null && serviceAgreementTemplate != null) {
                             if (paymentPlanToAdd.isDefault()
@@ -52,6 +52,11 @@ public abstract class ServiceAgreementTemplatePaymentPlan extends ServiceAgreeme
     protected void removeParameters() {
         super.removeParameters();
         super.setServiceAgreementTemplate(null);
+    }
+
+    @Deprecated
+    public boolean hasServiceAgreementTemplate() {
+        return getServiceAgreementTemplate() != null;
     }
 
 }

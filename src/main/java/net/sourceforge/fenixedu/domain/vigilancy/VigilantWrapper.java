@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -105,7 +106,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         double points = this.getStartPoints().doubleValue();
         BigDecimal weight = this.getPointsWeight();
 
-        List<Vigilancy> vigilancies = getVigilancies();
+        Collection<Vigilancy> vigilancies = getVigilancies();
 
         for (Vigilancy vigilancy : vigilancies) {
             points += weight.doubleValue() * vigilancy.getPoints();
@@ -162,7 +163,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public Boolean isAvailableOnDate(DateTime begin, DateTime end) {
-        List<UnavailablePeriod> unavailablePeriods = this.getPerson().getUnavailablePeriods();
+        Collection<UnavailablePeriod> unavailablePeriods = this.getPerson().getUnavailablePeriods();
         for (UnavailablePeriod period : unavailablePeriods) {
             if (period.containsInterval(begin, end)) {
                 return Boolean.FALSE;
@@ -231,7 +232,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
     public List<Interval> getConvokePeriods() {
         List<Interval> convokingPeriods = new ArrayList<Interval>();
-        List<Vigilancy> convokes = this.getVigilancies();
+        Collection<Vigilancy> convokes = this.getVigilancies();
         for (Vigilancy convoke : convokes) {
             convokingPeriods.add(new Interval(convoke.getBeginDate(), convoke.getEndDate()));
         }
@@ -242,7 +243,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         DateTime beginOfExam = writtenEvaluation.getBeginningDateTime();
         DateTime endOfExam = writtenEvaluation.getEndDateTime();
 
-        boolean isInExamPeriod = writtenEvaluation.getAssociatedExecutionCourses().get(0).isInExamPeriod();
+        boolean isInExamPeriod = writtenEvaluation.getAssociatedExecutionCourses().iterator().next().isInExamPeriod();
         return this.isAvailableOnDate(beginOfExam, endOfExam)
                 && this.hasNoEvaluationsOnDate(beginOfExam, endOfExam)
                 && (isInExamPeriod || (!isInExamPeriod && ((this.getTeacher() != null && this.getTeacher().teachesAny(
@@ -255,7 +256,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public boolean hasNoEvaluationsOnDate(DateTime beginOfExam, DateTime endOfExam) {
-        List<Vigilancy> convokes = this.getVigilancies();
+        Collection<Vigilancy> convokes = this.getVigilancies();
         Interval requestedInterval = new Interval(beginOfExam, endOfExam);
         for (Vigilancy convoke : convokes) {
             DateTime begin = convoke.getBeginDateTime();
@@ -272,12 +273,12 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     public void delete() {
 
         if (this.getActiveVigilanciesInList(this.getVigilancies()).size() == 0) {
-            for (; !this.getVigilancies().isEmpty(); this.getVigilancies().get(0).delete()) {
+            for (; !this.getVigilancies().isEmpty(); this.getVigilancies().iterator().next().delete()) {
                 ;
             }
-            removePerson();
-            removeVigilantGroup();
-            removeRootDomainObject();
+            setPerson(null);
+            setVigilantGroup(null);
+            setRootDomainObject(null);
             super.deleteDomainObject();
         } else {
             throw new DomainException("vigilancy.error.cannotDeleteVigilantDueToConvokes");
@@ -328,7 +329,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         return getActiveVigilanciesInList(getOwnCourseVigilancies());
     }
 
-    private List<Vigilancy> getActiveVigilanciesInList(List<Vigilancy> vigilancies) {
+    private List<Vigilancy> getActiveVigilanciesInList(Collection<Vigilancy> vigilancies) {
         List<Vigilancy> activeVigilancies = new ArrayList<Vigilancy>();
         for (Vigilancy vigilancy : vigilancies) {
             if (vigilancy.isActive()) {
@@ -349,12 +350,12 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     @Override
-    public List<Vigilancy> getVigilancies() {
+    public Set<Vigilancy> getVigilanciesSet() {
         return this.getVigilantGroup().getVigilancies(this);
     }
 
     public boolean hasBeenConvokedForEvaluation(WrittenEvaluation writtenEvaluation) {
-        List<Vigilancy> convokes = this.getVigilancies();
+        Collection<Vigilancy> convokes = this.getVigilancies();
         for (Vigilancy convoke : convokes) {
             if (convoke.getWrittenEvaluation().equals(writtenEvaluation)) {
                 return true;
@@ -411,7 +412,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
         Person person = this.getPerson().getIncompatibleVigilantPerson();
         if (person != null) {
-            List<Vigilancy> convokes = writtenEvaluation.getVigilancies();
+            Collection<Vigilancy> convokes = writtenEvaluation.getVigilancies();
             for (Vigilancy convoke : convokes) {
                 if (convoke.getVigilantWrapper().getPerson().equals(person)) {
                     return UnavailableTypes.INCOMPATIBLE_PERSON;
@@ -458,6 +459,46 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
     public List<UnavailablePeriod> getUnavailablePeriods() {
         return getPerson().getUnavailablePeriodsForGivenYear(getExecutionYear());
+    }
+
+    @Deprecated
+    public boolean hasAnyVigilancies() {
+        return !getVigilanciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasJustification() {
+        return getJustification() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasConvokable() {
+        return getConvokable() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsWeight() {
+        return getPointsWeight() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartPoints() {
+        return getStartPoints() != null;
+    }
+
+    @Deprecated
+    public boolean hasVigilantGroup() {
+        return getVigilantGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

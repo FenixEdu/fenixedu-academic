@@ -250,11 +250,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public List<CurricularCourse> getCurricularCourses() {
-        return Collections.emptyList();
-    }
-
-    @Override
     public Set<CurricularCourse> getCurricularCoursesSet() {
         return Collections.emptySet();
     }
@@ -338,11 +333,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     @Override
     public Boolean getCanModify() {
         return false;
-    }
-
-    @Override
-    public void removeDegree() {
-        throw new DomainException("EmptyDegreeCurricularPlan.not.available");
     }
 
     @Override
@@ -527,8 +517,8 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public List<DegreeCurricularPlanEquivalencePlan> getTargetEquivalencePlans() {
-        return Collections.emptyList();
+    public Set<DegreeCurricularPlanEquivalencePlan> getTargetEquivalencePlans() {
+        return Collections.emptySet();
     }
 
     @Override

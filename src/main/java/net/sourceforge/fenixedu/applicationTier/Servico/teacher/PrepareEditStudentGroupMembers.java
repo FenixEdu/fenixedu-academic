@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -14,8 +15,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -25,7 +26,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class PrepareEditStudentGroupMembers {
 
     protected List run(String executionCourseID, String studentGroupID) throws FenixServiceException {
-        final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupID);
+        final StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -33,7 +34,7 @@ public class PrepareEditStudentGroupMembers {
         final List<Attends> groupingAttends = new ArrayList<Attends>();
         groupingAttends.addAll(studentGroup.getGrouping().getAttends());;
 
-        final List<StudentGroup> studentsGroups = studentGroup.getGrouping().getStudentGroups();
+        final Collection<StudentGroup> studentsGroups = studentGroup.getGrouping().getStudentGroupsSet();
         for (final StudentGroup studentGroupIter : studentsGroups) {
             for (final Attends attend : studentGroupIter.getAttends()) {
                 groupingAttends.remove(attend);
@@ -50,7 +51,7 @@ public class PrepareEditStudentGroupMembers {
 
     private static final PrepareEditStudentGroupMembers serviceInstance = new PrepareEditStudentGroupMembers();
 
-    @Service
+    @Atomic
     public static List runPrepareEditStudentGroupMembers(String executionCourseID, String studentGroupID)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);

@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -37,7 +37,7 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends FenixDi
             HttpServletResponse response) throws Exception {
 
         StudentCurricularPlan studentCurricularPlan =
-                AbstractDomainObject.fromExternalId((String) ((DynaActionForm) form).get("scpID"));
+                FenixFramework.getDomainObject((String) ((DynaActionForm) form).get("scpID"));
 
         request.setAttribute(PresentationConstants.STUDENT, studentCurricularPlan.getRegistration());
         request.setAttribute("scpID", studentCurricularPlan.getExternalId());

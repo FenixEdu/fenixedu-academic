@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.functionalities.Module;
 
 import org.jdom.Element;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ImportStartupFunctionalities extends ImportFunctionalities {
@@ -73,7 +73,7 @@ public class ImportStartupFunctionalities extends ImportFunctionalities {
 
     private static final ImportStartupFunctionalities serviceInstance = new ImportStartupFunctionalities();
 
-    @Service
+    @Atomic
     public static void runImportStartupFunctionalities(InputStream stream) throws IOException, NotAuthorizedException {
         ManagerAuthorizationFilter.instance.execute();
         serviceInstance.run(stream);

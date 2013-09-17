@@ -23,7 +23,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "resourceAllocationManager", path = "/enrollStudentInShifts",
         input = "/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos&page=0",
@@ -75,7 +75,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
     }
 
     private Registration getRegistration(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(request.getParameter("registrationOID"));
+        return FenixFramework.getDomainObject(request.getParameter("registrationOID"));
     }
 
     private Registration getStudent(final IUserView userView) {

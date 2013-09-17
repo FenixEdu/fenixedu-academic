@@ -52,7 +52,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/teachingInquiry", module = "teacher")
 @Forwards({
@@ -159,7 +159,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
     static InquiryResponseState getFilledState(Professorship professorship, TeacherInquiryTemplate inquiryTemplate,
             List<TeacherShiftTypeGroupsResumeResult> teacherResults) {
-        List<InquiryResult> professorshipResults = professorship.getInquiryResults();
+        Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
         InquiryResponseState finalState = InquiryResponseState.COMPLETE;
         if (professorship.hasInquiryTeacherAnswer()
                 && professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)) {
@@ -185,7 +185,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
         return finalState;
     }
 
-    private static Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+    private static Set<ShiftType> getShiftTypes(Collection<InquiryResult> professorshipResults) {
         Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
         for (InquiryResult inquiryResult : professorshipResults) {
             shiftTypes.add(inquiryResult.getShiftType());
@@ -196,7 +196,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward showTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
+        Professorship professorship = FenixFramework.getDomainObject(getFromRequest(request, "professorshipOID").toString());
         TeacherInquiryTemplate teacherInquiryTemplate = TeacherInquiryTemplate.getCurrentTemplate();
 
         TeacherInquiryBean teacherInquiryBean = new TeacherInquiryBean(teacherInquiryTemplate, professorship);
@@ -212,9 +212,9 @@ public class TeachingInquiryDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionCourseOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionCourseOID").toString());
         ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionDegreeOID").toString());
 
         DelegateInquiryTemplate delegateInquiryTemplate =
                 DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
@@ -293,7 +293,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final StudentInquiriesCourseResult courseResult =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "resultId").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "resultId").toString());
         final Person loggedPerson = AccessControl.getPerson();
         if (!loggedPerson.isPedagogicalCouncilMember() && loggedPerson.getPersonRole(RoleType.GEP) == null
                 && loggedPerson.getPersonRole(RoleType.DEPARTMENT_MEMBER) == null
@@ -316,7 +316,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         final StudentInquiriesTeachingResult teachingResult =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "resultId").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "resultId").toString());
         final Person loggedPerson = AccessControl.getPerson();
         if (!loggedPerson.isPedagogicalCouncilMember() && loggedPerson.getPersonRole(RoleType.GEP) == null
                 && loggedPerson.getPersonRole(RoleType.DEPARTMENT_MEMBER) == null

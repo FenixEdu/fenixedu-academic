@@ -19,14 +19,15 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadCoordinatedDegrees {
 
-    @Checked("RolePredicates.COORDINATOR_PREDICATE")
-    @Service
+    @Atomic
     public static List<InfoDegreeCurricularPlan> run(IUserView userView) throws FenixServiceException {
+        check(RolePredicates.COORDINATOR_PREDICATE);
         final Person person = userView.getPerson();
         if (person == null) {
             throw new InvalidArgumentsServiceException();

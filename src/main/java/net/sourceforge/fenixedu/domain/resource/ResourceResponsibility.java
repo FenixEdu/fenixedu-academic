@@ -54,4 +54,29 @@ public abstract class ResourceResponsibility extends ResourceResponsibility_Base
         final YearMonthDay end = getEnd();
         return start != null && (end == null || !start.isAfter(end));
     }
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasResource() {
+        return getResource() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasBegin() {
+        return getBegin() != null;
+    }
+
 }

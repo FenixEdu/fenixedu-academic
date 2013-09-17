@@ -89,7 +89,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
             if (version.intValue() == 0) {
                 List guidesList = ChooseGuide.runChooseGuide(number, year);
-                guide = (InfoGuide) guidesList.get(0);
+                guide = (InfoGuide) guidesList.iterator().next();
             } else {
                 guide = ChooseGuide.runChooseGuide(number, year, version);
             }

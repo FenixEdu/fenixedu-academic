@@ -19,7 +19,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -40,7 +40,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
             scpID = ((DynaActionForm) form).get("scpID").equals("") ? null : (String) ((DynaActionForm) form).get("scpID");
         }
 
-        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
+        StudentCurricularPlan studentCurricularPlan = FenixFramework.getDomainObject(scpID);
 
         return transportStudentCurricularPlan(form, request, actionErrors, studentCurricularPlan);
     }

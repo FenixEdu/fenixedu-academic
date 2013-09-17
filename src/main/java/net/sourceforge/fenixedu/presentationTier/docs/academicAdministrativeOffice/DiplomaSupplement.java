@@ -259,7 +259,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                                     .getString(
                                             "diploma.supplement.four.two.programmerequirements.template.noareas.with.official.publication"),
                             labelThe, graduateDegree, Long.toString(ectsCredits), officialPublication);
-        } else if (getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE) || dr.getSpecializationAreaCount() == 0) {
+        } else if (getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE)
+                || dr.getSpecializationAreaSet().size() == 0) {
             programmeRequirements =
                     applyMessageArguments(
                             getResourceBundle().getString("diploma.supplement.four.two.programmerequirements.template.noareas"),

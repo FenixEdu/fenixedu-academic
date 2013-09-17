@@ -1,7 +1,7 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
 <em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key ="title.person.changepass" /></h2>

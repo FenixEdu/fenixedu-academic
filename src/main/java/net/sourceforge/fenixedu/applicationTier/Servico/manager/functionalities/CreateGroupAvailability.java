@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities
 
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * Creates a new {@link ExpresssionGroupAvailability} based on the expression
@@ -14,9 +15,9 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateGroupAvailability {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static ExpressionGroupAvailability run(Content functionality, String expression) {
+        check(RolePredicates.MANAGER_PREDICATE);
         if (!isEmpty(expression)) {
             return new ExpressionGroupAvailability(functionality, expression);
         } else {

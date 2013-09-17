@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 //modified by gedl AT rnl dot IST dot uTl dot pT , September the 16th, 2003
 //added the auth to a lecturing teacher
@@ -67,7 +67,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 
             final Person person = id.getPerson();
 
-            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+            ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
             // For all Associated Curricular Courses
             Iterator curricularCourseIterator = executionCourse.getAssociatedCurricularCourses().iterator();
@@ -77,7 +77,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                 // Read All Execution Degrees for this Degree Curricular
                 // Plan
 
-                List executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegrees();
+                Collection executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegrees();
 
                 // Check if the Coordinator is the logged one
                 Iterator executionDegreesIterator = executionDegrees.iterator();
@@ -105,7 +105,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+                ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
                 teacher.getProfessorshipByExecutionCourse(executionCourse);
             }
             return professorship != null;

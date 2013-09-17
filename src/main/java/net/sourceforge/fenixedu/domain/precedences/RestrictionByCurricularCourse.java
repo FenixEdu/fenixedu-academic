@@ -15,8 +15,13 @@ public abstract class RestrictionByCurricularCourse extends RestrictionByCurricu
 
     @Override
     public void delete() {
-        removePrecedentCurricularCourse();
+        setPrecedentCurricularCourse(null);
         super.delete();
+    }
+
+    @Deprecated
+    public boolean hasPrecedentCurricularCourse() {
+        return getPrecedentCurricularCourse() != null;
     }
 
 }

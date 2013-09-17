@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteEquivalencePlanEntry {
 
@@ -20,7 +20,7 @@ public class DeleteEquivalencePlanEntry {
 
     private static final DeleteEquivalencePlanEntry serviceInstance = new DeleteEquivalencePlanEntry();
 
-    @Service
+    @Atomic
     public static void runDeleteEquivalencePlanEntry(EquivalencePlanEntry EquivalencePlanEntry) throws NotAuthorizedException {
         try {
             ScientificCouncilAuthorizationFilter.instance.execute();

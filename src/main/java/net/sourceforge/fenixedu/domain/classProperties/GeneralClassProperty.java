@@ -31,4 +31,19 @@ public abstract class GeneralClassProperty extends GeneralClassProperty_Base {
         setValueString(value.getValue());
     }
 
+    @Deprecated
+    public boolean hasValueString() {
+        return getValueString() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNameString() {
+        return getNameString() != null;
+    }
+
 }

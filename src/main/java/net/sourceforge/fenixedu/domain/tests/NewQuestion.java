@@ -52,7 +52,7 @@ public abstract class NewQuestion extends NewQuestion_Base {
     }
 
     public static class AtomicQuestionComparator implements Comparator<NewQuestion> {
-        private NewQuestionGroup questionGroup;
+        private final NewQuestionGroup questionGroup;
 
         public AtomicQuestionComparator(NewQuestionGroup questionGroup) {
             super();
@@ -94,11 +94,11 @@ public abstract class NewQuestion extends NewQuestion_Base {
     }
 
     public Party getOwner() {
-        if (this.getParentElementsCount() == 0) {
+        if (this.getParentElementsSet().size() == 0) {
             return null;
         }
 
-        return this.getParentElements().get(0).getParent().getOwner();
+        return this.getParentElements().iterator().next().getParent().getOwner();
     }
 
     public List<NewPermissionUnit> getPermissionUnit(Party party) {
@@ -136,7 +136,7 @@ public abstract class NewQuestion extends NewQuestion_Base {
             return false;
         }
 
-        return !this.getParentQuestionGroups().get(0).isComposite();
+        return !this.getParentQuestionGroups().iterator().next().isComposite();
     }
 
     /**
@@ -201,7 +201,7 @@ public abstract class NewQuestion extends NewQuestion_Base {
     public abstract Integer getNewPosition(NewQuestionGroup parentQuestionGroup);
 
     public NewQuestionBank getQuestionBank() {
-        return this.getParentQuestionGroups().get(0).getQuestionBank();
+        return this.getParentQuestionGroups().iterator().next().getQuestionBank();
     }
 
     public List<NewQuestionGroup> getAssociableParents() {
@@ -267,7 +267,7 @@ public abstract class NewQuestion extends NewQuestion_Base {
     }
 
     protected NewAllGroup getParentAllGroup() {
-        return (NewAllGroup) this.getParentQuestionGroups().get(0);
+        return (NewAllGroup) this.getParentQuestionGroups().iterator().next();
     }
 
     @Override
@@ -331,4 +331,50 @@ public abstract class NewQuestion extends NewQuestion_Base {
 
         return this.getPreCondition().evaluate(this, person);
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewGroupElement> getParentElements() {
+        return getParentElementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParentElements() {
+        return !getParentElementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewModelRestriction> getModelRestrictions() {
+        return getModelRestrictionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyModelRestrictions() {
+        return !getModelRestrictionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewPermissionUnit> getPermissionUnits() {
+        return getPermissionUnitsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPermissionUnits() {
+        return !getPermissionUnitsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPreCondition() {
+        return getPreCondition() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrade() {
+        return getGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasTimesUsed() {
+        return getTimesUsed() != null;
+    }
+
 }

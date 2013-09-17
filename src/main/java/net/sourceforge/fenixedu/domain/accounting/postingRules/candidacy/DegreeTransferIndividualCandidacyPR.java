@@ -162,4 +162,14 @@ public class DegreeTransferIndividualCandidacyPR extends DegreeTransferIndividua
                 amountForInstitutionStudent, amountForExternalStudent);
     }
 
+    @Deprecated
+    public boolean hasAmountForInstitutionStudent() {
+        return getAmountForInstitutionStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasAmountForExternalStudent() {
+        return getAmountForExternalStudent() != null;
+    }
+
 }

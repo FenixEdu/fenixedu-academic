@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadExecutionYears {
-    @Service
+    @Atomic
     public static List run() throws FenixServiceException {
         final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
         for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {

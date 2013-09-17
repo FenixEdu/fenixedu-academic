@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -54,16 +55,17 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ThesisPredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-import dml.runtime.RelationAdapter;
 
 public class Thesis extends Thesis_Base {
 
     static {
-        ThesisEnrolment.addListener(new RelationAdapter<Thesis, Enrolment>() {
+        getRelationThesisEnrolment().addListener(new RelationAdapter<Thesis, Enrolment>() {
 
             @Override
             public void beforeAdd(Thesis thesis, Enrolment enrolment) {
@@ -73,7 +75,7 @@ public class Thesis extends Thesis_Base {
                     return;
                 }
 
-                List<Thesis> theses = enrolment.getTheses();
+                Collection<Thesis> theses = enrolment.getTheses();
 
                 String number = enrolment.getStudentCurricularPlan().getRegistration().getNumber().toString();
                 switch (theses.size()) {
@@ -96,7 +98,7 @@ public class Thesis extends Thesis_Base {
         @Override
         public int compare(Thesis t1, Thesis t2) {
             final int n = Student.NUMBER_COMPARATOR.compare(t1.getStudent(), t2.getStudent());
-            return n == 0 ? COMPARATOR_BY_ID.compare(t1, t2) : n;
+            return n == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(t1, t2) : n;
         }
     };
 
@@ -266,8 +268,8 @@ public class Thesis extends Thesis_Base {
     }
 
     @Override
-    @Checked("ThesisPredicates.studentOrAcademicAdministrativeOfficeOrScientificCouncil")
     public void setDiscussed(DateTime discussed) {
+        check(this, ThesisPredicates.studentOrAcademicAdministrativeOfficeOrScientificCouncil);
         if (discussed != null && getEnrolment().getCreationDateDateTime().isAfter(discussed)) {
             throw new DomainException("thesis.invalid.discussed.date.time");
         }
@@ -275,14 +277,14 @@ public class Thesis extends Thesis_Base {
     }
 
     @Override
-    @Checked("ThesisPredicates.waitingConfirmation")
     public void setThesisAbstract(MultiLanguageString thesisAbstract) {
+        check(this, ThesisPredicates.waitingConfirmation);
         super.setThesisAbstract(thesisAbstract);
     }
 
     @Override
-    @Checked("ThesisPredicates.waitingConfirmation")
     public void setKeywords(MultiLanguageString keywords) {
+        check(this, ThesisPredicates.waitingConfirmation);
         super.setKeywords(keywords);
     }
 
@@ -361,25 +363,25 @@ public class Thesis extends Thesis_Base {
         return result;
     }
 
-    @Checked("ThesisPredicates.isScientificCommission")
     public void delete() {
+        check(this, ThesisPredicates.isScientificCommission);
 
         if (!canBeDeleted()) {
             throw new DomainException("thesis.delete.notDraft");
         }
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
 
         for (; !getParticipations().isEmpty(); getParticipations().iterator().next().delete()) {
             ;
         }
 
         // Unnecessary, the student could not submit files while in draft
-        // removeDissertation();
-        // removeExtendedAbstract();
+        // setDissertation(null);
+        // setExtendedAbstract(null);
 
-        removeDegree();
-        removeEnrolment();
+        setDegree(null);
+        setEnrolment(null);
 
         deleteDomainObject();
     }
@@ -524,7 +526,6 @@ public class Thesis extends Thesis_Base {
         super.setEnrolment(enrolment);
     }
 
-    @Override
     public void removeEnrolment() {
         super.setEnrolment(null);
     }
@@ -535,7 +536,7 @@ public class Thesis extends Thesis_Base {
             return competenceCourse.getDepartmentUnit().getDepartment().getRealName();
         }
         if (competenceCourse.hasAnyDepartments()) {
-            return competenceCourse.getDepartments().get(0).getRealName();
+            return competenceCourse.getDepartments().iterator().next().getRealName();
         }
         return null;
     }
@@ -553,8 +554,8 @@ public class Thesis extends Thesis_Base {
     }
 
     // / DRAFT -> SUBMITTED
-    @Checked("ThesisPredicates.isScientificCommission")
     public void submit() {
+        check(this, ThesisPredicates.isScientificCommission);
         if (getState() != ThesisState.DRAFT) {
             throw new DomainException("thesis.submit.notDraft");
         }
@@ -577,8 +578,8 @@ public class Thesis extends Thesis_Base {
     }
 
     // / SUBMITTED -> DRAFT
-    @Checked("ThesisPredicates.isScientificCommission")
     public void cancelSubmit() {
+        check(this, ThesisPredicates.isScientificCommission);
         switch (getState()) {
         case SUBMITTED:
             break;
@@ -613,8 +614,8 @@ public class Thesis extends Thesis_Base {
     // }
 
     // SUBMITTED -> APPROVED
-    @Checked("ThesisPredicates.isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator")
     public void approveProposal() {
+        check(this, ThesisPredicates.isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator);
         if (getState() != ThesisState.APPROVED) {
             if (getState() != ThesisState.SUBMITTED) {
                 throw new DomainException("thesis.approve.notSubmitted");
@@ -628,8 +629,8 @@ public class Thesis extends Thesis_Base {
     }
 
     // (SUBMITTED | APPROVED) -> DRAFT
-    @Checked("ThesisPredicates.isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator")
     public void rejectProposal(String rejectionComment) {
+        check(this, ThesisPredicates.isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator);
         if (getState() != ThesisState.SUBMITTED && getState() != ThesisState.APPROVED) {
             throw new DomainException("thesis.reject.notSubmittedNorApproved");
         }
@@ -666,7 +667,7 @@ public class Thesis extends Thesis_Base {
         final String body = getMessage("message.thesis.reject.submission.email.body", studentNumber, title, rejectionComment);
 
         //
-        final Sender sender = ScientificCouncilUnit.getScientificCouncilUnit().getUnitBasedSender().get(0);
+        final Sender sender = ScientificCouncilUnit.getScientificCouncilUnit().getUnitBasedSender().iterator().next();
 
         new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
     }
@@ -1055,7 +1056,7 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    @Service
+    @Atomic
     public void swapFilesVisibility() {
         ThesisVisibilityType visibility = getVisibility();
 
@@ -1397,8 +1398,8 @@ public class Thesis extends Thesis_Base {
         return getThesisAbstractLanguage("pt");
     }
 
-    @Checked("ThesisPredicates.waitingConfirmation")
     public void setThesisAbstractPt(String text) {
+        check(this, ThesisPredicates.waitingConfirmation);
         setThesisAbstractLanguage("pt", text);
     }
 
@@ -1406,8 +1407,8 @@ public class Thesis extends Thesis_Base {
         return getThesisAbstractLanguage("en");
     }
 
-    @Checked("ThesisPredicates.waitingConfirmation")
     public void setThesisAbstractEn(String text) {
+        check(this, ThesisPredicates.waitingConfirmation);
         setThesisAbstractLanguage("en", text);
     }
 
@@ -1448,8 +1449,8 @@ public class Thesis extends Thesis_Base {
         return getKeywordsLanguage("pt");
     }
 
-    @Checked("ThesisPredicates.waitingConfirmation")
     public void setKeywordsPt(String text) {
+        check(this, ThesisPredicates.waitingConfirmation);
         setKeywordsLanguage("pt", normalizeKeywords(text));
     }
 
@@ -1457,8 +1458,8 @@ public class Thesis extends Thesis_Base {
         return getKeywordsLanguage("en");
     }
 
-    @Checked("ThesisPredicates.waitingConfirmation")
     public void setKeywordsEn(String text) {
+        check(this, ThesisPredicates.waitingConfirmation);
         setKeywordsLanguage("en", normalizeKeywords(text));
     }
 
@@ -1526,8 +1527,8 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void setOrientator(Person person) {
+        check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
         setParticipation(person, ThesisParticipationType.ORIENTATOR);
 
         if (!isCreditsDistributionNeeded()) {
@@ -1535,8 +1536,8 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void setCoorientator(Person person) {
+        check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
         setParticipation(person, ThesisParticipationType.COORIENTATOR);
 
         if (!isCreditsDistributionNeeded()) {
@@ -1544,8 +1545,8 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void setPresident(Person person) {
+        check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
         setParticipation(person, ThesisParticipationType.PRESIDENT);
     }
 
@@ -1577,8 +1578,8 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void addVowel(Person person) {
+        check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
         if (person != null) {
             new ThesisEvaluationParticipant(this, person, ThesisParticipationType.VOWEL);
         }
@@ -1672,8 +1673,8 @@ public class Thesis extends Thesis_Base {
         return getCurrentDiscussedDate() != null;
     }
 
-    @Checked("ThesisPredicates.isScientificCommission")
     public void checkIsScientificCommission() {
+        check(this, ThesisPredicates.isScientificCommission);
         // Nothing to do here... just the access control stuff that is injected
         // whenever necessary
     }
@@ -1731,7 +1732,7 @@ public class Thesis extends Thesis_Base {
             if (language == Language.pt) {
                 result.add(0, language);
             } else if (language == Language.en) {
-                if (result.size() > 0 && result.get(0) == Language.pt) {
+                if (result.size() > 0 && result.iterator().next() == Language.pt) {
                     result.add(1, language);
                 } else if (result.size() > 0) {
                     result.add(0, language);
@@ -1747,6 +1748,166 @@ public class Thesis extends Thesis_Base {
     public boolean areThesisFilesReadable() {
         final ThesisFile thesisFile = getDissertation();
         return thesisFile != null && thesisFile.areThesisFilesReadable();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant> getParticipations() {
+        return getParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipations() {
+        return !getParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasConfirmation() {
+        return getConfirmation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolment() {
+        return getEnrolment() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmission() {
+        return getSubmission() != null;
+    }
+
+    @Deprecated
+    public boolean hasDeclarationAcceptedTime() {
+        return getDeclarationAcceptedTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasDeclarationAccepted() {
+        return getDeclarationAccepted() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluation() {
+        return getEvaluation() != null;
+    }
+
+    @Deprecated
+    public boolean hasExtendedAbstract() {
+        return getExtendedAbstract() != null;
+    }
+
+    @Deprecated
+    public boolean hasMark() {
+        return getMark() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentsAvailableAfter() {
+        return getDocumentsAvailableAfter() != null;
+    }
+
+    @Deprecated
+    public boolean hasKeywords() {
+        return getKeywords() != null;
+    }
+
+    @Deprecated
+    public boolean hasThesisAbstract() {
+        return getThesisAbstract() != null;
+    }
+
+    @Deprecated
+    public boolean hasRejectionComment() {
+        return getRejectionComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasDiscussed() {
+        return getDiscussed() != null;
+    }
+
+    @Deprecated
+    public boolean hasSite() {
+        return getSite() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreation() {
+        return getCreation() != null;
+    }
+
+    @Deprecated
+    public boolean hasConfirmmedDocuments() {
+        return getConfirmmedDocuments() != null;
+    }
+
+    @Deprecated
+    public boolean hasProposedPlace() {
+        return getProposedPlace() != null;
+    }
+
+    @Deprecated
+    public boolean hasComment() {
+        return getComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastLibraryOperation() {
+        return getLastLibraryOperation() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectFromPendingPublication() {
+        return getRootDomainObjectFromPendingPublication() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublication() {
+        return getPublication() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasProposedDiscussed() {
+        return getProposedDiscussed() != null;
+    }
+
+    @Deprecated
+    public boolean hasApproval() {
+        return getApproval() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibility() {
+        return getVisibility() != null;
+    }
+
+    @Deprecated
+    public boolean hasOrientatorCreditsDistribution() {
+        return getOrientatorCreditsDistribution() != null;
+    }
+
+    @Deprecated
+    public boolean hasDissertation() {
+        return getDissertation() != null;
     }
 
 }

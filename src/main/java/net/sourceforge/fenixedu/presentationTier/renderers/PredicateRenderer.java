@@ -149,7 +149,7 @@ public class PredicateRenderer extends OutputRenderer {
             HtmlInlineContainer container = new HtmlInlineContainer();
 
             container.addChild(new HtmlText("não"));
-            container.addChild(renderValue(notPredicate.getPredicates().get(0), null, "values"));
+            container.addChild(renderValue(notPredicate.getPredicates().iterator().next(), null, "values"));
 
             return container;
         }

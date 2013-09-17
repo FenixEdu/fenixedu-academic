@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
@@ -46,7 +46,7 @@ public class FileContent extends FileContent_Base {
     }
 
     public static FileContent readByOID(String externalId) {
-        return AbstractDomainObject.fromExternalId(externalId);
+        return FenixFramework.getDomainObject(externalId);
     }
 
     public static List<FileContent> readAllFileItems() {
@@ -91,4 +91,9 @@ public class FileContent extends FileContent_Base {
             attachment.logItemFilePermittedGroup();
         }
     }
+    @Deprecated
+    public boolean hasAttachment() {
+        return getAttachment() != null;
+    }
+
 }

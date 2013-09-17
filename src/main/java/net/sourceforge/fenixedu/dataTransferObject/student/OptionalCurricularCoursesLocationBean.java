@@ -112,7 +112,7 @@ public class OptionalCurricularCoursesLocationBean implements Serializable {
                             studentCurricularPlan
                                     .getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(getOptionalCurricularCourse()));
             Collections.sort(curriculumGroups, CurriculumGroup.COMPARATOR_BY_NAME_AND_ID);
-            return curriculumGroups.isEmpty() ? null : curriculumGroups.get(0);
+            return curriculumGroups.isEmpty() ? null : curriculumGroups.iterator().next();
         }
 
         public StudentCurricularPlan getStudentCurricularPlan() {

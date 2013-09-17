@@ -58,7 +58,7 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
             if (object instanceof FinalDegreeWorkGroup) {
                 FinalDegreeWorkGroup group = (FinalDegreeWorkGroup) object;
                 if (group.isAttributed() && group.hasAnyGroupStudents()) {
-                    final Student student = group.getGroupStudentsIterator().next().getRegistration().getStudent();
+                    final Student student = group.getGroupStudentsSet().iterator().next().getRegistration().getStudent();
                     final Degree degree = group.getExecutionDegree().getDegree();
                     ExecutionYear nextExecutionYear = group.getExecutionDegree().getExecutionYear().getNextExecutionYear();
                     for (final Registration registration : student.getRegistrationsSet()) {
@@ -114,16 +114,16 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
     }
 
     public void delete() {
-        removeExecutionDegree();
+        setExecutionDegree(null);
         for (final GroupProposal groupProposal : getGroupProposalsSet()) {
             groupProposal.delete();
         }
         for (final GroupStudent groupStudent : getGroupStudentsSet()) {
             groupStudent.delete();
         }
-        removeProposalAttributed();
-        removeProposalAttributedByTeacher();
-        removeRootDomainObject();
+        setProposalAttributed(null);
+        setProposalAttributedByTeacher(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -169,6 +169,46 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 
     public boolean isValid() {
         return hasAnyGroupProposals() || hasProposalAttributed() || hasProposalAttributedByTeacher();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent> getGroupStudents() {
+        return getGroupStudentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGroupStudents() {
+        return !getGroupStudentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal> getGroupProposals() {
+        return getGroupProposalsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGroupProposals() {
+        return !getGroupProposalsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasProposalAttributed() {
+        return getProposalAttributed() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasProposalAttributedByTeacher() {
+        return getProposalAttributedByTeacher() != null;
     }
 
 }

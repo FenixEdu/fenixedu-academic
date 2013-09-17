@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Mapping(path = "/thesisSubmission", module = "student")
@@ -89,7 +89,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
                 }
             }
         } else {
-            thesis = AbstractDomainObject.fromExternalId(idString);
+            thesis = FenixFramework.getDomainObject(idString);
         }
 
         return thesis;

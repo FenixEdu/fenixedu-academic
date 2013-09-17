@@ -12,16 +12,16 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class JournalIssue extends JournalIssue_Base implements ParticipationsInterface {
 
     static {
-        JournalIssueScientificJournal.addListener(new RelationAdapter<JournalIssue, ScientificJournal>() {
+        getRelationJournalIssueScientificJournal().addListener(new RelationAdapter<ScientificJournal, JournalIssue>() {
 
             @Override
-            public void afterRemove(JournalIssue issue, ScientificJournal journal) {
-                super.afterRemove(issue, journal);
+            public void afterRemove(ScientificJournal journal, JournalIssue issue) {
+                super.afterRemove(journal, issue);
                 if (issue != null && journal != null && !journal.hasAnyParticipations() && !journal.hasAnyJournalIssues()) {
                     journal.delete();
                 }
@@ -78,14 +78,14 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
     }
 
     public void delete() {
-        for (; !this.getArticleAssociations().isEmpty(); this.getArticleAssociations().get(0).delete()) {
+        for (; !this.getArticleAssociations().isEmpty(); this.getArticleAssociations().iterator().next().delete()) {
             ;
         }
-        for (; !this.getParticipations().isEmpty(); this.getParticipations().get(0).delete()) {
+        for (; !this.getParticipations().isEmpty(); this.getParticipations().iterator().next().delete()) {
             ;
         }
-        removeScientificJournal();
-        removeRootDomainObject();
+        setScientificJournal(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -151,4 +151,72 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
             addParticipations(journalIssueParticipation);
         }
     }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation> getArticleAssociations() {
+        return getArticleAssociationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyArticleAssociations() {
+        return !getArticleAssociationsSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation> getParticipations() {
+        return getParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipations() {
+        return !getParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpecialIssueComment() {
+        return getSpecialIssueComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrl() {
+        return getUrl() != null;
+    }
+
+    @Deprecated
+    public boolean hasVolume() {
+        return getVolume() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasScientificJournal() {
+        return getScientificJournal() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpecialIssue() {
+        return getSpecialIssue() != null;
+    }
+
+    @Deprecated
+    public boolean hasMonth() {
+        return getMonth() != null;
+    }
+
 }

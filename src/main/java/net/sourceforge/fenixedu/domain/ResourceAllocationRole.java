@@ -15,7 +15,8 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 
 public class ResourceAllocationRole extends ResourceAllocationRole_Base {
 
@@ -123,9 +124,9 @@ public class ResourceAllocationRole extends ResourceAllocationRole_Base {
         }
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageAccessGroups")
     public void addOrRemovePersonFromAccessGroup(String expression, ResourceAllocationAccessGroupType accessGroupType,
             boolean toAdd) {
+        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageAccessGroups);
 
         if (StringUtils.isEmpty(expression)) {
             throw new DomainException("error.ResourceAllocation.access.groups.management.no.person");
@@ -219,7 +220,7 @@ public class ResourceAllocationRole extends ResourceAllocationRole_Base {
             }
         }
 
-        return (Group) (existentGroups.isEmpty() ? null : existentGroups.size() == 1 ? existentGroups.get(0) : new GroupUnion(
+        return (Group) (existentGroups.isEmpty() ? null : existentGroups.size() == 1 ? existentGroups.iterator().next() : new GroupUnion(
                 existentGroups));
     }
 
@@ -239,4 +240,24 @@ public class ResourceAllocationRole extends ResourceAllocationRole_Base {
             }
         }
     }
+    @Deprecated
+    public boolean hasSpacesAccessGroup() {
+        return getSpacesAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasVehiclesAccessGroup() {
+        return getVehiclesAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasSchedulesAccessGroup() {
+        return getSchedulesAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaterialsAccessGroup() {
+        return getMaterialsAccessGroup() != null;
+    }
+
 }

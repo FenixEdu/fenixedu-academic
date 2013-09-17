@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.text.MessageFormat;
-import java.util.List;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -10,14 +10,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InsertTestAsNewTest {
 
     protected String run(String executionCourseId, String oldTestId) throws FenixServiceException {
-        Test oldTest = AbstractDomainObject.fromExternalId(oldTestId);
+        Test oldTest = FenixFramework.getDomainObject(oldTestId);
         if (oldTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -26,7 +26,7 @@ public class InsertTestAsNewTest {
         String title = MessageFormat.format(bundle.getString("label.testTitle.duplicated"), new Object[] { oldTest.getTitle() });
         Test test = new Test(title, oldTest.getInformation(), oldTest.getTestScope());
 
-        List<TestQuestion> testQuestionList = oldTest.getTestQuestions();
+        Collection<TestQuestion> testQuestionList = oldTest.getTestQuestions();
 
         for (TestQuestion testQuestion : testQuestionList) {
             TestQuestion newTestQuestion = new TestQuestion();
@@ -43,7 +43,7 @@ public class InsertTestAsNewTest {
 
     private static final InsertTestAsNewTest serviceInstance = new InsertTestAsNewTest();
 
-    @Service
+    @Atomic
     public static String runInsertTestAsNewTest(String executionCourseId, String oldTestId) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

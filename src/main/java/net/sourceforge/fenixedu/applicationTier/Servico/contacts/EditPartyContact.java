@@ -4,11 +4,11 @@ import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EditPartyContact {
 
-    @Service
+    @Atomic
     public static Boolean run(PartyContactBean contactBean, final boolean toBeValidated) {
         // return type true if value changed
         Boolean wasChanged = contactBean.edit();

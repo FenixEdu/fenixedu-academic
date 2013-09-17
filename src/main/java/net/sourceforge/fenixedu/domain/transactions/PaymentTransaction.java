@@ -53,12 +53,12 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
         if (this instanceof GratuityTransaction) {
             GratuityTransaction gratuityTransaction = (GratuityTransaction) this;
             GratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
-            gratuityTransaction.removeGratuitySituation();
+            gratuityTransaction.setGratuitySituation(null);
 
             gratuitySituation.updateValues();
         }
 
-        removeGuideEntry();
+        setGuideEntry(null);
         super.delete();
     }
 
@@ -74,6 +74,11 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
         }
 
         return getValueBigDecimal().subtract(reimbursedValue);
+    }
+
+    @Deprecated
+    public boolean hasGuideEntry() {
+        return getGuideEntry() != null;
     }
 
 }

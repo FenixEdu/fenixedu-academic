@@ -11,8 +11,9 @@ import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeThesisState;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -20,9 +21,9 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadActiveMasterDegreeThesis {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static Collection<MasterDegreeThesis> run(MasterDegreeThesisState thesisState, Integer year, Degree degree) {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         Collection<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
         for (MasterDegreeThesis masterDegreeThesis : RootDomainObject.getInstance().getMasterDegreeThesiss()) {

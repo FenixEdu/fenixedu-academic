@@ -7,6 +7,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -16,8 +17,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import dml.runtime.RelationAdapter;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ContextPredicates;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Context extends Context_Base implements Comparable<Context> {
 
@@ -28,7 +30,7 @@ public class Context extends Context_Base implements Comparable<Context> {
             final DegreeModule d1 = o1.getChildDegreeModule();
             final DegreeModule d2 = o2.getChildDegreeModule();
             final int c = Collator.getInstance().compare(d1.getName(), d2.getName());
-            return c == 0 ? COMPARATOR_BY_ID.compare(d1, d2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(d1, d2) : c;
         }
 
     };
@@ -42,10 +44,10 @@ public class Context extends Context_Base implements Comparable<Context> {
     };
 
     static {
-        CourseGroupContext.addListener(new RelationAdapter<Context, CourseGroup>() {
+        getRelationCourseGroupContext().addListener(new RelationAdapter<CourseGroup, Context>() {
 
             @Override
-            public void beforeAdd(Context context, CourseGroup courseGroup) {
+            public void beforeAdd(CourseGroup courseGroup, Context context) {
                 if (context != null && courseGroup != null) {
                     if (context.getChildDegreeModule() != null && context.getChildDegreeModule().isCycleCourseGroup()) {
                         validateCycleCourseGroupParent(context, courseGroup);
@@ -71,7 +73,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 
         });
 
-        DegreeModuleContext.addListener(new RelationAdapter<Context, DegreeModule>() {
+        getRelationDegreeModuleContext().addListener(new RelationAdapter<Context, DegreeModule>() {
             @Override
             public void beforeAdd(Context context, DegreeModule degreeModule) {
                 if (context != null && degreeModule != null) {
@@ -185,18 +187,18 @@ public class Context extends Context_Base implements Comparable<Context> {
     public void delete() {
 
         final DegreeModule degreeModule = getChildDegreeModule();
-        removeChildDegreeModule();
+        setChildDegreeModule(null);
         /*
          * First remove child and then check if all curriculum lines remain
          * valid
          */
         checkCurriculumLines(degreeModule);
 
-        removeCurricularPeriod();
-        removeParentCourseGroup();
-        removeBeginExecutionPeriod();
-        removeEndExecutionPeriod();
-        removeRootDomainObject();
+        setCurricularPeriod(null);
+        setParentCourseGroup(null);
+        setBeginExecutionPeriod(null);
+        setEndExecutionPeriod(null);
+        setRootDomainObject(null);
         getAssociatedWrittenEvaluations().clear();
         super.deleteDomainObject();
     }
@@ -220,20 +222,20 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     @Override
-    @Checked("ContextPredicates.curricularPlanMemberWritePredicate")
     public void setParentCourseGroup(CourseGroup courseGroup) {
+        check(this, ContextPredicates.curricularPlanMemberWritePredicate);
         super.setParentCourseGroup(courseGroup);
     }
 
     @Override
-    @Checked("ContextPredicates.curricularPlanMemberWritePredicate")
     public void setCurricularPeriod(CurricularPeriod curricularPeriod) {
+        check(this, ContextPredicates.curricularPlanMemberWritePredicate);
         super.setCurricularPeriod(curricularPeriod);
     }
 
     @Override
-    @Checked("ContextPredicates.curricularPlanMemberWritePredicate")
     public void setChildDegreeModule(DegreeModule degreeModule) {
+        check(this, ContextPredicates.curricularPlanMemberWritePredicate);
         super.setChildDegreeModule(degreeModule);
     }
 
@@ -372,7 +374,6 @@ public class Context extends Context_Base implements Comparable<Context> {
         super.setBeginExecutionPeriod(beginExecutionPeriod);
     }
 
-    @Override
     public void removeBeginExecutionPeriod() {
         super.setBeginExecutionPeriod(null);
     }
@@ -474,6 +475,51 @@ public class Context extends Context_Base implements Comparable<Context> {
         public int hashCode() {
             return context.hashCode();
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluation> getAssociatedWrittenEvaluations() {
+        return getAssociatedWrittenEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedWrittenEvaluations() {
+        return !getAssociatedWrittenEvaluationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasCurricularPeriod() {
+        return getCurricularPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasParentCourseGroup() {
+        return getParentCourseGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginExecutionPeriod() {
+        return getBeginExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasChildOrder() {
+        return getChildOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasChildDegreeModule() {
+        return getChildDegreeModule() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndExecutionPeriod() {
+        return getEndExecutionPeriod() != null;
     }
 
 }

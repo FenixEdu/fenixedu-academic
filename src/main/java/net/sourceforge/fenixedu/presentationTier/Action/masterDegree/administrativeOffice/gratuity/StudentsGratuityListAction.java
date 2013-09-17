@@ -371,7 +371,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             throw new FenixActionException(exception);
         }
 
-        String firstExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(0)).getExternalId();
+        String firstExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.iterator().next()).getExternalId();
         String secondExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(1)).getExternalId();
 
         if (executionDegreeID.equals(firstExecutionDegreeID)) {

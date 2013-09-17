@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
 
@@ -81,7 +81,7 @@ public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
         return markSheetType;
     }
 
-    @Service
+    @Atomic
     public MarkSheet createRectificationOldMarkSheet(Person person) throws InvalidArgumentsServiceException {
         if (getEnrolmentEvaluation() == null) {
             throw new InvalidArgumentsServiceException();

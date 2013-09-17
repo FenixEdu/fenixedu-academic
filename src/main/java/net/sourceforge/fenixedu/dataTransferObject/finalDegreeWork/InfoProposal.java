@@ -241,7 +241,7 @@ public class InfoProposal extends InfoObject {
      * @return Returns the executionDegree.
      */
     public InfoExecutionDegree getExecutionDegree() {
-        return InfoExecutionDegree.newInfoFromDomain(getProposal().getScheduleing().getExecutionDegrees().get(0));
+        return InfoExecutionDegree.newInfoFromDomain(getProposal().getScheduleing().getExecutionDegrees().iterator().next());
     }
 
     /**

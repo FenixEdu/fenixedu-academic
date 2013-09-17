@@ -35,12 +35,13 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -126,13 +127,13 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         if (viewStateLoad != null) {
             load = (CompetenceCourseLoadBean) viewStateLoad.getMetaObject().getObject();
         } else {
-            if (information != null && information.getCompetenceCourseLoadsCount() > 0) {
-                load = new CompetenceCourseLoadBean(information.getCompetenceCourseLoads().get(0));
+            if (information != null && information.getCompetenceCourseLoadsSet().size() > 0) {
+                load = new CompetenceCourseLoadBean(information.getCompetenceCourseLoads().iterator().next());
             } else if (period != null
-                    && course.findCompetenceCourseInformationForExecutionPeriod(period).getCompetenceCourseLoadsCount() > 0) {
+                    && course.findCompetenceCourseInformationForExecutionPeriod(period).getCompetenceCourseLoadsSet().size() > 0) {
                 load =
                         new CompetenceCourseLoadBean(course.findCompetenceCourseInformationForExecutionPeriod(period)
-                                .getCompetenceCourseLoads().get(0));
+                                .getCompetenceCourseLoads().iterator().next());
             } else {
                 load = new CompetenceCourseLoadBean();
             }
@@ -251,10 +252,10 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         return showVersions(mapping, form, request, response);
     }
 
-    @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     private static void createCompetenceCourseInformationChangeRequest(CompetenceCourseInformationRequestBean bean,
             CompetenceCourseLoadBean loadBean, Person requestor) {
+        check(RolePredicates.BOLONHA_MANAGER_PREDICATE);
         CompetenceCourse course = bean.getCompetenceCourse();
         ExecutionSemester period = bean.getExecutionPeriod();
         CompetenceCourseInformationChangeRequest request = course.getChangeRequestDraft(period);

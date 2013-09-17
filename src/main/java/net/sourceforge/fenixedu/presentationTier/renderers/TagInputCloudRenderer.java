@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu.domain.UnitFileTag;
@@ -86,7 +86,7 @@ public class TagInputCloudRenderer extends InputRenderer {
                 tagCloud.setLinkFormat("#");
                 tagCloud.setOnClick(getAction(input.getName()));
                 tagCloud.setOnDblClick(getAction(input.getName()));
-                List<UnitFileTag> tagList = getTags();
+                Collection<UnitFileTag> tagList = getTags();
 
                 PresentationContext newContext = getContext().createSubContext(getContext().getMetaObject());
                 newContext.setProperties(new Properties());
@@ -119,7 +119,7 @@ public class TagInputCloudRenderer extends InputRenderer {
                 return script;
             }
 
-            private List<UnitFileTag> getTags() {
+            private Collection<UnitFileTag> getTags() {
                 UnitFileBean bean = (UnitFileBean) getContext().getParentContext().getMetaObject().getObject();
                 return bean.getUnit().getUnitFileTags();
             }

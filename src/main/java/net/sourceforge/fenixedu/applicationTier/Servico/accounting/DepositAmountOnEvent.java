@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransact
 import net.sourceforge.fenixedu.dataTransferObject.accounting.DepositAmountBean;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DepositAmountOnEvent {
 
-    @Service
+    @Atomic
     public static AccountingTransaction run(final DepositAmountBean depositAmountBean) {
         return depositAmountBean.getEvent().depositAmount(
                 null,

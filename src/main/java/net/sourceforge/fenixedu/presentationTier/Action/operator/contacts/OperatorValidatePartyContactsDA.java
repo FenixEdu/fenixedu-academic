@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.operator.contacts;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,11 +21,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 
@@ -42,7 +44,7 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
                 new AndPredicate<PartyContactValidation>(PartyContactValidation.PREDICATE_INVALID,
                         PhysicalAddressValidation.PREDICATE_FILE);
 
-        final List<PartyContactValidation> partyContactValidation =
+        final Collection<PartyContactValidation> partyContactValidation =
                 RootDomainObject.getInstance().getInvalidPartyContactValidations();
         final List<PartyContactValidation> invalidPartyContactValidations =
                 CollectionUtils.filter(partyContactValidation, predicate);
@@ -59,7 +61,7 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
         return prepare(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     private void sendPhysicalAddressValidationEmail(PhysicalAddressValidation physicalAddressValidation) {
         final Person person = (Person) physicalAddressValidation.getPartyContact().getParty();
         final String subject =
@@ -82,7 +84,7 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
     public ActionForward viewPartyContactValidation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String extId = request.getParameter("partyContactValidation");
-        final PhysicalAddressValidation physicalAddressValidation = PartyContactValidation.fromExternalId(extId);
+        final PhysicalAddressValidation physicalAddressValidation = FenixFramework.getDomainObject(extId);
         request.setAttribute("physicalAddressValidation", physicalAddressValidation);
         request.setAttribute("person", physicalAddressValidation.getPartyContact().getParty());
         return mapping.findForward("viewPartyContactValidation");

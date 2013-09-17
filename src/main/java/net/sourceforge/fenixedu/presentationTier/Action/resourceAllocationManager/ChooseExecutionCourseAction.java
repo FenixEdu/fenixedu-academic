@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author jpvl
@@ -50,7 +50,7 @@ public class ChooseExecutionCourseAction extends FenixDateAndTimeAndClassAndExec
 
         if (courseInitials != null && !courseInitials.equals("")) {
             final ExecutionSemester executionSemester =
-                    AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+                    FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
             final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(courseInitials);
             final InfoExecutionCourse infoCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 

@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.UnitMembersGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DepartmentMemberBasedSender extends DepartmentMemberBasedSender_Base {
 
@@ -29,7 +29,7 @@ public class DepartmentMemberBasedSender extends DepartmentMemberBasedSender_Bas
         return getFromName(person);
     }
 
-    @Service
+    @Atomic
     public static DepartmentMemberBasedSender newInstance(final Unit unit) {
         return new DepartmentMemberBasedSender(unit, Sender.getNoreplyMail(), new UnitMembersGroup(unit));
     }

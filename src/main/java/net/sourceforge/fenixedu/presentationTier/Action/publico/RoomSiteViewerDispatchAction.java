@@ -198,7 +198,7 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
                 if (xpto < weeks.size()) {
                     today = (Calendar) weeks.get(xpto);
                 } else {
-                    today = (Calendar) weeks.get(0);
+                    today = (Calendar) weeks.iterator().next();
                     indexForm.set("indexWeek", new Integer(0));
                 }
             }

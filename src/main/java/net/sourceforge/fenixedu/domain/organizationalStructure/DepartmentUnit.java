@@ -173,7 +173,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     @Override
     public void delete() {
         for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
-                .get(0).delete()) {
+                .iterator().next().delete()) {
             ;
         }
         super.setDepartment(null);
@@ -248,7 +248,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     @Override
     public UnitBasedSender getOneUnitBasedSender() {
         if (hasAnyUnitBasedSender()) {
-            return getUnitBasedSender().get(0);
+            return getUnitBasedSender().iterator().next();
         } else {
             return UnitBasedSender.newInstance(this);
         }
@@ -269,6 +269,21 @@ public class DepartmentUnit extends DepartmentUnit_Base {
             }
         }
         return null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse> getParticipatingAnyCurricularCourseCurricularRules() {
+        return getParticipatingAnyCurricularCourseCurricularRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipatingAnyCurricularCourseCurricularRules() {
+        return !getParticipatingAnyCurricularCourseCurricularRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDepartment() {
+        return getDepartment() != null;
     }
 
 }

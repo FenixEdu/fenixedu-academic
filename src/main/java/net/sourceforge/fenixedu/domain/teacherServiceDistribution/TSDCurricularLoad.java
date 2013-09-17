@@ -45,8 +45,8 @@ public class TSDCurricularLoad extends TSDCurricularLoad_Base {
     }
 
     public void delete() {
-        removeTSDCourse();
-        removeRootDomainObject();
+        setTSDCourse(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -60,7 +60,7 @@ public class TSDCurricularLoad extends TSDCurricularLoad_Base {
             BigDecimal shiftHours = null;
 
             if (courseList != null && !courseList.isEmpty()) {
-                shiftHours = courseList.get(0).getTotalHoursByShiftType(getType(), course.getExecutionPeriod());
+                shiftHours = courseList.iterator().next().getTotalHoursByShiftType(getType(), course.getExecutionPeriod());
             }
             return shiftHours == null ? 0d : shiftHours.doubleValue() / CompetenceCourseLoad.NUMBER_OF_WEEKS;
         }
@@ -119,4 +119,79 @@ public class TSDCurricularLoad extends TSDCurricularLoad_Base {
                 Math.ceil((SchoolClassCalculationMethod.SHIFT_BASED.equals(getSchoolClassCalculationMethod())) ? getNumberOfShifts() : getNumberOfShifts()
                         * getFrequency())).intValue();
     }
+    @Deprecated
+    public boolean hasHoursManual() {
+        return getHoursManual() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerShiftManual() {
+        return getWeightFirstTimeEnrolledStudentsPerShiftManual() != null;
+    }
+
+    @Deprecated
+    public boolean hasHoursPerShiftManual() {
+        return getHoursPerShiftManual() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerShiftManual() {
+        return getStudentsPerShiftManual() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerShiftType() {
+        return getWeightSecondTimeEnrolledStudentsPerShiftType() != null;
+    }
+
+    @Deprecated
+    public boolean hasHoursType() {
+        return getHoursType() != null;
+    }
+
+    @Deprecated
+    public boolean hasTSDCourse() {
+        return getTSDCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasSchoolClassCalculationMethod() {
+        return getSchoolClassCalculationMethod() != null;
+    }
+
+    @Deprecated
+    public boolean hasTimeTableSlots() {
+        return getTimeTableSlots() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerShiftType() {
+        return getStudentsPerShiftType() != null;
+    }
+
+    @Deprecated
+    public boolean hasFrequency() {
+        return getFrequency() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerShiftManual() {
+        return getWeightSecondTimeEnrolledStudentsPerShiftManual() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerShiftType() {
+        return getWeightFirstTimeEnrolledStudentsPerShiftType() != null;
+    }
+
 }

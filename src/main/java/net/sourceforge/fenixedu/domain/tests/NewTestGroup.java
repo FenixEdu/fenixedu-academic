@@ -32,7 +32,7 @@ public class NewTestGroup extends NewTestGroup_Base {
     }
 
     public int getQuestionCount() {
-        return this.getTests().get(0).getQuestionCount();
+        return this.getTests().iterator().next().getQuestionCount();
     }
 
     public List<NewTest> getOrderedTests() {
@@ -137,13 +137,13 @@ public class NewTestGroup extends NewTestGroup_Base {
         if (!isDeletable()) {
             throw new DomainException("could.not.delete");
         }
-        for (; this.hasAnyTests(); this.getTests().get(0).delete()) {
+        for (; this.hasAnyTests(); this.getTests().iterator().next().delete()) {
             ;
         }
 
-        this.removeCreator();
-        this.removeExecutionCourse();
-        this.removeRootDomainObject();
+        this.setCreator(null);
+        this.setExecutionCourse(null);
+        this.setRootDomainObject(null);
 
         super.deleteDomainObject();
     }
@@ -177,10 +177,10 @@ public class NewTestGroup extends NewTestGroup_Base {
     }
 
     private NewTest getLeastUsedTest() {
-        NewTest candidate = this.getTests().get(0);
+        NewTest candidate = this.getTests().iterator().next();
 
         for (NewTest test : this.getTests()) {
-            if (test.getPersonsCount() < candidate.getPersonsCount()) {
+            if (test.getPersonsSet().size() < candidate.getPersonsSet().size()) {
                 candidate = test;
             }
         }
@@ -198,6 +198,51 @@ public class NewTestGroup extends NewTestGroup_Base {
 
     public TestsGrade getGrade() {
         return this.getTest().getFinalGrade();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTest> getTests() {
+        return getTestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTests() {
+        return !getTestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasStatus() {
+        return getStatus() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalDate() {
+        return getFinalDate() != null;
     }
 
 }

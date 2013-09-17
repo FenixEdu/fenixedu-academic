@@ -27,13 +27,48 @@ public class SpaceAttendances extends SpaceAttendances_Base {
         if (hasOccupiedLibraryPlace()) {
             setResponsibleForExitIstUsername(responsibleUsername);
             setExitTime(new DateTime());
-            removeOccupiedLibraryPlace();
+            setOccupiedLibraryPlace(null);
         }
     }
 
     public void delete() {
-        removeOccupiedLibraryPlace();
-        removeVisitedLibraryPlace();
+        setOccupiedLibraryPlace(null);
+        setVisitedLibraryPlace(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasPersonIstUsername() {
+        return getPersonIstUsername() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsibleForEntranceIstUsername() {
+        return getResponsibleForEntranceIstUsername() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsibleForExitIstUsername() {
+        return getResponsibleForExitIstUsername() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisitedLibraryPlace() {
+        return getVisitedLibraryPlace() != null;
+    }
+
+    @Deprecated
+    public boolean hasOccupiedLibraryPlace() {
+        return getOccupiedLibraryPlace() != null;
+    }
+
+    @Deprecated
+    public boolean hasEntranceTime() {
+        return getEntranceTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasExitTime() {
+        return getExitTime() != null;
+    }
+
 }

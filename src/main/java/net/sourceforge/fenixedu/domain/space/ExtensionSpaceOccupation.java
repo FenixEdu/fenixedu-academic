@@ -1,18 +1,17 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Extension;
 import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 
-    @Checked("SpacePredicates.checkPermissionsToManageExtensionSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created extension occupation", parameters = { "space", "extension",
             "begin", "end" })
     public ExtensionSpaceOccupation(Space space, Extension extension, YearMonthDay begin, YearMonthDay end) {
@@ -24,18 +23,18 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
         super.setEnd(end);
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManageExtensionSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited extension occupation", parameters = { "begin", "end" })
     public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
+        check(this, SpacePredicates.checkPermissionsToManageExtensionSpaceOccupations);
         checkExtensionSpaceOccupationIntersection(begin, end, getExtension());
         super.setBegin(begin);
         super.setEnd(end);
     }
 
     @Override
-    @Checked("SpacePredicates.checkPermissionsToManageExtensionSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted extension occupation", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkPermissionsToManageExtensionSpaceOccupations);
         super.delete();
     }
 

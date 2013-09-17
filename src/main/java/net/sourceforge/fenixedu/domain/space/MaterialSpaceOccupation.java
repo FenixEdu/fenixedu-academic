@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
 
@@ -9,15 +10,13 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-
 public abstract class MaterialSpaceOccupation extends MaterialSpaceOccupation_Base {
 
     public final static Comparator<MaterialSpaceOccupation> COMPARATOR_BY_CLASS_NAME = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("class.simpleName"));
         ((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("begin"));
-        ((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     protected MaterialSpaceOccupation() {
@@ -53,4 +52,20 @@ public abstract class MaterialSpaceOccupation extends MaterialSpaceOccupation_Ba
     public boolean isMaterialSpaceOccupation() {
         return true;
     }
+
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaterial() {
+        return getMaterial() != null;
+    }
+
+    @Deprecated
+    public boolean hasBegin() {
+        return getBegin() != null;
+    }
+
 }

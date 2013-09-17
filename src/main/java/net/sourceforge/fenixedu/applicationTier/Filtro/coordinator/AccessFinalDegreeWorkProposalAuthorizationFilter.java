@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -34,7 +34,7 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
             return false;
         }
 
-        final Proposal proposal = AbstractDomainObject.fromExternalId(objectId);
+        final Proposal proposal = FenixFramework.getDomainObject(objectId);
         if (proposal == null) {
             return false;
         }

@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "scientificCouncil", path = "/supportLessonsManagement",
         input = "/supportLessonsManagement.do?method=prepareEdit&page=0", attribute = "supportLessonForm",
@@ -55,7 +55,7 @@ public class ScientificCouncilManageTeacherSupportLessonsDispatchAction extends 
 
         SupportLesson supportLesson = null;
         if (!StringUtils.isEmpty(supportLesssonID)) {
-            supportLesson = AbstractDomainObject.fromExternalId(supportLesssonID);
+            supportLesson = FenixFramework.getDomainObject(supportLesssonID);
             if (!professorship.getSupportLessons().contains(supportLesson)) {
                 return mapping.findForward("teacher-not-found");
             }

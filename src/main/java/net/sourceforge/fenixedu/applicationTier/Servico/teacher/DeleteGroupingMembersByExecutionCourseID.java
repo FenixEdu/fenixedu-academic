@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,8 +20,8 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -30,20 +31,20 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DeleteGroupingMembersByExecutionCourseID {
 
     protected Boolean run(String executionCourseCode, String groupingCode) throws FenixServiceException {
-        Grouping grouping = AbstractDomainObject.fromExternalId(groupingCode);
+        Grouping grouping = FenixFramework.getDomainObject(groupingCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
 
         if (executionCourse == null) {
             throw new InvalidSituationServiceException();
         }
 
         List executionCourseStudentNumbers = new ArrayList();
-        final List<Attends> attends = executionCourse.getAttends();
+        final Collection<Attends> attends = executionCourse.getAttends();
         for (final Attends attend : attends) {
             final Registration registration = attend.getRegistration();
             executionCourseStudentNumbers.add(registration.getNumber());
@@ -65,7 +66,7 @@ public class DeleteGroupingMembersByExecutionCourseID {
                 }
 
                 boolean found = false;
-                Iterator iterStudentsGroups = grouping.getStudentGroups().iterator();
+                Iterator iterStudentsGroups = grouping.getStudentGroupsSet().iterator();
                 while (iterStudentsGroups.hasNext() && !found) {
                     final StudentGroup studentGroup = (StudentGroup) iterStudentsGroups.next();
                     if (studentGroup != null) {
@@ -97,7 +98,7 @@ public class DeleteGroupingMembersByExecutionCourseID {
     private static final DeleteGroupingMembersByExecutionCourseID serviceInstance =
             new DeleteGroupingMembersByExecutionCourseID();
 
-    @Service
+    @Atomic
     public static Boolean runDeleteGroupingMembersByExecutionCourseID(String executionCourseCode, String groupingCode)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

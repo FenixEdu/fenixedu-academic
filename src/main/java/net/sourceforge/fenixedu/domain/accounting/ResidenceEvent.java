@@ -18,7 +18,8 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.EventsPredicates;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ResidenceEvent extends ResidenceEvent_Base {
@@ -86,18 +87,18 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     }
 
     @Override
-    @Checked("EventsPredicates.MANAGER_OR_RESIDENCE_UNIT_EMPLOYEE")
     public void cancel(Person responsible) {
+        check(this, EventsPredicates.MANAGER_OR_RESIDENCE_UNIT_EMPLOYEE);
         super.cancel(responsible);
     }
 
     public DateTime getPaymentDate() {
-        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail()
+        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next().getTransactionDetail()
                 .getWhenRegistered();
     }
 
     public PaymentMode getPaymentMode() {
-        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail()
+        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next().getTransactionDetail()
                 .getPaymentMode();
     }
 
@@ -108,7 +109,7 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 
     @Override
     protected List<AccountingEventPaymentCode> createPaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
 
         return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.RESIDENCE_FEE, new YearMonthDay(),
                 getPaymentLimitDate().toYearMonthDay(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()));
@@ -116,8 +117,8 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
-        getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(),
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
+        getNonProcessedPaymentCodes().iterator().next().update(new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(),
                 entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
 
         return getNonProcessedPaymentCodes();
@@ -142,6 +143,21 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     @Override
     public Unit getOwnerUnit() {
         return getManagementUnit();
+    }
+
+    @Deprecated
+    public boolean hasRoom() {
+        return getRoom() != null;
+    }
+
+    @Deprecated
+    public boolean hasResidenceMonth() {
+        return getResidenceMonth() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoomValue() {
+        return getRoomValue() != null;
     }
 
 }

@@ -27,7 +27,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author jpvl
@@ -60,7 +60,7 @@ public class UpdateTeacherExecutionCourseResponsabilitiesAction extends Action {
         String teacherId = (String) teacherExecutionYearResponsabilitiesForm.get("teacherName");
         String executionYearId = (String) teacherExecutionYearResponsabilitiesForm.get("executionYearId");
         Person person = Person.readPersonByIstUsername(teacherId);
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
+        ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearId);
         try {
             UpdateProfessorshipWithPerson.run(person, executionYear, Arrays.asList(executionCourseResponsabilities));
         } catch (NotAuthorizedException e) {

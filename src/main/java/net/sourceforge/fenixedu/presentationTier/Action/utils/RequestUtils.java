@@ -30,7 +30,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -162,7 +162,7 @@ public class RequestUtils {
         }
     }
 
-    @Service
+    @Atomic
     public static PendingRequest storeRequest(HttpServletRequest request) {
         return new PendingRequest(request);
     }

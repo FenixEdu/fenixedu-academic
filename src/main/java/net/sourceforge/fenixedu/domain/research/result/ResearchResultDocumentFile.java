@@ -7,8 +7,9 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -38,8 +39,8 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
         init(path, filename, displayName, metadata, content, permittedGroup);
     }
 
-    @Checked("ResultPredicates.documentFileWritePredicate")
     public void setEdit(String displayName, FileResultPermittedGroupType fileResultPermittedGroupType) {
+        check(this, ResultPredicates.documentFileWritePredicate);
         super.setDisplayName(displayName);
         changeFilePermission(fileResultPermittedGroupType);
         this.getResult().setModifiedByAndDate();
@@ -73,7 +74,7 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
     }
 
     public final static ResearchResultDocumentFile readByOID(String oid) {
-        final ResearchResultDocumentFile documentFile = AbstractDomainObject.fromExternalId(oid);
+        final ResearchResultDocumentFile documentFile = FenixFramework.getDomainObject(oid);
 
         if (documentFile == null) {
             throw new DomainException("error.researcher.ResultDocumentFile.null");
@@ -115,9 +116,19 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
         throw new DomainException("error.researcher.ResultDocumentFile.call", "setResult");
     }
 
-    @Override
-    public void removeResult() {
-        throw new DomainException("error.researcher.ResultDocumentFile.call", "removeResult");
+    @Deprecated
+    public boolean hasResult() {
+        return getResult() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisible() {
+        return getVisible() != null;
+    }
+
+    @Deprecated
+    public boolean hasFileResultPermittedGroupType() {
+        return getFileResultPermittedGroupType() != null;
     }
 
 }

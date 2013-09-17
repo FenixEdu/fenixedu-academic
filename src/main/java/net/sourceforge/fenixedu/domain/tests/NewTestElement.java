@@ -38,14 +38,14 @@ public abstract class NewTestElement extends NewTestElement_Base {
 
     public void delete() {
         if (this.getSection() != null) {
-            this.removeSection();
+            this.setSection(null);
         }
 
         for (NewPresentationMaterial presentationMaterial : getPresentationMaterials()) {
             presentationMaterial.delete();
         }
 
-        this.removeRootDomainObject();
+        this.setRootDomainObject(null);
 
         this.deleteDomainObject();
     }
@@ -118,6 +118,31 @@ public abstract class NewTestElement extends NewTestElement_Base {
 
     public TestsGrade getFinalGrade(Person person) {
         return null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial> getPresentationMaterials() {
+        return getPresentationMaterialsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPresentationMaterials() {
+        return !getPresentationMaterialsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSection() {
+        return getSection() != null;
+    }
+
+    @Deprecated
+    public boolean hasSectionPosition() {
+        return getSectionPosition() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
     }
 
 }

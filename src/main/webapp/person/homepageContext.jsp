@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
 <jsp:include page="/commons/functionalities/breadCrumbs.jsp"/>
 

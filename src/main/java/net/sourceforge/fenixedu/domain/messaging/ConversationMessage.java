@@ -29,7 +29,6 @@ public class ConversationMessage extends ConversationMessage_Base implements IDa
         setCreator(creator);
     }
 
-    @Override
     public void removeCreator() {
         super.setCreator(null);
     }

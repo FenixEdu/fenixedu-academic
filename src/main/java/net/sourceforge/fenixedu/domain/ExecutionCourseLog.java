@@ -45,8 +45,13 @@ public class ExecutionCourseLog extends ExecutionCourseLog_Base {
 
     @Override
     public void delete() {
-        removeExecutionCourse();
+        setExecutionCourse(null);
         super.delete();
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
     }
 
 }

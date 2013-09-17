@@ -37,4 +37,39 @@ public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGen
     public RegistryCode createRegistryFor(IDiplomaRequest request) {
         return new RegistryCode(this, request);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode> getRegistryCode() {
+        return getRegistryCodeSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRegistryCode() {
+        return !getRegistryCodeSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurrentSecondCycle() {
+        return getCurrentSecondCycle() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurrentThirdCycle() {
+        return getCurrentThirdCycle() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitution() {
+        return getInstitution() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurrentFirstCycle() {
+        return getCurrentFirstCycle() != null;
+    }
+
 }

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -11,11 +13,11 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -125,7 +127,6 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     }
 
     @Override
-    @Checked("RegistrationPredicates.MANAGE_CONCLUSION_PROCESS")
     public void conclude() {
         throw new DomainException("error.ExternalCurriculumGroup.cannot.conclude.external.curriculumGroups");
     }

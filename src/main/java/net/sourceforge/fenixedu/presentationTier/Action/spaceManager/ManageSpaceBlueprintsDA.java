@@ -34,7 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 @Mapping(module = "SpaceManager", path = "/manageBlueprints", scope = "session", parameter = "method")
@@ -170,7 +170,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         BigDecimal scalePercentage = getScalePercentage(request);
 
         final String blueprintIdString = request.getParameter("blueprintId");
-        final Blueprint blueprint = AbstractDomainObject.fromExternalId(blueprintIdString);
+        final Blueprint blueprint = FenixFramework.getDomainObject(blueprintIdString);
         final BlueprintFile blueprintFile = blueprint.getBlueprintFile();
 
         // If dspace worked properly we could do this...
@@ -227,14 +227,14 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         final String spaceInformationIDString =
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
-        return AbstractDomainObject.fromExternalId(spaceInformationIDString);
+        return FenixFramework.getDomainObject(spaceInformationIDString);
     }
 
     private Blueprint getSpaceBlueprintFromParameter(HttpServletRequest request) {
         final String spaceBlueprintIDString =
                 request.getParameterMap().containsKey("spaceBlueprintID") ? request.getParameter("spaceBlueprintID") : (String) request
                         .getAttribute("spaceBlueprintID");
-        return AbstractDomainObject.fromExternalId(spaceBlueprintIDString);
+        return FenixFramework.getDomainObject(spaceBlueprintIDString);
     }
 
     private Boolean isToViewBlueprintNumbers(HttpServletRequest request) {

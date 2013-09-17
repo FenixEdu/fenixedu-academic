@@ -11,9 +11,10 @@ import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -22,11 +23,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan {
 
-    @Checked("RolePredicates.COORDINATOR_PREDICATE")
-    @Service
+    @Atomic
     public static List run(String degreeCurricularPlanID) throws FenixServiceException {
+        check(RolePredicates.COORDINATOR_PREDICATE);
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         List masterDegreeThesisDataVersions = degreeCurricularPlan.readActiveMasterDegreeThesisDataVersions();
 

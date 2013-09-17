@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -13,10 +15,11 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-import dml.runtime.RelationAdapter;
 
 public class UnitSite extends UnitSite_Base {
 
@@ -27,7 +30,7 @@ public class UnitSite extends UnitSite_Base {
             Language.en, "Side");
 
     static {
-        UnitSiteManagers.addListener(new ManageWebsiteManagerRole());
+        getRelationUnitSiteManagers().addListener(new ManageWebsiteManagerRole());
     }
 
     protected UnitSite() {
@@ -57,50 +60,50 @@ public class UnitSite extends UnitSite_Base {
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setDescription(MultiLanguageString description) {
+        check(this, UnitSitePredicates.managers);
         super.setDescription(description == null || description.isEmpty() ? null : description);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setSideBanner(MultiLanguageString sideBanner) {
+        check(this, UnitSitePredicates.managers);
         super.setSideBanner(sideBanner);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setShowAnnouncements(Boolean showAnnouncements) {
+        check(this, UnitSitePredicates.managers);
         super.setShowAnnouncements(showAnnouncements);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setShowEvents(Boolean showEvents) {
+        check(this, UnitSitePredicates.managers);
         super.setShowEvents(showEvents);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setShowBanner(Boolean showBanner) {
+        check(this, UnitSitePredicates.managers);
         super.setShowBanner(showBanner);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setShowIntroduction(Boolean showIntroduction) {
+        check(this, UnitSitePredicates.managers);
         super.setShowIntroduction(showIntroduction);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setPersonalizedLogo(Boolean personalizedLogo) {
+        check(this, UnitSitePredicates.managers);
         super.setPersonalizedLogo(personalizedLogo);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setShowFlags(Boolean showFlags) {
+        check(this, UnitSitePredicates.managers);
         super.setShowFlags(showFlags);
     }
 
@@ -140,7 +143,7 @@ public class UnitSite extends UnitSite_Base {
         for (final Person person : getManagersSet()) {
             removeManagers(person);
         }
-        removeUnit();
+        setUnit(null);
         deleteLinks(getFooterLinksSet());
         super.disconnect();
     }
@@ -176,7 +179,7 @@ public class UnitSite extends UnitSite_Base {
     public boolean isBannerAvailable() {
         Integer sum = null;
 
-        List<UnitSiteBanner> banners = getBanners();
+        Collection<UnitSiteBanner> banners = getBanners();
         for (UnitSiteBanner banner : banners) {
             Integer weight = banner.getWeight();
 
@@ -193,7 +196,7 @@ public class UnitSite extends UnitSite_Base {
     }
 
     public UnitSiteBanner getCurrentBanner() {
-        List<UnitSiteBanner> banners = getBanners();
+        List<UnitSiteBanner> banners = new ArrayList<>(getBanners());
 
         if (banners.isEmpty()) {
             return null;
@@ -371,4 +374,105 @@ public class UnitSite extends UnitSite_Base {
 
         return groups;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.UnitSiteBanner> getBanners() {
+        return getBannersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyBanners() {
+        return !getBannersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.UnitSiteLink> getTopLinks() {
+        return getTopLinksSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTopLinks() {
+        return !getTopLinksSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getManagers() {
+        return getManagersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyManagers() {
+        return !getManagersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.UnitSiteLink> getFooterLinks() {
+        return getFooterLinksSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFooterLinks() {
+        return !getFooterLinksSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasGoogleAnalyticsCode() {
+        return getGoogleAnalyticsCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowFlags() {
+        return getShowFlags() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowBanner() {
+        return getShowBanner() != null;
+    }
+
+    @Deprecated
+    public boolean hasLayout() {
+        return getLayout() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowEvents() {
+        return getShowEvents() != null;
+    }
+
+    @Deprecated
+    public boolean hasLogo() {
+        return getLogo() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowInstitutionLogo() {
+        return getShowInstitutionLogo() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowIntroduction() {
+        return getShowIntroduction() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonalizedLogo() {
+        return getPersonalizedLogo() != null;
+    }
+
+    @Deprecated
+    public boolean hasSideBanner() {
+        return getSideBanner() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowAnnouncements() {
+        return getShowAnnouncements() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

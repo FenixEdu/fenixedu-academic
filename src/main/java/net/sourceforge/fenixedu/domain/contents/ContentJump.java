@@ -46,4 +46,9 @@ public class ContentJump extends ContentJump_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasJumpTo() {
+        return getJumpTo() != null;
+    }
+
 }

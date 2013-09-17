@@ -687,4 +687,29 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
         return getIndividualProgramProcess().getWhenStartedStudies();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarState> getStates() {
+        return getStatesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStates() {
+        return !getStatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPresentationDate() {
+        return getPresentationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPresentationRequestDate() {
+        return getPresentationRequestDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasIndividualProgramProcess() {
+        return getIndividualProgramProcess() != null;
+    }
+
 }

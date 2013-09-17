@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +18,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategySugestion;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class VigilantGroup extends VigilantGroup_Base {
 
@@ -55,7 +56,7 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     }
 
-    private List<VigilantWrapper> findTeachersThatAreInGroupFor(List<ExecutionCourse> executionCourses) {
+    private List<VigilantWrapper> findTeachersThatAreInGroupFor(Collection<ExecutionCourse> executionCourses) {
         List<VigilantWrapper> teachers = new ArrayList<VigilantWrapper>();
         for (VigilantWrapper vigilantWrapper : this.getVigilantWrappersThatCantBeConvoked()) {
             Teacher teacher = vigilantWrapper.getTeacher();
@@ -71,7 +72,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         for (VigilantWrapper vigilant : vigilants) {
             if (!vigilant.hasBeenConvokedForEvaluation(writtenEvaluation)) {
                 Teacher teacher = vigilant.getTeacher();
-                if (teacher != null && teacher.teachesAny(writtenEvaluation.getAssociatedExecutionCourses())) {
+                if (teacher != null && teacher.teachesAny(writtenEvaluation.getAssociatedExecutionCoursesSet())) {
                     vigilant.addVigilancies(new OwnCourseVigilancy(writtenEvaluation));
                 } else {
                     vigilant.addVigilancies(new OtherCourseVigilancy(writtenEvaluation));
@@ -85,8 +86,8 @@ public class VigilantGroup extends VigilantGroup_Base {
         }
     }
 
-    public List<VigilantWrapper> getVigilants() {
-        return this.getVigilantWrappers();
+    public Collection<VigilantWrapper> getVigilants() {
+        return this.getVigilantWrappersSet();
     }
 
     public int getVigilantsCount() {
@@ -115,7 +116,7 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     public List<Person> getPersons() {
         List<Person> persons = new ArrayList<Person>();
-        List<VigilantWrapper> vigilantWrappers = this.getVigilantWrappers();
+        Collection<VigilantWrapper> vigilantWrappers = this.getVigilantWrappersSet();
         for (VigilantWrapper vigilantWrapper : vigilantWrappers) {
             persons.add(vigilantWrapper.getPerson());
         }
@@ -153,8 +154,8 @@ public class VigilantGroup extends VigilantGroup_Base {
         return convokesToReturn;
     }
 
-    public List<Vigilancy> getVigilancies(VigilantWrapper vigilantWrapper) {
-        List<Vigilancy> vigilantConvokes = new ArrayList<Vigilancy>();
+    public Set<Vigilancy> getVigilancies(VigilantWrapper vigilantWrapper) {
+        Set<Vigilancy> vigilantConvokes = new HashSet<Vigilancy>();
         for (Vigilancy convoke : this.getVigilancies()) {
             if (vigilantWrapper == convoke.getVigilantWrapper()) {
                 vigilantConvokes.add(convoke);
@@ -200,13 +201,13 @@ public class VigilantGroup extends VigilantGroup_Base {
     }
 
     public void delete() {
-        removeExecutionYear();
+        setExecutionYear(null);
         getExecutionCourses().clear();
         getExamCoordinators().clear();
-        removeUnit();
-        removeRootDomainObject();
+        setUnit(null);
+        setRootDomainObject(null);
         for (VigilantWrapper vigilant : this.getVigilantWrappers()) {
-            List<Vigilancy> vigilancies = vigilant.getVigilancies();
+            Collection<Vigilancy> vigilancies = vigilant.getVigilancies();
             for (Vigilancy vigilancy : vigilancies) {
                 if (vigilancy.isActive()) {
                     throw new DomainException("label.vigilancy.error.cannotDeleteGroupWithVigilants");
@@ -218,7 +219,7 @@ public class VigilantGroup extends VigilantGroup_Base {
     }
 
     public List<WrittenEvaluation> getAllAssociatedWrittenEvaluations() {
-        List<ExecutionCourse> courses = this.getExecutionCourses();
+        Collection<ExecutionCourse> courses = this.getExecutionCourses();
         Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
         for (ExecutionCourse course : courses) {
             evaluations.addAll(course.getWrittenEvaluations());
@@ -245,7 +246,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         return new ArrayList<WrittenEvaluation>(evaluations);
     }
 
-    @Service
+    @Atomic
     public void copyPointsFromVigilantGroup(VigilantGroup previousGroup) {
         this.setPointsForTeacher(previousGroup.getPointsForTeacher());
         this.setPointsForConvoked(previousGroup.getPointsForConvoked());
@@ -264,4 +265,133 @@ public class VigilantGroup extends VigilantGroup_Base {
         }
         return null;
     }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator> getExamCoordinators() {
+        return getExamCoordinatorsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExamCoordinators() {
+        return !getExamCoordinatorsSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper> getVigilantWrappers() {
+        return getVigilantWrappersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVigilantWrappers() {
+        return !getVigilantWrappersSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourse> getExecutionCourses() {
+        return getExecutionCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionCourses() {
+        return !getExecutionCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForTeacher() {
+        return getPointsForTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForDismissed() {
+        return getPointsForDismissed() != null;
+    }
+
+    @Deprecated
+    public boolean hasContactEmail() {
+        return getContactEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndOfSecondPeriodForUnavailablePeriods() {
+        return getEndOfSecondPeriodForUnavailablePeriods() != null;
+    }
+
+    @Deprecated
+    public boolean hasConvokeStrategy() {
+        return getConvokeStrategy() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForDismissedTeacher() {
+        return getPointsForDismissedTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndOfFirstPeriodForUnavailablePeriods() {
+        return getEndOfFirstPeriodForUnavailablePeriods() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForMissing() {
+        return getPointsForMissing() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmailSubjectPrefix() {
+        return getEmailSubjectPrefix() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginOfSecondPeriodForUnavailablePeriods() {
+        return getBeginOfSecondPeriodForUnavailablePeriods() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForMissingTeacher() {
+        return getPointsForMissingTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForConvoked() {
+        return getPointsForConvoked() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginOfFirstPeriodForUnavailablePeriods() {
+        return getBeginOfFirstPeriodForUnavailablePeriods() != null;
+    }
+
+    @Deprecated
+    public boolean hasRulesLink() {
+        return getRulesLink() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForDisconvoked() {
+        return getPointsForDisconvoked() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

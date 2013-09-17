@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.util.MarkType;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Comparable {
 
@@ -478,18 +478,18 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     private void deleteObject() {
         checkApprovedEnrolmentPayment();
 
-        removePersonResponsibleForGrade();
-        removePerson();
-        removeEnrolment();
-        removeMarkSheet();
-        removeRectification();
-        removeRectified();
+        setPersonResponsibleForGrade(null);
+        setPerson(null);
+        setEnrolment(null);
+        setMarkSheet(null);
+        setRectification(null);
+        setRectified(null);
         if (hasImprovementOfApprovedEnrolmentEvent()) {
             getImprovementOfApprovedEnrolmentEvent().removeImprovementEnrolmentEvaluations(this);
         }
-        removeExecutionPeriod();
+        setExecutionPeriod(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
     }
@@ -509,7 +509,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setExamDateYearMonthDay(null);
         setGradeAvailableDateYearMonthDay(null);
 
-        removeMarkSheet();
+        setMarkSheet(null);
     }
 
     public void insertStudentFinalEvaluationForMasterDegree(String gradeValue, Person responsibleFor, Date examDate)
@@ -680,7 +680,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         return this.getEnrolmentEvaluationType().getDescription();
     }
 
-    @Service
+    @Atomic
     public void deleteEnrolmentEvaluationCurriculumValidationContext() {
         if (!getEnrolment().getStudentCurricularPlan().getEvaluationForCurriculumValidationAllowed()) {
             throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");
@@ -737,6 +737,111 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         } else {
             setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasGradeAvailableDateYearMonthDay() {
+        return getGradeAvailableDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasImprovementOfApprovedEnrolmentEvent() {
+        return getImprovementOfApprovedEnrolmentEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolment() {
+        return getEnrolment() != null;
+    }
+
+    @Deprecated
+    public boolean hasRectified() {
+        return getRectified() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeScale() {
+        return getGradeScale() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurriculumValidationEvaluationPhase() {
+        return getCurriculumValidationEvaluationPhase() != null;
+    }
+
+    @Deprecated
+    public boolean hasMarkSheet() {
+        return getMarkSheet() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasObservation() {
+        return getObservation() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonResponsibleForGrade() {
+        return getPersonResponsibleForGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentEvaluationType() {
+        return getEnrolmentEvaluationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeValue() {
+        return getGradeValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenDateTime() {
+        return getWhenDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasContext() {
+        return getContext() != null;
+    }
+
+    @Deprecated
+    public boolean hasBookReference() {
+        return getBookReference() != null;
+    }
+
+    @Deprecated
+    public boolean hasPage() {
+        return getPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentEvaluationState() {
+        return getEnrolmentEvaluationState() != null;
+    }
+
+    @Deprecated
+    public boolean hasRectification() {
+        return getRectification() != null;
+    }
+
+    @Deprecated
+    public boolean hasCheckSum() {
+        return getCheckSum() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

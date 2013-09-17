@@ -47,14 +47,14 @@ public class ExternalSupervisionEntryPointAction extends FenixDispatchAction {
         //In that case the agreement greeting supposed to be shown
         //is attainable through the request.
         final String registrationProtocolId = request.getParameter("registrationProtocolId");
-        RegistrationProtocol registrationProtocol = AbstractDomainObject.fromExternalId(registrationProtocolId);
+        RegistrationProtocol registrationProtocol = FenixFramework.getDomainObject(registrationProtocolId);
         RegistrationAgreement registrationAgreement;
         
         //If coming from selectProtocol, read agreement from request. Else read from user. Plain simple.
         if(registrationProtocol != null){
             registrationAgreement = registrationProtocol.getRegistrationAgreement();
         } else {
-            registrationAgreement = supervisor.getRegistrationProtocols().get(0).getRegistrationAgreement();
+            registrationAgreement = supervisor.getRegistrationProtocols().iterator().next().getRegistrationAgreement();
         }*/
 
         final IUserView userView = UserView.getUser();

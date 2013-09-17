@@ -27,9 +27,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import dml.DomainModel;
-import dml.DomainRelation;
-import dml.Role;
+import pt.ist.fenixframework.dml.DomainModel;
+import pt.ist.fenixframework.dml.DomainRelation;
+import pt.ist.fenixframework.dml.Role;
 
 /**
  * @author Luis Crus & Sara Ribeiro

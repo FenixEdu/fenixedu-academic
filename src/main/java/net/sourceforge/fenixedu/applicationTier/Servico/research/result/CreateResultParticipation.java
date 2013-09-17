@@ -11,11 +11,11 @@ import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateResultParticipation {
 
-    @Service
+    @Atomic
     public static void run(ResultParticipationCreationBean bean) throws FenixServiceException {
         final ResearchResult result = bean.getResult();
         final ResultParticipationRole role = bean.getRole();

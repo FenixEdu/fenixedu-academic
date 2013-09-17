@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -14,7 +14,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadNumberCachedItems {
 
-    @Service
+    @Atomic
     public static Integer run() throws FenixServiceException {
         Integer numberCachedObjects = null;
 

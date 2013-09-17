@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.reports;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -86,7 +87,7 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
         spreadsheet.setHeader("SNE - Descrição");
         spreadsheet.setHeader("O - Descrição");
 
-        List<Teacher> teachers = RootDomainObject.getInstance().getTeachers();
+        Collection<Teacher> teachers = RootDomainObject.getInstance().getTeachers();
         for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
             Interval semesterInterval =
                     new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),

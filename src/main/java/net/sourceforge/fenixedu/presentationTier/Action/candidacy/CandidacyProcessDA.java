@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean;
@@ -38,7 +38,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -80,7 +80,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     protected void setExecutionInterval(final HttpServletRequest request) {
         final String executionIntervalId = (String) getFromRequest(request, "executionIntervalId");
         if (executionIntervalId != null) {
-            request.setAttribute("executionInterval", AbstractDomainObject.fromExternalId(executionIntervalId));
+            request.setAttribute("executionInterval", FenixFramework.getDomainObject(executionIntervalId));
         }
     }
 
@@ -223,7 +223,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     private List<PublicCandidacyHashCode> getIndividualCandidacyHashCodesNotBounded() {
         List<PublicCandidacyHashCode> publicCandidacyHashCodeList =
                 new ArrayList<PublicCandidacyHashCode>(CollectionUtils.select(
-                        RootDomainObject.readAllDomainObjects(PublicCandidacyHashCode.class),
+                        DomainObjectUtil.readAllDomainObjects(PublicCandidacyHashCode.class),
                         new org.apache.commons.collections.Predicate() {
 
                             @Override

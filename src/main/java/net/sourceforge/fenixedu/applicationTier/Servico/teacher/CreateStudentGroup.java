@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author ansr & scpo
@@ -36,13 +36,13 @@ public class CreateStudentGroup {
 
     protected Boolean run(String executionCourseID, Integer groupNumber, String groupingID, String shiftID, List studentUserNames)
             throws FenixServiceException {
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupingID);
+        final Grouping grouping = FenixFramework.getDomainObject(groupingID);
 
         if (grouping == null) {
             throw new FenixServiceException();
         }
 
-        Shift shift = AbstractDomainObject.fromExternalId(shiftID);
+        Shift shift = FenixFramework.getDomainObject(shiftID);
 
         List studentList = buildStudentList(studentUserNames, grouping);
 
@@ -55,7 +55,7 @@ public class CreateStudentGroup {
 
     private static final CreateStudentGroup serviceInstance = new CreateStudentGroup();
 
-    @Service
+    @Atomic
     public static Boolean runCreateStudentGroup(String executionCourseID, Integer groupNumber, String groupingID, String shiftID,
             List studentUserNames) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);

@@ -51,7 +51,7 @@ import org.apache.struts.util.LabelValueBean;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(
         module = "masterDegreeAdministrativeOffice",
@@ -193,7 +193,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
     }
 
     private ExecutionSemester getExecutionPeriod(final DynaActionForm form) {
-        return AbstractDomainObject.fromExternalId(form.getString("executionPeriod"));
+        return FenixFramework.getDomainObject(form.getString("executionPeriod"));
     }
 
     private DegreeType getDegreeType(final DynaActionForm form) {
@@ -305,7 +305,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
             List<ExecutionDegree> intersection =
                     (List<ExecutionDegree>) CollectionUtils.intersection(executionDegrees, studentCurricularPlan
                             .getDegreeCurricularPlan().getExecutionDegreesSet());
-            form.set("executionDegree", intersection.get(0).getExternalId().toString());
+            form.set("executionDegree", intersection.iterator().next().getExternalId().toString());
         }
     }
 
@@ -481,7 +481,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
         final DynaActionForm actionForm = (DynaActionForm) form;
         // actionForm.set("executionPeriod",
         // request.getParameter("executionPeriod"));
-        Registration registration = AbstractDomainObject.fromExternalId(request.getParameter("registrationID"));
+        Registration registration = FenixFramework.getDomainObject(request.getParameter("registrationID"));
         if (registration == null) {
             throw new FenixActionException("invalid registration id");
         }
@@ -503,7 +503,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
         final ExecutionSemester executionSemester = getExecutionPeriod(actionForm);
         StudentCurricularPlan studentCurricularPlan =
-                AbstractDomainObject.fromExternalId(request.getParameter("studentCurricularPlan"));
+                FenixFramework.getDomainObject(request.getParameter("studentCurricularPlan"));
 
         if (studentCurricularPlan == null || executionSemester == null) {
             throw new FenixActionException("invalid arguments");
@@ -534,7 +534,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
         final DynaActionForm form = (DynaActionForm) actionForm;
 
         final StudentCurricularPlan studentCurricularPlan =
-                AbstractDomainObject.fromExternalId((String) form.get("studentCurricularPlan"));
+                FenixFramework.getDomainObject((String) form.get("studentCurricularPlan"));
         final List<String> unenrollmentsList = Arrays.asList((String[]) form.get("unenrollments"));
 
         try {
@@ -566,7 +566,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
         final ExecutionSemester executionSemester = getExecutionPeriod(form);
 
         final StudentCurricularPlan studentCurricularPlan =
-                AbstractDomainObject.fromExternalId((String) form.get("studentCurricularPlan"));
+                FenixFramework.getDomainObject((String) form.get("studentCurricularPlan"));
         List<ExecutionDegree> result = null;
         try {
 
@@ -606,7 +606,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
         final List<Integer> curricularSemesters = Arrays.asList((Integer[]) form.get("curricularSemesters"));
 
         final StudentCurricularPlan studentCurricularPlan =
-                AbstractDomainObject.fromExternalId((String) form.get("studentCurricularPlan"));
+                FenixFramework.getDomainObject((String) form.get("studentCurricularPlan"));
         List<CurricularCourse2Enroll> curricularCourses2Enroll = null;
         try {
 
@@ -663,7 +663,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
         final List<String> curricularCourses = Arrays.asList((String[]) form.get("curricularCourses"));
         final Map optionalEnrollments = (HashMap) form.get("enrollmentTypes");
         final StudentCurricularPlan studentCurricularPlan =
-                AbstractDomainObject.fromExternalId((String) form.get("studentCurricularPlan"));
+                FenixFramework.getDomainObject((String) form.get("studentCurricularPlan"));
 
         try {
             if (studentCurricularPlan.getRegistration().getDegreeType().isBolonhaType()) {

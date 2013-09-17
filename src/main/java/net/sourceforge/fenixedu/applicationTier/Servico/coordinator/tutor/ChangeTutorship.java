@@ -18,14 +18,14 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ChangeTutorship extends TutorshipManagement {
 
     public List<TutorshipErrorBean> run(String executionDegreeID, List<ChangeTutorshipBean> beans) throws FenixServiceException {
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         List<TutorshipErrorBean> studentsWithErrors = new ArrayList<TutorshipErrorBean>();
@@ -61,7 +61,7 @@ public class ChangeTutorship extends TutorshipManagement {
 
     private static final ChangeTutorship serviceInstance = new ChangeTutorship();
 
-    @Service
+    @Atomic
     public static List<TutorshipErrorBean> runChangeTutorship(String executionDegreeID, List<ChangeTutorshipBean> beans)
             throws FenixServiceException, NotAuthorizedException {
         try {

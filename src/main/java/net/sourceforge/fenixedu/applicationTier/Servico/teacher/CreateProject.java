@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Project;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateProject {
 
@@ -25,12 +25,12 @@ public class CreateProject {
             Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID, GradeScale gradeScale,
             List<Department> departments) throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
         if (executionCourse == null) {
             throw new FenixServiceException("error.noExecutionCourse");
         }
 
-        final Grouping grouping = (groupingID != null) ? AbstractDomainObject.<Grouping> fromExternalId(groupingID) : null;
+        final Grouping grouping = (groupingID != null) ? FenixFramework.<Grouping> getDomainObject(groupingID) : null;
 
         final Project project =
                 new Project(name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping,
@@ -42,7 +42,7 @@ public class CreateProject {
 
     private static final CreateProject serviceInstance = new CreateProject();
 
-    @Service
+    @Atomic
     public static void runCreateProject(String executionCourseID, String name, Date begin, Date end, String description,
             Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID, GradeScale gradeScale,
             List<Department> departments) throws FenixServiceException, NotAuthorizedException {

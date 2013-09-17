@@ -30,7 +30,7 @@ public abstract class AbstractExecutionCourseTeachersGroup extends ExecutionCour
 
     @Override
     public int getElementsCount() {
-        return hasExecutionCourse() ? this.getExecutionCourse().getProfessorshipsCount() : 0;
+        return hasExecutionCourse() ? this.getExecutionCourse().getProfessorships().size() : 0;
     }
 
     @Override

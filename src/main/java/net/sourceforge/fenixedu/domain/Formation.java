@@ -76,11 +76,11 @@ public class Formation extends Formation_Base {
 
     @Override
     public void delete() {
-        removeEducationArea();
-        removeInstitution();
-        removeBaseInstitution();
-        removeCountryUnit();
-        removeCreator();
+        setEducationArea(null);
+        setInstitution(null);
+        setBaseInstitution(null);
+        setCountryUnit(null);
+        setCreator(null);
         super.delete();
     }
 
@@ -106,6 +106,51 @@ public class Formation extends Formation_Base {
         setBaseInstitution(formation.getParentInstitution());
         setCountryUnit(formation.getCountryUnit());
         setLastModificationDateDateTime(new DateTime());
+    }
+
+    @Deprecated
+    public boolean hasCountryUnit() {
+        return getCountryUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasFormationHours() {
+        return getFormationHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasBaseInstitution() {
+        return getBaseInstitution() != null;
+    }
+
+    @Deprecated
+    public boolean hasEducationArea() {
+        return getEducationArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasFormationType() {
+        return getFormationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginYear() {
+        return getBeginYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitutionType() {
+        return getInstitutionType() != null;
+    }
+
+    @Deprecated
+    public boolean hasEctsCredits() {
+        return getEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitution() {
+        return getInstitution() != null;
     }
 
 }

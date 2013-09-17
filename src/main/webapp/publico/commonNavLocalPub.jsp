@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <ul>
 	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/instituto/"><bean:message key="label.institution" bundle="GLOBAL_RESOURCES"/></a></li>
 	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/estrutura/"><bean:message key="label.structure" bundle="GLOBAL_RESOURCES"/></a></li>

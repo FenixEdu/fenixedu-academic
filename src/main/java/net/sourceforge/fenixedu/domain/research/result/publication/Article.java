@@ -9,7 +9,8 @@ import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Month;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
@@ -39,9 +40,9 @@ public class Article extends Article_Base {
         fillAllAttributes(title, keywords, issue, firstPage, lastPage, note, language, url);
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setEditAll(String title, MultiLanguageString keywords, JournalIssue issue, Integer firstPage, Integer lastPage,
             MultiLanguageString note, String language, String url) {
+        check(this, ResultPredicates.writePredicate);
         checkRequiredParameters(title, issue);
         fillAllAttributes(title, keywords, issue, firstPage, lastPage, note, language, url);
         super.setModifiedByAndDate();
@@ -200,8 +201,8 @@ public class Article extends Article_Base {
         return getArticleAssociation().getJournalIssue();
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setJournalIssue(JournalIssue journalIssue) {
+        check(this, ResultPredicates.writePredicate);
         ArticleAssociation association = getArticleAssociation();
         if (association == null) {
             Person creator = AccessControl.getPerson();
@@ -247,4 +248,34 @@ public class Article extends Article_Base {
     public String getNumber() {
         return this.getJournalIssue().getNumber();
     }
+    @Deprecated
+    public boolean hasFirstPage() {
+        return getFirstPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasArticleAssociation() {
+        return getArticleAssociation() != null;
+    }
+
+    @Deprecated
+    public boolean hasJournal() {
+        return getJournal() != null;
+    }
+
+    @Deprecated
+    public boolean hasIssn() {
+        return getIssn() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastPage() {
+        return getLastPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
 }

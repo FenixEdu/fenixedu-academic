@@ -49,7 +49,7 @@ public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProces
 
     @Override
     protected void disconnect() {
-        removeMeetingProcess();
+        setMeetingProcess(null);
         super.disconnect();
     }
 
@@ -104,6 +104,16 @@ public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProces
     @Override
     public PhdProgramProcess getProcess() {
         return getMeetingProcess();
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasMeetingProcess() {
+        return getMeetingProcess() != null;
     }
 
 }

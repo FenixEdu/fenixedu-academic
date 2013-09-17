@@ -89,4 +89,19 @@ public class EvenOddRule extends EvenOddRule_Base {
                 new Locale("pt", "PT")).getString("label." + (getEven() ? "even" : "odd"))).toString();
     }
 
+    @Deprecated
+    public boolean hasEven() {
+        return getEven() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcademicPeriod() {
+        return getAcademicPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularPeriodOrder() {
+        return getCurricularPeriodOrder() != null;
+    }
+
 }

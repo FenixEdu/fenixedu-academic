@@ -30,8 +30,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
-import dml.DomainClass;
-import dml.Slot;
+import pt.ist.fenixframework.dml.DomainClass;
+import pt.ist.fenixframework.dml.Slot;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -74,7 +74,7 @@ public class DomainObjectStringPropertyFormatterDispatchAction extends FenixDisp
     }
 
     public ActionForward formatProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws ClassNotFoundException,  FenixServiceException {
+            HttpServletResponse response) throws ClassNotFoundException, FenixServiceException {
 
         IUserView userView = UserView.getUser();
 

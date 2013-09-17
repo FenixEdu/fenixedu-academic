@@ -40,4 +40,9 @@ public class PastCertificateRequestEvent extends PastCertificateRequestEvent_Bas
         throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
     }
 
+    @Deprecated
+    public boolean hasPastAmount() {
+        return getPastAmount() != null;
+    }
+
 }

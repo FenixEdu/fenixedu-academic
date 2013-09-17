@@ -5,16 +5,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoPaymentTransaction;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadPaymentTransactionByGuideEntryID {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static InfoPaymentTransaction run(String guideEntryId) throws FenixServiceException {
-        GuideEntry guideEntry = AbstractDomainObject.fromExternalId(guideEntryId);
+        check(RolePredicates.MANAGER_PREDICATE);
+        GuideEntry guideEntry = FenixFramework.getDomainObject(guideEntryId);
         PaymentTransaction paymentTransaction = guideEntry.getPaymentTransaction();
         if (paymentTransaction == null) {
             throw new ExcepcaoInexistente();

@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.domain.accounting.events.InsuranceExemptionJusti
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ExemptionsManagement {
 
-    @Service
+    @Atomic
     public static void createAdministrativeOfficeFeeAndInsuranceExemption(final Person responsible,
             final AdministrativeOfficeFeeAndInsuranceExemptionBean exemptionBean) {
         AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
@@ -50,7 +50,7 @@ public class ExemptionsManagement {
 
     }
 
-    @Service
+    @Atomic
     public static void createInsuranceExemption(final Person responsible, final InsuranceExemptionBean exemptionBean) {
         new InsuranceExemption(responsible, exemptionBean.getInsuranceEvent(), exemptionBean.getJustificationType(),
                 exemptionBean.getReason(), exemptionBean.getDispatchDate());

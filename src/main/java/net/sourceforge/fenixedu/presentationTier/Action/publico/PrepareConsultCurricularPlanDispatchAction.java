@@ -65,7 +65,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 
             if (!infoExecutionDegreeList.isEmpty()) {
                 List<LabelValueBean> executionPeriodsLabelValueList = new ArrayList<LabelValueBean>();
-                InfoExecutionDegree infoExecutionDegree1 = infoExecutionDegreeList.get(0);
+                InfoExecutionDegree infoExecutionDegree1 = infoExecutionDegreeList.iterator().next();
                 executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionDegree1.getInfoExecutionYear().getYear(), ""
                         + infoExecutionDegree1.getInfoExecutionYear().getExternalId()));
 
@@ -105,7 +105,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
         if (selectedExecutionPeriod != null) {
             indexForm.set("indice", selectedExecutionPeriod.getInfoExecutionYear().getExternalId());
-            indexForm.set("curYear", Integer.valueOf(anosCurriculares.indexOf(anosCurriculares.get(0))));
+            indexForm.set("curYear", Integer.valueOf(anosCurriculares.indexOf(anosCurriculares.iterator().next())));
             request.setAttribute(PresentationConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
             request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getExternalId().toString());
         }
@@ -165,10 +165,10 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 
         List infoExecutionPeriodList = ReadExecutionPeriodsByExecutionYear.run(executionYear);
 
-        request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriodList.get(0));
-        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, ((InfoExecutionPeriod) infoExecutionPeriodList.get(0))
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriodList.iterator().next());
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, ((InfoExecutionPeriod) infoExecutionPeriodList.iterator().next())
                 .getExternalId().toString());
-        RequestUtils.setExecutionPeriodToRequest(request, (InfoExecutionPeriod) infoExecutionPeriodList.get(0));
+        RequestUtils.setExecutionPeriodToRequest(request, (InfoExecutionPeriod) infoExecutionPeriodList.iterator().next());
 
         // ----------------------------------------------------------
 

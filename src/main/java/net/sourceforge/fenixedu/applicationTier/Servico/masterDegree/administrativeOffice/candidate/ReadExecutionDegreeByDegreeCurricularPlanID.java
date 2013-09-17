@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -18,8 +19,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -37,9 +38,9 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
 
     protected InfoExecutionDegree run(String degreeCurricularPlanID, Integer executionDegreeIndex) {
         List infoExecutionDegreeList = null;
-        List executionDegrees = null;
+        Collection executionDegrees = null;
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         executionDegrees = degreeCurricularPlan.getExecutionDegrees();
 
@@ -72,10 +73,10 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
      * @throws ExcepcaoPersistencia
      */
     protected InfoExecutionDegree run(String degreeCurricularPlanID, final String executionYear) {
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         if (executionYear.equals("")) {
-            return InfoExecutionDegree.newInfoFromDomain(degreeCurricularPlan.getExecutionDegrees().get(0));
+            return InfoExecutionDegree.newInfoFromDomain(degreeCurricularPlan.getExecutionDegrees().iterator().next());
         }
 
         ExecutionDegree executionDegree =
@@ -99,7 +100,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
     private static final ReadExecutionDegreeByDegreeCurricularPlanID serviceInstance =
             new ReadExecutionDegreeByDegreeCurricularPlanID();
 
-    @Service
+    @Atomic
     public static InfoExecutionDegree runReadExecutionDegreeByDegreeCurricularPlanID(String degreeCurricularPlanID,
             Integer executionDegreeIndex) throws NotAuthorizedException {
         try {
@@ -120,7 +121,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
         }
     }
 
-    @Service
+    @Atomic
     public static InfoExecutionDegree runReadExecutionDegreeByDegreeCurricularPlanID(String degreeCurricularPlanID,
             final String executionYear) throws NotAuthorizedException {
         try {

@@ -42,10 +42,30 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
     }
 
     public void delete() {
-        removeExecutionYear();
-        removeRegistration();
-        removeRootDomainObject();
+        setExecutionYear(null);
+        setRegistration(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentModel() {
+        return getEnrolmentModel() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
     }
 
 }

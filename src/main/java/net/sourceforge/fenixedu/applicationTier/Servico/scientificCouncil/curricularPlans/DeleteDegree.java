@@ -4,20 +4,21 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteDegree {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String externalId) throws FenixServiceException {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         if (externalId == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degreeToDelete = AbstractDomainObject.fromExternalId(externalId);
+        final Degree degreeToDelete = FenixFramework.getDomainObject(externalId);
 
         if (degreeToDelete == null) {
             throw new NonExistingServiceException();

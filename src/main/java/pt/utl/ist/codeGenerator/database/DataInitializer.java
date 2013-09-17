@@ -1,6 +1,5 @@
 package pt.utl.ist.codeGenerator.database;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.District;
@@ -24,9 +23,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixframework.FenixFrameworkInitializer;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -34,36 +31,17 @@ public class DataInitializer {
 
     public static void main(String[] args) {
 
-        try {
-            Class.forName(FenixFrameworkInitializer.class.getName());
-        } catch (ClassNotFoundException e) {
-        }
-
-        FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig());
-
-        RootDomainObject.init();
-
-        try {
-            Transaction.withTransaction(false, new jvstm.TransactionalCommand() {
-                @Override
-                public void doIt() {
-                    try {
-                        initialize();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        throw new Error("Found exception while processing script: " + e, e);
-                    }
-                }
-            });
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        initialize();
 
         System.out.println("Initialization complete.");
         System.exit(0);
     }
 
+    @Atomic
     private static void initialize() {
+        RootDomainObject.ensureRootDomainObject();
+        RootDomainObject.initialize();
+
         createRoles();
         createCurricularYearsAndSemesters();
         createEmptyDegreeAndEmptyDegreeCurricularPlan();

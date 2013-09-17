@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ProjectManagementBackingBean extends EvaluationManagementBackingBean {
@@ -134,14 +134,14 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     private Project getProject() {
         if (this.project == null && this.getProjectID() != null) {
-            this.project = (Project) AbstractDomainObject.fromExternalId(getProjectID());
+            this.project = (Project) FenixFramework.getDomainObject(getProjectID());
         }
         return this.project;
     }
 
     public List<Project> getAssociatedProjects() throws FenixServiceException {
         if (this.associatedProjects == null) {
-            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID());
+            final ExecutionCourse executionCourse = FenixFramework.getDomainObject(getExecutionCourseID());
             this.associatedProjects = executionCourse.getAssociatedProjects();
             Collections.sort(this.associatedProjects, new BeanComparator("begin"));
         }
@@ -299,7 +299,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
     public List<Department> getSelectDepartments() {
         List<Department> departments = new ArrayList<Department>();
         for (String departmentExtId : selectedDepartments) {
-            departments.add((Department) RootDomainObject.fromExternalId(departmentExtId));
+            departments.add((Department) FenixFramework.getDomainObject(departmentExtId));
         }
         return departments;
     }

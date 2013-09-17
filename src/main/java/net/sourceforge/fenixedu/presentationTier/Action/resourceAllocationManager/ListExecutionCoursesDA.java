@@ -194,7 +194,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
             }
             row.setCell(enrolmentCount);
 
-            row.setCell(executionCourse.getAttendsCount());
+            row.setCell(executionCourse.getAttendsSet().size());
         }
     }
 

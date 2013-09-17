@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -14,8 +14,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationRequest_Base {
@@ -28,14 +26,14 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     static {
         ((ComparatorChain) COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT).addComparator(
                 new BeanComparator("moreRecentCommentInstant"), true);
-        ((ComparatorChain) COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
         ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("instant"), true);
-        ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationRequests")
     public PunctualRoomsOccupationRequest(Person requestor, MultiLanguageString subject, MultiLanguageString description) {
+//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationRequests);
         super();
         checkIfRequestAlreadyExists(requestor, subject, description);
         setRootDomainObject(RootDomainObject.getInstance());
@@ -56,9 +54,9 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 
     public Integer getNumberOfNewComments(Person person) {
         if (person.equals(getOwner())) {
-            return getCommentsCount() - getEmployeeReadComments();
+            return getCommentsSet().size() - getEmployeeReadComments();
         } else if (person.equals(getRequestor())) {
-            return getCommentsCount() - getTeacherReadComments();
+            return getCommentsSet().size() - getTeacherReadComments();
         }
         return Integer.valueOf(0);
     }
@@ -82,24 +80,24 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     public void createNewTeacherOrEmployeeComment(MultiLanguageString description, Person commentOwner, DateTime instant) {
         new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);
         if (commentOwner.equals(getRequestor())) {
-            setTeacherReadComments(getCommentsCount());
+            setTeacherReadComments(getCommentsSet().size());
         } else {
             setOwner(commentOwner);
-            setEmployeeReadComments(getCommentsCount());
+            setEmployeeReadComments(getCommentsSet().size());
         }
     }
 
     public void createNewTeacherCommentAndOpenRequest(MultiLanguageString description, Person commentOwner, DateTime instant) {
         openRequestWithoutAssociateOwner(instant);
         new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);
-        setTeacherReadComments(getCommentsCount());
+        setTeacherReadComments(getCommentsSet().size());
     }
 
     public void createNewEmployeeCommentAndCloseRequest(MultiLanguageString description, Person commentOwner, DateTime instant) {
         new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);
         closeRequestWithoutAssociateOwner(instant);
         setOwner(commentOwner);
-        setEmployeeReadComments(getCommentsCount());
+        setEmployeeReadComments(getCommentsSet().size());
     }
 
     public void closeRequestAndAssociateOwnerOnlyForEmployees(DateTime instant, Person person) {
@@ -276,7 +274,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     private Integer getNextRequestIdentification() {
         SortedSet<PunctualRoomsOccupationRequest> result =
                 new TreeSet<PunctualRoomsOccupationRequest>(PunctualRoomsOccupationRequest.COMPARATOR_BY_IDENTIFICATION);
-        List<PunctualRoomsOccupationRequest> requests = RootDomainObject.getInstance().getPunctualRoomsOccupationRequests();
+        Collection<PunctualRoomsOccupationRequest> requests = RootDomainObject.getInstance().getPunctualRoomsOccupationRequests();
         for (PunctualRoomsOccupationRequest request : requests) {
             if (!request.equals(this)) {
                 result.add(request);
@@ -305,4 +303,70 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
             }
         }
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant> getStateInstants() {
+        return getStateInstantsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStateInstants() {
+        return !getStateInstantsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.GenericEvent> getGenericEvents() {
+        return getGenericEventsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGenericEvents() {
+        return !getGenericEventsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment> getComments() {
+        return getCommentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyComments() {
+        return !getCommentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasOwner() {
+        return getOwner() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstant() {
+        return getInstant() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmployeeReadComments() {
+        return getEmployeeReadComments() != null;
+    }
+
+    @Deprecated
+    public boolean hasIdentification() {
+        return getIdentification() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestor() {
+        return getRequestor() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherReadComments() {
+        return getTeacherReadComments() != null;
+    }
+
 }

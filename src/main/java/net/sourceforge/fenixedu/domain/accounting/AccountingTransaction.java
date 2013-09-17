@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -92,16 +90,6 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     @Override
-    public List<Entry> getEntries() {
-        return Collections.unmodifiableList(super.getEntries());
-    }
-
-    @Override
-    public Iterator<Entry> getEntriesIterator() {
-        return getEntriesSet().iterator();
-    }
-
-    @Override
     public Set<Entry> getEntriesSet() {
         return Collections.unmodifiableSet(super.getEntriesSet());
     }
@@ -138,18 +126,8 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     @Override
-    public List<AccountingTransaction> getAdjustmentTransactions() {
-        return Collections.unmodifiableList(super.getAdjustmentTransactions());
-    }
-
-    @Override
     public Set<AccountingTransaction> getAdjustmentTransactionsSet() {
         return Collections.unmodifiableSet(super.getAdjustmentTransactionsSet());
-    }
-
-    @Override
-    public Iterator<AccountingTransaction> getAdjustmentTransactionsIterator() {
-        return getAdjustmentTransactionsSet().iterator();
     }
 
     @Override
@@ -307,7 +285,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     public void delete() {
 
         super.setAdjustedTransaction(null);
-        for (; !getAdjustmentTransactions().isEmpty(); getAdjustmentTransactions().get(0).delete()) {
+        for (; !getAdjustmentTransactions().isEmpty(); getAdjustmentTransactions().iterator().next().delete()) {
             ;
         }
 
@@ -315,13 +293,13 @@ public class AccountingTransaction extends AccountingTransaction_Base {
             getTransactionDetail().delete();
         }
 
-        for (; !getEntries().isEmpty(); getEntries().get(0).delete()) {
+        for (; !getEntries().isEmpty(); getEntries().iterator().next().delete()) {
             ;
         }
 
         super.setResponsibleUser(null);
         super.setEvent(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
     }
@@ -348,6 +326,51 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
     public Money getOriginalAmount() {
         return getToAccountEntry().getOriginalAmount();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.AccountingTransaction> getAdjustmentTransactions() {
+        return getAdjustmentTransactionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAdjustmentTransactions() {
+        return !getAdjustmentTransactionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Entry> getEntries() {
+        return getEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEntries() {
+        return !getEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasTransactionDetail() {
+        return getTransactionDetail() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdjustedTransaction() {
+        return getAdjustedTransaction() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvent() {
+        return getEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsibleUser() {
+        return getResponsibleUser() != null;
     }
 
 }

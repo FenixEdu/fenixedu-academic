@@ -100,7 +100,7 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 
     @Override
     protected void disconnect() {
-        removeProcess();
+        setProcess(null);
         super.disconnect();
     }
 
@@ -135,7 +135,7 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
     @Override
     public void delete() {
         Student student = getProcess().getStudent();
-        removeProcess();
+        setProcess(null);
         super.delete();
         student.updateStudentRole();
     }
@@ -220,4 +220,14 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 
         return new PhdProgramProcessState(process, type, person, remarks, stateDate);
     }
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
 }

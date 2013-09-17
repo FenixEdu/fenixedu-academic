@@ -21,8 +21,8 @@ public class OldPublication extends OldPublication_Base {
     }
 
     public void delete() {
-        removeTeacher();
-        removeRootDomainObject();
+        setTeacher(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -52,6 +52,31 @@ public class OldPublication extends OldPublication_Base {
         } else {
             setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasLastModificationDateDateTime() {
+        return getLastModificationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublication() {
+        return getPublication() != null;
+    }
+
+    @Deprecated
+    public boolean hasOldPublicationType() {
+        return getOldPublicationType() != null;
     }
 
 }

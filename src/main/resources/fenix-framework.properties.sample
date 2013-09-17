@@ -1,0 +1,9 @@
+# Add additional backend-specific configurations in here
+
+dbAlias=//localhost:3306/ciapl
+dbUsername=root
+dbPassword=
+
+updateRepositoryStructureIfNeeded=false
+
+canCreateDomainMetaObjects=false

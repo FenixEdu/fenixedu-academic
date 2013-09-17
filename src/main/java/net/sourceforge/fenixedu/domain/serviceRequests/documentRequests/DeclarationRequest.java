@@ -126,4 +126,14 @@ abstract public class DeclarationRequest extends DeclarationRequest_Base {
         return false;
     }
 
+    @Deprecated
+    public boolean hasOtherDocumentPurposeTypeDescription() {
+        return getOtherDocumentPurposeTypeDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentPurposeType() {
+        return getDocumentPurposeType() != null;
+    }
+
 }

@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EditMarkSheet {
 
-    @Service
+    @Atomic
     public static void run(MarkSheet markSheet, Teacher responsibleTeacher, Date evaluationDate) throws FenixServiceException {
 
         if (markSheet == null) {
@@ -28,7 +28,7 @@ public class EditMarkSheet {
         markSheet.editNormal(responsibleTeacher, evaluationDate);
     }
 
-    @Service
+    @Atomic
     public static void run(MarkSheetManagementEditBean markSheetManagementEditBean) throws FenixServiceException {
 
         MarkSheet markSheet = markSheetManagementEditBean.getMarkSheet();

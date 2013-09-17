@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -36,7 +37,7 @@ public class ReadCurricularCoursesByUsername {
         if (registration == null) {
             throw new NonExistingServiceException();
         }
-        List<StudentCurricularPlan> curricularPlans = registration.getStudentCurricularPlans();
+        Collection<StudentCurricularPlan> curricularPlans = registration.getStudentCurricularPlans();
         for (Object element : curricularPlans) {
             StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) element;
             for (Object element2 : studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourses()) {
@@ -52,7 +53,7 @@ public class ReadCurricularCoursesByUsername {
 
     private static final ReadCurricularCoursesByUsername serviceInstance = new ReadCurricularCoursesByUsername();
 
-    @Service
+    @Atomic
     public static List runReadCurricularCoursesByUsername(String username) throws BDException, NonExistingServiceException,
             NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();

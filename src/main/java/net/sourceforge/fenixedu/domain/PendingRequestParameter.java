@@ -11,9 +11,34 @@ public class PendingRequestParameter extends PendingRequestParameter_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removePendingRequest();
+        setRootDomainObject(null);
+        setPendingRequest(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasParameterValue() {
+        return getParameterValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasAttribute() {
+        return getAttribute() != null;
+    }
+
+    @Deprecated
+    public boolean hasPendingRequest() {
+        return getPendingRequest() != null;
+    }
+
+    @Deprecated
+    public boolean hasParameterKey() {
+        return getParameterKey() != null;
     }
 
 }

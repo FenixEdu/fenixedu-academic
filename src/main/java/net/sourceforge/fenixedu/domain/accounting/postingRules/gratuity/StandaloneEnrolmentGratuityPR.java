@@ -261,4 +261,19 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
                 "error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.ectsFactor");
     }
 
+    @Deprecated
+    public boolean hasEctsForYear() {
+        return getEctsForYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasEctsFactor() {
+        return getEctsFactor() != null;
+    }
+
+    @Deprecated
+    public boolean hasGratuityFactor() {
+        return getGratuityFactor() != null;
+    }
+
 }

@@ -62,7 +62,7 @@ public abstract class DelegateElectionPeriod extends DelegateElectionPeriod_Base
     }
 
     public void delete() {
-        super.removeRootDomainObject();
+        super.setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -71,5 +71,20 @@ public abstract class DelegateElectionPeriod extends DelegateElectionPeriod_Base
     public abstract boolean isSecondRoundElections();
 
     public abstract boolean isOpenRoundElections();
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDate() {
+        return getStartDate() != null;
+    }
 
 }

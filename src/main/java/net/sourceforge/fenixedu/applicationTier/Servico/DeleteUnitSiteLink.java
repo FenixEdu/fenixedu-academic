@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthor
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteLink;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteUnitSiteLink {
 
@@ -17,7 +17,7 @@ public class DeleteUnitSiteLink {
 
     private static final DeleteUnitSiteLink serviceInstance = new DeleteUnitSiteLink();
 
-    @Service
+    @Atomic
     public static void runDeleteUnitSiteLink(UnitSite site, UnitSiteLink link) throws NotAuthorizedException {
         ResearchSiteManagerAuthorizationFilter.instance.execute(site);
         serviceInstance.run(site, link);

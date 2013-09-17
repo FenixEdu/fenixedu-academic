@@ -49,7 +49,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualProcessData_Base {
@@ -270,7 +270,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         final Person student = personalData.getPerson();
 
         if (student.hasAnyPhdIndividualProgramProcesses()) {
-            return student.getPhdIndividualProgramProcesses().get(0);
+            return student.getPhdIndividualProgramProcesses().iterator().next();
         }
 
         return null;
@@ -385,7 +385,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         return getProcessBean().getAnnulmentDate() != null;
     }
 
-    @Service
+    @Atomic
     public Boolean proceedWithMigration(IUserView userView) {
 
         PhdMigrationProcessStateType activeState;
@@ -467,8 +467,8 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         candidacyBean.setPhdStudentNumber(getPhdMigrationIndividualPersonalData().getNumber());
         candidacyBean.setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
         candidacyBean.setExecutionYear(getExecutionYear());
-        candidacyBean.setFocusArea((getProcessBean().getPhdProgram().getPhdProgramFocusAreasCount() == 1) ? getProcessBean()
-                .getPhdProgram().getPhdProgramFocusAreas().get(0) : null);
+        candidacyBean.setFocusArea((getProcessBean().getPhdProgram().getPhdProgramFocusAreasSet().size() == 1) ? getProcessBean()
+                .getPhdProgram().getPhdProgramFocusAreas().iterator().next() : null);
 
         final PhdIndividualProgramProcess individualProcess =
                 (PhdIndividualProgramProcess) CreateNewProcess.run(PhdIndividualProgramProcess.class, candidacyBean);
@@ -644,6 +644,46 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         final PhdIndividualProgramProcessBean processBean = new PhdIndividualProgramProcessBean(individualProcess);
         processBean.setStateDate(anullmentDate);
         ExecuteProcessActivity.run(individualProcess, CancelPhdProgramProcess.class.getSimpleName(), processBean);
+    }
+
+    @Deprecated
+    public boolean hasMigrationDate() {
+        return getMigrationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasData() {
+        return getData() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMigrationStatus() {
+        return getMigrationStatus() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdMigrationIndividualPersonalData() {
+        return getPhdMigrationIndividualPersonalData() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdMigrationProcess() {
+        return getPhdMigrationProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasParseLog() {
+        return getParseLog() != null;
     }
 
 }

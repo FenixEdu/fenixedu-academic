@@ -30,11 +30,11 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 import com.google.common.base.Predicate;
@@ -89,8 +89,8 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
         request.setAttribute("candidacyProcessBean", bean);
         if (map.hasAnyChildProcesses()) {
             request.setAttribute("preLoadLevel", "Error");
-        } else if (map.hasAnyCoordinators() || map.getCandidacyPeriod().getMobilityQuotasCount() > 0
-                || map.getCandidacyPeriod().getEmailTemplatesCount() > 0) {
+        } else if (map.hasAnyCoordinators() || map.getCandidacyPeriod().getMobilityQuotasSet().size() > 0
+                || map.getCandidacyPeriod().getEmailTemplatesSet().size() > 0) {
             request.setAttribute("preLoadLevel", "Warn");
         } else {
             request.setAttribute("preLoadLevel", "Ok");
@@ -112,12 +112,12 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     public ActionForward preLoadLastConfigurations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         String processEid = request.getParameter("processEid");
-        MobilityApplicationProcess process = AbstractDomainObject.fromExternalId(processEid);
+        MobilityApplicationProcess process = FenixFramework.getDomainObject(processEid);
         preLoadLastProcessConfigurations(process);
         return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     private void preLoadLastProcessConfigurations(MobilityApplicationProcess process) {
         process.resetConfigurations();
         process.preLoadLastConfigurations();
@@ -130,7 +130,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
             chooseMobilityProgramBean = new ChooseMobilityProgramBean(getProcess(request));
             String mobilityProgramEid = request.getParameter("mobilityProgramEid");
             if (mobilityProgramEid != null && !mobilityProgramEid.isEmpty()) {
-                MobilityProgram mobilityProgram = AbstractDomainObject.fromExternalId(mobilityProgramEid);
+                MobilityProgram mobilityProgram = FenixFramework.getDomainObject(mobilityProgramEid);
                 chooseMobilityProgramBean.setMobilityProgram(mobilityProgram);
             }
         }
@@ -147,7 +147,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
             chooseDegreeBean = new ChooseDegreeBean(getProcess(request));
             String degreeEid = request.getParameter("degreeEid");
             if (degreeEid != null && !degreeEid.isEmpty()) {
-                Degree degree = AbstractDomainObject.fromExternalId(degreeEid);
+                Degree degree = FenixFramework.getDomainObject(degreeEid);
                 chooseDegreeBean.setDegree(degree);
             }
         }
@@ -187,11 +187,11 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
             final List<ExecutionInterval> executionIntervals = getExecutionIntervalsWithCandidacyPeriod();
 
             if (executionIntervals.size() == 1) {
-                final ExecutionInterval executionInterval = executionIntervals.get(0);
+                final ExecutionInterval executionInterval = executionIntervals.iterator().next();
                 final List<MobilityApplicationProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
                 if (candidacyProcesses.size() == 1) {
-                    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+                    setCandidacyProcessInformation(request, candidacyProcesses.iterator().next());
                     setCandidacyProcessInformation(actionForm, getProcess(request));
                     request.setAttribute("candidacyProcesses", candidacyProcesses);
                     return;
@@ -212,7 +212,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
                 final List<MobilityApplicationProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
                 if (candidacyProcesses.size() == 1) {
-                    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+                    setCandidacyProcessInformation(request, candidacyProcesses.iterator().next());
                     setCandidacyProcessInformation(actionForm, getProcess(request));
                     request.setAttribute("candidacyProcesses", candidacyProcesses);
                     return;

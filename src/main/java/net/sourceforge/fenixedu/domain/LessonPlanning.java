@@ -44,7 +44,7 @@ public class LessonPlanning extends LessonPlanning_Base {
                 getLessonType().getFullNameTipoAula(), getExecutionCourse().getNome(), getExecutionCourse()
                         .getDegreePresentationString());
         super.setExecutionCourse(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -136,4 +136,34 @@ public class LessonPlanning extends LessonPlanning_Base {
                 "log.executionCourse.curricular.planning.edited", getTitle().getContent(), getLessonType().getFullNameTipoAula(),
                 getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
     }
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasOrderOfPlanning() {
+        return getOrderOfPlanning() != null;
+    }
+
+    @Deprecated
+    public boolean hasPlanning() {
+        return getPlanning() != null;
+    }
+
+    @Deprecated
+    public boolean hasLessonType() {
+        return getLessonType() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
 }

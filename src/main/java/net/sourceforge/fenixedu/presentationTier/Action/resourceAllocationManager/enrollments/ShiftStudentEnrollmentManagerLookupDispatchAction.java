@@ -38,7 +38,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "resourceAllocationManager", path = "/studentShiftEnrollmentManagerLoockup",
         input = "/studentShiftEnrollmentManager.do?method=prepare", attribute = "studentShiftEnrollmentForm",
@@ -80,7 +80,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ShiftStudentEnrollmentManagerLookupDispatchAction extends TransactionalLookupDispatchAction {
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
-        final Registration registration = AbstractDomainObject.fromExternalId(getStringFromRequest(request, "registrationOID"));
+        final Registration registration = FenixFramework.getDomainObject(getStringFromRequest(request, "registrationOID"));
         if (!registration.getPerson().getStudent().getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
             return null;
         }
@@ -207,7 +207,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
         final SchoolClass schoolClass =
                 (classIdSelected != null) ? searchSchoolClassFrom(schoolClassesToEnrol, classIdSelected) : schoolClassesToEnrol
-                        .get(0);
+                        .iterator().next();
         request.setAttribute("selectedSchoolClass", schoolClass);
 
         return schoolClass;
@@ -240,7 +240,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
     private ExecutionCourse getExecutionCourse(HttpServletRequest request) {
         if (!StringUtils.isEmpty(request.getParameter("executionCourseID"))) {
-            return AbstractDomainObject.fromExternalId(request.getParameter("executionCourseID"));
+            return FenixFramework.getDomainObject(request.getParameter("executionCourseID"));
         } else {
             return null;
         }

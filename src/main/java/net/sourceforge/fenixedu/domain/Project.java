@@ -20,16 +20,16 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.joda.time.DateTime;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Project extends Project_Base {
 
     static {
-        ProjectGrouping.addListener(new RelationAdapter<Project, Grouping>() {
+        getRelationProjectGrouping().addListener(new RelationAdapter<Project, Grouping>() {
             @Override
             public void afterAdd(Project project, Grouping grouping) {
                 if (project != null && grouping != null) {
-                    if (grouping.getAutomaticEnrolment() && grouping.getStudentGroups().isEmpty()) {
+                    if (grouping.getAutomaticEnrolment() && grouping.getStudentGroupsSet().isEmpty()) {
                         int groupCount = 0;
                         for (final ExecutionCourse executionCourse : project.getAssociatedExecutionCoursesSet()) {
                             for (Attends attend : executionCourse.getAttendsSet()) {
@@ -109,7 +109,7 @@ public class Project extends Project_Base {
         }
 
         setOnlineSubmissionProperties(onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping);
-        final List<Department> departmentsList = getDeparments();
+        final Collection<Department> departmentsList = getDeparments();
         departmentsList.clear();
         departmentsList.addAll(departments);
 
@@ -215,7 +215,7 @@ public class Project extends Project_Base {
         }
 
         logRemove();
-        removeGrouping();
+        setGrouping(null);
         super.delete();
     }
 
@@ -360,4 +360,70 @@ public class Project extends Project_Base {
     public String getPresentationName() {
         return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.project") + " " + getName();
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Department> getDeparments() {
+        return getDeparmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDeparments() {
+        return !getDeparmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmission> getProjectSubmissions() {
+        return getProjectSubmissionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjectSubmissions() {
+        return !getProjectSubmissionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmissionLog> getProjectSubmissionLogs() {
+        return getProjectSubmissionLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjectSubmissionLogs() {
+        return !getProjectSubmissionLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasOnlineSubmissionsAllowed() {
+        return getOnlineSubmissionsAllowed() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasProjectBeginDateTime() {
+        return getProjectBeginDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaxSubmissionsToKeep() {
+        return getMaxSubmissionsToKeep() != null;
+    }
+
+    @Deprecated
+    public boolean hasProjectEndDateTime() {
+        return getProjectEndDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrouping() {
+        return getGrouping() != null;
+    }
+
 }

@@ -22,7 +22,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/auditResult", module = "pedagogicalCouncil")
 @Forwards({ @Forward(name = "viewProcessDetails", path = "/pedagogicalCouncil/inquiries/viewProcessDetailsNoAction.jsp") })
@@ -32,7 +32,7 @@ public class ViewQucAuditProcessDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         String executionCourseAuditOID = (String) getFromRequest(request, "executionCourseAuditOID");
-        ExecutionCourseAudit executionCourseAudit = AbstractDomainObject.fromExternalId(executionCourseAuditOID);
+        ExecutionCourseAudit executionCourseAudit = FenixFramework.getDomainObject(executionCourseAuditOID);
 
         List<CompetenceCourseResultsResume> competenceCoursesToAudit = getCompetenceCourseResultsBeans(executionCourseAudit);
 

@@ -7,6 +7,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -21,44 +22,43 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.util.Season;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static InfoViewExamByDayAndShift run(String executionCourseInitials, Season season,
             InfoExecutionPeriod infoExecutionPeriod) {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
         ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);
 
         List<Exam> associatedExams = new ArrayList();
-        List<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+        Collection<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluationsSet();
         for (Evaluation evaluation : associatedEvaluations) {
             if (evaluation instanceof Exam) {
                 associatedExams.add((Exam) evaluation);
             }
         }
-        for (int i = 0; i < associatedExams.size(); i++) {
-            Exam exam = associatedExams.get(i);
+        for (Exam exam : associatedExams) {
             if (exam.getSeason().equals(season)) {
                 infoViewExamByDayAndShift.setInfoExam(InfoExam.newInfoFromDomain(exam));
 
                 List infoExecutionCourses = new ArrayList();
                 List infoDegrees = new ArrayList();
-                for (int j = 0; j < exam.getAssociatedExecutionCourses().size(); j++) {
-                    ExecutionCourse tempExecutionCourse = exam.getAssociatedExecutionCourses().get(j);
+                for (ExecutionCourse tempExecutionCourse : exam.getAssociatedExecutionCoursesSet()) {
                     infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(tempExecutionCourse));
 
                     // prepare degrees associated with exam
-                    List tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();
-                    for (int k = 0; k < tempAssociatedCurricularCourses.size(); k++) {
-                        Degree tempDegree =
-                                ((CurricularCourse) tempAssociatedCurricularCourses.get(k)).getDegreeCurricularPlan().getDegree();
+                    Collection<CurricularCourse> tempAssociatedCurricularCourses =
+                            executionCourse.getAssociatedCurricularCoursesSet();
+                    for (CurricularCourse curricularCourse : tempAssociatedCurricularCourses) {
+                        Degree tempDegree = curricularCourse.getDegreeCurricularPlan().getDegree();
                         infoDegrees.add(InfoDegree.newInfoFromDomain(tempDegree));
                     }
                 }

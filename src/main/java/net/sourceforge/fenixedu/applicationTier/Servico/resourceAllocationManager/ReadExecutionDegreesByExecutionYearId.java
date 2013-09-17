@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExecutionDegreesByExecutionYearId {
 
-    @Service
+    @Atomic
     public static List run(String executionYearId) {
 
         List<InfoExecutionDegree> infoExecutionDegreeList = null;
@@ -24,7 +24,7 @@ public class ReadExecutionDegreesByExecutionYearId {
         if (StringUtils.isEmpty(executionYearId)) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         } else {
-            executionYear = AbstractDomainObject.fromExternalId(executionYearId);
+            executionYear = FenixFramework.getDomainObject(executionYearId);
         }
 
         List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear.getYear());

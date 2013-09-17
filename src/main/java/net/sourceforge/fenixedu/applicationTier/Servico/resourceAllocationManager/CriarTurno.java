@@ -9,17 +9,18 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CriarTurno {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static InfoShift run(InfoShiftEditor infoTurno) {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         final ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(infoTurno.getInfoDisciplinaExecucao().getExternalId());
+                FenixFramework.getDomainObject(infoTurno.getInfoDisciplinaExecucao().getExternalId());
         final Shift newShift = new Shift(executionCourse, infoTurno.getTipos(), infoTurno.getLotacao());
         return InfoShift.newInfoFromDomain(newShift);
     }

@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,12 +43,13 @@ public class ReadExecutionCoursesAction extends FenixAction {
         List executionCourses = null;
 
         try {
-            executionCourses = ReadExecutionCoursesByExecutionPeriod.run(request.getParameter("executionPeriodId"));
+            executionCourses =
+                    new ArrayList(ReadExecutionCoursesByExecutionPeriod.run(request.getParameter("executionPeriodId")));
 
             if (executionCourses != null && executionCourses.size() > 0) {
                 Collections.sort(executionCourses, new BeanComparator("nome"));
                 InfoExecutionPeriod infoExecutionPeriod =
-                        ((InfoExecutionCourse) executionCourses.get(0)).getInfoExecutionPeriod();
+                        ((InfoExecutionCourse) executionCourses.iterator().next()).getInfoExecutionPeriod();
 
                 String executionPeriodNameAndYear =
                         new String(infoExecutionPeriod.getName() + "-" + infoExecutionPeriod.getInfoExecutionYear().getYear());

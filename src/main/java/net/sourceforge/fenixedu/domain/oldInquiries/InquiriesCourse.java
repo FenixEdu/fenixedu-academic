@@ -220,4 +220,299 @@ public class InquiriesCourse extends InquiriesCourse_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRoom> getAssociatedInquiriesRooms() {
+        return getAssociatedInquiriesRoomsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedInquiriesRooms() {
+        return !getAssociatedInquiriesRoomsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesTeacher> getAssociatedInquiriesTeachers() {
+        return getAssociatedInquiriesTeachersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedInquiriesTeachers() {
+        return !getAssociatedInquiriesTeachersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasArithmeticMeanClassification() {
+        return getArithmeticMeanClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasHighWorkLoadReasonLackOfPreviousPreparation() {
+        return getHighWorkLoadReasonLackOfPreviousPreparation() != null;
+    }
+
+    @Deprecated
+    public boolean hasHighWorkLoadReasonCurricularProgramExtension() {
+        return getHighWorkLoadReasonCurricularProgramExtension() != null;
+    }
+
+    @Deprecated
+    public boolean hasKnowledgeAndComprehensionOfCU() {
+        return getKnowledgeAndComprehensionOfCU() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeeklySpentHours() {
+        return getWeeklySpentHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasWellStructuredOfCU() {
+        return getWellStructuredOfCU() != null;
+    }
+
+    @Deprecated
+    public boolean hasContributionForGraduation() {
+        return getContributionForGraduation() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponseDateTime() {
+        return getResponseDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasHighWorkLoadReasonComplexProjects() {
+        return getHighWorkLoadReasonComplexProjects() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegreeCourse() {
+        return getExecutionDegreeCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasGoodGuidanceMaterial() {
+        return getGoodGuidanceMaterial() != null;
+    }
+
+    @Deprecated
+    public boolean hasCriticSenseAndReflexiveSpirit() {
+        return getCriticSenseAndReflexiveSpirit() != null;
+    }
+
+    @Deprecated
+    public boolean hasGlobalAppreciation() {
+        return getGlobalAppreciation() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyDaysSpentInExamsSeason() {
+        return getStudyDaysSpentInExamsSeason() != null;
+    }
+
+    @Deprecated
+    public boolean hasNotAnsweredJustification() {
+        return getNotAnsweredJustification() != null;
+    }
+
+    @Deprecated
+    public boolean hasKnowledgeApplicationOfCU() {
+        return getKnowledgeApplicationOfCU() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnswerDuration() {
+        return getAnswerDuration() != null;
+    }
+
+    @Deprecated
+    public boolean hasFairEvaluationMethods() {
+        return getFairEvaluationMethods() != null;
+    }
+
+    @Deprecated
+    public boolean hasOnlineInfo() {
+        return getOnlineInfo() != null;
+    }
+
+    @Deprecated
+    public boolean hasHighWorkLoadReasonPersonalOrTeamProblems() {
+        return getHighWorkLoadReasonPersonalOrTeamProblems() != null;
+    }
+
+    @Deprecated
+    public boolean hasCooperationAndComunicationCapacity() {
+        return getCooperationAndComunicationCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyMethodAttendToClasses() {
+        return getStudyMethodAttendToClasses() != null;
+    }
+
+    @Deprecated
+    public boolean hasHighWorkLoadReasonCuOrganizationProblems() {
+        return getHighWorkLoadReasonCuOrganizationProblems() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyMethodSuggestedBibliography() {
+        return getStudyMethodSuggestedBibliography() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentFirstEnrollment() {
+        return getStudentFirstEnrollment() != null;
+    }
+
+    @Deprecated
+    public boolean hasGlobalClassificationOfCU() {
+        return getGlobalClassificationOfCU() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovationRatioClassification() {
+        return getApprovationRatioClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeeklyHoursSpentInClassesSeason() {
+        return getWeeklyHoursSpentInClassesSeason() != null;
+    }
+
+    @Deprecated
+    public boolean hasHighWorkLoadReasonOtherReasons() {
+        return getHighWorkLoadReasonOtherReasons() != null;
+    }
+
+    @Deprecated
+    public boolean hasPredictedProgramTeached() {
+        return getPredictedProgramTeached() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyMethodStudentDocuments() {
+        return getStudyMethodStudentDocuments() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCurricularYear() {
+        return getStudentCurricularYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegreeStudent() {
+        return getExecutionDegreeStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasPreviousKnowledgeEnoughToCUAttendance() {
+        return getPreviousKnowledgeEnoughToCUAttendance() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyMethodTeacherDocuments() {
+        return getStudyMethodTeacherDocuments() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyMethodOther() {
+        return getStudyMethodOther() != null;
+    }
+
+    @Deprecated
+    public boolean hasAutonomousLearningCapacity() {
+        return getAutonomousLearningCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyElementsContribution() {
+        return getStudyElementsContribution() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationMethodAdequation() {
+        return getEvaluationMethodAdequation() != null;
+    }
+
+    @Deprecated
+    public boolean hasHighWorkLoadReasonLackOfAttendanceOfLessons() {
+        return getHighWorkLoadReasonLackOfAttendanceOfLessons() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeeklyHoursSpentPercentage() {
+        return getWeeklyHoursSpentPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasHighWorkLoadReasonExtenseProjects() {
+        return getHighWorkLoadReasonExtenseProjects() != null;
+    }
+
+    @Deprecated
+    public boolean hasClassificationInThisCU() {
+        return getClassificationInThisCU() != null;
+    }
+
+    @Deprecated
+    public boolean hasActivityParticipation() {
+        return getActivityParticipation() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentSchoolClass() {
+        return getStudentSchoolClass() != null;
+    }
+
+    @Deprecated
+    public boolean hasSocialAndProfessionalContextAnalysis() {
+        return getSocialAndProfessionalContextAnalysis() != null;
+    }
+
+    @Deprecated
+    public boolean hasNotAnsweredOtherJustification() {
+        return getNotAnsweredOtherJustification() != null;
+    }
+
+    @Deprecated
+    public boolean hasClassCoordination() {
+        return getClassCoordination() != null;
+    }
+
+    @Deprecated
+    public boolean hasEntryGradeClassification() {
+        return getEntryGradeClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasHighWorkLoadReasonManyProjects() {
+        return getHighWorkLoadReasonManyProjects() != null;
+    }
+
+    @Deprecated
+    public boolean hasRecomendendBibliographyImportance() {
+        return getRecomendendBibliographyImportance() != null;
+    }
+
+    @Deprecated
+    public boolean hasPreviousKnowledgeArticulation() {
+        return getPreviousKnowledgeArticulation() != null;
+    }
+
 }

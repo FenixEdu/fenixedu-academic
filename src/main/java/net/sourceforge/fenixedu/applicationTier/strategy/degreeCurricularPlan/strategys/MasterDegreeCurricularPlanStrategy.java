@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
@@ -39,7 +39,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 
         DegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
 
-        List enrolments = studentCurricularPlan.getEnrolments();
+        Collection enrolments = studentCurricularPlan.getEnrolmentsSet();
 
         Iterator iterator = enrolments.iterator();
 
@@ -73,7 +73,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
         // DegreeCurricularPlan degreeCurricularPlan =
         // super.getDegreeCurricularPlan();
 
-        List enrolments = studentCurricularPlan.getEnrolments();
+        Collection enrolments = studentCurricularPlan.getEnrolmentsSet();
 
         Iterator iterator = enrolments.iterator();
 

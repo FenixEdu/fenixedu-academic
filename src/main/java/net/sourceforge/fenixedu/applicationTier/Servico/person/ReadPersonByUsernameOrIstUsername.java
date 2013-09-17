@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadPersonByUsernameOrIstUsername {
 
-    @Service
+    @Atomic
     public static Person run(String username) throws FenixServiceException {
         return Person.readPersonByUsername(username);
     }

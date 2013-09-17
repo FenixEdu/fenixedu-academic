@@ -14,14 +14,14 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
 import org.apache.commons.lang.StringUtils;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 
     static {
-        ExternalCurricularCourseUnit.addListener(new RelationAdapter<ExternalCurricularCourse, Unit>() {
+        getRelationExternalCurricularCourseUnit().addListener(new RelationAdapter<Unit, ExternalCurricularCourse>() {
             @Override
-            public void beforeAdd(ExternalCurricularCourse externalCurricularCourse, Unit unit) {
+            public void beforeAdd(Unit unit, ExternalCurricularCourse externalCurricularCourse) {
                 if (unit != null) {
                     if (!unit.isUniversityUnit() && !unit.isSchoolUnit() && !unit.isDepartmentUnit()) {
                         throw new DomainException("error.extraCurricularCourse.invalid.unit.type");
@@ -72,8 +72,8 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 
     public void delete() {
         if (canBeDeleted()) {
-            removeRootDomainObject();
-            removeUnit();
+            setRootDomainObject(null);
+            setUnit(null);
             super.deleteDomainObject();
         } else {
             throw new DomainException("error.external.enrolment.cannot.be.deleted");
@@ -160,4 +160,35 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
         }
         return result;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment> getExternalEnrolments() {
+        return getExternalEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExternalEnrolments() {
+        return !getExternalEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

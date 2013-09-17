@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOffice;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentAdmOffice", path = "/supportLessonsManagement",
         input = "/supportLessonsManagement.do?method=prepareEdit&page=0", attribute = "supportLessonForm",
@@ -69,7 +70,7 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
 
         SupportLesson supportLesson = null;
         if (!StringUtils.isEmpty(supportLesssonID)) {
-            supportLesson = AbstractDomainObject.fromExternalId(supportLesssonID);
+            supportLesson = FenixFramework.getDomainObject(supportLesssonID);
             if (!professorship.getSupportLessons().contains(supportLesson)) {
                 return mapping.findForward("teacher-not-found");
             }
@@ -82,7 +83,7 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
     private boolean isTeacherOfManageableDepartments(Teacher teacher, ExecutionSemester executionSemester,
             HttpServletRequest request) {
         IUserView userView = UserView.getUser();
-        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
         List<Unit> workingPlacesByPeriod =
                 teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
                         executionSemester.getEndDateYearMonthDay());

@@ -35,7 +35,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -182,7 +182,7 @@ public abstract class RequestUtils {
             }
             request.setAttribute("degreeCurricularPlanID", executionDegree.getInfoDegreeCurricularPlan().getExternalId());
             request.setAttribute("executionDegree",
-                    AbstractDomainObject.fromExternalId(executionDegree.getExternalId()));
+                    FenixFramework.getDomainObject(executionDegree.getExternalId()));
         }
 
     }

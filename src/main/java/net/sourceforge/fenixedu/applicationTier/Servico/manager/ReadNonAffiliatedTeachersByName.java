@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Ricardo Rodrigues
@@ -49,7 +49,7 @@ public class ReadNonAffiliatedTeachersByName {
 
     private static final ReadNonAffiliatedTeachersByName serviceInstance = new ReadNonAffiliatedTeachersByName();
 
-    @Service
+    @Atomic
     public static List runReadNonAffiliatedTeachersByName(String nameToSearch) throws NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

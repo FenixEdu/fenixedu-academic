@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AlumniManagement implements IAlumniManagement {
 
@@ -28,8 +28,7 @@ public class AlumniManagement implements IAlumniManagement {
             MessageContext context) throws NotAuthorizedException {
 
         checkPermissions(username, password, context);
-        AlumniIdentityCheckRequest identityCheckRequest =
-                (AlumniIdentityCheckRequest) AbstractDomainObject.fromOID(Long.valueOf(requestOID));
+        AlumniIdentityCheckRequest identityCheckRequest = FenixFramework.getDomainObject(requestOID);
         if (identityCheckRequest != null && identityCheckRequest.getRequestToken().equals(UUID.fromString(requestUUID))) {
             return identityCheckRequest.getAlumni().getLoginUsername();
         }

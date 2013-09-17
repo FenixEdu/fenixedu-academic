@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.IFileManager;
 
@@ -188,7 +188,7 @@ public class Fetcher {
     }
 
     private File getFileFromUrl(final String oid) {
-        return AbstractDomainObject.fromExternalId(oid);
+        return FenixFramework.getDomainObject(oid);
     }
 
     private String getDspaceFileId(String url) {

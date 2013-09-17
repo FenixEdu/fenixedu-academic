@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +10,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class RoomSubdivision extends RoomSubdivision_Base {
 
@@ -22,9 +23,9 @@ public class RoomSubdivision extends RoomSubdivision_Base {
     }
 
     @Override
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted roomSubdivision", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkPermissionsToManageSpace);
         super.delete();
     }
 

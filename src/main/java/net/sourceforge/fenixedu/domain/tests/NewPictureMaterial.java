@@ -31,4 +31,9 @@ public class NewPictureMaterial extends NewPictureMaterial_Base {
         return new NewPictureMaterial(this.getTestElement(), this.getInline(), this.getPictureMaterialFile());
     }
 
+    @Deprecated
+    public boolean hasPictureMaterialFile() {
+        return getPictureMaterialFile() != null;
+    }
+
 }

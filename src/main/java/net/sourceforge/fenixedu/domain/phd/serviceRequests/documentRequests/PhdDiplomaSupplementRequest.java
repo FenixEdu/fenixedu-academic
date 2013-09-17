@@ -338,4 +338,9 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
     public boolean isProgrammeLinkVisible() {
         return getPhdIndividualProgramProcess().isCurrentUserAllowedToManageProcess();
     }
+    @Deprecated
+    public boolean hasRegistryDiplomaRequest() {
+        return getRegistryDiplomaRequest() != null;
+    }
+
 }

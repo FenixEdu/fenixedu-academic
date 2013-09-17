@@ -47,7 +47,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -202,8 +202,8 @@ public class SummariesManagementDA extends FenixDispatchAction {
         bean.setLessonType(null);
 
         Lesson lesson = bean.getLesson();
-        if (lesson != null && lesson.getShift().getCourseLoadsCount() == 1) {
-            bean.setLessonType(lesson.getShift().getCourseLoads().get(0).getType());
+        if (lesson != null && lesson.getShift().getCourseLoadsSet().size() == 1) {
+            bean.setLessonType(lesson.getShift().getCourseLoads().iterator().next().getType());
         }
 
         return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
@@ -458,10 +458,10 @@ public class SummariesManagementDA extends FenixDispatchAction {
                         loggedProfessorship, nextPossibleLessonsDates);
 
         Shift shift = nextSummaryDateBean.getLesson().getShift();
-        if (shift.getCourseLoadsCount() != 1) {
+        if (shift.getCourseLoadsSet().size() != 1) {
             request.setAttribute("notShowLessonPlanningsAndSummaries", Boolean.TRUE);
         } else {
-            nextSummaryDateBean.setLessonType(shift.getCourseLoads().get(0).getType());
+            nextSummaryDateBean.setLessonType(shift.getCourseLoads().iterator().next().getType());
             bean.setLessonType(nextSummaryDateBean.getLessonType());
         }
 
@@ -513,15 +513,15 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
                 NextPossibleSummaryLessonsAndDatesBean nextLesson =
                         NextPossibleSummaryLessonsAndDatesBean.getNewInstance(lessonRepresentation);
-                if (nextLesson.getLesson().getShift().getCourseLoadsCount() == 1) {
-                    nextLesson.setLessonType(nextLesson.getLesson().getShift().getCourseLoads().get(0).getType());
+                if (nextLesson.getLesson().getShift().getCourseLoadsSet().size() == 1) {
+                    nextLesson.setLessonType(nextLesson.getLesson().getShift().getCourseLoads().iterator().next().getType());
                 }
 
                 nextPossibleLessonsDates.add(nextLesson);
 
                 ShiftType lessonType = null;
-                if (nextLesson.getLesson().getShift().getCourseLoadsCount() == 1) {
-                    lessonType = nextLesson.getLesson().getShift().getCourseLoads().get(0).getType();
+                if (nextLesson.getLesson().getShift().getCourseLoadsSet().size() == 1) {
+                    lessonType = nextLesson.getLesson().getShift().getCourseLoads().iterator().next().getType();
                     if (shiftType == null) {
                         shiftType = lessonType;
                     } else if (!shiftType.equals(lessonType)) {
@@ -838,14 +838,14 @@ public class SummariesManagementDA extends FenixDispatchAction {
         final String executionCourseIDString =
                 request.getParameterMap().containsKey("executionCourseID") ? request.getParameter("executionCourseID") : (String) request
                         .getAttribute("executionCourseID");
-        return AbstractDomainObject.fromExternalId(executionCourseIDString);
+        return FenixFramework.getDomainObject(executionCourseIDString);
     }
 
     private Summary getSummaryFromParameter(final HttpServletRequest request) {
         final String summaryIDString =
                 request.getParameterMap().containsKey("summaryID") ? request.getParameter("summaryID") : (String) request
                         .getAttribute("summaryID");
-        return AbstractDomainObject.fromExternalId(summaryIDString);
+        return FenixFramework.getDomainObject(summaryIDString);
     }
 
     private NextPossibleSummaryLessonsAndDatesBean getNextSummaryDateBeanFromParameter(final HttpServletRequest request) {
@@ -862,7 +862,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
                         .getAttribute("teacher");
         if (!StringUtils.isEmpty(professorshipIDString)
                 && !(professorshipIDString.equals("0") || professorshipIDString.equals("-1"))) {
-            return AbstractDomainObject.fromExternalId(professorshipIDString);
+            return FenixFramework.getDomainObject(professorshipIDString);
         }
         return null;
     }

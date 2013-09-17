@@ -33,12 +33,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/residenceManagement", module = "residenceManagement")
 @Forwards({
@@ -199,7 +199,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 
     private ResidenceMonth getResidenceMonth(HttpServletRequest request) {
         String oid = request.getParameter("monthOID");
-        return oid == null ? null : (ResidenceMonth) AbstractDomainObject.fromOID(Long.valueOf(oid));
+        return oid == null ? null : FenixFramework.<ResidenceMonth> getDomainObject(oid);
     }
 
     public ActionForward generateDebts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -217,7 +217,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
         return importData(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     public void makePayments(List<ResidenceEventBean> events, HttpServletRequest request) throws Exception {
         for (ResidenceEventBean event : events) {
             ResidenceDebtEventBean debtEvent = (ResidenceDebtEventBean) event;

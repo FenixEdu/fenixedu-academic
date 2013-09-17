@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CareerWorkshopConfirmation extends CareerWorkshopConfirmation_Base {
 
@@ -29,32 +29,67 @@ public class CareerWorkshopConfirmation extends CareerWorkshopConfirmation_Base 
         setCareerWorkshopApplication(application);
     }
 
-    @Service
+    @Atomic
     public void delete() {
-        removeStudent();
-        removeCareerWorkshopApplication();
-        removeCareerWorkshopConfirmationEvent();
-        removeRootDomainObject();
+        setStudent(null);
+        setCareerWorkshopApplication(null);
+        setCareerWorkshopConfirmationEvent(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
-    @Service
+    @Atomic
     @Override
     public void setConfirmation(Boolean confirmation) {
         super.setConfirmation(confirmation);
     }
 
-    @Service
+    @Atomic
     @Override
     public void setConfirmationCode(String confirmationCode) {
         super.setConfirmationCode(confirmationCode);
     }
 
-    @Service
+    @Atomic
     public void sealConfirmation() {
         DateTime timestamp = new DateTime();
         setSealStamp(timestamp);
         getCareerWorkshopConfirmationEvent().setLastUpdate(timestamp);
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasConfirmation() {
+        return getConfirmation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCareerWorkshopConfirmationEvent() {
+        return getCareerWorkshopConfirmationEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasConfirmationCode() {
+        return getConfirmationCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasSealStamp() {
+        return getSealStamp() != null;
+    }
+
+    @Deprecated
+    public boolean hasCareerWorkshopApplication() {
+        return getCareerWorkshopApplication() != null;
     }
 
 }

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.Tutor
 
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TutorshipSummary extends TutorshipSummary_Base {
 
@@ -29,7 +29,7 @@ public class TutorshipSummary extends TutorshipSummary_Base {
         return !(curDate.isBefore(beginDate) || curDate.isAfter(endDate));
     }
 
-    @Service
+    @Atomic
     public void update(final CreateSummaryBean bean, boolean relations) {
         setHowManyContactsEmail(bean.getHowManyContactsEmail());
         setHowManyContactsPhone(bean.getHowManyContactsPhone());
@@ -73,7 +73,7 @@ public class TutorshipSummary extends TutorshipSummary_Base {
         }
     }
 
-    @Service
+    @Atomic
     static public TutorshipSummary create(final CreateSummaryBean bean) {
         TutorshipSummary tutorshipSummary = new TutorshipSummary();
 
@@ -101,4 +101,189 @@ public class TutorshipSummary extends TutorshipSummary_Base {
         }
         return semesters;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipSummaryRelation> getTutorshipSummaryRelations() {
+        return getTutorshipSummaryRelationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTutorshipSummaryRelations() {
+        return !getTutorshipSummaryRelationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDifficulties() {
+        return getDifficulties() != null;
+    }
+
+    @Deprecated
+    public boolean hasHowManyReunionsGroup() {
+        return getHowManyReunionsGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasSuggestions() {
+        return getSuggestions() != null;
+    }
+
+    @Deprecated
+    public boolean hasGainsR6() {
+        return getGainsR6() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsR4() {
+        return getProblemsR4() != null;
+    }
+
+    @Deprecated
+    public boolean hasGainsR7() {
+        return getGainsR7() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsR5() {
+        return getProblemsR5() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsR10() {
+        return getProblemsR10() != null;
+    }
+
+    @Deprecated
+    public boolean hasGainsR10() {
+        return getGainsR10() != null;
+    }
+
+    @Deprecated
+    public boolean hasGainsR8() {
+        return getGainsR8() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsR2() {
+        return getProblemsR2() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemester() {
+        return getSemester() != null;
+    }
+
+    @Deprecated
+    public boolean hasGainsR9() {
+        return getGainsR9() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsR3() {
+        return getProblemsR3() != null;
+    }
+
+    @Deprecated
+    public boolean hasGains() {
+        return getGains() != null;
+    }
+
+    @Deprecated
+    public boolean hasHowManyReunionsIndividual() {
+        return getHowManyReunionsIndividual() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsR1() {
+        return getProblemsR1() != null;
+    }
+
+    @Deprecated
+    public boolean hasHowManyContactsEmail() {
+        return getHowManyContactsEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsOther() {
+        return getProblemsOther() != null;
+    }
+
+    @Deprecated
+    public boolean hasGainsR1() {
+        return getGainsR1() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsR8() {
+        return getProblemsR8() != null;
+    }
+
+    @Deprecated
+    public boolean hasGainsR2() {
+        return getGainsR2() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsR9() {
+        return getProblemsR9() != null;
+    }
+
+    @Deprecated
+    public boolean hasGainsR3() {
+        return getGainsR3() != null;
+    }
+
+    @Deprecated
+    public boolean hasTutorshipSummarySatisfaction() {
+        return getTutorshipSummarySatisfaction() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsR6() {
+        return getProblemsR6() != null;
+    }
+
+    @Deprecated
+    public boolean hasGainsR4() {
+        return getGainsR4() != null;
+    }
+
+    @Deprecated
+    public boolean hasGainsR5() {
+        return getGainsR5() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsR7() {
+        return getProblemsR7() != null;
+    }
+
+    @Deprecated
+    public boolean hasGainsOther() {
+        return getGainsOther() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasTutorshipSummaryProgramAssessment() {
+        return getTutorshipSummaryProgramAssessment() != null;
+    }
+
+    @Deprecated
+    public boolean hasHowManyContactsPhone() {
+        return getHowManyContactsPhone() != null;
+    }
+
 }

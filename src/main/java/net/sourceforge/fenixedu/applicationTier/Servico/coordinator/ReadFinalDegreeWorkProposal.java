@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -20,14 +20,14 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadFinalDegreeWorkProposal {
 
     protected InfoProposal run(String finalDegreeWorkProposalOID) throws FenixServiceException {
-        return InfoProposal.newInfoFromDomain(AbstractDomainObject.<Proposal> fromExternalId(finalDegreeWorkProposalOID));
+        return InfoProposal.newInfoFromDomain(FenixFramework.<Proposal> getDomainObject(finalDegreeWorkProposalOID));
     }
 
     // Service Invokers migrated from Berserk
 
     private static final ReadFinalDegreeWorkProposal serviceInstance = new ReadFinalDegreeWorkProposal();
 
-    @Service
+    @Atomic
     public static InfoProposal runReadFinalDegreeWorkProposal(String DegreeWorkProposalOID) throws FenixServiceException,
             NotAuthorizedException {
         try {

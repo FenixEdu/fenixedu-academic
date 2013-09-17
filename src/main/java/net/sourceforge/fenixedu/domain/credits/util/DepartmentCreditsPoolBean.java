@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DepartmentCreditsPoolBean implements Serializable {
 
@@ -260,7 +260,7 @@ public class DepartmentCreditsPoolBean implements Serializable {
 
     }
 
-    @Service
+    @Atomic
     public void editUnitCredits() {
         BigDecimal newAssignedCredits = BigDecimal.ZERO;
         for (DepartmentExecutionCourse departmentExecutionCourse : otherDepartmentSharedExecutionCourses) {

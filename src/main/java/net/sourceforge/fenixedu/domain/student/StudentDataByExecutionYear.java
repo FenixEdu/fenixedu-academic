@@ -65,11 +65,36 @@ public class StudentDataByExecutionYear extends StudentDataByExecutionYear_Base 
     }
 
     public void delete() {
-        removeExecutionYear();
-        removeResidenceCandidacy();
-        removeStudent();
-        removeRootDomainObject();
+        setExecutionYear(null);
+        setResidenceCandidacy(null);
+        setStudent(null);
+        setRootDomainObject(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWorkingStudent() {
+        return getWorkingStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasResidenceCandidacy() {
+        return getResidenceCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
     }
 
 }

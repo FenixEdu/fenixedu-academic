@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain.material;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -18,19 +20,17 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-
 public abstract class Material extends Material_Base {
 
     public final static Comparator<Material> COMPARATOR_BY_IDENTIFICATION = new ComparatorChain();
     public final static Comparator<Material> COMPARATOR_BY_CLASS_NAME = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_IDENTIFICATION).addComparator(new BeanComparator("identification"));
-        ((ComparatorChain) COMPARATOR_BY_IDENTIFICATION).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_IDENTIFICATION).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
         ((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("class.simpleName"));
         ((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("acquisition"));
-        ((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public abstract String getMaterialSpaceOccupationSlotName();
@@ -68,7 +68,7 @@ public abstract class Material extends Material_Base {
     }
 
     public Unit getOwner() {
-        List<ResourceResponsibility> list = getResourceResponsibility();
+        Collection<ResourceResponsibility> list = getResourceResponsibility();
         for (ResourceResponsibility resourceResponsibility : list) {
             if (resourceResponsibility.isMaterialResponsibility()) {
                 return (Unit) resourceResponsibility.getParty();
@@ -78,7 +78,7 @@ public abstract class Material extends Material_Base {
     }
 
     private void deleteOwner() {
-        List<ResourceResponsibility> list = getResourceResponsibility();
+        Collection<ResourceResponsibility> list = getResourceResponsibility();
         for (Iterator<ResourceResponsibility> iter = list.iterator(); iter.hasNext();) {
             ResourceResponsibility responsibility = iter.next();
             if (responsibility.isMaterialResponsibility()) {
@@ -167,4 +167,35 @@ public abstract class Material extends Material_Base {
         Collections.sort(result, COMPARATOR_BY_IDENTIFICATION);
         return result;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation> getMaterialSpaceOccupations() {
+        return getMaterialSpaceOccupationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMaterialSpaceOccupations() {
+        return !getMaterialSpaceOccupationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAcquisition() {
+        return getAcquisition() != null;
+    }
+
+    @Deprecated
+    public boolean hasBarCodeNumber() {
+        return getBarCodeNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasIdentification() {
+        return getIdentification() != null;
+    }
+
+    @Deprecated
+    public boolean hasCease() {
+        return getCease() != null;
+    }
+
 }

@@ -12,20 +12,21 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadAvailableExecutionPeriods {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static List run(List<String> unavailableExecutionPeriodsIDs) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         final Collection<ExecutionSemester> filteredExecutionPeriods =
                 new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriodsSet());
         for (final String executionPeriodID : unavailableExecutionPeriodsIDs) {
-            final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
+            final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
             filteredExecutionPeriods.remove(executionSemester);
         }
         return (List) CollectionUtils.collect(filteredExecutionPeriods, TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);

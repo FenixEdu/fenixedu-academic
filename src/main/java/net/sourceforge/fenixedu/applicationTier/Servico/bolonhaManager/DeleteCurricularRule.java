@@ -5,14 +5,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteCurricularRule {
 
-    @Service
+    @Atomic
     public static void run(String curricularRuleID) throws FenixServiceException {
-        final CurricularRule curricularRule = AbstractDomainObject.fromExternalId(curricularRuleID);
+        final CurricularRule curricularRule = FenixFramework.getDomainObject(curricularRuleID);
         if (curricularRule == null) {
             throw new FenixServiceException("error.noCurricularRule");
         }

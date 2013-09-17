@@ -17,9 +17,10 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
@@ -27,11 +28,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class CreateGratuityTransaction {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String guideEntryID, IUserView userView) {
+        check(RolePredicates.MANAGER_PREDICATE);
 
-        GuideEntry guideEntry = AbstractDomainObject.fromExternalId(guideEntryID);
+        GuideEntry guideEntry = FenixFramework.getDomainObject(guideEntryID);
 
         Guide guide = guideEntry.getGuide();
         Registration registration = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);

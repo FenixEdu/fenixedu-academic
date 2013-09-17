@@ -31,7 +31,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "coordinator", path = "/tutorManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "prepareChooseTutorHistory", path = "/tutorManagement.do?method=prepareChooseTutorHistory"),
@@ -66,7 +66,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
         }
 
         final ExecutionDegree executionDegree =
-                (ExecutionDegree) AbstractDomainObject.fromExternalId(bean.getExecutionDegreeID());
+                (ExecutionDegree) FenixFramework.getDomainObject(bean.getExecutionDegreeID());
 
         if (!validateDegreeTypeAccessRestrictions(executionDegree)) {
             addActionMessage(request, "error.tutor.notAuthorized.notBolonhaOrLEEC");
@@ -91,7 +91,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
         TutorshipManagementBean bean = (TutorshipManagementBean) request.getAttribute("tutorshipManagementBean");
 
         if (request.getParameter("chooseFromList") != null) {
-            ExecutionDegree executiondegree = AbstractDomainObject.fromExternalId(bean.getExecutionDegreeID());
+            ExecutionDegree executiondegree = FenixFramework.getDomainObject(bean.getExecutionDegreeID());
             List<TutorBean> possibleTutorsForExecutionDegree = getAllPossibleTutors(bean, executiondegree);
 
             request.setAttribute("tutors", possibleTutorsForExecutionDegree);
@@ -105,7 +105,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         TutorshipManagementBean bean = (TutorshipManagementBean) request.getAttribute("tutorshipManagementBean");
 
-        final ExecutionDegree executiondegree = AbstractDomainObject.fromExternalId(bean.getExecutionDegreeID());
+        final ExecutionDegree executiondegree = FenixFramework.getDomainObject(bean.getExecutionDegreeID());
         final Teacher teacher = User.readUserByUserUId(bean.getTeacherId()).getPerson().getTeacher();
 
         if (teacher == null) {
@@ -135,7 +135,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareChooseTutorHistory(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final TutorshipManagementBean bean = (TutorshipManagementBean) request.getAttribute("tutorshipManagementBean");
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(bean.getExecutionDegreeID());
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(bean.getExecutionDegreeID());
 
         if (request.getParameter("filtered") != null) {
             request.setAttribute("teachers", getTutorsWithTutorshipHistory(bean, executionDegree));

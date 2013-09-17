@@ -97,7 +97,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 
     @Override
     public Dismissal getDismissal(final CurricularCourse curricularCourse) {
-        return hasNoEnrolCurricularCourses(curricularCourse) ? this : null;
+        return getNoEnrolCurricularCoursesSet().contains(curricularCourse) ? this : null;
     }
 
     @Override
@@ -121,7 +121,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     private boolean hasSameNoEnrolCurricularCourses(final Collection<CurricularCourse> curricularCourses,
             final CreditsDismissal dismissal) {
         return curricularCourses.containsAll(dismissal.getNoEnrolCurricularCourses())
-                && curricularCourses.size() == dismissal.getNoEnrolCurricularCoursesCount();
+                && curricularCourses.size() == dismissal.getNoEnrolCurricularCoursesSet().size();
     }
 
     private boolean hasSameEctsCredits(final Double ectsCredits, final CreditsDismissal dismissal) {
@@ -138,4 +138,15 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     public Grade getEctsGrade(DateTime processingDate) {
         return EctsTableIndex.convertGradeToEcts(getStudentCurricularPlan().getDegree(), this, getGrade(), processingDate);
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getNoEnrolCurricularCourses() {
+        return getNoEnrolCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNoEnrolCurricularCourses() {
+        return !getNoEnrolCurricularCoursesSet().isEmpty();
+    }
+
 }

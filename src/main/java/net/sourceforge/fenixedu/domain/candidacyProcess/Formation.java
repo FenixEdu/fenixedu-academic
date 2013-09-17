@@ -75,4 +75,24 @@ public class Formation extends Formation_Base {
                 StringUtils.isEmpty(getConclusionGrade()) ? StringUtils.EMPTY : getConclusionGrade());
     }
 
+    @Deprecated
+    public boolean hasIndividualCandidacy() {
+        return getIndividualCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasConcluded() {
+        return getConcluded() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionExecutionYear() {
+        return getConclusionExecutionYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionGrade() {
+        return getConclusionGrade() != null;
+    }
+
 }

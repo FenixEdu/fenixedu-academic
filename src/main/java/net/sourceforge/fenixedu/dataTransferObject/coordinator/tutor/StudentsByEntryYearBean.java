@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Month;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class StudentsByEntryYearBean implements Serializable {
     private String teacherId;
@@ -176,7 +176,7 @@ public class StudentsByEntryYearBean implements Serializable {
         List<Person> studentsNotRegistered = new ArrayList<Person>();
         if (personsExternalIds != null) {
             for (String studentIID : personsExternalIds) {
-                Person person = AbstractDomainObject.fromExternalId(studentIID);
+                Person person = FenixFramework.getDomainObject(studentIID);
                 Student student = person.getStudent();
                 Registration registration = student.getActiveRegistrationFor(executionDegree.getDegree());
                 if (registration != null) {

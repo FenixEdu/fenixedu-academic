@@ -8,10 +8,10 @@ package net.sourceforge.fenixedu.domain;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -32,9 +32,8 @@ import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
  * 
@@ -43,16 +42,16 @@ import dml.runtime.RelationAdapter;
 public class Attends extends Attends_Base {
 
     static {
-        ExecutionCourseAttends.addListener(new RelationAdapter<Attends, ExecutionCourse>() {
+        getRelationExecutionCourseAttends().addListener(new RelationAdapter<ExecutionCourse, Attends>() {
             @Override
-            public void afterAdd(Attends attends, ExecutionCourse executionCourse) {
+            public void afterAdd(ExecutionCourse executionCourse, Attends attends) {
                 if (executionCourse != null && attends != null) {
                     for (Grouping grouping : executionCourse.getGroupings()) {
-                        if (grouping.getAutomaticEnrolment() && !grouping.getStudentGroups().isEmpty()) {
+                        if (grouping.getAutomaticEnrolment() && !grouping.getStudentGroupsSet().isEmpty()) {
                             grouping.addAttends(attends);
 
                             int groupNumber = 1;
-                            final List<StudentGroup> studentGroups = new ArrayList<StudentGroup>(grouping.getStudentGroups());
+                            final List<StudentGroup> studentGroups = new ArrayList<StudentGroup>(grouping.getStudentGroupsSet());
                             Collections.sort(studentGroups, StudentGroup.COMPARATOR_BY_GROUP_NUMBER);
 
                             for (final StudentGroup studentGroup : studentGroups) {
@@ -62,7 +61,7 @@ public class Attends extends Attends_Base {
                                 groupNumber = studentGroup.getGroupNumber() + 1;
                             }
 
-                            grouping.setGroupMaximumNumber(grouping.getStudentGroupsCount() + 1);
+                            grouping.setGroupMaximumNumber(grouping.getStudentGroupsSet().size() + 1);
                             try {
                                 GroupEnrolment.enrole(grouping.getExternalId(), null, groupNumber, new ArrayList<String>(),
                                         attends.getRegistration().getStudent().getPerson().getUsername());
@@ -83,7 +82,7 @@ public class Attends extends Attends_Base {
             final Integer n1 = attends1.getRegistration().getStudent().getNumber();
             final Integer n2 = attends2.getRegistration().getStudent().getNumber();
             int res = n1.compareTo(n2);
-            return res != 0 ? res : COMPARATOR_BY_ID.compare(attends1, attends2);
+            return res != 0 ? res : DomainObjectUtil.COMPARATOR_BY_ID.compare(attends1, attends2);
         }
     };
 
@@ -115,7 +114,7 @@ public class Attends extends Attends_Base {
             final ExecutionCourse executionCourse1 = o1.getExecutionCourse();
             final ExecutionCourse executionCourse2 = o2.getExecutionCourse();
             final int c = Collator.getInstance().compare(executionCourse1.getNome(), executionCourse2.getNome());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };
@@ -139,57 +138,34 @@ public class Attends extends Attends_Base {
     public void delete() throws DomainException {
         if (canDelete()) {
 
-            for (; hasAnyWeeklyWorkLoads(); getWeeklyWorkLoads().get(0).delete()) {
+            for (; hasAnyWeeklyWorkLoads(); getWeeklyWorkLoads().iterator().next().delete()) {
                 ;
             }
 
             getProjectSubmissionLogsSet().clear();
             getGroupingsSet().clear();
-            removeAluno();
-            removeDisciplinaExecucao();
-            removeEnrolment();
+            setAluno(null);
+            setDisciplinaExecucao(null);
+            setEnrolment(null);
 
-            removeRootDomainObject();
+            setRootDomainObject(null);
             deleteDomainObject();
         }
     }
 
-    public List<StudentGroup> getAllStudentGroups() {
-        return super.getStudentGroups();
-    }
-
-    @Override
-    public List<StudentGroup> getStudentGroups() {
-        List<StudentGroup> result = new ArrayList<StudentGroup>();
-        for (StudentGroup sg : super.getStudentGroups()) {
-            if (sg.getValid()) {
-                result.add(sg);
-            }
-        }
-        return Collections.unmodifiableList(result);
-    }
-
-    @Override
-    public int getStudentGroupsCount() {
-        return this.getStudentGroups().size();
-    }
-
-    @Override
-    public Iterator<StudentGroup> getStudentGroupsIterator() {
-        // TODO Auto-generated method stub
-        return this.getStudentGroups().iterator();
+    public Collection<StudentGroup> getAllStudentGroups() {
+        return super.getStudentGroupsSet();
     }
 
     @Override
     public Set<StudentGroup> getStudentGroupsSet() {
-        // TODO Auto-generated method stub
-        return new TreeSet<StudentGroup>(this.getStudentGroups());
-    }
-
-    @Override
-    public boolean hasStudentGroups(StudentGroup studentGroups) {
-        // TODO Auto-generated method stub
-        return this.getStudentGroups().contains(studentGroups);
+        Set<StudentGroup> result = new TreeSet<StudentGroup>();
+        for (StudentGroup sg : super.getStudentGroupsSet()) {
+            if (sg.getValid()) {
+                result.add(sg);
+            }
+        }
+        return Collections.unmodifiableSet(result);
     }
 
     private boolean canDelete() {
@@ -566,13 +542,104 @@ public class Attends extends Attends_Base {
         return !getExecutionPeriod().isBefore(to.getStartExecutionPeriod());
     }
 
-    @Service
+    @Atomic
     public void deleteShiftEnrolments() {
         final Registration registration = getRegistration();
         final ExecutionCourse executionCourse = getExecutionCourse();
         for (final Shift shift : executionCourse.getAssociatedShifts()) {
             shift.removeStudents(registration);
         }
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService> getDegreeProjectTutorialServices() {
+        return getDegreeProjectTutorialServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeProjectTutorialServices() {
+        return !getDegreeProjectTutorialServicesSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Grouping> getGroupings() {
+        return getGroupingsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGroupings() {
+        return !getGroupingsSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Mark> getAssociatedMarks() {
+        return getAssociatedMarksSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedMarks() {
+        return !getAssociatedMarksSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmissionLog> getProjectSubmissionLogs() {
+        return getProjectSubmissionLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjectSubmissionLogs() {
+        return !getProjectSubmissionLogsSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad> getWeeklyWorkLoads() {
+        return getWeeklyWorkLoadsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWeeklyWorkLoads() {
+        return !getWeeklyWorkLoadsSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmission> getProjectSubmissions() {
+        return getProjectSubmissionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjectSubmissions() {
+        return !getProjectSubmissionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentGroups() {
+        return !getStudentGroupsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAluno() {
+        return getAluno() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolment() {
+        return getEnrolment() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisciplinaExecucao() {
+        return getDisciplinaExecucao() != null;
     }
 
 }

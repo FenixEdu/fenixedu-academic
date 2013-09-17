@@ -10,9 +10,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AuthenticateKerberos extends Authenticate {
 
@@ -24,14 +23,15 @@ public class AuthenticateKerberos extends Authenticate {
             personID = person.getExternalId();
         }
 
+        @Atomic
         @Override
         public void run() {
-            Transaction.withTransaction(this);
+            doIt();
         }
 
         @Override
         public void doIt() {
-            final Person person = (Person) AbstractDomainObject.fromExternalId(personID);
+            final Person person = (Person) FenixFramework.getDomainObject(personID);
             doIt(person);
         }
 
@@ -142,7 +142,7 @@ public class AuthenticateKerberos extends Authenticate {
 
     private static final AuthenticateKerberos serviceInstance = new AuthenticateKerberos();
 
-    @Service
+    @Atomic
     public static IUserView runKerberosExternalAuthentication(final String username, final String password,
             final String requestURL, final String remoteHost) throws ExcepcaoAutenticacao, FenixServiceException {
         return serviceInstance.run(username, password, requestURL, remoteHost);
@@ -150,7 +150,7 @@ public class AuthenticateKerberos extends Authenticate {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static void runAuthenticateKerberos(final String username, final String password, final String requestURL,
             final String remoteHost) throws ExcepcaoAutenticacao, FenixServiceException {
         serviceInstance.run(username, password, requestURL, remoteHost);

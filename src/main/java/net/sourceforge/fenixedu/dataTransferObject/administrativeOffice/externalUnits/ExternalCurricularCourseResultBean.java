@@ -42,7 +42,7 @@ public class ExternalCurricularCourseResultBean extends AbstractExternalUnitResu
     }
 
     public int getNumberOfExternalEnrolments() {
-        return getExternalCurricularCourse().getExternalEnrolmentsCount();
+        return getExternalCurricularCourse().getExternalEnrolments().size();
     }
 
     @Override

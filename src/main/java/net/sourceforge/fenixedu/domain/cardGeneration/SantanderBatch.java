@@ -44,15 +44,15 @@ public class SantanderBatch extends SantanderBatch_Base {
         if (getSantanderBatchSender() != null) {
             getSantanderBatchSender().delete();
         }
-        removeSantanderSequenceNumberGenerator();
+        setSantanderSequenceNumberGenerator(null);
         for (SantanderEntry entry : getSantanderEntries()) {
             entry.delete();
         }
         for (SantanderProblem problem : getSantanderProblems()) {
             problem.delete();
         }
-        removeExecutionYear();
-        removeRootDomainObject();
+        setExecutionYear(null);
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
     }
@@ -116,7 +116,7 @@ public class SantanderBatch extends SantanderBatch_Base {
     private StringBuilder buildTrailer(StringBuilder stringBuilder) throws Exception {
         String recordType = "9";
 
-        String numberOfEntries = makeZeroPaddedNumber(getSantanderEntriesCount(), 5);
+        String numberOfEntries = makeZeroPaddedNumber(getSantanderEntriesSet().size(), 5);
 
         String filler = makeStringBlock("", 1493);
 
@@ -150,6 +150,71 @@ public class SantanderBatch extends SantanderBatch_Base {
         }
         String format = "%0" + size + "d";
         return String.format(format, number);
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderProblem> getSantanderProblems() {
+        return getSantanderProblemsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySantanderProblems() {
+        return !getSantanderProblemsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderEntry> getSantanderEntries() {
+        return getSantanderEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySantanderEntries() {
+        return !getSantanderEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSent() {
+        return getSent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasSantanderBatchSender() {
+        return getSantanderBatchSender() != null;
+    }
+
+    @Deprecated
+    public boolean hasSantanderSequenceNumberGenerator() {
+        return getSantanderSequenceNumberGenerator() != null;
+    }
+
+    @Deprecated
+    public boolean hasSantanderBatchRequester() {
+        return getSantanderBatchRequester() != null;
+    }
+
+    @Deprecated
+    public boolean hasSequenceNumber() {
+        return getSequenceNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasGenerated() {
+        return getGenerated() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
     }
 
 }

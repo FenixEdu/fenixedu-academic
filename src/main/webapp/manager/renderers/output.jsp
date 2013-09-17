@@ -1,7 +1,7 @@
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
 <!-- Title and TOC -->
 <a name="top"></a>
@@ -30,7 +30,7 @@
 </p>
 
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px;">
-    <pre>&lt;%@ taglib uri=&quot;/WEB-INF/fenix-renderers.tld&quot; prefix=&quot;fr&quot; %&gt;</pre>
+    <pre>&lt;%@ taglib uri=&quot;http://fenix-ashes.ist.utl.pt/fenix-renderers&quot; prefix=&quot;fr&quot; %&gt;</pre>
 </div>
 
 <p>
@@ -533,7 +533,7 @@
 </p>
 
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px">
-    <pre>&lt;%@ taglib uri=&quot;/WEB-INF/fenix-template.tld&quot; prefix=&quot;ft&quot; %&gt;
+    <pre>&lt;%@ taglib uri=&quot;http://fenix-ashes.ist.utl.pt/fenix-template&quot; prefix=&quot;ft&quot; %&gt;
 
 &lt;!-- Defines a page attribute with the value of the property &quot;name&quot; of the shown object --&gt;
 &lt;ft:define id=&quot;personName&quot; property=&quot;name&quot;/&gt;

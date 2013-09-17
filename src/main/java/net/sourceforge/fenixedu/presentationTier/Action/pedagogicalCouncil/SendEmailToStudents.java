@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "pedagogicalCouncil", path = "/sendEmailToStudents", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -52,7 +52,7 @@ public class SendEmailToStudents extends FenixDispatchAction {
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         request.setAttribute("currentExecutionYear", currentExecutionYear);
         if (electionPeriodBean == null) {
-            final Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("degreeOID"));
+            final Degree degree = FenixFramework.getDomainObject(request.getParameter("degreeOID"));
 
             electionPeriodBean = new ElectionPeriodBean();
             electionPeriodBean.setDegree(degree);
@@ -86,7 +86,7 @@ public class SendEmailToStudents extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(request.getParameter("executionYear"));
         CurricularYear curricularYear = CurricularYear.readByYear(Integer.valueOf(request.getParameter("curricularYear")));
-        Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("degreeId"));
+        Degree degree = FenixFramework.getDomainObject(request.getParameter("degreeId"));
 
         StudentsByDegreeAndCurricularYear studentsByDegreeAndCurricularYear =
                 new StudentsByDegreeAndCurricularYear(degree, curricularYear, executionYear);

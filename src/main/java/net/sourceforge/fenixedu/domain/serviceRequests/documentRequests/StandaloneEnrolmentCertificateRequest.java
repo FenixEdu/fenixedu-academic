@@ -15,7 +15,7 @@ public class StandaloneEnrolmentCertificateRequest extends StandaloneEnrolmentCe
         this();
         super.init(bean);
         checkParameters(bean);
-        super.getEnrolments().addAll(bean.getEnrolments());
+        super.getEnrolmentsSet().addAll(bean.getEnrolments());
     }
 
     @Override
@@ -27,7 +27,7 @@ public class StandaloneEnrolmentCertificateRequest extends StandaloneEnrolmentCe
 
     @Override
     public Integer getNumberOfUnits() {
-        return super.getEnrolmentsCount();
+        return super.getEnrolmentsSet().size();
     }
 
     @Override
@@ -61,9 +61,19 @@ public class StandaloneEnrolmentCertificateRequest extends StandaloneEnrolmentCe
 
         if (academicServiceRequestBean.isToCancelOrReject()) {
             for (; hasAnyEnrolments();) {
-                removeEnrolments(getEnrolments().get(0));
+                removeEnrolments(getEnrolments().iterator().next());
             }
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
+        return getEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolments() {
+        return !getEnrolmentsSet().isEmpty();
     }
 
 }

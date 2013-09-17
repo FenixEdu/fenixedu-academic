@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadExecutionPeriodsEnrolment {
 
@@ -51,7 +51,7 @@ public class ReadExecutionPeriodsEnrolment {
 
     private static final ReadExecutionPeriodsEnrolment serviceInstance = new ReadExecutionPeriodsEnrolment();
 
-    @Service
+    @Atomic
     public static List<InfoExecutionPeriod> runReadExecutionPeriodsEnrollmentFenix(DegreeType degreeType) {
         return serviceInstance.run(degreeType);
     }

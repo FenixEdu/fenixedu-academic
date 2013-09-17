@@ -6,4 +6,14 @@ public class UsernameCounter extends UsernameCounter_Base {
         super();
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInvitationCounter() {
+        return getInvitationCounter() != null;
+    }
+
 }

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.candi
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
@@ -31,7 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
@@ -102,11 +103,11 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
             final List<ExecutionInterval> executionIntervals = getExecutionIntervalsWithCandidacyPeriod();
 
             if (executionIntervals.size() == 1) {
-                final ExecutionInterval executionInterval = executionIntervals.get(0);
+                final ExecutionInterval executionInterval = executionIntervals.iterator().next();
                 final List<SecondCycleCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
                 if (candidacyProcesses.size() == 1) {
-                    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+                    setCandidacyProcessInformation(request, candidacyProcesses.iterator().next());
                     setCandidacyProcessInformation(actionForm, getProcess(request));
                     request.setAttribute("candidacyProcesses", candidacyProcesses);
                     return;
@@ -127,7 +128,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
                 final List<SecondCycleCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
                 if (candidacyProcesses.size() == 1) {
-                    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+                    setCandidacyProcessInformation(request, candidacyProcesses.iterator().next());
                     setCandidacyProcessInformation(actionForm, getProcess(request));
                     request.setAttribute("candidacyProcesses", candidacyProcesses);
                     return;
@@ -283,7 +284,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     @Override
     protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-        List<IndividualCandidacyProcess> processes = process.getChildProcesses();
+        Collection<IndividualCandidacyProcess> processes = process.getChildProcesses();
         List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses =
                 new ArrayList<IndividualCandidacyProcess>();
         Degree selectedDegree = getChooseDegreeBean(request).getDegree();
@@ -303,7 +304,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {
-            return AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
+            return FenixFramework.getDomainObject(degreeCurricularPlanOID);
         }
 
         return null;

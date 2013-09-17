@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.PartyClassification;
@@ -25,7 +26,7 @@ import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -55,7 +56,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
 
         setRequestedAs(creator.getRequestAs() != null ? creator.getRequestAs() : creator.getParkingParty().getSubmitAsRoles()
-                .get(0));
+                .iterator().next());
         boolean limitlessAccessCard = creator.isLimitlessAccessCard();
         if (limitlessAccessCard == false
                 && (creator.getParkingParty().getParty().getPartyClassification().equals(PartyClassification.TEACHER) || creator
@@ -701,7 +702,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
         public ParkingRequestFactoryCreator(ParkingParty parkingParty) {
             super(parkingParty);
-            if ((!getParkingParty().hasAnyParkingRequests()) && parkingParty.getParty().getParkingPartyHistoriesCount() != 0) {
+            if ((!getParkingParty().hasAnyParkingRequests()) && parkingParty.getParty().getParkingPartyHistoriesSet().size() != 0) {
                 Vehicle firstVehicle = parkingParty.getFirstVehicle();
                 if (firstVehicle != null) {
                     setFirstCarPlateNumber(firstVehicle.getPlateNumber());
@@ -782,7 +783,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             setDriverLicenseDeliveryType(parkingRequest.getDriverLicenseDeliveryType());
 
             if (!parkingRequest.getVehicles().isEmpty()) {
-                Vehicle firstVehicle = parkingRequest.getVehicles().get(0);
+                Vehicle firstVehicle = parkingRequest.getVehicles().iterator().next();
                 setFirstVechicleID(firstVehicle.getExternalId());
                 setFirstCarMake(firstVehicle.getVehicleMake());
                 setFirstCarPlateNumber(firstVehicle.getPlateNumber());
@@ -797,7 +798,9 @@ public class ParkingRequest extends ParkingRequest_Base {
             }
 
             if (parkingRequest.getVehicles().size() > 1) {
-                Vehicle secondVehicle = parkingRequest.getVehicles().get(1);
+                Iterator<Vehicle> vehicles = parkingRequest.getVehiclesSet().iterator();
+                vehicles.next();
+                Vehicle secondVehicle = vehicles.next();
                 setSecondVechicleID(secondVehicle.getExternalId());
                 setSecondCarMake(secondVehicle.getVehicleMake());
                 setSecondCarPlateNumber(secondVehicle.getPlateNumber());
@@ -832,7 +835,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                 parkingRequest.edit(this);
                 VirtualPath filePath = getFilePath(parkingRequest.getExternalId());
                 writeDriverLicenseFile(parkingRequest, filePath);
-                Vehicle firstVehicle = AbstractDomainObject.fromExternalId(getFirstVechicleID());
+                Vehicle firstVehicle = FenixFramework.getDomainObject(getFirstVechicleID());
                 if (firstVehicle != null) {
                     firstVehicle.setPlateNumber(getFirstCarPlateNumber());
                     firstVehicle.setVehicleMake(getFirstCarMake());
@@ -843,7 +846,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                     writeFirstVehicleDocuments(firstVehicle, filePath);
                 }
                 if (getSecondVechicleID() != null) {
-                    Vehicle secondVehicle = AbstractDomainObject.fromExternalId(getSecondVechicleID());
+                    Vehicle secondVehicle = FenixFramework.getDomainObject(getSecondVechicleID());
 
                     if (getSecondCarMake() == null) {
                         secondVehicle.delete();
@@ -919,12 +922,12 @@ public class ParkingRequest extends ParkingRequest_Base {
 
     public void delete() {
         if (canBeDeleted()) {
-            for (; getVehicles().size() != 0; getVehicles().get(0).delete()) {
+            for (; getVehicles().size() != 0; getVehicles().iterator().next().delete()) {
                 ;
             }
             deleteDriverLicenseDocument();
-            removeParkingParty();
-            removeRootDomainObject();
+            setParkingParty(null);
+            setRootDomainObject(null);
             deleteDomainObject();
         }
     }
@@ -936,4 +939,125 @@ public class ParkingRequest extends ParkingRequest_Base {
     public boolean getHasHistory() {
         return getParkingParty().getParty().getParkingPartyHistories().size() != 0;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.parking.Vehicle> getVehicles() {
+        return getVehiclesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVehicles() {
+        return !getVehiclesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasParkingRequestType() {
+        return getParkingRequestType() != null;
+    }
+
+    @Deprecated
+    public boolean hasParkingRequestState() {
+        return getParkingRequestState() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhone() {
+        return getPhone() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstCarPropertyRegistryDocumentState() {
+        return getFirstCarPropertyRegistryDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestedAs() {
+        return getRequestedAs() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstCarOwnerIdDocumentState() {
+        return getFirstCarOwnerIdDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstCarInsuranceDocumentState() {
+        return getFirstCarInsuranceDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasNote() {
+        return getNote() != null;
+    }
+
+    @Deprecated
+    public boolean hasDriverLicenseDeliveryType() {
+        return getDriverLicenseDeliveryType() != null;
+    }
+
+    @Deprecated
+    public boolean hasDriverLicenseDocument() {
+        return getDriverLicenseDocument() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCarOwnerIdDocumentState() {
+        return getSecondCarOwnerIdDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstCarDeclarationDocumentState() {
+        return getFirstCarDeclarationDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasParkingParty() {
+        return getParkingParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCarDeclarationDocumentState() {
+        return getSecondCarDeclarationDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmail() {
+        return getEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasLimitlessAccessCard() {
+        return getLimitlessAccessCard() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCarPropertyRegistryDocumentState() {
+        return getSecondCarPropertyRegistryDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobile() {
+        return getMobile() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCarInsuranceDocumentState() {
+        return getSecondCarInsuranceDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasDriverLicenseDocumentState() {
+        return getDriverLicenseDocumentState() != null;
+    }
+
 }

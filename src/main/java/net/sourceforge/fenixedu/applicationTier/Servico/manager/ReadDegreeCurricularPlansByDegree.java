@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -19,9 +19,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadDegreeCurricularPlansByDegree {
 
-    @Service
+    @Atomic
     public static List run(String idDegree) throws FenixServiceException {
-        final Degree degree = AbstractDomainObject.fromExternalId(idDegree);
+        final Degree degree = FenixFramework.getDomainObject(idDegree);
 
         List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
 

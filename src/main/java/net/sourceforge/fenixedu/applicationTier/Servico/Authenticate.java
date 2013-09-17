@@ -37,8 +37,8 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
@@ -133,7 +133,7 @@ public class Authenticate implements Serializable {
 
         @Override
         public Person getPerson() {
-            return personOid != null ? (Person) AbstractDomainObject.fromExternalId(personOid) : null;
+            return personOid != null ? (Person) FenixFramework.getDomainObject(personOid) : null;
         }
 
         @Override
@@ -318,13 +318,13 @@ public class Authenticate implements Serializable {
 
     private static final Authenticate serviceInstance = new Authenticate();
 
-    @Service
+    @Atomic
     public static IUserView runAuthenticate(String username, String password, String requestURL, String remoteHost)
             throws ExcepcaoAutenticacao, FenixServiceException {
         return serviceInstance.run(username, password, requestURL, remoteHost);
     }
 
-    @Service
+    @Atomic
     public static IUserView runAuthenticate(final CASReceipt receipt, final String requestURL, final String remoteHost)
             throws ExcepcaoAutenticacao, FenixServiceException, ExcepcaoPersistencia {
         return serviceInstance.run(receipt, requestURL, remoteHost);
@@ -332,7 +332,7 @@ public class Authenticate implements Serializable {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static IUserView runLocalAuthenticate(String username, String password, String requestURL, String remoteHost)
             throws ExcepcaoAutenticacao, FenixServiceException {
         return serviceInstance.run(username, password, requestURL, remoteHost);

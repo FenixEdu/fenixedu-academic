@@ -38,4 +38,9 @@ public class PastFreeSolicitationAcademicRequestEvent extends PastFreeSolicitati
         return labelFormatter;
     }
 
+    @Deprecated
+    public boolean hasPastAmount() {
+        return getPastAmount() != null;
+    }
+
 }

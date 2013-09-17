@@ -20,62 +20,63 @@ import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalPartic
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateResearchActivityParticipation {
 
-    @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(ResearchEvent event, ResearchActivityParticipationRole role, Person person,
             MultiLanguageString roleMessage) throws FenixServiceException {
+        check(ResultPredicates.author);
 
         new EventParticipation(person, role, event, roleMessage);
     }
 
-    @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(ScientificJournal journal, ResearchActivityParticipationRole role, Person person,
             MultiLanguageString roleMessage, YearMonthDay begin, YearMonthDay end) throws FenixServiceException {
+        check(ResultPredicates.author);
 
         new ScientificJournalParticipation(person, role, journal, roleMessage, begin, end);
     }
 
-    @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(ScientificJournal journal, ParticipantBean bean) throws FenixServiceException {
+        check(ResultPredicates.author);
         Unit unit = getUnit(bean.getUnit(), bean.getUnitName(), bean.isExternalParticipation());
 
         new ScientificJournalParticipation(unit, bean.getRole(), journal, bean.getRoleMessage(), bean.getBeginDate(),
                 bean.getEndDate());
     }
 
-    @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(ResearchEvent event, ParticipantBean bean) throws FenixServiceException {
+        check(ResultPredicates.author);
 
         Unit unit = getUnit(bean.getUnit(), bean.getUnitName(), bean.isExternalParticipation());
         new EventParticipation(unit, bean.getRole(), event, bean.getRoleMessage());
     }
 
-    @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(JournalIssue issue, ResearchActivityParticipationRole role, Person person,
             MultiLanguageString roleMessage) {
+        check(ResultPredicates.author);
         new JournalIssueParticipation(issue, role, person, roleMessage);
     }
 
-    @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(EventEdition edition, ResearchActivityParticipationRole role, Person person,
             MultiLanguageString roleMessage) {
+        check(ResultPredicates.author);
         new EventEditionParticipation(person, role, edition, roleMessage);
     }
 
-    @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(ResearchCooperationCreationBean cooperationBean, Person person) throws FenixServiceException {
+        check(ResultPredicates.author);
 
         Unit unit = getUnit(cooperationBean.getUnit(), cooperationBean.getUnitName(), cooperationBean.isExternalParticipation());
 

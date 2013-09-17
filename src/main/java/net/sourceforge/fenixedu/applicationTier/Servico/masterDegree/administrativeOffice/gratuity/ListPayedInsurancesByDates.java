@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -13,7 +14,7 @@ import net.sourceforge.fenixedu.domain.transactions.Transaction;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -21,12 +22,12 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ListPayedInsurancesByDates {
 
-    @Service
+    @Atomic
     public static List<InsuranceTransaction> run(ExecutionYear executionYear, YearMonthDay beginDate, YearMonthDay endDate) {
 
         List<InsuranceTransaction> insuranceTransactions = new ArrayList<InsuranceTransaction>();
 
-        List<Transaction> transactions = RootDomainObject.getInstance().getTransactions();
+        Collection<Transaction> transactions = RootDomainObject.getInstance().getTransactions();
         for (Transaction transaction : transactions) {
             if (transaction instanceof InsuranceTransaction) {
                 InsuranceTransaction insuranceTransaction = (InsuranceTransaction) transaction;

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class LoginPeriod extends LoginPeriod_Base {
 
@@ -15,7 +15,7 @@ public class LoginPeriod extends LoginPeriod_Base {
         @Override
         public int compare(LoginPeriod o1, LoginPeriod o2) {
             final int c = o1.getBeginDate().compareTo(o2.getBeginDate());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };
@@ -42,7 +42,7 @@ public class LoginPeriod extends LoginPeriod_Base {
 
     public void delete() {
         super.setLogin(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -60,4 +60,24 @@ public class LoginPeriod extends LoginPeriod_Base {
         final YearMonthDay end = getEndDate();
         return start != null && (end == null || !start.isAfter(end));
     }
+    @Deprecated
+    public boolean hasLogin() {
+        return getLogin() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
 }

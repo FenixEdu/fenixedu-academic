@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class FixedSetGroup extends LeafGroup {
 
@@ -121,7 +121,7 @@ public class FixedSetGroup extends LeafGroup {
             for (Object object : arguments) {
                 Person person;
                 if (object instanceof String) {
-                    person = AbstractDomainObject.fromExternalId((String) object);
+                    person = FenixFramework.getDomainObject((String) object);
                 } else if (object instanceof Person) {
                     person = (Person) object;
                 } else {

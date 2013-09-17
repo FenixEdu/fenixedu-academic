@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandidacySubmission_Base implements
         Comparable<OutboundMobilityCandidacySubmission> {
@@ -27,7 +27,7 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
         submission.apply(contest);
     }
 
-    @Service
+    @Atomic
     public void apply(final OutboundMobilityCandidacyContest contest) {
         for (final OutboundMobilityCandidacy candidacy : getOutboundMobilityCandidacySet()) {
             if (candidacy.getOutboundMobilityCandidacyContest() == contest) {
@@ -37,7 +37,7 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
         new OutboundMobilityCandidacy(contest, this);
     }
 
-    @Service
+    @Atomic
     private static OutboundMobilityCandidacySubmission getOutboundMobilityCandidacySubmission(
             final OutboundMobilityCandidacyContest contest, final Registration registration) {
         final OutboundMobilityCandidacyPeriod candidacyPeriod = contest.getOutboundMobilityCandidacyPeriod();
@@ -50,9 +50,9 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
     }
 
     public void delete() {
-        removeOutboundMobilityCandidacyPeriod();
-        removeRegistration();
-        removeRootDomainObject();
+        setOutboundMobilityCandidacyPeriod(null);
+        setRegistration(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -84,7 +84,7 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
         return null;
     }
 
-    @Service
+    @Atomic
     public void setGrade(final OutboundMobilityCandidacyContestGroup mobilityGroup, final BigDecimal grade) {
         for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : getOutboundMobilityCandidacySubmissionGradeSet()) {
             if (submissionGrade.getOutboundMobilityCandidacyContestGroup() == mobilityGroup) {
@@ -121,18 +121,63 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
         return false;
     }
 
-    @Service
+    @Atomic
     public void selectOption(final OutboundMobilityCandidacyPeriodConfirmationOption option) {
         setConfirmationOption(option);
         setConfirmedPlacement(Boolean.TRUE);
     }
 
-    @Service
+    @Atomic
     public void removeOption(final OutboundMobilityCandidacyPeriodConfirmationOption option) {
         if (getConfirmationOption() == option) {
-            removeConfirmationOption();
+            setConfirmationOption(null);
             setConfirmedPlacement(Boolean.FALSE);
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmissionGrade> getOutboundMobilityCandidacySubmissionGrade() {
+        return getOutboundMobilityCandidacySubmissionGradeSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOutboundMobilityCandidacySubmissionGrade() {
+        return !getOutboundMobilityCandidacySubmissionGradeSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy> getOutboundMobilityCandidacy() {
+        return getOutboundMobilityCandidacySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOutboundMobilityCandidacy() {
+        return !getOutboundMobilityCandidacySet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasConfirmationOption() {
+        return getConfirmationOption() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSelectedCandidacy() {
+        return getSelectedCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasOutboundMobilityCandidacyPeriod() {
+        return getOutboundMobilityCandidacyPeriod() != null;
     }
 
 }

@@ -100,7 +100,7 @@ public class ParkingParty extends ParkingParty_Base {
     public ParkingRequest getFirstRequest() {
         List<ParkingRequest> requests = getOrderedParkingRequests();
         if (requests.size() != 0) {
-            return requests.get(0);
+            return requests.iterator().next();
         }
         return null;
     }
@@ -427,16 +427,16 @@ public class ParkingParty extends ParkingParty_Base {
 
     public void delete() {
         if (canBeDeleted()) {
-            removeParty();
-            removeParkingGroup();
+            setParty(null);
+            setParkingGroup(null);
             deleteDriverLicenseDocument();
-            for (; getVehicles().size() != 0; getVehicles().get(0).delete()) {
+            for (; getVehicles().size() != 0; getVehicles().iterator().next().delete()) {
                 ;
             }
-            for (; getParkingRequests().size() != 0; getParkingRequests().get(0).delete()) {
+            for (; getParkingRequests().size() != 0; getParkingRequests().iterator().next().delete()) {
                 ;
             }
-            removeRootDomainObject();
+            setRootDomainObject(null);
             deleteDomainObject();
         }
     }
@@ -521,7 +521,7 @@ public class ParkingParty extends ParkingParty_Base {
         return 0;
     }
 
-    public static List<ParkingParty> getAll() {
+    public static Collection<ParkingParty> getAll() {
         return RootDomainObject.getInstance().getParkingParties();
     }
 
@@ -788,13 +788,148 @@ public class ParkingParty extends ParkingParty_Base {
     public Vehicle getFirstVehicle() {
         List<Vehicle> vehicles = new ArrayList<Vehicle>(getVehicles());
         Collections.sort(vehicles, new BeanComparator("plateNumber"));
-        return vehicles.size() > 0 ? vehicles.get(0) : null;
+        return vehicles.size() > 0 ? vehicles.iterator().next() : null;
     }
 
     public Vehicle getSecondVehicle() {
         List<Vehicle> vehicles = new ArrayList<Vehicle>(getVehicles());
         Collections.sort(vehicles, new BeanComparator("plateNumber"));
         return vehicles.size() > 1 ? vehicles.get(1) : null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.parking.ParkingRequest> getParkingRequests() {
+        return getParkingRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParkingRequests() {
+        return !getParkingRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.parking.Vehicle> getVehicles() {
+        return getVehiclesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVehicles() {
+        return !getVehiclesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasCardNumber() {
+        return getCardNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstCarPropertyRegistryDocumentState() {
+        return getFirstCarPropertyRegistryDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestedAs() {
+        return getRequestedAs() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcceptedRegulation() {
+        return getAcceptedRegulation() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstCarOwnerIdDocumentState() {
+        return getFirstCarOwnerIdDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdNumber() {
+        return getPhdNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasCardStartDate() {
+        return getCardStartDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstCarInsuranceDocumentState() {
+        return getFirstCarInsuranceDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasUsedNumber() {
+        return getUsedNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasDriverLicenseDeliveryType() {
+        return getDriverLicenseDeliveryType() != null;
+    }
+
+    @Deprecated
+    public boolean hasDriverLicenseDocument() {
+        return getDriverLicenseDocument() != null;
+    }
+
+    @Deprecated
+    public boolean hasParkingGroup() {
+        return getParkingGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCarOwnerIdDocumentState() {
+        return getSecondCarOwnerIdDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstCarDeclarationDocumentState() {
+        return getFirstCarDeclarationDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasNotes() {
+        return getNotes() != null;
+    }
+
+    @Deprecated
+    public boolean hasAuthorized() {
+        return getAuthorized() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCarDeclarationDocumentState() {
+        return getSecondCarDeclarationDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCarPropertyRegistryDocumentState() {
+        return getSecondCarPropertyRegistryDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCarInsuranceDocumentState() {
+        return getSecondCarInsuranceDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasDriverLicenseDocumentState() {
+        return getDriverLicenseDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasCardEndDate() {
+        return getCardEndDate() != null;
     }
 
 }

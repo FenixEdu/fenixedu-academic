@@ -13,17 +13,18 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadInfoEnrolmentEvaluationByEvaluationOID {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static InfoEnrolmentEvaluation run(IUserView userView, Integer studentNumber, DegreeType degreeType,
             String enrolmentOID) throws ExcepcaoInexistente, FenixServiceException {
-        return (new GetEnrolmentGrade()).run((Enrolment) AbstractDomainObject.fromExternalId(enrolmentOID));
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
+        return (new GetEnrolmentGrade()).run((Enrolment) FenixFramework.getDomainObject(enrolmentOID));
     }
 
 }

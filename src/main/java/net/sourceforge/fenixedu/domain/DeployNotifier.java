@@ -38,4 +38,19 @@ public class DeployNotifier extends DeployNotifier_Base {
 
         return active;
     }
+    @Deprecated
+    public boolean hasTimeStamp() {
+        return getTimeStamp() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNotifyUsers() {
+        return getNotifyUsers() != null;
+    }
+
 }

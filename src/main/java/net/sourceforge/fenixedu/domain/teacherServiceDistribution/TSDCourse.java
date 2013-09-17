@@ -49,7 +49,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
     }
 
     public TSDCurricularLoad getTSDCurricularLoadByShiftType(ShiftType type) {
-        for (TSDCurricularLoad curricularLoad : super.getTSDCurricularLoads()) {
+        for (TSDCurricularLoad curricularLoad : super.getTSDCurricularLoadsSet()) {
             if (curricularLoad.getType().equals(type)) {
                 return curricularLoad;
             }
@@ -147,7 +147,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
     }
 
     public TSDProcessPhase getTSDProcessPhase() {
-        return getTeacherServiceDistributions().get(0).getTSDProcessPhase();
+        return getTeacherServiceDistributions().iterator().next().getTSDProcessPhase();
     }
 
     public Double getHours(ShiftType type) {
@@ -480,7 +480,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
 
     public CompetenceCourse getCompetenceCourse() {
         if (getAssociatedCurricularCourses().size() > 0) {
-            return getAssociatedCurricularCourses().get(0).getCompetenceCourse();
+            return getAssociatedCurricularCourses().iterator().next().getCompetenceCourse();
         } else {
             return null;
         }
@@ -503,8 +503,8 @@ public abstract class TSDCourse extends TSDCourse_Base {
             load.delete();
         }
 
-        removeExecutionPeriod();
-        removeRootDomainObject();
+        setExecutionPeriod(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -512,7 +512,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
 
         CurricularCourse curricularCourse = null;
         if (getAssociatedCurricularCourses().size() > 0) {
-            curricularCourse = getAssociatedCurricularCourses().get(0);
+            curricularCourse = getAssociatedCurricularCourses().iterator().next();
         }
 
         if (curricularCourse != null) {
@@ -535,7 +535,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
     }
 
     public List<TSDCurricularLoad> getSortedTSDCurricularLoads() {
-        List<TSDCurricularLoad> loads = new ArrayList<TSDCurricularLoad>(super.getTSDCurricularLoads());
+        List<TSDCurricularLoad> loads = new ArrayList<TSDCurricularLoad>(super.getTSDCurricularLoadsSet());
         Collections.sort(loads, new BeanComparator("type"));
         return loads;
     }
@@ -548,4 +548,70 @@ public abstract class TSDCourse extends TSDCourse_Base {
 
         return degrees;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution> getTeacherServiceDistributions() {
+        return getTeacherServiceDistributionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherServiceDistributions() {
+        return !getTeacherServiceDistributionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship> getTSDProfessorships() {
+        return getTSDProfessorshipsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDProfessorships() {
+        return !getTSDProfessorshipsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad> getTSDCurricularLoads() {
+        return getTSDCurricularLoadsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDCurricularLoads() {
+        return !getTSDCurricularLoadsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSecondTimeEnrolledStudentsManual() {
+        return getSecondTimeEnrolledStudentsManual() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsActive() {
+        return getIsActive() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstTimeEnrolledStudentsManual() {
+        return getFirstTimeEnrolledStudentsManual() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstTimeEnrolledStudentsType() {
+        return getFirstTimeEnrolledStudentsType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondTimeEnrolledStudentsType() {
+        return getSecondTimeEnrolledStudentsType() != null;
+    }
+
 }

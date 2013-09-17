@@ -12,7 +12,8 @@ import net.sourceforge.fenixedu.util.Month;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
@@ -44,9 +45,9 @@ public class Inproceedings extends Inproceedings_Base {
         fillAllAttributes(title, keywords, eventEdition, publisher, address, firstPage, lastPage, note, language, url);
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setEditAll(String title, MultiLanguageString keywords, EventEdition eventEdition, String publisher,
             String address, Integer firstPage, Integer lastPage, MultiLanguageString note, String language, String url) {
+        check(this, ResultPredicates.writePredicate);
         super.checkRequiredParameters(keywords, note);
         checkRequiredParameters(title, eventEdition);
         fillAllAttributes(title, keywords, eventEdition, publisher, address, firstPage, lastPage, note, language, url);
@@ -206,8 +207,8 @@ public class Inproceedings extends Inproceedings_Base {
         return this.getEventConferenceArticlesAssociation().getEventEdition();
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setEventEdition(EventEdition eventEdition) {
+        check(this, ResultPredicates.writePredicate);
         EventConferenceArticlesAssociation association = this.getEventConferenceArticlesAssociation();
 
         if (association == null) {
@@ -251,4 +252,24 @@ public class Inproceedings extends Inproceedings_Base {
     public Boolean getIsPossibleSelectPersonRole() {
         return true;
     }
+    @Deprecated
+    public boolean hasFirstPage() {
+        return getFirstPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasAddress() {
+        return getAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastPage() {
+        return getLastPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
 }

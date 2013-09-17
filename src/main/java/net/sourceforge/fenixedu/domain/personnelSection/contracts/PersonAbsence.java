@@ -41,4 +41,14 @@ public class PersonAbsence extends PersonAbsence_Base {
         return getAbsence().getGiveCredits();
     }
 
+    @Deprecated
+    public boolean hasAbsence() {
+        return getAbsence() != null;
+    }
+
+    @Deprecated
+    public boolean hasAbsenceGiafId() {
+        return getAbsenceGiafId() != null;
+    }
+
 }

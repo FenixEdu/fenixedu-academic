@@ -36,7 +36,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DegreeManagementBackingBean extends FenixBackingBean {
@@ -127,7 +127,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public Degree getDegree() {
-        return (degree == null) ? (degree = AbstractDomainObject.fromExternalId(getDegreeId())) : degree;
+        return (degree == null) ? (degree = FenixFramework.getDomainObject(getDegreeId())) : degree;
     }
 
     public String getName() {
@@ -248,7 +248,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         }
 
         try {
-            AdministrativeOffice administrativeOffice = AdministrativeOffice.fromExternalId(getAcademicAdminOfficeId());
+            AdministrativeOffice administrativeOffice = FenixFramework.getDomainObject(getAcademicAdminOfficeId());
             CreateDegree.run(this.name, this.nameEn, this.acronym, DegreeType.valueOf(this.bolonhaDegreeType),
                     this.getEctsCredits(), null, this.prevailingScientificArea, administrativeOffice);
         } catch (IllegalDataAccessException e) {
@@ -354,7 +354,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public ExecutionYear getSelectedExecutionYear() {
-        return AbstractDomainObject.fromExternalId(getSelectedExecutionYearId());
+        return FenixFramework.getDomainObject(getSelectedExecutionYearId());
     }
 
     public List<SelectItem> getOpenExecutionYears() {
@@ -452,7 +452,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         }
 
         // test if the list is already filled, return if so
-        if (this.officialPublicationsBeanPrettyPrints.size() == degree.getOfficialPublicationCount()) {
+        if (this.officialPublicationsBeanPrettyPrints.size() == degree.getOfficialPublicationSet().size()) {
             return this.officialPublicationsBeanPrettyPrints;
         }
 
@@ -681,8 +681,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
         public DegreeOfficialPublication getDegreeOfficialPublication() {
             this.degreeOfficialPublication =
-                    (this.getOfficialPubId() == null ? null : (DegreeOfficialPublication) AbstractDomainObject
-                            .fromExternalId(getOfficialPubId()));
+                    (this.getOfficialPubId() == null ? null : (DegreeOfficialPublication) FenixFramework
+                            .getDomainObject(getOfficialPubId()));
 
             return this.degreeOfficialPublication;
         }
@@ -732,8 +732,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
         public DegreeSpecializationArea getSpecializationAreaToDelete() {
             this.specializationAreaToDelete =
-                    (DegreeSpecializationArea) (getSpecializationIdToDelete() == null ? null : AbstractDomainObject
-                            .fromExternalId(getSpecializationIdToDelete()));
+                    (DegreeSpecializationArea) (getSpecializationIdToDelete() == null ? null : FenixFramework
+                            .getDomainObject(getSpecializationIdToDelete()));
 
             if (getDegreeOfficialPublicationGoBack() == null && this.specializationAreaToDelete != null) {
                 setDegreeOfficialPublicationGoBack(this.specializationAreaToDelete.getOfficialPublication());

@@ -13,4 +13,9 @@ public class SystemSender extends SystemSender_Base {
         setFromName("Sistema Fénix");
         setSystemRootDomainObject(getRootDomainObject());
     }
+    @Deprecated
+    public boolean hasSystemRootDomainObject() {
+        return getSystemRootDomainObject() != null;
+    }
+
 }

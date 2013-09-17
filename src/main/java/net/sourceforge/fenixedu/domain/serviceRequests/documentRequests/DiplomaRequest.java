@@ -26,7 +26,8 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 
 public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaRequest, IRectorateSubmissionBatchDocumentEntry {
 
@@ -169,7 +170,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
             if (!getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
                 RegistryCode code = getRegistryCode();
                 if (code != null) {
-                    if (!code.hasDocumentRequest(this)) {
+                    if (!code.getDocumentRequestSet().contains(this)) {
                         code.addDocumentRequest(this);
                         getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
                     }
@@ -441,8 +442,8 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     }
 
     @Override
-    @Checked("AcademicPredicates.SERVICE_REQUESTS_REVERT_TO_PROCESSING_STATE")
     public void revertToProcessingState() {
+        check(this, AcademicPredicates.SERVICE_REQUESTS_REVERT_TO_PROCESSING_STATE);
         internalRevertToProcessingState();
     }
 
@@ -520,4 +521,10 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     public boolean isProgrammeLinkVisible() {
         return getRegistration().isAllowedToManageRegistration();
     }
+
+    @Deprecated
+    public boolean hasRequestedCycle() {
+        return getRequestedCycle() != null;
+    }
+
 }

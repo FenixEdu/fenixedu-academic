@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.credits;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class DepartmentAdmOfficeShowAllTeacherCreditsResumeAction extends ShowAllTeacherCreditsResumeAction {
 
     public ActionForward prepareTeacherSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         dynaForm.set("method", "showTeacherCreditsResume");
@@ -64,7 +65,7 @@ public class DepartmentAdmOfficeShowAllTeacherCreditsResumeAction extends ShowAl
     private boolean isTeacherOfManageableDepartments(Teacher teacher, ExecutionSemester executionSemester,
             HttpServletRequest request) {
         IUserView userView = UserView.getUser();
-        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
         List<Unit> workingPlacesByPeriod =
                 teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
                         executionSemester.getEndDateYearMonthDay());

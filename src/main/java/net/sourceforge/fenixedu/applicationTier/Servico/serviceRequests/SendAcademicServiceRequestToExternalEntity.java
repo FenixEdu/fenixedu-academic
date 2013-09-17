@@ -48,7 +48,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -70,7 +70,7 @@ public class SendAcademicServiceRequestToExternalEntity {
     // process is open to all
     // degrees
 
-    @Service
+    @Atomic
     public static void run(final AcademicServiceRequest academicServiceRequest, final YearMonthDay sendDate,
             final String justification) {
         academicServiceRequest.sendToExternalEntity(sendDate, justification);
@@ -115,7 +115,7 @@ public class SendAcademicServiceRequestToExternalEntity {
             logger.debug(studentData.toString());
             logger.debug(studentGrades.toString());
 
-            List<IndividualCandidacyDocumentFile> candidacyDocuments =
+            Collection<IndividualCandidacyDocumentFile> candidacyDocuments =
                     individualCandidacy != null ? individualCandidacy.getDocuments() : Collections.EMPTY_LIST;
             final ByteArrayOutputStream resultStream =
                     buildDocumentsStream(candidacyDocuments, studentData.toString(), studentGrades.toString(), registration,

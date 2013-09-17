@@ -10,16 +10,16 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadAllDegreesByType {
 
-    @Service
+    @Atomic
     public static List<InfoDegree> run(String degreeType) throws FenixServiceException {
         return readDegreesByType(DegreeType.valueOf(degreeType));
     }
 
-    @Service
+    @Atomic
     public static List<InfoDegree> run(DegreeType degreeType) throws FenixServiceException {
         return readDegreesByType(degreeType);
     }

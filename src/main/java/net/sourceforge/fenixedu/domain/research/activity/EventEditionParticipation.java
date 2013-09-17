@@ -78,7 +78,7 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
 
     @Override
     public void delete() {
-        removeEventEdition();
+        setEventEdition(null);
         super.delete();
     }
 
@@ -91,6 +91,11 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
     @Override
     public boolean scopeMatches(ScopeType type) {
         return this.getEventEdition().getEvent().getLocationType().equals(type);
+    }
+
+    @Deprecated
+    public boolean hasEventEdition() {
+        return getEventEdition() != null;
     }
 
 }

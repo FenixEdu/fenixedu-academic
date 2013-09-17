@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -16,18 +16,19 @@ import net.sourceforge.fenixedu.domain.Shift;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadShiftsByClass {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static Object run(InfoClass infoClass) {
-        SchoolClass schoolClass = AbstractDomainObject.fromExternalId(infoClass.getExternalId());
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
+        SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
 
-        List<Shift> shifts = schoolClass.getAssociatedShifts();
+        Collection<Shift> shifts = schoolClass.getAssociatedShifts();
 
         return CollectionUtils.collect(shifts, new Transformer() {
             @Override

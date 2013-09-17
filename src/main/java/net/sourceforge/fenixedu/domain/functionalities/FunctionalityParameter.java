@@ -30,11 +30,31 @@ public class FunctionalityParameter extends FunctionalityParameter_Base {
     }
 
     public void delete() {
-        removeType();
-        removeFunctionality();
-        removeRootDomainObject();
+        setType(null);
+        setFunctionality(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasFunctionality() {
+        return getFunctionality() != null;
     }
 
 }

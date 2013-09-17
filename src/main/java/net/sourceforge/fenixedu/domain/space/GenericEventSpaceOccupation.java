@@ -1,22 +1,22 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Base {
 
-    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
     public GenericEventSpaceOccupation(AllocatableSpace allocatableSpace, GenericEvent genericEvent) {
+//        check(this, SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations);
 
         super();
 
@@ -30,14 +30,14 @@ public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Bas
     }
 
     @Override
-    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
     public void delete() {
+        check(this, SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations);
         super.setGenericEvent(null);
         super.delete();
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
     public void verifyIfIsPossibleCloseGenericEvent() {
+        check(this, SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations);
     }
 
     @Override
@@ -107,4 +107,10 @@ public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Bas
     public String getPresentationString() {
         return getGenericEvent().getGanttDiagramEventName().getContent();
     }
+
+    @Deprecated
+    public boolean hasGenericEvent() {
+        return getGenericEvent() != null;
+    }
+
 }

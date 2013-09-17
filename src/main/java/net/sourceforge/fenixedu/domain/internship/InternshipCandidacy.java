@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class InternshipCandidacy extends InternshipCandidacy_Base {
     private static final int MAX_CODE = 999999;
@@ -26,7 +26,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    @Service
+    @Atomic
     public static Integer create(InternshipCandidacyBean bean) throws DuplicateInternshipCandidacy {
         Integer code = new Random(System.currentTimeMillis()).nextInt(MAX_CODE - MIN_CODE) + MIN_CODE;
         for (InternshipCandidacy other : bean.getSession().getInternshipCandidacySet()) {
@@ -49,7 +49,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
         return candidacy.getCandidacyCode();
     }
 
-    @Service
+    @Atomic
     public void edit(InternshipCandidacyBean bean) throws DuplicateInternshipCandidacy {
         beanToModel(bean, this);
     }
@@ -96,15 +96,195 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
         candidacy.setPreviousCandidacy(bean.getPreviousCandidacy());
     }
 
-    @Service
+    @Atomic
     public void delete() {
-        removeInternshipCandidacySession();
-        removeCountryOfBirth();
-        removeFirstDestination();
-        removeSecondDestination();
-        removeThirdDestination();
-        removeUniversity();
-        removeRootDomainObject();
+        setInternshipCandidacySession(null);
+        setCountryOfBirth(null);
+        setFirstDestination(null);
+        setSecondDestination(null);
+        setThirdDestination(null);
+        setUniversity(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasStreet() {
+        return getStreet() != null;
+    }
+
+    @Deprecated
+    public boolean hasBranch() {
+        return getBranch() != null;
+    }
+
+    @Deprecated
+    public boolean hasExpirationDateOfPassport() {
+        return getExpirationDateOfPassport() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTelephone() {
+        return getTelephone() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstDestination() {
+        return getFirstDestination() != null;
+    }
+
+    @Deprecated
+    public boolean hasFrench() {
+        return getFrench() != null;
+    }
+
+    @Deprecated
+    public boolean hasArea() {
+        return getArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyCode() {
+        return getCandidacyCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasThirdDestination() {
+        return getThirdDestination() != null;
+    }
+
+    @Deprecated
+    public boolean hasPassportIdNumber() {
+        return getPassportIdNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasUniversity() {
+        return getUniversity() != null;
+    }
+
+    @Deprecated
+    public boolean hasBirthday() {
+        return getBirthday() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyDate() {
+        return getCandidacyDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCountryOfBirth() {
+        return getCountryOfBirth() != null;
+    }
+
+    @Deprecated
+    public boolean hasPreviousCandidacy() {
+        return getPreviousCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilePhone() {
+        return getMobilePhone() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmissionLocationOfPassport() {
+        return getEmissionLocationOfPassport() != null;
+    }
+
+    @Deprecated
+    public boolean hasExpirationDateOfDocumentId() {
+        return getExpirationDateOfDocumentId() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpanish() {
+        return getSpanish() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentNumber() {
+        return getStudentNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasParishOfBirth() {
+        return getParishOfBirth() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentYear() {
+        return getStudentYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmissionDateOfDocumentId() {
+        return getEmissionDateOfDocumentId() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnglish() {
+        return getEnglish() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmissionLocationOfDocumentId() {
+        return getEmissionLocationOfDocumentId() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasAreaCode() {
+        return getAreaCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmail() {
+        return getEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasGender() {
+        return getGender() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentIdNumber() {
+        return getDocumentIdNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasGerman() {
+        return getGerman() != null;
+    }
+
+    @Deprecated
+    public boolean hasInternshipCandidacySession() {
+        return getInternshipCandidacySession() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondDestination() {
+        return getSecondDestination() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmissionDateOfPassport() {
+        return getEmissionDateOfPassport() != null;
+    }
+
 }

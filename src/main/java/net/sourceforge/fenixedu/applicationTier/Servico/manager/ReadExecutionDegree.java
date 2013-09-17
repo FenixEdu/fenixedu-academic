@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -20,7 +20,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExecutionDegree {
 
     protected InfoExecutionDegree run(String externalId) throws FenixServiceException {
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(externalId);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(externalId);
 
         if (executionDegree == null) {
             throw new NonExistingServiceException();
@@ -33,7 +33,7 @@ public class ReadExecutionDegree {
 
     private static final ReadExecutionDegree serviceInstance = new ReadExecutionDegree();
 
-    @Service
+    @Atomic
     public static InfoExecutionDegree runReadExecutionDegree(String externalId) throws FenixServiceException,
             NotAuthorizedException {
         try {

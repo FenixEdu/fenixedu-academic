@@ -16,7 +16,7 @@ import net.sourceforge.jeuclid.util.Converter;
 import org.apache.avalon.framework.logger.NullLogger;
 import org.apache.tools.ant.filters.StringInputStream;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class MathMlServlet extends HttpServlet {
 
@@ -39,7 +39,7 @@ public class MathMlServlet extends HttpServlet {
             return;
         }
 
-        NewMathMlMaterial mathMlMaterial = AbstractDomainObject.fromExternalId(oid);
+        NewMathMlMaterial mathMlMaterial = FenixFramework.getDomainObject(oid);
 
         response.setContentType("image/gif");
 

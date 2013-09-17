@@ -32,4 +32,19 @@ public class ErasmusCandidacyProcessExecutedAction extends ErasmusCandidacyProce
     public boolean isReceptionEmailExecutedAction() {
         return ExecutedActionType.SENT_RECEPTION_EMAIL.equals(getType());
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess> getSubjectMobilityIndividualApplicationProcess() {
+        return getSubjectMobilityIndividualApplicationProcessSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySubjectMobilityIndividualApplicationProcess() {
+        return !getSubjectMobilityIndividualApplicationProcessSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasMobilityApplicationProcess() {
+        return getMobilityApplicationProcess() != null;
+    }
+
 }

@@ -7,43 +7,44 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class TransferEnrollments {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(final String destinationStudentCurricularPlanId, final String[] enrollmentIDsToTransfer,
             final String destinationCurriculumGroupID) {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         if (!StringUtils.isEmpty(destinationCurriculumGroupID)) {
 
-            CurriculumGroup curriculumGroup = (CurriculumGroup) AbstractDomainObject.fromExternalId(destinationCurriculumGroupID);
+            CurriculumGroup curriculumGroup = (CurriculumGroup) FenixFramework.getDomainObject(destinationCurriculumGroupID);
             StudentCurricularPlan studentCurricularPlan = curriculumGroup.getStudentCurricularPlan();
 
             for (final String enrollmentIDToTransfer : enrollmentIDsToTransfer) {
-                Enrolment enrolment = (Enrolment) AbstractDomainObject.fromExternalId(enrollmentIDToTransfer);
+                Enrolment enrolment = (Enrolment) FenixFramework.getDomainObject(enrollmentIDToTransfer);
 
                 fixEnrolmentCurricularCourse(studentCurricularPlan, enrolment);
 
                 enrolment.setCurriculumGroup(curriculumGroup);
-                enrolment.removeStudentCurricularPlan();
+                enrolment.setStudentCurricularPlan(null);
             }
 
         } else {
 
             final StudentCurricularPlan studentCurricularPlan =
-                    AbstractDomainObject.fromExternalId(destinationStudentCurricularPlanId);
+                    FenixFramework.getDomainObject(destinationStudentCurricularPlanId);
             for (final String enrollmentIDToTransfer : enrollmentIDsToTransfer) {
-                final Enrolment enrollment = (Enrolment) AbstractDomainObject.fromExternalId(enrollmentIDToTransfer);
+                final Enrolment enrollment = (Enrolment) FenixFramework.getDomainObject(enrollmentIDToTransfer);
 
                 fixEnrolmentCurricularCourse(studentCurricularPlan, enrollment);
 
                 if (enrollment.getStudentCurricularPlan() != studentCurricularPlan) {
                     enrollment.setStudentCurricularPlan(studentCurricularPlan);
-                    enrollment.removeCurriculumGroup();
+                    enrollment.setCurriculumGroup(null);
                 }
 
             }

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.operator;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.alumni.AlumniNotificationService;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ValidateAlumniIdentity extends AlumniNotificationService {
 
@@ -20,12 +20,12 @@ public class ValidateAlumniIdentity extends AlumniNotificationService {
 
     private static final ValidateAlumniIdentity serviceInstance = new ValidateAlumniIdentity();
 
-    @Service
+    @Atomic
     public static void runValidateAlumniIdentity(AlumniIdentityCheckRequest identityRequest, Boolean approval, Person operator) {
         serviceInstance.run(identityRequest, approval, operator);
     }
 
-    @Service
+    @Atomic
     public static void runValidateAlumniIdentity(AlumniIdentityCheckRequest identityRequest, Person alumniPerson) {
         serviceInstance.run(identityRequest, alumniPerson);
     }

@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -48,7 +49,6 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -259,7 +259,7 @@ public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
                     final YearMonthDay yearMonthDay1 = o1.getStartDateYearMonthDay();
                     final YearMonthDay yearMonthDay2 = o2.getStartDateYearMonthDay();
                     final int c = yearMonthDay1.compareTo(yearMonthDay2);
-                    return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
                 } else {
                     return degreeType1.compareTo(degreeType2);
                 }
@@ -273,7 +273,7 @@ public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
         return event != null && event.isClosed() ? findPhd(person.getPhdIndividualProgramProcesses()) : null;
     }
 
-    private PhdIndividualProgramProcess findPhd(final List<PhdIndividualProgramProcess> phdIndividualProgramProcesses) {
+    private PhdIndividualProgramProcess findPhd(final Collection<PhdIndividualProgramProcess> phdIndividualProgramProcesses) {
         PhdIndividualProgramProcess result = null;
         for (final PhdIndividualProgramProcess process : phdIndividualProgramProcesses) {
             if (process.getActiveState() == PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
@@ -335,7 +335,7 @@ public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
         CardGenerationEntry result = null;
         for (final CardGenerationEntry entry : person.getCardGenerationEntriesSet()) {
             final CardGenerationBatch batch = entry.getCardGenerationBatch();
-            if (batch.getSent() != null && batch.getCardGenerationProblemsCount() == 0) {
+            if (batch.getSent() != null && batch.getCardGenerationProblemsSet().size() == 0) {
                 if (result == null || result.getCardGenerationBatch().getSent().isBefore(batch.getSent())) {
                     result = entry;
                 }

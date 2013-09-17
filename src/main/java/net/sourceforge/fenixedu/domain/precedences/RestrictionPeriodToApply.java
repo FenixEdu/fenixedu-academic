@@ -38,4 +38,9 @@ public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base {
         return CurricularCourseEnrollmentType.NO_EVALUATE;
     }
 
+    @Deprecated
+    public boolean hasPeriodToApplyRestriction() {
+        return getPeriodToApplyRestriction() != null;
+    }
+
 }

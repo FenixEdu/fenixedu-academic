@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewTeacherResults", module = "publico")
 public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
@@ -39,14 +40,14 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
 
     public static ActionForward getTeacherResultsActionForward(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
-        Professorship professorship = AbstractDomainObject.fromExternalId(request.getParameter("professorshipOID"));
+        Professorship professorship = FenixFramework.getDomainObject(request.getParameter("professorshipOID"));
         ShiftType shiftType = ShiftType.valueOf(request.getParameter("shiftType"));
 
         List<InquiryResult> inquiryResults = professorship.getInquiryResults(shiftType);
 
         ExecutionSemester executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
         ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
-        List<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
+        Collection<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
 
         GroupResultsSummaryBean teacherGroupResultsSummaryBean =
                 getGeneralResults(inquiryResults, resultBlocks, GroupResultType.TEACHER_RESULTS);
@@ -67,7 +68,7 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
         request.setAttribute("professorship", professorship);
         request.setAttribute("executionPeriod", executionPeriod);
         request.setAttribute("blockResultsSummaryBeans", blockResultsSummaryBeans);
-        request.setAttribute("resultsDate", inquiryResults.get(0).getResultDate());
+        request.setAttribute("resultsDate", inquiryResults.iterator().next().getResultDate());
 
         setTeacherScaleColorException(executionPeriod, request);
         request.setAttribute("publicContext", true);

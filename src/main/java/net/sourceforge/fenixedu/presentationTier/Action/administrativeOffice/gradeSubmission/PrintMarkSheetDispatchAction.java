@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
@@ -37,7 +36,6 @@ import org.apache.struts.util.LabelValueBean;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/printMarkSheet", module = "academicAdministration", formBean = "printMarkSheetForm",
         input = "/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0")
@@ -71,12 +69,11 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
     }
 
     private ExecutionSemester getExecutionSemester(DynaActionForm form) {
-        return AbstractDomainObject.fromExternalId(form.getString("ecID"));
+        return getDomainObject(form, "ecID");
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(DynaActionForm form) {
-        final String dcpID = form.getString("dcpID");
-        return !StringUtils.isEmpty(dcpID) ? (DegreeCurricularPlan) AbstractDomainObject.fromExternalId(dcpID) : null;
+        return getDomainObject(form, "dcpID");
     }
 
     private ActionForward choosePrinterMarkSheetsWeb(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -187,7 +184,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
         DynaActionForm form = (DynaActionForm) actionForm;
         String printerName = form.getString("printerName");
         String markSheetString = form.getString("markSheet");
-        MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetString);
+        MarkSheet markSheet = getDomainObject(form, "markSheet");
         ActionMessages actionMessages = new ActionMessages();
 
         try {

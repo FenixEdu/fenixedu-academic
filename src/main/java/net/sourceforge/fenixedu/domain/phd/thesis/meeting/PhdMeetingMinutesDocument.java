@@ -76,4 +76,9 @@ public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
     public PhdProgramProcessDocument getLastVersion() {
         return getPhdMeeting().getLatestDocumentVersion();
     }
+    @Deprecated
+    public boolean hasPhdMeeting() {
+        return getPhdMeeting() != null;
+    }
+
 }

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadStudentCurricularPlanForEnrollmentsWithoutRules {
 
@@ -40,7 +40,7 @@ public class ReadStudentCurricularPlanForEnrollmentsWithoutRules {
     private static final ReadStudentCurricularPlanForEnrollmentsWithoutRules serviceInstance =
             new ReadStudentCurricularPlanForEnrollmentsWithoutRules();
 
-    @Service
+    @Atomic
     public static StudentCurricularPlan runReadStudentCurricularPlanForEnrollmentsWithoutRules(Registration registration,
             DegreeType degreeType, ExecutionSemester executionSemester) throws FenixServiceException, NotAuthorizedException {
         try {

@@ -24,7 +24,7 @@ public class OtherTypeCreditLine extends OtherTypeCreditLine_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -38,6 +38,26 @@ public class OtherTypeCreditLine extends OtherTypeCreditLine_Base {
         }
 
         return result;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasCredits() {
+        return getCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasReason() {
+        return getReason() != null;
     }
 
 }

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,11 +14,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/qualification", module = "manager")
 @Forwards({ @Forward(name = "showQualifications", path = "/manager/qualifications/showQualifications.jsp"),
@@ -47,7 +47,7 @@ public class QualificationDA extends FenixDispatchAction {
         return mapping.findForward("qualification");
     }
 
-    @Service
+    @Atomic
     public ActionForward deleteQualification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         Qualification qualification = getQualificationFromParameter(request);
@@ -69,13 +69,13 @@ public class QualificationDA extends FenixDispatchAction {
 
     protected Person getPersonSelectedFromParameter(HttpServletRequest request) {
         String personIDString = request.getParameter("personID");
-        return AbstractDomainObject.fromExternalId(personIDString);
+        return FenixFramework.getDomainObject(personIDString);
 
     }
 
     protected Qualification getQualificationFromParameter(HttpServletRequest request) {
         String qualificationIDString = request.getParameter("qualificationId");
-        return AbstractDomainObject.fromExternalId(qualificationIDString);
+        return FenixFramework.getDomainObject(qualificationIDString);
     }
 
     private void setAttributePerson(HttpServletRequest request) {
@@ -87,7 +87,7 @@ public class QualificationDA extends FenixDispatchAction {
             HttpServletResponse response) {
         Person person = getPersonSelectedFromParameter(request);
 
-        List<PersonInformationLog> logsList = person.getPersonInformationLogs();
+        Collection<PersonInformationLog> logsList = person.getPersonInformationLogs();
         request.setAttribute("person", person);
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");

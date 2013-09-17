@@ -59,7 +59,7 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
             Collection<CurricularCourse> oldCurricularCourses) {
         int size = oldCurricularCourses.size();
         for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalences()) {
-            int sizeOld = curricularCourseEquivalence.getOldCurricularCoursesCount();
+            int sizeOld = curricularCourseEquivalence.getOldCurricularCoursesSet().size();
             if ((size == sizeOld)
                     && CollectionUtils.intersection(oldCurricularCourses,
                             curricularCourseEquivalence.getOldCurricularCoursesSet()).size() == size) {
@@ -73,7 +73,7 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
         setEquivalentCurricularCourse(null);
         getOldCurricularCourses().clear();
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -92,4 +92,30 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
     public boolean isFrom(DegreeCurricularPlan degreeCurricularPlan) {
         return getDegreeCurricularPlan() == degreeCurricularPlan;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getOldCurricularCourses() {
+        return getOldCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOldCurricularCourses() {
+        return !getOldCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEquivalentCurricularCourse() {
+        return getEquivalentCurricularCourse() != null;
+    }
+
 }

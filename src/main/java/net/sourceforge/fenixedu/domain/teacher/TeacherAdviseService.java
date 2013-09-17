@@ -22,8 +22,8 @@ public class TeacherAdviseService extends TeacherAdviseService_Base {
 
     public void delete(RoleType roleType) {
         getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
-        removeAdvise();
-        removeTeacherService();
+        setAdvise(null);
+        setTeacherService(null);
         super.delete();
     }
 
@@ -39,4 +39,14 @@ public class TeacherAdviseService extends TeacherAdviseService_Base {
             throw new DomainException("error.invalid.advise.service.percentage");
         }
     }
+    @Deprecated
+    public boolean hasPercentage() {
+        return getPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdvise() {
+        return getAdvise() != null;
+    }
+
 }

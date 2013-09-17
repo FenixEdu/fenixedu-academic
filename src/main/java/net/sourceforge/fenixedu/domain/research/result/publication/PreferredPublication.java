@@ -66,9 +66,29 @@ public class PreferredPublication extends PreferredPublication_Base {
     }
 
     public void delete() {
-        removePersonThatPrefers();
-        removePreferredPublication();
-        removeRootDomainObject();
+        setPersonThatPrefers(null);
+        setPreferredPublication(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasPreferredPublication() {
+        return getPreferredPublication() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonThatPrefers() {
+        return getPersonThatPrefers() != null;
+    }
+
+    @Deprecated
+    public boolean hasPriority() {
+        return getPriority() != null;
+    }
+
 }

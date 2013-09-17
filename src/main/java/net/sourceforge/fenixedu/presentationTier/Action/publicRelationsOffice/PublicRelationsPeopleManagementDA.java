@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/managePublicRelationsPeople", module = "publicRelations")
 @Forwards({ @Forward(name = "managePeople", path = "/publicRelations/managePeople/managePeople.jsp") })
@@ -43,7 +43,7 @@ public class PublicRelationsPeopleManagementDA extends FenixDispatchAction {
     public ActionForward removeManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws  FenixServiceException {
         String id = request.getParameter("managerID");
-        Person person = AbstractDomainObject.fromExternalId(id);
+        Person person = FenixFramework.getDomainObject(id);
         person.removeRoleByTypeService(RoleType.PUBLIC_RELATIONS_OFFICE);
         return managePeople(mapping, actionForm, request, response);
     }

@@ -25,8 +25,8 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
@@ -96,7 +96,7 @@ public class SearchPerson implements Serializable {
             }
 
             if (!StringUtils.isEmpty(degreeId)) {
-                degree = AbstractDomainObject.fromExternalId(degreeId);
+                degree = FenixFramework.getDomainObject(degreeId);
             }
 
             if (degreeTypeString != null && degreeTypeString.length() > 0) {
@@ -104,7 +104,7 @@ public class SearchPerson implements Serializable {
             }
 
             if (!StringUtils.isEmpty(departmentId)) {
-                department = AbstractDomainObject.fromExternalId(departmentId);
+                department = FenixFramework.getDomainObject(departmentId);
             }
         }
 
@@ -459,7 +459,7 @@ public class SearchPerson implements Serializable {
 
     private static final SearchPerson serviceInstance = new SearchPerson();
 
-    @Service
+    @Atomic
     public static CollectionPager<Person> runSearchPerson(SearchParameters searchParameters, Predicate predicate) {
         return serviceInstance.run(searchParameters, predicate);
     }

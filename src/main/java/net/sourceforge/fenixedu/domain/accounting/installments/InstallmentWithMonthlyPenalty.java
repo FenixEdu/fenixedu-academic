@@ -116,4 +116,14 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
         super.edit(bean);
     }
 
+    @Deprecated
+    public boolean hasMaxMonthsToApplyPenalty() {
+        return getMaxMonthsToApplyPenalty() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenStartToApplyPenalty() {
+        return getWhenStartToApplyPenalty() != null;
+    }
+
 }

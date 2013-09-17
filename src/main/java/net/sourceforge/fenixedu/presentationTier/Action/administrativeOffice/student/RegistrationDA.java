@@ -41,7 +41,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/registration", module = "academicAdministration")
 @Forwards({
@@ -308,7 +308,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         request.setAttribute("registration", registration);
 
         final String attendsIdString = request.getParameter("attendsId");
-        final Attends attends = AbstractDomainObject.fromExternalId(attendsIdString);
+        final Attends attends = FenixFramework.getDomainObject(attendsIdString);
 
         try {
             registration.removeAttendFor(attends.getExecutionCourse());
@@ -325,7 +325,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         request.setAttribute("registration", registration);
 
         final String attendsIdString = request.getParameter("attendsId");
-        final Attends attends = AbstractDomainObject.fromExternalId(attendsIdString);
+        final Attends attends = FenixFramework.getDomainObject(attendsIdString);
 
         if (attends != null) {
             attends.deleteShiftEnrolments();

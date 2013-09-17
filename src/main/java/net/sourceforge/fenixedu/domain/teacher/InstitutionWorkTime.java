@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class InstitutionWorkTime extends InstitutionWorkTime_Base {
 
@@ -57,11 +57,11 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
         return null;
     }
 
-    @Service
+    @Atomic
     public void delete(RoleType roleType) {
         getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
         log("label.teacher.schedule.institutionWorkTime.delete");
-        removeTeacherService();
+        setTeacherService(null);
         super.delete();
     }
 
@@ -135,6 +135,21 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
         } else {
             setStartTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public boolean hasEndTimeHourMinuteSecond() {
+        return getEndTimeHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartTimeHourMinuteSecond() {
+        return getStartTimeHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeekDay() {
+        return getWeekDay() != null;
     }
 
 }

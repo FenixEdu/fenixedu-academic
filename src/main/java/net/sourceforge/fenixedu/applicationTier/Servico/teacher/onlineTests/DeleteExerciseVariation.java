@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -31,7 +31,7 @@ public class DeleteExerciseVariation {
     public List<LabelValueBean> run(String executionCourseId, String questionCode) throws InvalidArgumentsServiceException {
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
-        Question question = AbstractDomainObject.fromExternalId(questionCode);
+        Question question = FenixFramework.getDomainObject(questionCode);
 
         if (question == null) {
             throw new InvalidArgumentsServiceException();
@@ -57,7 +57,7 @@ public class DeleteExerciseVariation {
             Metadata metadata = question.getMetadata();
             if (question.getStudentTestsQuestions() == null || question.getStudentTestsQuestions().size() == 0) {
                 question.delete();
-                if (metadata.getQuestionsCount() <= 1) {
+                if (metadata.getQuestionsSet().size() <= 1) {
                     metadata.delete();
                 } else if (metadata.getVisibleQuestions().size() == 0) {
                     metadata.setVisibility(Boolean.FALSE);
@@ -106,7 +106,7 @@ public class DeleteExerciseVariation {
 
     private static final DeleteExerciseVariation serviceInstance = new DeleteExerciseVariation();
 
-    @Service
+    @Atomic
     public static List<LabelValueBean> runDeleteExerciseVariation(String executionCourseId, String questionCode)
             throws InvalidArgumentsServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

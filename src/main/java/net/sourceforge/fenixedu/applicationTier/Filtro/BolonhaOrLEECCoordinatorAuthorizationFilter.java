@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -37,7 +37,7 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
             return false;
         }
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
 
         if (executionDegree.isBolonhaDegree() && executionDegree.getDegree().getSigla().equals("LEEC-pB")) {
             return true;
@@ -51,7 +51,7 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
             return false;
         }
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
 
         List<Coordinator> coordinators = new ArrayList<Coordinator>();
         coordinators.addAll(person.getCoordinators());

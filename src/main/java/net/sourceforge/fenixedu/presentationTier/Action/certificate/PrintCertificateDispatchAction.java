@@ -64,7 +64,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
             if (enrolmentList.size() == 0) {
                 anoLectivo = infoExecutionYear.getYear();
             } else {
-                anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+                anoLectivo = ((InfoEnrolment) enrolmentList.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
             }
             if (certificate.equals("Matrícula")) {
                 request.setAttribute(PresentationConstants.MATRICULA, certificate.toUpperCase());
@@ -109,11 +109,11 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                     if (result instanceof InfoEnrolmentInExtraCurricularCourse) {
                         extraEnrolment.add(infoEnrolment2);
                         anoLectivo =
-                                ((InfoEnrolment) extraEnrolment.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+                                ((InfoEnrolment) extraEnrolment.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
                     } else {
                         normalEnrolment.add(infoEnrolment2);
                         anoLectivo =
-                                ((InfoEnrolment) normalEnrolment.get(0)).getInfoExecutionPeriod().getInfoExecutionYear()
+                                ((InfoEnrolment) normalEnrolment.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear()
                                         .getYear();
                     }
                 }
@@ -149,12 +149,12 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                         if (infoEnrolment2.getEnrolment().isExtraCurricular()) {
                             extraEnrolment.add(infoEnrolment2);
                             anoLectivo =
-                                    ((InfoEnrolment) extraEnrolment.get(0)).getInfoExecutionPeriod().getInfoExecutionYear()
+                                    ((InfoEnrolment) extraEnrolment.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear()
                                             .getYear();
                         } else {
                             normalEnrolment.add(infoEnrolment2);
                             anoLectivo =
-                                    ((InfoEnrolment) normalEnrolment.get(0)).getInfoExecutionPeriod().getInfoExecutionYear()
+                                    ((InfoEnrolment) normalEnrolment.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear()
                                             .getYear();
                         }
                     }
@@ -229,12 +229,12 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                                 if (result instanceof InfoEnrolmentInExtraCurricularCourse) {
                                     extraEnrolment.add(infoEnrolment2);
                                     anoLectivo =
-                                            ((InfoEnrolment) extraEnrolment.get(0)).getInfoExecutionPeriod()
+                                            ((InfoEnrolment) extraEnrolment.iterator().next()).getInfoExecutionPeriod()
                                                     .getInfoExecutionYear().getYear();
                                 } else {
                                     normalEnrolment.add(infoEnrolment2);
                                     anoLectivo =
-                                            ((InfoEnrolment) normalEnrolment.get(0)).getInfoExecutionPeriod()
+                                            ((InfoEnrolment) normalEnrolment.iterator().next()).getInfoExecutionPeriod()
                                                     .getInfoExecutionYear().getYear();
                                 }
                             }

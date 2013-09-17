@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import dml.runtime.RelationAdapter;
 
 public abstract class Exemption extends Exemption_Base {
 
     static {
-        ExemptionEvent.addListener(new RelationAdapter<Exemption, Event>() {
+        getRelationExemptionEvent().addListener(new RelationAdapter<Exemption, Event>() {
 
             @Override
             public void beforeAdd(Exemption exemption, Event event) {
@@ -72,11 +72,11 @@ public abstract class Exemption extends Exemption_Base {
     }
 
     public void delete(final boolean recalculateEventState) {
-        removeRootDomainObject();
-        removeResponsible();
+        setRootDomainObject(null);
+        setResponsible(null);
         getExemptionJustification().delete();
         final Event event = getEvent();
-        removeEvent();
+        setEvent(null);
         if (recalculateEventState) {
             event.recalculateState(new DateTime());
         }
@@ -84,12 +84,10 @@ public abstract class Exemption extends Exemption_Base {
         super.deleteDomainObject();
     }
 
-    @Override
     public void removeResponsible() {
         super.setResponsible(null);
     }
 
-    @Override
     public void removeEvent() {
         super.setEvent(null);
     }
@@ -141,4 +139,30 @@ public abstract class Exemption extends Exemption_Base {
     public boolean isSecondCycleIndividualCandidacyExemption() {
         return false;
     }
+
+    @Deprecated
+    public boolean hasResponsible() {
+        return getResponsible() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvent() {
+        return getEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasExemptionJustification() {
+        return getExemptionJustification() != null;
+    }
+
 }

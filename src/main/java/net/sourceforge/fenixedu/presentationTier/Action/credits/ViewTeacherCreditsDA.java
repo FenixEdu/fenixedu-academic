@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public abstract class ViewTeacherCreditsDA extends FenixDispatchAction {
 
@@ -38,10 +38,10 @@ public abstract class ViewTeacherCreditsDA extends FenixDispatchAction {
 
     protected ActionForward viewAnnualTeachingCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response, RoleType roleType) throws NumberFormatException, FenixServiceException, Exception {
-        Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionYearOid"));
+        Teacher teacher = FenixFramework.getDomainObject((String) getFromRequest(request, "teacherOid"));
+        ExecutionYear executionYear = FenixFramework.getDomainObject((String) getFromRequest(request, "executionYearOid"));
         if (teacher == null) {
-            Professorship professorship = AbstractDomainObject.fromExternalId(getStringFromRequest(request, "professorshipID"));
+            Professorship professorship = FenixFramework.getDomainObject(getStringFromRequest(request, "professorshipID"));
             if (professorship != null) {
                 teacher = professorship.getTeacher();
                 executionYear = professorship.getExecutionCourse().getExecutionYear();
@@ -86,8 +86,8 @@ public abstract class ViewTeacherCreditsDA extends FenixDispatchAction {
 
     public ActionForward recalculateCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-        Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionYearOid"));
+        Teacher teacher = FenixFramework.getDomainObject((String) getFromRequest(request, "teacherOid"));
+        ExecutionYear executionYear = FenixFramework.getDomainObject((String) getFromRequest(request, "executionYearOid"));
         AnnualTeachingCredits annualTeachingCredits = AnnualTeachingCredits.readByYearAndTeacher(executionYear, teacher);
         if (annualTeachingCredits != null) {
             annualTeachingCredits.calculateCredits();

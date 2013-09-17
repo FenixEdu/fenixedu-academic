@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -15,7 +13,8 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class Entry extends Entry_Base {
@@ -66,16 +65,6 @@ public class Entry extends Entry_Base {
     }
 
     @Override
-    public void removeAccount() {
-        throw new DomainException("error.accounting.entry.cannot.remove.account");
-    }
-
-    @Override
-    public void removeAccountingTransaction() {
-        throw new DomainException("error.accounting.entry.cannot.remove.accountingTransaction");
-    }
-
-    @Override
     public void setAccount(Account account) {
         throw new DomainException("error.accounting.entry.cannot.modify.account");
     }
@@ -109,18 +98,8 @@ public class Entry extends Entry_Base {
     }
 
     @Override
-    public List<Receipt> getReceipts() {
-        return Collections.unmodifiableList(super.getReceipts());
-    }
-
-    @Override
     public Set<Receipt> getReceiptsSet() {
         return Collections.unmodifiableSet(super.getReceiptsSet());
-    }
-
-    @Override
-    public Iterator<Receipt> getReceiptsIterator() {
-        return getReceiptsSet().iterator();
     }
 
     @Override
@@ -211,15 +190,15 @@ public class Entry extends Entry_Base {
         return false;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     void delete() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         if (!canBeDeleted()) {
             throw new DomainException("error.accounting.Entry.belongs.to.receipt");
         }
 
         super.setAccount(null);
         super.setAccountingTransaction(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
     }
@@ -230,6 +209,56 @@ public class Entry extends Entry_Base {
 
     public PaymentMode getPaymentMode() {
         return getAccountingTransaction().getTransactionDetail().getPaymentMode();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry> getCreditNoteEntries() {
+        return getCreditNoteEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCreditNoteEntries() {
+        return !getCreditNoteEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Receipt> getReceipts() {
+        return getReceiptsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReceipts() {
+        return !getReceiptsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasOriginalAmount() {
+        return getOriginalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasEntryType() {
+        return getEntryType() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdjustmentCreditNoteEntry() {
+        return getAdjustmentCreditNoteEntry() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAccountingTransaction() {
+        return getAccountingTransaction() != null;
+    }
+
+    @Deprecated
+    public boolean hasAccount() {
+        return getAccount() != null;
     }
 
 }

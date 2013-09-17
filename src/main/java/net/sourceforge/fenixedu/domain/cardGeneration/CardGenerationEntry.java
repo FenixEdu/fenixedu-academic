@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -29,7 +31,6 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class CardGenerationEntry extends CardGenerationEntry_Base {
@@ -70,7 +71,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         @Override
         public int compare(CardGenerationEntry o1, CardGenerationEntry o2) {
             final int c = o1.getCreated().compareTo(o2.getCreated());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };
@@ -80,7 +81,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         DateTime creationDateStart = getCreated();
         DateTime creationDateEnd = null;
         if (getPerson() != null) {
-            List<CardGenerationEntry> cardGenerationEntries = getPerson().getCardGenerationEntries();
+            Collection<CardGenerationEntry> cardGenerationEntries = getPerson().getCardGenerationEntries();
             CardGenerationEntry cardGenerationEntry = getNextCGE(cardGenerationEntries);
             creationDateEnd = (cardGenerationEntry == null) ? null : cardGenerationEntry.getCreated();
             for (CardGenerationRegister cardGenerationRegister : getPerson().getCardGenerationRegister()) {
@@ -95,7 +96,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         return count;
     }
 
-    public CardGenerationEntry getNextCGE(List<CardGenerationEntry> cardGenerationEntries) {
+    public CardGenerationEntry getNextCGE(Collection<CardGenerationEntry> cardGenerationEntries) {
         boolean found = false;
         List<CardGenerationEntry> sortedEntries = new ArrayList<CardGenerationEntry>();
         sortedEntries.addAll(cardGenerationEntries);
@@ -219,9 +220,9 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         final Person person = studentCurricularPlan.getPerson();
         final int numberOfCards;
         if (getPerson() == null) {
-            numberOfCards = person.getCardGenerationEntriesCount();
+            numberOfCards = person.getCardGenerationEntriesSet().size();
         } else {
-            numberOfCards = person.getCardGenerationEntriesCount() - 1;
+            numberOfCards = person.getCardGenerationEntriesSet().size() - 1;
         }
         return numberOfCards > 9 ? Integer.toString(numberOfCards) : "0" + numberOfCards;
     }
@@ -387,9 +388,9 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     public void delete() {
-        removeCardGenerationBatch();
-        removePerson();
-        removeRootDomainObject();
+        setCardGenerationBatch(null);
+        setPerson(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -817,6 +818,36 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         stringBuilder.append("\r\n");
 
         return stringBuilder.toString();
+    }
+
+    @Deprecated
+    public boolean hasCardGenerationBatch() {
+        return getCardGenerationBatch() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentID() {
+        return getDocumentID() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasLine() {
+        return getLine() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

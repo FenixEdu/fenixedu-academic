@@ -19,7 +19,7 @@ public abstract class AbstractAcronymPathProcess<T extends Site> extends Abstrac
         if (site == null) {
             for (UnitAcronym acronym : RootDomainObject.getInstance().getUnitAcronyms()) {
                 if (acronym.getAcronym().equalsIgnoreCase(getAcronym())) {
-                    Unit unit = acronym.getUnits().get(0);
+                    Unit unit = acronym.getUnits().iterator().next();
                     site = (T) unit.getSite();
                     return site;
                 }

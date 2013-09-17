@@ -75,7 +75,7 @@ public class JournalIssueParticipation extends JournalIssueParticipation_Base {
 
     @Override
     public void delete() {
-        removeJournalIssue();
+        setJournalIssue(null);
         super.delete();
     }
 
@@ -88,4 +88,9 @@ public class JournalIssueParticipation extends JournalIssueParticipation_Base {
     public boolean scopeMatches(ScopeType type) {
         return this.getJournalIssue().getLocationType().equals(type);
     }
+    @Deprecated
+    public boolean hasJournalIssue() {
+        return getJournalIssue() != null;
+    }
+
 }

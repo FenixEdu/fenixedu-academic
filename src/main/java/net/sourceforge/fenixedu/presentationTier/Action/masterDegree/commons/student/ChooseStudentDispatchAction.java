@@ -43,7 +43,7 @@ public class ChooseStudentDispatchAction extends FenixDispatchAction {
         }
 
         if (result.size() == 1) {
-            request.setAttribute("studentCPID", ((InfoStudentCurricularPlan) result.get(0)).getExternalId());
+            request.setAttribute("studentCPID", ((InfoStudentCurricularPlan) result.iterator().next()).getExternalId());
             return mapping.findForward("StudentCurricularPlanChosen");
         }
 

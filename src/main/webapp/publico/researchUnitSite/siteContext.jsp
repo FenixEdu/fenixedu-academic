@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
 <bean:define id="announcementActionVariable" value="/department/announcements.do" toScope="request"/>
 <bean:define id="eventActionVariable" value="/department/events.do" toScope="request"/>

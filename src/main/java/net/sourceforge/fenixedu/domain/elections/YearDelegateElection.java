@@ -43,7 +43,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 
     @Override
     public void delete() {
-        removeCurricularYear();
+        setCurricularYear(null);
         super.delete();
     }
 
@@ -292,7 +292,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
                             election.getCurricularYear().getYear(), votingPeriod.getPeriod()), 10000);
                     spreadsheet.getSheet().addMergedRegion(new Region(fistHeaderRow, (short) 0, fistHeaderRow, (short) 5));
                     spreadsheet.newRow();
-                    if (votingPeriod.getVotesCount() == 0) {
+                    if (votingPeriod.getVotesSet().size() == 0) {
                         spreadsheet.addCell(BUNDLE.getString("label.elections.excel.not.have.votes"));
                     } else {
                         spreadsheet.addHeader(BUNDLE.getString("label.elections.excel.studentNumber"), 6000);
@@ -359,4 +359,10 @@ public class YearDelegateElection extends YearDelegateElection_Base {
         });
         return elections;
     }
+
+    @Deprecated
+    public boolean hasCurricularYear() {
+        return getCurricularYear() != null;
+    }
+
 }

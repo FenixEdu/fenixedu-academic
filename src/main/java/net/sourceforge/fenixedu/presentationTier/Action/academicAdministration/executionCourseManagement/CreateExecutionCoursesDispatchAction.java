@@ -28,7 +28,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 @Mapping(module = "academicAdministration", path = "/createExecutionCourses",
@@ -93,13 +93,13 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
                             executionPeriodID);
 
             // avmc (ist150958): success messages: 1 line for each DCP
-            final ExecutionSemester executionPeriod = AbstractDomainObject.fromExternalId(executionPeriodID);
+            final ExecutionSemester executionPeriod = FenixFramework.getDomainObject(executionPeriodID);
             addActionMessage("successHead", request,
                     "message.executionCourseManagement.createExecutionCoursesForDegreeCurricularPlan.successHead",
                     executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear());
 
             for (final String degreeCurricularPlanID : degreeCurricularPlansIDs) {
-                final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+                final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
                 addActionMessage("successDCP", request,
                         "message.executionCourseManagement.createExecutionCoursesForDegreeCurricularPlan.successDCP",
                         degreeCurricularPlan.getPresentationName(), result.get(degreeCurricularPlanID).getKey().toString(),

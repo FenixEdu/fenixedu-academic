@@ -57,7 +57,6 @@ public class ConversationThread extends ConversationThread_Base implements IDate
         super.setTitle(subject);
     }
 
-    @Override
     public void removeCreator() {
         super.setCreator(null);
     }
@@ -119,7 +118,7 @@ public class ConversationThread extends ConversationThread_Base implements IDate
     }
 
     public int getConversationMessagesCount() {
-        return getChildrenCount();
+        return getChildrenSet().size();
     }
 
     @Override

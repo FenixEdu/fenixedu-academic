@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class QualificationManagerAuthorizationFilter {
 
@@ -57,7 +57,7 @@ public class QualificationManagerAuthorizationFilter {
         if (isNew) {
             return true;
         }
-        final Qualification qualification = AbstractDomainObject.fromExternalId(infoQualification.getExternalId());
+        final Qualification qualification = FenixFramework.getDomainObject(infoQualification.getExternalId());
         return qualification.getPerson() == userView.getPerson();
     }
 }

@@ -20,14 +20,15 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.Standalo
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class PostingRulesManager {
 
-    @Service
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
+    @Atomic
     static public void createGraduationGratuityPostingRule(final CreateGratuityPostingRuleBean bean) {
+        check(AcademicPredicates.MANAGE_PAYMENTS);
 
         if (bean.getRule() == GratuityWithPaymentPlanPR.class) {
 
@@ -55,9 +56,9 @@ public class PostingRulesManager {
 
     }
 
-    @Service
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
+    @Atomic
     static public void createStandaloneGraduationGratuityPostingRule(final CreateStandaloneEnrolmentGratuityPRBean bean) {
+        check(AcademicPredicates.MANAGE_PAYMENTS);
 
         if (bean.getRule() == StandaloneEnrolmentGratuityPR.class) {
             for (final DegreeCurricularPlan degreeCurricularPlan : bean.getDegreeCurricularPlans()) {
@@ -86,9 +87,9 @@ public class PostingRulesManager {
         }
     }
 
-    @Service
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
+    @Atomic
     static public void createDFAGratuityPostingRule(final CreateDFAGratuityPostingRuleBean bean) {
+        check(AcademicPredicates.MANAGE_PAYMENTS);
         if (bean.getRule() == DFAGratuityByAmountPerEctsPR.class) {
             new DFAGratuityByAmountPerEctsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(),
                     bean.getTotalAmount(), bean.getPartialAcceptedPercentage(), bean.getAmountPerEctsCredit());
@@ -100,9 +101,9 @@ public class PostingRulesManager {
         }
     }
 
-    @Service
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
+    @Atomic
     static public void createSpecializationDegreeGratuityPostingRule(final CreateSpecializationDegreeGratuityPostingRuleBean bean) {
+        check(AcademicPredicates.MANAGE_PAYMENTS);
         if (bean.getRule() == SpecializationDegreeGratuityByAmountPerEctsPR.class) {
             new SpecializationDegreeGratuityByAmountPerEctsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(),
                     bean.getTotalAmount(), bean.getPartialAcceptedPercentage(), bean.getAmountPerEctsCredit());
@@ -111,15 +112,15 @@ public class PostingRulesManager {
         }
     }
 
-    @Service
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
+    @Atomic
     static public void deletePostingRule(final PostingRule postingRule) {
+        check(AcademicPredicates.MANAGE_PAYMENTS);
         postingRule.delete();
     }
 
-    @Service
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
+    @Atomic
     public static void createDEAGratuityPostingRule(PaymentPlanBean paymentPlanBean) {
+        check(AcademicPredicates.MANAGE_PAYMENTS);
         CreateGratuityPostingRuleBean createGratuityPostingRuleBean = new CreateGratuityPostingRuleBean();
         createGratuityPostingRuleBean.setExecutionYear(paymentPlanBean.getExecutionYear());
         createGratuityPostingRuleBean.setDegreeCurricularPlans(paymentPlanBean.getDegreeCurricularPlans());

@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class InsertTutorship extends TutorshipManagement {
 
@@ -27,7 +27,7 @@ public class InsertTutorship extends TutorshipManagement {
 
         final Integer studentNumber = bean.getStudentNumber();
         final Teacher teacher = bean.getTeacher();
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         validateTeacher(teacher, executionDegree);
@@ -47,7 +47,7 @@ public class InsertTutorship extends TutorshipManagement {
     public List<TutorshipErrorBean> run(String executionDegreeID, StudentsByEntryYearBean bean) throws FenixServiceException {
 
         final List<StudentCurricularPlan> students = bean.getStudentsToCreateTutorshipList();
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         final Teacher teacher = bean.getTeacher();
 
@@ -87,7 +87,7 @@ public class InsertTutorship extends TutorshipManagement {
 
     private static final InsertTutorship serviceInstance = new InsertTutorship();
 
-    @Service
+    @Atomic
     public static void runInsertTutorship(String executionDegreeID, TutorshipManagementBean bean) throws FenixServiceException,
             NotAuthorizedException {
         try {
@@ -100,7 +100,7 @@ public class InsertTutorship extends TutorshipManagement {
         }
     }
 
-    @Service
+    @Atomic
     public static List<TutorshipErrorBean> runInsertTutorship(String executionDegreeID, StudentsByEntryYearBean bean)
             throws FenixServiceException, NotAuthorizedException {
         try {

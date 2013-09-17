@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Pedro Santos (pmrsa)
@@ -22,7 +22,7 @@ public class GeneratedDocumentWithoutSource extends GeneratedDocumentWithoutSour
         return new RoleGroup(RoleType.MANAGER);
     }
 
-    @Service
+    @Atomic
     public static void createDocument(GeneratedDocumentType type, Party addressee, Person operator, String filename,
             byte[] content) {
         new GeneratedDocumentWithoutSource(type, addressee, operator, filename, content);

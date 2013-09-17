@@ -7,21 +7,22 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
  */
 public class CreateFAQSection {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(InfoFAQSection infoFAQSection) {
+        check(RolePredicates.MANAGER_PREDICATE);
         FAQSection parentFAQSection = null;
         if (infoFAQSection.getParentSection() != null && infoFAQSection.getParentSection().getExternalId() != null) {
-            parentFAQSection = AbstractDomainObject.fromExternalId(infoFAQSection.getParentSection().getExternalId());
+            parentFAQSection = FenixFramework.getDomainObject(infoFAQSection.getParentSection().getExternalId());
         }
 
         FAQSection faqSection = new FAQSection();

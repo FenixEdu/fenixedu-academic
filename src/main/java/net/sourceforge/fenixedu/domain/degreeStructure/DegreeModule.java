@@ -15,6 +15,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.EquivalencePlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -52,7 +53,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
             }
 
             final int c = Collator.getInstance().compare(name1, name2);
-            return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };
@@ -98,14 +99,14 @@ abstract public class DegreeModule extends DegreeModule_Base {
         if (isRoot()) {
             result.append(selfName);
         } else {
-            List<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
+            Collection<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
             if (parentContextsByExecutionPeriod.isEmpty()) {
                 // if not existing, just return all (as previous implementation
                 // of method
                 parentContextsByExecutionPeriod = getParentContexts();
             }
 
-            final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.get(0).getParentCourseGroup();
+            final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.iterator().next().getParentCourseGroup();
 
             parentCourseGroup.getOneFullName(result, executionSemester);
             result.append(FULL_NAME_SEPARATOR);
@@ -142,14 +143,14 @@ abstract public class DegreeModule extends DegreeModule_Base {
         if (isRoot()) {
             result.append(selfName);
         } else {
-            List<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
+            Collection<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
             if (parentContextsByExecutionPeriod.isEmpty()) {
                 // if not existing, just return all (as previous implementation
                 // of method
                 parentContextsByExecutionPeriod = getParentContexts();
             }
 
-            final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.get(0).getParentCourseGroup();
+            final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.iterator().next().getParentCourseGroup();
 
             parentCourseGroup.getOneFullNameI18N(result, executionSemester, language);
             result.append(FULL_NAME_SEPARATOR);
@@ -191,18 +192,18 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     public void delete() {
         if (getCanBeDeleted()) {
-            for (; !getParentContexts().isEmpty(); getParentContexts().get(0).delete()) {
+            for (; !getParentContexts().isEmpty(); getParentContexts().iterator().next().delete()) {
                 ;
             }
-            for (; !getCurricularRules().isEmpty(); getCurricularRules().get(0).delete()) {
+            for (; !getCurricularRules().isEmpty(); getCurricularRules().iterator().next().delete()) {
                 ;
             }
-            for (; !getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().get(0)
-                    .delete()) {
+            for (; !getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().iterator()
+                    .next().delete()) {
                 ;
             }
-            for (; !getParticipatingExclusivenessCurricularRules().isEmpty(); getParticipatingExclusivenessCurricularRules().get(
-                    0).delete()) {
+            for (; !getParticipatingExclusivenessCurricularRules().isEmpty(); getParticipatingExclusivenessCurricularRules()
+                    .iterator().next().delete()) {
                 ;
             }
         } else {
@@ -215,7 +216,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     public void deleteContext(Context context) {
-        if (hasParentContexts(context)) {
+        if (getParentContextsSet().contains(context)) {
             context.delete();
         }
         if (!hasAnyParentContexts()) {
@@ -567,12 +568,12 @@ abstract public class DegreeModule extends DegreeModule_Base {
         final List<DegreeModulesSelectionLimit> result =
                 (List<DegreeModulesSelectionLimit>) getCurricularRules(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT,
                         executionSemester);
-        return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.get(0);
+        return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.iterator().next();
     }
 
     public CreditsLimit getCreditsLimitRule(final ExecutionSemester executionSemester) {
         final List<? extends ICurricularRule> result = getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionSemester);
-        return result.isEmpty() ? null : (CreditsLimit) result.get(0);
+        return result.isEmpty() ? null : (CreditsLimit) result.iterator().next();
     }
 
     public List<Exclusiveness> getExclusivenessRules(final ExecutionSemester executionSemester) {
@@ -631,5 +632,110 @@ abstract public class DegreeModule extends DegreeModule_Base {
     abstract public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor);
 
     abstract public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate);
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness> getParticipatingExclusivenessCurricularRules() {
+        return getParticipatingExclusivenessCurricularRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipatingExclusivenessCurricularRules() {
+        return !getParticipatingExclusivenessCurricularRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule> getParticipatingPrecedenceCurricularRules() {
+        return getParticipatingPrecedenceCurricularRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipatingPrecedenceCurricularRules() {
+        return !getParticipatingPrecedenceCurricularRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getCurricularRules() {
+        return getCurricularRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularRules() {
+        return !getCurricularRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> getOldEquivalencePlanEntries() {
+        return getOldEquivalencePlanEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOldEquivalencePlanEntries() {
+        return !getOldEquivalencePlanEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getParentContexts() {
+        return getParentContextsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParentContexts() {
+        return !getParentContextsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> getNewEquivalencePlanEntries() {
+        return getNewEquivalencePlanEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNewEquivalencePlanEntries() {
+        return !getNewEquivalencePlanEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.log.CurriculumLineLog> getCurriculumLineLogs() {
+        return getCurriculumLineLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurriculumLineLogs() {
+        return !getCurriculumLineLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule> getCurriculumModules() {
+        return getCurriculumModulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurriculumModules() {
+        return !getCurriculumModulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNameEn() {
+        return getNameEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcronym() {
+        return getAcronym() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
 
 }

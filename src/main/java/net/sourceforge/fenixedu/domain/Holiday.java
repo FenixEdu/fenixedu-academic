@@ -98,7 +98,7 @@ public class Holiday extends Holiday_Base {
     }
 
     public void delete() {
-        removeLocality();
+        setLocality(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
@@ -116,4 +116,19 @@ public class Holiday extends Holiday_Base {
         }
         return false;
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasLocality() {
+        return getLocality() != null;
+    }
+
+    @Deprecated
+    public boolean hasDate() {
+        return getDate() != null;
+    }
+
 }

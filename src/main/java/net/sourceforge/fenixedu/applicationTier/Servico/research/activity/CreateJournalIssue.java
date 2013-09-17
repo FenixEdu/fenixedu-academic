@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.C
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.util.Month;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateJournalIssue {
 
-    @Service
+    @Atomic
     public static JournalIssue run(CreateIssueBean bean) {
 
         ScientificJournal journal;
@@ -23,7 +23,7 @@ public class CreateJournalIssue {
                 bean.getSpecialIssue(), bean.getSpecialIssueComment());
     }
 
-    @Service
+    @Atomic
     public static JournalIssue run(ScientificJournal journal, Integer year, Month month, String volume, String number,
             String url, Boolean specialIssue, String specialIssueComment) {
         JournalIssue issue = new JournalIssue(journal);

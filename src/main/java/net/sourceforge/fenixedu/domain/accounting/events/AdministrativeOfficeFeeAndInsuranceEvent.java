@@ -40,16 +40,16 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import dml.runtime.RelationAdapter;
 
 public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOfficeFeeAndInsuranceEvent_Base implements
         IAdministrativeOfficeFeeEvent, IInsuranceEvent {
 
     static {
-        PersonAccountingEvent.addListener(new RelationAdapter<Event, Party>() {
+        getRelationPersonAccountingEvent().addListener(new RelationAdapter<Party, Event>() {
             @Override
-            public void beforeAdd(Event event, Party party) {
+            public void beforeAdd(Party party, Event event) {
                 if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent && party != null && party instanceof Person) {
                     Person person = (Person) party;
                     final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
@@ -166,7 +166,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
         }
 
         Registration registration =
-                getPerson().getStudent().getActiveRegistrationsIn(getExecutionYear().getFirstExecutionPeriod()).get(0);
+                getPerson().getStudent().getActiveRegistrationsIn(getExecutionYear().getFirstExecutionPeriod()).iterator().next();
         StudentCandidacy studentCandidacy = getActiveDgesCandidacy(getPerson());
 
         if (studentCandidacy == null) {
@@ -241,11 +241,11 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     private AccountingEventPaymentCode getCancelledPaymentCode() {
-        return (getCancelledPaymentCodes().isEmpty() ? null : getCancelledPaymentCodes().get(0));
+        return (getCancelledPaymentCodes().isEmpty() ? null : getCancelledPaymentCodes().iterator().next());
     }
 
     private AccountingEventPaymentCode getNonProcessedPaymentCode() {
-        return (getNonProcessedPaymentCodes().isEmpty() ? null : getNonProcessedPaymentCodes().get(0));
+        return (getNonProcessedPaymentCodes().isEmpty() ? null : getNonProcessedPaymentCodes().iterator().next());
     }
 
     private YearMonthDay calculatePaymentCodeEndDate() {
@@ -490,4 +490,10 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     public boolean hasInsuranceExemption() {
         return getInsuranceExemption() != null;
     }
+
+    @Deprecated
+    public boolean hasPaymentEndDate() {
+        return getPaymentEndDate() != null;
+    }
+
 }

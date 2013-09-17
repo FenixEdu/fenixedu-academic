@@ -14,9 +14,14 @@ public class ExecutionCourseProperty extends ExecutionCourseProperty_Base {
     }
 
     public void delete() {
-        removeExecutionCourse();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
     }
 
 }

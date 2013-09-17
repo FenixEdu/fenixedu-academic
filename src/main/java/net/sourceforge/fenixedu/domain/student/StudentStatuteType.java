@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -140,7 +140,7 @@ public enum StudentStatuteType {
         VISIBLE_STATUTES = Collections.unmodifiableList(result);
     }
 
-    @Service
+    @Atomic
     public StudentStatute createStudentStatute(Student student, ExecutionSemester beginExecutionPeriod,
             ExecutionSemester endExecutionPeriod) {
         return new StudentStatute(student, this, beginExecutionPeriod, endExecutionPeriod);

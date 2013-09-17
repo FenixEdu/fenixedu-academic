@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MarkSheetManagementCreateBean extends MarkSheetManagementBaseBean {
 
@@ -72,7 +72,7 @@ public class MarkSheetManagementCreateBean extends MarkSheetManagementBaseBean {
         return result;
     }
 
-    @Service
+    @Atomic
     public MarkSheet createMarkSheet(Person person) {
         final Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeanList =
                 CollectionUtils.select(getAllEnrolmentEvalutionBeans(), new Predicate() {
@@ -87,7 +87,7 @@ public class MarkSheetManagementCreateBean extends MarkSheetManagementBaseBean {
                 getMarkSheetType(), Boolean.FALSE, enrolmentEvaluationBeanList, person);
     }
 
-    @Service
+    @Atomic
     public MarkSheet createOldMarkSheet(Person person) {
         final Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeanList =
                 CollectionUtils.select(getAllEnrolmentEvalutionBeans(), new Predicate() {

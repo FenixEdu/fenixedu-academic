@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ImportBibliographicReferences {
 
@@ -19,7 +19,7 @@ public class ImportBibliographicReferences {
 
     private static final ImportBibliographicReferences serviceInstance = new ImportBibliographicReferences();
 
-    @Service
+    @Atomic
     public static void runImportBibliographicReferences(String executionCourseToId, ExecutionCourse executionCourseTo,
             ExecutionCourse executionCourseFrom, Shift shift) throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseToId);

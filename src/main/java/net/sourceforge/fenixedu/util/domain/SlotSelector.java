@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
-import pt.ist.fenixframework.pstm.IllegalWriteException;
+import pt.ist.fenixframework.core.WriteOnReadError;
 
 /**
  * Allows to obtain the elements being ordered and the order for each element
@@ -41,8 +41,8 @@ public class SlotSelector<HolderType, ObjectType> implements OrdinalAccessor<Hol
     }
 
     private RuntimeException handleInvocationTargetException(InvocationTargetException e, String message) {
-        if (e.getCause() instanceof IllegalWriteException) {
-            throw (IllegalWriteException) e.getCause();
+        if (e.getCause() instanceof WriteOnReadError) {
+            throw (WriteOnReadError) e.getCause();
         }
         if (e.getCause() instanceof RuntimeException) {
             return (RuntimeException) e.getCause();

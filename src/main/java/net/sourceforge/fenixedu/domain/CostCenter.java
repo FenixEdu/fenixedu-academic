@@ -36,4 +36,59 @@ public class CostCenter extends CostCenter_Base {
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EmployeeHistoric> getSalaryCostCenterAssociatedEmployeeHistorics() {
+        return getSalaryCostCenterAssociatedEmployeeHistoricsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySalaryCostCenterAssociatedEmployeeHistorics() {
+        return !getSalaryCostCenterAssociatedEmployeeHistoricsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EmployeeHistoric> getMailingCostCenterAssociatedEmployeeHistorics() {
+        return getMailingCostCenterAssociatedEmployeeHistoricsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMailingCostCenterAssociatedEmployeeHistorics() {
+        return !getMailingCostCenterAssociatedEmployeeHistoricsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EmployeeHistoric> getWorkingPlaceCostCenterAssociatedEmployeeHistorics() {
+        return getWorkingPlaceCostCenterAssociatedEmployeeHistoricsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWorkingPlaceCostCenterAssociatedEmployeeHistorics() {
+        return !getWorkingPlaceCostCenterAssociatedEmployeeHistoricsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDepartament() {
+        return getDepartament() != null;
+    }
+
+    @Deprecated
+    public boolean hasSection2() {
+        return getSection2() != null;
+    }
+
+    @Deprecated
+    public boolean hasSection1() {
+        return getSection1() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
 }

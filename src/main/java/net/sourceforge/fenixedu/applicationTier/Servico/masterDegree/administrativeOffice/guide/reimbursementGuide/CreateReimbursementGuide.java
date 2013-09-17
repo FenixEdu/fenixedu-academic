@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,9 +24,10 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntr
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br/>
@@ -53,12 +55,12 @@ public class CreateReimbursementGuide {
      * @throws ExcepcaoPersistencia
      */
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static String run(String guideId, String remarks, List infoReimbursementGuideEntries, IUserView userView)
             throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
-        Guide guide = AbstractDomainObject.fromExternalId(guideId);
+        Guide guide = FenixFramework.getDomainObject(guideId);
         if (!guide.getActiveSituation().getSituation().equals(GuideState.PAYED)) {
             throw new InvalidGuideSituationServiceException("error.exception.masterDegree.invalidGuideSituation");
         }
@@ -74,7 +76,7 @@ public class CreateReimbursementGuide {
             }
 
             GuideEntry guideEntry =
-                    AbstractDomainObject.fromExternalId(infoReimbursementGuideEntry.getInfoGuideEntry().getExternalId());
+                    FenixFramework.getDomainObject(infoReimbursementGuideEntry.getInfoGuideEntry().getExternalId());
             if (checkReimbursementGuideEntriesSum(infoReimbursementGuideEntry, guideEntry) == false) {
                 throw new InvalidReimbursementValueServiceException("error.exception.masterDegree.invalidReimbursementValue");
             }
@@ -126,7 +128,7 @@ public class CreateReimbursementGuide {
         Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue() * guideEntry.getQuantity().intValue());
         Double sum = new Double(newReimbursementGuideEntry.getValue().doubleValue());
 
-        List reimbursementGuideEntries = guideEntry.getReimbursementGuideEntries();
+        Collection reimbursementGuideEntries = guideEntry.getReimbursementGuideEntries();
 
         if (reimbursementGuideEntries == null) {
             return isGreaterThan(guideEntryValue, sum);

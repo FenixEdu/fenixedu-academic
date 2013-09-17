@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author João Mota
@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionCoursesByTeacherResponsibility {
 
-    @Service
+    @Atomic
     public static List run(String id) throws FenixServiceException {
 
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();

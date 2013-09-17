@@ -6,4 +6,14 @@ public abstract class QueueJobWithFile extends QueueJobWithFile_Base {
         super();
     }
 
+    @Deprecated
+    public boolean hasFile() {
+        return getFile() != null;
+    }
+
+    @Deprecated
+    public boolean hasContentType() {
+        return getContentType() != null;
+    }
+
 }

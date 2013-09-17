@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PersonFunctionBean implements Serializable {
     private ExecutionSemester executionSemester;
@@ -124,7 +124,7 @@ public class PersonFunctionBean implements Serializable {
         this.credits = credits;
     }
 
-    @Service
+    @Atomic
     public void createOrEditPersonFunction() {
         PersonFunction thisPersonFunction = getPersonFunction();
         final StringBuilder log = new StringBuilder();
@@ -168,7 +168,7 @@ public class PersonFunctionBean implements Serializable {
         new TeacherServiceLog(teacherService, log.toString());
     }
 
-    @Service
+    @Atomic
     public void deletePersonFunction() {
         if (getExecutionSemester() == null) {
             List<ExecutionSemester> executionSemesters =

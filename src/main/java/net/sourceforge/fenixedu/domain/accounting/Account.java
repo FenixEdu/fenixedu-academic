@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -47,16 +45,6 @@ public class Account extends Account_Base {
     }
 
     @Override
-    public List<Entry> getEntries() {
-        return Collections.unmodifiableList(super.getEntries());
-    }
-
-    @Override
-    public Iterator<Entry> getEntriesIterator() {
-        return getEntriesSet().iterator();
-    }
-
-    @Override
     public Set<Entry> getEntriesSet() {
         return Collections.unmodifiableSet(super.getEntriesSet());
     }
@@ -86,12 +74,12 @@ public class Account extends Account_Base {
             throw new DomainException("error.accounting.account.cannot.be.deleted");
         }
         super.setParty(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
     private boolean canBeDeleted() {
-        return getEntriesCount() == 0;
+        return getEntriesSet().size() == 0;
     }
 
     public void transferEntry(Entry entry) {
@@ -108,6 +96,36 @@ public class Account extends Account_Base {
 
     public boolean isExternal() {
         return getAccountType() == AccountType.EXTERNAL;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Entry> getEntries() {
+        return getEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEntries() {
+        return !getEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasAccountType() {
+        return getAccountType() != null;
     }
 
 }

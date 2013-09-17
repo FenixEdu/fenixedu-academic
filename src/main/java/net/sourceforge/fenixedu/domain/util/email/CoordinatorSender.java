@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CoordinatorSender extends CoordinatorSender_Base {
     private Recipient createRecipient(Group group) {
@@ -43,9 +43,14 @@ public class CoordinatorSender extends CoordinatorSender_Base {
         return getMembers().getName();
     }
 
-    @Service
+    @Atomic
     public static CoordinatorSender newInstance(Degree degree) {
         CoordinatorSender sender = degree.getSender();
         return sender == null ? new CoordinatorSender(degree) : sender;
     }
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
 }

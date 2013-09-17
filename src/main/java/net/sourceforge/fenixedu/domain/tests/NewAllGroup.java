@@ -49,7 +49,7 @@ public class NewAllGroup extends NewAllGroup_Base {
     }
 
     public boolean isTopAllGroup() {
-        if (this.getParentQuestionGroupsCount() == 1 && this.getParentQuestionGroups().get(0) instanceof NewAllGroup) {
+        if (this.getParentQuestionGroupsCount() == 1 && this.getParentQuestionGroups().iterator().next() instanceof NewAllGroup) {
             return false;
         }
 
@@ -63,7 +63,7 @@ public class NewAllGroup extends NewAllGroup_Base {
 
     @Override
     public List<NewQuestionGroup> getAssociableParents() {
-        if (!this.getParentQuestionGroups().get(0).isComposite()) {
+        if (!this.getParentQuestionGroups().iterator().next().isComposite()) {
             return new ArrayList<NewQuestionGroup>();
         }
 

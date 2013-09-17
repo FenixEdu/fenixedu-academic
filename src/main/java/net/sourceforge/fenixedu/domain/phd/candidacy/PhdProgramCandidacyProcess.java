@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -182,7 +183,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public static boolean hasOnlineApplicationForPeriod(final Person person, PhdCandidacyPeriod phdCandidacyPeriod) {
-        List<PhdIndividualProgramProcess> phdIndividualProgramProcesses = person.getPhdIndividualProgramProcesses();
+        Collection<PhdIndividualProgramProcess> phdIndividualProgramProcesses = person.getPhdIndividualProgramProcesses();
 
         for (PhdIndividualProgramProcess phdIndividualProgramProcess : phdIndividualProgramProcesses) {
             if (phdCandidacyPeriod == phdIndividualProgramProcess.getCandidacyProcess().getPublicPhdCandidacyPeriod()) {
@@ -560,7 +561,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public void deleteLastState() {
-        if (getStatesCount() <= 1) {
+        if (getStatesSet().size() <= 1) {
             throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.cannot.delete.the.only.state");
         }
 
@@ -568,7 +569,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public PhdCandidacyReferee getCandidacyRefereeByEmail(final String email) {
-        List<PhdCandidacyReferee> candidacyReferees = getCandidacyReferees();
+        Collection<PhdCandidacyReferee> candidacyReferees = getCandidacyReferees();
 
         for (PhdCandidacyReferee phdCandidacyReferee : candidacyReferees) {
             if (phdCandidacyReferee.getEmail().trim().equals(email.trim())) {
@@ -578,4 +579,92 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
         return null;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.notification.PhdNotification> getNotifications() {
+        return getNotificationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNotifications() {
+        return !getNotificationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter> getRefereeLetters() {
+        return getRefereeLettersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRefereeLetters() {
+        return !getRefereeLettersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee> getCandidacyReferees() {
+        return getCandidacyRefereesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidacyReferees() {
+        return !getCandidacyRefereesSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdCandidacyProcessState> getStates() {
+        return getStatesSet();
+    }
+
+    @Override
+    @Deprecated
+    public boolean hasAnyStates() {
+        return !getStatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasWhenRatified() {
+        return getWhenRatified() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacy() {
+        return getCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyDate() {
+        return getCandidacyDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvent() {
+        return getEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublicPhdCandidacyPeriod() {
+        return getPublicPhdCandidacyPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasFeedbackRequest() {
+        return getFeedbackRequest() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyHashCode() {
+        return getCandidacyHashCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidatedByCandidate() {
+        return getValidatedByCandidate() != null;
+    }
+
+    @Deprecated
+    public boolean hasIndividualProgramProcess() {
+        return getIndividualProgramProcess() != null;
+    }
+
 }

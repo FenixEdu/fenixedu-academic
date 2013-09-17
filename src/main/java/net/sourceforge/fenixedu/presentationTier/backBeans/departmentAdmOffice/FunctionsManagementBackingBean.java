@@ -48,7 +48,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
@@ -407,7 +407,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getExecutionPeriods() throws FenixServiceException {
-        List<ExecutionYear> allExecutionYears = rootDomainObject.getExecutionYears();
+        Collection<ExecutionYear> allExecutionYears = rootDomainObject.getExecutionYears();
         List<SelectItem> list = new ArrayList<SelectItem>();
         String[] year = null;
 
@@ -503,7 +503,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public Person getPerson() throws FenixServiceException {
-        return (Person) AbstractDomainObject.fromExternalId(getPersonID());
+        return (Person) FenixFramework.getDomainObject(getPersonID());
     }
 
     public int getPersonsNumber() throws FenixServiceException {
@@ -546,7 +546,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public Unit getUnit() throws FenixServiceException {
         if (this.unit == null && this.getUnitID() != null) {
-            this.unit = (Unit) AbstractDomainObject.fromExternalId(getUnitID());
+            this.unit = (Unit) FenixFramework.getDomainObject(getUnitID());
         } else if (this.unit == null && this.getPersonFunctionID() != null) {
             this.unit = this.getPersonFunction().getFunction().getUnit();
         }
@@ -594,7 +594,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public Function getFunction() throws FenixServiceException {
         if (this.function == null && this.getFunctionID() != null) {
-            this.function = (Function) AbstractDomainObject.fromExternalId(getFunctionID());
+            this.function = (Function) FenixFramework.getDomainObject(getFunctionID());
         } else if (this.function == null && this.getPersonFunctionID() != null) {
             this.function = this.getPersonFunction().getFunction();
         }
@@ -633,7 +633,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         } else if (this.beginDate == null && this.getPersonFunctionID() == null
                 && (this.beginDateHidden == null || this.beginDateHidden.getValue() == null) && this.getExecutionPeriod() != null) {
 
-            ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(this.executionPeriod);
+            ExecutionSemester executionSemester = FenixFramework.getDomainObject(this.executionPeriod);
 
             this.beginDate =
                     (executionSemester != null) ? DateFormatUtil.format("dd/MM/yyyy", executionSemester.getBeginDate()) : null;
@@ -674,7 +674,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         } else if (this.endDate == null && this.getPersonFunctionID() == null
                 && (this.endDateHidden == null || this.endDateHidden.getValue() == null) && this.getExecutionPeriod() != null) {
 
-            ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(this.executionPeriod);
+            ExecutionSemester executionSemester = FenixFramework.getDomainObject(this.executionPeriod);
 
             ExecutionSemester executionPeriodWithDuration = getDurationEndDate(executionSemester);
             this.endDate = DateFormatUtil.format("dd/MM/yyyy", executionPeriodWithDuration.getEndDate());
@@ -809,7 +809,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public PersonFunction getPersonFunction() throws FenixServiceException {
         if (this.personFunction == null) {
-            this.personFunction = (PersonFunction) AbstractDomainObject.fromExternalId(this.getPersonFunctionID());
+            this.personFunction = (PersonFunction) FenixFramework.getDomainObject(this.getPersonFunctionID());
         }
         return personFunction;
     }
@@ -866,7 +866,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     private String getCurrentExecutionPeriodID() throws FenixServiceException {
-        List<ExecutionSemester> allExecutionPeriods = rootDomainObject.getExecutionPeriods();
+        Collection<ExecutionSemester> allExecutionPeriods = rootDomainObject.getExecutionPeriods();
         for (ExecutionSemester period : allExecutionPeriods) {
             if (period.getState().equals(PeriodState.CURRENT)) {
                 return period.getExternalId();

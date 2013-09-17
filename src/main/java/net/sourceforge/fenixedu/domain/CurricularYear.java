@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author dcs-rjao
@@ -50,13 +50,63 @@ public class CurricularYear extends CurricularYear_Base implements Comparable<Cu
     }
 
     public static CurricularYear readByYear(Integer year) {
-        List<CurricularYear> curricularYears = RootDomainObject.getInstance().getCurricularYears();
+        Collection<CurricularYear> curricularYears = RootDomainObject.getInstance().getCurricularYears();
         for (CurricularYear curricularYear : curricularYears) {
             if (curricularYear.getYear().equals(year)) {
                 return curricularYear;
             }
         }
         return null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularSemester> getCurricularSemesters() {
+        return getCurricularSemestersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularSemesters() {
+        return !getCurricularSemestersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction> getPersonFunctions() {
+        return getPersonFunctionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonFunctions() {
+        return !getPersonFunctionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.YearDelegateElection> getYearDelegateElections() {
+        return getYearDelegateElectionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyYearDelegateElections() {
+        return !getYearDelegateElectionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsCurricularYearConversionTable> getEctsConversionTables() {
+        return getEctsConversionTablesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEctsConversionTables() {
+        return !getEctsConversionTablesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
     }
 
 }

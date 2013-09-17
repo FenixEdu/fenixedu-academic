@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.FenixFramework;
-import dml.DomainClass;
+import pt.ist.fenixframework.dml.DomainClass;
 
 public abstract class Process extends Process_Base implements Comparable<Process> {
 
@@ -165,4 +165,20 @@ public abstract class Process extends Process_Base implements Comparable<Process
     public abstract boolean canExecuteActivity(IUserView userView);
 
     public abstract String getDisplayName();
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.caseHandling.ProcessLog> getProcessLogs() {
+        return getProcessLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProcessLogs() {
+        return !getProcessLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

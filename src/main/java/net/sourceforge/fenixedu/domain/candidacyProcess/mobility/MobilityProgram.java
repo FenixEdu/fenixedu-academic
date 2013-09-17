@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -34,7 +35,7 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         getMobilityAgreements().clear();
         deleteDomainObject();
     }
@@ -42,7 +43,7 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
     public static List<MobilityProgram> getAllMobilityPrograms() {
         List<MobilityProgram> result = new ArrayList<MobilityProgram>();
 
-        List<Program> programs = RootDomainObject.getInstance().getPrograms();
+        Collection<Program> programs = RootDomainObject.getInstance().getPrograms();
 
         for (Program program : programs) {
             if (program.isMobility()) {
@@ -69,7 +70,7 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
     }
 
     public MobilityAgreement getMobilityAgreementByUniversityUnit(final UniversityUnit unit) {
-        List<MobilityAgreement> mobilityAgreements = getMobilityAgreements();
+        Collection<MobilityAgreement> mobilityAgreements = getMobilityAgreements();
 
         for (MobilityAgreement mobilityAgreement : mobilityAgreements) {
             if (mobilityAgreement.getUniversityUnit() == unit) {
@@ -81,7 +82,7 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
     }
 
     public static MobilityProgram getByRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-        List<Program> programs = RootDomainObject.getInstance().getPrograms();
+        Collection<Program> programs = RootDomainObject.getInstance().getPrograms();
         for (Program program : programs) {
             if (program instanceof MobilityProgram) {
                 MobilityProgram mob = ((MobilityProgram) program);
@@ -98,4 +99,25 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
         int rac = getRegistrationAgreement().compareTo(o.getRegistrationAgreement());
         return rac == 0 ? getExternalId().compareTo(o.getExternalId()) : rac;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement> getMobilityAgreements() {
+        return getMobilityAgreementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMobilityAgreements() {
+        return !getMobilityAgreementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate> getEmailTemplates() {
+        return getEmailTemplatesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEmailTemplates() {
+        return !getEmailTemplatesSet().isEmpty();
+    }
+
 }

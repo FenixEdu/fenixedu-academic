@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class EventEdition extends EventEdition_Base implements ParticipationsInterface {
 
     static {
-        EventEventEdition.addListener(new RelationAdapter<EventEdition, ResearchEvent>() {
+        getRelationEventEventEdition().addListener(new RelationAdapter<EventEdition, ResearchEvent>() {
 
             @Override
             public void afterRemove(EventEdition edition, ResearchEvent event) {
@@ -74,13 +74,13 @@ public class EventEdition extends EventEdition_Base implements ParticipationsInt
      * This method is responsible for deleting the object and all its references
      */
     public void delete() {
-        for (; !this.getEventConferenceArticlesAssociations().isEmpty(); this.getEventConferenceArticlesAssociations().get(0)
+        for (; !this.getEventConferenceArticlesAssociations().isEmpty(); this.getEventConferenceArticlesAssociations().iterator().next()
                 .delete()) {
             ;
         }
 
-        removeEvent();
-        removeRootDomainObject();
+        setEvent(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -157,6 +157,77 @@ public class EventEdition extends EventEdition_Base implements ParticipationsInt
             }
             addParticipations(eventEditionParticipation);
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation> getAssociatedProjects() {
+        return getAssociatedProjectsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedProjects() {
+        return !getAssociatedProjectsSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipation> getParticipations() {
+        return getParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipations() {
+        return !getParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.EventConferenceArticlesAssociation> getEventConferenceArticlesAssociations() {
+        return getEventConferenceArticlesAssociationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEventConferenceArticlesAssociations() {
+        return !getEventConferenceArticlesAssociationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEventLocation() {
+        return getEventLocation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrl() {
+        return getUrl() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDate() {
+        return getStartDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasEdition() {
+        return getEdition() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvent() {
+        return getEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasOrganization() {
+        return getOrganization() != null;
     }
 
 }

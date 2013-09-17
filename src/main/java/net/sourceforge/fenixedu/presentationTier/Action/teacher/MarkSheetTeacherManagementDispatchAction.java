@@ -39,7 +39,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCourseDA {
 
@@ -189,7 +189,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         return enrolmentsNotInAnyMarkSheet;
     }
 
-    private boolean checkIfCanSubmitMarksToAnyCurricularCourse(List<CurricularCourse> curricularCourses,
+    private boolean checkIfCanSubmitMarksToAnyCurricularCourse(Collection<CurricularCourse> curricularCourses,
             ExecutionSemester executionSemester, HttpServletRequest request, ActionMessages actionMessages) {
         boolean result = true;
         String dateFormat = "dd/MM/yyyy";
@@ -258,7 +258,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
             HttpServletResponse response) {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         String markSheetID = request.getParameter("msID");
-        MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
+        MarkSheet markSheet = FenixFramework.getDomainObject(markSheetID);
         request.setAttribute("markSheet", markSheet);
         request.setAttribute("executionCourseID", executionCourse.getExternalId());
         return mapping.findForward("viewMarkSheet");

@@ -12,6 +12,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -30,8 +31,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -44,7 +45,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         @Override
         public int compare(CurriculumModule o1, CurriculumModule o2) {
             int result = o1.getName().compareTo(o2.getName());
-            return (result == 0) ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : result;
+            return (result == 0) ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : result;
         }
     };
 
@@ -52,7 +53,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         @Override
         public int compare(CurriculumModule o1, CurriculumModule o2) {
             int result = o1.getFullPath().compareTo(o2.getFullPath());
-            return (result == 0) ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : result;
+            return (result == 0) ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : result;
         }
     };
 
@@ -70,15 +71,15 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         setCreationDateDateTime(new DateTime());
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void deleteRecursive() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         delete();
     }
 
     public void delete() {
-        removeDegreeModule();
-        removeCurriculumGroup();
-        removeRootDomainObject();
+        setDegreeModule(null);
+        setCurriculumGroup(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -530,6 +531,26 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         } else {
             setCreationDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasCurriculumGroup() {
+        return getCurriculumGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateDateTime() {
+        return getCreationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeModule() {
+        return getDegreeModule() != null;
     }
 
 }

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -35,7 +36,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -123,8 +124,8 @@ public class CourseStatistics extends FenixBackingBean {
             List<InfoExecutionYear> executionYearsList = ReadNotClosedExecutionYears.run();
             List<SelectItem> result = new ArrayList<SelectItem>();
             for (InfoExecutionYear executionYear : executionYearsList) {
-                List<ExecutionSemester> executionSemesters =
-                        AbstractDomainObject.<ExecutionYear> fromExternalId(executionYear.getExternalId()).getExecutionPeriods();
+                Collection<ExecutionSemester> executionSemesters =
+                        FenixFramework.<ExecutionYear> getDomainObject(executionYear.getExternalId()).getExecutionPeriods();
                 for (ExecutionSemester executionSemester : executionSemesters) {
                     result.add(new SelectItem(executionSemester.getExternalId(), executionSemester.getExecutionYear().getYear()
                             + " - " + executionSemester.getName()));
@@ -188,7 +189,7 @@ public class CourseStatistics extends FenixBackingBean {
     }
 
     public CompetenceCourse getCompetenceCourse() {
-        return competenceCourse == null ? AbstractDomainObject.<CompetenceCourse> fromExternalId(getCompetenceCourseId()) : competenceCourse;
+        return competenceCourse == null ? FenixFramework.<CompetenceCourse> getDomainObject(getCompetenceCourseId()) : competenceCourse;
     }
 
     private ResourceBundle getApplicationResources() {
@@ -201,7 +202,7 @@ public class CourseStatistics extends FenixBackingBean {
     private CurricularCourse getCurricularCourseToExport() {
 
         final CompetenceCourse cc = getCompetenceCourse();
-        final Degree degree = AbstractDomainObject.fromExternalId(getDegreeId());
+        final Degree degree = FenixFramework.getDomainObject(getDegreeId());
 
         for (final CurricularCourse curricularCourse : cc.getAssociatedCurricularCourses()) {
             if (curricularCourse.getDegree().equals(degree)) {
@@ -293,7 +294,7 @@ public class CourseStatistics extends FenixBackingBean {
     }
 
     private ExecutionYear getExecutionYear() {
-        return AbstractDomainObject.<ExecutionSemester> fromExternalId(getExecutionPeriodId()).getExecutionYear();
+        return FenixFramework.<ExecutionSemester> getDomainObject(getExecutionPeriodId()).getExecutionYear();
     }
 
     /*

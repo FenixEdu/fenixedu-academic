@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -29,17 +29,17 @@ public class EditStudentGroupShift {
     protected Boolean run(String executionCourseCode, String studentGroupCode, String groupPropertiesCode, String newShiftCode)
             throws FenixServiceException {
 
-        Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        Grouping grouping = FenixFramework.getDomainObject(groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        Shift shift = AbstractDomainObject.fromExternalId(newShiftCode);
+        Shift shift = FenixFramework.getDomainObject(newShiftCode);
 
         // grouping.checkShiftCapacity(shift);
 
-        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
 
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
@@ -61,7 +61,7 @@ public class EditStudentGroupShift {
 
     private static final EditStudentGroupShift serviceInstance = new EditStudentGroupShift();
 
-    @Service
+    @Atomic
     public static Boolean runEditStudentGroupShift(String executionCourseCode, String studentGroupCode,
             String groupPropertiesCode, String newShiftCode) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

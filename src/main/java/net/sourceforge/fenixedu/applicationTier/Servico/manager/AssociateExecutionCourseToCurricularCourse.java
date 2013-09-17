@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -8,40 +8,41 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AssociateExecutionCourseToCurricularCourse {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String executionCourseId, String curricularCourseId, String executionPeriodId)
             throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
-        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
+        final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }
 
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
         if (executionSemester == null) {
             throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
         }
 
-        List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
         for (ExecutionCourse executionCourse : executionCourses) {
             if (executionCourse.getExecutionPeriod() == executionSemester) {
                 throw new ExistingServiceException("message.unavailable.execution.period", null);
             }
         }
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }
 
-        if (!curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
+        if (!curricularCourse.getAssociatedExecutionCoursesSet().contains(executionCourse)) {
             curricularCourse.addAssociatedExecutionCourses(executionCourse);
         }
     }

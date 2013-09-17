@@ -188,7 +188,252 @@ public class Country extends Country_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonGrantOwnerEquivalent> getPersonGrantOwnerEquivalences() {
+        return getPersonGrantOwnerEquivalencesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonGrantOwnerEquivalences() {
+        return !getPersonGrantOwnerEquivalencesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyExternalPersonDetails> getExternalCandidacyPersonDetailsCountryOfResidence() {
+        return getExternalCandidacyPersonDetailsCountryOfResidenceSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExternalCandidacyPersonDetailsCountryOfResidence() {
+        return !getExternalCandidacyPersonDetailsCountryOfResidenceSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Job> getJobs() {
+        return getJobsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyJobs() {
+        return !getJobsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getAssociatedResidentPersonsCandidacies() {
+        return getAssociatedResidentPersonsCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedResidentPersonsCandidacies() {
+        return !getAssociatedResidentPersonsCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.PersonalIngressionData> getPersonalIngressionsData() {
+        return getPersonalIngressionsDataSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonalIngressionsData() {
+        return !getPersonalIngressionsDataSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyExternalPersonDetails> getExternalCandidacyPersonDetailsNationality() {
+        return getExternalCandidacyPersonDetailsNationalitySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExternalCandidacyPersonDetailsNationality() {
+        return !getExternalCandidacyPersonDetailsNationalitySet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getOriginPrecedentDegreeInformations() {
+        return getOriginPrecedentDegreeInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOriginPrecedentDegreeInformations() {
+        return !getOriginPrecedentDegreeInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Party> getAssociatedParties() {
+        return getAssociatedPartiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedParties() {
+        return !getAssociatedPartiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy> getAssociatedResidentIndividualCandidacies() {
+        return getAssociatedResidentIndividualCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedResidentIndividualCandidacies() {
+        return !getAssociatedResidentIndividualCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation> getCandidacyPrecedentDegreeInformations() {
+        return getCandidacyPrecedentDegreeInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidacyPrecedentDegreeInformations() {
+        return !getCandidacyPrecedentDegreeInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.internship.InternshipCandidacy> getThirdInternshipDestination() {
+        return getThirdInternshipDestinationSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyThirdInternshipDestination() {
+        return !getThirdInternshipDestinationSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreeInformations() {
+        return getPrecedentDegreeInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPrecedentDegreeInformations() {
+        return !getPrecedentDegreeInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter> getRefereeLetters() {
+        return getRefereeLettersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRefereeLetters() {
+        return !getRefereeLettersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.internship.InternshipCandidacySession> getInternshipCandidacySession() {
+        return getInternshipCandidacySessionSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInternshipCandidacySession() {
+        return !getInternshipCandidacySessionSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.contacts.PhysicalAddress> getAssociatedPhysicalAddresses() {
+        return getAssociatedPhysicalAddressesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedPhysicalAddresses() {
+        return !getAssociatedPhysicalAddressesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.internship.InternshipCandidacy> getFirstInternshipDestination() {
+        return getFirstInternshipDestinationSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFirstInternshipDestination() {
+        return !getFirstInternshipDestinationSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getAssociatedBornedPersons() {
+        return getAssociatedBornedPersonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedBornedPersons() {
+        return !getAssociatedBornedPersonsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Qualification> getAssociatedQualifications() {
+        return getAssociatedQualificationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedQualifications() {
+        return !getAssociatedQualificationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.internship.InternshipCandidacy> getInternshipCandidacy() {
+        return getInternshipCandidacySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInternshipCandidacy() {
+        return !getInternshipCandidacySet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.internship.InternshipCandidacy> getSecondInternshipDestination() {
+        return getSecondInternshipDestinationSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySecondInternshipDestination() {
+        return !getSecondInternshipDestinationSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResearchResult> getResults() {
+        return getResultsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResults() {
+        return !getResultsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDefaultCountry() {
+        return getDefaultCountry() != null;
+    }
+
+    @Deprecated
+    public boolean hasCountryNationality() {
+        return getCountryNationality() != null;
+    }
+
+    @Deprecated
+    public boolean hasLocalizedName() {
+        return getLocalizedName() != null;
+    }
+
+    @Deprecated
+    public boolean hasThreeLetterCode() {
+        return getThreeLetterCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
 }

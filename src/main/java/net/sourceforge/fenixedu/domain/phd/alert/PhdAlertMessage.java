@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdAlertMessage extends PhdAlertMessage_Base {
@@ -27,7 +27,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         @Override
         public int compare(PhdAlertMessage m1, PhdAlertMessage m2) {
             int comp = m1.getWhenCreated().compareTo(m2.getWhenCreated());
-            return (comp != 0) ? comp : COMPARATOR_BY_ID.compare(m1, m2);
+            return (comp != 0) ? comp : DomainObjectUtil.COMPARATOR_BY_ID.compare(m1, m2);
         }
     };
 
@@ -53,7 +53,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
             MultiLanguageString body) {
         checkParameters(process, persons, subject, body);
         super.setProcess(process);
-        super.getPersons().addAll(persons);
+        super.getPersonsSet().addAll(persons);
         super.setSubject(subject);
         super.setBody(body);
         super.setReaded(Boolean.FALSE);
@@ -91,18 +91,8 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
     }
 
     @Override
-    public List<Person> getPersons() {
-        return Collections.unmodifiableList(super.getPersons());
-    }
-
-    @Override
     public Set<Person> getPersonsSet() {
         return Collections.unmodifiableSet(super.getPersonsSet());
-    }
-
-    @Override
-    public Iterator<Person> getPersonsIterator() {
-        return getPersonsSet().iterator();
     }
 
     @Override
@@ -125,7 +115,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.cannot.modify.readed");
     }
 
-    @Service
+    @Atomic
     public void markAsReaded(Person person) {
         String[] args = {};
         if (person == null) {
@@ -137,10 +127,10 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         super.setPersonWhoMarkedAsReaded(person);
     }
 
-    @Service
+    @Atomic
     public void markAsUnread() {
         super.setReaded(false);
-        removePersonWhoMarkedAsReaded();
+        setPersonWhoMarkedAsReaded(null);
     }
 
     public boolean isReaded() {
@@ -153,7 +143,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 
     public List<PhdAlert> getAlertsPossibleResponsibleForMessageGeneration() {
         List<PhdAlert> result = new ArrayList<PhdAlert>();
-        List<PhdAlert> alerts = getProcess().getAlerts();
+        Collection<PhdAlert> alerts = getProcess().getAlerts();
 
         for (PhdAlert phdAlert : alerts) {
             if (getSubject().getContent().contentEquals(phdAlert.getFormattedSubject().getContent())) {
@@ -174,7 +164,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 
         UnitBasedSender sender = getSender();
 
-        List<Message> messages = sender.getMessages();
+        Collection<Message> messages = sender.getMessages();
 
         for (Message message : messages) {
             if (getSubject().getContent().contentEquals(message.getSubject())) {
@@ -183,6 +173,51 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         }
 
         return result;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getPersons() {
+        return getPersonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersons() {
+        return !getPersonsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPersonWhoMarkedAsReaded() {
+        return getPersonWhoMarkedAsReaded() != null;
+    }
+
+    @Deprecated
+    public boolean hasBody() {
+        return getBody() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasReaded() {
+        return getReaded() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubject() {
+        return getSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
     }
 
 }

@@ -19,7 +19,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "scientificCouncil", path = "/showFullTeacherCreditsSheet", attribute = "teacherCreditsSheetForm",
         formBean = "teacherCreditsSheetForm", scope = "request", parameter = "method")
@@ -71,7 +71,7 @@ public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeach
 
     private ExecutionSemester getExecutionSemesterFromRequestOrForm(HttpServletRequest request, DynaActionForm teacherCreditsForm) {
         ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("executionPeriodId"));
+                FenixFramework.getDomainObject((String) teacherCreditsForm.get("executionPeriodId"));
         if (executionSemester != null) {
             return executionSemester;
         }
@@ -85,7 +85,7 @@ public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeach
         public InfoTeacherCredits(ActionForm form, HttpServletRequest request) {
             DynaActionForm teacherCreditsForm = (DynaActionForm) form;
             executionSemester = getExecutionSemesterFromRequestOrForm(request, teacherCreditsForm);
-            teacher = AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
+            teacher = FenixFramework.getDomainObject((String) teacherCreditsForm.get("teacherId"));
         }
 
         public Teacher getTeacher() {

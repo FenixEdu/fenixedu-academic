@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
 <% final String url = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("institution.url"); %>
 <div id="latnav">

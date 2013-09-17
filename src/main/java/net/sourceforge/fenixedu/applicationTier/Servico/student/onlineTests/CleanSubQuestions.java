@@ -13,18 +13,19 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Susana Fernandes
  */
 public class CleanSubQuestions {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Registration registration, DistributedTest distributedTest, String exerciseCode, Integer itemCode,
             String path) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
         if (distributedTest == null) {
             throw new FenixServiceException();
         }
@@ -38,7 +39,7 @@ public class CleanSubQuestions {
                 } catch (Exception e) {
                     throw new FenixServiceException(e);
                 }
-                SubQuestion subQuestion = studentTestQuestion.getStudentSubQuestions().get(0);
+                SubQuestion subQuestion = studentTestQuestion.getStudentSubQuestions().iterator().next();
                 if (subQuestion.getItemId().equals(studentTestQuestion.getItemId())) {
                     // e a 1ª
                     studentTestQuestion.setResponse(null);

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 
@@ -101,11 +101,11 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
     }
 
     public ExecutionYear getExecutionYear() {
-        return AbstractDomainObject.fromExternalId(executionYearId);
+        return FenixFramework.getDomainObject(executionYearId);
     }
 
     public CurricularCourse getCurricularCourse() {
-        return (CurricularCourse) (curricularCourseId != null ? AbstractDomainObject.fromExternalId(curricularCourseId) : null);
+        return (CurricularCourse) (curricularCourseId != null ? FenixFramework.getDomainObject(curricularCourseId) : null);
     }
 
     private int getNumberOfEnrolledStudents() {

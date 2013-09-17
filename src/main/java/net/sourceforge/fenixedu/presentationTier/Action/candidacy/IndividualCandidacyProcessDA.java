@@ -44,7 +44,7 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
 import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * INFO: when extending this class pay attention to the following aspects
@@ -86,7 +86,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     protected void setParentProcess(HttpServletRequest request) {
         final String parentProcessId = (String) getFromRequest(request, "parentProcessId");
         if (parentProcessId != null) {
-            request.setAttribute("parentProcess", AbstractDomainObject.fromExternalId(parentProcessId));
+            request.setAttribute("parentProcess", FenixFramework.getDomainObject(parentProcessId));
         } else {
             setProcess(request);
             if (hasProcess(request)) {
@@ -282,7 +282,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
         }
 
         bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
-        bean.removeChoosePersonBean();
+        bean.setChoosePersonBean(null);
         return mapping.findForward("fill-personal-information");
     }
 
@@ -309,7 +309,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
         // bean.getPersonBean().setNationality(Country.readByTwoLetterCode("AF"));
         // bean.getPersonBean().setAreaCode("1223-123");
 
-        bean.removeChoosePersonBean();
+        bean.setChoosePersonBean(null);
         return mapping.findForward("fill-personal-information");
     }
 
@@ -387,8 +387,8 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
             } else {
                 final List<StudentCurricularPlan> scps = bean.getPrecedentStudentCurricularPlans();
                 if (scps.size() == 1) {
-                    createCandidacyPrecedentDegreeInformation(bean, scps.get(0));
-                    bean.setPrecedentStudentCurricularPlan(scps.get(0));
+                    createCandidacyPrecedentDegreeInformation(bean, scps.iterator().next());
+                    bean.setPrecedentStudentCurricularPlan(scps.iterator().next());
                 }
             }
         }
@@ -673,7 +673,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
         CandidacyProcessDocumentUploadBean uploadBean =
                 (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document");
         String documentExternalId = request.getParameter("documentFileOid");
-        IndividualCandidacyDocumentFile documentFile = IndividualCandidacyDocumentFile.fromExternalId(documentExternalId);
+        IndividualCandidacyDocumentFile documentFile = FenixFramework.getDomainObject(documentExternalId);
         uploadBean.setDocumentFile(documentFile);
 
         executeActivity(getProcess(request), "RevokeDocumentFile", uploadBean);

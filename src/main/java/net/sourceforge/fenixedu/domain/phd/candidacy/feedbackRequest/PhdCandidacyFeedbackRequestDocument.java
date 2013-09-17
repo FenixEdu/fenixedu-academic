@@ -53,7 +53,7 @@ public class PhdCandidacyFeedbackRequestDocument extends PhdCandidacyFeedbackReq
                 super.setDocumentVersion(process.getLastVersionNumber(documentType) + 1);
 
             } else {
-                super.setDocumentVersion(getElement().getFeedbackDocumentsCount() + 1);
+                super.setDocumentVersion(getElement().getFeedbackDocumentsSet().size() + 1);
             }
         } else {
             super.setDocumentVersion(1);
@@ -85,4 +85,10 @@ public class PhdCandidacyFeedbackRequestDocument extends PhdCandidacyFeedbackReq
     public PhdProgramProcessDocument getLastVersion() {
         return getElement().getLastFeedbackDocument();
     }
+
+    @Deprecated
+    public boolean hasElement() {
+        return getElement() != null;
+    }
+
 }

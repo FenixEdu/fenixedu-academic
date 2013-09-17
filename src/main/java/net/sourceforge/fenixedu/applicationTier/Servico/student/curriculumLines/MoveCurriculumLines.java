@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MoveCurriculumLines {
 
-    @Service
+    @Atomic
     public static void run(final MoveCurriculumLinesBean moveCurriculumLinesBean) {
         final StudentCurricularPlan studentCurricularPlan = moveCurriculumLinesBean.getStudentCurricularPlan();
         if (moveCurriculumLinesBean.isWithRules()) {
@@ -22,7 +22,7 @@ public class MoveCurriculumLines {
         }
     }
 
-    @Service
+    @Atomic
     public static void run(final OptionalCurricularCoursesLocationBean bean) throws FenixServiceException {
         moveEnrolments(bean);
         moveOptionalEnrolments(bean);

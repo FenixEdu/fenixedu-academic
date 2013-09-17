@@ -27,7 +27,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public abstract class QUCAuditorDA extends FenixDispatchAction {
 
@@ -66,7 +66,7 @@ public abstract class QUCAuditorDA extends FenixDispatchAction {
     private ExecutionCourseAudit getExecutionCourseAudit(HttpServletRequest request) {
         if (getFromRequest(request, "executionCourseAuditOID") != null) {
             String executionCourseAuditOID = (String) getFromRequest(request, "executionCourseAuditOID");
-            return AbstractDomainObject.fromExternalId(executionCourseAuditOID);
+            return FenixFramework.getDomainObject(executionCourseAuditOID);
         } else {
             Object object = getRenderedObject();
             if (object instanceof AuditProcessBean) {
@@ -183,7 +183,7 @@ public abstract class QUCAuditorDA extends FenixDispatchAction {
             HttpServletResponse response) throws IOException {
 
         String executionCourseAuditFileOID = (String) getFromRequest(request, "executionCourseAuditFileOID");
-        ExecutionCourseAuditFile executionCourseAuditFile = AbstractDomainObject.fromExternalId(executionCourseAuditFileOID);
+        ExecutionCourseAuditFile executionCourseAuditFile = FenixFramework.getDomainObject(executionCourseAuditFileOID);
         ExecutionCourseAudit executionCourseAudit = executionCourseAuditFile.getExecutionCourseAudit();
 
         executionCourseAudit.deleteFile(executionCourseAuditFile);

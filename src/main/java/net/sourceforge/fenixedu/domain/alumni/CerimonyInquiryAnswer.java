@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.alumni;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements Comparable<CerimonyInquiryAnswer> {
 
@@ -23,7 +23,7 @@ public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements
         if (cerimonyInquiry == null) {
             setOrder(Integer.valueOf(0));
         } else {
-            setOrder(Integer.valueOf(cerimonyInquiry.getCerimonyInquiryAnswerCount()));
+            setOrder(Integer.valueOf(cerimonyInquiry.getCerimonyInquiryAnswerSet().size()));
         }
     }
 
@@ -35,13 +35,43 @@ public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements
         setAnswerOrder(order);
     }
 
-    @Service
+    @Atomic
     public void delete() {
         if (!hasAnyCerimonyInquiryPerson()) {
-            removeCerimonyInquiry();
-            removeRootDomainObject();
+            setCerimonyInquiry(null);
+            setRootDomainObject(null);
             deleteDomainObject();
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson> getCerimonyInquiryPerson() {
+        return getCerimonyInquiryPersonSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCerimonyInquiryPerson() {
+        return !getCerimonyInquiryPersonSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasText() {
+        return getText() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCerimonyInquiry() {
+        return getCerimonyInquiry() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnswerOrder() {
+        return getAnswerOrder() != null;
     }
 
 }

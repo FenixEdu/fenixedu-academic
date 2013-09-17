@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -25,10 +26,10 @@ public class Login extends Login_Base {
 
     @Override
     public void delete() {
-        for (; !getAlias().isEmpty(); getAlias().get(0).delete()) {
+        for (; !getAlias().isEmpty(); getAlias().iterator().next().delete()) {
             ;
         }
-        for (; !getLoginPeriods().isEmpty(); getLoginPeriods().get(0).delete()) {
+        for (; !getLoginPeriods().isEmpty(); getLoginPeriods().iterator().next().delete()) {
             ;
         }
         super.delete();
@@ -70,16 +71,16 @@ public class Login extends Login_Base {
     }
 
     public String getMostImportantAlias() {
-        List<Role> personRoles = getUser().getPerson().getPersonRoles();
+        Collection<Role> personRoles = getUser().getPerson().getPersonRoles();
         Role mostImportantRole = UsernameUtils.getMostImportantRole(personRoles);
         if (mostImportantRole != null) {
             RoleType roleType = mostImportantRole.getRoleType();
             List<LoginAlias> loginAlias = getRoleLoginAlias(roleType);
             if (!loginAlias.isEmpty()) {
-                return loginAlias.get(0).getAlias();
+                return loginAlias.iterator().next().getAlias();
             }
         }
-        return getAlias().isEmpty() ? null : getAlias().get(0).getAlias();
+        return getAlias().isEmpty() ? null : getAlias().iterator().next().getAlias();
     }
 
     public String getUserUId() {
@@ -282,6 +283,36 @@ public class Login extends Login_Base {
 
     private String makeNewAliasGrantOwner(final Person person) {
         return person.hasEmployee() ? "F" + person.getEmployee().getEmployeeNumber() : null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.LoginAlias> getAlias() {
+        return getAliasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAlias() {
+        return !getAliasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.LoginPeriod> getLoginPeriods() {
+        return getLoginPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLoginPeriods() {
+        return !getLoginPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasIsPassInKerberos() {
+        return getIsPassInKerberos() != null;
+    }
+
+    @Deprecated
+    public boolean hasPassword() {
+        return getPassword() != null;
     }
 
 }

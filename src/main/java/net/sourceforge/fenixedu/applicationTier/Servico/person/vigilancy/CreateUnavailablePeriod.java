@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateUnavailablePeriod {
 
-    @Service
+    @Atomic
     public static void run(Person person, DateTime begin, DateTime end, String justification) {
 
         CreateUnavailable(person, begin, end, justification);

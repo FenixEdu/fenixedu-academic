@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
 import java.lang.reflect.Constructor;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -39,14 +39,11 @@ public class Precedence extends Precedence_Base {
     }
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-        List restrictions = getRestrictions();
+        Collection<Restriction> restrictions = getRestrictions();
 
-        int size = restrictions.size();
+        CurricularCourseEnrollmentType evaluate = restrictions.iterator().next().evaluate(precedenceContext);
 
-        CurricularCourseEnrollmentType evaluate = ((Restriction) restrictions.get(0)).evaluate(precedenceContext);
-
-        for (int i = 1; i < size; i++) {
-            Restriction restriction = (Restriction) restrictions.get(i);
+        for (Restriction restriction : restrictions) {
             evaluate = evaluate.and(restriction.evaluate(precedenceContext));
         }
 
@@ -55,7 +52,7 @@ public class Precedence extends Precedence_Base {
 
     public void delete() {
 
-        Iterator<Restriction> restrictionIterator = getRestrictionsIterator();
+        Iterator<Restriction> restrictionIterator = getRestrictions().iterator();
 
         while (restrictionIterator.hasNext()) {
             Restriction restriction = restrictionIterator.next();
@@ -64,14 +61,14 @@ public class Precedence extends Precedence_Base {
             restriction.delete();
         }
 
-        removeCurricularCourse();
-        removeRootDomainObject();
+        setCurricularCourse(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     public void mergePrecedences(Precedence sourcePrecedence) {
 
-        Iterator<Restriction> restrictionsIterator = sourcePrecedence.getRestrictionsIterator();
+        Iterator<Restriction> restrictionsIterator = sourcePrecedence.getRestrictions().iterator();
 
         while (restrictionsIterator.hasNext()) {
             Restriction restriction = restrictionsIterator.next();
@@ -82,4 +79,25 @@ public class Precedence extends Precedence_Base {
 
         sourcePrecedence.delete();
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.precedences.Restriction> getRestrictions() {
+        return getRestrictionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRestrictions() {
+        return !getRestrictionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
 }

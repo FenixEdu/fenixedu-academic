@@ -16,7 +16,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SearchForStudents extends FenixDispatchAction {
 
@@ -56,7 +56,7 @@ public class SearchForStudents extends FenixDispatchAction {
 
     private Student getStudent(final HttpServletRequest request) {
         final String studentID = request.getParameter("studentID");
-        final Student student = AbstractDomainObject.fromExternalId(studentID);
+        final Student student = FenixFramework.getDomainObject(studentID);
 
         request.setAttribute("student", student);
         return student;

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -40,7 +40,7 @@ public class Section extends Section_Base {
                 return co;
             }
             final int cn = o1.getName().compareTo(o2.getName());
-            return cn == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : cn;
+            return cn == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : cn;
         }
 
     };
@@ -408,6 +408,21 @@ public class Section extends Section_Base {
 
     public void logEditSectionPermission() {
         getSite().logEditSectionPermission(this);
+    }
+
+    @Deprecated
+    public boolean hasEnabled() {
+        return getEnabled() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowSubSections() {
+        return getShowSubSections() != null;
+    }
+
+    @Deprecated
+    public boolean hasModificationDate() {
+        return getModificationDate() != null;
     }
 
 }

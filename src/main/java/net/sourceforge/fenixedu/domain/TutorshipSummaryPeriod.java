@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.Tutor
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TutorshipSummaryPeriod extends TutorshipSummaryPeriod_Base {
 
@@ -17,13 +17,13 @@ public class TutorshipSummaryPeriod extends TutorshipSummaryPeriod_Base {
         setEndDate(endDate);
     }
 
-    @Service
+    @Atomic
     public void update(TutorshipSummaryPeriodBean bean) {
         setBeginDate(bean.getBeginDate());
         setEndDate(bean.getEndDate());
     }
 
-    @Service
+    @Atomic
     public static TutorshipSummaryPeriod create(TutorshipSummaryPeriodBean bean) {
         TutorshipSummaryPeriod tutorshipSummaryPeriod =
                 new TutorshipSummaryPeriod(bean.getExecutionSemester(), bean.getBeginDate(), bean.getEndDate());
@@ -36,4 +36,24 @@ public class TutorshipSummaryPeriod extends TutorshipSummaryPeriod_Base {
                 new Interval(getBeginDate().toDateTimeAtStartOfDay(), getEndDate().plusDays(1).toDateTimeAtStartOfDay());
         return interval.containsNow();
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
+    }
+
 }

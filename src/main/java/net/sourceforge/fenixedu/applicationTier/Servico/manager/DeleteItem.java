@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.SiteManagerAuthorizationF
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Site;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Fernanda Quitério
@@ -24,7 +24,7 @@ public class DeleteItem {
 
     private static final DeleteItem serviceInstance = new DeleteItem();
 
-    @Service
+    @Atomic
     public static Boolean runDeleteItem(Site site, Item item) throws NotAuthorizedException {
         SiteManagerAuthorizationFilter.instance.execute(site);
         return serviceInstance.run(site, item);

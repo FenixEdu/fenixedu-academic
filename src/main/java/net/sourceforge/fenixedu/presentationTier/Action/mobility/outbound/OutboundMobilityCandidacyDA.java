@@ -132,7 +132,7 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         final OutboundMobilityCandidacyContest contest = getDomainObject(request, "contestOid");
         if (contest != null) {
             final OutboundMobilityCandidacyContestGroup mobilityGroup = contest.getOutboundMobilityCandidacyContestGroup();
-            if (mobilityGroup.getOutboundMobilityCandidacyContestCount() == 1) {
+            if (mobilityGroup.getOutboundMobilityCandidacyContestSet().size() == 1) {
                 outboundMobilityContextBean.getMobilityGroups().remove(mobilityGroup);
             }
             contest.delete();
@@ -210,8 +210,8 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return null;
     }
 
-    public ActionForward editVacancies(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-            final HttpServletResponse response) {
+    public ActionForward editVacancies(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityCandidacyContest contest = getDomainObject(request, "contestOid");
         final String vacancies = (String) getFromRequest(request, "vacancies");
         contest.editVacancies(vacancies == null || vacancies.isEmpty() ? null : new Integer(vacancies));

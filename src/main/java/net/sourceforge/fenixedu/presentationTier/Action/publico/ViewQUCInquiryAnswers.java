@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewQUCInquiryAnswers", module = "publico")
 public class ViewQUCInquiryAnswers extends FenixDispatchAction {
@@ -39,12 +39,12 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionDegreeOID").toString());
         ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionPeriodOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionPeriodOID").toString());
         CoordinatorInquiryTemplate coordinatorInquiryTemplate =
                 CoordinatorInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
-        Coordinator coordinator = AbstractDomainObject.fromExternalId(getFromRequest(request, "coordinatorOID").toString());
+        Coordinator coordinator = FenixFramework.getDomainObject(getFromRequest(request, "coordinatorOID").toString());
         InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
         if (coordinatorInquiryTemplate.getShared()) {
             inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionSemester);
@@ -73,7 +73,7 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
     public ActionForward showRegentInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
+        Professorship professorship = FenixFramework.getDomainObject(getFromRequest(request, "professorshipOID").toString());
 
         RegentInquiryTemplate regentInquiryTemplate =
                 RegentInquiryTemplate.getTemplateByExecutionPeriod(professorship.getExecutionCourse().getExecutionPeriod());
@@ -95,7 +95,7 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
     public ActionForward showTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
+        Professorship professorship = FenixFramework.getDomainObject(getFromRequest(request, "professorshipOID").toString());
 
         TeacherInquiryTemplate teacherInquiryTemplate =
                 TeacherInquiryTemplate.getTemplateByExecutionPeriod(professorship.getExecutionCourse().getExecutionPeriod());
@@ -118,9 +118,9 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionCourseOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionCourseOID").toString());
         ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionDegreeOID").toString());
 
         DelegateInquiryTemplate delegateInquiryTemplate =
                 DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());

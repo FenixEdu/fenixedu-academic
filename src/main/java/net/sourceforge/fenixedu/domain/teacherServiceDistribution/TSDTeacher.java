@@ -145,7 +145,7 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
     }
 
     public Department getDepartment() {
-        return getTeacherServiceDistributions().get(0).getTSDProcessPhase().getTSDProcess().getDepartment();
+        return getTeacherServiceDistributions().iterator().next().getTSDProcessPhase().getTSDProcess().getDepartment();
     }
 
     public Double getTotalHoursLectured(List<ExecutionSemester> executionPeriodList) {
@@ -179,8 +179,8 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
             tsdProfessorship.delete();
         }
 
-        removeProfessionalCategory();
-        removeRootDomainObject();
+        setProfessionalCategory(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -206,12 +206,58 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
 
     public Double getExtraCreditsValue(List<ExecutionSemester> executionPeriodList) {
         return getExtraCreditsValue()
-                * (executionPeriodList.size() / getTeacherServiceDistributions().get(0).getTSDProcessPhase().getTSDProcess()
-                        .getExecutionPeriodsCount());
+                * (executionPeriodList.size() / getTeacherServiceDistributions().iterator().next().getTSDProcessPhase()
+                        .getTSDProcess().getExecutionPeriodsSet().size());
     }
 
     public Double getTotalHoursLecturedPlusExtraCredits(List<ExecutionSemester> executionPeriodList) {
         return getTotalHoursLectured(executionPeriodList)
                 + (getUsingExtraCredits() ? getExtraCreditsValue(executionPeriodList) : 0d);
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship> getTSDProfessorships() {
+        return getTSDProfessorshipsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDProfessorships() {
+        return !getTSDProfessorshipsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution> getTeacherServiceDistributions() {
+        return getTeacherServiceDistributionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherServiceDistributions() {
+        return !getTeacherServiceDistributionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUsingExtraCredits() {
+        return getUsingExtraCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCategory() {
+        return getProfessionalCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasExtraCreditsName() {
+        return getExtraCreditsName() != null;
+    }
+
+    @Deprecated
+    public boolean hasExtraCreditsValue() {
+        return getExtraCreditsValue() != null;
+    }
+
 }

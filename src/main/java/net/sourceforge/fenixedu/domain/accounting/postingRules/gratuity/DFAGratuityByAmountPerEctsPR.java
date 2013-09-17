@@ -12,7 +12,8 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class DFAGratuityByAmountPerEctsPR extends DFAGratuityByAmountPerEctsPR_Base {
 
@@ -97,21 +98,26 @@ public class DFAGratuityByAmountPerEctsPR extends DFAGratuityByAmountPerEctsPR_B
         return result;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public DFAGratuityByAmountPerEctsPR edit(Money dfaTotalAmount, Money dfaAmountPerEctsCredit,
             BigDecimal partialAcceptedPercentage) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         return edit(new DateTime(), dfaTotalAmount, dfaAmountPerEctsCredit, partialAcceptedPercentage);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public DFAGratuityByAmountPerEctsPR edit(DateTime startDate, Money dfaTotalAmount, Money dfaAmountPerEctsCredit,
             BigDecimal partialAcceptedPercentage) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
 
         deactivate(startDate);
 
         return new DFAGratuityByAmountPerEctsPR(startDate, null, getServiceAgreementTemplate(), dfaTotalAmount,
                 partialAcceptedPercentage, dfaAmountPerEctsCredit);
 
+    }
+
+    @Deprecated
+    public boolean hasDfaAmountPerEctsCredit() {
+        return getDfaAmountPerEctsCredit() != null;
     }
 
 }

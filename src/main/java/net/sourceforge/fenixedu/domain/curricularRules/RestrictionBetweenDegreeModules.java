@@ -107,4 +107,5 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
     public VerifyRuleExecutor createVerifyRuleExecutor() {
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
+
 }

@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.parking;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -12,8 +13,9 @@ import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 /**
@@ -23,12 +25,12 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchPartyCarPlate {
 
-    @Checked("RolePredicates.PARKING_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static List<Party> run(String nameSearch, String carPlateNumber, Long parkingCardNumber) {
+        check(RolePredicates.PARKING_MANAGER_PREDICATE);
         List<Party> result = new ArrayList<Party>();
         if (!StringUtils.isEmpty(carPlateNumber) || !StringUtils.isEmpty(nameSearch) || parkingCardNumber != null) {
-            List<ParkingParty> parkingParties = RootDomainObject.getInstance().getParkingParties();
+            Collection<ParkingParty> parkingParties = RootDomainObject.getInstance().getParkingParties();
             for (ParkingParty parkingParty : parkingParties) {
                 if (parkingParty.getParty() != null) {
                     if (satisfiedParkingCardNumber(parkingParty, parkingCardNumber)

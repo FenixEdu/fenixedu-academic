@@ -23,4 +23,24 @@ public class SibsPaymentFile extends SibsPaymentFile_Base {
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry> getSibsPaymentFileEntries() {
+        return getSibsPaymentFileEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySibsPaymentFileEntries() {
+        return !getSibsPaymentFileEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFilename() {
+        return getFilename() != null;
+    }
+
 }

@@ -8,6 +8,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,18 +19,18 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadStudentCurricularPlans {
 
-    @Service
+    @Atomic
     public static List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente, FenixServiceException {
 
         Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if (registration == null) {
             throw new NonExistingServiceException("student does not exist");
         }
-        List<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans();
+        Collection<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans();
 
         if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)) {
             throw new NonExistingServiceException();

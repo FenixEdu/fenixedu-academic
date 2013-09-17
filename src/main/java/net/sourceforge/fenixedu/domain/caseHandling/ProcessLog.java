@@ -46,4 +46,29 @@ public class ProcessLog extends ProcessLog_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasWhenDateTime() {
+        return getWhenDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasActivity() {
+        return getActivity() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasUserName() {
+        return getUserName() != null;
+    }
+
 }

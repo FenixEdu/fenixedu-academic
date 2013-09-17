@@ -13,19 +13,20 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateEditCompetenceCourse {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static InfoCompetenceCourse run(String competenceCourseID, String code, String name, String[] departmentIDs)
             throws NonExistingServiceException, InvalidArgumentsServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         List<Department> departments = new ArrayList<Department>();
         for (String departmentID : departmentIDs) {
-            Department department = AbstractDomainObject.fromExternalId(departmentID);
+            Department department = FenixFramework.getDomainObject(departmentID);
             if (department == null) {
                 throw new NonExistingServiceException("error.manager.noDepartment");
             }
@@ -37,7 +38,7 @@ public class CreateEditCompetenceCourse {
             if (StringUtils.isEmpty(competenceCourseID)) {
                 competenceCourse = new CompetenceCourse(code, name, departments);
             } else {
-                competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);
+                competenceCourse = FenixFramework.getDomainObject(competenceCourseID);
                 if (competenceCourse == null) {
                     throw new NonExistingServiceException("error.manager.noCompetenceCourse");
                 }

@@ -52,7 +52,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class InfoSiteCourseInformation extends DataTranferObject implements ISiteComponent {
 
-    private ExecutionCourse executionCourseDomainReference;
+    private final ExecutionCourse executionCourseDomainReference;
 
     private ExecutionYear executionYearDomainReference;
 
@@ -131,7 +131,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
     private Integer getNumberOfLessons(final Collection<Shift> shifts) {
         int result = 0;
         for (final Shift shift : shifts) {
-            result += shift.getAssociatedLessonsCount();
+            result += shift.getAssociatedLessons().size();
         }
         return result;
     }
@@ -145,7 +145,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             result++;
         }
 
-        Iterator iter = getExecutionCourse().getAssociatedBibliographicReferencesIterator();
+        Iterator iter = getExecutionCourse().getAssociatedBibliographicReferences().iterator();
         while (iter.hasNext()) {
             BibliographicReference bibliographicReference = (BibliographicReference) iter.next();
             if (bibliographicReference.getTitle() != null && bibliographicReference.getTitle().length() > MIN_LENGTH) {
@@ -188,7 +188,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             numberOfFieldsFilled++;
         }
 
-        Iterator iter = getExecutionCourse().getAssociatedBibliographicReferencesIterator();
+        Iterator iter = getExecutionCourse().getAssociatedBibliographicReferences().iterator();
         while (iter.hasNext()) {
             BibliographicReference bibliographicReference = (BibliographicReference) iter.next();
             if (bibliographicReference.getTitle().length() > MIN_LENGTH) {
@@ -332,7 +332,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             @Override
             public boolean evaluate(Object o) {
                 InfoLesson infoLesson = (InfoLesson) o;
-                if (infoLesson.getInfoShift().getShift().getCourseLoadsCount() == 1) {
+                if (infoLesson.getInfoShift().getShift().getCourseLoads().size() == 1) {
                     return infoLesson.getInfoShift().getShift().containsType(lessonType);
                 }
                 return false;

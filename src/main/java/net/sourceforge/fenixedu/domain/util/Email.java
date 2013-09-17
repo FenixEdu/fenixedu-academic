@@ -88,12 +88,12 @@ public class Email extends Email_Base {
     }
 
     public void delete() {
-        removeMessage();
+        setMessage(null);
         for (final MessageTransportResult messageTransportResult : getMessageTransportResultSet()) {
             messageTransportResult.delete();
         }
-        removeRootDomainObjectFromEmailQueue();
-        removeRootDomainObject();
+        setRootDomainObjectFromEmailQueue(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -383,7 +383,7 @@ public class Email extends Email_Base {
 
     public void deliver() {
         if (!hasAnyRecipients() || (hasMessage() && getMessage().getCreated().plusDays(5).isBeforeNow())) {
-            removeRootDomainObjectFromEmailQueue();
+            setRootDomainObjectFromEmailQueue(null);
         } else {
             final EmailAddressList toAddresses = getToAddresses();
             final EmailAddressList ccAddresses = getCcAddresses();
@@ -408,7 +408,7 @@ public class Email extends Email_Base {
             }
 
             if (!hasAnyRecipients()) {
-                removeRootDomainObjectFromEmailQueue();
+                setRootDomainObjectFromEmailQueue(null);
             }
         }
     }
@@ -424,6 +424,86 @@ public class Email extends Email_Base {
     @Override
     public void setFromName(final String fromName) {
         super.setFromName(fromName.replace(",", ""));
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.MessageTransportResult> getMessageTransportResult() {
+        return getMessageTransportResultSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMessageTransportResult() {
+        return !getMessageTransportResultSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasBccAddresses() {
+        return getBccAddresses() != null;
+    }
+
+    @Deprecated
+    public boolean hasBody() {
+        return getBody() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMessage() {
+        return getMessage() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubject() {
+        return getSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasHtmlBody() {
+        return getHtmlBody() != null;
+    }
+
+    @Deprecated
+    public boolean hasConfirmedAddresses() {
+        return getConfirmedAddresses() != null;
+    }
+
+    @Deprecated
+    public boolean hasFailedAddresses() {
+        return getFailedAddresses() != null;
+    }
+
+    @Deprecated
+    public boolean hasFromName() {
+        return getFromName() != null;
+    }
+
+    @Deprecated
+    public boolean hasFromAddress() {
+        return getFromAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasToAddresses() {
+        return getToAddresses() != null;
+    }
+
+    @Deprecated
+    public boolean hasCcAddresses() {
+        return getCcAddresses() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectFromEmailQueue() {
+        return getRootDomainObjectFromEmailQueue() != null;
+    }
+
+    @Deprecated
+    public boolean hasReplyTos() {
+        return getReplyTos() != null;
     }
 
 }

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentCodes.rectorate;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -41,7 +42,7 @@ public class RectoratePaymentCode extends RectoratePaymentCode_Base {
     public static List<RectoratePaymentCode> getAllRectoratePaymentCodes() {
         List<RectoratePaymentCode> result = new ArrayList<RectoratePaymentCode>();
 
-        List<PaymentCode> paymentCodes = RootDomainObject.getInstance().getPaymentCodes();
+        Collection<PaymentCode> paymentCodes = RootDomainObject.getInstance().getPaymentCodes();
 
         for (PaymentCode paymentCode : paymentCodes) {
             if (paymentCode.isForRectorate() && !StringUtils.isEmpty(paymentCode.getCode())) {

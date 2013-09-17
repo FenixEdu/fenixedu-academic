@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "external", path = "/partyContactValidation", scope = "request", parameter = "method")
 @Forwards({ @Forward(name = "emailValidation", path = "emailValidation"),
@@ -30,7 +31,7 @@ public class PartyContactValidationDA extends FenixDispatchAction {
         String tries = "N/A";
 
         if (!StringUtils.isEmpty(validationOID) && !StringUtils.isEmpty(token)) {
-            EmailValidation emailValidation = EmailValidation.fromExternalId(validationOID);
+            EmailValidation emailValidation = FenixFramework.getDomainObject(validationOID);
             if (emailValidation != null) {
                 emailValidation.processValidation(token);
                 state = emailValidation.getState().toString();

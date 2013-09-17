@@ -36,7 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "teacher", path = "/projectSubmissionsManagement", scope = "request", parameter = "method")
 @Forwards(
@@ -174,7 +174,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
 
         final Project project = getProject(request);
 
-        ExecutionCourse course = (ExecutionCourse) AbstractDomainObject.fromExternalId(getExecutionCourseID(request));
+        ExecutionCourse course = (ExecutionCourse) FenixFramework.getDomainObject(getExecutionCourseID(request));
 
         NotifyStudentGroup.run(project.getLastProjectSubmissionForStudentGroup(getStudentGroup(request)), course,
                 getLoggedPerson(request));
@@ -198,7 +198,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     private Project getProject(HttpServletRequest request) {
         final String projectExtId = request.getParameter("projectOID");
         if (projectExtId != null) {
-            final Project project = Project.fromExternalId(projectExtId);
+            final Project project = FenixFramework.getDomainObject(projectExtId);
             request.setAttribute("projectID", project.getExternalId().toString());
             return project;
         }

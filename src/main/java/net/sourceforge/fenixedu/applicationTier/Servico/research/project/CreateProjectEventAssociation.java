@@ -7,9 +7,10 @@ import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateProjectEventAssociation {
 
@@ -28,12 +29,12 @@ public class CreateProjectEventAssociation {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, String projectId)
             throws FenixServiceException {
+        check(ResultPredicates.author);
         ProjectEventAssociation association = null;
-        final Project project = AbstractDomainObject.fromExternalId(projectId);
+        final Project project = FenixFramework.getDomainObject(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }
@@ -60,13 +61,13 @@ public class CreateProjectEventAssociation {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static ProjectEventAssociation run(ProjectEventAssociationFullCreationBean bean, String projectId)
             throws FenixServiceException {
+        check(ResultPredicates.author);
         final ProjectEventAssociation association;
 
-        final Project project = AbstractDomainObject.fromExternalId(projectId);
+        final Project project = FenixFramework.getDomainObject(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }

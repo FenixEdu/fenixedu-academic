@@ -124,7 +124,7 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
     protected void createHeader(Object object, final HtmlTableRow headerRow) {
         List<BlockResumeResult> blockResumeResults = (List<BlockResumeResult>) object;
         if (!blockResumeResults.isEmpty()) {
-            BlockResumeResult blocksResume = blockResumeResults.get(0);
+            BlockResumeResult blocksResume = blockResumeResults.iterator().next();
 
             final Set<InquiryResult> blocksResults = blocksResume.getResultBlocks();
 

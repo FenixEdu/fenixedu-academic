@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.LocalDateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.PossiblyNullEndedInterval;
 
 /**
@@ -42,11 +43,11 @@ public abstract class Career extends Career_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    @Service
+    @Atomic
     public void delete() {
-        removePerson();
-        removeTeacher();
-        removeRootDomainObject();
+        setPerson(null);
+        setTeacher(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -75,7 +76,7 @@ public abstract class Career extends Career_Base {
         super.setEndYear(endYear);
     }
 
-    public static List<Career> readAllByTeacherIdAndCareerType(Person person, CareerType careerType) {
+    public static Collection<Career> readAllByTeacherIdAndCareerType(Person person, CareerType careerType) {
         if (careerType == null) {
             return person.getAssociatedCareers();
         }
@@ -110,6 +111,36 @@ public abstract class Career extends Career_Base {
         } else {
             setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasLastModificationDateDateTime() {
+        return getLastModificationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginYear() {
+        return getBeginYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndYear() {
+        return getEndYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

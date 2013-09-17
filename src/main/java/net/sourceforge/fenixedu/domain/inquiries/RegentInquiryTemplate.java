@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -15,7 +15,7 @@ public class RegentInquiryTemplate extends RegentInquiryTemplate_Base {
     }
 
     public static RegentInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {
-        final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof RegentInquiryTemplate && executionSemester == inquiryTemplate.getExecutionPeriod()) {
                 return (RegentInquiryTemplate) inquiryTemplate;
@@ -25,7 +25,7 @@ public class RegentInquiryTemplate extends RegentInquiryTemplate_Base {
     }
 
     public static RegentInquiryTemplate getCurrentTemplate() {
-        final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof RegentInquiryTemplate && inquiryTemplate.isOpen()) {
                 return (RegentInquiryTemplate) inquiryTemplate;

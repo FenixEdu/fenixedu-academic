@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.teacher.evaluation.RadistEvaluation;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TeacherEvaluationTypeSelection implements Serializable {
     private final TeacherEvaluationProcess process;
@@ -35,7 +35,7 @@ public class TeacherEvaluationTypeSelection implements Serializable {
         return type;
     }
 
-    @Service
+    @Atomic
     public void createEvaluation() {
         switch (type) {
         case NO_EVALUATION:

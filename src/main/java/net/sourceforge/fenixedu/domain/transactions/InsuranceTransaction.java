@@ -57,7 +57,7 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
     }
 
     public boolean isReimbursed() {
-        if (!hasGuideEntry() || getGuideEntry().getReimbursementGuideEntriesCount() == 0) {
+        if (!hasGuideEntry() || getGuideEntry().getReimbursementGuideEntriesSet().size() == 0) {
             return false;
         } else {
             for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
@@ -73,9 +73,19 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 
     @Override
     public void delete() {
-        removeExecutionYear();
-        removeStudent();
+        setExecutionYear(null);
+        setStudent(null);
         super.delete();
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
     }
 
 }

@@ -15,7 +15,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Comparable<NextPossibleSummaryLessonsAndDatesBean> {
 
@@ -132,7 +132,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
         }
 
         YearMonthDay date = new YearMonthDay(year, month, day);
-        Lesson lesson = AbstractDomainObject.fromExternalId(value.substring(8));
+        Lesson lesson = FenixFramework.getDomainObject(value.substring(8));
         NextPossibleSummaryLessonsAndDatesBean bean = new NextPossibleSummaryLessonsAndDatesBean(lesson, date);
 
         return bean;

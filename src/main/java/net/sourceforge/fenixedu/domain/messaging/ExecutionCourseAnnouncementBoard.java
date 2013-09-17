@@ -95,7 +95,7 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 
     @Override
     protected void disconnect() {
-        removeExecutionCourse();
+        setExecutionCourse(null);
         super.disconnect();
     }
 
@@ -165,6 +165,26 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
         ContentManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
                 "log.executionCourse.content.file.added", attachment.getName().getContent(), getExecutionCourse().getNome(),
                 getExecutionCourse().getDegreePresentationString());
+    }
+
+    @Deprecated
+    public boolean hasExecutionCoursePermittedManagementGroupType() {
+        return getExecutionCoursePermittedManagementGroupType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCoursePermittedWriteGroupType() {
+        return getExecutionCoursePermittedWriteGroupType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCoursePermittedReadGroupType() {
+        return getExecutionCoursePermittedReadGroupType() != null;
     }
 
 }

@@ -6,22 +6,23 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEditor;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditDegreeCurricularPlan {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(InfoDegreeCurricularPlanEditor infoDcp) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         if (infoDcp.getExternalId() == null || infoDcp.getName() == null || infoDcp.getInitialDate() == null
                 || infoDcp.getDegreeDuration() == null || infoDcp.getMinimalYearForOptionalCourses() == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DegreeCurricularPlan dcpToEdit = AbstractDomainObject.fromExternalId(infoDcp.getExternalId());
+        final DegreeCurricularPlan dcpToEdit = FenixFramework.getDomainObject(infoDcp.getExternalId());
         if (dcpToEdit == null) {
             throw new FenixServiceException("message.nonExistingDegreeCurricularPlan");
         }

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGenerator_Base {
 
@@ -23,8 +23,8 @@ public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGen
     }
 
     private static SantanderSequenceNumberGenerator getInstance() {
-        final List<SantanderSequenceNumberGenerator> instances =
-                RootDomainObject.getInstance().getSantanderSequenceNumberGenerators();
+        final Collection<SantanderSequenceNumberGenerator> instances =
+                RootDomainObject.getInstance().getSantanderSequenceNumberGeneratorsSet();
         if (instances.size() > 1) {
             throw new DomainException("santanderSequenceNumberGenerator.more.than.one.instances.exist");
         }
@@ -50,7 +50,7 @@ public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGen
         return String.format("%0" + numberOfDigits + "d", pin);
     }
 
-    @Service
+    @Atomic
     public static SantanderPIN generateSantanderPIN(Person person) {
         String pin = generatePIN(4);
         try {

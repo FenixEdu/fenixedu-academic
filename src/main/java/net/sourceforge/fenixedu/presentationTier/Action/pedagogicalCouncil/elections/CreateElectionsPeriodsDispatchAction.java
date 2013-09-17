@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "pedagogicalCouncil", path = "/createElectionsPeriods", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -63,7 +63,7 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         if (getFromRequest(request, "selectedPeriod") != null) {
-            final DelegateElection election = AbstractDomainObject.fromExternalId(request.getParameter("selectedPeriod"));
+            final DelegateElection election = FenixFramework.getDomainObject(request.getParameter("selectedPeriod"));
 
             Degree degree = election.getDegree();
             CurricularYear curricularYear = ((YearDelegateElection) election).getCurricularYear();
@@ -72,7 +72,7 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
         } else {
             final Integer year = Integer.parseInt(request.getParameter("selectedYear"));
             final CurricularYear curricularYear = CurricularYear.readByYear(year);
-            final Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("selectedDegree"));
+            final Degree degree = FenixFramework.getDomainObject(request.getParameter("selectedDegree"));
 
             return prepareCreateYearDelegateElectionPeriod(mapping, actionForm, request, response, degree, curricularYear, null);
         }
@@ -84,7 +84,7 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
     public ActionForward prepareCreateYearDelegateVotingPeriod(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final DelegateElection election = AbstractDomainObject.fromExternalId(request.getParameter("selectedPeriod"));
+        final DelegateElection election = FenixFramework.getDomainObject(request.getParameter("selectedPeriod"));
 
         Degree degree = election.getDegree();
         CurricularYear curricularYear = ((YearDelegateElection) election).getCurricularYear();

@@ -6,12 +6,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AddContextToCourseGroup {
 
-    @Service
+    @Atomic
     public static void run(CourseGroup courseGroup, CourseGroup parentCourseGroup, String beginExecutionPeriodID,
             String endExecutionPeriodID) throws FenixServiceException {
 
@@ -29,11 +29,11 @@ public class AddContextToCourseGroup {
         if (beginExecutionPeriodID == null) {
             return ExecutionSemester.readActualExecutionSemester();
         } else {
-            return AbstractDomainObject.fromExternalId(beginExecutionPeriodID);
+            return FenixFramework.getDomainObject(beginExecutionPeriodID);
         }
     }
 
     private static ExecutionSemester getEndExecutionPeriod(String endExecutionPeriodID) {
-        return AbstractDomainObject.fromExternalId(endExecutionPeriodID);
+        return FenixFramework.getDomainObject(endExecutionPeriodID);
     }
 }

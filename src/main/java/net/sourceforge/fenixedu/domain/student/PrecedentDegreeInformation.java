@@ -228,22 +228,22 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     }
 
     public void delete() {
-        removeCountry();
-        removeInstitution();
-        removeSourceInstitution();
+        setCountry(null);
+        setInstitution(null);
+        setSourceInstitution(null);
 
-        removeStudent();
-        removeRegistration();
-        removePhdIndividualProgramProcess();
+        setStudent(null);
+        setRegistration(null);
+        setPhdIndividualProgramProcess(null);
 
-        removeStudentCandidacy();
-        removeIndividualCandidacy();
+        setStudentCandidacy(null);
+        setIndividualCandidacy(null);
 
-        removePrecedentCountry();
-        removePrecedentInstitution();
+        setPrecedentCountry(null);
+        setPrecedentInstitution(null);
 
-        removePersonalIngressionData();
-        removeRootDomainObject();
+        setPersonalIngressionData(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -350,4 +350,164 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         return super.getPrecedentInstitution();
 
     }
+    @Deprecated
+    public boolean hasCandidacyInternal() {
+        return getCandidacyInternal() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfEnrolmentsInPreviousDegrees() {
+        return getNumberOfEnrolmentsInPreviousDegrees() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionDate() {
+        return getConclusionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrecedentSchoolLevel() {
+        return getPrecedentSchoolLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDate() {
+        return getLastModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovedEcts() {
+        return getApprovedEcts() != null;
+    }
+
+    @Deprecated
+    public boolean hasOtherPrecedentSchoolLevel() {
+        return getOtherPrecedentSchoolLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCandidacy() {
+        return getStudentCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionGrade() {
+        return getConclusionGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionYear() {
+        return getConclusionYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasSchoolLevel() {
+        return getSchoolLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasOtherSchoolLevel() {
+        return getOtherSchoolLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonalIngressionData() {
+        return getPersonalIngressionData() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfApprovedCurricularCourses() {
+        return getNumberOfApprovedCurricularCourses() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfEnroledCurricularCourses() {
+        return getNumberOfEnroledCurricularCourses() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeSum() {
+        return getGradeSum() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnroledEcts() {
+        return getEnroledEcts() != null;
+    }
+
+    @Deprecated
+    public boolean hasIndividualCandidacy() {
+        return getIndividualCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasCountry() {
+        return getCountry() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCurricularPlan() {
+        return getStudentCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitution() {
+        return getInstitution() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeDesignation() {
+        return getDegreeDesignation() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityProgramDuration() {
+        return getMobilityProgramDuration() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrecedentCountry() {
+        return getPrecedentCountry() != null;
+    }
+
+    @Deprecated
+    public boolean hasSourceInstitution() {
+        return getSourceInstitution() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrecedentInstitution() {
+        return getPrecedentInstitution() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdIndividualProgramProcess() {
+        return getPhdIndividualProgramProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrecedentDegreeDesignation() {
+        return getPrecedentDegreeDesignation() != null;
+    }
+
+    @Deprecated
+    public boolean hasCycleType() {
+        return getCycleType() != null;
+    }
+
 }

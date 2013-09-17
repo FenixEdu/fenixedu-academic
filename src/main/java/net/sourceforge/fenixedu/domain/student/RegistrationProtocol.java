@@ -6,13 +6,13 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.services.Service;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class RegistrationProtocol extends RegistrationProtocol_Base {
 
     static {
-        Person.RegistrationProtocolPerson.addListener(new RelationAdapter<Person, RegistrationProtocol>() {
+        Person.getRelationRegistrationProtocolPerson().addListener(new RelationAdapter<Person, RegistrationProtocol>() {
 
             @Override
             public void afterAdd(Person o1, RegistrationProtocol o2) {
@@ -26,7 +26,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
             @Override
             public void afterRemove(Person o1, RegistrationProtocol o2) {
                 if (o1 != null && o2 != null) {
-                    if (o1.getRegistrationProtocolsCount() == 0) {
+                    if (o1.getRegistrationProtocolsSet().size() == 0) {
                         o1.removeRoleByType(RoleType.EXTERNAL_SUPERVISOR);
                     }
                 }
@@ -52,7 +52,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
         setRegistrationAgreement(registrationAgreement);
     }
 
-    @Service
+    @Atomic
     public static RegistrationProtocol serveRegistrationProtocol(RegistrationAgreement registrationAgreement) {
         Set<RegistrationProtocol> dataset = RootDomainObject.getInstance().getRegistrationProtocolsSet();
         for (RegistrationProtocol iter : dataset) {
@@ -64,12 +64,12 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
         return newProtocol;
     }
 
-    @Service
+    @Atomic
     public void addSupervisor(Person supervisor) {
         this.addSupervisors(supervisor);
     }
 
-    @Service
+    @Atomic
     public void removeSupervisor(Person supervisor) {
         this.removeSupervisors(supervisor);
     }
@@ -81,4 +81,35 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
     public boolean equals(RegistrationAgreement myOtherSoul) {
         return this.getRegistrationAgreement().name().equals(myOtherSoul.name());
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getSupervisors() {
+        return getSupervisorsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySupervisors() {
+        return !getSupervisorsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getRegistrations() {
+        return getRegistrationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRegistrations() {
+        return !getRegistrationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistrationAgreement() {
+        return getRegistrationAgreement() != null;
+    }
+
 }

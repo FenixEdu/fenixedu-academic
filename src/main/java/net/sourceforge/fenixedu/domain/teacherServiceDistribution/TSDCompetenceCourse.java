@@ -45,7 +45,7 @@ public class TSDCompetenceCourse extends TSDCompetenceCourse_Base {
 
     @Override
     public void delete() {
-        removeCompetenceCourse();
+        setCompetenceCourse(null);
         super.delete();
     }
 
@@ -103,6 +103,11 @@ public class TSDCompetenceCourse extends TSDCompetenceCourse_Base {
             new TSDCurricularLoad(this, shiftType, 0d, TSDValueType.OMISSION_VALUE, 0, TSDValueType.OMISSION_VALUE, 1d,
                     TSDValueType.OMISSION_VALUE, 1d, TSDValueType.OMISSION_VALUE);
         }
+    }
+
+    @Deprecated
+    public boolean hasCompetenceCourse() {
+        return getCompetenceCourse() != null;
     }
 
 }

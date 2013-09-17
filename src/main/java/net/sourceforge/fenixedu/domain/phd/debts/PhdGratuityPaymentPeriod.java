@@ -85,18 +85,43 @@ public class PhdGratuityPaymentPeriod extends PhdGratuityPaymentPeriod_Base {
     }
 
     /*
-     * @Service public static final PhdGratuityPaymentPeriod
+     * @Atomic public static final PhdGratuityPaymentPeriod
      * makeNewFirstStandardPeriod() { return new PhdGratuityPaymentPeriod(1, 1,
      * 30, 6, 31, 8); }
      * 
-     * @Service public static final PhdGratuityPaymentPeriod
+     * @Atomic public static final PhdGratuityPaymentPeriod
      * makeNewSecondStandardPeriod() { return new PhdGratuityPaymentPeriod(1, 7,
      * 31, 12, 28, 2); }
      */
 
     public void delete() {
-        removeRootDomainObject();
-        removePostingRule();
+        setRootDomainObject(null);
+        setPostingRule(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPostingRule() {
+        return getPostingRule() != null;
+    }
+
+    @Deprecated
+    public boolean hasStart() {
+        return getStart() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastPayment() {
+        return getLastPayment() != null;
+    }
+
 }

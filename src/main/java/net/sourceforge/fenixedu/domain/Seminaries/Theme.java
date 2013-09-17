@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.domain.Seminaries;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
@@ -24,8 +24,58 @@ public class Theme extends Theme_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public static List<Theme> getAllThemes() {
+    public static Collection<Theme> getAllThemes() {
         return RootDomainObject.getInstance().getThemes();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.CaseStudy> getCaseStudies() {
+        return getCaseStudiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCaseStudies() {
+        return !getCaseStudiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy> getAssociatedCandidacies() {
+        return getAssociatedCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedCandidacies() {
+        return !getAssociatedCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency> getCourseEquivalencies() {
+        return getCourseEquivalenciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCourseEquivalencies() {
+        return !getCourseEquivalenciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasShortName() {
+        return getShortName() != null;
     }
 
 }

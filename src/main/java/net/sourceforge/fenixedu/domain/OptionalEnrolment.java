@@ -118,7 +118,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     @Override
     protected void deleteInformation() {
         super.deleteInformation();
-        removeOptionalCurricularCourse();
+        setOptionalCurricularCourse(null);
     }
 
     @Override
@@ -186,4 +186,9 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
             throw new DomainException("error.OptionalEnrolment.invalid.optional.curricularCourse");
         }
     }
+    @Deprecated
+    public boolean hasOptionalCurricularCourse() {
+        return getOptionalCurricularCourse() != null;
+    }
+
 }

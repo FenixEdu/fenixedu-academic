@@ -7,4 +7,9 @@ public class InquiryTextBoxQuestion extends InquiryTextBoxQuestion_Base {
         setTextArea(false);
     }
 
+    @Deprecated
+    public boolean hasTextArea() {
+        return getTextArea() != null;
+    }
+
 }

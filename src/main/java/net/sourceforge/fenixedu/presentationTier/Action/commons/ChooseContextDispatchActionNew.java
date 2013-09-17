@@ -35,7 +35,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author jpvl
@@ -247,7 +247,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
         // infoDegreeCurricularPlan
         if (degreeCurricularPlanId != null) {
-            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+            final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
 
             InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
             request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
@@ -269,8 +269,8 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
         request.setAttribute("semester", infoExecutionPeriod.getSemester());
 
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
         ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionSemester.getExecutionYear());
         if (executionDegree == null) {
             executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();

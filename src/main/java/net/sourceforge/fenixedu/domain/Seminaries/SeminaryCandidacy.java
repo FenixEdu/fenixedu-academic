@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.domain.Seminaries;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -30,13 +31,13 @@ public class SeminaryCandidacy extends SeminaryCandidacy_Base {
             choice.delete();
         }
 
-        removeCurricularCourse();
-        removeModality();
-        removeSeminary();
-        removeStudent();
-        removeTheme();
+        setCurricularCourse(null);
+        setModality(null);
+        setSeminary(null);
+        setStudent(null);
+        setTheme(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -58,8 +59,58 @@ public class SeminaryCandidacy extends SeminaryCandidacy_Base {
         return candidacies;
     }
 
-    public static List<SeminaryCandidacy> getAllCandidacies() {
+    public static Collection<SeminaryCandidacy> getAllCandidacies() {
         return RootDomainObject.getInstance().getCandidacys();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice> getCaseStudyChoices() {
+        return getCaseStudyChoicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCaseStudyChoices() {
+        return !getCaseStudyChoicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasTheme() {
+        return getTheme() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMotivation() {
+        return getMotivation() != null;
+    }
+
+    @Deprecated
+    public boolean hasApproved() {
+        return getApproved() != null;
+    }
+
+    @Deprecated
+    public boolean hasModality() {
+        return getModality() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeminary() {
+        return getSeminary() != null;
     }
 
 }

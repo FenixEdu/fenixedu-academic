@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
@@ -47,7 +47,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
             return false;
         }
         try {
-            final Evaluation evaluation = AbstractDomainObject.fromExternalId(writtenEvaluationOID);
+            final Evaluation evaluation = FenixFramework.getDomainObject(writtenEvaluationOID);
 
             for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
                 for (final Attends attend : executionCourse.getAttends()) {

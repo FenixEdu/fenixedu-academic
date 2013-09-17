@@ -35,9 +35,44 @@ public class CronScriptInvocation extends CronScriptInvocation_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeCronScriptState();
+        setRootDomainObject(null);
+        setCronScriptState(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasSuccessful() {
+        return getSuccessful() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasLog() {
+        return getLog() != null;
+    }
+
+    @Deprecated
+    public boolean hasCronScriptState() {
+        return getCronScriptState() != null;
+    }
+
+    @Deprecated
+    public boolean hasServerID() {
+        return getServerID() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndTime() {
+        return getEndTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartTime() {
+        return getStartTime() != null;
     }
 
 }

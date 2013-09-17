@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.email;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -82,7 +83,7 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
             return this.getClass().getSimpleName();
         }
 
-        public abstract List<PhdParticipant> getGroupParticipants(PhdIndividualProgramProcess process);
+        public abstract Collection<PhdParticipant> getGroupParticipants(PhdIndividualProgramProcess process);
 
         public String getEmailsAsBccs(PhdIndividualProgramProcess process) {
             StringBuilder bccs = new StringBuilder();
@@ -168,7 +169,7 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
         }
 
         @Override
-        public List<PhdParticipant> getGroupParticipants(PhdIndividualProgramProcess process) {
+        public Collection<PhdParticipant> getGroupParticipants(PhdIndividualProgramProcess process) {
             return process.getParticipants();
         }
 

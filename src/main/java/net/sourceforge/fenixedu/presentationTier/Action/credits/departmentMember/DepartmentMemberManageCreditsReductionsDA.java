@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentMember", path = "/creditsReductions", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "editReductionService", path = "/credits/degreeTeachingService/editCreditsReduction.jsp"),
@@ -60,7 +60,7 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
     public ActionForward aproveReductionService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         ReductionService reductionService =
-                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "reductionServiceOID"));
+                FenixFramework.getDomainObject((String) getFromRequest(request, "reductionServiceOID"));
         ReductionServiceBean reductionServiceBean = null;
         if (reductionService != null) {
             reductionServiceBean = new ReductionServiceBean(reductionService);

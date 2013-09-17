@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <tiles:insert definition="df.layout.two-column-photo" beanName="" flush="true">
   <tiles:put name="serviceName" value="SOP - Serviço de Organização Pedagógica" />
   <tiles:put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />

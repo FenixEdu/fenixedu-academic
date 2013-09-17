@@ -14,8 +14,18 @@ public class InquiryTeacherAnswer extends InquiryTeacherAnswer_Base {
         if (hasAnyQuestionAnswers()) {
             throw new DomainException("error.inquiryAnswer.questionAnswersAssociated");
         }
-        removeProfessorship();
-        removeRootDomainObject();
+        setProfessorship(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasAllowAcademicPublicizing() {
+        return getAllowAcademicPublicizing() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
 }

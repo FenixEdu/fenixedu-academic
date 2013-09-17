@@ -27,8 +27,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -37,7 +37,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadDistributedTestMarksToString {
 
     protected String run(String executionCourseId, String distributedTestId) throws FenixServiceException {
-        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -89,7 +89,7 @@ public class ReadDistributedTestMarksToString {
         StringBuilder result = new StringBuilder();
         result.append("Número\tNome\t");
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         List<Registration> studentsFromAttendsList =
                 (List) CollectionUtils.collect(executionCourse.getAttends(), new Transformer() {
 
@@ -101,7 +101,7 @@ public class ReadDistributedTestMarksToString {
 
         final Set<Registration> students = new HashSet<Registration>();
         for (final String distributedTestCode : distributedTestCodes) {
-            final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestCode);
+            final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCode);
             students.addAll(distributedTest.findStudents());
         }
 
@@ -109,7 +109,7 @@ public class ReadDistributedTestMarksToString {
         Double[] maxValues = new Double[distributedTestCodes.length];
 
         for (int i = 0; i < distributedTestCodes.length; i++) {
-            DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestCodes[i]);
+            DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCodes[i]);
             if (distributedTest == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -134,7 +134,7 @@ public class ReadDistributedTestMarksToString {
                 DecimalFormat df = new DecimalFormat("#0.##");
                 DecimalFormat percentageFormat = new DecimalFormat("#%");
 
-                final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestCodes[i]);
+                final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCodes[i]);
                 finalMark = distributedTest.calculateTestFinalMarkForStudent(registration);
 
                 if (finalMark == null) {
@@ -183,14 +183,14 @@ public class ReadDistributedTestMarksToString {
 
     private static final ReadDistributedTestMarksToString serviceInstance = new ReadDistributedTestMarksToString();
 
-    @Service
+    @Atomic
     public static String runReadDistributedTestMarksToString(String executionCourseId, String distributedTestId)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId);
     }
 
-    @Service
+    @Atomic
     public static String runReadDistributedTestMarksToString(String executionCourseId, String[] distributedTestCodes)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

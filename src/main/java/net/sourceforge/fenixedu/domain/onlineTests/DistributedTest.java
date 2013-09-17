@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.TestType;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -47,10 +47,10 @@ public class DistributedTest extends DistributedTest_Base {
                 "log.executionCourse.evaluation.tests.distribution.removed", getEvaluationTitle(), getBeginDateTimeFormatted(),
                 ec.getName(), ec.getDegreePresentationString());
 
-        for (; hasAnyDistributedTestQuestions(); getDistributedTestQuestions().get(0).delete()) {
+        for (; hasAnyDistributedTestQuestions(); getDistributedTestQuestions().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyStudentsLogs(); getStudentsLogs().get(0).delete()) {
+        for (; hasAnyStudentsLogs(); getStudentsLogs().iterator().next().delete()) {
             ;
         }
         if (getTestType().getType().intValue() == TestType.EVALUATION) {
@@ -58,8 +58,8 @@ public class DistributedTest extends DistributedTest_Base {
         }
         deleteQuestions();
 
-        removeTestScope();
-        removeRootDomainObject();
+        setTestScope(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }
@@ -143,7 +143,7 @@ public class DistributedTest extends DistributedTest_Base {
     }
 
     public StudentTestLog getLastSubmissionStudentTestLog(final String registrationId) {
-        Registration registration = AbstractDomainObject.fromExternalId(registrationId);
+        Registration registration = FenixFramework.getDomainObject(registrationId);
         for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
             if (studentTestLog.getEvent().startsWith("Submeter Teste;") && registration.equals(studentTestLog.getStudent())) {
                 return studentTestLog;
@@ -486,6 +486,96 @@ public class DistributedTest extends DistributedTest_Base {
         } else {
             setEndHourDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog> getStudentsLogs() {
+        return getStudentsLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentsLogs() {
+        return !getStudentsLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion> getDistributedTestQuestions() {
+        return getDistributedTestQuestionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDistributedTestQuestions() {
+        return !getDistributedTestQuestionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasBeginDateDateYearMonthDay() {
+        return getBeginDateDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasCorrectionAvailability() {
+        return getCorrectionAvailability() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginHourDateHourMinuteSecond() {
+        return getBeginHourDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasOnlineTest() {
+        return getOnlineTest() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestScope() {
+        return getTestScope() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfQuestions() {
+        return getNumberOfQuestions() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationTitle() {
+        return getEvaluationTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasImsFeedback() {
+        return getImsFeedback() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestType() {
+        return getTestType() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateDateYearMonthDay() {
+        return getEndDateDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndHourDateHourMinuteSecond() {
+        return getEndHourDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestInformation() {
+        return getTestInformation() != null;
     }
 
 }

@@ -35,4 +35,34 @@ public class StudentCourseReport extends StudentCourseReport_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasStrongPoints() {
+        return getStrongPoints() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModificationDateDateTime() {
+        return getLastModificationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeakPoints() {
+        return getWeakPoints() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentReport() {
+        return getStudentReport() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
 }

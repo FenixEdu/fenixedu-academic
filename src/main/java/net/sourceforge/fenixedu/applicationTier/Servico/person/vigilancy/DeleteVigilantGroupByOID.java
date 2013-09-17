@@ -1,15 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteVigilantGroupByOID {
 
-    @Service
+    @Atomic
     public static void run(String externalId) {
 
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(externalId);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(externalId);
         group.delete();
 
     }

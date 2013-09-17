@@ -32,4 +32,39 @@ public class ErrorLog extends ErrorLog_Base {
         return new ErrorLog(stackTrace, exceptionType);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.support.SupportException> getSupportExceptions() {
+        return getSupportExceptionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySupportExceptions() {
+        return !getSupportExceptionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.log.requests.RequestLog> getRequestLogs() {
+        return getRequestLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRequestLogs() {
+        return !getRequestLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasException() {
+        return getException() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStackTrace() {
+        return getStackTrace() != null;
+    }
+
 }

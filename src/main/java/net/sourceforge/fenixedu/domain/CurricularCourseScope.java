@@ -110,11 +110,11 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 
     public void delete() throws DomainException {
         if (canBeDeleted()) {
-            removeCurricularSemester();
-            removeCurricularCourse();
-            removeBranch();
+            setCurricularSemester(null);
+            setCurricularCourse(null);
+            setBranch(null);
 
-            removeRootDomainObject();
+            setRootDomainObject(null);
             super.deleteDomainObject();
         } else {
             throw new DomainException("error.curricular.course.scope.has.written.evaluations");
@@ -295,6 +295,46 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         } else {
             setEndYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluation> getAssociatedWrittenEvaluations() {
+        return getAssociatedWrittenEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedWrittenEvaluations() {
+        return !getAssociatedWrittenEvaluationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasBranch() {
+        return getBranch() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularSemester() {
+        return getCurricularSemester() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnotation() {
+        return getAnotation() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginYearMonthDay() {
+        return getBeginYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
     }
 
 }

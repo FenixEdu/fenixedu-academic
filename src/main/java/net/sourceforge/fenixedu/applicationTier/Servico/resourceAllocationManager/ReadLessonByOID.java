@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.Lesson;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -17,9 +17,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadLessonByOID {
 
-    @Service
+    @Atomic
     public static InfoLesson run(String oid) {
-        final Lesson lesson = AbstractDomainObject.fromExternalId(oid);
+        final Lesson lesson = FenixFramework.getDomainObject(oid);
         return (lesson != null) ? InfoLesson.newInfoFromDomain(lesson) : null;
 
     }

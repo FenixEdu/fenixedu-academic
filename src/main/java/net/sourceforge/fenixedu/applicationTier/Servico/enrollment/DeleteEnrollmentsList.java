@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteEnrollmentsList {
 
@@ -33,7 +33,7 @@ public class DeleteEnrollmentsList {
 
     private static final DeleteEnrollmentsList serviceInstance = new DeleteEnrollmentsList();
 
-    @Service
+    @Atomic
     public static void runDeleteEnrollmentsList(Registration registration, DegreeType degreeType, List<String> enrolmentIDList)
             throws NotAuthorizedException {
         try {

@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthor
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteUnitSiteBanner {
 
@@ -17,7 +17,7 @@ public class DeleteUnitSiteBanner {
 
     private static final DeleteUnitSiteBanner serviceInstance = new DeleteUnitSiteBanner();
 
-    @Service
+    @Atomic
     public static void runDeleteUnitSiteBanner(UnitSite site, UnitSiteBanner banner) throws NotAuthorizedException {
         ResearchSiteManagerAuthorizationFilter.instance.execute(site);
         serviceInstance.run(site, banner);

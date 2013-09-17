@@ -136,7 +136,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
         Date date = new Date();
         String anoLectivo = "";
         if (newEnrolmentList != null && newEnrolmentList.size() > 0) {
-            anoLectivo = ((InfoEnrolment) newEnrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+            anoLectivo = ((InfoEnrolment) newEnrolmentList.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
         }
         String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 

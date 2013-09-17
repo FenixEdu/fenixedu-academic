@@ -1,10 +1,10 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@page import="net.sourceforge.fenixedu.domain.PedagogicalCouncilSite"%>
 
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
 <logic:present role="PEDAGOGICAL_COUNCIL">
 	<%

@@ -1,13 +1,13 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Degree" %>
-<%@ page import="pt.ist.fenixframework.pstm.AbstractDomainObject" %>
+<%@ page import="pt.ist.fenixframework.FenixFramework" %>
 <%@ page import="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" %>
 <html:xhtml/>
 
@@ -20,7 +20,7 @@
 	<bean:define id="executionDegreeID" name="infoExecutionDegree" property="externalId" />
 
     <%
-        Degree degree = AbstractDomainObject.<DegreeCurricularPlan> fromExternalId(degreeCurricularPlanID).getDegree();
+        Degree degree = FenixFramework.<DegreeCurricularPlan> getDomainObject(degreeCurricularPlanID).getDegree();
         if (degree.isCoordinatorInSomeExecutionYear(person)) {
             request.setAttribute("isCoordinator", true);
         }

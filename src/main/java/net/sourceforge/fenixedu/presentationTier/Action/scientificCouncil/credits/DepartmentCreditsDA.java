@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/departmentCredits", module = "scientificCouncil")
 @Forwards({ @Forward(name = "departmentCredits", path = "/scientificCouncil/credits/departmentCredits/departmentCredits.jsp",
@@ -90,16 +90,16 @@ public class DepartmentCreditsDA extends FenixDispatchAction {
     }
 
     private Employee getEmployeeFromRequest(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(request.getParameter("employeeId"));
+        return FenixFramework.getDomainObject(request.getParameter("employeeId"));
     }
 
     private Department getDepartmentFromRequest(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(request.getParameter("departmentId"));
+        return FenixFramework.getDomainObject(request.getParameter("departmentId"));
     }
 
     private boolean hasPersonPermissionCredits(Person person, Department department) {
         return person.hasRole(RoleType.DEPARTMENT_CREDITS_MANAGER) && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)
-                && person.hasManageableDepartmentCredits(department);
+                && person.getManageableDepartmentCreditsSet().contains(department);
     }
 
 }

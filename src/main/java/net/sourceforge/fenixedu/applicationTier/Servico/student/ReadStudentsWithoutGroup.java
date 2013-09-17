@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -22,9 +23,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -35,24 +37,24 @@ public class ReadStudentsWithoutGroup {
     public class NewStudentGroupAlreadyExists extends FenixServiceException {
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static ISiteComponent run(final String groupPropertiesCode, final String username) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        final Grouping grouping = FenixFramework.getDomainObject(groupPropertiesCode);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final List allStudentsGroups = grouping.getStudentGroups();
+        final Collection allStudentsGroups = grouping.getStudentGroupsSet();
 
         final Integer groupNumber = grouping.findMaxGroupNumber() + 1;
 
         infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
         infoSiteStudentsWithoutGroup.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
 
-        final List<Attends> attends = grouping.getAttends();
+        final Collection<Attends> attends = grouping.getAttends();
 
         Registration userStudent = null;
         for (Object element : attends) {
@@ -75,7 +77,7 @@ public class ReadStudentsWithoutGroup {
         for (final Iterator iterator = allStudentsGroups.iterator(); iterator.hasNext();) {
             final StudentGroup studentGroup = (StudentGroup) iterator.next();
 
-            final List allStudentGroupsAttends = studentGroup.getAttends();
+            final Collection allStudentGroupsAttends = studentGroup.getAttends();
 
             for (final Iterator iterator2 = allStudentGroupsAttends.iterator(); iterator2.hasNext();) {
                 final Attends studentGroupAttend = (Attends) iterator2.next();

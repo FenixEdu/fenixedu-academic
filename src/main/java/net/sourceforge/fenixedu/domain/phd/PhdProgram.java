@@ -12,6 +12,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -25,8 +26,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -36,7 +36,7 @@ public class PhdProgram extends PhdProgram_Base {
         @Override
         public int compare(final PhdProgram p1, final PhdProgram p2) {
             int res = p1.getName().compareTo(p2.getName());
-            return res != 0 ? res : AbstractDomainObject.COMPARATOR_BY_ID.compare(p1, p2);
+            return res != 0 ? res : DomainObjectUtil.COMPARATOR_BY_ID.compare(p1, p2);
         }
     };
 
@@ -117,16 +117,16 @@ public class PhdProgram extends PhdProgram_Base {
         return bundle.getString("label.php.program") + " " + bundle.getString("label.in") + " ";
     }
 
-    @Service
+    @Atomic
     public void delete() {
         if (hasAnyIndividualProgramProcesses()) {
             throw new DomainException("error.PhdProgram.cannot.delete.has.individual.php.program.processes");
         }
 
         getPhdProgramUnit().delete();
-        removeDegree();
-        removeServiceAgreementTemplate();
-        removeRootDomainObject();
+        setDegree(null);
+        setServiceAgreementTemplate(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -172,12 +172,12 @@ public class PhdProgram extends PhdProgram_Base {
         return getCoordinatorsFor(executionYear).contains(person);
     }
 
-    @Service
+    @Atomic
     static public PhdProgram create(final Degree degree, final MultiLanguageString name, final String acronym) {
         return new PhdProgram(degree, name, acronym);
     }
 
-    @Service
+    @Atomic
     static public PhdProgram create(final Degree degree, final MultiLanguageString name, final String acronym, final Unit parent) {
         return new PhdProgram(degree, name, acronym, parent);
     }
@@ -201,7 +201,7 @@ public class PhdProgram extends PhdProgram_Base {
             return null;
         }
 
-        return periods.get(0);
+        return periods.iterator().next();
     }
 
     public boolean isActiveNow() {
@@ -255,9 +255,109 @@ public class PhdProgram extends PhdProgram_Base {
         return mostRecent;
     }
 
-    @Service
+    @Atomic
     public PhdProgramContextPeriod create(PhdProgramContextPeriodBean bean) {
         return PhdProgramContextPeriod.create(bean);
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea> getPhdProgramFocusAreas() {
+        return getPhdProgramFocusAreasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdProgramFocusAreas() {
+        return !getPhdProgramFocusAreasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getIndividualProgramProcesses() {
+        return getIndividualProgramProcessesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyIndividualProgramProcesses() {
+        return !getIndividualProgramProcessesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.InstitutionPhdCandidacyPeriod> getInstitutionPhdCandidacyPeriod() {
+        return getInstitutionPhdCandidacyPeriodSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInstitutionPhdCandidacyPeriod() {
+        return !getInstitutionPhdCandidacyPeriodSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmail> getPhdProgramEmails() {
+        return getPhdProgramEmailsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdProgramEmails() {
+        return !getPhdProgramEmailsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod> getPhdProgramContextPeriods() {
+        return getPhdProgramContextPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdProgramContextPeriods() {
+        return !getPhdProgramContextPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramInformation> getPhdProgramInformations() {
+        return getPhdProgramInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdProgramInformations() {
+        return !getPhdProgramInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasServiceAgreementTemplate() {
+        return getServiceAgreementTemplate() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcronym() {
+        return getAcronym() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdProgramUnit() {
+        return getPhdProgramUnit() != null;
     }
 
 }

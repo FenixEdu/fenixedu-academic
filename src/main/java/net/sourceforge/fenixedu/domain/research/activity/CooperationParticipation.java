@@ -61,7 +61,7 @@ public class CooperationParticipation extends CooperationParticipation_Base {
 
     @Override
     public void delete() {
-        removeCooperation();
+        setCooperation(null);
         super.delete();
     }
 
@@ -73,6 +73,11 @@ public class CooperationParticipation extends CooperationParticipation_Base {
     @Override
     public boolean scopeMatches(ScopeType type) {
         return false;
+    }
+
+    @Deprecated
+    public boolean hasCooperation() {
+        return getCooperation() != null;
     }
 
 }

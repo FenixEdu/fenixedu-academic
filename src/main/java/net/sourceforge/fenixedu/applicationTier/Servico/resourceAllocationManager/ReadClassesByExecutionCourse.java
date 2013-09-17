@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author LuisCruz & Sara Ribeiro
@@ -34,7 +34,7 @@ public class ReadClassesByExecutionCourse {
 
     private static final ReadClassesByExecutionCourse serviceInstance = new ReadClassesByExecutionCourse();
 
-    @Service
+    @Atomic
     public static List<InfoClass> runReadClassesByExecutionCourse(ExecutionCourse executionCourse) throws NotAuthorizedException {
         try {
             ResourceAllocationManagerAuthorizationFilter.instance.execute();

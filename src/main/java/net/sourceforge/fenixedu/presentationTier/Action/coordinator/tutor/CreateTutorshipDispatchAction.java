@@ -34,7 +34,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "coordinator", path = "/createTutorship", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "notAuthorized", path = "/coordinator/tutors/notAuthorized.jsp"),
@@ -54,7 +54,7 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
         final String executionDegreeId = getFromRequest(request, "executionDegreeId");
         final String degreeCurricularPlanID = getFromRequest(request, "degreeCurricularPlanID");
 
-        final ExecutionDegree executionDegree = (ExecutionDegree) AbstractDomainObject.fromExternalId(executionDegreeId);
+        final ExecutionDegree executionDegree = (ExecutionDegree) FenixFramework.getDomainObject(executionDegreeId);
 
         if (!validateDegreeTypeAccessRestrictions(executionDegree)) {
             addActionMessage(request, "error.tutor.notAuthorized.notBolonhaOrLEEC");
@@ -151,7 +151,7 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
         StudentsByEntryYearBean selectedStudentsBean = (StudentsByEntryYearBean) getViewState("selectedStudentsBean");
         RenderUtils.invalidateViewState();
 
-        final ExecutionDegree executiondegree = AbstractDomainObject.fromExternalId(selectedStudentsBean.getExecutionDegreeID());
+        final ExecutionDegree executiondegree = FenixFramework.getDomainObject(selectedStudentsBean.getExecutionDegreeID());
         List<Teacher> possibleTutorsForExecutionDegree = executiondegree.getPossibleTutorsFromExecutionDegreeDepartments();
 
         final Teacher teacher = User.readUserByUserUId(selectedStudentsBean.getTeacherId()).getPerson().getTeacher();
@@ -219,7 +219,7 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
     private List<StudentsByEntryYearBean> getStudentsWithoutTutorByEntryYearBeans(String degreeCurricularPlanID,
             String executionDegreeID, String showAll) {
         final DegreeCurricularPlan degreeCurricularPlan =
-                (DegreeCurricularPlan) AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+                (DegreeCurricularPlan) FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         Map<ExecutionYear, StudentsByEntryYearBean> studentsWithoutTutorByEntryYear =
                 new HashMap<ExecutionYear, StudentsByEntryYearBean>();
@@ -250,7 +250,7 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
     private List<StudentsByEntryYearBean> getAllStudentsWithoutTutorByEntryYearBeans(String degreeCurricularPlanID,
             String executionDegreeID, String showAll) {
         final DegreeCurricularPlan degreeCurricularPlan =
-                (DegreeCurricularPlan) AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+                (DegreeCurricularPlan) FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         Map<ExecutionYear, StudentsByEntryYearBean> studentsWithoutTutorByEntryYear =
                 new HashMap<ExecutionYear, StudentsByEntryYearBean>();

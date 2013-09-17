@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Coordinator extends Coordinator_Base {
 
     static {
-        Person.CoordinatorTeacher.addListener(new RelationAdapter<Person, Coordinator>() {
+        Person.getRelationCoordinatorTeacher().addListener(new RelationAdapter<Person, Coordinator>() {
 
             @Override
             public void afterAdd(Person o1, Coordinator o2) {
@@ -26,7 +26,7 @@ public class Coordinator extends Coordinator_Base {
             @Override
             public void afterRemove(Person o1, Coordinator o2) {
                 if (o1 != null && o2 != null) {
-                    if (o1.getCoordinatorsCount() == 0 && !o1.hasAnyScientificCommissions()) {
+                    if (o1.getCoordinatorsSet().size() == 0 && !o1.hasAnyScientificCommissions()) {
                         o1.removeRoleByType(RoleType.COORDINATOR);
                     }
                 }
@@ -60,12 +60,12 @@ public class Coordinator extends Coordinator_Base {
     public void delete() throws DomainException {
 
         checkRulesToDelete();
-        removeExecutionDegree();
-        removePerson();
+        setExecutionDegree(null);
+        setPerson(null);
         getExecutionDegreeCoursesReports().clear();
         getStudentInquiriesCourseResults().clear();
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -91,7 +91,7 @@ public class Coordinator extends Coordinator_Base {
         return getPerson().getTeacher();
     }
 
-    @Service
+    @Atomic
     public static Coordinator createCoordinator(ExecutionDegree executionDegree, Person person, Boolean responsible) {
 
         CoordinationTeamLog.createLog(executionDegree.getDegree(), executionDegree.getExecutionYear(),
@@ -101,7 +101,7 @@ public class Coordinator extends Coordinator_Base {
         return new Coordinator(executionDegree, person, responsible);
     }
 
-    @Service
+    @Atomic
     public void removeCoordinator() {
         this.delete();
     }
@@ -115,12 +115,12 @@ public class Coordinator extends Coordinator_Base {
 
     }
 
-    @Service
+    @Atomic
     public void setAsResponsible() {
         this.setResponsible(Boolean.valueOf(true));
     }
 
-    @Service
+    @Atomic
     public void setAsNotResponsible() {
         this.setResponsible(Boolean.valueOf(false));
     }
@@ -161,4 +161,55 @@ public class Coordinator extends Coordinator_Base {
         }
         return null;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport> getExecutionDegreeCoursesReports() {
+        return getExecutionDegreeCoursesReportsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionDegreeCoursesReports() {
+        return !getExecutionDegreeCoursesReportsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult> getStudentInquiriesCourseResults() {
+        return getStudentInquiriesCourseResultsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentInquiriesCourseResults() {
+        return !getStudentInquiriesCourseResultsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer> getInquiryCoordinatorAnswers() {
+        return getInquiryCoordinatorAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryCoordinatorAnswers() {
+        return !getInquiryCoordinatorAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasResponsible() {
+        return getResponsible() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

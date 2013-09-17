@@ -122,4 +122,9 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
         throw new DomainException("error.ConclusionProcess.method.not.allowed");
     }
 
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
 }

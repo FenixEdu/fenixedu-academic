@@ -146,4 +146,9 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricul
         return result;
     }
 
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
 }

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class ExamCoordinator extends ExamCoordinator_Base {
     }
 
     public List<Vigilancy> getConvokesThatCanManage() {
-        List<VigilantGroup> groups = this.getVigilantGroups();
+        Collection<VigilantGroup> groups = this.getVigilantGroupsSet();
         Set<Vigilancy> convokes = new HashSet<Vigilancy>();
 
         for (VigilantGroup group : groups) {
@@ -58,10 +59,10 @@ public class ExamCoordinator extends ExamCoordinator_Base {
 
     public List<VigilantWrapper> getVigilantsThatCanManage() {
         List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
-        List<VigilantGroup> groups = this.getVigilantGroups();
+        Collection<VigilantGroup> groups = this.getVigilantGroupsSet();
 
         for (VigilantGroup group : groups) {
-            vigilants.addAll(group.getVigilantWrappers());
+            vigilants.addAll(group.getVigilantWrappersSet());
         }
 
         return new ArrayList<VigilantWrapper>(vigilants);
@@ -72,7 +73,7 @@ public class ExamCoordinator extends ExamCoordinator_Base {
     }
 
     public boolean managesGivenVigilantGroup(VigilantGroup group) {
-        List<VigilantGroup> groups = this.getVigilantGroups();
+        Collection<VigilantGroup> groups = this.getVigilantGroupsSet();
         return groups.contains(group);
     }
 
@@ -85,7 +86,7 @@ public class ExamCoordinator extends ExamCoordinator_Base {
     }
 
     public List<WrittenEvaluation> getAssociatedWrittenEvaluations() {
-        List<VigilantGroup> groups = this.getVigilantGroups();
+        Collection<VigilantGroup> groups = this.getVigilantGroupsSet();
         Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
         for (VigilantGroup group : groups) {
             evaluations.addAll(group.getAllAssociatedWrittenEvaluations());
@@ -94,7 +95,7 @@ public class ExamCoordinator extends ExamCoordinator_Base {
     }
 
     public List<WrittenEvaluation> getAssociatedWrittenEvaluationsAfterDate(DateTime date) {
-        List<VigilantGroup> groups = this.getVigilantGroups();
+        Collection<VigilantGroup> groups = this.getVigilantGroupsSet();
         Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
         for (VigilantGroup group : groups) {
             evaluations.addAll(group.getWrittenEvaluationsAfterDate(date));
@@ -103,7 +104,7 @@ public class ExamCoordinator extends ExamCoordinator_Base {
     }
 
     public List<WrittenEvaluation> getAssociatedWrittenEvaluationsBeforeDate(DateTime date) {
-        List<VigilantGroup> groups = this.getVigilantGroups();
+        Collection<VigilantGroup> groups = this.getVigilantGroupsSet();
         Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
         for (VigilantGroup group : groups) {
             evaluations.addAll(group.getWrittenEvaluationsBeforeDate(date));
@@ -112,10 +113,46 @@ public class ExamCoordinator extends ExamCoordinator_Base {
     }
 
     public void delete() {
-        removeUnit();
-        removeRootDomainObject();
-        removePerson();
-        removeExecutionYear();
+        setUnit(null);
+        setRootDomainObject(null);
+        setPerson(null);
+        setExecutionYear(null);
         super.deleteDomainObject();
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup> getVigilantGroups() {
+        return getVigilantGroupsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVigilantGroups() {
+        return !getVigilantGroupsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowedToCreateGroups() {
+        return getAllowedToCreateGroups() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

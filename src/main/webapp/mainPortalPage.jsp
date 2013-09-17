@@ -1,5 +1,5 @@
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <tiles:insert definition="df.layout.two-column-photo" beanName="" flush="true">
   <tiles:put name="title" value="/commons/blank.jsp" />
   <tiles:put name="serviceName" value="Intranet do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>" />

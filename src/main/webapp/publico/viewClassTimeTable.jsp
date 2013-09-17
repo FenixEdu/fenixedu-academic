@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles"%>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles"%>
 <tiles:insert definition="definition.public.mainPage" beanName="" flush="true">
 	<tiles:put name="titleString" value="public.general.viewClassSchedule" />
 	<tiles:put name="bundle" value="TITLES_RESOURCES" />

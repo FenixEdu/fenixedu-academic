@@ -122,4 +122,9 @@ public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
         return DAYS_UNTIL_DEADLINE;
     }
 
+    @Deprecated
+    public boolean hasPhdParticipant() {
+        return getPhdParticipant() != null;
+    }
+
 }

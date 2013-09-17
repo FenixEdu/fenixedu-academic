@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PersonalInformationBean implements Serializable {
 
@@ -830,7 +830,7 @@ public class PersonalInformationBean implements Serializable {
         }
     }
 
-    @Service
+    @Atomic
     public void updatePersonalInformation(boolean isStudentEditing) {
         PrecedentDegreeInformation precedentInfo = getPrecedentDegreeInformation();
         PersonalIngressionData personalData;

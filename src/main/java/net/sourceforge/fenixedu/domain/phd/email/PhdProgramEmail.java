@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdProgramEmail extends PhdProgramEmail_Base {
@@ -36,12 +36,12 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
 
     @Override
     protected Collection<? extends ReplyTo> getReplyTos() {
-        return getPhdProgram().getPhdProgramUnit().getUnitBasedSender().get(0).getReplyTos();
+        return getPhdProgram().getPhdProgramUnit().getUnitBasedSender().iterator().next().getReplyTos();
     }
 
     @Override
     protected Sender getSender() {
-        return getPhdProgram().getPhdProgramUnit().getUnitBasedSender().get(0);
+        return getPhdProgram().getPhdProgramUnit().getUnitBasedSender().iterator().next();
     }
 
     @Override
@@ -64,13 +64,13 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
         return builder.toString();
     }
 
-    @Service
+    @Atomic
     static public PhdProgramEmail createEmail(PhdProgramEmailBean bean) {
         return new PhdProgramEmail(bean.getSubject(), bean.getMessage(), null, bean.getBccsWithSelectedParticipants(),
                 bean.getCreator(), bean.getCreationDate(), bean.getPhdProgram(), bean.getSelectedElements());
     }
 
-    @Service
+    @Atomic
     static public void validateEmailBean(PhdProgramEmailBean bean) {
         final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 
@@ -86,6 +86,21 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
             throw new DomainException(resourceBundle.getString("error.email.validation.message.empty"));
         }
 
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getPhdIndividualProgramProcesses() {
+        return getPhdIndividualProgramProcessesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdIndividualProgramProcesses() {
+        return !getPhdIndividualProgramProcessesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPhdProgram() {
+        return getPhdProgram() != null;
     }
 
 }

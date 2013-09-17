@@ -3,10 +3,10 @@
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <%@page import="net.sourceforge.fenixedu.domain.User"%>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="title.send.mail"/></h2>

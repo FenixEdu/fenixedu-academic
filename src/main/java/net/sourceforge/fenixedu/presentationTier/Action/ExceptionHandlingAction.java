@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -119,7 +119,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
         requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
         final String parameter = request.getParameter("contextId");
         if (parameter != null && !parameter.isEmpty()) {
-            requestBean.setRequestContext(AbstractDomainObject.<Content> fromExternalId(parameter));
+            requestBean.setRequestContext(FenixFramework.<Content> getDomainObject(parameter));
         }
 
         request.setAttribute("requestBean", requestBean);

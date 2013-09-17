@@ -12,17 +12,18 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadExecutionCoursesByStudentTests {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Set<ExecutionCourse> run(final Student student, final ExecutionYear executionYear) {
+        check(RolePredicates.STUDENT_PREDICATE);
         final Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
         for (final Registration registration : student.getRegistrationsSet()) {
             if (registration.isActive()) {

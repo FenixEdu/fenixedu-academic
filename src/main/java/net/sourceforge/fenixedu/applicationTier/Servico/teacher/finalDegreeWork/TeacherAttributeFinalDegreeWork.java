@@ -8,17 +8,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
  */
 public class TeacherAttributeFinalDegreeWork {
 
-    @Service
+    @Atomic
     public static Boolean run(String selectedGroupProposalOID) throws FenixServiceException {
-        final GroupProposal groupProposal = AbstractDomainObject.fromExternalId(selectedGroupProposalOID);
+        final GroupProposal groupProposal = FenixFramework.getDomainObject(selectedGroupProposalOID);
 
         if (groupProposal != null) {
             final Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
@@ -32,8 +32,7 @@ public class TeacherAttributeFinalDegreeWork {
 
                 if (proposal.getGroupAttributedByTeacher() == null || proposal.getGroupAttributedByTeacher() != group) {
                     proposal.setGroupAttributedByTeacher(group);
-                    for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                        GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
+                    for (GroupProposal otherGroupProposal : group.getGroupProposalsSet()) {
                         Proposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
                         if (otherProposal != proposal && group == otherProposal.getGroupAttributedByTeacher()) {
                             otherProposal.setGroupAttributedByTeacher(null);

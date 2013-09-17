@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 /**
@@ -26,7 +26,7 @@ public class EditFilePermissions extends FileContentService {
 
     private static final EditFilePermissions serviceInstance = new EditFilePermissions();
 
-    @Service
+    @Atomic
     public static void runEditFilePermissions(Site site, FileContent fileContent, Group group) throws FenixServiceException,
             DomainException, FileManagerException, NotAuthorizedException {
         SiteManagerAuthorizationFilter.instance.execute(site);

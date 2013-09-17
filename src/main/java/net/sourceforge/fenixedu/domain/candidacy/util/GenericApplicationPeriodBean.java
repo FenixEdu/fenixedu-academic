@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -57,7 +57,7 @@ public class GenericApplicationPeriodBean implements Serializable {
         this.end = end;
     }
 
-    @Service
+    @Atomic
     public void createNewPeriod() {
         final IUserView userView = AccessControl.getUserView();
         if (userView != null && userView.hasRoleType(RoleType.MANAGER)) {        

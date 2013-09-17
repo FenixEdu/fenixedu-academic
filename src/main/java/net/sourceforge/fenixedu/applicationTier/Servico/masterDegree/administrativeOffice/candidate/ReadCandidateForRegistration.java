@@ -16,18 +16,19 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.util.SituationName;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class ReadCandidateForRegistration {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static List run(String executionDegreeCode) throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         List<SituationName> situationNames =
                 Arrays.asList(new SituationName[] { SituationName.ADMITED_CONDICIONAL_CURRICULAR_OBJ,
@@ -35,7 +36,7 @@ public class ReadCandidateForRegistration {
                         SituationName.ADMITED_CONDICIONAL_OTHER_OBJ, SituationName.ADMITIDO_OBJ,
                         SituationName.ADMITED_SPECIALIZATION_OBJ });
 
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeCode);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeCode);
         List<CandidateSituation> result = executionDegree.getCandidateSituationsInSituation(situationNames);
 
         if (result.isEmpty()) {

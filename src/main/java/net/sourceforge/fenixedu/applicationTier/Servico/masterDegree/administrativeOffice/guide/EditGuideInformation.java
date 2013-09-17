@@ -30,16 +30,17 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditGuideInformation {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static InfoGuide run(InfoGuide infoGuide, String[] quantityList, Integer contributorNumber, String othersRemarks,
             Integer othersQuantity, Double othersPrice) throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         // This will be the flag that indicates if a change has been made to the
         // Guide
@@ -114,7 +115,7 @@ public class EditGuideInformation {
                 }
                 // Remove the Guide entries wich have been deleted
                 for (InfoGuideEntry infoGuideEntry : guideEntriesToRemove) {
-                    GuideEntry guideEntry = AbstractDomainObject.fromExternalId(infoGuideEntry.getExternalId());
+                    GuideEntry guideEntry = FenixFramework.getDomainObject(infoGuideEntry.getExternalId());
                     guideEntry.delete();
                 }
 
@@ -244,7 +245,7 @@ public class EditGuideInformation {
         Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
 
         ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(infoGuide.getInfoExecutionDegree().getExternalId());
+                FenixFramework.getDomainObject(infoGuide.getInfoExecutionDegree().getExternalId());
         Guide guide = new Guide();
 
         // Set the fields

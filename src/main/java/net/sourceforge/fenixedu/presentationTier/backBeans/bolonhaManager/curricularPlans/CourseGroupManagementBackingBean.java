@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CourseGroupManagementBackingBean extends CurricularCourseManagementBackingBean {
@@ -79,7 +79,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     }
 
     public CourseGroup getCourseGroup(String courseGroupID) {
-        return (CourseGroup) AbstractDomainObject.fromExternalId(courseGroupID);
+        return (CourseGroup) FenixFramework.getDomainObject(courseGroupID);
     }
 
     @Override

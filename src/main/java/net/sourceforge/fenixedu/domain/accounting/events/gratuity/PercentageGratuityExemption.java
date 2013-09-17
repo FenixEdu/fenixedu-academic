@@ -10,7 +10,8 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class PercentageGratuityExemption extends PercentageGratuityExemption_Base {
 
@@ -42,9 +43,9 @@ public class PercentageGratuityExemption extends PercentageGratuityExemption_Bas
         }
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setPercentage(BigDecimal percentage) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setPercentage(percentage);
         final DateTime now = new DateTime();
         getGratuityEvent().forceChangeState(EventState.OPEN, now);
@@ -63,6 +64,11 @@ public class PercentageGratuityExemption extends PercentageGratuityExemption_Bas
     @Override
     public boolean isPercentageExemption() {
         return true;
+    }
+
+    @Deprecated
+    public boolean hasPercentage() {
+        return getPercentage() != null;
     }
 
 }

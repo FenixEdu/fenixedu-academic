@@ -5,14 +5,15 @@ import net.sourceforge.fenixedu.domain.library.LibraryCard;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class MarkLibraryCardAsEmited {
 
-    @Checked("RolePredicates.LIBRARY_PREDICATE")
-    @Service
+    @Atomic
     public static void run(LibraryCard libraryCard) {
+        check(RolePredicates.LIBRARY_PREDICATE);
         libraryCard.setCardEmitionDate(new DateTime());
     }
 }

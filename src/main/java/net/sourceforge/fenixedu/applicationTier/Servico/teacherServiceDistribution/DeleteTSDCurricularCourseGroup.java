@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourseGroup;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteTSDCurricularCourseGroup {
     protected void run(String tsdCurricularCourseGroupId) {
         TSDCurricularCourseGroup tsdCurricularCourseGroup =
-                (TSDCurricularCourseGroup) AbstractDomainObject.fromExternalId(tsdCurricularCourseGroupId);
+                (TSDCurricularCourseGroup) FenixFramework.getDomainObject(tsdCurricularCourseGroupId);
 
         for (TSDCurricularCourse tsdCurricularCourse : tsdCurricularCourseGroup.getTSDCurricularCourses()) {
             tsdCurricularCourse.setTSDCurricularCourseGroup(null);
@@ -25,7 +25,7 @@ public class DeleteTSDCurricularCourseGroup {
 
     private static final DeleteTSDCurricularCourseGroup serviceInstance = new DeleteTSDCurricularCourseGroup();
 
-    @Service
+    @Atomic
     public static void runDeleteTSDCurricularCourseGroup(String tsdCurricularCourseGroupId) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

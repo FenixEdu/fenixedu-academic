@@ -21,7 +21,7 @@ import org.joda.time.Partial;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -36,7 +36,7 @@ public class Summary extends Summary_Base {
             final int c1 = o2.getSummaryDateYearMonthDay().compareTo(o1.getSummaryDateYearMonthDay());
             if (c1 == 0) {
                 final int c2 = o2.getSummaryHourHourMinuteSecond().compareTo(o1.getSummaryHourHourMinuteSecond());
-                return c2 == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c2;
+                return c2 == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c2;
             } else {
                 return c1;
             }
@@ -49,7 +49,7 @@ public class Summary extends Summary_Base {
             final int c1 = o2.getSummaryDateYearMonthDay().compareTo(o1.getSummaryDateYearMonthDay());
             if (c1 == 0) {
                 final int c2 = o2.getSummaryHourHourMinuteSecond().compareTo(o1.getSummaryHourHourMinuteSecond());
-                return -1 * (c2 == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c2);
+                return -1 * (c2 == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c2);
             } else {
                 return -1 * c1;
             }
@@ -130,10 +130,10 @@ public class Summary extends Summary_Base {
         super.setExecutionCourse(null);
         super.setShift(null);
         super.setLessonInstance(null);
-        removeRoom();
-        removeProfessorship();
-        removeTeacher();
-        removeRootDomainObject();
+        setRoom(null);
+        setProfessorship(null);
+        setTeacher(null);
+        setRootDomainObject(null);
         deleteDomainObject();
 
     }
@@ -358,6 +358,91 @@ public class Summary extends Summary_Base {
         } else {
             setSummaryHourHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public boolean hasSummaryHourHourMinuteSecond() {
+        return getSummaryHourHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasSummaryDateYearMonthDay() {
+        return getSummaryDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasSummaryType() {
+        return getSummaryType() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherName() {
+        return getTeacherName() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSummaryText() {
+        return getSummaryText() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsNumber() {
+        return getStudentsNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasLessonInstance() {
+        return getLessonInstance() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsExtraLesson() {
+        return getIsExtraLesson() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoom() {
+        return getRoom() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDateDateTime() {
+        return getLastModifiedDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasTaught() {
+        return getTaught() != null;
     }
 
 }

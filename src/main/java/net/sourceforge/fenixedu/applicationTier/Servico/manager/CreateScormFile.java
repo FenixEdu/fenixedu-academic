@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.linkare.scorm.utils.ScormMetaDataHash;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
@@ -164,7 +164,7 @@ public class CreateScormFile extends CreateFileContent {
 
     private static final CreateScormFile serviceInstance = new CreateScormFile();
 
-    @Service
+    @Atomic
     public static void runCreateScormFile(CreateScormFileItemForItemArgs args) throws FenixServiceException, DomainException, IOException  , NotAuthorizedException {
         SiteManagerScormFileAuthorizationFilter.instance.execute(args);
         serviceInstance.run(args);

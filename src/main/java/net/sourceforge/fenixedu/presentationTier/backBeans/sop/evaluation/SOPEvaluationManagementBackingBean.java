@@ -67,7 +67,7 @@ import org.apache.struts.util.MessageResources;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -236,7 +236,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public ExecutionDegree getExecutionDegree() {
-        return AbstractDomainObject.fromExternalId(this.getExecutionDegreeID());
+        return FenixFramework.getDomainObject(this.getExecutionDegreeID());
     }
 
     public String getExecutionDegreeLabel() {
@@ -1104,7 +1104,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
             for (String chosenRoomString : this.getChosenRoomsIDs()) {
                 String chosenRoomID = getRoomID(chosenRoomString);
-                AllocatableSpace room = (AllocatableSpace) AbstractDomainObject.fromExternalId(chosenRoomID);
+                AllocatableSpace room = (AllocatableSpace) FenixFramework.getDomainObject(chosenRoomID);
                 result.append(room.getIdentification());
                 result.append("; ");
             }
@@ -1313,7 +1313,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         for (String executionCourseID : this.associatedExecutionCourses) {
 
-            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+            ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
             this.associatedExecutionCoursesNames.put(executionCourseID, executionCourse.getNome());
 
             List<SelectItem> items = new ArrayList<SelectItem>();
@@ -1417,7 +1417,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 list.add(integer);
             }
 
-            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(integer);
+            ExecutionCourse executionCourse = FenixFramework.getDomainObject(integer);
             List<String> auxiliarArray = new ArrayList<String>();
             for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
                 for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
@@ -1561,7 +1561,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     private List<ExecutionCourse> readExecutionCourses() throws FenixServiceException {
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(this.getSelectedExecutionDegreeID());
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(this.getSelectedExecutionDegreeID());
         final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
                 getAcademicIntervalFromParameter(getAcademicInterval()), executionDegree.getDegreeCurricularPlan(),

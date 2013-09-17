@@ -2,14 +2,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
 
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class DeletePersonSpaceOccupation {
 
-    @Checked("RolePredicates.SPACE_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(PersonSpaceOccupation personSpaceOccupation) {
+        check(RolePredicates.SPACE_MANAGER_PREDICATE);
         if (personSpaceOccupation != null) {
             personSpaceOccupation.delete();
         }

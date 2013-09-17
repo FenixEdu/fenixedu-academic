@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class RecoverInactivePersonDA extends FenixDispatchAction {
 
@@ -45,7 +45,7 @@ public class RecoverInactivePersonDA extends FenixDispatchAction {
             throws FenixServiceException {
         final String personIDString = request.getParameter("personID");
         if (personIDString != null && StringUtils.isNumeric(personIDString)) {
-            final Person person = (Person) AbstractDomainObject.fromExternalId(personIDString);
+            final Person person = (Person) FenixFramework.getDomainObject(personIDString);
             final Set<Role> roles = new HashSet<Role>();
             roles.add(Role.getRoleByRoleType(RoleType.PERSON));
 

@@ -11,9 +11,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -25,10 +26,10 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup {
         super();
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(String username, String groupOID, String studentToRemoveID) throws FenixServiceException {
-        FinalDegreeWorkGroup group = AbstractDomainObject.fromExternalId(groupOID);
+        check(RolePredicates.STUDENT_PREDICATE);
+        FinalDegreeWorkGroup group = FenixFramework.getDomainObject(groupOID);
         Registration registration = Registration.readByUsername(username);
 
         if (group == null || registration == null || group.getGroupStudents() == null

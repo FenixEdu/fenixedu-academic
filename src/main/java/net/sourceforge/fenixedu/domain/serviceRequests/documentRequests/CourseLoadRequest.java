@@ -25,7 +25,7 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
         super.init(bean);
 
         checkParameters(bean);
-        super.getEnrolments().addAll(bean.getEnrolments());
+        super.getEnrolmentsSet().addAll(bean.getEnrolments());
         super.setRequestedCycle(bean.getRequestedCycle());
     }
 
@@ -47,7 +47,7 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 
     @Override
     public Integer getNumberOfUnits() {
-        return getEnrolmentsCount();
+        return getEnrolmentsSet().size();
     }
 
     @Override
@@ -71,14 +71,14 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 
         if (academicServiceRequestBean.isToCancelOrReject()) {
             for (; hasAnyEnrolments();) {
-                removeEnrolments(getEnrolments().get(0));
+                removeEnrolments(getEnrolments().iterator().next());
             }
         }
     }
 
     @Override
     protected void disconnect() {
-        super.getEnrolments().clear();
+        super.getEnrolmentsSet().clear();
         super.disconnect();
     }
 
@@ -88,6 +88,21 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
             return true;
         }
         return super.isFree();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
+        return getEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolments() {
+        return !getEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRequestedCycle() {
+        return getRequestedCycle() != null;
     }
 
 }

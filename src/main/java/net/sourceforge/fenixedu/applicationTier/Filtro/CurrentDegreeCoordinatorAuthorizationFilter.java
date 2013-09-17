@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Mota
@@ -56,7 +56,7 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
         try {
             final Person person = id.getPerson();
 
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegreeId);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegreeId);
             ExecutionYear executionYear = executionDegree.getExecutionYear();
 
             Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);

@@ -156,4 +156,29 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
         return !getUserDefined().booleanValue();
     }
 
+    @Deprecated
+    public boolean hasSendEmail() {
+        return getSendEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasShared() {
+        return getShared() != null;
+    }
+
+    @Deprecated
+    public boolean hasUserDefined() {
+        return getUserDefined() != null;
+    }
+
+    @Deprecated
+    public boolean hasTargetGroup() {
+        return getTargetGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenToFire() {
+        return getWhenToFire() != null;
+    }
+
 }

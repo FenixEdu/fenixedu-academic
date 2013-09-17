@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.enrolment.withoutRules;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOfficeSuperUserAuthorizationFilter;
@@ -11,12 +12,12 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadCurricularCoursesToEnrollSuperUser extends ReadCurricularCoursesToEnroll {
 
     @Override
-    protected List<CurricularCourse> findCurricularCourses(final List<CurricularCourse> curricularCourses,
+    protected List<CurricularCourse> findCurricularCourses(final Collection<CurricularCourse> curricularCourses,
             final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 
         final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
@@ -36,7 +37,7 @@ public class ReadCurricularCoursesToEnrollSuperUser extends ReadCurricularCourse
 
     private static final ReadCurricularCoursesToEnrollSuperUser serviceInstance = new ReadCurricularCoursesToEnrollSuperUser();
 
-    @Service
+    @Atomic
     public static List<CurricularCourse2Enroll> runReadCurricularCoursesToEnrollSuperUser(
             final StudentCurricularPlan studentCurricularPlan, final DegreeType degreeType,
             final ExecutionSemester executionSemester, final String executionDegreeID, final List<Integer> curricularYearsList,

@@ -1,5 +1,5 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
 <ul>
 	<li><html:link page="/sendEmail.do?method=prepare&amp;allowChangeSender=false&amp;fromName=Conselho Directivo&amp;from=cd@ist.utl.pt"><bean:message key="label.send.mail"/></html:link></li>

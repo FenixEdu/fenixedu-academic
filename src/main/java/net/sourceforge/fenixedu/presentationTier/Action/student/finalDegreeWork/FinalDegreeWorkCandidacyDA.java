@@ -61,7 +61,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -254,7 +254,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
             executionYear = ExecutionYear.readCurrentExecutionYear();
             dynaActionForm.set("executionYearOID", executionYear.getExternalId().toString());
         } else {
-            executionYear = AbstractDomainObject.fromExternalId(executionYearOID);
+            executionYear = FenixFramework.getDomainObject(executionYearOID);
         }
 
         final Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
@@ -271,7 +271,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
         if (executionDegreeOID != null && executionDegreeOID.length() > 0) {
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOID);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeOID);
             Scheduleing scheduling = executionDegree.getScheduling();
             request.setAttribute("executionDegree", executionDegree);
             request.setAttribute("scheduling", scheduling);
@@ -284,7 +284,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String executionYearOID = (String) dynaActionForm.get("executionYearOID");
         if (executionYearOID != null && executionYearOID.length() > 0) {
-            ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearOID);
+            ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearOID);
             placeListOfExecutionDegreesInRequest(request, executionYear);
         }
         return dissertations(mapping, form, request, response);
@@ -301,7 +301,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
             executionYear = ExecutionYear.readCurrentExecutionYear();
             dynaActionForm.set("executionYearOID", executionYear.getExternalId().toString());
         } else {
-            executionYear = AbstractDomainObject.fromExternalId(executionYearOID);
+            executionYear = FenixFramework.getDomainObject(executionYearOID);
         }
 
         final Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
@@ -444,7 +444,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         if (groupOID != null && !groupOID.equals("") && StringUtils.isNumeric(groupOID) && selectedProposal != null
                 && !selectedProposal.equals("") && StringUtils.isNumeric(selectedProposal)) {
             try {
-                final FinalDegreeWorkGroup group = AbstractDomainObject.fromExternalId(groupOID);
+                final FinalDegreeWorkGroup group = FenixFramework.getDomainObject(groupOID);
                 request.setAttribute("infoGroup", InfoGroup.newInfoFromDomain(group));
                 AddFinalDegreeWorkProposalCandidacyForGroup.run(group, selectedProposal);
                 return mapping.findForward("showCandidacyForm");
@@ -467,7 +467,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         if (selectedGroupProposal != null && !selectedGroupProposal.equals("") && StringUtils.isNumeric(selectedGroupProposal)
                 && externalId != null && !externalId.equals("") && StringUtils.isNumeric(externalId)) {
             try {
-                final FinalDegreeWorkGroup group = AbstractDomainObject.fromExternalId(externalId);
+                final FinalDegreeWorkGroup group = FenixFramework.getDomainObject(externalId);
                 RemoveProposalFromFinalDegreeWorkStudentGroup.run(group, selectedGroupProposal);
                 request.setAttribute("infoGroup", InfoGroup.newInfoFromDomain(group));
                 return mapping.findForward("showCandidacyForm");
@@ -495,7 +495,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
                 && orderOfProposalPreference != null && !orderOfProposalPreference.equals("")
                 && StringUtils.isNumeric(orderOfProposalPreference)) {
 
-            final FinalDegreeWorkGroup group = AbstractDomainObject.fromExternalId(externalId);
+            final FinalDegreeWorkGroup group = FenixFramework.getDomainObject(externalId);
             request.setAttribute("infoGroup", InfoGroup.newInfoFromDomain(group));
             ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy.run(group, selectedGroupProposal, new Integer(
                     orderOfProposalPreference));

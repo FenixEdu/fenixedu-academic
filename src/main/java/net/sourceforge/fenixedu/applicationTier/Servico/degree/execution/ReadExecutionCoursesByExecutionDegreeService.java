@@ -13,8 +13,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExecutionCoursesByExecutionDegreeService {
 
@@ -24,17 +24,17 @@ public class ReadExecutionCoursesByExecutionDegreeService {
         }
     }
 
-    @Service
+    @Atomic
     public static List run(String executionDegreeId, String executionPeriodId) throws FenixServiceException {
 
         final ExecutionSemester executionSemester;
         if (StringUtils.isEmpty(executionPeriodId)) {
             executionSemester = ExecutionSemester.readActualExecutionSemester();
         } else {
-            executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
+            executionSemester = FenixFramework.getDomainObject(executionPeriodId);
         }
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
         if (executionDegree == null) {
             throw new NonExistingExecutionDegree();
         }

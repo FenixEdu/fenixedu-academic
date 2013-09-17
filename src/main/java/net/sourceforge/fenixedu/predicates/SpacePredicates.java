@@ -173,7 +173,7 @@ public class SpacePredicates {
                         return true;
                     }
 
-                    if (loggedPerson.getProfessorshipsCount() > 0) {
+                    if (loggedPerson.getProfessorships().size() > 0) {
                         return true;
                     }
 

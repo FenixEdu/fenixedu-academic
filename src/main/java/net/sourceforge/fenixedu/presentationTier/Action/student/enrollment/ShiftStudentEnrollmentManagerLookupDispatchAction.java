@@ -38,7 +38,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(module = "student", path = "/studentShiftEnrollmentManagerLoockup",
@@ -81,7 +81,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class ShiftStudentEnrollmentManagerLookupDispatchAction extends TransactionalLookupDispatchAction {
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
-        final Registration registration = AbstractDomainObject.fromExternalId(request.getParameter("registrationOID"));
+        final Registration registration = FenixFramework.getDomainObject(request.getParameter("registrationOID"));
         if (!getUserView(request).getPerson().getStudent().getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
             return null;
         }
@@ -147,7 +147,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         }
 
         try {
-            registration.removeAttendFor(AbstractDomainObject.<ExecutionCourse> fromExternalId(executionCourseId));
+            registration.removeAttendFor(FenixFramework.<ExecutionCourse> getDomainObject(executionCourseId));
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return mapping.getInputForward();
@@ -198,7 +198,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
         final SchoolClass schoolClass =
                 (classIdSelected != null) ? searchSchoolClassFrom(schoolClassesToEnrol, classIdSelected) : schoolClassesToEnrol
-                        .get(0);
+                        .iterator().next();
         request.setAttribute("selectedSchoolClass", schoolClass);
 
         return schoolClass;
@@ -231,7 +231,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
     private ExecutionCourse getExecutionCourse(HttpServletRequest request) {
         if (!StringUtils.isEmpty(request.getParameter("executionCourseID"))) {
-            return AbstractDomainObject.fromExternalId(request.getParameter("executionCourseID"));
+            return FenixFramework.getDomainObject(request.getParameter("executionCourseID"));
         } else {
             return null;
         }

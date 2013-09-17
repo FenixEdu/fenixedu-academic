@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +30,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "academicAdministration", path = "/academicCalendarsManagement", input = "/index.do",
         attribute = "academicCalendarsManagementForm", formBean = "academicCalendarsManagementForm", scope = "request",
@@ -61,7 +61,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward prepareChooseCalendar(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        List<AcademicCalendarRootEntry> academicCalendars = rootDomainObject.getAcademicCalendars();
+        Collection<AcademicCalendarRootEntry> academicCalendars = rootDomainObject.getAcademicCalendars();
         request.setAttribute("academicCalendars", academicCalendars);
 
         return mapping.findForward("prepareChooseCalendar");
@@ -284,12 +284,12 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 
     private AcademicCalendarEntry getAcademicCalendarEntryFromParameter(final HttpServletRequest request) {
         final String calendarIDString = request.getParameter("entryID");
-        return AbstractDomainObject.fromExternalId(calendarIDString);
+        return FenixFramework.getDomainObject(calendarIDString);
     }
 
     private AcademicCalendarRootEntry getAcademicCalendarRootEntryFromParameter(final HttpServletRequest request) {
         final String calendarIDString = request.getParameter("rootEntryID");
-        return (AcademicCalendarRootEntry) AbstractDomainObject.fromExternalId(calendarIDString);
+        return (AcademicCalendarRootEntry) FenixFramework.getDomainObject(calendarIDString);
     }
 
     private Partial getBeginFromParameter(final HttpServletRequest request) {

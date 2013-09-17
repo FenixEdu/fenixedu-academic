@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.util.email;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PersonSender extends PersonSender_Base {
 
@@ -19,8 +19,13 @@ public class PersonSender extends PersonSender_Base {
         setMembers(new PersonGroup(person));
     }
 
-    @Service
+    @Atomic
     public static PersonSender newInstance(final Person person) {
         return person.hasSender() ? person.getSender() : new PersonSender(person);
     }
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

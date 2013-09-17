@@ -43,7 +43,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.util.MessageResources;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
@@ -125,7 +125,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
         final String degreeCurricularPlanID = getDegreeCurricularPlanID();
-        return AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        return FenixFramework.getDomainObject(degreeCurricularPlanID);
     }
 
     private ExecutionSemester getCurrentExecutionPeriod() throws FenixServiceException {
@@ -175,7 +175,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
     public ExecutionSemester getExecutionPeriod() throws FenixServiceException {
         final String executionPeriodID = getExecutionPeriodID();
-        return AbstractDomainObject.fromExternalId(executionPeriodID);
+        return FenixFramework.getDomainObject(executionPeriodID);
     }
 
     private ExecutionDegree getExecutionDegree() throws FenixServiceException {
@@ -356,7 +356,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
     private CurricularYear getCurricularYear() {
         final String curricularYearID = getCurricularYearID();
-        return (curricularYearID != null) ? AbstractDomainObject.<CurricularYear> fromExternalId(curricularYearID) : null;
+        return (curricularYearID != null) ? FenixFramework.<CurricularYear> getDomainObject(curricularYearID) : null;
     }
 
     private void constructEmptyCalendarLink(final List<CalendarLink> calendarLinks, final WrittenEvaluation writtenEvaluation,
@@ -536,7 +536,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
     }
 
     public ExecutionCourse getExecutionCourse() {
-        return AbstractDomainObject.fromExternalId(getExecutionCourseID());
+        return FenixFramework.getDomainObject(getExecutionCourseID());
     }
 
     private List<String> getDegreeModuleScopeIDs(final ExecutionCourse executionCourse) {
@@ -632,7 +632,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
     private Evaluation getEvaluation() {
         if (this.evalution == null && getEvaluationID() != null) {
-            this.evaluation = AbstractDomainObject.fromExternalId(getEvaluationID());
+            this.evaluation = FenixFramework.getDomainObject(getEvaluationID());
         }
 
         return this.evaluation;

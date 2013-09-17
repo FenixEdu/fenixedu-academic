@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthor
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteLink;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RearrangeUnitSiteLinks {
 
@@ -22,7 +22,7 @@ public class RearrangeUnitSiteLinks {
 
     private static final RearrangeUnitSiteLinks serviceInstance = new RearrangeUnitSiteLinks();
 
-    @Service
+    @Atomic
     public static void runRearrangeUnitSiteLinks(UnitSite site, Boolean top, List<UnitSiteLink> links)
             throws NotAuthorizedException {
         ResearchSiteManagerAuthorizationFilter.instance.execute(site);

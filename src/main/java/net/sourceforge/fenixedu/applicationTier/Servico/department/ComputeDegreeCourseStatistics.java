@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
 
     public List<DegreeCourseStatisticsDTO> run(String competenceCourseId, String executionPeriodId) throws FenixServiceException {
-        CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseId);
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
+        CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseId);
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
         Map<Degree, List<CurricularCourse>> groupedCourses = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree();
 
         List<DegreeCourseStatisticsDTO> results = new ArrayList<DegreeCourseStatisticsDTO>();
@@ -46,7 +46,7 @@ public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
 
     private static final ComputeDegreeCourseStatistics serviceInstance = new ComputeDegreeCourseStatistics();
 
-    @Service
+    @Atomic
     public static List<DegreeCourseStatisticsDTO> runComputeDegreeCourseStatistics(String competenceCourseId,
             String executionPeriodId) throws FenixServiceException {
         return serviceInstance.run(competenceCourseId, executionPeriodId);

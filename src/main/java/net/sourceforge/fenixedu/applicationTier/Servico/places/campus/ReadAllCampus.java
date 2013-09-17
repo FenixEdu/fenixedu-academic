@@ -6,11 +6,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadAllCampus {
 
-    @Service
+    @Atomic
     public static List run() throws FenixServiceException {
         List<InfoCampus> result = new ArrayList<InfoCampus>();
 

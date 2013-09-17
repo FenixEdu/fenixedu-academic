@@ -4,9 +4,6 @@ import java.util.Arrays;
 
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR;
-
-import org.apache.ojb.broker.cache.RuntimeCacheException;
-
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -37,7 +34,7 @@ public class DFAGratuityPRTypeProvider implements DataProvider {
                 try {
                     return Class.forName((String) target);
                 } catch (ClassNotFoundException e) {
-                    throw new RuntimeCacheException(e);
+                    throw new RuntimeException(e);
                 }
             }
         };

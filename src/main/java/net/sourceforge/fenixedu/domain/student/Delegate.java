@@ -36,10 +36,25 @@ public class Delegate extends Delegate_Base {
 
     public void delete() {
         getDelegateFunction().delete();
-        removeDelegateFunction();
-        removeRegistration();
-        removeRootDomainObject();
+        setDelegateFunction(null);
+        setRegistration(null);
+        setRootDomainObject(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDelegateFunction() {
+        return getDelegateFunction() != null;
     }
 
 }

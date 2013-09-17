@@ -7,9 +7,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Curriculum;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Mota
@@ -19,13 +20,13 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class EditCurriculum {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(String curriculumId, String program, String programEn, String operacionalObjectives,
             String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, Boolean basic)
             throws FenixServiceException {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
-        Curriculum curriculum = AbstractDomainObject.fromExternalId(curriculumId);
+        Curriculum curriculum = FenixFramework.getDomainObject(curriculumId);
         if (curriculum.getCurricularCourse().getBasic().equals(basic)) {
             curriculum.setProgram(program);
             curriculum.setProgramEn(programEn);

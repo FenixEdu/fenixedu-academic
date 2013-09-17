@@ -15,7 +15,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ManageFinalDegreeWorksDA extends FenixDispatchAction {
 
@@ -75,7 +75,7 @@ public class ManageFinalDegreeWorksDA extends FenixDispatchAction {
         if (degreeCurricularPlanIDString == null || degreeCurricularPlanIDString.length() == 0) {
             degreeCurricularPlanIDString = (String) request.getAttribute("degreeCurricularPlanID");
         }
-        return AbstractDomainObject.fromExternalId(degreeCurricularPlanIDString);
+        return FenixFramework.getDomainObject(degreeCurricularPlanIDString);
     }
 
 }

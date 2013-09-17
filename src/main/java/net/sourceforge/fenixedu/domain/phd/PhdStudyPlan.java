@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -17,25 +15,26 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import dml.runtime.RelationAdapter;
 
 public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     static {
-        PhdStudyPlanPhdIndividualProgramProcess.addListener(new RelationAdapter<PhdStudyPlan, PhdIndividualProgramProcess>() {
-            @Override
-            public void beforeAdd(PhdStudyPlan studyPlan, PhdIndividualProgramProcess process) {
+        getRelationPhdStudyPlanPhdIndividualProgramProcess().addListener(
+                new RelationAdapter<PhdStudyPlan, PhdIndividualProgramProcess>() {
+                    @Override
+                    public void beforeAdd(PhdStudyPlan studyPlan, PhdIndividualProgramProcess process) {
 
-                if (studyPlan != null && process != null) {
-                    if (process.hasStudyPlan()) {
-                        throw new DomainException(
-                                "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.process.already.has.study.play");
+                        if (studyPlan != null && process != null) {
+                            if (process.hasStudyPlan()) {
+                                throw new DomainException(
+                                        "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.process.already.has.study.play");
+                            }
+                        }
+
                     }
-                }
-
-            }
-        });
+                });
     }
 
     protected PhdStudyPlan() {
@@ -96,18 +95,8 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     }
 
     @Override
-    public List<PhdStudyPlanEntry> getEntries() {
-        return Collections.unmodifiableList(super.getEntries());
-    }
-
-    @Override
     public Set<PhdStudyPlanEntry> getEntriesSet() {
         return Collections.unmodifiableSet(super.getEntriesSet());
-    }
-
-    @Override
-    public Iterator<PhdStudyPlanEntry> getEntriesIterator() {
-        return getEntries().iterator();
     }
 
     @Override
@@ -179,7 +168,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     public void delete() {
 
-        for (; hasAnyEntries(); getEntries().get(0).delete()) {
+        for (; hasAnyEntries(); getEntries().iterator().next().delete()) {
             ;
         }
 
@@ -245,6 +234,46 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     private boolean isFor(final Enrolment enrolment, final CompetenceCourse competenceCourse) {
         return enrolment.getCurricularCourse().getCompetenceCourse().equals(competenceCourse);
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry> getEntries() {
+        return getEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEntries() {
+        return !getEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreatedBy() {
+        return getCreatedBy() != null;
+    }
+
+    @Deprecated
+    public boolean hasExempted() {
+        return getExempted() != null;
     }
 
 }

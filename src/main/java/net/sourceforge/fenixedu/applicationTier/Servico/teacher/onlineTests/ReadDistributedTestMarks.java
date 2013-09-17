@@ -24,8 +24,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -38,7 +38,7 @@ public class ReadDistributedTestMarks {
 
         InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
 
-        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -60,7 +60,7 @@ public class ReadDistributedTestMarks {
                     throw new FenixServiceException(e);
                 }
                 if (studentTestQuestion.getItemId() != null
-                        && !studentTestQuestion.getItemId().equals(question.getSubQuestions().get(0).getItemId())) {
+                        && !studentTestQuestion.getItemId().equals(question.getSubQuestions().iterator().next().getItemId())) {
                     infoStudentTestQuestionMark.addTestQuestionMark(
                             infoStudentTestQuestionMark.getTestQuestionMarks().size() - 1,
                             studentTestQuestion.getTestQuestionMark());
@@ -89,7 +89,7 @@ public class ReadDistributedTestMarks {
 
     private static final ReadDistributedTestMarks serviceInstance = new ReadDistributedTestMarks();
 
-    @Service
+    @Atomic
     public static InfoSiteStudentsTestMarks runReadDistributedTestMarks(String executionCourseId, String distributedTestId,
             String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

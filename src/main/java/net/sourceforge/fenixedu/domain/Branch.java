@@ -43,9 +43,9 @@ public class Branch extends Branch_Base {
     }
 
     private Boolean canDeleteAllEligibleCurricularCourseScopes(final Branch commonBranch) {
-        Iterator branchCurricularCourseScopesIterator = getScopesIterator();
+        Iterator<CurricularCourseScope> branchCurricularCourseScopesIterator = getScopesSet().iterator();
         while (branchCurricularCourseScopesIterator.hasNext()) {
-            CurricularCourseScope scope = (CurricularCourseScope) branchCurricularCourseScopesIterator.next();
+            CurricularCourseScope scope = branchCurricularCourseScopesIterator.next();
             CurricularCourse curricularCourse = scope.getCurricularCourse();
 
             // if CurricularCourse already has a common Branch
@@ -91,22 +91,22 @@ public class Branch extends Branch_Base {
         this.getStudentCurricularPlans().clear();
 
         removeCurricularCourseScopes(commonBranch);
-        removeDegreeCurricularPlan();
-        removeRootDomainObject();
+        setDegreeCurricularPlan(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     private void removeCurricularCourseScopes(final Branch commonBranch) throws DomainException {
-        Iterator branchCurricularCourseScopesIterator = getScopesIterator();
+        Iterator<CurricularCourseScope> branchCurricularCourseScopesIterator = getScopesSet().iterator();
         while (branchCurricularCourseScopesIterator.hasNext()) {
-            CurricularCourseScope scope = (CurricularCourseScope) branchCurricularCourseScopesIterator.next();
+            CurricularCourseScope scope = branchCurricularCourseScopesIterator.next();
             CurricularCourse curricularCourse = scope.getCurricularCourse();
 
             // if CurricularCourse already has a common Branch
             if (hasCurricularCourseCommonBranchInAnyCurricularCourseScope(curricularCourse, commonBranch)) {
                 // delete the CurricularCourseScope
                 branchCurricularCourseScopesIterator.remove();
-                scope.removeBranch();
+                scope.setBranch(null);
                 scope.delete();
 
             } else {
@@ -157,6 +157,81 @@ public class Branch extends Branch_Base {
 
     public boolean isSecondaryBranch() {
         return getBranchType() == BranchType.SECNBR;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal> getAssociatedFinalDegreeWorkProposals() {
+        return getAssociatedFinalDegreeWorkProposalsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedFinalDegreeWorkProposals() {
+        return !getAssociatedFinalDegreeWorkProposalsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseScope> getScopes() {
+        return getScopesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyScopes() {
+        return !getScopesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.StudentCurricularPlan> getStudentCurricularPlans() {
+        return getStudentCurricularPlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentCurricularPlans() {
+        return !getStudentCurricularPlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondaryCredits() {
+        return getSecondaryCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasNameEn() {
+        return getNameEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpecializationCredits() {
+        return getSpecializationCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcronym() {
+        return getAcronym() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasBranchType() {
+        return getBranchType() != null;
     }
 
 }

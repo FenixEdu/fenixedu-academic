@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -56,7 +56,7 @@ public class CandidacyAccessFilter {
 
         Registration registration = Registration.readByUsername(id.getUtilizador());
         if (registration != null) {
-            SeminaryCandidacy candidacy = AbstractDomainObject.fromExternalId(candidacyID);
+            SeminaryCandidacy candidacy = FenixFramework.getDomainObject(candidacyID);
             //
             if ((candidacy != null) && !(candidacy.getStudent().getExternalId().equals(registration.getExternalId()))) {
                 result = false;

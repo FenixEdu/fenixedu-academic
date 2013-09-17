@@ -226,7 +226,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
         request.setAttribute("tsdProcessPhaseList", tsdProcessPhases);
 
         if (!tsdProcessPhases.isEmpty()) {
-            dynaForm.set("tsdProcessPhase", tsdProcessPhases.get(0).getExternalId());
+            dynaForm.set("tsdProcessPhase", tsdProcessPhases.iterator().next().getExternalId());
         }
 
         return showTSDProcessPhaseDataManagementOptions(mapping, form, request, response);

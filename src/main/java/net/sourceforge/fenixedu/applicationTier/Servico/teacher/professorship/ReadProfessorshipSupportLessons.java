@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author jpvl
@@ -29,14 +29,14 @@ public class ReadProfessorshipSupportLessons {
 
         final ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = new ProfessorshipSupportLessonsDTO();
 
-        final Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final Teacher teacher = FenixFramework.getDomainObject(teacherId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         final Professorship professorship = (teacher != null) ? teacher.getProfessorshipByExecutionCourse(executionCourse) : null;
 
         professorshipSupportLessonsDTO.setInfoProfessorship(InfoProfessorship.newInfoFromDomain(professorship));
 
         final List<InfoSupportLesson> infoSupportLessons =
-                new ArrayList<InfoSupportLesson>(professorship.getSupportLessonsCount());
+                new ArrayList<InfoSupportLesson>(professorship.getSupportLessons().size());
         for (final SupportLesson supportLesson : professorship.getSupportLessonsSet()) {
             infoSupportLessons.add(InfoSupportLesson.newInfoFromDomain(supportLesson));
         }
@@ -49,7 +49,7 @@ public class ReadProfessorshipSupportLessons {
 
     private static final ReadProfessorshipSupportLessons serviceInstance = new ReadProfessorshipSupportLessons();
 
-    @Service
+    @Atomic
     public static ProfessorshipSupportLessonsDTO runReadProfessorshipSupportLessons(String teacherId, String executionCourseId)
             throws FenixServiceException, NotAuthorizedException {
         CreditsServiceWithTeacherIdArgumentAuthorization.instance.execute(teacherId);

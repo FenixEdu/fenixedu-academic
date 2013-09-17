@@ -66,19 +66,19 @@ public class TSDCurricularCourse extends TSDCurricularCourse_Base {
     @Override
     public void delete() {
         TSDCurricularCourseGroup valuationGroup = getTSDCurricularCourseGroup();
-        removeTSDCurricularCourseGroup();
+        setTSDCurricularCourseGroup(null);
 
-        if (valuationGroup != null && valuationGroup.getTSDCurricularCoursesCount() == 0) {
+        if (valuationGroup != null && valuationGroup.getTSDCurricularCoursesSet().size() == 0) {
             valuationGroup.delete();
         }
 
-        removeCurricularCourse();
+        setCurricularCourse(null);
         super.delete();
     }
 
     public void deleteTSDCourseOnly() {
-        removeTSDCurricularCourseGroup();
-        removeCurricularCourse();
+        setTSDCurricularCourseGroup(null);
+        setCurricularCourse(null);
         super.delete();
     }
 
@@ -94,4 +94,15 @@ public class TSDCurricularCourse extends TSDCurricularCourse_Base {
 
         return degree.getNameFor(getExecutionPeriod().getExecutionYear()) + " (" + degree.getSigla() + ")";
     }
+
+    @Deprecated
+    public boolean hasTSDCurricularCourseGroup() {
+        return getTSDCurricularCourseGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
 }

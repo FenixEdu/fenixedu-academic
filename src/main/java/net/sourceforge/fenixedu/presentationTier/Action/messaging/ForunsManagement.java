@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,7 +37,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -94,7 +95,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         request.setAttribute("thread", thread);
 
         request.setAttribute("pageNumber", pageNumber);
-        request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, thread.getChildrenCount()));
+        request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, thread.getChildrenSet().size()));
         request.setAttribute("messages", getContentToDisplay(thread.getChildren(), pageNumber, DEFAULT_PAGE_SIZE));
 
         Person loggedPerson = getLoggedPerson(request);
@@ -184,14 +185,14 @@ public abstract class ForunsManagement extends FenixDispatchAction {
     }
 
     protected ConversationThread getRequestedThread(HttpServletRequest request) {
-        return (ConversationThread) AbstractDomainObject.fromExternalId(request.getParameter("threadId"));
+        return (ConversationThread) FenixFramework.getDomainObject(request.getParameter("threadId"));
     }
 
     protected Forum getRequestedForum(HttpServletRequest request) {
-        return (Forum) AbstractDomainObject.fromExternalId(request.getParameter("forumId"));
+        return (Forum) FenixFramework.getDomainObject(request.getParameter("forumId"));
     }
 
-    private List<Content> getContentToDisplay(List<Node> nodes, Integer pageNumber, Integer pageSize) {
+    private List<Content> getContentToDisplay(Collection<Node> nodes, Integer pageNumber, Integer pageSize) {
         List<Node> nodeCopy = new ArrayList<Node>(nodes);
         Collections.sort(nodeCopy);
         List<Content> contents = new ArrayList<Content>();
@@ -213,7 +214,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         String quotationText = null;
         if (quotedMessageId != null) {
             MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
-            ConversationMessage message = (ConversationMessage) AbstractDomainObject.fromExternalId(quotedMessageId);
+            ConversationMessage message = (ConversationMessage) FenixFramework.getDomainObject(quotedMessageId);
 
             String author = message.getCreator().getName() + " (" + message.getCreator().getIstUsername() + ")";
 
@@ -235,7 +236,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
 
         request.setAttribute("conversationThreads", getContentToDisplay(forum.getChildren(), pageNumber, DEFAULT_PAGE_SIZE));
 
-        request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, forum.getChildrenCount()));
+        request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, forum.getChildrenSet().size()));
         Person loggedPerson = getLoggedPerson(request);
         request.setAttribute("receivingMessagesByEmail", forum.isPersonReceivingMessagesByEmail(loggedPerson));
 

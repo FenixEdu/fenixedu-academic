@@ -157,7 +157,7 @@ public abstract class Container extends Container_Base {
         }
         final Content content = getInitialContent();
         if (content != null) {
-            removeInitialContent();
+            setInitialContent(null);
             if (!content.hasAnyParents()) {
                 content.delete();
             }
@@ -316,6 +316,31 @@ public abstract class Container extends Container_Base {
         }
 
         return result;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.contents.Node> getChildren() {
+        return getChildrenSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChildren() {
+        return !getChildrenSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasMaximizable() {
+        return getMaximizable() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrefix() {
+        return getPrefix() != null;
+    }
+
+    @Deprecated
+    public boolean hasInitialContent() {
+        return getInitialContent() != null;
     }
 
 }

@@ -35,4 +35,34 @@ public class TestScope extends TestScope_Base {
         return result;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.Test> getTests() {
+        return getTestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTests() {
+        return !getTestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.DistributedTest> getDistributedTests() {
+        return getDistributedTestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDistributedTests() {
+        return !getDistributedTestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

@@ -16,7 +16,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "publico", path = "/files")
 public class FileDownload extends FenixAction {
@@ -25,7 +25,7 @@ public class FileDownload extends FenixAction {
     public ActionForward execute(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
         final String oid = request.getParameter("oid");
-        final File file = AbstractDomainObject.fromExternalId(oid);
+        final File file = FenixFramework.getDomainObject(oid);
         if (file == null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_BAD_REQUEST));

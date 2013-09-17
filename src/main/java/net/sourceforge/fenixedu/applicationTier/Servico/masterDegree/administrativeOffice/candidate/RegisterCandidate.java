@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -37,17 +37,18 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class RegisterCandidate {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static InfoCandidateRegistration run(String candidateID, String branchID, Integer studentNumber, IUserView userView)
             throws FenixServiceException {
-        MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
+        MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
 
         Person person = masterDegreeCandidate.getPerson();
 
@@ -90,7 +91,7 @@ public class RegisterCandidate {
         infoCandidateRegistration
                 .setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
         infoCandidateRegistration.setEnrolments(new ArrayList<InfoEnrolment>());
-        Iterator<Enrolment> iteratorSCPs = studentCurricularPlan.getEnrolments().iterator();
+        Iterator<Enrolment> iteratorSCPs = studentCurricularPlan.getEnrolmentsSet().iterator();
         while (iteratorSCPs.hasNext()) {
             Enrolment enrolment = iteratorSCPs.next();
             infoCandidateRegistration.getEnrolments().add(InfoEnrolment.newInfoFromDomain(enrolment));
@@ -145,7 +146,7 @@ public class RegisterCandidate {
 
     private static void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
             StudentCurricularPlan studentCurricularPlan) {
-        List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+        Collection<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
             new Enrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(), executionSemester,
@@ -155,7 +156,7 @@ public class RegisterCandidate {
 
     private static StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, String branchID,
             MasterDegreeCandidate masterDegreeCandidate) {
-        Branch branch = AbstractDomainObject.fromExternalId(branchID);
+        Branch branch = FenixFramework.getDomainObject(branchID);
         DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan();
 
         StudentCurricularPlan studentCurricularPlan =

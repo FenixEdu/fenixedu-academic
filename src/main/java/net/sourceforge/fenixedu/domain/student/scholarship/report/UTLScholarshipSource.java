@@ -6,4 +6,9 @@ public class UTLScholarshipSource extends UTLScholarshipSource_Base {
         super();
     }
 
+    @Deprecated
+    public boolean hasUtlScholarshipReport() {
+        return getUtlScholarshipReport() != null;
+    }
+
 }

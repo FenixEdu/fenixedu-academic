@@ -36,7 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/studentExternalEnrolments", module = "academicAdministration", formBean = "studentExternalEnrolmentsForm")
 @Forwards({
@@ -222,20 +222,20 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
     }
 
     protected Registration getRegistration(final HttpServletRequest request, ActionForm form) {
-        return AbstractDomainObject.fromExternalId(getStringFromRequestOrForm(request, (DynaActionForm) form, "registrationId"));
+        return FenixFramework.getDomainObject(getStringFromRequestOrForm(request, (DynaActionForm) form, "registrationId"));
     }
 
     protected Unit getExternalUnit(final HttpServletRequest request, ActionForm actionForm) {
-        return AbstractDomainObject.fromExternalId(getStringFromRequestOrForm(request, (DynaActionForm) actionForm,
+        return FenixFramework.getDomainObject(getStringFromRequestOrForm(request, (DynaActionForm) actionForm,
                 "externalUnitId"));
     }
 
     protected ExternalCurricularCourse getExternalCurricularCourseByID(final String externalCurricularCourseID) {
-        return AbstractDomainObject.fromExternalId(externalCurricularCourseID);
+        return FenixFramework.getDomainObject(externalCurricularCourseID);
     }
 
     protected ExternalEnrolment getExternalEnrolment(final HttpServletRequest request, ActionForm actionForm) {
-        return AbstractDomainObject.fromExternalId(getStringFromRequestOrForm(request, (DynaActionForm) actionForm,
+        return FenixFramework.getDomainObject(getStringFromRequestOrForm(request, (DynaActionForm) actionForm,
                 "externalEnrolmentId"));
     }
 

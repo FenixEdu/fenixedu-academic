@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.period;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -93,7 +94,7 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
     public static List<CandidacyPeriod> readAllByType(Class<? extends CandidacyPeriod> clazz) {
         List<CandidacyPeriod> result = new ArrayList<CandidacyPeriod>();
 
-        List<CandidacyPeriod> candidacyPeriods = RootDomainObject.getInstance().getCandidacyPeriods();
+        Collection<CandidacyPeriod> candidacyPeriods = RootDomainObject.getInstance().getCandidacyPeriods();
 
         for (CandidacyPeriod candidacyPeriod : candidacyPeriods) {
             if (clazz.equals(candidacyPeriod.getClass())) {
@@ -105,6 +106,26 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
         Collections.sort(result, LAST_CANDIDACY_PERIOD);
 
         return result;
+    }
+
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionInterval() {
+        return getExecutionInterval() != null;
+    }
+
+    @Deprecated
+    public boolean hasStart() {
+        return getStart() != null;
     }
 
 }

@@ -9,7 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public abstract class QueueJob extends QueueJob_Base {
     public static enum Priority {
@@ -74,14 +74,54 @@ public abstract class QueueJob extends QueueJob_Base {
         return Priority.NORMAL;
     }
 
-    @Service
+    @Atomic
     public void cancel() {
-        removeRootDomainObjectQueueUndone();
+        setRootDomainObjectQueueUndone(null);
     }
 
-    @Service
+    @Atomic
     public void resend() {
         setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFailedCounter() {
+        return getFailedCounter() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestDate() {
+        return getRequestDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasJobEndTime() {
+        return getJobEndTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasDone() {
+        return getDone() != null;
+    }
+
+    @Deprecated
+    public boolean hasJobStartTime() {
+        return getJobStartTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectQueueUndone() {
+        return getRootDomainObjectQueueUndone() != null;
     }
 
 }

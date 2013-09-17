@@ -28,7 +28,7 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
 
     @Override
     public List<NewQuestionGroup> getAssociableParents() {
-        if (!this.getParentQuestionGroups().get(0).isComposite()) {
+        if (!this.getParentQuestionGroups().iterator().next().isComposite()) {
             return new ArrayList<NewQuestionGroup>();
         }
 
@@ -57,11 +57,11 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
 
     @Override
     public void delete() {
-        for (; this.hasAnyCorrectors(); this.getCorrectors().get(0).delete()) {
+        for (; this.hasAnyCorrectors(); this.getCorrectors().iterator().next().delete()) {
             ;
         }
 
-        for (; this.hasAnyAnswers(); this.getAnswers().get(0).delete()) {
+        for (; this.hasAnyAnswers(); this.getAnswers().iterator().next().delete()) {
             ;
         }
 
@@ -238,7 +238,7 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
 
     @Override
     public boolean isCorrectable(Person person) {
-        return this.isAnswered(person) && this.isVisible(person) && this.getCorrectorsCount() == 0;
+        return this.isAnswered(person) && this.isVisible(person) && this.getCorrectorsSet().size() == 0;
     }
 
     public boolean isCorrectable() {
@@ -256,7 +256,7 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
 
     @Override
     public void publishGrades() {
-        if (this.getCorrectorsCount() == 0) {
+        if (this.getCorrectorsSet().size() == 0) {
             for (NewAnswer answer : this.getAnswers()) {
                 if (answer.getPercentage() == null) {
                     answer.setPercentage(new Double(0));
@@ -276,7 +276,7 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
             return new TestsGrade(0, this.getTest().getScale());
         }
 
-        if (this.getCorrectorsCount() > 0) {
+        if (this.getCorrectorsSet().size() > 0) {
             return this.getFinalGradeByCorrector(person);
         }
 
@@ -297,6 +297,31 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
         }
 
         return new TestsGrade(0, this.getTest().getScale());
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewAnswer> getAnswers() {
+        return getAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAnswers() {
+        return !getAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewCorrector> getCorrectors() {
+        return getCorrectorsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCorrectors() {
+        return !getCorrectorsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasValidator() {
+        return getValidator() != null;
     }
 
 }

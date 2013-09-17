@@ -7,28 +7,29 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeEditor;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditExecutionDegree {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
-        final ExecutionDegree oldExecutionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
+        final ExecutionDegree oldExecutionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
         if (oldExecutionDegree == null) {
             throw new NonExistingServiceException("message.nonExistingExecutionDegree", null);
         }
 
-        final Campus campus = (Campus) AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoCampus().getExternalId());
+        final Campus campus = (Campus) FenixFramework.getDomainObject(infoExecutionDegree.getInfoCampus().getExternalId());
         if (campus == null) {
             throw new NonExistingServiceException("message.nonExistingCampus", null);
         }
 
         final ExecutionYear executionYear =
-                AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoExecutionYear().getExternalId());
+                FenixFramework.getDomainObject(infoExecutionDegree.getInfoExecutionYear().getExternalId());
         if (executionYear == null) {
             throw new NonExistingServiceException("message.non.existing.execution.year", null);
         }

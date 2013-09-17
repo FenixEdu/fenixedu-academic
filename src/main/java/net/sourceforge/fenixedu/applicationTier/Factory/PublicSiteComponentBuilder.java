@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -86,7 +87,7 @@ public class PublicSiteComponentBuilder {
             throws FenixServiceException {
         List infoLessonList = null;
 
-        List<Shift> shiftList = domainClass.getAssociatedShifts();
+        Collection<Shift> shiftList = domainClass.getAssociatedShifts();
         infoLessonList = new ArrayList();
 
         ExecutionSemester executionSemester = domainClass.getExecutionPeriod();

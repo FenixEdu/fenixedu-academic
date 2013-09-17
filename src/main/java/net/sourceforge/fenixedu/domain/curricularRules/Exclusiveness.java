@@ -42,7 +42,7 @@ public class Exclusiveness extends Exclusiveness_Base {
     protected void edit(final DegreeModule exclusiveDegreeModule, final CourseGroup contextCourseGroup) {
         checkParameters(getDegreeModuleToApplyRule(), exclusiveDegreeModule);
         if (exclusiveDegreeModule != getExclusiveDegreeModule()) {
-            removeRuleFromCurrentExclusiveDegreeModule(this.getExclusiveDegreeModule().getCurricularRulesIterator());
+            removeRuleFromCurrentExclusiveDegreeModule(this.getExclusiveDegreeModule().getCurricularRulesSet().iterator());
             new Exclusiveness(exclusiveDegreeModule, getDegreeModuleToApplyRule(), contextCourseGroup, getBegin(), getEnd());
         }
         setExclusiveDegreeModule(exclusiveDegreeModule);
@@ -84,8 +84,8 @@ public class Exclusiveness extends Exclusiveness_Base {
 
     @Override
     protected void removeOwnParameters() {
-        removeRuleFromCurrentExclusiveDegreeModule(this.getExclusiveDegreeModule().getCurricularRulesIterator());
-        removeExclusiveDegreeModule();
+        removeRuleFromCurrentExclusiveDegreeModule(this.getExclusiveDegreeModule().getCurricularRulesSet().iterator());
+        setExclusiveDegreeModule(null);
     }
 
     private void removeRuleFromCurrentExclusiveDegreeModule(final Iterator<CurricularRule> curricularRulesIterator) {
@@ -94,7 +94,7 @@ public class Exclusiveness extends Exclusiveness_Base {
             if (curricularRule.getCurricularRuleType() == null) { // (composite
                 // rule)
                 final CompositeRule compositeRule = (CompositeRule) curricularRule;
-                removeRuleFromCurrentExclusiveDegreeModule(compositeRule.getCurricularRulesIterator());
+                removeRuleFromCurrentExclusiveDegreeModule(compositeRule.getCurricularRulesSet().iterator());
             } else if (curricularRule.getCurricularRuleType() == this.getCurricularRuleType()) {
                 removeExclusivenessRule(curricularRulesIterator, (Exclusiveness) curricularRule);
             }
@@ -117,7 +117,7 @@ public class Exclusiveness extends Exclusiveness_Base {
                 }
             }
             curricularRulesIterator.remove();
-            exclusiveness.removeExclusiveDegreeModule();
+            exclusiveness.setExclusiveDegreeModule(null);
             exclusiveness.removeCommonParameters();
             exclusiveness.deleteDomainObject();
         }
@@ -127,4 +127,10 @@ public class Exclusiveness extends Exclusiveness_Base {
     public VerifyRuleExecutor createVerifyRuleExecutor() {
         return new ExclusivenessVerifier();
     }
+
+    @Deprecated
+    public boolean hasExclusiveDegreeModule() {
+        return getExclusiveDegreeModule() != null;
+    }
+
 }

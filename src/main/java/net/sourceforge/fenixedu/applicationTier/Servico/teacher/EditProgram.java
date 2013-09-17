@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério
@@ -23,8 +23,8 @@ public class EditProgram {
             throws FenixServiceException {
 
         final Person person = Person.readPersonByUsername(username);
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseOID);
-        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseOID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseOID);
+        final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseOID);
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         Curriculum curriculum =
@@ -64,7 +64,7 @@ public class EditProgram {
 
     private static final EditProgram serviceInstance = new EditProgram();
 
-    @Service
+    @Atomic
     public static Boolean runEditProgram(String executionCourseOID, String curricularCourseOID, InfoCurriculum infoCurriculumNew,
             String username) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseResponsibleForTeacherAuthorizationFilter.instance.execute(executionCourseOID);

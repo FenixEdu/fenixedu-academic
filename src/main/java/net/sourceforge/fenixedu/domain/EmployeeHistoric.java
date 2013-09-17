@@ -56,4 +56,59 @@ public class EmployeeHistoric extends EmployeeHistoric_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasBeginDateYearMonthDay() {
+        return getBeginDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenDateTime() {
+        return getWhenDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWho() {
+        return getWho() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateYearMonthDay() {
+        return getEndDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasMailingCostCenter() {
+        return getMailingCostCenter() != null;
+    }
+
+    @Deprecated
+    public boolean hasCalendar() {
+        return getCalendar() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsableEmployee() {
+        return getResponsableEmployee() != null;
+    }
+
+    @Deprecated
+    public boolean hasWorkingPlaceCostCenter() {
+        return getWorkingPlaceCostCenter() != null;
+    }
+
+    @Deprecated
+    public boolean hasSalaryCostCenter() {
+        return getSalaryCostCenter() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmployee() {
+        return getEmployee() != null;
+    }
+
 }

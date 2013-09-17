@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.student.firstTimeCandidacy;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,7 +45,7 @@ public class FirstTimeCandidacySummaryFileDA extends FenixDispatchAction {
 
     private StudentCandidacy findCandidacy(Integer studentNumber) {
         final Student student = Student.readStudentByNumber(studentNumber);
-        final List<Registration> registrations = student.getRegistrations();
+        final Collection<Registration> registrations = student.getRegistrations();
         if (registrations != null && registrations.size() > 0) {
             return registrations.iterator().next().getStudentCandidacy();
         }

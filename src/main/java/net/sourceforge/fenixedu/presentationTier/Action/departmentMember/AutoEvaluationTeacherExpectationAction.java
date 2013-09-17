@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentMember", path = "/teacherExpectationAutoAvaliation", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -33,7 +33,7 @@ public class AutoEvaluationTeacherExpectationAction extends FenixDispatchAction 
 
         String executionYearID = request.getParameter("executionYearId");
         if (executionYearID != null) {
-            ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+            ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
             request.setAttribute("expectation", getTeacherExpectationForGivenYearInRequest(request, executionYear));
         }
         return mapping.findForward("editAutoEvaluation");
@@ -62,7 +62,7 @@ public class AutoEvaluationTeacherExpectationAction extends FenixDispatchAction 
         } else {
             String id = request.getParameter("executionYearId");
             year =
-                    id != null ? (ExecutionYear) AbstractDomainObject.fromExternalId(id) : ExecutionYear
+                    id != null ? (ExecutionYear) FenixFramework.getDomainObject(id) : ExecutionYear
                             .readCurrentExecutionYear();
         }
         return year;

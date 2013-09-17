@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RearrangeUnitSiteFunctions extends ManageVirtualFunction {
 
@@ -20,7 +20,7 @@ public class RearrangeUnitSiteFunctions extends ManageVirtualFunction {
 
     private static final RearrangeUnitSiteFunctions serviceInstance = new RearrangeUnitSiteFunctions();
 
-    @Service
+    @Atomic
     public static void runRearrangeUnitSiteFunctions(UnitSite site, Unit unit, Collection<Function> functions)
             throws NotAuthorizedException {
         ResearchSiteManagerAuthorizationFilter.instance.execute(site);

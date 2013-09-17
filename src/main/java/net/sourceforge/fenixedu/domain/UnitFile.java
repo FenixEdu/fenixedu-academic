@@ -12,19 +12,19 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
-import dml.runtime.RelationAdapter;
 
 public class UnitFile extends UnitFile_Base {
 
     static {
-        FileTagging.addListener(new RelationAdapter<UnitFile, UnitFileTag>() {
+        getRelationFileTagging().addListener(new RelationAdapter<UnitFileTag, UnitFile>() {
 
             @Override
-            public void afterRemove(UnitFile file, UnitFileTag tag) {
-                super.afterRemove(file, tag);
-                if (file != null && tag != null && tag.getTaggedFilesCount() == 0) {
+            public void afterRemove(UnitFileTag tag, UnitFile file) {
+                super.afterRemove(tag, file);
+                if (file != null && tag != null && tag.getTaggedFilesSet().size() == 0) {
                     tag.delete();
                 }
             }
@@ -56,11 +56,11 @@ public class UnitFile extends UnitFile_Base {
     @Override
     public void delete() {
         if (isEditableByCurrentUser()) {
-            removeUnit();
-            for (; !getUnitFileTags().isEmpty(); getUnitFileTags().get(0).removeTaggedFiles(this)) {
+            setUnit(null);
+            for (; !getUnitFileTags().isEmpty(); getUnitFileTags().iterator().next().removeTaggedFiles(this)) {
                 ;
             }
-            removeUploader();
+            setUploader(null);
             super.delete();
         } else {
             throw new DomainException("error.cannot.delete.file");
@@ -106,6 +106,31 @@ public class UnitFile extends UnitFile_Base {
 
     public boolean hasUnitFileTags(Collection<UnitFileTag> tags) {
         return getUnitFileTags().containsAll(tags);
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.UnitFileTag> getUnitFileTags() {
+        return getUnitFileTagsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyUnitFileTags() {
+        return !getUnitFileTagsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasUploader() {
+        return getUploader() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
     }
 
 }

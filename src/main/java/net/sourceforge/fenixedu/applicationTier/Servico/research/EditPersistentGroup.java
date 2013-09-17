@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EditPersistentGroup {
 
@@ -25,7 +25,7 @@ public class EditPersistentGroup {
 
     private static final EditPersistentGroup serviceInstance = new EditPersistentGroup();
 
-    @Service
+    @Atomic
     public static void runEditPersistentGroup(PersistentGroupMembers group, String name, List<Person> people, Unit unit)
             throws NotAuthorizedException {
         ManageUnitPersistentGroup.instance.execute(group.getUnit());

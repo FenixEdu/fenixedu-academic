@@ -218,7 +218,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
         if (getIndividualCandidacySeriesGrade().size() == 0) {
             return null;
         } else {
-            return (DegreeCandidacyForGraduatedPersonSeriesGade) getIndividualCandidacySeriesGrade().get(0);
+            return (DegreeCandidacyForGraduatedPersonSeriesGade) getIndividualCandidacySeriesGrade().iterator().next();
         }
     }
 
@@ -275,6 +275,26 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     @Override
     public void setCandidacyGrade(BigDecimal value) {
         getDegreeCandidacyForGraduatedPersonSeriesGade().setCandidacyGrade(value);
+    }
+
+    @Deprecated
+    public boolean hasCandidacyGrade() {
+        return getCandidacyGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeNature() {
+        return getDegreeNature() != null;
+    }
+
+    @Deprecated
+    public boolean hasSelectedDegree() {
+        return getSelectedDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasAffinity() {
+        return getAffinity() != null;
     }
 
 }

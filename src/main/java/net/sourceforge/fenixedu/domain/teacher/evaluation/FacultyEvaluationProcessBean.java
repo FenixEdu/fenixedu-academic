@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class FacultyEvaluationProcessBean implements Serializable {
@@ -117,7 +117,7 @@ public class FacultyEvaluationProcessBean implements Serializable {
         return new Interval(getEvaluationIntervalStart(), getEvaluationIntervalEnd());
     }
 
-    @Service
+    @Atomic
     public FacultyEvaluationProcess create() {
         FacultyEvaluationProcess process =
                 new FacultyEvaluationProcess(getTitle(), getAutoEvaluationInterval(), getEvaluationInterval());
@@ -126,7 +126,7 @@ public class FacultyEvaluationProcessBean implements Serializable {
         return process;
     }
 
-    @Service
+    @Atomic
     public void edit() {
         facultyEvaluationProcess.setTitle(getTitle());
         facultyEvaluationProcess.setAutoEvaluationInterval(getAutoEvaluationInterval());

@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MessageDeleteService {
 
-    @Service
+    @Atomic
     public static void delete(final Message message) {
         message.safeDelete();
     }

@@ -50,7 +50,7 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
@@ -282,7 +282,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         if (parameter == null) {
             return null;
         }
-        return (Item) AbstractDomainObject.fromExternalId(parameter);
+        return (Item) FenixFramework.getDomainObject(parameter);
     }
 
     protected Section getSection(final HttpServletRequest request) {
@@ -290,7 +290,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         if (parameter == null) {
             return null;
         }
-        return (Section) AbstractDomainObject.fromExternalId(parameter);
+        return (Section) FenixFramework.getDomainObject(parameter);
     }
 
     public ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -879,8 +879,8 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             return prepareAddFromPool(mapping, actionForm, request, response);
         }
 
-        Container container = (Container) AbstractDomainObject.fromExternalId(containerId);
-        Content content = AbstractDomainObject.fromExternalId(contentId);
+        Container container = (Container) FenixFramework.getDomainObject(containerId);
+        Content content = FenixFramework.getDomainObject(contentId);
 
         AddFunctionalityToContainer.run((Functionality) content, container);
 
@@ -891,9 +891,9 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     public ActionForward removeFunctionalityFromContainer(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         String contentId = request.getParameter("contentID");
-        Content content = AbstractDomainObject.fromExternalId(contentId);
+        Content content = FenixFramework.getDomainObject(contentId);
         String containerId = request.getParameter("containerID");
-        Container container = (Container) AbstractDomainObject.fromExternalId(containerId);
+        Container container = (Container) FenixFramework.getDomainObject(containerId);
 
         try {
             RemoveContentFromContainer.run(container, content);
@@ -912,7 +912,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             return null;
         }
 
-        return (Site) AbstractDomainObject.fromExternalId(siteId);
+        return (Site) FenixFramework.getDomainObject(siteId);
     }
 
     protected FunctionalityCall getFunctionalityCall(HttpServletRequest request) {
@@ -922,7 +922,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             return null;
         }
 
-        return (FunctionalityCall) AbstractDomainObject.fromExternalId(functionalityId);
+        return (FunctionalityCall) FenixFramework.getDomainObject(functionalityId);
     }
 
     protected abstract String getAuthorNameForFile(HttpServletRequest request);

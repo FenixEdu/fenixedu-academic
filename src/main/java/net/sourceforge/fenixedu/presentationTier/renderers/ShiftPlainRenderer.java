@@ -38,7 +38,7 @@ public class ShiftPlainRenderer extends OutputRenderer {
                     if (lesson.hasSala()) {
                         lessonsLabel.append(lesson.getSala().getName().toString());
                     }
-                    if (index < shift.getAssociatedLessonsCount()) {
+                    if (index < shift.getAssociatedLessonsSet().size()) {
                         lessonsLabel.append(" ; ");
                     } else {
                         lessonsLabel.append(" ");

@@ -12,7 +12,8 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Deprecated
@@ -77,9 +78,9 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
 
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setInstallment(Installment installment) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setInstallment(installment);
     }
 
@@ -107,4 +108,9 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
     public boolean isInstallmentPaymentCode() {
         return true;
     }
+    @Deprecated
+    public boolean hasInstallment() {
+        return getInstallment() != null;
+    }
+
 }

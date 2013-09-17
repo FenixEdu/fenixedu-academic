@@ -332,13 +332,13 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
         List<ErasmusAlert> alerts = new ArrayList<ErasmusAlert>(getAlert());
         Collections.sort(alerts, Collections.reverseOrder(ErasmusAlert.WHEN_CREATED_COMPARATOR));
 
-        return alerts.get(0);
+        return alerts.iterator().next();
     }
 
     public boolean isProcessWithMostRecentAlertMessageNotViewed() {
         List<ErasmusAlert> alertsNotViewed = getAlertsNotViewed();
 
-        return !alertsNotViewed.isEmpty() && alertsNotViewed.get(0) == getMostRecentAlert();
+        return !alertsNotViewed.isEmpty() && alertsNotViewed.iterator().next() == getMostRecentAlert();
     }
 
     public boolean isStudentAccepted() {
@@ -381,7 +381,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     public DateTime getLastReceptionEmailSent() {
         List<ReceptionEmailExecutedAction> list = getAllReceptionEmailNotifications();
-        return list.isEmpty() ? null : list.get(0).getWhenOccured();
+        return list.isEmpty() ? null : list.iterator().next().getWhenOccured();
     }
 
     public String getErasmusCandidacyStateDescription() {
@@ -1434,6 +1434,51 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     public MobilityProgram getMobilityProgram() {
         return getCandidacy().getMobilityProgram();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlert> getAlert() {
+        return getAlertSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAlert() {
+        return !getAlertSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessExecutedAction> getExecutedActions() {
+        return getExecutedActionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutedActions() {
+        return !getExecutedActionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction> getErasmusCandidacyProcessExecutedAction() {
+        return getErasmusCandidacyProcessExecutedActionSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyErasmusCandidacyProcessExecutedAction() {
+        return !getErasmusCandidacyProcessExecutedActionSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasValidatedByMobilityCoordinator() {
+        return getValidatedByMobilityCoordinator() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidatedByGri() {
+        return getValidatedByGri() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonalFieldsFromStork() {
+        return getPersonalFieldsFromStork() != null;
     }
 
 }

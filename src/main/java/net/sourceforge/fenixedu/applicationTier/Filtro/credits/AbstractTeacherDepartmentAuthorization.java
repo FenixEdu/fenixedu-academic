@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * Base class for authorization issues on credits information edition done by
@@ -36,11 +36,11 @@ public abstract class AbstractTeacherDepartmentAuthorization<T> extends Filtro {
 
             final Person requesterPerson = requester.getPerson();
 
-            Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
+            Teacher teacher = FenixFramework.getDomainObject(teacherId);
 
             Department teacherDepartment = teacher.getCurrentWorkingDepartment();
 
-            List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
+            Collection departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
 
             if (!departmentsWithAccessGranted.contains(teacherDepartment)) {
                 throw new NotAuthorizedException();

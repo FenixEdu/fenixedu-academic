@@ -44,22 +44,25 @@ import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.pstm.MissingObjectException;
-import pt.ist.fenixframework.pstm.Transaction;
-import dml.DomainClass;
-import dml.DomainEntity;
-import dml.DomainModel;
-import dml.Role;
-import dml.Slot;
+import pt.ist.fenixframework.core.exception.MissingObjectException;
+import pt.ist.fenixframework.dml.DomainClass;
+import pt.ist.fenixframework.dml.DomainEntity;
+import pt.ist.fenixframework.dml.DomainModel;
+import pt.ist.fenixframework.dml.Role;
+import pt.ist.fenixframework.dml.Slot;
 
+@WebServlet(urlPatterns = "/domainbrowser/*")
 public class DomainBrowserServlet extends HttpServlet {
+
+    private static final long serialVersionUID = -3780027224510147325L;
 
     private static DomainModel domainModel;
     private static HashMap<DomainClass, String> domainClassesDescAttr = new HashMap<DomainClass, String>();
@@ -112,7 +115,7 @@ public class DomainBrowserServlet extends HttpServlet {
             return;
         }
 
-        DomainObject domObj = Transaction.getObjectForOID(params.oid);
+        DomainObject domObj = FenixFramework.getDomainObject(params.oid);
         DomainClass domClass = getDomainClass(domObj);
 
         out.println("<H1>");
@@ -168,7 +171,7 @@ public class DomainBrowserServlet extends HttpServlet {
                     }
 
                     out.println("<a href=\"listRole?OID=");
-                    out.println(domObj.getOID());
+                    out.println(domObj.getExternalId());
                     out.println("&role=");
                     out.println(role.getName());
                     out.println("\">");
@@ -194,7 +197,7 @@ public class DomainBrowserServlet extends HttpServlet {
             return;
         }
 
-        DomainObject domObj = Transaction.getObjectForOID(params.oid);
+        DomainObject domObj = FenixFramework.getDomainObject(params.oid);
 
         out.println("<H1>");
         renderObjectId(out, domObj);
@@ -216,7 +219,7 @@ public class DomainBrowserServlet extends HttpServlet {
         out.println(params.classFullName);
         out.println(" Entities</H1>\n");
 
-        Collection insts = RootDomainObject.readAllDomainObjects(params.javaClass);
+        Collection insts = DomainObjectUtil.readAllDomainObjects(params.javaClass);
         renderCollection(out, insts, params);
     }
 
@@ -276,7 +279,7 @@ public class DomainBrowserServlet extends HttpServlet {
 
     protected void renderObjectId(PrintWriter out, DomainObject domObj) throws IOException {
         out.println("<a href=\"showObj?OID=");
-        out.println(domObj.getOID());
+        out.println(domObj.getExternalId());
         out.println("\">");
         out.println(getObjectDescription(domObj));
         out.println("</a>");
@@ -357,7 +360,7 @@ public class DomainBrowserServlet extends HttpServlet {
 
                 List<Role> roles = getAllRoles(domClass);
                 if (!roles.isEmpty()) {
-                    Collection insts = RootDomainObject.readAllDomainObjects(Class.forName(domClass.getFullName()));
+                    Collection insts = DomainObjectUtil.readAllDomainObjects(Class.forName(domClass.getFullName()));
                     if (insts.size() == 0) {
                         out.print("<P>Can't check ");
                         out.print(domClass.getFullName());
@@ -557,7 +560,7 @@ public class DomainBrowserServlet extends HttpServlet {
         String classFullName = null;
         DomainClass domClass = null;
         Class javaClass = null;
-        long oid = -1;
+        String oid = null;
         String roleName = null;
         Role role = null;
         int start = 1;
@@ -574,7 +577,7 @@ public class DomainBrowserServlet extends HttpServlet {
                 sb.append(classFullName);
                 sep = "&";
             }
-            if (oid != -1) {
+            if (oid != null) {
                 sb.append(sep);
                 sb.append("OID=");
                 sb.append(oid);
@@ -621,8 +624,8 @@ public class DomainBrowserServlet extends HttpServlet {
                             return null;
                         }
                     } else if (name.equals("OID")) {
-                        params.oid = Long.parseLong(value);
-                        DomainObject domObj = Transaction.getObjectForOID(params.oid);
+                        params.oid = value;
+                        DomainObject domObj = FenixFramework.getDomainObject(params.oid);
                         params.domClass = domainModel.findClass(domObj.getClass().getName());
                     } else if (name.equals("role")) {
                         params.roleName = value;

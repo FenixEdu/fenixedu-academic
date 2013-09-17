@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "coordinator", path = "/scientificCommissionTeamDA", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "viewScientificCommission",
@@ -60,7 +60,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
         if (id == null) {
             return null;
         } else {
-            return AbstractDomainObject.fromExternalId(id);
+            return FenixFramework.getDomainObject(id);
         }
     }
 
@@ -73,7 +73,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
             if (id == null) {
                 return getDefaultExecutionDegree(request);
             } else {
-                return AbstractDomainObject.fromExternalId(id);
+                return FenixFramework.getDomainObject(id);
             }
         }
     }

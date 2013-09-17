@@ -4,16 +4,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteCompetenceCourse {
 
-    @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(final String competenceCourseID) {
-        final CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);
+        check(RolePredicates.BOLONHA_MANAGER_PREDICATE);
+        final CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseID);
         if (competenceCourse != null) {
             competenceCourse.delete();
         }

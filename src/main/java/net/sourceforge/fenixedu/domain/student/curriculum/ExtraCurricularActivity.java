@@ -12,7 +12,7 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
 import org.joda.time.Partial;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * Extra curricular activity performed by a student during some period of time.
@@ -101,14 +101,39 @@ public class ExtraCurricularActivity extends ExtraCurricularActivity_Base {
         setActivityInterval(new Interval(getActivityInterval().getStart(), end.toDateTime(new DateTime(0))));
     }
 
-    @Service
+    @Atomic
     public void delete() {
         if (!getIsDeletable()) {
             throw new DomainException("information.already.featured.in.official.document");
         }
-        removeType();
-        removeStudent();
-        removeRootDomainObject();
+        setType(null);
+        setStudent(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasFeaturedDiploma() {
+        return getFeaturedDiploma() != null;
+    }
+
+    @Deprecated
+    public boolean hasActivityInterval() {
+        return getActivityInterval() != null;
+    }
+
 }

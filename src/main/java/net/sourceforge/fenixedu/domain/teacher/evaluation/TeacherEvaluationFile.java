@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -56,12 +56,12 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
 
     @Override
     public void delete() {
-        removeTeacherEvaluation();
-        removeCreatedBy();
+        setTeacherEvaluation(null);
+        setCreatedBy(null);
         super.delete();
     }
 
-    @Service
+    @Atomic
     public static TeacherEvaluationFile create(FileUploadBean fileUploadBean, Person createdBy) throws IOException {
         return new TeacherEvaluationFile(fileUploadBean.getTeacherEvaluationProcess().getCurrentTeacherEvaluation(),
                 fileUploadBean.getTeacherEvaluationFileType(), fileUploadBean.getFilename(), fileUploadBean.getBytes(), createdBy);
@@ -69,6 +69,21 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
 
     public TeacherEvaluationFile copy(TeacherEvaluation evaluation) {
         return new TeacherEvaluationFile(evaluation, getTeacherEvaluationFileType(), getFilename(), getContents(), getCreatedBy());
+    }
+
+    @Deprecated
+    public boolean hasTeacherEvaluation() {
+        return getTeacherEvaluation() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherEvaluationFileType() {
+        return getTeacherEvaluationFileType() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreatedBy() {
+        return getCreatedBy() != null;
     }
 
 }

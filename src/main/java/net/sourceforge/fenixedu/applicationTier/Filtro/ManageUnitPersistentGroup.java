@@ -13,7 +13,7 @@ public class ManageUnitPersistentGroup extends Filtro {
     public void execute(Unit unit) throws NotAuthorizedException {
         IUserView userView = AccessControl.getUserView();
         Person person = userView.getPerson();
-        if (!(unit.getSite() != null && unit.getSite().hasManagers(person))) {
+        if (!(unit.getSite() != null && unit.getSite().getManagersSet().contains(person))) {
             throw new NotAuthorizedException("error.person.not.manager.of.site");
         }
     }

@@ -20,11 +20,11 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateResearchContract {
 
-    @Service
+    @Atomic
     public static void run(ResearchContractBean bean, Person creator, String url) throws FenixServiceException {
         Person person = bean.getPerson();
         if (person == null) {

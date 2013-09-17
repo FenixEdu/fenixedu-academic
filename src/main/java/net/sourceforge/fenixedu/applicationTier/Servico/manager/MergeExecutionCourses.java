@@ -60,8 +60,8 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -86,13 +86,13 @@ public class MergeExecutionCourses {
             throw new SourceAndDestinationAreTheSameException();
         }
 
-        final ExecutionCourse executionCourseFrom = AbstractDomainObject.fromExternalId(executionCourseSourceId);
+        final ExecutionCourse executionCourseFrom = FenixFramework.getDomainObject(executionCourseSourceId);
 
         if (executionCourseFrom == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ExecutionCourse executionCourseTo = AbstractDomainObject.fromExternalId(executionCourseDestinationId);
+        final ExecutionCourse executionCourseTo = FenixFramework.getDomainObject(executionCourseDestinationId);
 
         if (executionCourseTo == null) {
             throw new InvalidArgumentsServiceException();
@@ -235,7 +235,7 @@ public class MergeExecutionCourses {
     private void removeEvaluations(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws FenixServiceException {
         while (!executionCourseFrom.getAssociatedEvaluations().isEmpty()) {
-            final Evaluation evaluation = executionCourseFrom.getAssociatedEvaluations().get(0);
+            final Evaluation evaluation = executionCourseFrom.getAssociatedEvaluations().iterator().next();
             if (evaluation instanceof FinalEvaluation) {
                 final FinalEvaluation finalEvaluationFrom = (FinalEvaluation) evaluation;
                 if (finalEvaluationFrom.hasAnyMarks()) {
@@ -252,7 +252,8 @@ public class MergeExecutionCourses {
 
     private void copyBibliographicReference(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (; !executionCourseFrom.getAssociatedBibliographicReferences().isEmpty(); executionCourseTo
-                .getAssociatedBibliographicReferences().add(executionCourseFrom.getAssociatedBibliographicReferences().get(0))) {
+                .getAssociatedBibliographicReferences().add(
+                        executionCourseFrom.getAssociatedBibliographicReferences().iterator().next())) {
             ;
         }
     }
@@ -294,7 +295,7 @@ public class MergeExecutionCourses {
     private void copyAttends(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws FenixServiceException {
         while (!executionCourseFrom.getAttends().isEmpty()) {
-            final Attends attends = executionCourseFrom.getAttends().get(0);
+            final Attends attends = executionCourseFrom.getAttends().iterator().next();
             final Attends otherAttends = executionCourseTo.getAttendsByStudent(attends.getRegistration());
             if (otherAttends == null) {
                 attends.setDisciplinaExecucao(executionCourseTo);
@@ -307,19 +308,19 @@ public class MergeExecutionCourses {
                     throw new FenixServiceException("Unable to merge execution courses. Registration "
                             + attends.getRegistration().getNumber() + " has an enrolment in both.");
                 }
-                for (; !attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends.getAssociatedMarks().get(
-                        0))) {
+                for (; !attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends.getAssociatedMarks()
+                        .iterator().next())) {
                     ;
                 }
-                for (; !attends.getAllStudentGroups().isEmpty(); otherAttends.addStudentGroups(attends.getAllStudentGroups().get(
-                        0))) {
+                for (; !attends.getAllStudentGroups().isEmpty(); otherAttends.addStudentGroups(attends.getAllStudentGroups()
+                        .iterator().next())) {
                     ;
                 }
                 attends.delete();
             }
         }
 
-        final Iterator<Attends> associatedAttendsFromDestination = executionCourseTo.getAttendsIterator();
+        final Iterator<Attends> associatedAttendsFromDestination = executionCourseTo.getAttends().iterator();
         final Map<String, Attends> alreadyAttendingDestination = new HashMap<String, Attends>();
         while (associatedAttendsFromDestination.hasNext()) {
             Attends attend = associatedAttendsFromDestination.next();
@@ -432,29 +433,29 @@ public class MergeExecutionCourses {
 
     private void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (; !executionCourseFrom.getProfessorships().isEmpty();) {
-            final Professorship professorship = executionCourseFrom.getProfessorships().get(0);
+            final Professorship professorship = executionCourseFrom.getProfessorships().iterator().next();
             final Professorship otherProfessorship = findProfessorShip(executionCourseTo, professorship.getPerson());
             if (otherProfessorship == null) {
                 professorship.setExecutionCourse(executionCourseTo);
             } else {
                 for (; !professorship.getAssociatedSummaries().isEmpty(); otherProfessorship.addAssociatedSummaries(professorship
-                        .getAssociatedSummaries().get(0))) {
+                        .getAssociatedSummaries().iterator().next())) {
                     ;
                 }
                 for (; !professorship.getAssociatedShiftProfessorship().isEmpty(); otherProfessorship
-                        .addAssociatedShiftProfessorship(professorship.getAssociatedShiftProfessorship().get(0))) {
+                        .addAssociatedShiftProfessorship(professorship.getAssociatedShiftProfessorship().iterator().next())) {
                     ;
                 }
                 for (; !professorship.getSupportLessons().isEmpty(); otherProfessorship.addSupportLessons(professorship
-                        .getSupportLessons().get(0))) {
+                        .getSupportLessons().iterator().next())) {
                     ;
                 }
                 for (; !professorship.getDegreeTeachingServices().isEmpty(); otherProfessorship
-                        .addDegreeTeachingServices(professorship.getDegreeTeachingServices().get(0))) {
+                        .addDegreeTeachingServices(professorship.getDegreeTeachingServices().iterator().next())) {
                     ;
                 }
                 for (; !professorship.getTeacherMasterDegreeServices().isEmpty(); otherProfessorship
-                        .addTeacherMasterDegreeServices(professorship.getTeacherMasterDegreeServices().get(0))) {
+                        .addTeacherMasterDegreeServices(professorship.getTeacherMasterDegreeServices().iterator().next())) {
                     ;
                 }
                 professorship.delete();
@@ -479,7 +480,7 @@ public class MergeExecutionCourses {
         }
 
         while (!executionCourseFrom.getForuns().isEmpty()) {
-            ExecutionCourseForum sourceForum = executionCourseFrom.getForuns().get(0);
+            ExecutionCourseForum sourceForum = executionCourseFrom.getForuns().iterator().next();
             MultiLanguageString forumName = sourceForum.getName();
 
             ExecutionCourseForum targetForum = executionCourseTo.getForumByName(forumName);
@@ -499,7 +500,7 @@ public class MergeExecutionCourses {
     private void copyForumSubscriptions(ExecutionCourseForum sourceForum, ExecutionCourseForum targetForum) {
 
         while (!sourceForum.getForumSubscriptions().isEmpty()) {
-            ForumSubscription sourceForumSubscription = sourceForum.getForumSubscriptions().get(0);
+            ForumSubscription sourceForumSubscription = sourceForum.getForumSubscriptions().iterator().next();
             Person sourceForumSubscriber = sourceForumSubscription.getPerson();
             ForumSubscription targetForumSubscription = targetForum.getPersonSubscription(sourceForumSubscriber);
 
@@ -523,7 +524,7 @@ public class MergeExecutionCourses {
     private void copyThreads(ExecutionCourseForum sourceForum, ExecutionCourseForum targetForum) {
 
         while (!sourceForum.getConversationThreads().isEmpty()) {
-            ConversationThread sourceConversationThread = sourceForum.getConversationThreads().get(0);
+            ConversationThread sourceConversationThread = sourceForum.getConversationThreads().iterator().next();
 
             if (!targetForum.hasConversationThreadWithSubject(sourceConversationThread.getTitle())) {
                 sourceConversationThread.setForum(targetForum);
@@ -550,7 +551,7 @@ public class MergeExecutionCourses {
 
     private static final MergeExecutionCourses serviceInstance = new MergeExecutionCourses();
 
-    @Service
+    @Atomic
     public static void runMergeExecutionCourses(String executionCourseDestinationId, String executionCourseSourceId)
             throws FenixServiceException {
         serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);

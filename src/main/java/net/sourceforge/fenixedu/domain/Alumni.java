@@ -28,7 +28,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class Alumni extends Alumni_Base {
 
@@ -123,7 +123,7 @@ public class Alumni extends Alumni_Base {
     }
 
     public PhysicalAddress getLastPersonalAddress() {
-        SortedSet<PhysicalAddress> addressSet = new TreeSet<PhysicalAddress>(PartyContact.COMPARATOR_BY_ID);
+        SortedSet<PhysicalAddress> addressSet = new TreeSet<PhysicalAddress>(DomainObjectUtil.COMPARATOR_BY_ID);
         addressSet.addAll(getStudent().getPerson().getPhysicalAddresses());
         return !addressSet.isEmpty() && addressSet.last() != null ? addressSet.last() : null;
     }
@@ -455,9 +455,9 @@ public class Alumni extends Alumni_Base {
     }
 
     public void delete() {
-        removeStudent();
+        setStudent(null);
         getIdentityRequests().clear();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -478,7 +478,7 @@ public class Alumni extends Alumni_Base {
         return hasPasswordRequest && !hasPasswordRequestAccepted;
     }
 
-    @Service
+    @Atomic
     public void validateEmailFromRegistrationProcess() {
         final Person person = getStudent().getPerson();
         for (final EmailAddress address : person.getPendingEmailAddresses()) {
@@ -487,4 +487,45 @@ public class Alumni extends Alumni_Base {
             }
         }
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest> getIdentityRequests() {
+        return getIdentityRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyIdentityRequests() {
+        return !getIdentityRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistered() {
+        return getRegistered() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsEmployed() {
+        return getIsEmployed() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegisteredWhen() {
+        return getRegisteredWhen() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrlRequestToken() {
+        return getUrlRequestToken() != null;
+    }
+
 }

@@ -3,17 +3,18 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditarTurma {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static Object run(final String externalId, final String className) throws ExistingServiceException {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
-        final SchoolClass classToEdit = AbstractDomainObject.fromExternalId(externalId);
+        final SchoolClass classToEdit = FenixFramework.getDomainObject(externalId);
         classToEdit.edit(className);
         return InfoClass.newInfoFromDomain(classToEdit);
     }

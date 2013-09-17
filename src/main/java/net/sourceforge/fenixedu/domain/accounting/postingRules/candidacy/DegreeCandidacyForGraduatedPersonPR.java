@@ -163,4 +163,14 @@ public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGradu
         return new DegreeCandidacyForGraduatedPersonPR(new DateTime(), null, getServiceAgreementTemplate(),
                 amountForInstitutionStudent, amountForExternalStudent);
     }
+    @Deprecated
+    public boolean hasAmountForInstitutionStudent() {
+        return getAmountForInstitutionStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasAmountForExternalStudent() {
+        return getAmountForExternalStudent() != null;
+    }
+
 }

@@ -7,9 +7,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -18,15 +19,15 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DeleteDegrees {
 
     // delete a set of degrees
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static List<String> run(List<String> degreesInternalIds) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         Iterator<String> iter = degreesInternalIds.iterator();
 
         List<String> undeletedDegreesNames = new ArrayList<String>();
         while (iter.hasNext()) {
             String internalId = iter.next();
-            Degree degree = AbstractDomainObject.fromExternalId(internalId);
+            Degree degree = FenixFramework.getDomainObject(internalId);
 
             if (degree != null) {
 

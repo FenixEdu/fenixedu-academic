@@ -130,4 +130,5 @@ public class MobilePhone extends MobilePhone_Base {
     public void logRefuse(Person person) {
         logRefuseAux(person, "label.partyContacts.MobilePhone");
     }
+
 }

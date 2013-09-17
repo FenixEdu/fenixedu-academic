@@ -110,4 +110,109 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
         return description.toString();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CandidateSituation> getSituations() {
+        return getSituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySituations() {
+        return !getSituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CandidateEnrolment> getCandidateEnrolments() {
+        return getCandidateEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidateEnrolments() {
+        return !getCandidateEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpecializationArea() {
+        return getSpecializationArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubstituteOrder() {
+        return getSubstituteOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasMajorDegree() {
+        return getMajorDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasMajorDegreeYear() {
+        return getMajorDegreeYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpecialization() {
+        return getSpecialization() != null;
+    }
+
+    @Deprecated
+    public boolean hasCoursesToAssist() {
+        return getCoursesToAssist() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidateNumber() {
+        return getCandidateNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasCourseAssistant() {
+        return getCourseAssistant() != null;
+    }
+
+    @Deprecated
+    public boolean hasHasGuider() {
+        return getHasGuider() != null;
+    }
+
+    @Deprecated
+    public boolean hasGivenCredits() {
+        return getGivenCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasGivenCreditsRemarks() {
+        return getGivenCreditsRemarks() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage() {
+        return getAverage() != null;
+    }
+
+    @Deprecated
+    public boolean hasGuider() {
+        return getGuider() != null;
+    }
+
+    @Deprecated
+    public boolean hasMajorDegreeSchool() {
+        return getMajorDegreeSchool() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

@@ -36,10 +36,30 @@ public class IdDocument extends IdDocument_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeIdDocumentType();
-        removeRootDomainObject();
+        setPerson(null);
+        super.setIdDocumentType(null);
+        setRootDomainObject(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasValue() {
+        return getValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasIdDocumentType() {
+        return getIdDocumentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

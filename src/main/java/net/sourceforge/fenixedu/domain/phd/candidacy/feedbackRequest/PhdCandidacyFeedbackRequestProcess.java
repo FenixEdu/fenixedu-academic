@@ -432,4 +432,34 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
         activities.add(new DownloadCandidacyFeedbackDocuments());
         activities.add(new ExternalUploadCandidacyFeedback());
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackState> getStates() {
+        return getStatesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStates() {
+        return !getStatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement> getElements() {
+        return getElementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyElements() {
+        return !getElementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSharedDocuments() {
+        return getSharedDocuments() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyProcess() {
+        return getCandidacyProcess() != null;
+    }
+
 }

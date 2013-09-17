@@ -80,9 +80,9 @@ public class RegistrationRegime extends RegistrationRegime_Base {
     }
 
     public void delete() {
-        removeRegistration();
-        removeExecutionYear();
-        removeRootDomainObject();
+        setRegistration(null);
+        setExecutionYear(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -93,4 +93,29 @@ public class RegistrationRegime extends RegistrationRegime_Base {
     public boolean hasRegime(final RegistrationRegimeType type) {
         return getRegimeType() == type;
     }
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegimeType() {
+        return getRegimeType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

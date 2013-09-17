@@ -5,19 +5,20 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteExecutionDegreesOfDegreeCurricularPlan {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static List<String> run(List<String> executionDegreesIds) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         List<String> undeletedExecutionDegreesYears = new ArrayList<String>();
 
         for (final String executionDegreeId : executionDegreesIds) {
-            final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+            final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
 
             if (executionDegree != null) {
                 if (executionDegree.canBeDeleted()) {

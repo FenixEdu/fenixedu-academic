@@ -14,7 +14,7 @@ public class ResearchSiteManagerAuthorizationFilter {
         IUserView userView = AccessControl.getUserView();
         Person person = userView.getPerson();
 
-        if (!site.hasManagers(person)) {
+        if (!site.getManagersSet().contains(person)) {
             throw new NotAuthorizedException("error.person.not.manager.of.site");
         }
     }

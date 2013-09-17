@@ -91,31 +91,31 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     }
 
     public void delete() {
-        if (getChildProcessesCount() > 0) {
+        if (getChildProcessesSet().size() > 0) {
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.individual.application");
         }
-        if (getCoordinatorsCount() > 0) {
+        if (getCoordinatorsSet().size() > 0) {
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.coordinators");
         }
         if (getCandidacyPeriod() != null) {
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.defined.period");
         }
-        if (getErasmusCandidacyProcessExecutedActionCount() > 0) {
+        if (getErasmusCandidacyProcessExecutedActionSet().size() > 0) {
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.executed.actions");
         }
-        if (getErasmusCandidacyProcessReportsCount() > 0) {
+        if (getErasmusCandidacyProcessReportsSet().size() > 0) {
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.reports");
         }
-        if (getProcessLogsCount() > 0) {
+        if (getProcessLogsSet().size() > 0) {
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.logs");
         }
         setForSemester(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
     public void resetConfigurations() {
-        if (getChildProcessesCount() > 0) {
+        if (getChildProcessesSet().size() > 0) {
             throw new DomainException("error.mobility.application.process.cant.delete.configurations.it.has.applications");
         }
         for (MobilityQuota quota : getCandidacyPeriod().getMobilityQuotasSet()) {
@@ -854,6 +854,51 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
             }
         }
         return results;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction> getErasmusCandidacyProcessExecutedAction() {
+        return getErasmusCandidacyProcessExecutedActionSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyErasmusCandidacyProcessExecutedAction() {
+        return !getErasmusCandidacyProcessExecutedActionSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport> getErasmusCandidacyProcessReports() {
+        return getErasmusCandidacyProcessReportsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyErasmusCandidacyProcessReports() {
+        return !getErasmusCandidacyProcessReportsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator> getCoordinators() {
+        return getCoordinatorsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCoordinators() {
+        return !getCoordinatorsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasForSemester() {
+        return getForSemester() != null;
+    }
+
+    @Deprecated
+    public boolean hasReceptionEmailSubject() {
+        return getReceptionEmailSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasReceptionEmailBody() {
+        return getReceptionEmailBody() != null;
     }
 
 }

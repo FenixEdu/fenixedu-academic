@@ -26,4 +26,9 @@ public class PhdProgramServiceAgreementTemplate extends PhdProgramServiceAgreeme
         throw new DomainException("error.phd.PhdProgramServiceAgreementTemplate.cannot.modify.phdProgram");
     }
 
+    @Deprecated
+    public boolean hasPhdProgram() {
+        return getPhdProgram() != null;
+    }
+
 }

@@ -28,8 +28,8 @@ public class EvaluationMethod extends EvaluationMethod_Base {
     }
 
     public void delete() {
-        removeExecutionCourse();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -40,4 +40,19 @@ public class EvaluationMethod extends EvaluationMethod_Base {
                         .getExecutionCourse().getDegreePresentationString());
         super.setEvaluationElements(evaluationElements);
     }
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationElements() {
+        return getEvaluationElements() != null;
+    }
+
 }

@@ -36,7 +36,7 @@ import org.jfree.data.CategoryDataset;
 import org.jfree.data.DefaultCategoryDataset;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewCurriculumGraph", module = "academicAdministration")
 public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
@@ -44,7 +44,7 @@ public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
     public ActionForward createAreaXYChart(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        Registration registration = AbstractDomainObject.fromExternalId(request.getParameter("registrationOID"));
+        Registration registration = FenixFramework.getDomainObject(request.getParameter("registrationOID"));
 
         List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registration);
         Collections.sort(studentStatistics, new BeanComparator("executionPeriod"));

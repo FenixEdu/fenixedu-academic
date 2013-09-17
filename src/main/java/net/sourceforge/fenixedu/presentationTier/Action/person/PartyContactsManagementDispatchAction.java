@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +38,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "person", path = "/partyContacts", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -161,7 +162,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         if (getRenderedObject("edit-contact") instanceof PartyContactBean) {
             PartyContactBean contact = getRenderedObject("edit-contact");
             PartyContact newPartyContact = null;
@@ -203,7 +204,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
         getParty(request); // this must be called because subclasses can
         // populate request with other needed objects
         final String contactId = (String) getFromRequest(request, "contactId");
-        return PartyContact.fromExternalId(contactId);
+        return FenixFramework.getDomainObject(contactId);
     }
 
     public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -225,7 +226,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         if (getRenderedObject("edit-contact") instanceof PartyContactBean) {
             PartyContactBean contact = getRenderedObject("edit-contact");
             Boolean wasValidated = false;
@@ -250,7 +251,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareValidate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final String partyContactExtId = request.getParameter("partyContact");
-        PartyContact partyContact = PartyContact.fromExternalId(partyContactExtId);
+        PartyContact partyContact = FenixFramework.getDomainObject(partyContactExtId);
         partyContact.triggerValidationProcessIfNeeded();
         PartyContactBean contactBean = PartyContactBean.createFromDomain(partyContact);
         addWarningMessage(request, contactBean);
@@ -290,14 +291,14 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
         if (validationBean != null) {
             partyContactValidation = validationBean.getValidation();
         } else {
-            partyContactValidation = PartyContactValidation.fromExternalId(extId);
+            partyContactValidation = FenixFramework.getDomainObject(extId);
             partyContactValidation.processValidation(code);
         }
         return forwardToInputValidationCode(mapping, actionForm, request, response, partyContactValidation.getPartyContact());
     }
 
     public ActionForward deletePartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             final PartyContact partyContact = getPartyContact(request);
             deleteContact(partyContact);
@@ -323,7 +324,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward requestValidationToken(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final String partyContactExtId = request.getParameter("partyContactValidation");
-        final PartyContactValidation partyContactValidation = PartyContactValidation.fromExternalId(partyContactExtId);
+        final PartyContactValidation partyContactValidation = FenixFramework.getDomainObject(partyContactExtId);
         final PartyContact partyContact = partyContactValidation.getPartyContact();
         PartyContactBean contactBean = PartyContactBean.createFromDomain(partyContact);
         partyContact.triggerValidationProcess();
@@ -341,7 +342,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
         Person person = AccessControl.getPerson();
 
-        List<PersonInformationLog> logsList = person.getPersonInformationLogs();
+        Collection<PersonInformationLog> logsList = person.getPersonInformationLogs();
         request.setAttribute("person", person);
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");

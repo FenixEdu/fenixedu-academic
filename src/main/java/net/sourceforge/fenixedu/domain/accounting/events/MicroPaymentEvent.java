@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -19,7 +20,7 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class MicroPaymentEvent extends MicroPaymentEvent_Base {
@@ -29,7 +30,7 @@ public class MicroPaymentEvent extends MicroPaymentEvent_Base {
         @Override
         public int compare(final MicroPaymentEvent e1, final MicroPaymentEvent e2) {
             final int i = e1.getWhenOccured().compareTo(e1.getWhenOccured());
-            return i == 0 ? COMPARATOR_BY_ID.compare(e1, e2) : i;
+            return i == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(e1, e2) : i;
         }
 
     };
@@ -90,7 +91,7 @@ public class MicroPaymentEvent extends MicroPaymentEvent_Base {
                 .findPostingRuleBy(getEventType(), getWhenOccured(), null);
     }
 
-    @Service
+    @Atomic
     public static MicroPaymentEvent create(final User responsible, final Person person, final Unit destinationUnit,
             final Money amount, final String paymentTicket) {
         final MicroPaymentEvent event = new MicroPaymentEvent(person, destinationUnit, amount, paymentTicket);
@@ -103,6 +104,21 @@ public class MicroPaymentEvent extends MicroPaymentEvent_Base {
     @Override
     public Unit getOwnerUnit() {
         return getDestinationUnit();
+    }
+
+    @Deprecated
+    public boolean hasAmount() {
+        return getAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasDestinationUnit() {
+        return getDestinationUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasAffiliationEvent() {
+        return getAffiliationEvent() != null;
     }
 
 }

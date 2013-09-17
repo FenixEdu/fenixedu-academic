@@ -14,11 +14,11 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreatePastDiplomaRequest {
 
-    @Service
+    @Atomic
     public static PastDiplomaRequest create(DocumentRequestCreator bean) {
         if (bean.getRegistration().getStartDate().isAfter(bean.getPastRequestDate())) {
             throw new DomainException("DiplomaRequest.cannot.request.before.registration.start");

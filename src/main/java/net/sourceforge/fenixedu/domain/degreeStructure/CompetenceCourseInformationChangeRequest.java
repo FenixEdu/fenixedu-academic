@@ -12,8 +12,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUni
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class CompetenceCourseInformationChangeRequest extends CompetenceCourseInformationChangeRequest_Base {
 
@@ -140,12 +141,12 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
     }
 
     public void delete() {
-        removeCompetenceCourse();
-        removeAnalizedBy();
-        removeRequester();
-        removeExecutionPeriod();
-        removeRootDomainObject();
-        removeCompetenceCourseGroupUnit();
+        setCompetenceCourse(null);
+        setAnalizedBy(null);
+        setRequester(null);
+        setExecutionPeriod(null);
+        setRootDomainObject(null);
+        setCompetenceCourseGroupUnit(null);
         super.deleteDomainObject();
     }
 
@@ -153,9 +154,9 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         APPROVED, REJECTED, ON_HOLD;
     }
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public void reject(Person analisedBy) {
+        check(this, RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         if (getApproved() != null) {
             throw new DomainException("error.request.already.processed");
         }
@@ -163,9 +164,9 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         setAnalizedBy(analisedBy);
     }
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public void approve(Person analisedBy) {
+        check(this, RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         if (getApproved() != null) {
             throw new DomainException("error.request.already.processed");
         }
@@ -186,7 +187,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
             information.setBibliographicReferences(getBibliographicReferences());
 
-            for (; !information.getCompetenceCourseLoads().isEmpty(); information.getCompetenceCourseLoads().get(0).delete()) {
+            for (; !information.getCompetenceCourseLoads().isEmpty(); information.getCompetenceCourseLoads().iterator().next().delete()) {
                 ;
             }
             createLoads(information);
@@ -236,4 +237,189 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         return getCompetenceCourse().getDepartmentUnit(getExecutionPeriod()).getDepartment()
                 .isUserMemberOfCompetenceCourseMembersGroup(person);
     }
+    @Deprecated
+    public boolean hasSecondTheoreticalHours() {
+        return getSecondTheoreticalHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequester() {
+        return getRequester() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeminaryHours() {
+        return getSeminaryHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondTrainingPeriodHours() {
+        return getSecondTrainingPeriodHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasApproved() {
+        return getApproved() != null;
+    }
+
+    @Deprecated
+    public boolean hasBibliographicReferences() {
+        return getBibliographicReferences() != null;
+    }
+
+    @Deprecated
+    public boolean hasObjectivesEn() {
+        return getObjectivesEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondProblemsHours() {
+        return getSecondProblemsHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasEctsCredits() {
+        return getEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondFieldWorkHours() {
+        return getSecondFieldWorkHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondEctsCredits() {
+        return getSecondEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondSeminaryHours() {
+        return getSecondSeminaryHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsHours() {
+        return getProblemsHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegime() {
+        return getRegime() != null;
+    }
+
+    @Deprecated
+    public boolean hasObjectives() {
+        return getObjectives() != null;
+    }
+
+    @Deprecated
+    public boolean hasAutonomousWorkHours() {
+        return getAutonomousWorkHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasFieldWorkHours() {
+        return getFieldWorkHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondLaboratorialHours() {
+        return getSecondLaboratorialHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasCompetenceCourse() {
+        return getCompetenceCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasProgram() {
+        return getProgram() != null;
+    }
+
+    @Deprecated
+    public boolean hasCompetenceCourseGroupUnit() {
+        return getCompetenceCourseGroupUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationMethodEn() {
+        return getEvaluationMethodEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondAutonomousWorkHours() {
+        return getSecondAutonomousWorkHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasCompetenceCourseLevel() {
+        return getCompetenceCourseLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasLaboratorialHours() {
+        return getLaboratorialHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnalizedBy() {
+        return getAnalizedBy() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasJustification() {
+        return getJustification() != null;
+    }
+
+    @Deprecated
+    public boolean hasTrainingPeriodHours() {
+        return getTrainingPeriodHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondTutorialOrientationHours() {
+        return getSecondTutorialOrientationHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasNameEn() {
+        return getNameEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationMethod() {
+        return getEvaluationMethod() != null;
+    }
+
+    @Deprecated
+    public boolean hasTheoreticalHours() {
+        return getTheoreticalHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasProgramEn() {
+        return getProgramEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasTutorialOrientationHours() {
+        return getTutorialOrientationHours() != null;
+    }
+
 }

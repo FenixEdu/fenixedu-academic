@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.b
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ImportBibtexPublication extends ResultPublicationService {
 
@@ -194,13 +194,13 @@ public class ImportBibtexPublication extends ResultPublicationService {
 
     private static final ImportBibtexPublication serviceInstance = new ImportBibtexPublication();
 
-    @Service
+    @Atomic
     public static ResearchResultPublication runImportBibtexPublication(Person personImporting, BookBean bean,
             BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         return serviceInstance.run(personImporting, bean, bibtexPublicationBean);
     }
 
-    @Service
+    @Atomic
     public static ResearchResultPublication runImportBibtexPublication(Person person,
             ResultPublicationBean currentPublicationBean, BibtexPublicationBean currentBibtexPublication)
             throws FenixServiceException {

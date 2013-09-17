@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ex
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateExternalUnitByNameAndCountry {
 
-    @Service
+    @Atomic
     public static Unit run(String name, Country country) {
         return Unit.createNewNoOfficialExternalInstitution(name, country);
     }

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -179,7 +180,7 @@ public class InstallmentBean implements Serializable {
         return result;
     }
 
-    public void setExecutionSemesters(List<ExecutionSemester> executionSemesters) {
+    public void setExecutionSemesters(Collection<ExecutionSemester> executionSemesters) {
         final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
         for (final ExecutionSemester each : executionSemesters) {
             result.add(each);

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -93,7 +93,7 @@ public class GratuityPaymentsReminderAction extends FenixDispatchAction {
     }
 
     private PaymentCode getActivePaymentCode(GratuityEvent gratuityEvent) {
-        List<AccountingEventPaymentCode> paymentCodesSet = gratuityEvent.getAllPaymentCodes();
+        Collection<AccountingEventPaymentCode> paymentCodesSet = gratuityEvent.getAllPaymentCodes();
 
         for (AccountingEventPaymentCode accountingEventPaymentCode : paymentCodesSet) {
             if (accountingEventPaymentCode.isNew()) {

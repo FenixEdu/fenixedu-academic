@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério 01/07/2003
@@ -19,7 +19,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadCurricularCoursesByDegree {
 
-    @Service
+    @Atomic
     public static List run(String executionYearString, String degreeName) throws FenixServiceException {
         ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
 
@@ -42,9 +42,9 @@ public class ReadCurricularCoursesByDegree {
 
     }
 
-    @Service
+    @Atomic
     public static List run(String degreeCurricularPlanID) {
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
         for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
