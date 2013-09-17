@@ -55,7 +55,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.spreadsheet.Formula;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
@@ -120,8 +120,8 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         request.setAttribute("fromExecutionYearID", fromExecutionYearID);
         request.setAttribute("untilExecutionYearID", untilExecutionYearID);
 
-        ExecutionYear fromExecutionYear = AbstractDomainObject.fromExternalId(fromExecutionYearID);
-        ExecutionYear untilExecutionYear = AbstractDomainObject.fromExternalId(untilExecutionYearID);
+        ExecutionYear fromExecutionYear = FenixFramework.getDomainObject(fromExecutionYearID);
+        ExecutionYear untilExecutionYear = FenixFramework.getDomainObject(untilExecutionYearID);
 
         ExecutionSemester fromExecutionPeriod = fromExecutionYear.getExecutionSemesterFor(1);
         ExecutionSemester untilExecutionPeriod = untilExecutionYear.getExecutionSemesterFor(2);
@@ -143,7 +143,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             }
             request.setAttribute("departmentID", null);
         } else {
-            Department department = AbstractDomainObject.fromExternalId(departmentID);
+            Department department = FenixFramework.getDomainObject(departmentID);
             Unit departmentUnit = department.getDepartmentUnit();
             teacherCreditsReportList =
                     ReadTeachersCreditsResumeByPeriodAndUnit.run(departmentUnit, fromExecutionPeriod, untilExecutionPeriod);
@@ -262,8 +262,8 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         final String untilExecutionYearID = request.getParameter("untilExecutionYearID");
         final String departmentID = request.getParameter("departmentID");
 
-        final ExecutionYear beginExecutionYear = AbstractDomainObject.fromExternalId(fromExecutionYearID);
-        final ExecutionYear endExecutionYear = AbstractDomainObject.fromExternalId(untilExecutionYearID);
+        final ExecutionYear beginExecutionYear = FenixFramework.getDomainObject(fromExecutionYearID);
+        final ExecutionYear endExecutionYear = FenixFramework.getDomainObject(untilExecutionYearID);
         final ExecutionSemester beginExecutionSemester;
         final ExecutionSemester endExecutionSemester = endExecutionYear.getExecutionSemesterFor(2);
         if (beginExecutionYear.getPreviousExecutionYear().equals(
@@ -277,7 +277,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         if (departmentID == null) {
             departments.addAll(rootDomainObject.getDepartments());
         } else {
-            departments.add(AbstractDomainObject.<Department> fromExternalId(departmentID));
+            departments.add(FenixFramework.<Department> getDomainObject(departmentID));
         }
 
         SheetData<Department> data = new SheetData<Department>(departments) {
@@ -352,8 +352,8 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         request.setAttribute("fromExecutionYearID", fromExecutionYearID);
         request.setAttribute("untilExecutionYearID", untilExecutionYearID);
 
-        ExecutionYear fromExecutionYear = AbstractDomainObject.fromExternalId(fromExecutionYearID);
-        ExecutionYear untilExecutionYear = AbstractDomainObject.fromExternalId(untilExecutionYearID);
+        ExecutionYear fromExecutionYear = FenixFramework.getDomainObject(fromExecutionYearID);
+        ExecutionYear untilExecutionYear = FenixFramework.getDomainObject(untilExecutionYearID);
 
         ExecutionSemester fromExecutionPeriod = null;
         if (fromExecutionYear.getPreviousExecutionYear().equals(
@@ -384,7 +384,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             }
             request.setAttribute("departmentID", null);
         } else {
-            Department department = AbstractDomainObject.fromExternalId(departmentID);
+            Department department = FenixFramework.getDomainObject(departmentID);
             Unit departmentUnit = department.getDepartmentUnit();
             departmentPeriodTotalCredits =
                     ReadDepartmentTotalCreditsByPeriod.run(departmentUnit, fromExecutionPeriod, untilExecutionPeriod);
@@ -450,7 +450,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             for (Unit unit : creditsByUnit.keySet()) {
                 List<TeacherCreditsReportDTO> teachersCreditReportDTOs = creditsByUnit.get(unit);
                 if (executionSemesters == null) {
-                    executionSemesters = teachersCreditReportDTOs.get(0).getCreditsByExecutionPeriod().keySet();
+                    executionSemesters = teachersCreditReportDTOs.iterator().next().getCreditsByExecutionPeriod().keySet();
                 }
                 spreadsheet.addRow();
                 final Row row = spreadsheet.addRow();

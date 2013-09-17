@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -14,7 +13,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -48,16 +47,16 @@ public class CreateGratuitySituationsForCurrentExecutionYear {
 
             this.firstYear = executionDegree.isFirstYear();
 
-            List<StudentCurricularPlan> studentCurricularPlans =
+            Collection<StudentCurricularPlan> studentCurricularPlans =
                     executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans();
             for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 
                 GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 
-                if (year.equals("2002/2003") && gratuitySituation.getTransactionListCount() == 0) {
-                    gratuitySituation.removeEmployee();
-                    gratuitySituation.removeGratuityValues();
-                    gratuitySituation.removeStudentCurricularPlan();
+                if (year.equals("2002/2003") && gratuitySituation.getTransactionListSet().size() == 0) {
+                    gratuitySituation.setEmployee(null);
+                    gratuitySituation.setGratuityValues(null);
+                    gratuitySituation.setStudentCurricularPlan(null);
                     this.gratuitySituationsToDelete.add(gratuitySituation);
                     continue;
                 }
@@ -126,9 +125,9 @@ public class CreateGratuitySituationsForCurrentExecutionYear {
             }
         }
 
-        gratuitySituation.removeEmployee();
-        gratuitySituation.removeGratuityValues();
-        gratuitySituation.removeStudentCurricularPlan();
+        gratuitySituation.setEmployee(null);
+        gratuitySituation.setGratuityValues(null);
+        gratuitySituation.setStudentCurricularPlan(null);
         this.gratuitySituationsToDelete.add(gratuitySituation);
     }
 
@@ -149,9 +148,10 @@ public class CreateGratuitySituationsForCurrentExecutionYear {
 
     // Service Invokers migrated from Berserk
 
-    private static final CreateGratuitySituationsForCurrentExecutionYear serviceInstance = new CreateGratuitySituationsForCurrentExecutionYear();
+    private static final CreateGratuitySituationsForCurrentExecutionYear serviceInstance =
+            new CreateGratuitySituationsForCurrentExecutionYear();
 
-    @Service
+    @Atomic
     public static void runCreateGratuitySituationsForCurrentExecutionYear(String year) {
         serviceInstance.run(year);
     }

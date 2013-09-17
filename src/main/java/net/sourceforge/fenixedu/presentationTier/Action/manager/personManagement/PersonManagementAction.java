@@ -44,6 +44,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -67,7 +68,7 @@ public class PersonManagementAction extends FenixDispatchAction {
     public ActionForward viewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         String externalId = request.getParameter("personID");
-        Person person = (Person) rootDomainObject.fromExternalId(externalId);
+        Person person = (Person) FenixFramework.getDomainObject(externalId);
         request.setAttribute("person", person);
         return mapping.findForward("viewPerson");
     }

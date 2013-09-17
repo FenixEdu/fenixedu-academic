@@ -4,10 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.Email;
@@ -16,7 +14,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
 
 public class Message extends Message_Base {
 
@@ -164,10 +162,10 @@ public class Message extends Message_Base {
             email.delete();
         }
 
-        removeSender();
-        removePerson();
-        removeRootDomainObjectFromPendingRelation();
-        removeRootDomainObject();
+        setSender(null);
+        setPerson(null);
+        setRootDomainObjectFromPendingRelation(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -209,7 +207,7 @@ public class Message extends Message_Base {
     public String getRecipientsGroupMembersInText() {
         StringBuilder builder = new StringBuilder();
 
-        List<Recipient> recipients = getRecipients();
+        Collection<Recipient> recipients = getRecipients();
         for (Recipient recipient : recipients) {
             builder.append(recipient.getMembersEmailInText());
         }
@@ -227,19 +225,11 @@ public class Message extends Message_Base {
             this.recipients = recipients;
         }
 
+        @Atomic
         @Override
         public void run() {
-            try {
-                Transaction.withTransaction(new TransactionalCommand() {
-                    @Override
-                    public void doIt() {
-                        for (final Recipient recipient : recipients) {
-                            recipient.addDestinationEmailAddresses(emailAddresses);
-                        }
-                    }
-                });
-            } finally {
-                Transaction.forceFinish();
+            for (final Recipient recipient : recipients) {
+                recipient.addDestinationEmailAddresses(emailAddresses);
             }
         }
 
@@ -275,7 +265,7 @@ public class Message extends Message_Base {
     }
 
     protected String[] getReplyToAddresses(final Person person) {
-        final String[] replyToAddresses = new String[getReplyTosCount()];
+        final String[] replyToAddresses = new String[getReplyTosSet().size()];
         int i = 0;
         for (final ReplyTo replyTo : getReplyTosSet()) {
             replyToAddresses[i++] = replyTo.getReplyToAddress(person);
@@ -303,7 +293,7 @@ public class Message extends Message_Base {
                             Collections.EMPTY_SET, getSubject(), getBody(), getHtmlBody());
             email.setMessage(this);
         }
-        removeRootDomainObjectFromPendingRelation();
+        setRootDomainObjectFromPendingRelation(null);
         setSent(new DateTime());
     }
 
@@ -330,9 +320,9 @@ public class Message extends Message_Base {
     // email.getFailedAddresses().isEmpty()) {
     // if (email.getMessageTransportResult().size() == 1
     // &&
-    // email.getMessageTransportResult().get(0).getDescription().trim().isEmpty()
+    // email.getMessageTransportResult().iterator().next().getDescription().trim().isEmpty()
     // &&
-    // "No recipient addresses".equals(email.getMessageTransportResult().get(0).getDescription()))
+    // "No recipient addresses".equals(email.getMessageTransportResult().iterator().next().getDescription()))
     // {
     // continue;
     // } else {
@@ -389,6 +379,116 @@ public class Message extends Message_Base {
             }
         }
         return count;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Recipient> getTos() {
+        return getTosSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTos() {
+        return !getTosSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.Email> getEmails() {
+        return getEmailsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEmails() {
+        return !getEmailsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Recipient> getCcs() {
+        return getCcsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCcs() {
+        return !getCcsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.MessageId> getMessageIds() {
+        return getMessageIdsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMessageIds() {
+        return !getMessageIdsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.ReplyTo> getReplyTos() {
+        return getReplyTosSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReplyTos() {
+        return !getReplyTosSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Recipient> getRecipients() {
+        return getRecipientsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRecipients() {
+        return !getRecipientsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSent() {
+        return getSent() != null;
+    }
+
+    @Deprecated
+    public boolean hasSender() {
+        return getSender() != null;
+    }
+
+    @Deprecated
+    public boolean hasBody() {
+        return getBody() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectFromPendingRelation() {
+        return getRootDomainObjectFromPendingRelation() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubject() {
+        return getSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasHtmlBody() {
+        return getHtmlBody() != null;
+    }
+
+    @Deprecated
+    public boolean hasBccs() {
+        return getBccs() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

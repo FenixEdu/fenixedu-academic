@@ -46,4 +46,14 @@ public class ECTSVisibleCondition extends ECTSVisibleCondition_Base {
         return conditionValues;
     }
 
+    @Deprecated
+    public boolean hasWorkLoadExcessive() {
+        return getWorkLoadExcessive() != null;
+    }
+
+    @Deprecated
+    public boolean hasEctsDifference() {
+        return getEctsDifference() != null;
+    }
+
 }

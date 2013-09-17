@@ -74,4 +74,29 @@ public class District extends District_Base {
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.DistrictSubdivision> getDistrictSubdivisions() {
+        return getDistrictSubdivisionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDistrictSubdivisions() {
+        return !getDistrictSubdivisionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
 }

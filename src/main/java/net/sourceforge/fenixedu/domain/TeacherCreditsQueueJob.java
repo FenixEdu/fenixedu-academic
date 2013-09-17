@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TeacherCreditsQueueJob extends TeacherCreditsQueueJob_Base {
 
@@ -17,9 +17,14 @@ public class TeacherCreditsQueueJob extends TeacherCreditsQueueJob_Base {
         return queueJobResult;
     }
 
-    @Service
+    @Atomic
     public static TeacherCreditsQueueJob createTeacherCreditsQueueJob(ExecutionSemester executionSemester) {
         return new TeacherCreditsQueueJob(executionSemester);
+    }
+
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
     }
 
 }

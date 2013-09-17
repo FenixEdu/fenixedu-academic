@@ -52,4 +52,24 @@ public class FinalMark extends FinalMark_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasSubmitDateYearMonthDay() {
+        return getSubmitDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmitedMark() {
+        return getSubmitedMark() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenSubmitedYearMonthDay() {
+        return getWhenSubmitedYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeListVersion() {
+        return getGradeListVersion() != null;
+    }
+
 }

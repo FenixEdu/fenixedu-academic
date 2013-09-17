@@ -52,7 +52,7 @@ public class DepartmentForum extends DepartmentForum_Base {
         return new GroupUnion(groups);
     }
 
-    private List<Person> getDepartmentManagers() {
+    private Collection<Person> getDepartmentManagers() {
         return getDepartment().getDepartmentUnit().getSite().getManagers();
     }
 

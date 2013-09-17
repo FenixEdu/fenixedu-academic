@@ -25,9 +25,10 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.State;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -37,10 +38,10 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class CreateGuideFromTransactions {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide, List<String> transactionsIDs)
             throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         GuideSituation guideSituation = null;
 
@@ -80,7 +81,7 @@ public class CreateGuideFromTransactions {
         }
 
         // Get the Execution Degree
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoGuide.getInfoExecutionDegree().getExternalId());
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoGuide.getInfoExecutionDegree().getExternalId());
 
         Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
@@ -99,7 +100,7 @@ public class CreateGuideFromTransactions {
 
         while (iterator.hasNext()) {
             String transactionId = iterator.next();
-            transaction = (PaymentTransaction) AbstractDomainObject.fromExternalId(transactionId);
+            transaction = (PaymentTransaction) FenixFramework.getDomainObject(transactionId);
             if (transaction == null) {
                 throw new ExcepcaoInexistente();
             }

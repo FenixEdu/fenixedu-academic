@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MobilityQuota extends MobilityQuota_Base {
 
@@ -61,7 +61,7 @@ public class MobilityQuota extends MobilityQuota_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static MobilityQuota createVacancy(final MobilityApplicationPeriod period, final Degree degree,
             final MobilityProgram mobilityProgram, final UniversityUnit unit, final Integer numberOfOpenings) {
         return new MobilityQuota(period, degree, mobilityProgram, unit, numberOfOpenings);
@@ -86,10 +86,10 @@ public class MobilityQuota extends MobilityQuota_Base {
             throw new DomainException("error.mobility.quota.is.associated.with.applications");
         }
 
-        removeMobilityAgreement();
-        removeDegree();
-        removeApplicationPeriod();
-        removeRootDomainObject();
+        setMobilityAgreement(null);
+        setDegree(null);
+        setApplicationPeriod(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }
@@ -100,6 +100,41 @@ public class MobilityQuota extends MobilityQuota_Base {
 
     public boolean isAssociatedToApplications() {
         return !getStudentApplicationProcesses().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData> getApplications() {
+        return getApplicationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyApplications() {
+        return !getApplicationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasNumberOfOpenings() {
+        return getNumberOfOpenings() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasApplicationPeriod() {
+        return getApplicationPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityAgreement() {
+        return getMobilityAgreement() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
     }
 
 }

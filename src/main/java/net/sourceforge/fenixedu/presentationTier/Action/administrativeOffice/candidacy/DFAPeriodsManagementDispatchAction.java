@@ -20,7 +20,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/dfaPeriodsManagement", attribute = "chooseExecutionYearForm",
         formBean = "chooseExecutionYearForm", scope = "request", parameter = "method")
@@ -50,7 +50,7 @@ public class DFAPeriodsManagementDispatchAction extends FenixDispatchAction {
 
     private ExecutionYear getExecutionYear(final HttpServletRequest request, final DynaActionForm dynaActionForm) {
         if (!StringUtils.isEmpty(dynaActionForm.getString("executionYear"))) {
-            return AbstractDomainObject.fromExternalId(dynaActionForm.getString("executionYear"));
+            return FenixFramework.getDomainObject(dynaActionForm.getString("executionYear"));
         } else if (request.getParameter("executionYearId") != null) {
             return getDomainObject(request, "executionYearId");
         } else {

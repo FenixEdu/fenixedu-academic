@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -28,18 +28,18 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ComputeCurricularCourseStatistics {
 
-    @Service
+    @Atomic
     public static String run(String degreeCurricularPlanID, String executionYearID, RegistrationAgreement agreement) {
 
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
-        List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+        ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
+        Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
         Formatter result = new Formatter();
 
         for (CurricularCourse curricularCourse : curricularCourses) {
 
-            List<ExecutionSemester> executionSemesters = executionYear.getExecutionPeriods();
+            Collection<ExecutionSemester> executionSemesters = executionYear.getExecutionPeriods();
             for (ExecutionSemester executionSemester : executionSemesters) {
 
                 // Get Scopes
@@ -79,7 +79,7 @@ public class ComputeCurricularCourseStatistics {
                 // // Houston, we have a problem...!!
                 // continue;
                 // }
-                // ExecutionCourse executionCourse = executionCourses.get(0);
+                // ExecutionCourse executionCourse = executionCourses.iterator().next();
 
                 if (executionCourses.size() == 1) {
                     // Organize enrolments by DegreeCurricularPlans

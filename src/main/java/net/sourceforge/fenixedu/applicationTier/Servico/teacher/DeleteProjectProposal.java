@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,8 +20,8 @@ import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -33,9 +34,9 @@ public class DeleteProjectProposal {
             String withdrawalPersonUsername) throws FenixServiceException {
 
         Person withdrawalPerson = Teacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
-        ExecutionCourse startExecutionCourse = AbstractDomainObject.fromExternalId(objectCode);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
+        ExecutionCourse startExecutionCourse = FenixFramework.getDomainObject(objectCode);
 
         if (groupProperties == null) {
             throw new InvalidArgumentsServiceException("error.noGroupProperties");
@@ -53,7 +54,7 @@ public class DeleteProjectProposal {
         // List teachers to advise
         List group = new ArrayList();
 
-        List groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
+        Collection groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
         Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
 
         while (iterGroupPropertiesExecutionCourseList.hasNext()) {
@@ -62,7 +63,7 @@ public class DeleteProjectProposal {
             if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
                     || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
 
-                List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
+                Collection professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
 
                 Iterator iterProfessorship = professorships.iterator();
                 while (iterProfessorship.hasNext()) {
@@ -76,7 +77,7 @@ public class DeleteProjectProposal {
             }
         }
 
-        List professorshipsAux = executionCourse.getProfessorships();
+        Collection professorshipsAux = executionCourse.getProfessorships();
 
         Iterator iterProfessorshipsAux = professorshipsAux.iterator();
         while (iterProfessorshipsAux.hasNext()) {
@@ -116,7 +117,7 @@ public class DeleteProjectProposal {
 
     private static final DeleteProjectProposal serviceInstance = new DeleteProjectProposal();
 
-    @Service
+    @Atomic
     public static Boolean runDeleteProjectProposal(String objectCode, String groupPropertiesCode, String executionCourseCode,
             String withdrawalPersonUsername) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(objectCode);

@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetailedTeacherProfessorshipsAbstractService {
 
     protected List run(String teacherID, String executionYearID) throws FenixServiceException {
 
-        final Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
+        final Teacher teacher = FenixFramework.getDomainObject(teacherID);
         if (teacher == null) {
             throw new DomainException("error.noTeacher");
         }
@@ -28,7 +28,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetail
         if (executionYearID == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         } else {
-            executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+            executionYear = FenixFramework.getDomainObject(executionYearID);
         }
 
         final List<Professorship> responsibleFors = new ArrayList();
@@ -45,7 +45,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetail
     private static final ReadDetailedTeacherProfessorshipsByExecutionYear serviceInstance =
             new ReadDetailedTeacherProfessorshipsByExecutionYear();
 
-    @Service
+    @Atomic
     public static List runReadDetailedTeacherProfessorshipsByExecutionYear(String teacherID, String executionYearID)
             throws FenixServiceException {
         return serviceInstance.run(teacherID, executionYearID);

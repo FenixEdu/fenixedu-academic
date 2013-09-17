@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.SendAcademicServiceRequestToExternalEntity;
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.RegistrationAcademicServiceRequestCreator;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -44,10 +45,10 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(path = "/academicServiceRequestsManagement", module = "academicAdministration",
@@ -192,7 +193,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
         return result;
     }
 
-    @Service
+    @Atomic
     public ActionForward revertRequestToProcessingState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
@@ -433,7 +434,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
         return mapping.findForward("viewRegistrationDetails");
     }
 
-    @Service
+    @Atomic
     public ActionForward generateRegistryCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
@@ -507,7 +508,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
             final ComparatorChain chain = new ComparatorChain();
             chain.addComparator(orderAsc ? new BeanComparator(orderGetter) : new ReverseComparator(
                     new BeanComparator(orderGetter)));
-            chain.addComparator(AcademicServiceRequest.COMPARATOR_BY_ID);
+            chain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
             return chain;
         }
 

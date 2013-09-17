@@ -13,15 +13,40 @@ public class CerimonyInquiryPerson extends CerimonyInquiryPerson_Base {
 
     public void delete() {
         if (!hasCerimonyInquiryAnswer()) {
-            removeCerimonyInquiry();
-            removePerson();
-            removeRootDomainObject();
+            setCerimonyInquiry(null);
+            setPerson(null);
+            setRootDomainObject(null);
             deleteDomainObject();
         }
     }
 
     public boolean isPendingResponse() {
         return !hasCerimonyInquiryAnswer() && getCerimonyInquiry().isOpen();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasComment() {
+        return getComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasCerimonyInquiry() {
+        return getCerimonyInquiry() != null;
+    }
+
+    @Deprecated
+    public boolean hasCerimonyInquiryAnswer() {
+        return getCerimonyInquiryAnswer() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

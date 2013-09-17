@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import dml.runtime.RelationAdapter;
 
 public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
 
     static {
-        StudentCurricularPlan.EnrolmentOutOfPeriodEventStudentCurricularPlan
-                .addListener(new RelationAdapter<StudentCurricularPlan, EnrolmentOutOfPeriodEvent>() {
+        StudentCurricularPlan.getRelationEnrolmentOutOfPeriodEventStudentCurricularPlan().addListener(
+                new RelationAdapter<StudentCurricularPlan, EnrolmentOutOfPeriodEvent>() {
                     @Override
                     public void beforeAdd(StudentCurricularPlan studentCurricularPlan,
                             EnrolmentOutOfPeriodEvent enrolmentOutOfPeriodEvent) {
@@ -138,6 +138,21 @@ public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
     @Override
     public boolean isEnrolmentOutOfPeriod() {
         return true;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfDelayDays() {
+        return getNumberOfDelayDays() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCurricularPlan() {
+        return getStudentCurricularPlan() != null;
     }
 
 }

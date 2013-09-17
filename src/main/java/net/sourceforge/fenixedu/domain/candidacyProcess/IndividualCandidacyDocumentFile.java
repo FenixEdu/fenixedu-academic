@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -65,10 +65,30 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         return filePath;
     }
 
-    @Service
+    @Atomic
     public static IndividualCandidacyDocumentFile createCandidacyDocument(byte[] contents, String filename,
             IndividualCandidacyDocumentFileType type, String processName, String documentIdNumber) {
         return new IndividualCandidacyDocumentFile(type, contents, filename, obtainVirtualPath(processName, documentIdNumber));
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy> getIndividualCandidacy() {
+        return getIndividualCandidacySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyIndividualCandidacy() {
+        return !getIndividualCandidacySet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasCandidacyFileType() {
+        return getCandidacyFileType() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyFileActive() {
+        return getCandidacyFileActive() != null;
     }
 
 }

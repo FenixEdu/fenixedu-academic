@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.MergeEventEditionPageContainerBean;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipation;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 
 public class MergeEventEditions {
@@ -38,7 +38,7 @@ public class MergeEventEditions {
 
     private static final MergeEventEditions serviceInstance = new MergeEventEditions();
 
-    @Service
+    @Atomic
     public static void runMergeEventEditions(MergeEventEditionPageContainerBean mergeEventEditionPageContainerBean)
             throws NotAuthorizedException {
         try {

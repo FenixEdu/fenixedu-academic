@@ -21,7 +21,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewDissertation", module = "externalSupervision")
 @Forwards({ @Forward(name = "chooseDissertation", path = "/externalSupervision/consult/chooseDissertation.jsp"),
@@ -58,7 +58,7 @@ public class ShowThesisStatus extends ScientificCouncilManageThesisDA {
     public ActionForward chooseDissertation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final String personId = request.getParameter("personId");
-        final Person personStudent = AbstractDomainObject.fromExternalId(personId);
+        final Person personStudent = FenixFramework.getDomainObject(personId);
         final Student student = personStudent.getStudent();
 
         Set<Enrolment> dissertations = getDissertations(student);

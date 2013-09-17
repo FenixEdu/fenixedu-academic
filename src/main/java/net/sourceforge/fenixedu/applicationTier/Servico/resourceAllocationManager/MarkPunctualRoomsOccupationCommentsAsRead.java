@@ -1,14 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MarkPunctualRoomsOccupationCommentsAsRead {
-    @Service
+    @Atomic
     public static void run(PunctualRoomsOccupationRequest request, boolean forTeacher) {
         Person person = AccessControl.getPerson();
 
@@ -16,9 +15,9 @@ public class MarkPunctualRoomsOccupationCommentsAsRead {
                 || person.hasAnyProfessorships()) {
             if (request != null) {
                 if (forTeacher) {
-                    request.setTeacherReadComments(request.getCommentsCount());
+                    request.setTeacherReadComments(request.getComments().size());
                 } else {
-                    request.setEmployeeReadComments(request.getCommentsCount());
+                    request.setEmployeeReadComments(request.getComments().size());
                 }
             }
         }

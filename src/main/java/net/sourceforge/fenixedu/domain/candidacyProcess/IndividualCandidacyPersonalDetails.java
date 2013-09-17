@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
@@ -30,7 +31,7 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
                 public int compare(final IndividualCandidacyPersonalDetails o1, final IndividualCandidacyPersonalDetails o2) {
                     final ComparatorChain comparatorChain = new ComparatorChain();
                     comparatorChain.addComparator(COMPARATOR_BY_NAME);
-                    comparatorChain.addComparator(COMPARATOR_BY_ID);
+                    comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
                     return comparatorChain.compare(o1, o2);
                 }
@@ -217,5 +218,15 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
     public abstract Boolean hasAnyRole();
 
     public abstract String getEidentifier();
+
+    @Deprecated
+    public boolean hasCandidacy() {
+        return getCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
 
 }

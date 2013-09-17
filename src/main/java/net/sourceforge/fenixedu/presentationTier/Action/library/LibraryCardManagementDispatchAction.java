@@ -46,7 +46,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -379,7 +379,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
         String libraryCardID = request.getParameter("libraryCardID");
 
-        LibraryCard libraryCard = AbstractDomainObject.fromExternalId(libraryCardID);
+        LibraryCard libraryCard = FenixFramework.getDomainObject(libraryCardID);
 
         List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
         cardList.add(new LibraryCardDTO(libraryCard));
@@ -587,7 +587,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws JRException, IOException {
 
         String libraryCardID = request.getParameter("libraryCardID");
-        LibraryCard libraryCard = AbstractDomainObject.fromExternalId(libraryCardID);
+        LibraryCard libraryCard = FenixFramework.getDomainObject(libraryCardID);
         PartyClassification partyClassification = PartyClassification.valueOf(request.getParameter("classification"));
         // TODO remove this condition, when user names that already exist are no
         // longer bigger than the max length

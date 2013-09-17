@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -16,8 +17,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
 
 public class PersonFunction extends PersonFunction_Base {
 
@@ -27,10 +27,10 @@ public class PersonFunction extends PersonFunction_Base {
 
     static {
         ((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDate"));
-        ((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
         ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("person.name"));
-        ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin, YearMonthDay end,
@@ -212,18 +212,18 @@ public class PersonFunction extends PersonFunction_Base {
     }
 
     @Override
-    @Service
+    @Atomic
     public void delete() {
         if (hasCurricularYear()) {
-            removeCurricularYear();
+            setCurricularYear(null);
         }
         if (hasDelegate()) {
-            removeDelegate();
+            setDelegate(null);
         }
         if (hasSender()) {
-            removeSender();
+            setSender(null);
         }
-        removeExecutionInterval();
+        setExecutionInterval(null);
         super.delete();
     }
 
@@ -243,4 +243,25 @@ public class PersonFunction extends PersonFunction_Base {
         }
         return false;
     }
+
+    @Deprecated
+    public boolean hasSender() {
+        return getSender() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularYear() {
+        return getCurricularYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionInterval() {
+        return getExecutionInterval() != null;
+    }
+
+    @Deprecated
+    public boolean hasDelegate() {
+        return getDelegate() != null;
+    }
+
 }

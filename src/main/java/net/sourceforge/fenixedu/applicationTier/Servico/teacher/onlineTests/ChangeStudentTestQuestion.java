@@ -33,8 +33,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestion {
@@ -43,7 +43,7 @@ public class ChangeStudentTestQuestion {
             String studentId, TestQuestionChangesType changesType, Boolean delete, TestQuestionStudentsChangesType studentsType,
             String path) throws FenixServiceException {
 
-        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         Question oldQuestion = distributedTest.findQuestionByOID(oldQuestionId);
 
         if (oldQuestion == null) {
@@ -54,7 +54,7 @@ public class ChangeStudentTestQuestion {
 
         List<Question> availableQuestions = new ArrayList<Question>();
         if (newMetadataId != null) {
-            metadata = AbstractDomainObject.fromExternalId(newMetadataId);
+            metadata = FenixFramework.getDomainObject(newMetadataId);
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -81,14 +81,14 @@ public class ChangeStudentTestQuestion {
             Collection<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
 
             if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-                Registration registration = AbstractDomainObject.fromExternalId(studentId);
+                Registration registration = FenixFramework.getDomainObject(studentId);
                 if (registration == null) {
                     throw new InvalidArgumentsServiceException();
                 }
                 studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(oldQuestion, registration,
                         currentDistributedTest));
             } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-                Registration registration = AbstractDomainObject.fromExternalId(studentId);
+                Registration registration = FenixFramework.getDomainObject(studentId);
                 if (registration == null) {
                     throw new InvalidArgumentsServiceException();
                 }
@@ -165,7 +165,7 @@ public class ChangeStudentTestQuestion {
 
             if (canDelete) {
                 oldQuestion.delete();
-                if (metadata.getQuestionsCount() <= 1) {
+                if (metadata.getQuestionsSet().size() <= 1) {
                     metadata.delete();
                 }
             } else {
@@ -216,7 +216,7 @@ public class ChangeStudentTestQuestion {
     }
 
     private void removeOldTestQuestion(Question oldQuestion) {
-        List<TestQuestion> testQuestionOldList = oldQuestion.getTestQuestions();
+        Collection<TestQuestion> testQuestionOldList = oldQuestion.getTestQuestions();
         List<Question> availableQuestions = new ArrayList<Question>();
         availableQuestions.addAll(oldQuestion.getMetadata().getVisibleQuestions());
         availableQuestions.remove(oldQuestion);
@@ -252,7 +252,7 @@ public class ChangeStudentTestQuestion {
 
     private static final ChangeStudentTestQuestion serviceInstance = new ChangeStudentTestQuestion();
 
-    @Service
+    @Atomic
     public static Boolean runChangeStudentTestQuestion(String executionCourseId, String distributedTestId, String oldQuestionId,
             String newMetadataId, String studentId, TestQuestionChangesType changesType, Boolean delete,
             TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, NotAuthorizedException {

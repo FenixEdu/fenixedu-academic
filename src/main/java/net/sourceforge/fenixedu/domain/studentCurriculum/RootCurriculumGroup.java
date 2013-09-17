@@ -294,7 +294,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
     @Override
     public void delete() {
-        removeParentStudentCurricularPlan();
+        setParentStudentCurricularPlan(null);
         super.delete();
     }
 
@@ -390,4 +390,9 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
         }
         return result;
     }
+    @Deprecated
+    public boolean hasParentStudentCurricularPlan() {
+        return getParentStudentCurricularPlan() != null;
+    }
+
 }

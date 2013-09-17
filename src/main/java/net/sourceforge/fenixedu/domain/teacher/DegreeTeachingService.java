@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -66,9 +67,9 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
         new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
                 "resources.TeacherCreditsSheetResources", "label.teacher.schedule.delete", getTeacherService().getTeacher()
                         .getPerson().getNickname(), getShift().getPresentationName(), getPercentage().toString()));
-        removeTeacherService();
-        removeShift();
-        removeProfessorship();
+        setTeacherService(null);
+        setShift(null);
+        setProfessorship(null);
         super.delete();
     }
 
@@ -109,7 +110,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 
     // TODO verify with other teachingServices
     private void verifyOverlapLessonPeriods() {
-        List<Lesson> lessons = getShift().getAssociatedLessons();
+        List<Lesson> lessons = new ArrayList<>(getShift().getAssociatedLessons());
         for (Lesson lesson : lessons) {
             DiaSemana lessonWeekDay = lesson.getDiaSemana();
             Date lessonStart = lesson.getBegin();
@@ -184,6 +185,21 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 
     public double calculateCredits() {
         return getEfectiveLoad() * getProfessorship().getExecutionCourse().getUnitCreditValue().doubleValue();
+    }
+
+    @Deprecated
+    public boolean hasPercentage() {
+        return getPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
     }
 
 }

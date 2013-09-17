@@ -37,7 +37,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -123,8 +123,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
         final ExecutionYear executionYear;
         final String executionYearOID = (String) finalDegreeWorkAttributionForm.get("executionYearOID");
         executionYear =
-                executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear() : AbstractDomainObject
-                        .<ExecutionYear> fromExternalId(executionYearOID);
+                executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear() : FenixFramework.<ExecutionYear> getDomainObject(executionYearOID);
         return prepare(mapping, finalDegreeWorkAttributionForm, request, executionYear);
     }
 

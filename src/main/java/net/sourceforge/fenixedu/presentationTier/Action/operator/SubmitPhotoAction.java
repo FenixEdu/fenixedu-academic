@@ -25,11 +25,11 @@ import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(module = "operator", path = "/submitPhoto", scope = "request", parameter = "method")
@@ -113,7 +113,7 @@ public class SubmitPhotoAction extends FenixDispatchAction {
         return preparePhotoUpload(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     private void updatePersonPhoto(final PhotographUploadBean photo) throws FileNotFoundException, IOException {
         if (photo.getUsername() == null) {
             throw new DomainException("error.operatorPhotoUpload.null.username");

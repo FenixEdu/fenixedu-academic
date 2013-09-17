@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -14,6 +13,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
@@ -31,7 +31,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class Event extends Event_Base {
@@ -40,7 +41,7 @@ public abstract class Event extends Event_Base {
         @Override
         public int compare(final Event e1, final Event e2) {
             final int i = e1.getWhenOccured().compareTo(e2.getWhenOccured());
-            return i == 0 ? COMPARATOR_BY_ID.compare(e1, e2) : i;
+            return i == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(e1, e2) : i;
         }
     };
 
@@ -173,32 +174,9 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
-    public List<AccountingTransaction> getAccountingTransactions() {
-        throw new DomainException(
-                "error.accounting.Event.this.method.should.not.be.used.directly.use.getNonAdjustingTransactions.method.instead");
-
-    }
-
-    @Override
     public Set<AccountingTransaction> getAccountingTransactionsSet() {
         throw new DomainException(
                 "error.accounting.Event.this.method.should.not.be.used.directly.use.getNonAdjustingTransactions.method.instead");
-    }
-
-    @Override
-    public int getAccountingTransactionsCount() {
-        throw new DomainException(
-                "error.accounting.Event.this.method.should.not.be.used.directly.use.getNonAdjustingTransactions.method.instead");
-    }
-
-    @Override
-    public Iterator<AccountingTransaction> getAccountingTransactionsIterator() {
-        return getAccountingTransactionsSet().iterator();
-    }
-
-    @Override
-    public boolean hasAccountingTransactions(AccountingTransaction accountingTransactions) {
-        return !getAccountingTransactionsSet().isEmpty();
     }
 
     @Override
@@ -236,8 +214,8 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void setEventStateDate(DateTime eventStateDate) {
+        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         super.setEventStateDate(eventStateDate);
     }
 
@@ -642,8 +620,8 @@ public abstract class Event extends Event_Base {
         return result;
     }
 
-    public List<AccountingEventPaymentCode> getAllPaymentCodes() {
-        return Collections.unmodifiableList(super.getPaymentCodes());
+    public Set<AccountingEventPaymentCode> getAllPaymentCodes() {
+        return Collections.unmodifiableSet(super.getPaymentCodesSet());
     }
 
     @Override
@@ -652,20 +630,9 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
-    public List<AccountingEventPaymentCode> getPaymentCodes() {
-        throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.Event.paymentCodes.cannot.be.accessed.directly");
-    }
-
-    @Override
     public Set<AccountingEventPaymentCode> getPaymentCodesSet() {
         throw new DomainException(
                 "error.net.sourceforge.fenixedu.domain.accounting.Event.paymentCodes.cannot.be.accessed.directly");
-    }
-
-    @Override
-    public Iterator<AccountingEventPaymentCode> getPaymentCodesIterator() {
-        return getPaymentCodesSet().iterator();
     }
 
     @Override
@@ -744,8 +711,8 @@ public abstract class Event extends Event_Base {
         return result;
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public final void forceChangeState(EventState state, DateTime when) {
+        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         changeState(state, when);
     }
 
@@ -813,10 +780,10 @@ public abstract class Event extends Event_Base {
         return result;
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void rollbackCompletly() {
+        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         while (!getNonAdjustingTransactions().isEmpty()) {
-            getNonAdjustingTransactions().get(0).delete();
+            getNonAdjustingTransactions().iterator().next().delete();
         }
 
         changeState(EventState.OPEN, new DateTime());
@@ -826,9 +793,9 @@ public abstract class Event extends Event_Base {
         }
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
-    public List<AccountingEventPaymentCode> getExistingPaymentCodes() {
-        return Collections.unmodifiableList(super.getPaymentCodes());
+    public Set<AccountingEventPaymentCode> getExistingPaymentCodes() {
+        check(this, AcademicPredicates.MANAGE_PAYMENTS);
+        return Collections.unmodifiableSet(super.getPaymentCodesSet());
     }
 
     protected abstract Account getFromAccount();
@@ -845,17 +812,17 @@ public abstract class Event extends Event_Base {
     }
 
     protected void disconnect() {
-        while (!super.getPaymentCodes().isEmpty()) {
-            super.getPaymentCodes().get(0).delete();
+        while (!super.getPaymentCodesSet().isEmpty()) {
+            super.getPaymentCodesSet().iterator().next().delete();
         }
 
         while (!getExemptions().isEmpty()) {
-            getExemptions().get(0).delete(false);
+            getExemptions().iterator().next().delete(false);
         }
 
         super.setParty(null);
         super.setResponsibleForCancel(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -898,18 +865,8 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
-    public List<Exemption> getExemptions() {
-        return Collections.unmodifiableList(super.getExemptions());
-    }
-
-    @Override
     public Set<Exemption> getExemptionsSet() {
         return Collections.unmodifiableSet(super.getExemptionsSet());
-    }
-
-    @Override
-    public Iterator<Exemption> getExemptionsIterator() {
-        return getExemptionsSet().iterator();
     }
 
     @Override
@@ -1101,6 +1058,106 @@ public abstract class Event extends Event_Base {
 
     public Person getPerson() {
         return (Person) getParty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEventTicket> getConsumedTicket() {
+        return getConsumedTicketSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyConsumedTicket() {
+        return !getConsumedTicketSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Discount> getDiscounts() {
+        return getDiscountsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDiscounts() {
+        return !getDiscountsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Exemption> getExemptions() {
+        return getExemptionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExemptions() {
+        return !getExemptionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.AccountingTransaction> getAccountingTransactions() {
+        return getAccountingTransactionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAccountingTransactions() {
+        return !getAccountingTransactionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode> getPaymentCodes() {
+        return getPaymentCodesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPaymentCodes() {
+        return !getPaymentCodesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasResponsibleForCancel() {
+        return getResponsibleForCancel() != null;
+    }
+
+    @Deprecated
+    public boolean hasEventState() {
+        return getEventState() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEventStateDate() {
+        return getEventStateDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreatedBy() {
+        return getCreatedBy() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenSentLetter() {
+        return getWhenSentLetter() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenOccured() {
+        return getWhenOccured() != null;
+    }
+
+    @Deprecated
+    public boolean hasEventType() {
+        return getEventType() != null;
+    }
+
+    @Deprecated
+    public boolean hasCancelJustification() {
+        return getCancelJustification() != null;
     }
 
 }

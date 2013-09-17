@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgum
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class PersonGroup extends DomainBackedGroup<Person> {
 
@@ -84,7 +84,7 @@ public class PersonGroup extends DomainBackedGroup<Person> {
             if (person == null) {
 
                 if (argument instanceof String) {
-                    person = AbstractDomainObject.fromExternalId((String) argument);
+                    person = FenixFramework.getDomainObject((String) argument);
                 } else {
                     throw new WrongTypeOfArgumentException(1, String.class, argument.getClass());
                 }

@@ -20,8 +20,13 @@ public class CandidacyDocumentFile extends CandidacyDocumentFile_Base {
 
     @Override
     public void delete() {
-        removeCandidacyDocument();
+        setCandidacyDocument(null);
         super.delete();
+    }
+
+    @Deprecated
+    public boolean hasCandidacyDocument() {
+        return getCandidacyDocument() != null;
     }
 
 }

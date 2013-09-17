@@ -16,19 +16,20 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.SituationName;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCandidateList {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static List run(String degreeName, Specialization degreeType, SituationName candidateSituation,
             Integer candidateNumber, String executionYearString) {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(degreeName);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(degreeName);
 
         final Set<MasterDegreeCandidate> result;
         if (executionDegree == null && degreeType == null && candidateSituation == null && candidateNumber == null) {

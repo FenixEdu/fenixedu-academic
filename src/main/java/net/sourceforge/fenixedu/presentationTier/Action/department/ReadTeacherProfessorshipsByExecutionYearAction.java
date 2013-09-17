@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.department;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,7 +121,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
 
         if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
 
-            final List<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
+            final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
             request.setAttribute("isDepartmentManager", Boolean.valueOf(departmentList.contains(department)));
 
         } else {

@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class UnEnrollStudentFromShift {
 
@@ -23,7 +23,7 @@ public class UnEnrollStudentFromShift {
             throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 
-        final Shift shift = AbstractDomainObject.fromExternalId(shiftId);
+        final Shift shift = FenixFramework.getDomainObject(shiftId);
         if (shift == null) {
             throw new ShiftNotFoundServiceException();
         }
@@ -44,7 +44,7 @@ public class UnEnrollStudentFromShift {
 
     private static final UnEnrollStudentFromShift serviceInstance = new UnEnrollStudentFromShift();
 
-    @Service
+    @Atomic
     public static void runUnEnrollStudentFromShift(Registration registration, String shiftId)
             throws StudentNotFoundServiceException, ShiftNotFoundServiceException, ShiftEnrolmentNotFoundServiceException,
             FenixServiceException, NotAuthorizedException {

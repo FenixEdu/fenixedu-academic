@@ -24,7 +24,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "teacher", path = "/sendMailToWorkGroupStudents")
 public class SendMailToWorkGroupStudents extends FenixDispatchAction {
@@ -33,8 +33,8 @@ public class SendMailToWorkGroupStudents extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         String executionCourseCode = request.getParameter("objectCode");
         String studentGroupCode = request.getParameter("studentGroupCode");
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
-        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
+        StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
         Group groupToSend = new StudentGroupStudentsGroup(studentGroup);
         Sender sender = ExecutionCourseSender.newInstance(executionCourse);
         final String label =
@@ -48,8 +48,8 @@ public class SendMailToWorkGroupStudents extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         String executionCourseCode = request.getParameter("objectCode");
         String groupingCode = request.getParameter("groupingCode");
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
-        Grouping grouping = AbstractDomainObject.fromExternalId(groupingCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
+        Grouping grouping = FenixFramework.getDomainObject(groupingCode);
         Group groupToSend = new GroupingGroup(grouping);
         Sender sender = ExecutionCourseSender.newInstance(executionCourse);
         final String label =

@@ -9,7 +9,7 @@ import org.apache.struts.action.Action;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public abstract class NavigationAction extends Action {
     public static final String NAVIGATION_SHOW = "show";
@@ -28,7 +28,7 @@ public abstract class NavigationAction extends Action {
     }
 
     protected DomainObject getTargetObject(HttpServletRequest request) throws FenixServiceException, ClassNotFoundException {
-        return AbstractDomainObject.fromExternalId(request.getParameter("oid"));
+        return FenixFramework.getDomainObject(request.getParameter("oid"));
     }
 
     protected String getCompleteTypeName(String typeName) {

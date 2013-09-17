@@ -72,7 +72,7 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
         final boolean hasPenalty = hasPenalty(event, when);
 
         Money result = Money.ZERO;
-        for (int i = 0; i < improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluationsCount(); i++) {
+        for (int i = 0; i < improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluationsSet().size(); i++) {
             result = result.add(hasPenalty ? getFixedAmountPenalty() : getFixedAmount());
         }
 
@@ -96,7 +96,7 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
         final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
                 (ImprovementOfApprovedEnrolmentEvent) event;
         final EnrolmentEvaluation enrolmentEvaluation =
-                improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluations().get(0);
+                improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluations().iterator().next();
         final DegreeCurricularPlan degreeCurricularPlan = enrolmentEvaluation.getDegreeCurricularPlan();
 
         final EnrolmentPeriod enrolmentPeriodInImprovementOfApprovedEnrolment =
@@ -138,6 +138,16 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
                     "error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.amount.being.payed.must.match.amount.to.pay",
                     event.getDescriptionForEntryType(getEntryType()));
         }
+    }
+
+    @Deprecated
+    public boolean hasFixedAmount() {
+        return getFixedAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasFixedAmountPenalty() {
+        return getFixedAmountPenalty() != null;
     }
 
 }

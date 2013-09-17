@@ -12,16 +12,16 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import dml.runtime.RelationAdapter;
 
 public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     static {
-        InternalPhdParticipantPerson.addListener(new RelationAdapter<InternalPhdParticipant, Person>() {
+        getRelationInternalPhdParticipantPerson().addListener(new RelationAdapter<Person, InternalPhdParticipant>() {
 
             @Override
-            public void beforeAdd(InternalPhdParticipant participant, Person person) {
+            public void beforeAdd(Person person, InternalPhdParticipant participant) {
                 if (participant != null && person != null) {
                     for (final PhdParticipant each : participant.getIndividualProcess().getParticipants()) {
                         if (each.isInternal() && ((InternalPhdParticipant) each).isFor(person)) {
@@ -103,7 +103,7 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     @Override
     public String getInstitution() {
-        return UnitAcronym.readUnitAcronymByAcronym("utl").getUnits().get(0).getName();
+        return UnitAcronym.readUnitAcronymByAcronym("utl").getUnits().iterator().next().getName();
     }
 
     @Override
@@ -146,7 +146,7 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     @Override
     protected void disconnect() {
-        removePerson();
+        setPerson(null);
         super.disconnect();
     }
 
@@ -174,6 +174,11 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
             return resourceBundle.getString("label.phd.assistant.guiding");
         }
         return null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class SetParkingCardId {
 
@@ -37,7 +37,7 @@ public class SetParkingCardId {
         return cardGenerationEntry.getPerson().getIstUsername();
     }
 
-    @Service
+    @Atomic
     public static String run(final String password, final String identificationCardCode, final Long parkingCardID)
             throws FenixServiceException {
         if (isAllowed(password)) {

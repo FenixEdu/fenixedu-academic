@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class OptionalCurricularCoursesLocationManagementDA extends FenixDispatch
         final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
         request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 
-        final List<Enrolment> enrolments = studentCurricularPlan.getEnrolments();
+        final List<Enrolment> enrolments = new ArrayList<>(studentCurricularPlan.getEnrolmentsSet());
         Collections.sort(enrolments, Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
         request.setAttribute("enrolments", enrolments);
 
@@ -109,7 +110,7 @@ public class OptionalCurricularCoursesLocationManagementDA extends FenixDispatch
 
     private List<Enrolment> getEnrolments(final StudentCurricularPlan studentCurricularPlan, final String[] enrolmentIds) {
         final List<Enrolment> result = new ArrayList<Enrolment>();
-        final List<Enrolment> enrolments = studentCurricularPlan.getEnrolments();
+        final Collection<Enrolment> enrolments = studentCurricularPlan.getEnrolmentsSet();
         for (final String stringId : enrolmentIds) {
             final Enrolment enrolment = getEnrolment(enrolments, stringId);
             if (enrolment != null) {
@@ -119,7 +120,7 @@ public class OptionalCurricularCoursesLocationManagementDA extends FenixDispatch
         return result;
     }
 
-    private Enrolment getEnrolment(final List<Enrolment> enrolments, final String enrolmentId) {
+    private Enrolment getEnrolment(final Collection<Enrolment> enrolments, final String enrolmentId) {
         for (final Enrolment enrolment : enrolments) {
             if (enrolment.getExternalId().equals(enrolmentId)) {
                 return enrolment;

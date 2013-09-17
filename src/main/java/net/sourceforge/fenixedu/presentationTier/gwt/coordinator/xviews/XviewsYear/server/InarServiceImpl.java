@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.Inar;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.YearViewBean;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.InarService;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -27,7 +27,7 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 
     @Override
     public String getExecutionYear(String eyId) {
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(eyId);
+        ExecutionYear executionYear = FenixFramework.getDomainObject(eyId);
         String shortPre = executionYear.getQualifiedName().substring(2, 4);
         String shortPost = executionYear.getQualifiedName().substring(7, 9);
         String yearAcronym = shortPre + "/" + shortPost;
@@ -37,8 +37,8 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 
     @Override
     public int[] getInar(String eyId, String dcpId) {
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(eyId);
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
+        ExecutionYear executionYear = FenixFramework.getDomainObject(eyId);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(dcpId);
 
         YearViewBean yearviewBean = new YearViewBean(degreeCurricularPlan);
         yearviewBean.setExecutionYear(executionYear);
@@ -65,8 +65,8 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 
     @Override
     public int[][] getInarByCurricularYears(String eyId, String dcpId) {
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(eyId);
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
+        ExecutionYear executionYear = FenixFramework.getDomainObject(eyId);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(dcpId);
 
         YearViewBean yearviewBean = new YearViewBean(degreeCurricularPlan);
         yearviewBean.setExecutionYear(executionYear);
@@ -102,14 +102,14 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 
     @Override
     public int getNumberOfCurricularYears(String dcpId) {
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(dcpId);
         return degreeCurricularPlan.getDegree().getDegreeType().getYears();
     }
 
     @Override
     public double[] getAverageByCurricularYears(String eyId, String dcpId) {
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(eyId);
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
+        ExecutionYear executionYear = FenixFramework.getDomainObject(eyId);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(dcpId);
 
         YearViewBean yearviewBean = new YearViewBean(degreeCurricularPlan);
         yearviewBean.setExecutionYear(executionYear);
@@ -155,8 +155,8 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 
     @Override
     public Map<Integer, Map<Integer, List<String>>> getDCPCourses(String eyId, String dcpId, String heuristic) {
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(eyId);
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
+        ExecutionYear executionYear = FenixFramework.getDomainObject(eyId);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(dcpId);
 
         Map<Integer, Map<Integer, List<String>>> harvester = new HashMap<Integer, Map<Integer, List<String>>>();
 
@@ -242,14 +242,14 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 
     @Override
     public String getCourseName(String ecId) {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(ecId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(ecId);
         return executionCourse.getName();
     }
 
     @Override
     public String[] getCourseInarLabel(String ecId) {
         String[] result = new String[2];
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(ecId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(ecId);
         String shortPre = executionCourse.getExecutionYear().getQualifiedName().substring(2, 4);
         String shortPost = executionCourse.getExecutionYear().getQualifiedName().substring(7, 9);
         result[0] = executionCourse.getSigla();
@@ -259,7 +259,7 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 
     @Override
     public int[] getInarByExecutionCourse(String ecId) {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(ecId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(ecId);
 
         Inar inar = new Inar();
 
@@ -282,10 +282,10 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 
     @Override
     public int[] getGradesDistribution(String ecId) {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(ecId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(ecId);
         int[] results;
         int padding;
-        switch (executionCourse.getActiveEnrollments().get(0).getGradeScale()) {
+        switch (executionCourse.getActiveEnrollments().iterator().next().getGradeScale()) {
         case TYPE20:
             results = new int[11];
             padding = 10;

@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -158,7 +159,7 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
      * @param externalPersons
      * @return
      */
-    private List copyExternalPersons(List externalPersons) {
+    private List copyExternalPersons(Collection externalPersons) {
         return (List) CollectionUtils.collect(externalPersons, new Transformer() {
             @Override
             public Object transform(Object arg0) {
@@ -172,7 +173,7 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
      * @param masterDegreeThesisDataVersion
      * @return
      */
-    private List copyTeachers(List teachers) {
+    private List copyTeachers(Collection teachers) {
         return (List) CollectionUtils.collect(teachers, new Transformer() {
             @Override
             public Object transform(Object arg0) {

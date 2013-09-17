@@ -347,7 +347,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
         GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan =
                 getStudentCurricularPlan().getGratuityEvent(getForExecutionYear(), GratuityEventWithPaymentPlan.class);
 
-        Installment firstInstallment = gratuityEventWithPaymentPlan.getInstallments().get(0);
+        Installment firstInstallment = gratuityEventWithPaymentPlan.getInstallments().iterator().next();
 
         /*
          * iterate the non adjusting accounting transactions until its paid
@@ -957,12 +957,12 @@ public class StudentLine implements IFileLine, java.io.Serializable {
         }
 
         if (enrolmentsExecutionYears.size() == 1
-                && ExecutionYear.readCurrentExecutionYear().equals(enrolmentsExecutionYears.get(0))) {
+                && ExecutionYear.readCurrentExecutionYear().equals(enrolmentsExecutionYears.iterator().next())) {
             return "";
-        } else if (ExecutionYear.readCurrentExecutionYear().equals(enrolmentsExecutionYears.get(0))) {
+        } else if (ExecutionYear.readCurrentExecutionYear().equals(enrolmentsExecutionYears.iterator().next())) {
             lastEnrolledExecutionYear = enrolmentsExecutionYears.get(1);
         } else {
-            lastEnrolledExecutionYear = enrolmentsExecutionYears.get(0);
+            lastEnrolledExecutionYear = enrolmentsExecutionYears.iterator().next();
         }
 
         return ((Integer) lastEnrolledExecutionYear.getBeginCivilYear()).toString();

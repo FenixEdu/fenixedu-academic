@@ -34,4 +34,29 @@ public class PhdConfigurationIndividualProgramProcess extends PhdConfigurationIn
     public Boolean isMigratedProcess() {
         return getMigratedProcess();
     }
+    @Deprecated
+    public boolean hasIsBolonha() {
+        return getIsBolonha() != null;
+    }
+
+    @Deprecated
+    public boolean hasGenerateAlert() {
+        return getGenerateAlert() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdIndividualProgramProcess() {
+        return getPhdIndividualProgramProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasMigratedProcess() {
+        return getMigratedProcess() != null;
+    }
+
 }

@@ -33,7 +33,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -45,7 +45,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
             throws Exception {
 
         InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
-        final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(infoClass.getExternalId());
+        final SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
         request.setAttribute("schoolClass", schoolClass);
 
         // Fill out the form with the name of the class
@@ -154,9 +154,9 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
             return mapping.getInputForward();
 
         }
-        List<Integer> shiftOIDs = new ArrayList<Integer>();
+        List<String> shiftOIDs = new ArrayList<String>();
         for (String selectedShift : selectedShifts) {
-            shiftOIDs.add(new Integer(selectedShift));
+            shiftOIDs.add(selectedShift);
         }
 
         InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);

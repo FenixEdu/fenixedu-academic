@@ -29,4 +29,9 @@ public class CandidacySummaryFile extends CandidacySummaryFile_Base {
         RoleGroup admins = new RoleGroup(RoleType.ADMINISTRATOR);
         return new GroupUnion(student, admins);
     }
+    @Deprecated
+    public boolean hasStudentCandidacy() {
+        return getStudentCandidacy() != null;
+    }
+
 }

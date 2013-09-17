@@ -54,15 +54,15 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
     }
 
     public Boolean getIsRealTeacher() {
-        return tsdTeacherList.get(0) instanceof TSDRealTeacher;
+        return tsdTeacherList.iterator().next() instanceof TSDRealTeacher;
     }
 
     public ProfessionalCategory getCategory() {
-        return tsdTeacherList.get(0).getProfessionalCategory();
+        return tsdTeacherList.iterator().next().getProfessionalCategory();
     }
 
     public String getName() {
-        return tsdTeacherList.get(0).getName();
+        return tsdTeacherList.iterator().next().getName();
     }
 
     public List<ExecutionSemester> getExecutionPeriodList() {
@@ -126,7 +126,7 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
     }
 
     public Double getRequiredHours() {
-        return tsdTeacherList.get(0).getRequiredHours(executionPeriodList);
+        return tsdTeacherList.iterator().next().getRequiredHours(executionPeriodList);
     }
 
     public Double getAvailability() {
@@ -134,11 +134,11 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
     }
 
     public Double getServiceExemptionCredits() {
-        return tsdTeacherList.get(0).getServiceExemptionCredits(executionPeriodList);
+        return tsdTeacherList.iterator().next().getServiceExemptionCredits(executionPeriodList);
     }
 
     public Double getManagementFunctionsCredits() {
-        return tsdTeacherList.get(0).getManagementFunctionsCredits(executionPeriodList);
+        return tsdTeacherList.iterator().next().getManagementFunctionsCredits(executionPeriodList);
     }
 
     public Double getRequiredTeachingHours() {
@@ -162,11 +162,11 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
     }
 
     public List<PersonContractSituation> getServiceExemptions() {
-        return tsdTeacherList.get(0).getServiceExemptions(executionPeriodList);
+        return tsdTeacherList.iterator().next().getServiceExemptions(executionPeriodList);
     }
 
     public List<PersonFunction> getManagementFunctions() {
-        return tsdTeacherList.get(0).getManagementFunctions(executionPeriodList);
+        return tsdTeacherList.iterator().next().getManagementFunctions(executionPeriodList);
     }
 
     public TSDProfessorshipDTOEntry getTSDProfessorshipDTOEntryByTSDCourseDTOEntry(final TSDCourseDTOEntry tsdCourseDTOEntry) {
@@ -182,31 +182,31 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
     }
 
     public String getAcronym() {
-        return tsdTeacherList.get(0).getAcronym();
+        return tsdTeacherList.iterator().next().getAcronym();
     }
 
     public Double getTotalHoursLecturedPlusExtraCredits() {
-        return tsdTeacherList.get(0).getTotalHoursLecturedPlusExtraCredits(executionPeriodList);
+        return tsdTeacherList.iterator().next().getTotalHoursLecturedPlusExtraCredits(executionPeriodList);
     }
 
     public Boolean getUsingExtraCredits() {
-        return tsdTeacherList.get(0).getUsingExtraCredits();
+        return tsdTeacherList.iterator().next().getUsingExtraCredits();
     }
 
     public String getExtraCreditsName() {
-        return tsdTeacherList.get(0).getExtraCreditsName();
+        return tsdTeacherList.iterator().next().getExtraCreditsName();
     }
 
     public Double getExtraCreditsValue() {
-        return tsdTeacherList.get(0).getExtraCreditsValue();
+        return tsdTeacherList.iterator().next().getExtraCreditsValue();
     }
 
     public String getEmailUserId() {
-        return tsdTeacherList.get(0).getEmailUserId();
+        return tsdTeacherList.iterator().next().getEmailUserId();
     }
 
     public String getShortName() {
-        return tsdTeacherList.get(0).getShortName();
+        return tsdTeacherList.iterator().next().getShortName();
     }
 
 }

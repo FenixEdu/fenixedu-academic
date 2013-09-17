@@ -12,4 +12,24 @@ public class DeleteFileLog extends DeleteFileLog_Base {
         this.setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestorIstUsername() {
+        return getRequestorIstUsername() != null;
+    }
+
+    @Deprecated
+    public boolean hasExternalStorageIdentification() {
+        return getExternalStorageIdentification() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestTime() {
+        return getRequestTime() != null;
+    }
+
 }

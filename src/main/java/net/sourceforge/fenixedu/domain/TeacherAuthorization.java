@@ -6,4 +6,24 @@ public class TeacherAuthorization extends TeacherAuthorization_Base {
         super();
     }
 
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCategory() {
+        return getProfessionalCategory() != null;
+    }
+
 }

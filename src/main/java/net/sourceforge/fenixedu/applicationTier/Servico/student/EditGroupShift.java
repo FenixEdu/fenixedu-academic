@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
@@ -37,9 +36,10 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.apache.struts.util.MessageResources;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -50,24 +50,24 @@ public class EditGroupShift {
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(String studentGroupID, String groupingID, String newShiftID, String username)
             throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         ServiceMonitoring.logService(EditGroupShift.class, studentGroupID, groupingID, newShiftID, username);
 
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupingID);
+        final Grouping grouping = FenixFramework.getDomainObject(groupingID);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupID);
+        final StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Shift shift = AbstractDomainObject.fromExternalId(newShiftID);
+        final Shift shift = FenixFramework.getDomainObject(newShiftID);
         if (grouping.getShiftType() == null || !shift.containsType(grouping.getShiftType())) {
             throw new InvalidStudentNumberServiceException();
         }
@@ -99,7 +99,7 @@ public class EditGroupShift {
     private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
             throws FenixServiceException {
         boolean found = false;
-        List studentGroupAttends = studentGroup.getAttends();
+        Collection studentGroupAttends = studentGroup.getAttends();
         Attends attend = null;
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {

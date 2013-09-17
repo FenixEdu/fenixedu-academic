@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -19,7 +20,7 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
         @Override
         public int compare(PhdProgramFocusArea o1, PhdProgramFocusArea o2) {
             int result = o1.getName().compareTo(o2.getName());
-            return (result != 0) ? result : COMPARATOR_BY_ID.compare(o1, o2);
+            return (result != 0) ? result : DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
         }
     };
 
@@ -49,7 +50,7 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
 
     public void delete() {
         getPhdPrograms().clear();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -89,4 +90,60 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
 
                 });
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgram> getPhdPrograms() {
+        return getPhdProgramsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdPrograms() {
+        return !getPhdProgramsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.ExternalPhdProgram> getExternalPhdPrograms() {
+        return getExternalPhdProgramsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExternalPhdPrograms() {
+        return !getExternalPhdProgramsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.ThesisSubject> getThesisSubjects() {
+        return getThesisSubjectsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyThesisSubjects() {
+        return !getThesisSubjectsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getIndividualProgramProcesses() {
+        return getIndividualProgramProcessesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyIndividualProgramProcesses() {
+        return !getIndividualProgramProcessesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
 }

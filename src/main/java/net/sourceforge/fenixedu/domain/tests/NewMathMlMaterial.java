@@ -36,4 +36,9 @@ public class NewMathMlMaterial extends NewMathMlMaterial_Base {
         return new NewMathMlMaterial(this.getTestElement(), this.getInline(), this.getMathMl());
     }
 
+    @Deprecated
+    public boolean hasMathMl() {
+        return getMathMl() != null;
+    }
+
 }

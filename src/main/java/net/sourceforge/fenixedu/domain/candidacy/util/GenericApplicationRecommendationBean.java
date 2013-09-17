@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class GenericApplicationRecommendationBean implements Serializable {
 
@@ -50,7 +50,7 @@ public class GenericApplicationRecommendationBean implements Serializable {
         this.email = email;
     }
 
-    @Service
+    @Atomic
     public void requestRecommendation(final GenericApplication application) {
         new GenericApplicationRecomentation(application, title, name, institution, email);
     }

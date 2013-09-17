@@ -2,9 +2,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.domain.Guide;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -13,10 +14,10 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class DeleteGuideVersionInManager {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String guideID) throws InvalidChangeServiceException {
-        Guide guide = AbstractDomainObject.fromExternalId(guideID);
+        check(RolePredicates.MANAGER_PREDICATE);
+        Guide guide = FenixFramework.getDomainObject(guideID);
 
         if (!guide.canBeDeleted()) {
             throw new InvalidChangeServiceException();

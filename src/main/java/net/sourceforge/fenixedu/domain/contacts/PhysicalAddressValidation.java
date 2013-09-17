@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.contacts;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public class PhysicalAddressValidation extends PhysicalAddressValidation_Base {
@@ -28,8 +28,18 @@ public class PhysicalAddressValidation extends PhysicalAddressValidation_Base {
         setPartyContact(physicalAddress);
     }
 
-    @Service
+    @Atomic
     public void setFile(String filename, String displayName, byte[] content) {
         new PhysicalAddressValidationFile(this, filename, displayName, content);
     }
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasFile() {
+        return getFile() != null;
+    }
+
 }

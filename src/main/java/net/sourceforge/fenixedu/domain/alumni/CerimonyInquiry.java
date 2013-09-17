@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<CerimonyInquiry> {
 
@@ -37,17 +37,17 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
         return new TreeSet<CerimonyInquiryAnswer>(getCerimonyInquiryAnswerSet());
     }
 
-    @Service
+    @Atomic
     public static CerimonyInquiry createNew() {
         return new CerimonyInquiry();
     }
 
-    @Service
+    @Atomic
     public CerimonyInquiryAnswer createNewAnswer() {
         return new CerimonyInquiryAnswer(this);
     }
 
-    @Service
+    @Atomic
     public void addPeople(final Set<String> usernames) {
         for (final String username : usernames) {
             final User user = User.readUserByUserUId(username);
@@ -69,7 +69,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
         return false;
     }
 
-    @Service
+    @Atomic
     public void delete() {
         for (final CerimonyInquiryAnswer cerimonyInquiryAnswer : getCerimonyInquiryAnswerSet()) {
             cerimonyInquiryAnswer.delete();
@@ -77,7 +77,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
         for (final CerimonyInquiryPerson cerimonyInquiryPerson : getCerimonyInquiryPersonSet()) {
             cerimonyInquiryPerson.delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -90,11 +90,61 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
         return Recipient.newInstance("Inquiridos: " + getDescription(), group);
     }
 
-    @Service
+    @Atomic
     public void toggleObservationFlag() {
         final Boolean allowComments = getAllowComments();
         final boolean value = !(allowComments != null && allowComments.booleanValue());
         setAllowComments(Boolean.valueOf(value));
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson> getCerimonyInquiryPerson() {
+        return getCerimonyInquiryPersonSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCerimonyInquiryPerson() {
+        return !getCerimonyInquiryPersonSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryAnswer> getCerimonyInquiryAnswer() {
+        return getCerimonyInquiryAnswerSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCerimonyInquiryAnswer() {
+        return !getCerimonyInquiryAnswerSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasText() {
+        return getText() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowComments() {
+        return getAllowComments() != null;
+    }
+
+    @Deprecated
+    public boolean hasBegin() {
+        return getBegin() != null;
     }
 
 }

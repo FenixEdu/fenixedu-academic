@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
@@ -49,9 +49,9 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
             throw new DomainException(
                     "error.careerWorkshop.deletingConfirmationPeriod: There are confirmations already associated");
         }
-        removeRootDomainObject();
-        removeConfirmations();
-        removeCareerWorkshopApplicationEvent();
+        setRootDomainObject(null);
+        setConfirmations(null);
+        setCareerWorkshopApplicationEvent(null);
         deleteDomainObject();
     }
 
@@ -88,7 +88,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
         return super.getConfirmations();
     }
 
-    @Service
+    @Atomic
     public void generateSpreadsheet() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("ISTCareerWorkshopsConfirmations-");
@@ -135,7 +135,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
         }
     }
 
-    @Service
+    @Atomic
     private List<CareerWorkshopConfirmation> getProcessedList() {
         for (CareerWorkshopApplication application : getCareerWorkshopApplicationEvent().getCareerWorkshopApplications()) {
             if (!(application.getCareerWorkshopConfirmation() == null)) {
@@ -173,6 +173,46 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
 
     public CareerWorkshopConfirmationSpreadsheet getConfirmationsWithoutGenerate() {
         return super.getConfirmations();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmation> getCareerWorkshopConfirmations() {
+        return getCareerWorkshopConfirmationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCareerWorkshopConfirmations() {
+        return !getCareerWorkshopConfirmationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasConfirmations() {
+        return getConfirmations() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastUpdate() {
+        return getLastUpdate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCareerWorkshopApplicationEvent() {
+        return getCareerWorkshopApplicationEvent() != null;
     }
 
 }

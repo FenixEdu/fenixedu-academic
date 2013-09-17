@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AuthenticateExpiredKerberos extends Authenticate {
 
@@ -64,7 +64,7 @@ public class AuthenticateExpiredKerberos extends Authenticate {
 
     private static final AuthenticateExpiredKerberos serviceInstance = new AuthenticateExpiredKerberos();
 
-    @Service
+    @Atomic
     public static IUserView runAuthenticationExpired(String username, String password, String newPassword, String requestURL,
             String remoteHostName) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
         return serviceInstance.run(username, password, newPassword, requestURL, remoteHostName);

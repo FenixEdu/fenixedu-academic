@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.contents;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -38,12 +38,17 @@ public class Portal extends Portal_Base {
 
     @Override
     protected void disconnect() {
-        removePortalRootDomainObject();
+        setPortalRootDomainObject(null);
         super.disconnect();
     }
 
-    @Service
+    @Atomic
     public void addContentJump(Site site, MultiLanguageString jumpName) {
         this.addChild(new ContentJump(jumpName, site));
     }
+    @Deprecated
+    public boolean hasPortalRootDomainObject() {
+        return getPortalRootDomainObject() != null;
+    }
+
 }

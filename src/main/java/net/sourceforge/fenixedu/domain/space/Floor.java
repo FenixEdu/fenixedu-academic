@@ -1,19 +1,20 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.io.Serializable;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class Floor extends Floor_Base {
 
@@ -21,7 +22,7 @@ public class Floor extends Floor_Base {
     static {
         ((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(new ReverseComparator(new BeanComparator(
                 "spaceInformation.level")));
-        ((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public Floor(Space suroundingSpace, Integer level, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
@@ -32,9 +33,9 @@ public class Floor extends Floor_Base {
     }
 
     @Override
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted floor", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkPermissionsToManageSpace);
         super.delete();
     }
 

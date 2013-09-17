@@ -52,7 +52,7 @@ import org.apache.struts.util.RequestUtils;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.image.TextPngCreator;
 
 public class ViewHomepageDA extends SiteVisualizationDA {
@@ -242,7 +242,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward emailPng(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String emailId = request.getParameter("email");
-        EmailAddress email = (EmailAddress) AbstractDomainObject.fromExternalId(emailId);
+        EmailAddress email = (EmailAddress) FenixFramework.getDomainObject(emailId);
         if (email != null && StringUtils.isNotEmpty(email.getValue())) {
             final byte[] pngFile = TextPngCreator.createPng("Arial", 12, "000000", email.getValue());
             response.setContentType("image/png");
@@ -449,7 +449,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
             return (Homepage) container;
         } else {
             String homepageID = request.getParameter("homepageID");
-            return (Homepage) AbstractDomainObject.fromExternalId(homepageID);
+            return (Homepage) FenixFramework.getDomainObject(homepageID);
         }
 
     }

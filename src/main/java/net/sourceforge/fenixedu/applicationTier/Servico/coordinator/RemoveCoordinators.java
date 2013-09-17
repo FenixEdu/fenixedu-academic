@@ -8,16 +8,16 @@ import net.sourceforge.fenixedu.domain.CoordinationTeamLog;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class RemoveCoordinators {
 
-    @Service
+    @Atomic
     public static void run(String executionDegreeID, List<String> coordinatorsToRemoveIDs) {
 
         for (final String coordinatorToRemoveID : coordinatorsToRemoveIDs) {
-            final Coordinator coordinator = AbstractDomainObject.fromExternalId(coordinatorToRemoveID);
+            final Coordinator coordinator = FenixFramework.getDomainObject(coordinatorToRemoveID);
             if (coordinator != null) {
                 final Person person = coordinator.getPerson();
 
@@ -37,7 +37,7 @@ public class RemoveCoordinators {
 
     private static final RemoveCoordinators serviceInstance = new RemoveCoordinators();
 
-    @Service
+    @Atomic
     public static void runRemoveCoordinators(String executionDegreeID, List<String> coordinatorsToRemoveIDs)
             throws NotAuthorizedException {
         ResponsibleDegreeCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);

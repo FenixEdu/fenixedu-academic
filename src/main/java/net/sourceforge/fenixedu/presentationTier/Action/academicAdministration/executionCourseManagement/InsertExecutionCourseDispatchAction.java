@@ -37,7 +37,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "academicAdministration", path = "/insertExecutionCourse", attribute = "insertExecutionCourseForm",
         formBean = "insertExecutionCourseForm", scope = "request", parameter = "method")
@@ -145,8 +145,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
         String executionPeriodId = (String) dynaForm.get("executionPeriodId");
         InfoExecutionPeriod infoExecutionPeriod = null;
         if (!StringUtils.isEmpty(executionPeriodId) && StringUtils.isNumeric(executionPeriodId)) {
-            infoExecutionPeriod =
-                    new InfoExecutionPeriod((ExecutionSemester) AbstractDomainObject.fromExternalId(executionPeriodId));
+            infoExecutionPeriod = new InfoExecutionPeriod((ExecutionSemester) FenixFramework.getDomainObject(executionPeriodId));
         }
 
         infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);

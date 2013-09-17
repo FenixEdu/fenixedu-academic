@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -32,7 +32,7 @@ public class AccountabilityType extends AccountabilityType_Base {
     }
 
     public static AccountabilityType readByType(AccountabilityTypeEnum typeEnum) {
-        List<AccountabilityType> allAccountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
+        Collection<AccountabilityType> allAccountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
         for (AccountabilityType accountabilityType : allAccountabilityTypes) {
             if (accountabilityType.getType().equals(typeEnum)) {
                 return accountabilityType;
@@ -73,8 +73,46 @@ public class AccountabilityType extends AccountabilityType_Base {
         }
 
         MultiLanguageString typeName = getTypeName();
-        typeName = typeName == null ? new MultiLanguageString(Language.getDefaultLanguage(), name) : typeName.with(Language.getDefaultLanguage(), name);
+        typeName =
+                typeName == null ? new MultiLanguageString(Language.getDefaultLanguage(), name) : typeName.with(
+                        Language.getDefaultLanguage(), name);
 
         setTypeName(typeName);
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Accountability> getAccountabilities() {
+        return getAccountabilitiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAccountabilities() {
+        return !getAccountabilitiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule> getConnectionRules() {
+        return getConnectionRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyConnectionRules() {
+        return !getConnectionRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasTypeName() {
+        return getTypeName() != null;
+    }
+
 }

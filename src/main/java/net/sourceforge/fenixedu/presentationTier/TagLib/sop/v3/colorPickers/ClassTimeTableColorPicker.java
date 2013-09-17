@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.ColorPicker;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ClassTimeTableColorPicker extends ColorPicker {
 
@@ -64,7 +64,7 @@ public class ClassTimeTableColorPicker extends ColorPicker {
     }
 
     private SortedSet<ExecutionCourse> sort(final Set<ExecutionCourse> associatedExecutionCoursesSet) {
-        final SortedSet<ExecutionCourse> result = new TreeSet<ExecutionCourse>(AbstractDomainObject.COMPARATOR_BY_ID);
+        final SortedSet<ExecutionCourse> result = new TreeSet<ExecutionCourse>(DomainObjectUtil.COMPARATOR_BY_ID);
         result.addAll(associatedExecutionCoursesSet);
         return result;
     }

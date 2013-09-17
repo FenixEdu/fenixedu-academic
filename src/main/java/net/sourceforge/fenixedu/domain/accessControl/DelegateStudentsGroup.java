@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.O
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DelegateStudentsGroup extends LeafGroup {
 
@@ -121,7 +121,7 @@ public class DelegateStudentsGroup extends LeafGroup {
     }
 
     public PersonFunction getPersonFunction() {
-        return personFunctionId != null ? (PersonFunction) AbstractDomainObject.fromExternalId(personFunctionId) : null;
+        return personFunctionId != null ? (PersonFunction) FenixFramework.getDomainObject(personFunctionId) : null;
     }
 
     public Student getStudent() {

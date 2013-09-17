@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -49,7 +50,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadTeacherInformation {
 
@@ -139,7 +140,7 @@ public class ReadTeacherInformation {
         // FIXME possible cause of error: this execution period is used for
         // what?
         infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionYear
-                .getExecutionPeriods().get(0)));
+                .getExecutionPeriods().iterator().next()));
         infoSiteTeacherInformation.setPersonFunctions(getPersonFunctions(teacher, executionYear));
 
         return new SiteView(infoSiteTeacherInformation);
@@ -175,7 +176,7 @@ public class ReadTeacherInformation {
     }
 
     private List getInfoExternalActivities(Teacher teacher) {
-        List<ExternalActivity> externalActivities = teacher.getAssociatedExternalActivities();
+        Collection<ExternalActivity> externalActivities = teacher.getAssociatedExternalActivities();
 
         List infoExternalActivities = (List) CollectionUtils.collect(externalActivities, new Transformer() {
             @Override
@@ -189,10 +190,10 @@ public class ReadTeacherInformation {
 
     private List getInfoLecturingExecutionCourses(Teacher teacher, final ExecutionYear wantedExecutionYear) {
 
-        List professorships = teacher.getProfessorships();
+        Collection professorships = teacher.getProfessorships();
 
         // filter only the execution courses of the wanted execution year
-        professorships = (List) CollectionUtils.select(professorships, new Predicate() {
+        professorships = CollectionUtils.select(professorships, new Predicate() {
 
             @Override
             public boolean evaluate(Object o) {
@@ -212,7 +213,7 @@ public class ReadTeacherInformation {
     }
 
     private List getInfoQualifications(Teacher teacher) {
-        List<Qualification> qualifications = teacher.getPerson().getAssociatedQualifications();
+        Collection<Qualification> qualifications = teacher.getPerson().getAssociatedQualifications();
         List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer() {
             @Override
             public Object transform(Object o) {
@@ -258,7 +259,7 @@ public class ReadTeacherInformation {
         final List<InfoCareer> oldestCareers = new ArrayList<InfoCareer>();
         final List<InfoCareer> newestCareers = new ArrayList<InfoCareer>();
 
-        final List<Career> careers = teacher.getAssociatedCareers();
+        final Collection<Career> careers = teacher.getAssociatedCareers();
         for (final Career career : careers) {
             boolean addCareer = false;
             if (careerType == null
@@ -321,7 +322,7 @@ public class ReadTeacherInformation {
 
     private static final ReadTeacherInformation serviceInstance = new ReadTeacherInformation();
 
-    @Service
+    @Atomic
     public static SiteView runReadTeacherInformation(String user, String argExecutionYear) throws NotAuthorizedException {
         try {
             TeacherAuthorizationFilter.instance.execute();

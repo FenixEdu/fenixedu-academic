@@ -258,4 +258,24 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
         return true;
     }
 
+    @Deprecated
+    public boolean hasNumberOfUnits() {
+        return getNumberOfUnits() != null;
+    }
+
+    @Deprecated
+    public boolean hasIgnoreExternalEntries() {
+        return getIgnoreExternalEntries() != null;
+    }
+
+    @Deprecated
+    public boolean hasIgnoreCurriculumInAdvance() {
+        return getIgnoreCurriculumInAdvance() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityProgram() {
+        return getMobilityProgram() != null;
+    }
+
 }

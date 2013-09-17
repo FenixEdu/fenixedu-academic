@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class InsertTeacherPersonalExpectation {
 
@@ -21,7 +21,7 @@ public class InsertTeacherPersonalExpectation {
 
     private static final InsertTeacherPersonalExpectation serviceInstance = new InsertTeacherPersonalExpectation();
 
-    @Service
+    @Atomic
     public static TeacherPersonalExpectation runInsertTeacherPersonalExpectation(TeacherPersonalExpectationBean bean)
             throws NotAuthorizedException {
         try {

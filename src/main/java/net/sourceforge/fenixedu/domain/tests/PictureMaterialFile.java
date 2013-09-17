@@ -21,11 +21,21 @@ public class PictureMaterialFile extends PictureMaterialFile_Base {
     public void delete(NewPictureMaterial pictureMaterial) {
         this.removePictureMaterials(pictureMaterial);
 
-        if (this.getPictureMaterialsCount() == 0) {
-            this.removeRootDomainObject();
+        if (this.getPictureMaterialsSet().size() == 0) {
+            this.setRootDomainObject(null);
 
             super.deleteDomainObject();
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewPictureMaterial> getPictureMaterials() {
+        return getPictureMaterialsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPictureMaterials() {
+        return !getPictureMaterialsSet().isEmpty();
     }
 
 }

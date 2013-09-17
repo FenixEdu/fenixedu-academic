@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DefaultPathProcessor extends AbstractPathProcessor {
 
@@ -21,7 +21,7 @@ public class DefaultPathProcessor extends AbstractPathProcessor {
 
     protected Container getTemplatedContent(final String path) {
         final String id = getTemplatedId(path);
-        return id == null ? null : (Container) AbstractDomainObject.fromExternalId(id);
+        return id == null ? null : (Container) FenixFramework.getDomainObject(id);
     }
 
     @Override

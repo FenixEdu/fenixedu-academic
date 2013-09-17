@@ -17,7 +17,7 @@ public class DeleteQualification extends PhdIndividualProgramProcessActivity {
     @Override
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
         final Qualification qualification = (Qualification) object;
-        if (process.getPerson().hasAssociatedQualifications(qualification)) {
+        if (process.getPerson().getAssociatedQualificationsSet().contains(qualification)) {
             if (!canDelete(qualification, process, userView != null ? userView.getPerson() : null)) {
                 throw new DomainException("error.PhdIndividualProgramProcess.DeleteQualification.not.authorized");
             }

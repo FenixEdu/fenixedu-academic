@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,10 @@ import net.sourceforge.fenixedu.domain.DeployNotifier;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+@WebServlet(urlPatterns = "/ajax/DeployNotifierServlet")
 public class DeployNotifierServlet extends HttpServlet {
+
+    private static final long serialVersionUID = 9222847333876912758L;
 
     private static DeployNotifier deployNotifier = null;
     private static ResourceBundle resourceBundle = null;

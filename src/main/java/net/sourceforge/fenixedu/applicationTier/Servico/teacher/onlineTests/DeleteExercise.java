@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,21 +17,21 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteExercise {
 
     protected void run(String executionCourseId, String metadataId) throws InvalidArgumentsServiceException, ExcepcaoPersistencia {
-        Metadata metadata = AbstractDomainObject.fromExternalId(metadataId);
+        Metadata metadata = FenixFramework.getDomainObject(metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        List<Question> questionList = metadata.getQuestions();
+        Collection<Question> questionList = metadata.getQuestions();
         boolean delete = true;
         for (Question question : questionList) {
-            List<TestQuestion> testQuestionList = question.getTestQuestions();
+            Collection<TestQuestion> testQuestionList = question.getTestQuestions();
             for (TestQuestion testQuestion : testQuestionList) {
                 removeTestQuestionFromTest(testQuestion);
             }
@@ -72,7 +73,7 @@ public class DeleteExercise {
 
     private static final DeleteExercise serviceInstance = new DeleteExercise();
 
-    @Service
+    @Atomic
     public static void runDeleteExercise(String executionCourseId, String metadataId) throws InvalidArgumentsServiceException,
             ExcepcaoPersistencia, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

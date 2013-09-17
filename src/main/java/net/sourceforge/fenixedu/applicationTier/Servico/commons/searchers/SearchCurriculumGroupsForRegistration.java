@@ -6,6 +6,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SearchCurriculumGroupsForRegistration implements AutoCompleteProvider<CurriculumGroup> {
 
@@ -15,7 +16,7 @@ public class SearchCurriculumGroupsForRegistration implements AutoCompleteProvid
     }
 
     private Registration getRegistration(Map<String, String> arguments) {
-        return Registration.fromExternalId(arguments.get("registrationID"));
+        return FenixFramework.getDomainObject(arguments.get("registrationID"));
     }
 
 }

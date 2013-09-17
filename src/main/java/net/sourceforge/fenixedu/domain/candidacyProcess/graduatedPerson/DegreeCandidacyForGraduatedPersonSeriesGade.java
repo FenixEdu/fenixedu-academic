@@ -17,7 +17,12 @@ public class DegreeCandidacyForGraduatedPersonSeriesGade extends DegreeCandidacy
     public void delete() {
         setIndividualCandidacy(null);
         setDegree(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasCandidacyGrade() {
+        return getCandidacyGrade() != null;
+    }
+
 }

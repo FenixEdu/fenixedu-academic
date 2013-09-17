@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -36,7 +36,7 @@ public class DegreeSite extends DegreeSite_Base {
 
     @Override
     protected void disconnect() {
-        removeDegree();
+        setDegree(null);
         super.disconnect();
     }
 
@@ -65,9 +65,14 @@ public class DegreeSite extends DegreeSite_Base {
         return unit;
     }
 
-    @Service
+    @Atomic
     private void updateUnit(Unit unit) {
         setUnit(unit);
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
     }
 
 }

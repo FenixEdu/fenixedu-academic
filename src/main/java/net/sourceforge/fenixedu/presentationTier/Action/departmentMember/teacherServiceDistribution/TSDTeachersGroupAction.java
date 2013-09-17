@@ -37,7 +37,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class TSDTeachersGroupAction extends FenixDispatchAction {
 
@@ -209,18 +209,18 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 
         // List<CurricularYear> curricularyearsList = new
         // ArrayList<CurricularYear
-        // >(rootDomainObject.readAllDomainObjects(CurricularYear.class));
+        // >(DomainObjectUtil.readAllDomainObjects(CurricularYear.class));
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
         TSDProcess process = selectedTeacherServiceDistribution.getTSDProcessPhase().getTSDProcess();
         Department department = process.getDepartment();
-        ExecutionYear year = process.getExecutionPeriods().get(0).getExecutionYear();
+        ExecutionYear year = process.getExecutionPeriods().iterator().next().getExecutionYear();
 
         List<DegreeCurricularPlan> departmentPlansList = new ArrayList<DegreeCurricularPlan>();
 
         for (DegreeCurricularPlan plan : DegreeCurricularPlan.readBolonhaDegreeCurricularPlans()) {
             Degree degree = plan.getDegree();
 
-            if (plan.getCurricularCoursesWithExecutionIn(year).size() > 0 && degree.getDepartmentsCount() > 0) {
+            if (plan.getCurricularCoursesWithExecutionIn(year).size() > 0 && degree.getDepartmentsSet().size() > 0) {
                 if (degree.getDepartments().contains(department)) {
                     departmentPlansList.add(plan);
                 }
@@ -303,7 +303,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
     private TeacherServiceDistribution getSelectedTeacherServiceDistribution(HttpServletRequest request) {
         String selectedTeacherServiceDistributionId = String.valueOf(request.getParameter("tsd"));
         TeacherServiceDistribution selectedTeacherServiceDistribution =
-                AbstractDomainObject.fromExternalId(selectedTeacherServiceDistributionId);
+                FenixFramework.getDomainObject(selectedTeacherServiceDistributionId);
 
         return selectedTeacherServiceDistribution;
     }

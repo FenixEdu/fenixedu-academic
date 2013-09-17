@@ -16,19 +16,20 @@ import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ChangeStudentsShift {
 
-    @Service
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Atomic
     public static void run(IUserView userView, String oldShiftId, String newShiftId, final Set<Registration> registrations)
             throws FenixServiceException {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
-        final Shift oldShift = AbstractDomainObject.fromExternalId(oldShiftId);
-        final Shift newShift = AbstractDomainObject.fromExternalId(newShiftId);
+        final Shift oldShift = FenixFramework.getDomainObject(oldShiftId);
+        final Shift newShift = FenixFramework.getDomainObject(newShiftId);
 
         if (newShift != null) {
             if (oldShift == null || !oldShift.getTypes().containsAll(newShift.getTypes())

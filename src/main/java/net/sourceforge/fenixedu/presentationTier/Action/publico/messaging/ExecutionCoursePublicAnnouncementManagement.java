@@ -27,7 +27,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -55,7 +55,7 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
 
     protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
         String id = this.getRequestedExecutionCourseId(request);
-        return AbstractDomainObject.fromExternalId(id);
+        return FenixFramework.getDomainObject(id);
     }
 
     @Override

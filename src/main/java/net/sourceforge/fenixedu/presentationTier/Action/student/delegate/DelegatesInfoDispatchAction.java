@@ -94,7 +94,7 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
 
     private void updateBeanDegreeType(DelegateSearchBean bean) {
         boolean updated = false;
-        DegreeType first = bean.getExecutionYear().getExecutionDegrees().get(0).getDegreeType();
+        DegreeType first = bean.getExecutionYear().getExecutionDegrees().iterator().next().getDegreeType();
 
         for (ExecutionDegree executionDegree : bean.getExecutionYear().getExecutionDegrees()) {
             if (executionDegree.getDegreeType().getGraduateTitle().split(" ")[0].equals(bean.getDegreeType().getGraduateTitle()
@@ -140,7 +140,7 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
 
     private Degree getDefaultDegreeGivenDegreeType(DegreeType degreeType) {
         List<Degree> degrees = Degree.readAllByDegreeType(degreeType);
-        return degrees.get(0);
+        return degrees.iterator().next();
     }
 
     /* Delegates from given degree (not year delegates) */
@@ -152,7 +152,7 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
             delegates.addAll(bean.getDegree()
                     .getAllDelegatesByExecutionYearAndFunctionType(bean.getExecutionYear(), functionType));
         }
-        return (delegates.isEmpty() ? null : new DelegateSearchBean(delegates.get(0).getPerson(), functionType,
+        return (delegates.isEmpty() ? null : new DelegateSearchBean(delegates.iterator().next().getPerson(), functionType,
                 bean.getExecutionYear()));
     }
 

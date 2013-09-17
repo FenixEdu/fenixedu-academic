@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
  * 
@@ -27,7 +28,7 @@ import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
 public class CurricularPeriod extends CurricularPeriod_Base implements Comparable<CurricularPeriod> {
 
     static {
-        CurricularPeriodParentChilds.addListener(new CurricularPeriodParentChildsListener());
+        getRelationCurricularPeriodParentChilds().addListener(new CurricularPeriodParentChildsListener());
     }
 
     public CurricularPeriod(AcademicPeriod academicPeriod) {
@@ -142,14 +143,14 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     public void delete() {
 
         getContexts().clear();
-        removeDegreeCurricularPlan();
+        setDegreeCurricularPlan(null);
 
-        removeParent();
+        setParent(null);
         for (CurricularPeriod child : getChilds()) {
             child.delete();
         }
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
 
     }
@@ -191,8 +192,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         return result;
     }
 
-    private static class CurricularPeriodParentChildsListener extends
-            dml.runtime.RelationAdapter<CurricularPeriod, CurricularPeriod> {
+    private static class CurricularPeriodParentChildsListener extends RelationAdapter<CurricularPeriod, CurricularPeriod> {
         @Override
         public void beforeAdd(CurricularPeriod parent, CurricularPeriod child) {
             if (parent == null) {
@@ -215,7 +215,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
             // re-order childs
             Integer order = child.getChildOrder();
             if (order == null) {
-                child.setChildOrder(parent.getChildsCount() + 1);
+                child.setChildOrder(parent.getChildsSet().size() + 1);
             } else {
                 if (parent.getChildByOrder(order) != null) {
                     throw new DomainException("error.childAlreadyExists");
@@ -285,7 +285,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         } else {
             final CurricularPeriod parentCurricularPeriod = getParent();
             final int absoluteOrderOfParent = parentCurricularPeriod.getAbsoluteOrderOfChild();
-            final int numberOfBrothersAndSisters = parentCurricularPeriod.getChildsCount();
+            final int numberOfBrothersAndSisters = parentCurricularPeriod.getChildsSet().size();
             return (absoluteOrderOfParent - 1) * numberOfBrothersAndSisters + getChildOrder().intValue();
         }
     }
@@ -316,4 +316,45 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     public boolean hasChildOrderValue(final Integer order) {
         return hasChildOrder() && getChildOrder().equals(order);
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getContexts() {
+        return getContextsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyContexts() {
+        return !getContextsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod> getChilds() {
+        return getChildsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChilds() {
+        return !getChildsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasParent() {
+        return getParent() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcademicPeriod() {
+        return getAcademicPeriod() != null;
+    }
+
 }

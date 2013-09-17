@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 import org.apache.log4j.Logger;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CheckIsAliveService {
 
@@ -25,7 +25,7 @@ public class CheckIsAliveService {
         }
     }
 
-    @Service
+    @Atomic
     public static Boolean run() {
         try {
             if (CHECK_DB) {

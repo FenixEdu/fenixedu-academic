@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /*
  * 
@@ -19,17 +19,17 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadExecutionDegreesByExecutionPeriodId {
 
-    @Service
+    @Atomic
     public static List<InfoExecutionDegree> run(String executionPeriodId) throws FenixServiceException {
         return getExecutionDegreesByExecutionPeriodId(executionPeriodId, null);
     }
 
-    @Service
+    @Atomic
     public static List<InfoExecutionDegree> runForAcademicAdmin(String executionPeriodId) throws FenixServiceException {
         return getExecutionDegreesByExecutionPeriodId(executionPeriodId, AcademicPredicates.MANAGE_EXECUTION_COURSES);
     }
 
-    @Service
+    @Atomic
     public static List<InfoExecutionDegree> runForAcademicAdminAdv(String executionPeriodId) throws FenixServiceException {
         return getExecutionDegreesByExecutionPeriodId(executionPeriodId, AcademicPredicates.MANAGE_EXECUTION_COURSES_ADV);
     }
@@ -39,7 +39,7 @@ public class ReadExecutionDegreesByExecutionPeriodId {
         if (executionPeriodId == null) {
             throw new FenixServiceException("executionPeriodId.should.not.be.null");
         }
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
 
         List<ExecutionDegree> executionDegrees =
                 ExecutionDegree.getAllByExecutionYear(executionSemester.getExecutionYear().getYear());

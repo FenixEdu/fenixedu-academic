@@ -4,13 +4,12 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEquivalencePlan_Base {
 
-    @Checked("DegreeCurricularPlanEquivalencePlanPredicates.checkPermissionsToCreate")
     public DegreeCurricularPlanEquivalencePlan(final DegreeCurricularPlan degreeCurricularPlan,
             final DegreeCurricularPlan sourceDegreeCurricularPlan) {
+//        check(this, DegreeCurricularPlanEquivalencePlanPredicates.checkPermissionsToCreate);
         super();
         init(degreeCurricularPlan, sourceDegreeCurricularPlan);
     }
@@ -45,12 +44,23 @@ public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEqu
 
     @Override
     public void delete() {
-        removeDegreeCurricularPlan();
-        removeSourceDegreeCurricularPlan();
+        setDegreeCurricularPlan(null);
+        setSourceDegreeCurricularPlan(null);
         super.delete();
     }
 
     public Degree getSourceDegree() {
         return getSourceDegreeCurricularPlan().getDegree();
     }
+
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasSourceDegreeCurricularPlan() {
+        return getSourceDegreeCurricularPlan() != null;
+    }
+
 }

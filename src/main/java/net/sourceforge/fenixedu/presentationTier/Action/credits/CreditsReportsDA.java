@@ -246,7 +246,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
 
         response.setContentType("text/plain");
         StringBuilder filename = new StringBuilder("creditos");
-        filename.append((departments.size() == 1 ? departments.get(0).getAcronym() : "Departamentos"));
+        filename.append((departments.size() == 1 ? departments.iterator().next().getAcronym() : "Departamentos"));
         filename.append("_").append(departmentCreditsBean.getExecutionYear().getQualifiedName().replaceAll("/", "_"))
                 .append(".xls");
         response.setHeader("Content-disposition", "attachment; filename=" + filename.toString());

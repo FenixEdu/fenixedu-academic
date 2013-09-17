@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.academicAdministration;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -86,7 +86,7 @@ public class DegreeByExecutionYearBean implements Serializable, Comparable<Degre
     }
 
     public String getKey() {
-        return getDegree().getOID() + ":" + getExecutionYear().getOID();
+        return getDegree().getExternalId() + ":" + getExecutionYear().getExternalId();
     }
 
     @Override
@@ -108,7 +108,7 @@ public class DegreeByExecutionYearBean implements Serializable, Comparable<Degre
         }
     }
 
-    public List<DegreeCurricularPlan> getDegreeCurricularPlans() {
+    public Collection<DegreeCurricularPlan> getDegreeCurricularPlans() {
         return getDegree().getDegreeCurricularPlans();
     }
 

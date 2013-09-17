@@ -31,7 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -56,7 +56,7 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final TeacherInquiryTemplate teacherInquiryTemplate =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "teacherInquiryOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "teacherInquiryOID").toString());
 
         final ExecutionSemester executionPeriod = teacherInquiryTemplate.getExecutionPeriod();
 

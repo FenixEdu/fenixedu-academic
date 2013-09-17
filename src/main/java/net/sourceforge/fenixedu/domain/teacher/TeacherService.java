@@ -25,7 +25,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TeacherService extends TeacherService_Base {
 
@@ -45,16 +45,16 @@ public class TeacherService extends TeacherService_Base {
 
     public void delete() {
         if (getServiceItems().isEmpty()) {
-            removeTeacher();
-            removeExecutionPeriod();
-            removeRootDomainObject();
+            setTeacher(null);
+            setExecutionPeriod(null);
+            setRootDomainObject(null);
             deleteDomainObject();
         } else {
             throw new DomainException("There are service items associated to this Teacher Service");
         }
     }
 
-    @Service
+    @Atomic
     public static TeacherService getTeacherService(Teacher teacher, ExecutionSemester executionPeriod) {
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService == null) {
@@ -344,18 +344,58 @@ public class TeacherService extends TeacherService_Base {
         return new TreeSet<TeacherServiceLog>(getTeacherServiceLogSet());
     }
 
-    @Service
+    @Atomic
     public void lockTeacherCredits() {
         setTeacherServiceLock(new DateTime());
         new TeacherServiceLog(this, BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
                 "label.teacher.lockTeacherCredits", getExecutionPeriod().getQualifiedName()));
     }
 
-    @Service
+    @Atomic
     public void unlockTeacherCredits() {
         setTeacherServiceLock(null);
         new TeacherServiceLog(this, BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
                 "label.teacher.unlockTeacherCredits", getExecutionPeriod().getQualifiedName()));
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem> getServiceItems() {
+        return getServiceItemsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyServiceItems() {
+        return !getServiceItemsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog> getTeacherServiceLog() {
+        return getTeacherServiceLogSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherServiceLog() {
+        return !getTeacherServiceLogSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherServiceLock() {
+        return getTeacherServiceLock() != null;
     }
 
 }

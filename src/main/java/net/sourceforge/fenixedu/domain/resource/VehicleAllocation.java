@@ -1,16 +1,20 @@
 package net.sourceforge.fenixedu.domain.resource;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.predicates.ResourceAllocationPredicates;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -18,20 +22,17 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-
 public class VehicleAllocation extends VehicleAllocation_Base {
 
     public final static Comparator<VehicleAllocation> COMPARATOR_BY_VEHICLE_NUMBER_PLATE = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_VEHICLE_NUMBER_PLATE).addComparator(new BeanComparator("vehicle.numberPlate"));
-        ((ComparatorChain) COMPARATOR_BY_VEHICLE_NUMBER_PLATE).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_VEHICLE_NUMBER_PLATE).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
-    @Checked("ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations")
     public VehicleAllocation(DateTime beginDateTime, DateTime endDateTime, Vehicle vehicle, Party requestor, String reason,
             BigDecimal distance, BigDecimal amountCharged) {
+//        check(this, ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations);
 
         super();
         setResource(vehicle);
@@ -42,9 +43,9 @@ public class VehicleAllocation extends VehicleAllocation_Base {
         setAmountCharged(amountCharged);
     }
 
-    @Checked("ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations")
     public void edit(DateTime beginDateTime, DateTime endDateTime, Vehicle vehicle, Party requestor, String reason,
             BigDecimal distance, BigDecimal amountCharged) {
+        check(this, ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations);
 
         setResource(vehicle);
         setRequestor(requestor);
@@ -55,8 +56,8 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     }
 
     @Override
-    @Checked("ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations")
     public void delete() {
+        check(this, ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations);
         DateTime currentDateTime = new DateTime();
         if (occursInThePast(currentDateTime)) {
             throw new DomainException("error.cannot.delete.allocation.already.occured");
@@ -220,7 +221,7 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     }
 
     public static Set<VehicleAllocation> getActiveVehicleAllocations() {
-        List<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
+        Collection<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
         Set<VehicleAllocation> result = new TreeSet<VehicleAllocation>(COMPARATOR_BY_VEHICLE_NUMBER_PLATE);
         DateTime currentDateTime = new DateTime();
         for (ResourceAllocation resourceAllocation : resourceAllocations) {
@@ -232,7 +233,7 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     }
 
     public static Set<VehicleAllocation> getFutureVehicleAllocations() {
-        List<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
+        Collection<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
         Set<VehicleAllocation> result = new TreeSet<VehicleAllocation>(COMPARATOR_BY_VEHICLE_NUMBER_PLATE);
         DateTime currentDateTime = new DateTime();
         for (ResourceAllocation resourceAllocation : resourceAllocations) {
@@ -245,7 +246,7 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     }
 
     public static Set<VehicleAllocation> getPastVehicleAllocations(DateTime begin, DateTime end, Vehicle vehicle) {
-        List<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
+        Collection<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
         Set<VehicleAllocation> result = new TreeSet<VehicleAllocation>(COMPARATOR_BY_VEHICLE_NUMBER_PLATE);
         DateTime currentDateTime = new DateTime();
         for (ResourceAllocation resourceAllocation : resourceAllocations) {
@@ -287,6 +288,36 @@ public class VehicleAllocation extends VehicleAllocation_Base {
         } else {
             setEndDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasDistance() {
+        return getDistance() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateTime() {
+        return getEndDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasAmountCharged() {
+        return getAmountCharged() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestor() {
+        return getRequestor() != null;
+    }
+
+    @Deprecated
+    public boolean hasReason() {
+        return getReason() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDateTime() {
+        return getBeginDateTime() != null;
     }
 
 }

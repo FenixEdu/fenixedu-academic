@@ -12,7 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "publico", path = "/announcementsRSS", scope = "session")
 public class GenerateAnnoucementsRSS extends FenixDispatchAction {
@@ -21,7 +21,7 @@ public class GenerateAnnoucementsRSS extends FenixDispatchAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         final String executionCourseIdString = request.getParameter("id");
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseIdString);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseIdString);
         if (executionCourse == null) {
             return forward("/publico/notFound.do");
         }

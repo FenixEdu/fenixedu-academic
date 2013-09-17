@@ -17,27 +17,28 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadStudentTest {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static List<StudentTestQuestion> run(Registration registration, String distributedTestId, Boolean log, String path)
             throws FenixServiceException {
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        check(RolePredicates.STUDENT_PREDICATE);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         return run(registration, distributedTest, log, path);
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static List<StudentTestQuestion> run(Registration registration, DistributedTest distributedTest, Boolean log,
             String path) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -73,14 +74,14 @@ public class ReadStudentTest {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static List<StudentTestQuestion> runReadStudentTestForCorrection(Registration registration, String distributedTestId,
             Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
         ReadStudentTestForCorrectionFilter.instance.execute(distributedTestId);
         return run(registration, distributedTestId, log, path);
     }
 
-    @Service
+    @Atomic
     public static List<StudentTestQuestion> runReadStudentTestForCorrection(Registration registration,
             DistributedTest distributedTest, Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
         ReadStudentTestForCorrectionFilter.instance.execute(distributedTest.getExternalId());
@@ -89,14 +90,14 @@ public class ReadStudentTest {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static List<StudentTestQuestion> runReadStudentTestToDo(Registration registration, String distributedTestId,
             Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
         ReadStudentTestToDoFilter.instance.execute(distributedTestId);
         return run(registration, distributedTestId, log, path);
     }
 
-    @Service
+    @Atomic
     public static List<StudentTestQuestion> runReadStudentTestToDo(Registration registration, DistributedTest distributedTest,
             Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
         ReadStudentTestToDoFilter.instance.execute(distributedTest.getExternalId());

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author mrsp
@@ -50,14 +50,14 @@ public class User extends User_Base {
     }
 
     public void delete() {
-        for (; !getIdentifications().isEmpty(); getIdentifications().get(0).delete()) {
+        for (; !getIdentifications().isEmpty(); getIdentifications().iterator().next().delete()) {
             ;
         }
         if (hasLoginRequest()) {
             getLoginRequest().delete();
         }
         super.setPerson(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -72,12 +72,12 @@ public class User extends User_Base {
         return aliass.toString();
     }
 
-    @Service
+    @Atomic
     public void logout() {
         setLogoutDateTime(new DateTime());
     }
 
-    @Service
+    @Atomic
     public void generateNewKey() throws Exception {
         KeyGenerator kgen = KeyGenerator.getInstance("AES");
         kgen.init(128);
@@ -143,6 +143,126 @@ public class User extends User_Base {
         } else {
             setLogoutDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.log.FirstYearShiftsCapacityToggleLog> getFirstYearShiftsCapacityToggleLog() {
+        return getFirstYearShiftsCapacityToggleLogSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFirstYearShiftsCapacityToggleLog() {
+        return !getFirstYearShiftsCapacityToggleLogSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.AccountingTransaction> getAccountingTransactions() {
+        return getAccountingTransactionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAccountingTransactions() {
+        return !getAccountingTransactionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog> getTeacherServiceLog() {
+        return getTeacherServiceLogSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherServiceLog() {
+        return !getTeacherServiceLogSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation> getLockedTeacherAutoEvaluations() {
+        return getLockedTeacherAutoEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLockedTeacherAutoEvaluations() {
+        return !getLockedTeacherAutoEvaluationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation> getLockedTeacherEvaluations() {
+        return getLockedTeacherEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLockedTeacherEvaluations() {
+        return !getLockedTeacherEvaluationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Identification> getIdentifications() {
+        return getIdentificationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyIdentifications() {
+        return !getIdentificationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPrivateKeyValidity() {
+        return getPrivateKeyValidity() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrivateKeyCreation() {
+        return getPrivateKeyCreation() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastLoginHost() {
+        return getLastLoginHost() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurrentLoginDateTimeDateTime() {
+        return getCurrentLoginDateTimeDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasLogoutDateTime() {
+        return getLogoutDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurrentLoginHost() {
+        return getCurrentLoginHost() != null;
+    }
+
+    @Deprecated
+    public boolean hasLoginRequest() {
+        return getLoginRequest() != null;
+    }
+
+    @Deprecated
+    public boolean hasUserUId() {
+        return getUserUId() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrivateKey() {
+        return getPrivateKey() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastLoginDateTimeDateTime() {
+        return getLastLoginDateTimeDateTime() != null;
     }
 
 }

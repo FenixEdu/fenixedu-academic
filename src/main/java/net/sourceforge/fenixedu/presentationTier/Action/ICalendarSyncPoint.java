@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.student.ICalStudentTimeTable;
 
-import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.lang.CharEncoding;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -33,7 +32,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/iCalendarSync", module = "external")
 public class ICalendarSyncPoint extends FenixDispatchAction {
@@ -133,7 +132,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
             throw new FenixActionException("error.expecting.parameter.not.found");
         }
 
-        final DomainObject object = AbstractDomainObject.fromExternalId(regId);
+        final DomainObject object = FenixFramework.getDomainObject(regId);
         if (object instanceof Registration) {
             User user = User.readUserByUserUId(userId);
             Registration registration = (Registration) object;

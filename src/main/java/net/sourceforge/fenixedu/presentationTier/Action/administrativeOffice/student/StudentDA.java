@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +23,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/student", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({ @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
@@ -34,7 +34,7 @@ public class StudentDA extends StudentRegistrationDA {
 
     private Student getAndSetStudent(final HttpServletRequest request) {
         final String studentID = getFromRequest(request, "studentID").toString();
-        final Student student = AbstractDomainObject.fromExternalId(studentID);
+        final Student student = FenixFramework.getDomainObject(studentID);
         request.setAttribute("student", student);
         request.setAttribute("choosePhdOrRegistration", new ChooseRegistrationOrPhd(student));
         return student;
@@ -90,7 +90,7 @@ public class StudentDA extends StudentRegistrationDA {
         final Student student = getAndSetStudent(request);
 
         Person person = student.getPerson();
-        List<PersonInformationLog> logsList = person.getPersonInformationLogs();
+        Collection<PersonInformationLog> logsList = person.getPersonInformationLogs();
         request.setAttribute("person", person);
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");

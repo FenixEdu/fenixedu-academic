@@ -6,15 +6,16 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateDegreeCurricularPlan {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String degreeId, String name, GradeScale gradeScale) throws FenixServiceException {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         if (degreeId == null || name == null) {
             throw new InvalidArgumentsServiceException();
@@ -25,7 +26,7 @@ public class CreateDegreeCurricularPlan {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.creator");
         }
 
-        final Degree degree = AbstractDomainObject.fromExternalId(degreeId);
+        final Degree degree = FenixFramework.getDomainObject(degreeId);
         if (degree == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
         }

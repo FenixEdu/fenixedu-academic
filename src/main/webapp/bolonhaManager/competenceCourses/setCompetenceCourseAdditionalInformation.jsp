@@ -1,7 +1,7 @@
-<%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
-<%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
-<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
-<%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
@@ -50,10 +50,7 @@
 		<h:outputText value="<h3 id='portuguese' class='first mbottom1'>#{bolonhaBundle['portuguese']}</h3><fieldset class='lfloat'>" escape="false"/>
 		<h:outputText value="<p><label>#{bolonhaBundle['objectives']}: </label>" escape="false"/>
 		<h:panelGrid columns="2">
-			<h:inputTextarea id="objectives" value="#{CompetenceCourseManagement.objectives}" cols="60" rows="10">
-				<f:validateLength maximum="900" />
-			</h:inputTextarea>
-			<h:outputText value="(#{bolonhaBundle['max']} 900 #{bolonhaBundle['characters']})" />
+			<h:inputTextarea id="objectives" value="#{CompetenceCourseManagement.objectives}" cols="60" rows="10"/>
 			<h:message for="objectives" styleClass="error0"/>
 		</h:panelGrid>
 		<h:outputText value="</p>" escape="false"/>
@@ -81,10 +78,7 @@
 		<h:outputText value="<h3 id='english' class='first mbottom1'>#{bolonhaBundle['english']}</h3><fieldset class='lfloat'>" escape="false"/>	
 		<h:outputText value="<p><label>#{bolonhaBundle['objectivesEn']}: </a></label>" escape="false"/>
 		<h:panelGrid columns="2">
-			<h:inputTextarea id="objectivesEn" value="#{CompetenceCourseManagement.objectivesEn}" cols="60" rows="10">
-				<f:validateLength maximum="900" />
-			</h:inputTextarea>
-			<h:outputText value="(#{bolonhaBundle['max']} 900 #{bolonhaBundle['characters']})" />
+			<h:inputTextarea id="objectivesEn" value="#{CompetenceCourseManagement.objectivesEn}" cols="60" rows="10"/>
 			<h:message for="objectivesEn" styleClass="error0"/>
 		</h:panelGrid>
 		<h:outputText value="</p>" escape="false"/>			

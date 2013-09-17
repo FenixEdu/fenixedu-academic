@@ -43,7 +43,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
@@ -194,7 +194,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         return modifiedDescription;
     }
 
-    @Service
+    @Atomic
     private Map<ExecutionDegree, Integer> setFirstYearShiftsCapacity(Boolean toBlock, ExecutionYear executionYear) {
 
         final ExecutionSemester executionSemester = executionYear.getFirstExecutionPeriod();

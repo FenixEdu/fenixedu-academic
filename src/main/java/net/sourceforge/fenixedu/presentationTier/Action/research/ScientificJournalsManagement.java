@@ -10,7 +10,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ScientificJournalsManagement extends FenixDispatchAction {
 
@@ -19,7 +19,7 @@ public class ScientificJournalsManagement extends FenixDispatchAction {
 
         String journalId = request.getParameter("journalId");
         if (journalId != null) {
-            ScientificJournal scientificJournal = AbstractDomainObject.fromExternalId(journalId);
+            ScientificJournal scientificJournal = FenixFramework.getDomainObject(journalId);
             request.setAttribute("journal", scientificJournal);
         }
 

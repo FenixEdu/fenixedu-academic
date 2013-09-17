@@ -37,9 +37,9 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 import com.lowagie.text.DocumentException;
 
@@ -59,8 +59,8 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
     public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2) throws IOException, ServletException {
         ResponseWrapper response = (ResponseWrapper) arg1;
 
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(arg0.getParameter("executionYearOid"));
-        Teacher teacher = AbstractDomainObject.fromExternalId(arg0.getParameter("teacherOid"));
+        ExecutionYear executionYear = FenixFramework.getDomainObject(arg0.getParameter("executionYearOid"));
+        Teacher teacher = FenixFramework.getDomainObject(arg0.getParameter("teacherOid"));
         if (teacher != null) {
             ByteArrayOutputStream pdfStreamToReturn = null;
             try {
@@ -121,7 +121,7 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
         return request.getContextPath() + urlWithChecksum;
     }
 
-    @Service
+    @Atomic
     private void closeAnnualCreditsState(AnnualCreditsState annualCreditsState,
             Map<AnnualTeachingCredits, ByteArrayOutputStream> documentsWithConfidentionalInformation,
             Map<AnnualTeachingCredits, ByteArrayOutputStream> documentsWithoutConfidentionalInformation) {

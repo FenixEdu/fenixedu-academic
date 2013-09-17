@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -12,6 +11,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -35,7 +35,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
@@ -70,7 +70,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
                 public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
                     final ComparatorChain comparatorChain = new ComparatorChain();
                     comparatorChain.addComparator(EXECUTION_YEAR_COMPARATOR);
-                    comparatorChain.addComparator(COMPARATOR_BY_ID);
+                    comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
                     return comparatorChain.compare(o1, o2);
                 }
@@ -195,7 +195,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         return getDescription(getAcademicServiceRequestType());
     }
 
-    @Service
+    @Atomic
     final public void process() throws DomainException {
         process(AccessControl.getPerson());
     }
@@ -212,25 +212,25 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         process(AccessControl.getPerson(), situationDate);
     }
 
-    @Service
+    @Atomic
     public void sendToExternalEntity(final YearMonthDay sendDate, final String description) {
         edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY,
                 AccessControl.getPerson(), sendDate, description));
     }
 
-    @Service
+    @Atomic
     final public void receivedFromExternalEntity(final YearMonthDay receivedDate, final String description) {
         edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY,
                 AccessControl.getPerson(), receivedDate, description));
     }
 
-    @Service
+    @Atomic
     final public void reject(final String justification) {
         edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.REJECTED, AccessControl.getPerson(),
                 justification));
     }
 
-    @Service
+    @Atomic
     final public void cancel(final String justification) {
         edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CANCELLED, AccessControl.getPerson(),
                 justification));
@@ -257,7 +257,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
                 justification));
     }
 
-    @Service
+    @Atomic
     final public void conclude(final YearMonthDay situationDate, final String justification, boolean sendEmail) {
         conclude(AccessControl.getPerson(), situationDate, justification);
         if (sendEmail) {
@@ -290,12 +290,12 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
         }
 
-        final Sender sender = getAdministrativeOffice().getUnit().getUnitBasedSender().get(0);
+        final Sender sender = getAdministrativeOffice().getUnit().getUnitBasedSender().iterator().next();
         final Recipient recipient = new Recipient(new PersonGroup(getPerson()));
         new Message(sender, sender.getReplyTos(), recipient.asCollection(), getDescription(), body, "");
     }
 
-    @Service
+    @Atomic
     final public void delivered() {
         delivered(AccessControl.getPerson());
     }
@@ -355,18 +355,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     @Override
-    final public List<AcademicServiceRequestSituation> getAcademicServiceRequestSituations() {
-        return Collections.unmodifiableList(super.getAcademicServiceRequestSituations());
-    }
-
-    @Override
     final public Set<AcademicServiceRequestSituation> getAcademicServiceRequestSituationsSet() {
         return Collections.unmodifiableSet(super.getAcademicServiceRequestSituationsSet());
-    }
-
-    @Override
-    final public Iterator<AcademicServiceRequestSituation> getAcademicServiceRequestSituationsIterator() {
-        return getAcademicServiceRequestSituationsSet().iterator();
     }
 
     @Override
@@ -774,4 +764,85 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public abstract AcademicProgram getAcademicProgram();
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation> getAcademicServiceRequestSituations() {
+        return getAcademicServiceRequestSituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAcademicServiceRequestSituations() {
+        return !getAcademicServiceRequestSituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument> getDocument() {
+        return getDocumentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDocument() {
+        return !getDocumentSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcademicServiceRequestYear() {
+        return getAcademicServiceRequestYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestDate() {
+        return getRequestDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvent() {
+        return getEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdministrativeOffice() {
+        return getAdministrativeOffice() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistryCode() {
+        return getRegistryCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasRectorateSubmissionBatch() {
+        return getRectorateSubmissionBatch() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrgentRequest() {
+        return getUrgentRequest() != null;
+    }
+
+    @Deprecated
+    public boolean hasServiceRequestNumber() {
+        return getServiceRequestNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasFreeProcessed() {
+        return getFreeProcessed() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

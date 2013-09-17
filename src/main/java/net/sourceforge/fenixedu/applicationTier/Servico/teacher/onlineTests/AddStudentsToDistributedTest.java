@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -32,7 +32,7 @@ public class AddStudentsToDistributedTest {
         if (infoStudentList == null || infoStudentList.size() == 0) {
             return;
         }
-        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -57,7 +57,7 @@ public class AddStudentsToDistributedTest {
                 questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
                 for (InfoStudent infoStudent : infoStudentList) {
-                    Registration registration = AbstractDomainObject.fromExternalId(infoStudent.getExternalId());
+                    Registration registration = FenixFramework.getDomainObject(infoStudent.getExternalId());
                     StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
                     studentTestQuestion.setStudent(registration);
                     studentTestQuestion.setDistributedTest(distributedTest);
@@ -79,8 +79,8 @@ public class AddStudentsToDistributedTest {
                     if (question == null) {
                         throw new InvalidArgumentsServiceException();
                     }
-                    if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().get(0).getItemId() != null) {
-                        studentTestQuestion.setItemId(question.getSubQuestions().get(0).getItemId());
+                    if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().iterator().next().getItemId() != null) {
+                        studentTestQuestion.setItemId(question.getSubQuestions().iterator().next().getItemId());
                     }
                     studentTestQuestion.setQuestion(question);
                     questionList.remove(question);
@@ -104,7 +104,7 @@ public class AddStudentsToDistributedTest {
 
     private static final AddStudentsToDistributedTest serviceInstance = new AddStudentsToDistributedTest();
 
-    @Service
+    @Atomic
     public static void runAddStudentsToDistributedTest(String executionCourseId, String distributedTestId,
             List<InfoStudent> infoStudentList, String contextPath) throws InvalidArgumentsServiceException,
             NotAuthorizedException {

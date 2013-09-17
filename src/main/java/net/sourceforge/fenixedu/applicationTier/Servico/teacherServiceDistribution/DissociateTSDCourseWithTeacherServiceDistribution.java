@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DissociateTSDCourseWithTeacherServiceDistribution {
     protected void run(String tsdId, String tsdCourseId) {
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
-        TSDCourse tsdCourse = AbstractDomainObject.fromExternalId(tsdCourseId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
+        TSDCourse tsdCourse = FenixFramework.getDomainObject(tsdCourseId);
 
         for (TSDCourse course : tsd.getTSDCoursesByCompetenceCourse(tsdCourse.getCompetenceCourse())) {
             tsd.removeTSDCourseFromAllChilds(course);
@@ -26,7 +26,7 @@ public class DissociateTSDCourseWithTeacherServiceDistribution {
     private static final DissociateTSDCourseWithTeacherServiceDistribution serviceInstance =
             new DissociateTSDCourseWithTeacherServiceDistribution();
 
-    @Service
+    @Atomic
     public static void runDissociateTSDCourseWithTeacherServiceDistribution(String tsdId, String tsdCourseId)
             throws NotAuthorizedException {
         try {

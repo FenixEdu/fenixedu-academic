@@ -31,10 +31,10 @@ public class ResultTeacher extends ResultTeacher_Base {
     }
 
     public void delete() {
-        removeResult();
-        removeTeacher();
+        setResult(null);
+        setTeacher(null);
         setPublicationArea(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -49,6 +49,26 @@ public class ResultTeacher extends ResultTeacher_Base {
         if (!isParticipator) {
             throw new DomainException("error.result.teacherNotAuthor");
         }
+    }
+
+    @Deprecated
+    public boolean hasResult() {
+        return getResult() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublicationArea() {
+        return getPublicationArea() != null;
     }
 
 }

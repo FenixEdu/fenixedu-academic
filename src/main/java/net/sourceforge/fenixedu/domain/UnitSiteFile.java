@@ -19,8 +19,13 @@ public class UnitSiteFile extends UnitSiteFile_Base {
 
     @Override
     public void delete() {
-        removeUnitSite();
+        setUnitSite(null);
         super.delete();
+    }
+
+    @Deprecated
+    public boolean hasUnitSite() {
+        return getUnitSite() != null;
     }
 
 }

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.tutor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,10 +37,10 @@ public class TutorInfoDispatchAction extends FenixDispatchAction {
         final Person person = getLoggedPerson(request);
         List<Tutorship> pastTutors = new ArrayList<Tutorship>();
 
-        List<Registration> registrations = person.getStudent().getRegistrations();
+        Collection<Registration> registrations = person.getStudent().getRegistrations();
 
         for (Registration registration : registrations) {
-            List<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans();
+            Collection<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans();
             for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
                 for (Tutorship tutorship : studentCurricularPlan.getTutorships()) {
                     if (tutorship.isActive()) {
@@ -59,7 +60,7 @@ public class TutorInfoDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final Person person = getLoggedPerson(request);
-        final List<Registration> registrations = person.getStudent().getRegistrations();
+        final Collection<Registration> registrations = person.getStudent().getRegistrations();
 
         List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registrations);
 
@@ -71,7 +72,7 @@ public class TutorInfoDispatchAction extends FenixDispatchAction {
      * AUXIALIRY METHODS
      */
 
-    private List<ExecutionPeriodStatisticsBean> getStudentStatistics(List<Registration> registrations) {
+    private List<ExecutionPeriodStatisticsBean> getStudentStatistics(Collection<Registration> registrations) {
         List<ExecutionPeriodStatisticsBean> studentStatistics = new ArrayList<ExecutionPeriodStatisticsBean>();
 
         Map<ExecutionSemester, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod =

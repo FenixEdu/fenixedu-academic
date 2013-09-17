@@ -116,13 +116,6 @@ manager.url=http://localhost:8080/manager
 #   db.assiduousness.alias: 
 #   db.assiduousness.validationQuery: 
 #
-default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.SuportePersistenteOJB
-
-db.name=ciapl
-db.user=root
-db.pass=
-db.alias=//localhost:3306/ciapl?useUnicode=true&characterEncoding=utf8&clobCharacterEncoding=utf8&zeroDateTimeBehavior=convertToNull&statementInterceptors=net.sourceforge.fenixedu.persistenceTier.statementInterceptors.FenixStatementInterceptor
-
 db.assiduousness.name=AssiduidadeOracleTeste
 db.assiduousness.platform=MySQL
 db.assiduousness.driver=com.mysql.jdbc.Driver
@@ -490,36 +483,6 @@ webServices.external.urls=http://localhost:8080/ciapl/services/PersonManagement?
 #							 
 
 merge.units.emails=
-
-#------------------------------------------------------------------------------
-# Persistence delete error/warning configuration 
-#------------------------------------------------------------------------------
-#
-#  error.if.deleted.object.not.disconnected:
-#      If false issues a warning whenever an object is deleted but still has
-#      some connections to other objects. If true throw an error.
-#
-#  error.if.changing.deleted.object:
-#      If false issues a warning whenever an object is changed in any way 
-#      after it is deleted. If true thow an error.
-#
-#------------------------------------------------------------------------------
-
-error.if.deleted.object.not.disconnected=true
-error.if.changing.deleted.object=true
-
-#------------------------------------------------------------------------------
-# Persistence of DomainMetaObjects/Consistency Predicate configuration 
-#------------------------------------------------------------------------------
-#
-#  can.create.domain.meta.objects:
-#      Allows the fenix-framework to create a DomainMetaObject for each existing
-#	   domain object. WARNING: SETTING THIS PROPERTY TO TRUE TRIGGERS A SPECIAL
-#	   INITIALIZATION OF THE FRAMEWORK THAT CAN TAKE SEVERAL HOURS.
-#
-#------------------------------------------------------------------------------
-
-can.create.domain.meta.objects=false
 
 #------------------------------------------------------------------------------
 # Configuration properties for data dependend propetires

@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -89,7 +89,7 @@ public class GroupCheckService {
      * TheYear>][;semester=<TheSemester>]
      * 
      */
-    @Service
+    @Atomic
     public static Boolean run(String query) throws FenixServiceException {
 
         GroupCheckQuery groupCheckQuery = parseQuery(query);

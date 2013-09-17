@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteTutorship extends TutorshipManagement {
 
     public List<TutorshipErrorBean> run(String executionDegreeID, List<Tutorship> tutorsToDelete) {
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         List<TutorshipErrorBean> studentsWithErrors = new ArrayList<TutorshipErrorBean>();
@@ -46,7 +46,7 @@ public class DeleteTutorship extends TutorshipManagement {
 
     private static final DeleteTutorship serviceInstance = new DeleteTutorship();
 
-    @Service
+    @Atomic
     public static List<TutorshipErrorBean> runDeleteTutorship(String executionDegreeID, List<Tutorship> tutorsToDelete)
             throws NotAuthorizedException {
         try {

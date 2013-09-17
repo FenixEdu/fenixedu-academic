@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.util.ByteArray;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.bennu.backend.util.ConnectionManager;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -141,7 +141,7 @@ public abstract class File extends File_Base {
         } else {
             createDeleteFileRequest();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
     }
 
     protected void createDeleteFileRequest() {
@@ -164,13 +164,13 @@ public abstract class File extends File_Base {
         // For performance reasons...
         PreparedStatement stmt = null;
         try {
-            final Connection connection = Transaction.getCurrentJdbcConnection();
+            final Connection connection = ConnectionManager.getCurrentSQLConnection();
             stmt = connection.prepareStatement("SELECT OID FROM FILE WHERE EXTERNAL_STORAGE_IDENTIFICATION = ?");
 
             stmt.setString(1, externalStorageIdentification);
             final ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
-                return AbstractDomainObject.fromOID(resultSet.getLong(1));
+                return FenixFramework.getDomainObject(resultSet.getString(1));
             }
 
             return null;
@@ -195,6 +195,61 @@ public abstract class File extends File_Base {
             FileManagerFactory.getFactoryInstance().getContentFileManager()
                     .changeFilePermissions(getExternalStorageIdentification(), !isPublic);
         }
+    }
+
+    @Deprecated
+    public boolean hasChecksum() {
+        return getChecksum() != null;
+    }
+
+    @Deprecated
+    public boolean hasPermittedGroup() {
+        return getPermittedGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUploadTime() {
+        return getUploadTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasMimeType() {
+        return getMimeType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExternalStorageIdentification() {
+        return getExternalStorageIdentification() != null;
+    }
+
+    @Deprecated
+    public boolean hasChecksumAlgorithm() {
+        return getChecksumAlgorithm() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisplayName() {
+        return getDisplayName() != null;
+    }
+
+    @Deprecated
+    public boolean hasLocalContent() {
+        return getLocalContent() != null;
+    }
+
+    @Deprecated
+    public boolean hasFilename() {
+        return getFilename() != null;
+    }
+
+    @Deprecated
+    public boolean hasSize() {
+        return getSize() != null;
     }
 
 }

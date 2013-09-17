@@ -10,9 +10,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -20,9 +21,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteDegreeCurricularPlans {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static List run(List<String> degreeCurricularPlansIds) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         Iterator<String> iter = degreeCurricularPlansIds.iterator();
 
         List<String> undeletedDegreeCurricularPlansNames = new ArrayList<String>();
@@ -30,7 +31,7 @@ public class DeleteDegreeCurricularPlans {
         while (iter.hasNext()) {
 
             String degreeCurricularPlanId = iter.next();
-            DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+            DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
 
             try {
                 degreeCurricularPlan.delete();

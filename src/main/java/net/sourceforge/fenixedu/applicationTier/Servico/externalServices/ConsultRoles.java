@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.User;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ConsultRoles {
 
@@ -34,7 +34,7 @@ public class ConsultRoles {
                 && (allowedHosts.contains(host) || allowedHosts.contains(ip));
     }
 
-    @Service
+    @Atomic
     public static Set<Role> run(final String host, final String ip, final String password, final String userUId)
             throws FenixServiceException {
         if (isAllowed(host, ip, password)) {

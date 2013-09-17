@@ -5,7 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PaymentCodeMapping extends PaymentCodeMapping_Base {
 
@@ -91,12 +91,12 @@ public class PaymentCodeMapping extends PaymentCodeMapping_Base {
         }
     }
 
-    @Service
+    @Atomic
     public void delete() {
-        removeExecutionInterval();
-        removeOldPaymentCode();
-        removeNewPaymentCode();
-        removeRootDomainObject();
+        setExecutionInterval(null);
+        setOldPaymentCode(null);
+        setNewPaymentCode(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -108,10 +108,30 @@ public class PaymentCodeMapping extends PaymentCodeMapping_Base {
         return getExecutionInterval().equals(executionInterval);
     }
 
-    @Service
+    @Atomic
     static public PaymentCodeMapping create(final ExecutionInterval executionInterval, final PaymentCode oldCode,
             final PaymentCode newCode) {
         return new PaymentCodeMapping(executionInterval, oldCode, newCode);
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionInterval() {
+        return getExecutionInterval() != null;
+    }
+
+    @Deprecated
+    public boolean hasOldPaymentCode() {
+        return getOldPaymentCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasNewPaymentCode() {
+        return getNewPaymentCode() != null;
     }
 
 }

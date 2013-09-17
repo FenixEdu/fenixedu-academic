@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentAdmOffice", path = "/teacherPersonalExpectationsDefinitionPeriod", scope = "request",
         parameter = "method")
@@ -89,7 +89,7 @@ public class TeacherPersonalExpectationsDefinitionPeriodDA extends FenixDispatch
 
     protected ExecutionYear getExecutionYearFromParameter(final HttpServletRequest request) {
         final String executionYearIDString = request.getParameter("executionYearId");
-        return AbstractDomainObject.fromExternalId(executionYearIDString);
+        return FenixFramework.getDomainObject(executionYearIDString);
     }
 
     protected Department getDepartment(HttpServletRequest request) {

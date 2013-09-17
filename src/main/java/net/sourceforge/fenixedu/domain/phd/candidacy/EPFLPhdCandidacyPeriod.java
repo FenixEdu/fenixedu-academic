@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -55,7 +55,7 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
         return true;
     }
 
-    @Service
+    @Atomic
     public static EPFLPhdCandidacyPeriod create(final PhdCandidacyPeriodBean phdCandidacyPeriodBean) {
         final ExecutionYear executionYear = phdCandidacyPeriodBean.getExecutionYear();
         final DateTime start = phdCandidacyPeriodBean.getStart();

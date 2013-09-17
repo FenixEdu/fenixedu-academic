@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -21,8 +22,8 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -30,11 +31,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadStudentsAndGroupsWithoutShift {
 
-    @Service
+    @Atomic
     public static InfoSiteStudentsAndGroups run(String groupPropertiesId) throws FenixServiceException {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesId);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesId);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();
@@ -45,7 +46,7 @@ public class ReadStudentsAndGroupsWithoutShift {
         Iterator iterStudentGroups = studentGroups.iterator();
         while (iterStudentGroups.hasNext()) {
 
-            List studentGroupAttendList = new ArrayList();
+            Collection studentGroupAttendList;
             StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
 
             studentGroupAttendList = studentGroup.getAttends();

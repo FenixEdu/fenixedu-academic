@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 
 public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduationGradeConversionTable_Base {
@@ -25,7 +25,7 @@ public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduation
         return getSchool();
     }
 
-    @Service
+    @Atomic
     public static void createConversionTable(Unit institution, AcademicInterval year, CycleType type, String[] table,
             String[] percentages) {
         EctsCycleGraduationGradeConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getGraduationTableBy(type);
@@ -46,7 +46,12 @@ public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduation
 
     @Override
     public void delete() {
-        removeSchool();
+        setSchool(null);
         super.delete();
     }
+    @Deprecated
+    public boolean hasSchool() {
+        return getSchool() != null;
+    }
+
 }

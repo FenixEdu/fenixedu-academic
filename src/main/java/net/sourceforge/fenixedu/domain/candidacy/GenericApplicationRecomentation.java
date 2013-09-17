@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Random;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
-import pt.ist.fenixWebFramework.services.Service;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.apache.commons.codec.digest.DigestUtils;
+
+import pt.ist.fenixframework.Atomic;
 
 public class GenericApplicationRecomentation extends GenericApplicationRecomentation_Base {
 
@@ -27,7 +27,7 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
         sendEmailForRecommendation();
     }
 
-    @Service
+    @Atomic
     public void sendEmailForRecommendation() {
         final String subject =
                 BundleUtil.getStringFromResourceBundle("resources.CandidateResources",

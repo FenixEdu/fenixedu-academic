@@ -46,7 +46,7 @@ import org.apache.struts.util.LabelValueBean;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -164,7 +164,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
         DynaActionForm manageLessonForm = (DynaActionForm) form;
 
         InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
-        Shift shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
+        Shift shift = FenixFramework.getDomainObject(infoShift.getExternalId());
         GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
 
         if (maxLessonsPeriod != null) {
@@ -216,7 +216,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
         manageLessonForm.set("createLessonInstances", Boolean.TRUE);
 
-        Lesson lesson = AbstractDomainObject.fromExternalId(infoLesson.getExternalId());
+        Lesson lesson = FenixFramework.getDomainObject(infoLesson.getExternalId());
         GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = lesson.getShift().getExecutionCourse().getMaxLessonsPeriod();
         if (maxLessonsPeriod != null) {
             request.setAttribute("executionDegreeLessonsStartDate", maxLessonsPeriod.getLeft().toString("dd/MM/yyyy"));
@@ -298,10 +298,10 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
             final Shift shift;
             if (action != null && action.equals("edit")) {
-                final Lesson lesson = AbstractDomainObject.fromExternalId(infoLesson.getExternalId());
+                final Lesson lesson = FenixFramework.getDomainObject(infoLesson.getExternalId());
                 shift = lesson.getShift();
             } else {
-                shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
+                shift = FenixFramework.getDomainObject(infoShift.getExternalId());
             }
             final GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
 

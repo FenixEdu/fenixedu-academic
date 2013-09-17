@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class WriteBolonhaEnrolmentsList extends WriteEnrollmentsList {
 
@@ -60,7 +60,7 @@ public class WriteBolonhaEnrolmentsList extends WriteEnrollmentsList {
 
     private static final WriteBolonhaEnrolmentsList serviceInstance = new WriteBolonhaEnrolmentsList();
 
-    @Service
+    @Atomic
     public static void runWriteBolonhaEnrolmentsList(final StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
             ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, IUserView userView)
             throws FenixServiceException {

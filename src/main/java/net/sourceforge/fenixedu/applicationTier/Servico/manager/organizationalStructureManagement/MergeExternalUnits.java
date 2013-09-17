@@ -15,14 +15,15 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class MergeExternalUnits {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Unit fromUnit, Unit destinationUnit, Boolean sendMail) {
+        check(RolePredicates.MANAGER_PREDICATE);
 
         if (fromUnit != null && destinationUnit != null) {
 

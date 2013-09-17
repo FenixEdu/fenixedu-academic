@@ -15,13 +15,18 @@ public class InternalCoEvaluator extends InternalCoEvaluator_Base {
 
     @Override
     public void delete() {
-        removePerson();
+        setPerson(null);
         super.delete();
     }
 
     @Override
     public String getDescription() {
         return getPerson().getName() + " (" + getPerson().getMostImportantAlias() + ")";
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

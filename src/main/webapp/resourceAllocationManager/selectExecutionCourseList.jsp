@@ -1,8 +1,8 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
 <bean:define id="executionCourseList" name="<%= PresentationConstants.EXECUTION_COURSE_LIST_KEY %>"/>
 <html:select bundle="HTMLALT_RESOURCES" property="courseInitials" size="1">

@@ -27,7 +27,7 @@ public class PendingPartyContactBean {
         final List<PhysicalAddress> pendingOrValidPhysicalAddresses = getPerson().getPendingOrValidPhysicalAddresses();
         if (!pendingOrValidPhysicalAddresses.isEmpty()) {
             if (pendingOrValidPhysicalAddresses.size() > 0) {
-                return pendingOrValidPhysicalAddresses.get(0);
+                return pendingOrValidPhysicalAddresses.iterator().next();
             } else {
                 for (PhysicalAddress physicalAddress : pendingOrValidPhysicalAddresses) {
                     if (physicalAddress.hasPartyContactValidation()) {

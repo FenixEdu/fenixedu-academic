@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -16,8 +17,9 @@ import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Leonor Almeida
@@ -26,13 +28,13 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExternalActivities {
 
-    @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
+    @Atomic
     public static SiteView run(String user) {
+        check(RolePredicates.TEACHER_PREDICATE);
         Teacher teacher = Teacher.readTeacherByUsername(user);
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
-        List<ExternalActivity> externalActivities = teacher.getAssociatedExternalActivities();
+        Collection<ExternalActivity> externalActivities = teacher.getAssociatedExternalActivities();
 
         List result = (List) CollectionUtils.collect(externalActivities, new Transformer() {
             @Override

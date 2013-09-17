@@ -28,7 +28,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentAdmOffice", path = "/defineExpectationEvaluationGroups", scope = "request", parameter = "method")
 @Forwards(
@@ -153,17 +153,17 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 
     private ExpectationEvaluationGroup getExpectationEvaluationGroupFromParameter(final HttpServletRequest request) {
         final String goupIDString = request.getParameter("groupID");
-        return AbstractDomainObject.fromExternalId(goupIDString);
+        return FenixFramework.getDomainObject(goupIDString);
     }
 
     private ExecutionYear getExecutionYearFromParameter(final HttpServletRequest request) {
         final String executionYearIDString = request.getParameter("executionYearID");
-        return AbstractDomainObject.fromExternalId(executionYearIDString);
+        return FenixFramework.getDomainObject(executionYearIDString);
     }
 
     private Teacher getTeacherFromParameter(final HttpServletRequest request) {
         final String teacherIDString = request.getParameter("teacherID");
-        return AbstractDomainObject.fromExternalId(teacherIDString);
+        return FenixFramework.getDomainObject(teacherIDString);
     }
 
     private Department getDepartment(HttpServletRequest request) {

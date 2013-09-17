@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -50,7 +50,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
         if (id.hasRoleType(RoleType.COORDINATOR)) {
             final Person person = id.getPerson();
 
-            MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
+            MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
 
             if (masterDegreeCandidate == null) {
                 return false;
@@ -68,7 +68,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
                 // Modified by Fernanda Quitério
 
                 CurricularCourse curricularCourse =
-                        (CurricularCourse) AbstractDomainObject.fromExternalId(selectedCurricularCourse);
+                        (CurricularCourse) FenixFramework.getDomainObject(selectedCurricularCourse);
                 if (!curricularCourse.getDegreeCurricularPlan().equals(
                         masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan())) {
                     return false;

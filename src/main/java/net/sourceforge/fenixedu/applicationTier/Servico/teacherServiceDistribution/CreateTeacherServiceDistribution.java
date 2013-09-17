@@ -10,14 +10,14 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTeacherServiceDistribution {
     protected TeacherServiceDistribution run(String tsdProcessPhaseId, String fatherTeacherServiceDistributionId, String name) {
-        TSDProcessPhase tsdProcessPhase = AbstractDomainObject.fromExternalId(tsdProcessPhaseId);
+        TSDProcessPhase tsdProcessPhase = FenixFramework.getDomainObject(tsdProcessPhaseId);
         TeacherServiceDistribution fatherTeacherServiceDistribution =
-                AbstractDomainObject.fromExternalId(fatherTeacherServiceDistributionId);
+                FenixFramework.getDomainObject(fatherTeacherServiceDistributionId);
 
         TeacherServiceDistribution tsd =
                 new TeacherServiceDistribution(tsdProcessPhase, name, fatherTeacherServiceDistribution,
@@ -30,7 +30,7 @@ public class CreateTeacherServiceDistribution {
 
     private static final CreateTeacherServiceDistribution serviceInstance = new CreateTeacherServiceDistribution();
 
-    @Service
+    @Atomic
     public static TeacherServiceDistribution runCreateTeacherServiceDistribution(String tsdProcessPhaseId,
             String fatherTeacherServiceDistributionId, String name) throws NotAuthorizedException {
         try {

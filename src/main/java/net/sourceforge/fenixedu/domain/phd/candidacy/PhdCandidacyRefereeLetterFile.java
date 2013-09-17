@@ -33,7 +33,12 @@ public class PhdCandidacyRefereeLetterFile extends PhdCandidacyRefereeLetterFile
 
     @Override
     public void delete() {
-        removeLetter();
+        setLetter(null);
         super.delete();
     }
+    @Deprecated
+    public boolean hasLetter() {
+        return getLetter() != null;
+    }
+
 }

@@ -25,8 +25,8 @@ public class GuideSituation extends GuideSituation_Base {
     }
 
     public void delete() {
-        removeGuide();
-        removeRootDomainObject();
+        setGuide(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -43,6 +43,36 @@ public class GuideSituation extends GuideSituation_Base {
         } else {
             setDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasGuide() {
+        return getGuide() != null;
+    }
+
+    @Deprecated
+    public boolean hasRemarks() {
+        return getRemarks() != null;
+    }
+
+    @Deprecated
+    public boolean hasDateYearMonthDay() {
+        return getDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasSituation() {
+        return getSituation() != null;
     }
 
 }

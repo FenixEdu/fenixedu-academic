@@ -35,7 +35,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério 01/07/2003
@@ -171,7 +171,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
 
         if (studentCode != null) {
 
-            final Enrolment enrolment = (Enrolment) AbstractDomainObject.fromExternalId(enrolmentCode);
+            final Enrolment enrolment = (Enrolment) FenixFramework.getDomainObject(enrolmentCode);
             final InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
             infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(enrolment));
 

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -48,7 +49,7 @@ public abstract class BlockResumeResult implements Serializable {
 
     private int getNumberOfMandatoryIssues(InquiryResult inquiryResult) {
         int count = 0;
-        List<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
+        Collection<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
         for (InquiryBlock inquiryBlock : associatedBlocks) {
             for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
                 for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
@@ -79,7 +80,7 @@ public abstract class BlockResumeResult implements Serializable {
 
     private int getCommentedMandatoryIssues(InquiryResult inquiryResult) {
         int count = 0;
-        List<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
+        Collection<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
         for (InquiryBlock inquiryBlock : associatedBlocks) {
             for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
                 for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
@@ -126,8 +127,8 @@ public abstract class BlockResumeResult implements Serializable {
         }
     }
 
-    private List<InquiryBlock> getAssociatedBlocks(InquiryResult inquiryResult) {
-        List<InquiryBlock> associatedBlocks = inquiryResult.getInquiryQuestion().getAssociatedBlocks();
+    private Collection<InquiryBlock> getAssociatedBlocks(InquiryResult inquiryResult) {
+        Collection<InquiryBlock> associatedBlocks = inquiryResult.getInquiryQuestion().getAssociatedBlocks();
         if (!inquiryResult.getInquiryQuestion().getAssociatedResultBlocks().isEmpty()) {
             associatedBlocks = new ArrayList<InquiryBlock>();
             for (InquiryBlock inquiryBlock : inquiryResult.getInquiryQuestion().getAssociatedResultBlocks()) {

@@ -63,4 +63,9 @@ public class GroupAvailability extends GroupAvailability_Base {
     public String getExpression() {
         return getTargetGroup().getExpression();
     }
+    @Deprecated
+    public boolean hasTargetGroup() {
+        return getTargetGroup() != null;
+    }
+
 }

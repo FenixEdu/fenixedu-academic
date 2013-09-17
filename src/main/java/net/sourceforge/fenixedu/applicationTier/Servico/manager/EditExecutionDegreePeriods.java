@@ -8,17 +8,18 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditExecutionDegreePeriods {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(InfoExecutionDegreeEditor infoExecutionDegree) {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
-        final ExecutionDegree oldExecutionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
+        final ExecutionDegree oldExecutionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
 
         OccupationPeriod periodLessonsFirstSemester = setCompositePeriod(infoExecutionDegree.getInfoPeriodLessonsFirstSemester());
         oldExecutionDegree.setPeriodLessonsFirstSemester(periodLessonsFirstSemester);

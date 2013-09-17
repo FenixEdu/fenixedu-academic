@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateUnitSiteBanner extends UnitSiteBannerFileService {
 
@@ -29,7 +29,7 @@ public class CreateUnitSiteBanner extends UnitSiteBannerFileService {
 
     private static final CreateUnitSiteBanner serviceInstance = new CreateUnitSiteBanner();
 
-    @Service
+    @Atomic
     public static UnitSiteBanner runCreateUnitSiteBanner(UnitSite site, File mainFile, String mainName, File backFile,
             String backName, UnitSiteBannerRepeatType repeat, String color, String link, Integer weight)
             throws FenixServiceException, IOException, NotAuthorizedException {

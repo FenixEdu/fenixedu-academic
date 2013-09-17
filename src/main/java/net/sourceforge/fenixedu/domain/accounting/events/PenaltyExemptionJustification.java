@@ -47,4 +47,9 @@ public class PenaltyExemptionJustification extends PenaltyExemptionJustification
 
     }
 
+    @Deprecated
+    public boolean hasPenaltyExemptionJustificationType() {
+        return getPenaltyExemptionJustificationType() != null;
+    }
+
 }

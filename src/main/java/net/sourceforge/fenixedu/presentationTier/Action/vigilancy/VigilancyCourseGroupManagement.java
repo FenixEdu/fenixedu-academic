@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "examCoordination", path = "/vigilancy/vigilancyCourseGroupManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "editCourseGroup", path = "edit-course-group") })
@@ -37,7 +37,7 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
         VigilancyCourseGroupBean bean = new VigilancyCourseGroupBean();
         String oid = request.getParameter("gid");
 
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(oid);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(oid);
         bean.setSelectedVigilantGroup(group);
         bean.setSelectedDepartment(getDepartment(group));
         request.setAttribute("bean", bean);

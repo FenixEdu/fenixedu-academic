@@ -9,8 +9,8 @@ import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class PhdDocumentsZip implements Serializable {
 
@@ -28,11 +28,11 @@ public class PhdDocumentsZip implements Serializable {
                         result = o1.getFilename().compareTo(o2.getFilename());
                     }
 
-                    return (result != 0) ? result : AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2);
+                    return (result != 0) ? result : DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
                 }
             };
 
-    private Collection<PhdProgramProcessDocument> documents;
+    private final Collection<PhdProgramProcessDocument> documents;
 
     public PhdDocumentsZip() {
         this.documents = new TreeSet<PhdProgramProcessDocument>(COMPARE_BY_DOCUMENT_TYPE_AND_NAME);

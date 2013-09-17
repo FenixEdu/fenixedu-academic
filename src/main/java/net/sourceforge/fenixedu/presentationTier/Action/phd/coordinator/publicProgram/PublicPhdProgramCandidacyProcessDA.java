@@ -35,7 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Mapping(path = "/candidacies/phdProgramCandidacyProcess", module = "coordinator")
@@ -190,7 +190,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward removeThesisSubject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         ThesisSubject thesisSubject =
-                (ThesisSubject) AbstractDomainObject.fromExternalId((String) getFromRequest(request, "thesisSubjectId"));
+                (ThesisSubject) FenixFramework.getDomainObject((String) getFromRequest(request, "thesisSubjectId"));
         try {
             thesisSubject.delete();
         } catch (PhdDomainOperationException e) {

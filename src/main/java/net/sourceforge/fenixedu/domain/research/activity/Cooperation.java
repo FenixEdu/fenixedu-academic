@@ -40,11 +40,11 @@ public class Cooperation extends Cooperation_Base implements ParticipationsInter
      * references, particularly Participations
      */
     public void delete() {
-        for (; this.hasAnyParticipations(); getParticipations().get(0).delete()) {
+        for (; this.hasAnyParticipations(); getParticipations().iterator().next().delete()) {
             ;
         }
-        removeUnit();
-        removeRootDomainObject();
+        setUnit(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -86,4 +86,44 @@ public class Cooperation extends Cooperation_Base implements ParticipationsInter
             addParticipations(cooperationParticipation);
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation> getParticipations() {
+        return getParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipations() {
+        return !getParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasCooperationType() {
+        return getCooperationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDate() {
+        return getStartDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

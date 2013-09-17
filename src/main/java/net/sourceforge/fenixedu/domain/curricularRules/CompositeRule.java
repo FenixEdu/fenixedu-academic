@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public abstract class CompositeRule extends CompositeRule_Base {
 
     static {
-        CurricularRuleCompositeRule.addListener(new RelationAdapter<CompositeRule, CurricularRule>() {
+        getRelationCurricularRuleCompositeRule().addListener(new RelationAdapter<CompositeRule, CurricularRule>() {
             @Override
             public void beforeAdd(CompositeRule compositeRule, CurricularRule curricularRule) {
                 if (curricularRule.getNotRule() != null) {
@@ -49,7 +49,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
         this.setEnd(getEndExecutionPeriod(curricularRules));
 
         for (CurricularRule rule : curricularRules) {
-            rule.removeDegreeModuleToApplyRule();
+            rule.setDegreeModuleToApplyRule(null);
             rule.setParentCompositeRule(this);
         }
     }
@@ -93,7 +93,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
     public List<GenericPair<Object, Boolean>> getLabel(final String operator) {
         final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
         labelList.add(new GenericPair<Object, Boolean>("( ", false));
-        final Iterator<CurricularRule> curricularRulesIterator = getCurricularRules().listIterator();
+        final Iterator<CurricularRule> curricularRulesIterator = getCurricularRules().iterator();
         while (curricularRulesIterator.hasNext()) {
             labelList.addAll(curricularRulesIterator.next().getLabel());
             if (curricularRulesIterator.hasNext()) {
@@ -135,7 +135,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
 
     @Override
     protected void removeOwnParameters() {
-        for (; !getCurricularRules().isEmpty(); getCurricularRules().get(0).delete()) {
+        for (; !getCurricularRules().isEmpty(); getCurricularRules().iterator().next().delete()) {
             ;
         }
     }
@@ -144,4 +144,20 @@ public abstract class CompositeRule extends CompositeRule_Base {
     public boolean isLeaf() {
         return false;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getCurricularRules() {
+        return getCurricularRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularRules() {
+        return !getCurricularRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasCompositeRuleType() {
+        return getCompositeRuleType() != null;
+    }
+
 }

@@ -69,7 +69,7 @@ public class Attachment extends Attachment_Base {
     @Override
     public void delete() {
         logRemoveFile();
-        removeFile();
+        setFile(null);
         super.delete();
     }
 
@@ -104,4 +104,9 @@ public class Attachment extends Attachment_Base {
         }
 
     }
+    @Deprecated
+    public boolean hasFile() {
+        return getFile() != null;
+    }
+
 }

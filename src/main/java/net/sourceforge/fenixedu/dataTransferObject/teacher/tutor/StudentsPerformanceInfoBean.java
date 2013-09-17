@@ -124,12 +124,12 @@ public class StudentsPerformanceInfoBean implements Serializable {
         if (getStudent() != null) {
             if ((!getTutorshipsFromStudent().isEmpty()) && (!checkStudentsEntryYearMatchesStudent(getStudentsEntryYear()))) {
                 entryYears = TutorshipEntryExecutionYearProviderForSingleStudent.getExecutionYears(this);
-                setStudentsEntryYear(entryYears.get(0));
+                setStudentsEntryYear(entryYears.iterator().next());
             }
         } else {
             if ((!getTutorships().isEmpty()) && (!checkStudentsEntryYearMatchesDegree(getStudentsEntryYear()))) {
                 entryYears = TutorshipEntryExecutionYearProvider.getExecutionYears(this);
-                setStudentsEntryYear(entryYears.get(0));
+                setStudentsEntryYear(entryYears.iterator().next());
             }
         }
     }
@@ -165,7 +165,7 @@ public class StudentsPerformanceInfoBean implements Serializable {
     protected void refreshCurrentMonitoringYear() {
         List<ExecutionYear> monitoringYears = TutorshipMonitoringExecutionYearProvider.getExecutionYears(this);
         if (!checkCurrentMonitoringYearMatchesStudentsEntryYear(getCurrentMonitoringYear())) {
-            setCurrentMonitoringYear(monitoringYears.get(0));
+            setCurrentMonitoringYear(monitoringYears.iterator().next());
         }
     }
 
@@ -187,7 +187,7 @@ public class StudentsPerformanceInfoBean implements Serializable {
 
     public void setStudentsEntryYearFromList(List<ExecutionYear> studentsEntryYears) {
         if (!studentsEntryYears.contains(this.studentsEntryYear)) {
-            setStudentsEntryYear(studentsEntryYears.get(0));
+            setStudentsEntryYear(studentsEntryYears.iterator().next());
         }
     }
 
@@ -199,7 +199,7 @@ public class StudentsPerformanceInfoBean implements Serializable {
 
     public void setCurrentMonitoringYearFromList(List<ExecutionYear> monitoringYears) {
         if (!monitoringYears.contains(this.currentMonitoringYear)) {
-            setCurrentMonitoringYear(monitoringYears.get(0));
+            setCurrentMonitoringYear(monitoringYears.iterator().next());
         }
     }
 

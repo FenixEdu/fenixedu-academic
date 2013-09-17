@@ -62,7 +62,7 @@ public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEv
             }
             writtenTestsRooms.put(writtenTest.getExternalId(), buffer.toString());
             writtenTestsFreeSpace.put(writtenTest.getExternalId(),
-                    Integer.valueOf(totalCapacity - writtenTest.getWrittenEvaluationEnrolmentsCount()));
+                    Integer.valueOf(totalCapacity - writtenTest.getWrittenEvaluationEnrolmentsSet().size()));
         }
     }
 

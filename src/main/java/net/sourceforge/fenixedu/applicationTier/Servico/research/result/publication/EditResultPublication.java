@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResul
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EditResultPublication extends ResultPublicationService {
 
@@ -220,12 +220,12 @@ public class EditResultPublication extends ResultPublicationService {
 
     private static final EditResultPublication serviceInstance = new EditResultPublication();
 
-    @Service
+    @Atomic
     public static ResearchResultPublication runEditResultPublication(BookBean bean) throws FenixServiceException {
         return serviceInstance.run(bean);
     }
 
-    @Service
+    @Atomic
     public static ResearchResultPublication runEditResultPublication(ResultPublicationBean currentPublicationBean)
             throws FenixServiceException {
         if (currentPublicationBean instanceof BookBean) {

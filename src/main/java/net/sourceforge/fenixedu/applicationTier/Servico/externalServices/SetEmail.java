@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.User;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class SetEmail {
 
@@ -66,7 +66,7 @@ public class SetEmail {
         person.setInstitutionalEmailAddressValue(newEmail);
     }
 
-    @Service
+    @Atomic
     public static void run(final String host, final String ip, final String password, final String userUId, final String email)
             throws FenixServiceException {
         if (isAllowed(host, ip, password)) {

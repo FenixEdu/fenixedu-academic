@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -19,9 +18,10 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.AbstractDomainObject;
 
 public class InquiryResult extends InquiryResult_Base {
 
@@ -105,27 +105,18 @@ public class InquiryResult extends InquiryResult_Base {
         }
 
         @Override
+        @Atomic(mode = TxMode.READ)
         public void run() {
             try {
-                Transaction.withTransaction(true, new TransactionalCommand() {
-
-                    @Override
-                    public void doIt() {
-                        try {
-                            importRows(rows, resultDate);
-                        } catch (DomainException e) {
-                            domainException = e;
-                            throw e;
-                        }
-                    }
-                });
-            } finally {
-                Transaction.forceFinish();
+                importRows(rows, resultDate);
+            } catch (DomainException e) {
+                domainException = e;
+                throw e;
             }
         }
     }
 
-    @Service
+    @Atomic
     private static void importRows(String[] rows, DateTime resultDate) {
         for (String row : rows) {
             if (row != null) {
@@ -148,7 +139,7 @@ public class InquiryResult extends InquiryResult_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static void updateRows(String rows, DateTime resultDate) {
         String[] allRows = rows.split("\r\n");// \r\n
         for (int iter = 1; iter < allRows.length; iter++) {
@@ -223,7 +214,7 @@ public class InquiryResult extends InquiryResult_Base {
 
     private static void setExecutionSemester(String[] columns, InquiryResult inquiryResult) {
         String executionPeriodOID = columns[3];
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodOID);
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodOID);
         if (executionSemester == null) {
             throw new DomainException("executionPeriod: " + getPrintableColumns(columns));
         }
@@ -241,13 +232,11 @@ public class InquiryResult extends InquiryResult_Base {
         String professorshipOID = columns[8];
         String shiftTypeString = columns[9];
         ExecutionCourse executionCourse =
-                !StringUtils.isEmpty(executionCourseOID) ? (ExecutionCourse) AbstractDomainObject
-                        .fromExternalId(executionCourseOID) : null;
+                !StringUtils.isEmpty(executionCourseOID) ? (ExecutionCourse) FenixFramework.getDomainObject(executionCourseOID) : null;
         ExecutionDegree executionDegree =
-                !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) AbstractDomainObject
-                        .fromExternalId(executionDegreeOID) : null;
+                !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) FenixFramework.getDomainObject(executionDegreeOID) : null;
         Professorship professorship =
-                !StringUtils.isEmpty(professorshipOID) ? (Professorship) AbstractDomainObject.fromExternalId(professorshipOID) : null;
+                !StringUtils.isEmpty(professorshipOID) ? (Professorship) FenixFramework.getDomainObject(professorshipOID) : null;
         ShiftType shiftType = !StringUtils.isEmpty(shiftTypeString) ? ShiftType.valueOf(shiftTypeString) : null;
         inquiryResult.setExecutionCourse(executionCourse);
         inquiryResult.setExecutionDegree(executionDegree);
@@ -256,7 +245,7 @@ public class InquiryResult extends InquiryResult_Base {
 
         if (!(StringUtils.isEmpty(inquiryQuestionOID) && ResultClassification.GREY
                 .equals(inquiryResult.getResultClassification()))) {
-            InquiryQuestion inquiryQuestion = AbstractDomainObject.fromExternalId(inquiryQuestionOID);
+            InquiryQuestion inquiryQuestion = FenixFramework.getDomainObject(inquiryQuestionOID);
             if (inquiryQuestion == null) {
                 throw new DomainException("não tem question: " + getPrintableColumns(columns));
             }
@@ -288,12 +277,12 @@ public class InquiryResult extends InquiryResult_Base {
                     getExecutionDegree() != null ? getExecutionDegree().getExternalId() : StringUtils.EMPTY,
                     getProfessorship() != null ? getProfessorship().getExternalId() : StringUtils.EMPTY);
         }
-        removeExecutionCourse();
-        removeExecutionDegree();
-        removeExecutionPeriod();
-        removeInquiryQuestion();
-        removeProfessorship();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setExecutionDegree(null);
+        setExecutionPeriod(null);
+        setInquiryQuestion(null);
+        setProfessorship(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -330,8 +319,7 @@ public class InquiryResult extends InquiryResult_Base {
             //se vier com valor + classificação dá erro
             String executionDegreeOID = row[0];
             ExecutionDegree executionDegree =
-                    !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) AbstractDomainObject
-                            .fromExternalId(executionDegreeOID) : null;
+                    !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) FenixFramework.getDomainObject(executionDegreeOID) : null;
             setExecutionDegree(executionDegree);
 
             String resultTypeString = row[1];
@@ -345,12 +333,11 @@ public class InquiryResult extends InquiryResult_Base {
 
             String executionCourseOID = row[2];
             ExecutionCourse executionCourse =
-                    !StringUtils.isEmpty(executionCourseOID) ? (ExecutionCourse) AbstractDomainObject
-                            .fromExternalId(executionCourseOID) : null;
+                    !StringUtils.isEmpty(executionCourseOID) ? (ExecutionCourse) FenixFramework.getDomainObject(executionCourseOID) : null;
             setExecutionCourse(executionCourse);
 
             String executionPeriodOID = row[3];
-            ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodOID);
+            ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodOID);
             if (executionSemester == null) {
                 throw new DomainException("executionPeriod resultType doesn't exists: " + getPrintableColumns(row));
             }
@@ -372,7 +359,7 @@ public class InquiryResult extends InquiryResult_Base {
 
             String inquiryQuestionOID = row[7];//TODO ver melhor
             if (!(StringUtils.isEmpty(inquiryQuestionOID) && ResultClassification.GREY.equals(getResultClassification()))) {
-                InquiryQuestion inquiryQuestion = AbstractDomainObject.fromExternalId(inquiryQuestionOID);
+                InquiryQuestion inquiryQuestion = FenixFramework.getDomainObject(inquiryQuestionOID);
                 if (inquiryQuestion == null) {
                     throw new DomainException("não tem question: " + getPrintableColumns(row));
                 }
@@ -381,8 +368,7 @@ public class InquiryResult extends InquiryResult_Base {
 
             String professorshipOID = row[8];
             Professorship professorship =
-                    !StringUtils.isEmpty(professorshipOID) ? (Professorship) AbstractDomainObject
-                            .fromExternalId(professorshipOID) : null;
+                    !StringUtils.isEmpty(professorshipOID) ? (Professorship) FenixFramework.getDomainObject(professorshipOID) : null;
             setProfessorship(professorship);
 
             String shiftTypeString = row[9];
@@ -494,4 +480,84 @@ public class InquiryResult extends InquiryResult_Base {
         }
 
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment> getInquiryResultComments() {
+        return getInquiryResultCommentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryResultComments() {
+        return !getInquiryResultCommentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasValue() {
+        return getValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasResultClassification() {
+        return getResultClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasScaleValue() {
+        return getScaleValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasShiftType() {
+        return getShiftType() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDate() {
+        return getLastModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryQuestion() {
+        return getInquiryQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasConnectionType() {
+        return getConnectionType() != null;
+    }
+
+    @Deprecated
+    public boolean hasResultDate() {
+        return getResultDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasResultType() {
+        return getResultType() != null;
+    }
+
 }

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério 5/Dez/2003
@@ -31,7 +31,7 @@ abstract public class ReadDegreeCurricularPlanBaseService {
 
         if (degreeCurricularPlanId != null) {
 
-            DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+            DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
             List<CurricularCourseScope> allActiveScopes = degreeCurricularPlan.getActiveCurricularCourseScopes();
 
             if (allActiveScopes != null && allActiveScopes.size() > 0) {

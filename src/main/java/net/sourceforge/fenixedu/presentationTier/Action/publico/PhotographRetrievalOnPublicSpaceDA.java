@@ -12,13 +12,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/retrievePersonalPhoto", module = "publico")
 public class PhotographRetrievalOnPublicSpaceDA extends RetrievePersonalPhotoAction {
     public ActionForward retrievePhotographOnPublicSpace(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
-        Person person = AbstractDomainObject.fromExternalId(request.getParameter("personId"));
+        Person person = FenixFramework.getDomainObject(request.getParameter("personId"));
         return retrievePhotograph(request, response, person);
     }
 

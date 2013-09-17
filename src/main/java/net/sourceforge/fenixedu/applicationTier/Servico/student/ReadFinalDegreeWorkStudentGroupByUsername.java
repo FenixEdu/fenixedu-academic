@@ -10,17 +10,18 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Luis Cruz
  */
 public class ReadFinalDegreeWorkStudentGroupByUsername {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static InfoGroup run(final Person personUser, final ExecutionDegree executionDegree) {
+        check(RolePredicates.STUDENT_PREDICATE);
         final FinalDegreeWorkGroup finalDegreeWorkGroup = findFinalDegreeWorkGroup(personUser, executionDegree);
         return InfoGroup.newInfoFromDomain(finalDegreeWorkGroup);
     }

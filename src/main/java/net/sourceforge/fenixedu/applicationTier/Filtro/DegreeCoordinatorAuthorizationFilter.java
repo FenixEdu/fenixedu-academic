@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Mota
@@ -49,7 +49,7 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
         }
         try {
             final Person person = id.getPerson();
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
             if (executionDegree == null) {
                 return false;
             }

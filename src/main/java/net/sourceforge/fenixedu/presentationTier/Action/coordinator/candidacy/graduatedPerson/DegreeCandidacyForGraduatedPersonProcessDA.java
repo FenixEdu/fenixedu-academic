@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.candidacy.graduatedPerson;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,7 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/caseHandlingDegreeCandidacyForGraduatedPersonProcess", module = "coordinator",
         formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
@@ -85,7 +86,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends
 
     @Override
     protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-        List<IndividualCandidacyProcess> processes = process.getChildProcesses();
+        Collection<IndividualCandidacyProcess> processes = process.getChildProcesses();
         List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses =
                 new ArrayList<IndividualCandidacyProcess>();
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
@@ -105,7 +106,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {
-            return AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
+            return FenixFramework.getDomainObject(degreeCurricularPlanOID);
         }
 
         return null;
@@ -116,7 +117,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends
         if (!hasExecutionInterval(request)) {
             final List<ExecutionInterval> executionIntervals = readExecutionIntervalFilteredByCoordinatorTeam(request);
             if (executionIntervals.size() == 1) {
-                setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.get(0)));
+                setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.iterator().next()));
             } else {
                 request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
                 request.setAttribute("executionIntervals", executionIntervals);

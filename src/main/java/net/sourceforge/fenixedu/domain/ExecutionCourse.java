@@ -72,9 +72,10 @@ import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ExecutionCoursePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -110,7 +111,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         @Override
         public int compare(ExecutionCourse o1, ExecutionCourse o2) {
             final int c = Collator.getInstance().compare(o1.getNome(), o2.getNome());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };
@@ -125,7 +126,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                         return cep;
                     }
                     final int c = Collator.getInstance().compare(o1.getNome(), o2.getNome());
-                    return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
                 }
 
             };
@@ -134,12 +135,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public static final List<String> THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES = new ArrayList<String>();
 
     static {
-        CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
+        getRelationCurricularCourseExecutionCourse().addListener(new CurricularCourseExecutionCourseListener());
 
         BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER =
                 new OrderedRelationAdapter<ExecutionCourse, BibliographicReference>("associatedBibliographicReferences",
                         "referenceOrder");
-        ExecutionCourseBibliographicReference.addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
+        getRelationExecutionCourseBibliographicReference().addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
 
         THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deamb");
         THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("dec");
@@ -222,7 +223,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean hasProposals() {
         boolean result = false;
         boolean found = false;
-        List<ExportGrouping> groupPropertiesExecutionCourseList = getExportGroupings();
+        Collection<ExportGrouping> groupPropertiesExecutionCourseList = getExportGroupings();
         Iterator<ExportGrouping> iter = groupPropertiesExecutionCourseList.iterator();
         while (iter.hasNext() && !found) {
             ExportGrouping groupPropertiesExecutionCourseAux = iter.next();
@@ -462,7 +463,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (canBeDeleted()) {
 
             if (hasSender()) {
-                removeSender();
+                setSender(null);
             }
 
             if (hasSite()) {
@@ -473,46 +474,46 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 getBoard().delete();
             }
 
-            for (; !getMetadatas().isEmpty(); getMetadatas().get(0).delete()) {
+            for (; !getMetadatas().isEmpty(); getMetadatas().iterator().next().delete()) {
                 ;
             }
-            for (; !getTestGroups().isEmpty(); getTestGroups().get(0).delete()) {
+            for (; !getTestGroups().isEmpty(); getTestGroups().iterator().next().delete()) {
                 ;
             }
-            for (; !getExportGroupings().isEmpty(); getExportGroupings().get(0).delete()) {
+            for (; !getExportGroupings().isEmpty(); getExportGroupings().iterator().next().delete()) {
                 ;
             }
-            for (; !getGroupingSenderExecutionCourse().isEmpty(); getGroupingSenderExecutionCourse().get(0).delete()) {
+            for (; !getGroupingSenderExecutionCourse().isEmpty(); getGroupingSenderExecutionCourse().iterator().next().delete()) {
                 ;
             }
-            for (; !getCourseLoads().isEmpty(); getCourseLoads().get(0).delete()) {
+            for (; !getCourseLoads().isEmpty(); getCourseLoads().iterator().next().delete()) {
                 ;
             }
-            for (; !getProfessorships().isEmpty(); getProfessorships().get(0).delete()) {
+            for (; !getProfessorships().isEmpty(); getProfessorships().iterator().next().delete()) {
                 ;
             }
-            for (; !getLessonPlannings().isEmpty(); getLessonPlannings().get(0).delete()) {
+            for (; !getLessonPlannings().isEmpty(); getLessonPlannings().iterator().next().delete()) {
                 ;
             }
-            for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().get(0).delete()) {
+            for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().iterator().next().delete()) {
                 ;
             }
-            for (; !getAttends().isEmpty(); getAttends().get(0).delete()) {
+            for (; !getAttends().isEmpty(); getAttends().iterator().next().delete()) {
                 ;
             }
-            for (; !getForuns().isEmpty(); getForuns().get(0).delete()) {
+            for (; !getForuns().isEmpty(); getForuns().iterator().next().delete()) {
                 ;
             }
-            for (; !getExecutionCourseLogs().isEmpty(); getExecutionCourseLogs().get(0).delete()) {
+            for (; !getExecutionCourseLogs().isEmpty(); getExecutionCourseLogs().iterator().next().delete()) {
                 ;
             }
 
             removeFinalEvaluations();
             getAssociatedCurricularCourses().clear();
             getNonAffiliatedTeachers().clear();
-            removeVigilantGroup();
-            removeExecutionPeriod();
-            removeRootDomainObject();
+            setVigilantGroup(null);
+            setExecutionPeriod(null);
+            setRootDomainObject(null);
             super.deleteDomainObject();
 
         } else {
@@ -521,7 +522,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     private void removeFinalEvaluations() {
-        final Iterator<Evaluation> iterator = getAssociatedEvaluationsIterator();
+        final Iterator<Evaluation> iterator = getAssociatedEvaluationsSet().iterator();
         while (iterator.hasNext()) {
             final Evaluation evaluation = iterator.next();
             if (evaluation.isFinal()) {
@@ -634,7 +635,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                     StudentCurricularPlan studentCurricularPlanEntry = enrolment.getStudentCurricularPlan();
                     int numberOfEnrolmentsForThatExecutionCourse = 0;
 
-                    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolments()) {
+                    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolmentsSet()) {
                         if (enrolmentsFromStudentCPEntry.getCurricularCourse() == curricularCourseFromExecutionCourseEntry
                                 && (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(courseExecutionPeriod) <= 0)) {
                             ++numberOfEnrolmentsForThatExecutionCourse;
@@ -792,7 +793,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 evaluationComparisonDate = writtenEvaluation.getDayDate();
             } else if (evaluation instanceof FinalEvaluation) {
                 evaluationTypeDistinguisher = "4";
-                final ExecutionCourse executionCourse = evaluation.getAssociatedExecutionCourses().get(0);
+                final ExecutionCourse executionCourse = evaluation.getAssociatedExecutionCourses().iterator().next();
                 evaluationComparisonDate = executionCourse.getExecutionPeriod().getEndDate();
             } else {
                 throw new DomainException("unknown.evaluation.type", evaluation.getClass().getName());
@@ -815,8 +816,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return orderedAttends;
     }
 
-    private static class CurricularCourseExecutionCourseListener extends
-            dml.runtime.RelationAdapter<ExecutionCourse, CurricularCourse> {
+    private static class CurricularCourseExecutionCourseListener extends RelationAdapter<ExecutionCourse, CurricularCourse> {
 
         @Override
         public void afterAdd(ExecutionCourse execution, CurricularCourse curricular) {
@@ -1651,7 +1651,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
 
             boolean unique = true;
-            final String nameEn = getAssociatedCurricularCourses().get(0).getNameEn();
+            final String nameEn = getAssociatedCurricularCourses().iterator().next().getNameEn();
 
             for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
                 if (curricularCourse.getNameEn() == null || !curricularCourse.getNameEn().equals(nameEn)) {
@@ -1730,7 +1730,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public Registration getRegistration(Person person) {
         for (Registration registration : person.getStudents()) {
             for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
-                for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+                for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
                     for (ExecutionCourse course : enrolment.getExecutionCourses()) {
                         if (course.equals(this)) {
                             return registration;
@@ -2017,7 +2017,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public Map<ShiftType, CourseLoad> getCourseLoadsMap() {
         Map<ShiftType, CourseLoad> result = new HashMap<ShiftType, CourseLoad>();
-        List<CourseLoad> courseLoads = getCourseLoads();
+        Collection<CourseLoad> courseLoads = getCourseLoads();
         for (CourseLoad courseLoad : courseLoads) {
             result.put(courseLoad.getType(), courseLoad);
         }
@@ -2240,8 +2240,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return dcps;
     }
 
-    @Checked("ExecutionCoursePredicates.executionCourseLecturingTeacherOrDegreeCoordinator")
     public void searchAttends(SearchExecutionCourseAttendsBean attendsBean) {
+        check(this, ExecutionCoursePredicates.executionCourseLecturingTeacherOrDegreeCoordinator);
         final Predicate<Attends> filter = attendsBean.getFilters();
         final Collection<Attends> validAttends = new HashSet<Attends>();
         final Map<Integer, Integer> enrolmentNumberMap = new HashMap<Integer, Integer>();
@@ -2305,12 +2305,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                         curricularYear, name);
     }
 
-    public static List<ExecutionCourse> filterByAcademicInterval(AcademicInterval academicInterval) {
+    public static Collection<ExecutionCourse> filterByAcademicInterval(AcademicInterval academicInterval) {
         // FIXME (PERIODS) must be changed when ExecutionCourse is linked to
         // ExecutionInterval
         ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
 
-        return executionSemester == null ? Collections.EMPTY_LIST : executionSemester.getAssociatedExecutionCourses();
+        return executionSemester == null ? Collections.<ExecutionCourse> emptyList() : executionSemester
+                .getAssociatedExecutionCoursesSet();
     }
 
     public static ExecutionCourse getExecutionCourseByInitials(AcademicInterval academicInterval, String courseInitials) {
@@ -2361,7 +2362,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean isSplittable() {
-        if (getAssociatedCurricularCoursesCount() < 2) {
+        if (getAssociatedCurricularCoursesSet().size() < 2) {
             return false;
         }
         return true;
@@ -2422,7 +2423,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         boolean unique = true;
-        final String nameEn = getAssociatedCurricularCourses().get(0).getNameEn();
+        final String nameEn = getAssociatedCurricularCourses().iterator().next().getNameEn();
 
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
             if (curricularCourse.getNameEn() == null || !curricularCourse.getNameEn().equals(nameEn)) {
@@ -2550,7 +2551,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return hasExecutionCourseAudit();
     }
 
-    @Service
+    @Atomic
     public Boolean deleteInquiryResults() {
         boolean deletedResults = false;
         for (InquiryResult inquiryResult : getInquiryResultsSet()) {
@@ -2562,7 +2563,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return deletedResults;
     }
 
-    @Service
+    @Atomic
     public Boolean deleteInquiryResults(ExecutionDegree executionDegree, InquiryQuestion inquiryQuestion) {
         boolean deletedResults = false;
         for (InquiryResult inquiryResult : getInquiryResultsByExecutionDegree(executionDegree)) {
@@ -2575,7 +2576,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return deletedResults;
     }
 
-    @Service
+    @Atomic
     public Boolean deleteAllTeachersResults() {
         boolean deletedResults = false;
         for (InquiryResult inquiryResult : getInquiryResultsSet()) {
@@ -2606,14 +2607,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return false;
     }
 
-    @Service
+    @Atomic
     public void changeProjectTutorialCourse() {
         setProjectTutorialCourse(!getProjectTutorialCourse());
     }
 
     @Override
     public void addAssociatedCurricularCourses(final CurricularCourse curricularCourse) {
-        List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
 
         for (ExecutionCourse executionCourse : executionCourses) {
             if (this != executionCourse && executionCourse.getExecutionPeriod() == getExecutionPeriod()) {
@@ -2624,17 +2625,17 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         super.addAssociatedCurricularCourses(curricularCourse);
     }
 
-    @Service
+    @Atomic
     public void associateCurricularCourse(final CurricularCourse curricularCourse) {
         addAssociatedCurricularCourses(curricularCourse);
     }
 
-    @Service
+    @Atomic
     public void dissociateCurricularCourse(final CurricularCourse curricularCourse) {
         super.removeAssociatedCurricularCourses(curricularCourse);
     }
 
-    @Service
+    @Atomic
     public static ExecutionCourse createExecutionCourse(final ExecutionCourseManagementBean bean) {
         final ExecutionSemester executionSemester = bean.getSemester();
 
@@ -2704,4 +2705,345 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 //      }
 //      return false;
 //  }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment> getInquiryGlobalComments() {
+        return getInquiryGlobalCommentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryGlobalComments() {
+        return !getInquiryGlobalCommentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry> getStudentsInquiryRegistries() {
+        return getStudentsInquiryRegistriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentsInquiryRegistries() {
+        return !getStudentsInquiryRegistriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult> getStudentInquiriesCourseResults() {
+        return getStudentInquiriesCourseResultsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentInquiriesCourseResults() {
+        return !getStudentInquiriesCourseResultsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
+        return getAttendsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAttends() {
+        return !getAttendsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.Metadata> getMetadatas() {
+        return getMetadatasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMetadatas() {
+        return !getMetadatasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry> getYearDelegateCourseInquiries() {
+        return getYearDelegateCourseInquiriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyYearDelegateCourseInquiries() {
+        return !getYearDelegateCourseInquiriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty> getExecutionCourseProperties() {
+        return getExecutionCoursePropertiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionCourseProperties() {
+        return !getExecutionCoursePropertiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExportGrouping> getExportGroupings() {
+        return getExportGroupingsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExportGroupings() {
+        return !getExportGroupingsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getAssociatedCurricularCourses() {
+        return getAssociatedCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedCurricularCourses() {
+        return !getAssociatedCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry> getAssociatedInquiriesRegistries() {
+        return getAssociatedInquiriesRegistriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedInquiriesRegistries() {
+        return !getAssociatedInquiriesRegistriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourseLog> getExecutionCourseLogs() {
+        return getExecutionCourseLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionCourseLogs() {
+        return !getExecutionCourseLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Professorship> getProfessorships() {
+        return getProfessorshipsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProfessorships() {
+        return !getProfessorshipsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.NonAffiliatedTeacher> getNonAffiliatedTeachers() {
+        return getNonAffiliatedTeachersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNonAffiliatedTeachers() {
+        return !getNonAffiliatedTeachersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.BibliographicReference> getAssociatedBibliographicReferences() {
+        return getAssociatedBibliographicReferencesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedBibliographicReferences() {
+        return !getAssociatedBibliographicReferencesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.LessonPlanning> getLessonPlannings() {
+        return getLessonPlanningsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLessonPlannings() {
+        return !getLessonPlanningsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Evaluation> getAssociatedEvaluations() {
+        return getAssociatedEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedEvaluations() {
+        return !getAssociatedEvaluationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
+        return getAssociatedSummariesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedSummaries() {
+        return !getAssociatedSummariesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestGroup> getTestGroups() {
+        return getTestGroupsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTestGroups() {
+        return !getTestGroupsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesCourse> getAssociatedInquiriesCourses() {
+        return getAssociatedInquiriesCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedInquiriesCourses() {
+        return !getAssociatedInquiriesCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CourseLoad> getCourseLoads() {
+        return getCourseLoadsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCourseLoads() {
+        return !getCourseLoadsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer> getInquiryCourseAnswers() {
+        return getInquiryCourseAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryCourseAnswers() {
+        return !getInquiryCourseAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExportGrouping> getGroupingSenderExecutionCourse() {
+        return getGroupingSenderExecutionCourseSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGroupingSenderExecutionCourse() {
+        return !getGroupingSenderExecutionCourseSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer> getInquiryDelegatesAnswers() {
+        return getInquiryDelegatesAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryDelegatesAnswers() {
+        return !getInquiryDelegatesAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResult> getInquiryResults() {
+        return getInquiryResultsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryResults() {
+        return !getInquiryResultsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEntryPhase() {
+        return getEntryPhase() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSite() {
+        return getSite() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnitCreditValueNotes() {
+        return getUnitCreditValueNotes() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnitCreditValue() {
+        return getUnitCreditValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasComment() {
+        return getComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasEffortRate() {
+        return getEffortRate() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourseAudit() {
+        return getExecutionCourseAudit() != null;
+    }
+
+    @Deprecated
+    public boolean hasProjectTutorialCourse() {
+        return getProjectTutorialCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasSender() {
+        return getSender() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestScope() {
+        return getTestScope() != null;
+    }
+
+    @Deprecated
+    public boolean hasAvailableForInquiries() {
+        return getAvailableForInquiries() != null;
+    }
+
+    @Deprecated
+    public boolean hasSigla() {
+        return getSigla() != null;
+    }
+
+    @Deprecated
+    public boolean hasCourseReport() {
+        return getCourseReport() != null;
+    }
+
+    @Deprecated
+    public boolean hasBoard() {
+        return getBoard() != null;
+    }
+
+    @Deprecated
+    public boolean hasVigilantGroup() {
+        return getVigilantGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationMethod() {
+        return getEvaluationMethod() != null;
+    }
+
+    @Deprecated
+    public boolean hasNome() {
+        return getNome() != null;
+    }
+
+    @Deprecated
+    public boolean hasAvailableGradeSubmission() {
+        return getAvailableGradeSubmission() != null;
+    }
+
 }

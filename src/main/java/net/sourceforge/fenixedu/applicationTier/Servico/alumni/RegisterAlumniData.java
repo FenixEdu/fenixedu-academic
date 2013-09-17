@@ -21,11 +21,11 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RegisterAlumniData extends AlumniNotificationService {
 
-    @Service
+    @Atomic
     public static Alumni run(Alumni alumni, final UUID urlRequestToken) throws FenixServiceException {
 
         if (alumni == null) {
@@ -36,7 +36,7 @@ public class RegisterAlumniData extends AlumniNotificationService {
         return alumni;
     }
 
-    @Service
+    @Atomic
     public static Alumni run(Alumni alumni, final Boolean registered) throws FenixServiceException {
 
         alumni.setRegistered(registered);
@@ -46,12 +46,12 @@ public class RegisterAlumniData extends AlumniNotificationService {
         return alumni;
     }
 
-    @Service
+    @Atomic
     public static Alumni run(final Student student) {
         return new AlumniManager().registerAlumni(student);
     }
 
-    @Service
+    @Atomic
     public static Alumni run(final Integer studentNumber, final String documentIdNumber, final String email) {
 
         final Alumni alumni = new AlumniManager().registerAlumni(studentNumber, documentIdNumber, email);
@@ -59,7 +59,7 @@ public class RegisterAlumniData extends AlumniNotificationService {
         return alumni;
     }
 
-    @Service
+    @Atomic
     public static void run(final AlumniPublicAccessBean alumniBean, Boolean isEmployed) throws FenixServiceException {
         Person person = alumniBean.getAlumni().getStudent().getPerson();
         if (person == null) {
@@ -79,7 +79,7 @@ public class RegisterAlumniData extends AlumniNotificationService {
 
     }
 
-    @Service
+    @Atomic
     public static void run(final AlumniIdentityCheckRequestBean bean) {
 
         final Alumni alumni = new AlumniManager().checkAlumniIdentity(bean.getDocumentIdNumber(), bean.getContactEmail());
@@ -102,7 +102,7 @@ public class RegisterAlumniData extends AlumniNotificationService {
         }
     }
 
-    @Service
+    @Atomic
     public static void run(final AlumniPasswordBean bean) {
 
         bean.getAlumni().setRegistered(Boolean.TRUE);
@@ -186,7 +186,7 @@ public class RegisterAlumniData extends AlumniNotificationService {
 
     private static final RegisterAlumniData serviceInstance = new RegisterAlumniData();
 
-    @Service
+    @Atomic
     public static Alumni runRegisterAlumniData(Alumni alumni, UUID urlRequestToken) throws FenixServiceException  {
         return serviceInstance.run(alumni, urlRequestToken);
     }

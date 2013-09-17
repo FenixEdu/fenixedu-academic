@@ -38,4 +38,9 @@ public class SharedFunction extends SharedFunction_Base {
         }
         return personFunctions;
     }
+    @Deprecated
+    public boolean hasCredits() {
+        return getCredits() != null;
+    }
+
 }

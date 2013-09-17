@@ -15,15 +15,15 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentListByCurricularCourse {
 
     protected List run(final IUserView userView, final String curricularCourseID, final String executionYear)
             throws FenixServiceException {
 
-        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
+        final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseID);
         return (executionYear != null) ? cleanList(curricularCourse.getEnrolmentsByYear(executionYear)) : cleanList(curricularCourse
                 .getEnrolments());
     }
@@ -52,7 +52,7 @@ public class ReadStudentListByCurricularCourse {
 
     private static final ReadStudentListByCurricularCourse serviceInstance = new ReadStudentListByCurricularCourse();
 
-    @Service
+    @Atomic
     public static List runReadStudentListByCurricularCourse(IUserView userView, String curricularCourseID, String executionYear)
             throws FenixServiceException, NotAuthorizedException {
         StudentListByCurricularCourseAuthorizationFilter.instance.execute(curricularCourseID);

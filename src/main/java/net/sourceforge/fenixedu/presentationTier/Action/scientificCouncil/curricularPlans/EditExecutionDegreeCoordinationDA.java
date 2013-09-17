@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/curricularPlans/editExecutionDegreeCoordination", module = "scientificCouncil")
 @Forwards({
@@ -41,7 +41,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final String degreeCurricularPlanId = request.getParameter("degreeCurricularPlanId");
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
 
         final Set<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegreesSet();
 
@@ -57,7 +57,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
         String executionDegreeId = request.getParameter("executionDegreeId");
 
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
 
         String backTo = String.valueOf(request.getParameter("from"));
         String backPath;
@@ -85,7 +85,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final String personId = request.getParameter("personId");
-        final Person personAdding = rootDomainObject.fromExternalId(personId);
+        final Person personAdding = FenixFramework.getDomainObject(personId);
 
         ExecutionDegreeCoordinatorsBean coordsBean = getRenderedObject("coordsBean");
 
@@ -104,13 +104,13 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final String coordinatorId = request.getParameter("coordinatorId");
-        Coordinator coordinator = AbstractDomainObject.fromExternalId(coordinatorId);
+        Coordinator coordinator = FenixFramework.getDomainObject(coordinatorId);
 
         final String executionDegreeId = request.getParameter("executionDegreeId");
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
 
         final String personId = request.getParameter("personId");
-        final Person personSwitching = AbstractDomainObject.fromExternalId(personId);
+        final Person personSwitching = FenixFramework.getDomainObject(personId);
 
         String backPath = request.getParameter("backPath");
 
@@ -134,18 +134,18 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final String coordinatorId = request.getParameter("coordinatorId");
-        Coordinator coordinator = AbstractDomainObject.fromExternalId(coordinatorId);
+        Coordinator coordinator = FenixFramework.getDomainObject(coordinatorId);
 
         final String executionDegreeId = request.getParameter("executionDegreeId");
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
 
         final String personId = request.getParameter("personId");
-        final Person personDeleting = AbstractDomainObject.fromExternalId(personId);
+        final Person personDeleting = FenixFramework.getDomainObject(personId);
 
         String backPath = request.getParameter("backPath");
 
         coordinator.makeAction(OperationType.REMOVE, personDeleting);
-        // coordinator.removeCoordinator();
+        // coordinator.setCoordinator(null);
 
         ExecutionDegreeCoordinatorsBean coordsBean = new ExecutionDegreeCoordinatorsBean(executionDegree);
         coordsBean.setEscapedBackPath(backPath);
@@ -174,7 +174,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             sessionBean = new ExecutionDegreeCoordinatorsBean();
             final String executionYearId = String.valueOf(request.getParameter("executionYearId"));
             if (!executionYearId.equals("null")) {
-                ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
+                ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearId);
                 sessionBean.setExecutionYear(executionYear);
             } else {
                 request.setAttribute("sessionBean", sessionBean);
@@ -220,7 +220,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         String execDegId = request.getParameter("executionYearId");
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(execDegId);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(execDegId);
         List<CoordinatorLog> coordinatorLogs = getCoordinatorLogsByExecDegree(executionDegree);
         request.setAttribute("coordinatorLogs", coordinatorLogs);
 

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.thesis;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * Library operation of marking a thesis as archived (validated and with library
@@ -21,7 +21,7 @@ public class ThesisLibraryArchiveOperation extends ThesisLibraryArchiveOperation
     }
 
     public ThesisLibraryArchiveOperation(String thesisId, String performerId, String comment) {
-        this(AbstractDomainObject.<Thesis> fromExternalId(thesisId), AbstractDomainObject.<Person> fromExternalId(performerId),
+        this(FenixFramework.<Thesis> getDomainObject(thesisId), FenixFramework.<Person> getDomainObject(performerId),
                 comment);
     }
 
@@ -34,4 +34,9 @@ public class ThesisLibraryArchiveOperation extends ThesisLibraryArchiveOperation
     public String getPendingComment() {
         return null;
     }
+    @Deprecated
+    public boolean hasLibraryReference() {
+        return getLibraryReference() != null;
+    }
+
 }

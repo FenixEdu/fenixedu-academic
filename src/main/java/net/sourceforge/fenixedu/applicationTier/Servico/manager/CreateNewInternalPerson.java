@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateNewInternalPerson {
 
-    @Service
+    @Atomic
     public static Person run(final InternalPersonBean bean) {
         final Person person = new Person(bean, false, true); // validate
         // physical address
@@ -21,7 +21,7 @@ public class CreateNewInternalPerson {
         return person;
     }
 
-    @Service
+    @Atomic
     public static void attributeRoles(final Person person, final Set<RoleType> roleTypes) {
         if (roleTypes.isEmpty()) {
             throw new DomainException("error.create.internal.person.relation.type.none");

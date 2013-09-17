@@ -27,4 +27,14 @@ public class AnnualTeachingCreditsDocument extends AnnualTeachingCreditsDocument
         return filePath;
     }
 
+    @Deprecated
+    public boolean hasHasConfidencialInformation() {
+        return getHasConfidencialInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnnualTeachingCredits() {
+        return getAnnualTeachingCredits() != null;
+    }
+
 }

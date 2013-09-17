@@ -62,4 +62,29 @@ public class ResidenceYear extends ResidenceYear_Base {
         return getYear().intValue() == year;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.residence.ResidenceMonth> getMonths() {
+        return getMonthsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMonths() {
+        return !getMonthsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

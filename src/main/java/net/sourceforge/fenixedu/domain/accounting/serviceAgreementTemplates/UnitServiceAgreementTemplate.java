@@ -32,4 +32,9 @@ public class UnitServiceAgreementTemplate extends UnitServiceAgreementTemplate_B
         throw new DomainException("error.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate.cannot.modify.unit");
     }
 
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

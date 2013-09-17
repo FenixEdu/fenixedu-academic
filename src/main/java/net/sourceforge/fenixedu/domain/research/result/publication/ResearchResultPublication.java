@@ -17,7 +17,8 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.Resul
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
@@ -54,14 +55,14 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
     private void removeAssociations() {
         super.setPublisher(null);
         super.setOrganization(null);
-        for (; hasAnyPersonThatPrefers(); getPersonThatPrefers().get(0).delete()) {
+        for (; hasAnyPersonThatPrefers(); getPersonThatPrefers().iterator().next().delete()) {
             ;
         }
     }
 
     @Override
-    @Checked("ResultPredicates.writePredicate")
     public void delete() {
+        check(this, ResultPredicates.writePredicate);
         removeAssociations();
         super.delete();
     }
@@ -90,7 +91,7 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 
     protected String generateBibtexKey() {
         String key = "";
-        ResultParticipation participation = getOrderedResultParticipations().get(0);
+        ResultParticipation participation = getOrderedResultParticipations().iterator().next();
         key = participation.getPerson().getNickname();
         key = key.replace(" ", "");
         if ((getYear() != null) && (getYear() > 0)) {
@@ -279,4 +280,39 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
             }
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication> getPersonThatPrefers() {
+        return getPersonThatPrefersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonThatPrefers() {
+        return !getPersonThatPrefersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPublisher() {
+        return getPublisher() != null;
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasOrganization() {
+        return getOrganization() != null;
+    }
+
+    @Deprecated
+    public boolean hasMonth() {
+        return getMonth() != null;
+    }
+
+    @Deprecated
+    public boolean hasKeywords() {
+        return getKeywords() != null;
+    }
+
 }

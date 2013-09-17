@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEn
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EnrolInAffinityCycle {
 
@@ -30,7 +30,7 @@ public class EnrolInAffinityCycle {
      * conclude first cycle
      * 
      */
-    @Service
+    @Atomic
     public static void run(final Person person, final CycleEnrolmentBean cycleBean) {
         final StudentCurricularPlan studentCurricularPlan = cycleBean.getStudentCurricularPlan();
         studentCurricularPlan.enrolInAffinityCycle(cycleBean.getCycleCourseGroupToEnrol(), cycleBean.getExecutionPeriod());
@@ -46,7 +46,7 @@ public class EnrolInAffinityCycle {
      * 
      * 
      */
-    @Service
+    @Atomic
     public static Registration run(final Person person, final StudentCurricularPlan studentCurricularPlan,
             final CycleCourseGroup cycleCourseGroupToEnrol, final ExecutionSemester executionSemester)
             throws FenixServiceException {

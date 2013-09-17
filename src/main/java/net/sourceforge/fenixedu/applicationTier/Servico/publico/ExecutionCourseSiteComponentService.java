@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Jo�o Mota
@@ -33,7 +33,7 @@ public class ExecutionCourseSiteComponentService {
         if (infoSiteCode != null) {
             site = ExecutionCourseSite.readExecutionCourseSiteByOID(infoSiteCode);
         } else {
-            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourseCode);
+            final ExecutionCourse executionCourse = FenixFramework.getDomainObject(infoExecutionCourseCode);
             site = executionCourse.getSite();
         }
 
@@ -58,7 +58,7 @@ public class ExecutionCourseSiteComponentService {
 
     private static final ExecutionCourseSiteComponentService serviceInstance = new ExecutionCourseSiteComponentService();
 
-    @Service
+    @Atomic
     public static ExecutionCourseSiteView runExecutionCourseSiteComponentService(ISiteComponent commonComponent,
             ISiteComponent bodyComponent, String infoSiteCode, String infoExecutionCourseCode, Integer sectionIndex,
             Integer curricularCourseId) throws FenixServiceException, NonExistingAssociatedCurricularCoursesServiceException {

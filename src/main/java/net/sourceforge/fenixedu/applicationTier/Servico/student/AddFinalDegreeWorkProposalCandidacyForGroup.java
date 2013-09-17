@@ -9,9 +9,10 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -19,10 +20,10 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class AddFinalDegreeWorkProposalCandidacyForGroup {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(final FinalDegreeWorkGroup group, String proposalOID) throws FenixServiceException {
-        Proposal proposal = AbstractDomainObject.fromExternalId(proposalOID);
+        check(RolePredicates.STUDENT_PREDICATE);
+        Proposal proposal = FenixFramework.getDomainObject(proposalOID);
         if (group != null && group.getGroupProposals() != null
         /* && !CollectionUtils.exists(group.getStudents(), ) */) {
             Scheduleing scheduleing = group.getExecutionDegree().getScheduling();

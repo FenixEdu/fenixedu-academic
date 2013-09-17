@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
 
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class OfficialPublicationBean implements Serializable {
 
@@ -181,7 +181,7 @@ public class OfficialPublicationBean implements Serializable {
 
     }
 
-    @Service
+    @Atomic
     public void update(List<SpecializationName> names) {
         DegreeOfficialPublication degreeOfficialPublication = this.getDegreeOfficialPublication();
 

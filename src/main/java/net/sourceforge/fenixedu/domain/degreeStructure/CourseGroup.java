@@ -27,7 +27,8 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.CourseGroupPredicates;
 
 public class CourseGroup extends CourseGroup_Base {
 
@@ -102,10 +103,10 @@ public class CourseGroup extends CourseGroup_Base {
     public void delete() {
         if (getCanBeDeleted()) {
             super.delete();
-            for (; !getParticipatingContextCurricularRules().isEmpty(); getParticipatingContextCurricularRules().get(0).delete()) {
+            for (; !getParticipatingContextCurricularRules().isEmpty(); getParticipatingContextCurricularRules().iterator().next().delete()) {
                 ;
             }
-            removeRootDomainObject();
+            setRootDomainObject(null);
             super.deleteDomainObject();
         } else {
             throw new DomainException("courseGroup.notEmptyCourseGroupContexts");
@@ -133,7 +134,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-        return hasAnyParentContexts() ? getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan() : null;
+        return hasAnyParentContexts() ? getParentContexts().iterator().next().getParentCourseGroup().getParentDegreeCurricularPlan() : null;
     }
 
     public List<Context> getChildContexts(Class<? extends DegreeModule> clazz) {
@@ -254,14 +255,14 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     @Override
-    @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
     public void setName(String name) {
+        check(this, CourseGroupPredicates.curricularPlanMemberWritePredicate);
         super.setName(name);
     }
 
     @Override
-    @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
     public void setNameEn(String nameEn) {
+        check(this, CourseGroupPredicates.curricularPlanMemberWritePredicate);
         super.setNameEn(nameEn);
     }
 
@@ -505,7 +506,7 @@ public class CourseGroup extends CourseGroup_Base {
                     return creditsLimit.getMaximumCredits();
                 }
             }
-            return creditsLimitRules.get(0).getMaximumCredits();
+            return creditsLimitRules.iterator().next().getMaximumCredits();
         }
 
         final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionSemester);
@@ -538,7 +539,7 @@ public class CourseGroup extends CourseGroup_Base {
                     return creditsLimit.getMinimumCredits();
                 }
             }
-            return creditsLimitRules.get(0).getMinimumCredits();
+            return creditsLimitRules.iterator().next().getMinimumCredits();
         }
 
         final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionSemester);
@@ -817,6 +818,56 @@ public class CourseGroup extends CourseGroup_Base {
                 childDegreeModule.applyToCurricularCourses(executionYear, predicate);
             }
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> getPreviousEquivalencePlanEntries() {
+        return getPreviousEquivalencePlanEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPreviousEquivalencePlanEntries() {
+        return !getPreviousEquivalencePlanEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getChildContexts() {
+        return getChildContextsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChildContexts() {
+        return !getChildContextsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getParticipatingContextCurricularRules() {
+        return getParticipatingContextCurricularRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipatingContextCurricularRules() {
+        return !getParticipatingContextCurricularRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest> getOldCourseGroupChangeRequests() {
+        return getOldCourseGroupChangeRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOldCourseGroupChangeRequests() {
+        return !getOldCourseGroupChangeRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest> getNewCourseGroupChangeRequests() {
+        return getNewCourseGroupChangeRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNewCourseGroupChangeRequests() {
+        return !getNewCourseGroupChangeRequestsSet().isEmpty();
     }
 
 }

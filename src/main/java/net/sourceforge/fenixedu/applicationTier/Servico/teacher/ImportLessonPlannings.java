@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ImportLessonPlannings {
 
@@ -23,7 +23,7 @@ public class ImportLessonPlannings {
 
     private static final ImportLessonPlannings serviceInstance = new ImportLessonPlannings();
 
-    @Service
+    @Atomic
     public static void runImportLessonPlannings(String executionCourseID, ExecutionCourse executionCourseTo,
             ExecutionCourse executionCourseFrom, Shift shift) throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);

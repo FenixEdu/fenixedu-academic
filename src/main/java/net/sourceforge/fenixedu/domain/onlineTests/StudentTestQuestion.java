@@ -78,17 +78,17 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
     }
 
     public boolean isSubQuestion() {
-        if (getItemId() != null && (!getQuestion().getSubQuestions().get(0).getItemId().equals(getItemId()))) {
+        if (getItemId() != null && (!getQuestion().getSubQuestions().iterator().next().getItemId().equals(getItemId()))) {
             return true;
         }
         return false;
     }
 
     public void delete() {
-        removeDistributedTest();
-        removeQuestion();
-        removeStudent();
-        removeRootDomainObject();
+        setDistributedTest(null);
+        setQuestion(null);
+        setStudent(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -145,4 +145,59 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
             getStudentSubQuestions().set(i, newSubQuestion);
         }
     }
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestQuestionOrder() {
+        return getTestQuestionOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasItemId() {
+        return getItemId() != null;
+    }
+
+    @Deprecated
+    public boolean hasDistributedTest() {
+        return getDistributedTest() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasQuestion() {
+        return getQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestQuestionMark() {
+        return getTestQuestionMark() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponse() {
+        return getResponse() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestQuestionValue() {
+        return getTestQuestionValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasCorrectionFormula() {
+        return getCorrectionFormula() != null;
+    }
+
+    @Deprecated
+    public boolean hasOptionShuffle() {
+        return getOptionShuffle() != null;
+    }
+
 }

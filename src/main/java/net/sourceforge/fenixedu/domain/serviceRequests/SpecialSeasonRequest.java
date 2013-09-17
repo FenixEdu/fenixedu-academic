@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Academic
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
@@ -69,7 +69,7 @@ public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
         }
     }
 
-    @Service
+    @Atomic
     public void setDeferment(Boolean deferred) {
         this.setDeferred(deferred);
     }
@@ -112,6 +112,21 @@ public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
     @Override
     public boolean isToPrint() {
         return false;
+    }
+
+    @Deprecated
+    public boolean hasBeginExecutionPeriod() {
+        return getBeginExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndExecutionPeriod() {
+        return getEndExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasDeferred() {
+        return getDeferred() != null;
     }
 
 }

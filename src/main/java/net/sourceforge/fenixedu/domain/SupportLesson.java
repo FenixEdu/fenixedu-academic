@@ -40,8 +40,8 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
 
     public void delete(RoleType roleType) {
         getProfessorship().getExecutionCourse().getExecutionPeriod().checkValidCreditsPeriod(roleType);
-        removeProfessorship();
-        removeRootDomainObject();
+        setProfessorship(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -117,8 +117,8 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
     }
 
     public void delete() {
-        removeProfessorship();
-        removeRootDomainObject();
+        setProfessorship(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -155,6 +155,36 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
     public WeekDay getWeekDayObject() {
         final DiaSemana diaSemana = getWeekDay();
         return diaSemana == null ? null : WeekDay.getWeekDay(diaSemana);
+    }
+
+    @Deprecated
+    public boolean hasPlace() {
+        return getPlace() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndTimeHourMinuteSecond() {
+        return getEndTimeHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartTimeHourMinuteSecond() {
+        return getStartTimeHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeekDay() {
+        return getWeekDay() != null;
     }
 
 }

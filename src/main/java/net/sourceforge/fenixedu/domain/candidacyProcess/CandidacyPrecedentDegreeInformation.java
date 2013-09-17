@@ -63,4 +63,19 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
         return getOtherSchoolLevel() != null && !getOtherSchoolLevel().isEmpty();
     }
 
+    @Deprecated
+    public boolean hasCandidacy() {
+        return getCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCountry() {
+        return getCountry() != null;
+    }
+
 }

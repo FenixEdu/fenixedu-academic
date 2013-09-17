@@ -8,12 +8,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class Recipient extends Recipient_Base {
 
@@ -22,7 +23,7 @@ public class Recipient extends Recipient_Base {
         @Override
         public int compare(Recipient r1, Recipient r2) {
             final int c = r1.getToName().compareTo(r2.getToName());
-            return c == 0 ? COMPARATOR_BY_ID.compare(r1, r2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(r1, r2) : c;
         }
 
     };
@@ -46,12 +47,12 @@ public class Recipient extends Recipient_Base {
         setMembers(members);
     }
 
-    @Service
+    @Atomic
     public void delete() {
         for (final Sender sender : getSendersSet()) {
             removeSenders(sender);
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -75,7 +76,7 @@ public class Recipient extends Recipient_Base {
         return super.getToName();
     }
 
-    @Service
+    @Atomic
     private void initToName() {
         setToName(getMembers().getName());
     }
@@ -85,17 +86,17 @@ public class Recipient extends Recipient_Base {
         super.setToName(toName);
     }
 
-    @Service
+    @Atomic
     public static Recipient newInstance(final String toName, final Group members) {
         return new Recipient(toName, members);
     }
 
-    @Service
+    @Atomic
     public static Recipient newInstance(Group group) {
         return new Recipient(group);
     }
 
-    @Service
+    @Atomic
     public static List<Recipient> newInstance(final List<? extends Group> groups) {
         List<Recipient> recipients = new ArrayList<Recipient>();
         for (Group group : groups) {
@@ -131,6 +132,66 @@ public class Recipient extends Recipient_Base {
         }
 
         return builder.toString();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Sender> getSenders() {
+        return getSendersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySenders() {
+        return !getSendersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessagesTos() {
+        return getMessagesTosSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMessagesTos() {
+        return !getMessagesTosSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessagesCcs() {
+        return getMessagesCcsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMessagesCcs() {
+        return !getMessagesCcsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessages() {
+        return getMessagesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMessages() {
+        return !getMessagesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMembersSize() {
+        return getMembersSize() != null;
+    }
+
+    @Deprecated
+    public boolean hasMembers() {
+        return getMembers() != null;
+    }
+
+    @Deprecated
+    public boolean hasToName() {
+        return getToName() != null;
     }
 
 }

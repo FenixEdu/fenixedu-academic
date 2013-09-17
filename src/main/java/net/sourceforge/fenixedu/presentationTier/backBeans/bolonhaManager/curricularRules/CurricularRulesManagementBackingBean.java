@@ -46,7 +46,7 @@ import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     protected final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
@@ -107,12 +107,12 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     }
 
     public DegreeModule getDegreeModule() {
-        return (degreeModule == null) ? (degreeModule = AbstractDomainObject.fromExternalId(getDegreeModuleID())) : degreeModule;
+        return (degreeModule == null) ? (degreeModule = FenixFramework.getDomainObject(getDegreeModuleID())) : degreeModule;
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
         return (degreeCurricularPlan == null) ? (degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(getDegreeCurricularPlanID())) : degreeCurricularPlan;
+                FenixFramework.getDomainObject(getDegreeCurricularPlanID())) : degreeCurricularPlan;
     }
 
     public String getSelectedCurricularRuleType() {
@@ -359,7 +359,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     }
 
     public CurricularRule getCurricularRule() {
-        return (curricularRule == null) ? (curricularRule = AbstractDomainObject.fromExternalId(getCurricularRuleID())) : curricularRule;
+        return (curricularRule == null) ? (curricularRule = FenixFramework.getDomainObject(getCurricularRuleID())) : curricularRule;
     }
 
     public UISelectItems getDegreeModuleItems() {

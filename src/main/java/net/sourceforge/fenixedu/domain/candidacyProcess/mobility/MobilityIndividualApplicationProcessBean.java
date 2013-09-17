@@ -290,7 +290,7 @@ public class MobilityIndividualApplicationProcessBean extends IndividualCandidac
             throw new DomainException("error.mobility.application.process.invalid.dominant.degree");
         }
 
-        return candidateDegrees.get(0);
+        return candidateDegrees.iterator().next();
     }
 
     public List<Degree> getPossibleDegreesFromSelectedUniversity() {

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -131,7 +131,7 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
     }
 
     protected boolean hasStatute(Student student, ExecutionSemester executionSemester, Registration registration) {
-        List<StudentStatute> statutes = student.getStudentStatutes();
+        Collection<StudentStatute> statutes = student.getStudentStatutes();
         for (StudentStatute statute : statutes) {
             if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration)) {
                 continue;

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.SiteManagerAuthorizationF
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteSection {
 
@@ -26,7 +26,7 @@ public class DeleteSection {
 
     private static final DeleteSection serviceInstance = new DeleteSection();
 
-    @Service
+    @Atomic
     public static Boolean runDeleteSection(Site site, Section section) throws NotAuthorizedException {
         SiteManagerAuthorizationFilter.instance.execute(site);
         return serviceInstance.run(site, section);

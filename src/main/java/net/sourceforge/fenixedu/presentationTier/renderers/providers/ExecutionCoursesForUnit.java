@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -68,7 +69,7 @@ public class ExecutionCoursesForUnit implements DataProvider {
         return executionCourses;
     }
 
-    private List<ExecutionCourse> getExecutionCoursesFromCompetenceCourses(List<CompetenceCourse> competenceCourses) {
+    private List<ExecutionCourse> getExecutionCoursesFromCompetenceCourses(Collection<CompetenceCourse> competenceCourses) {
         List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
         ExecutionSemester period = ExecutionSemester.readActualExecutionSemester();
         for (CompetenceCourse course : competenceCourses) {

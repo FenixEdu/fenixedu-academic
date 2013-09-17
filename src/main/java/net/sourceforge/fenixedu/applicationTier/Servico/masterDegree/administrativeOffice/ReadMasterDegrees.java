@@ -14,11 +14,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadMasterDegrees {
 
-    @Service
+    @Atomic
     public static List run(String executionYearString) throws FenixServiceException {
         final ExecutionYear executionYear;
         if (executionYearString != null) {

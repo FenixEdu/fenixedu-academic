@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.curricularCours
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -19,7 +18,7 @@ public class SearchCurricularCourseBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private DegreeCurricularPlan degreeCurricularPlan;
+    private final DegreeCurricularPlan degreeCurricularPlan;
     private ExecutionYear beginExecutionYear;
     private ExecutionYear endExecutionYear;
     private String name;
@@ -37,7 +36,7 @@ public class SearchCurricularCourseBean implements Serializable {
     }
 
     private void searchRecursive(final CourseGroup courseGroup, Set<Context> result) {
-        List<Context> childContexts = courseGroup.getChildContexts();
+        Collection<Context> childContexts = courseGroup.getChildContexts();
 
         for (Context context : childContexts) {
             DegreeModule childDegreeModule = context.getChildDegreeModule();

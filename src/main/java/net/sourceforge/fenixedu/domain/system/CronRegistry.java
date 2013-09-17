@@ -20,4 +20,14 @@ public class CronRegistry extends CronRegistry_Base {
         return cronRegistries.isEmpty() ? null : cronRegistries.iterator().next();
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBuildVersion() {
+        return getBuildVersion() != null;
+    }
+
 }

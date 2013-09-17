@@ -5,7 +5,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.util.Month;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
@@ -41,10 +42,10 @@ public class BookPart extends BookPart_Base {
 
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setEditAll(String title, MultiLanguageString keywords, String bookTitle, String chapter, Integer firstPage,
             Integer lastPage, String publisher, Integer year, String volume, String series, String edition, Country country,
             String address, MultiLanguageString note, Month month, String url) {
+        check(this, ResultPredicates.writePredicate);
 
         super.checkRequiredParameters(keywords, note);
         checkRequiredParameters(title, bookTitle, firstPage, lastPage, publisher, year);
@@ -274,4 +275,44 @@ public class BookPart extends BookPart_Base {
     public Boolean getIsPossibleSelectPersonRole() {
         return true;
     }
+    @Deprecated
+    public boolean hasChapter() {
+        return getChapter() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstPage() {
+        return getFirstPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasBookTitle() {
+        return getBookTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasEdition() {
+        return getEdition() != null;
+    }
+
+    @Deprecated
+    public boolean hasVolume() {
+        return getVolume() != null;
+    }
+
+    @Deprecated
+    public boolean hasAddress() {
+        return getAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeries() {
+        return getSeries() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastPage() {
+        return getLastPage() != null;
+    }
+
 }

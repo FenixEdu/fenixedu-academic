@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateNewBlueprintVersion extends BlueprintVersionManagmentService {
 
@@ -31,7 +31,7 @@ public class CreateNewBlueprintVersion extends BlueprintVersionManagmentService 
 
     private static final CreateNewBlueprintVersion serviceInstance = new CreateNewBlueprintVersion();
 
-    @Service
+    @Atomic
     public static Blueprint runCreateNewBlueprintVersion(CreateBlueprintSubmissionBean blueprintSubmissionBean)
             throws IOException, FenixServiceException, NotAuthorizedException {
         SpaceManagerAuthorizationFilter.instance.execute();

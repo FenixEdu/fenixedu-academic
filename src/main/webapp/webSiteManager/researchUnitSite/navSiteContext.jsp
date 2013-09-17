@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <bean:define id="siteActionName" value="/manageResearchUnitSite.do" toScope="request"/>
 <bean:define id="siteContextParam" value="oid" toScope="request"/>

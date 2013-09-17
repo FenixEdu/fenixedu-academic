@@ -29,7 +29,7 @@ public class FirstTimeInstitutionStudentsPaymentPlanRule implements PaymentPlanR
 
     private boolean hasOnlyOneValidRegistration(final Student student, final Registration current) {
 
-        if (student.getRegistrationsCount() > 1) {
+        if (student.getRegistrationsSet().size() > 1) {
 
             for (final Registration registration : student.getRegistrations()) {
 

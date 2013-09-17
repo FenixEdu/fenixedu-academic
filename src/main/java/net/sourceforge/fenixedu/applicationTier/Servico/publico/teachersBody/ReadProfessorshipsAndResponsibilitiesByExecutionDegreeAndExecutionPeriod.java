@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico.teachersBody;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -19,15 +20,15 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod {
 
-    @Service
+    @Atomic
     public static List run(String executionDegreeId, Integer semester, Integer teacherType) throws FenixServiceException {
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
 
         List professorships;
         if (semester.intValue() == 0) {
@@ -106,8 +107,8 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
     private static List getResponsibleForsByDegree(ExecutionDegree executionDegree) {
         List responsibleFors = new ArrayList();
 
-        List<ExecutionCourse> executionCourses = new ArrayList();
-        List<ExecutionSemester> executionSemesters = executionDegree.getExecutionYear().getExecutionPeriods();
+        Collection<ExecutionCourse> executionCourses = new ArrayList();
+        Collection<ExecutionSemester> executionSemesters = executionDegree.getExecutionYear().getExecutionPeriods();
 
         for (ExecutionSemester executionSemester : executionSemesters) {
             executionCourses = executionSemester.getAssociatedExecutionCourses();

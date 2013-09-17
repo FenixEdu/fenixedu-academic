@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthor
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EditVirtualFunction extends ManageVirtualFunction {
@@ -18,7 +18,7 @@ public class EditVirtualFunction extends ManageVirtualFunction {
 
     private static final EditVirtualFunction serviceInstance = new EditVirtualFunction();
 
-    @Service
+    @Atomic
     public static void runEditVirtualFunction(UnitSite site, Function function, MultiLanguageString name)
             throws NotAuthorizedException {
         ResearchSiteManagerAuthorizationFilter.instance.execute(site);

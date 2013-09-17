@@ -5,6 +5,7 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -22,7 +23,7 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
                     if (o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber()) != 0) {
                         return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());
                     }
-                    return COMPARATOR_BY_ID.compare(o1, o2);
+                    return DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
                 }
             };
 
@@ -116,5 +117,10 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     }
 
     abstract public boolean isAvailableForTransitedRegistrations();
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
 
 }

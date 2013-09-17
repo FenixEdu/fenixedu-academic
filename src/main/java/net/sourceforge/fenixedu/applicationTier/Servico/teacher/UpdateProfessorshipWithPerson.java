@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class UpdateProfessorshipWithPerson {
-    @Service
+    @Atomic
     public static Boolean run(Person person, ExecutionYear executionYear, final List<String> executionCourseResponsabilities)
             throws MaxResponsibleForExceed, InvalidCategory, NotAuthorizedException {
         AbstractModifyProfessorshipWithPerson.run(person);

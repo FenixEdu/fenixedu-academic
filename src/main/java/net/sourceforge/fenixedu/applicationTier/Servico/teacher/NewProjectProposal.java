@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,8 +24,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -41,9 +42,9 @@ public class NewProjectProposal {
             return result;
         }
 
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesId);
-        ExecutionCourse goalExecutionCourse = AbstractDomainObject.fromExternalId(goalExecutionCourseId);
-        ExecutionCourse startExecutionCourse = AbstractDomainObject.fromExternalId(objectCode);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesId);
+        ExecutionCourse goalExecutionCourse = FenixFramework.getDomainObject(goalExecutionCourseId);
+        ExecutionCourse startExecutionCourse = FenixFramework.getDomainObject(objectCode);
         Person senderPerson = Teacher.readTeacherByUsername(senderPersonUsername).getPerson();
 
         if (groupProperties == null) {
@@ -59,7 +60,7 @@ public class NewProjectProposal {
             throw new InvalidArgumentsServiceException("error.noPerson");
         }
 
-        List listaRelation = groupProperties.getExportGroupings();
+        Collection listaRelation = groupProperties.getExportGroupings();
         Iterator iterRelation = listaRelation.iterator();
         while (iterRelation.hasNext()) {
             ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterRelation.next();
@@ -89,7 +90,7 @@ public class NewProjectProposal {
         List group = new ArrayList();
         List allOtherProfessors = new ArrayList();
 
-        List professorships = goalExecutionCourse.getProfessorships();
+        Collection professorships = goalExecutionCourse.getProfessorships();
         Iterator iterProfessorship = professorships.iterator();
         while (iterProfessorship.hasNext()) {
             Professorship professorship = (Professorship) iterProfessorship.next();
@@ -104,7 +105,7 @@ public class NewProjectProposal {
 
         List groupAux = new ArrayList();
 
-        List professorshipsAux = startExecutionCourse.getProfessorships();
+        Collection professorshipsAux = startExecutionCourse.getProfessorships();
         Iterator iterProfessorshipAux = professorshipsAux.iterator();
         while (iterProfessorshipAux.hasNext()) {
             Professorship professorshipAux = (Professorship) iterProfessorshipAux.next();
@@ -131,7 +132,7 @@ public class NewProjectProposal {
                 groupingStudentNumbers.add(attend.getRegistration().getNumber());
             }
 
-            Iterator iterAttends2 = goalExecutionCourse.getAttendsIterator();
+            Iterator iterAttends2 = goalExecutionCourse.getAttendsSet().iterator();
             while (iterAttends2.hasNext()) {
                 Attends attend = (Attends) iterAttends2.next();
                 if (!groupingStudentNumbers.contains(attend.getRegistration().getNumber())) {
@@ -154,7 +155,7 @@ public class NewProjectProposal {
 
     private static final NewProjectProposal serviceInstance = new NewProjectProposal();
 
-    @Service
+    @Atomic
     public static Boolean runNewProjectProposal(String objectCode, String goalExecutionCourseId, String groupPropertiesId,
             String senderPersonUsername) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(objectCode);

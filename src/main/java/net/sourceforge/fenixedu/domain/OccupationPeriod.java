@@ -248,7 +248,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 
         super.setNextPeriod(null);
         super.setPreviousPeriod(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
 
         if (nextPeriod != null) {
@@ -643,6 +643,46 @@ public class OccupationPeriod extends OccupationPeriod_Base {
             }
         }
 
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Lesson> getLessons() {
+        return getLessonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLessons() {
+        return !getLessonsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.OccupationPeriodReference> getExecutionDegrees() {
+        return getExecutionDegreesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionDegrees() {
+        return !getExecutionDegreesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNextPeriod() {
+        return getNextPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasPeriodInterval() {
+        return getPeriodInterval() != null;
+    }
+
+    @Deprecated
+    public boolean hasPreviousPeriod() {
+        return getPreviousPeriod() != null;
     }
 
 }

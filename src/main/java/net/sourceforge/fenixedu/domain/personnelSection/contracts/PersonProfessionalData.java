@@ -34,8 +34,8 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
     }
 
     public GiafProfessionalData getGiafProfessionalData() {
-        if (getGiafProfessionalDatasCount() == 1) {
-            return getGiafProfessionalDatasIterator().next();
+        if (getGiafProfessionalDatasSet().size() == 1) {
+            return getGiafProfessionalDatasSet().iterator().next();
         }
         throw new DomainException("more.than.one.GiafProfessionalData");
     }
@@ -287,6 +287,21 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
             }
         }
         return null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData> getGiafProfessionalDatas() {
+        return getGiafProfessionalDatasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGiafProfessionalDatas() {
+        return !getGiafProfessionalDatasSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

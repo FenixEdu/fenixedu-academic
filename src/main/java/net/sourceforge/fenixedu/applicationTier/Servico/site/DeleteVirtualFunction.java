@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteVirtualFunction extends ManageVirtualFunction {
 
@@ -26,7 +26,7 @@ public class DeleteVirtualFunction extends ManageVirtualFunction {
 
     private static final DeleteVirtualFunction serviceInstance = new DeleteVirtualFunction();
 
-    @Service
+    @Atomic
     public static void runDeleteVirtualFunction(UnitSite site, Function function) throws NotAuthorizedException {
         ResearchSiteManagerAuthorizationFilter.instance.execute(site);
         serviceInstance.run(site, function);

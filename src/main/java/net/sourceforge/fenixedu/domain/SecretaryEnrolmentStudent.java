@@ -8,9 +8,29 @@ public class SecretaryEnrolmentStudent extends SecretaryEnrolmentStudent_Base {
     }
 
     public void delete() {
-        removeStudent();
-        removeRootDomainObject();
+        setStudent(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasReasonType() {
+        return getReasonType() != null;
+    }
+
+    @Deprecated
+    public boolean hasReasonDescription() {
+        return getReasonDescription() != null;
     }
 
 }

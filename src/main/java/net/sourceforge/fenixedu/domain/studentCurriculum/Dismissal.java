@@ -212,7 +212,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
         createCurriculumLineLog(EnrolmentAction.UNENROL);
 
         final Credits credits = getCredits();
-        removeCredits();
+        setCredits(null);
         if (credits != null && !credits.hasAnyDismissals()) {
             credits.delete();
         }
@@ -347,4 +347,9 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
         ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
         return enumerationResources.getString(this.getClass().getName());
     }
+    @Deprecated
+    public boolean hasCredits() {
+        return getCredits() != null;
+    }
+
 }

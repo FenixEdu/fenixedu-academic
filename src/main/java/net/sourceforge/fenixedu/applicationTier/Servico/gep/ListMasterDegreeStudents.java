@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ListMasterDegreeStudents {
 
-    @Service
+    @Atomic
     public static Collection run(String executionYearName) {
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 

@@ -22,7 +22,7 @@ public class FunctionalityCall extends FunctionalityCall_Base {
 
     @Override
     protected void disconnect() {
-        removeFunctionality();
+        setFunctionality(null);
         super.disconnect();
     }
 
@@ -33,6 +33,11 @@ public class FunctionalityCall extends FunctionalityCall_Base {
             cont.logRemoveFunctionalityCall(this);
         }
         super.logDeleteNode();
+    }
+
+    @Deprecated
+    public boolean hasFunctionality() {
+        return getFunctionality() != null;
     }
 
 }

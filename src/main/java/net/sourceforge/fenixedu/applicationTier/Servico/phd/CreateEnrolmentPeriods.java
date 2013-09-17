@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateEnrolmentPeriods {
 
-    @Service
+    @Atomic
     static public void create(final Collection<DegreeCurricularPlan> degreeCurricularPlans, final ExecutionSemester semester,
             final DateTime startDate, final DateTime endDate) {
 

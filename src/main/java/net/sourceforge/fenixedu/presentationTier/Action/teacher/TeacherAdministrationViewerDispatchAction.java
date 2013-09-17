@@ -125,7 +125,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitï¿½rio
@@ -145,7 +145,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     // ========================
     public ActionForward prepareCustomizationOptions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getObjectCode(request));
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(getObjectCode(request));
         final InfoSite infoSite = InfoSite.newInfoFromDomain(executionCourse.getSite());
         final ISiteComponent customizationOptionsComponent = infoSite;
         readSiteView(request, customizationOptionsComponent, null, null, null);
@@ -165,7 +165,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward submitDataToImportCustomizationOptions(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getObjectCode(request));
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(getObjectCode(request));
         final IViewState viewState = RenderUtils.getViewState();
         final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();
         request.setAttribute("importContentBean", bean);
@@ -176,7 +176,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward submitDataToImportCustomizationOptionsPostBack(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getObjectCode(request));
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(getObjectCode(request));
         final IViewState viewState = RenderUtils.getViewState();
         final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();
         if (bean.getCurricularYear() == null || bean.getExecutionPeriod() == null || bean.getExecutionDegree() == null) {
@@ -191,7 +191,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward prepareImportCustomizationOptions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getObjectCode(request));
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(getObjectCode(request));
         request.setAttribute("importContentBean", new ImportContentBean());
         request.setAttribute("executionCourse", executionCourse);
         return mapping.findForward("importCustomizationOptions");
@@ -205,7 +205,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         request.setAttribute("importContentBean", bean);
 
         ExecutionCourse executionCourseFrom = bean.getExecutionCourse();
-        ExecutionCourse executionCourseTo = AbstractDomainObject.fromExternalId(getObjectCode(request));
+        ExecutionCourse executionCourseTo = FenixFramework.getDomainObject(getObjectCode(request));
 
         try {
             ImportCustomizationOptions.runImportCustomizationOptions(executionCourseTo.getExternalId(),
@@ -464,8 +464,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
                 if ((person.getTeacher() != null && (person.getTeacher().getTeacherAuthorization(executionSemester) != null || person
                         .hasRole(RoleType.TEACHER))) || slappedInTheFaceOneTooManyTimes(executionSemester)) {
                     Professorship professorship =
-                            Professorship.create(false, AbstractDomainObject.<ExecutionCourse> fromExternalId(objectCode),
-                                    person, 0.0);
+                            Professorship
+                                    .create(false, FenixFramework.<ExecutionCourse> getDomainObject(objectCode), person, 0.0);
                     request.setAttribute("teacherOID", professorship.getExternalId());
                 } else if (person.getTeacher() == null || person.getTeacher().getCategoryByPeriod(executionSemester) == null) {
                     final ActionErrors actionErrors = new ActionErrors();
@@ -496,7 +496,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String objectCode = getObjectCode(request);
         try {
             DeleteProfessorshipWithPerson.run(professorship.getPerson(),
-                    AbstractDomainObject.<ExecutionCourse> fromExternalId(objectCode));
+                    FenixFramework.<ExecutionCourse> getDomainObject(objectCode));
         } catch (NotAuthorizedException e) {
             final ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error", new ActionError("label.not.authorized.action"));
@@ -569,8 +569,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String sectionCode = getSectionCode(request);
         String objectCode = getObjectCode(request);
         try {
-            DeleteSection.runDeleteSection((Site) AbstractDomainObject.fromExternalId(objectCode),
-                    (Section) AbstractDomainObject.fromExternalId(sectionCode));
+            DeleteSection.runDeleteSection((Site) FenixFramework.getDomainObject(objectCode),
+                    (Section) FenixFramework.getDomainObject(sectionCode));
             // if this section has a parent section
             if (superiorSectionCode != null) {
                 return viewSection(mapping, form, request, response, superiorSectionCode);
@@ -635,8 +635,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String itemCode = getItemCode(request);
         String objectCode = getObjectCode(request);
         try {
-            DeleteItem.runDeleteItem((Site) AbstractDomainObject.fromExternalId(objectCode),
-                    (Item) AbstractDomainObject.fromExternalId(itemCode));
+            DeleteItem.runDeleteItem((Site) FenixFramework.getDomainObject(objectCode),
+                    (Item) FenixFramework.getDomainObject(itemCode));
         } catch (DomainException ex) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add(ex.getMessage(), new ActionError(ex.getMessage()));
@@ -655,8 +655,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         SiteManagementActionMapping siteManagementActionMapping = (SiteManagementActionMapping) mapping;
         ISiteComponent siteComponent = getSiteComponentForValidationError(siteManagementActionMapping);
         String infoExecutionCourseCode = null;
-        Object obj1 = null;
-        Object obj2 = null;
+        String obj1 = null;
+        String obj2 = null;
         if (siteComponent instanceof InfoSiteItems) {
             obj1 = getItemCode(request);
         } else if (siteComponent instanceof InfoSiteTeachers) {
@@ -707,7 +707,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, String infoExecutionCourseCode,
-            Object obj1, Object obj2) throws FenixActionException {
+            String obj1, String obj2) throws FenixActionException {
 
         String objectCode = null;
         if (infoExecutionCourseCode == null) {
@@ -716,7 +716,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourseCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(infoExecutionCourseCode);
         try {
             TeacherAdministrationSiteView siteView =
                     TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(
@@ -924,7 +924,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
         ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
         readSiteView(request, viewStudentGroup, null, studentGroupCodeString, null);
-        StudentGroup group = AbstractDomainObject.fromExternalId(studentGroupCodeString);
+        StudentGroup group = FenixFramework.getDomainObject(studentGroupCodeString);
         request.setAttribute("groupMembers", group.getAttends());
 
         if (request.getParameter("showPhotos") == null) {
@@ -972,7 +972,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward viewDeletedStudentGroupInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         String groupId = request.getParameter("studentGroupId");
-        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(groupId);
+        StudentGroup studentGroup = FenixFramework.getDomainObject(groupId);
         request.setAttribute("studentGroup", studentGroup);
         request.setAttribute("executionCourseID", request.getParameter("executionCourseID"));
         request.setAttribute("projectID", request.getParameter("projectID"));
@@ -981,7 +981,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     public List<LabelValueBean> getShiftTypeLabelValues(HttpServletRequest request, Boolean differentiatedCapacity) {
         String executionCourseCode = getObjectCode(request);
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
 
         List<LabelValueBean> shiftTypeValues = new ArrayList<LabelValueBean>();
 
@@ -1026,7 +1026,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         readSiteView(request, null, null, null, null);
         String executionCourseCode = getObjectCode(request);
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
         String shiftType = (String) groupPropertiesForm.get("shiftType");
 
         if (shiftType.equalsIgnoreCase("Sem Turno")) {
@@ -1087,12 +1087,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Boolean automaticEnrolment = getAutomaticEnrolment(groupPropertiesForm);
         if (automaticEnrolment) {
             String objectCode = getObjectCode(request);
-            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(objectCode);
+            ExecutionCourse executionCourse = FenixFramework.getDomainObject(objectCode);
             if (infoGroupProperties != null) {
                 infoGroupProperties.setMaximumCapacity(1);
                 infoGroupProperties.setMinimumCapacity(1);
                 infoGroupProperties.setIdealCapacity(1);
-                infoGroupProperties.setGroupMaximumNumber(executionCourse.getAttendsCount());
+                infoGroupProperties.setGroupMaximumNumber(executionCourse.getAttendsSet().size());
                 infoGroupProperties.setShiftType(null);
                 infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(2));
                 infoGroupProperties.setAutomaticEnrolment(Boolean.TRUE);
@@ -1101,7 +1101,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             groupPropertiesForm.set("maximumCapacity", "1");
             groupPropertiesForm.set("minimumCapacity", "1");
             groupPropertiesForm.set("idealCapacity", "1");
-            groupPropertiesForm.set("groupMaximumNumber", String.valueOf(executionCourse.getAttendsCount()));
+            groupPropertiesForm.set("groupMaximumNumber", String.valueOf(executionCourse.getAttendsSet().size()));
             groupPropertiesForm.set("shiftType", "SEM TURNO");
             groupPropertiesForm.set("enrolmentPolicy", "false");
             request.setAttribute("automaticEnrolment", "true");
@@ -1335,7 +1335,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         request.setAttribute("enrolmentPolicyValues", enrolmentPolicyValues);
         request.setAttribute("enrolmentPolicyNames", enrolmentPolicyNames);
 
-        final Grouping grouping = AbstractDomainObject.fromExternalId(infoGroupProperties.getExternalId());
+        final Grouping grouping = FenixFramework.getDomainObject(infoGroupProperties.getExternalId());
 
         String shiftType = (String) groupPropertiesForm.get("shiftType");
         if (getDifferentiatedCapacity(groupPropertiesForm) && shiftType.equalsIgnoreCase("Sem Turno")) {
@@ -1347,7 +1347,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             infoGroupProperties.setDifferentiatedCapacity(Boolean.FALSE);
         } else if (infoGroupProperties.getDifferentiatedCapacity()) {
             String executionCourseCode = getObjectCode(request);
-            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+            ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
             List<InfoShift> shiftsList;
             if (!shiftType.isEmpty()) {
                 shiftsList = InfoShift.getInfoShiftsByType(executionCourse, ShiftType.valueOf(shiftType));
@@ -1372,10 +1372,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             request.setAttribute("differentiatedCapacityDisable", "true");
         }
 
-        if (!grouping.getStudentGroups().isEmpty() && !grouping.getAutomaticEnrolment()) {
+        if (!grouping.getStudentGroupsSet().isEmpty() && !grouping.getAutomaticEnrolment()) {
             request.setAttribute("automaticEnrolmentDisable", "true");
         }
-        if (!grouping.getStudentGroups().isEmpty() && !grouping.getDifferentiatedCapacity()) {
+        if (!grouping.getStudentGroupsSet().isEmpty() && !grouping.getDifferentiatedCapacity()) {
             request.setAttribute("differentiatedCapacityDisable", "true");
         }
         if (grouping.hasAnyStudentGroups() && grouping.getAutomaticEnrolment() && !infoGroupProperties.getAutomaticEnrolment()) {

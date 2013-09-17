@@ -41,7 +41,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -118,7 +118,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
         String executionCourseID = request.getParameter("executionCourseID");
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
         List institutions = (List) ReadAllInstitutions.run();
         Collections.sort(institutions, new BeanComparator("name"));
@@ -154,11 +154,10 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
         final Unit institution =
                 StringUtils.isEmpty(nonAffiliatedTeacherInstitutionID) ? (Unit) InsertInstitution
-                        .run(nonAffiliatedTeacherInstitutionName) : (Unit) AbstractDomainObject
-                        .fromExternalId(nonAffiliatedTeacherInstitutionID);
+                        .run(nonAffiliatedTeacherInstitutionName) : (Unit) FenixFramework.getDomainObject(nonAffiliatedTeacherInstitutionID);
 
         NonAffiliatedTeacher.associateToInstitutionAndExecutionCourse(nonAffiliatedTeacherName, institution,
-                AbstractDomainObject.<ExecutionCourse> fromExternalId((String) dynaActionForm.get("executionCourseID")));
+                FenixFramework.<ExecutionCourse> getDomainObject((String) dynaActionForm.get("executionCourseID")));
 
         return viewTeachingStaff(mapping, actionForm, request, response);
 

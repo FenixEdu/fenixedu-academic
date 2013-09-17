@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -15,7 +16,7 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCode_Base {
 
@@ -97,7 +98,7 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 
     protected static IndividualCandidacyPaymentCode getAvailablePaymentCodeForReuse() {
         Set<IndividualCandidacyPaymentCode> individualCandidacyPaymentCodes =
-                RootDomainObject.readAllDomainObjects(IndividualCandidacyPaymentCode.class);
+                DomainObjectUtil.readAllDomainObjects(IndividualCandidacyPaymentCode.class);
 
         for (IndividualCandidacyPaymentCode paymentCode : individualCandidacyPaymentCodes) {
             if (paymentCode.isAvailableForReuse()) {
@@ -135,7 +136,7 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
         super._setPerson(student);
     }
 
-    @Service
+    @Atomic
     public static List<IndividualCandidacyPaymentCode> createPaymentCodes(PaymentCodeType type, LocalDate beginDate,
             LocalDate endDate, Money minimum, Money maximum, Integer numberOfPaymentCodes) {
 

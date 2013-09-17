@@ -47,4 +47,9 @@ public class PersonInformationLog extends PersonInformationLog_Base {
         return personViewed;
     }
 
+    @Deprecated
+    public boolean hasPersonViewed() {
+        return getPersonViewed() != null;
+    }
+
 }

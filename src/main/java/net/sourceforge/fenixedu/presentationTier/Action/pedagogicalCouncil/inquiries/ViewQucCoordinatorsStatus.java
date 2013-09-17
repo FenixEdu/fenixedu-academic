@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -49,7 +49,7 @@ public class ViewQucCoordinatorsStatus extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final CoordinatorInquiryTemplate coordinatorInquiryTemplate =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "coordinatorInquiryOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "coordinatorInquiryOID").toString());
         final ExecutionSemester executionPeriod = coordinatorInquiryTemplate.getExecutionPeriod();
 
         final Set<Coordinator> coordinatorsSet = new HashSet<Coordinator>();

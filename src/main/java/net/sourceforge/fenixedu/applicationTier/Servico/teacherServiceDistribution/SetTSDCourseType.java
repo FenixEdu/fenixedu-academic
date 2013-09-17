@@ -8,14 +8,14 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourseType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SetTSDCourseType {
     protected void run(String competenceCourseId, String tsdId, String executionPeriodId, String courseTSDProcessPhaseTypeString) {
-        CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseId);
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
+        CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
 
         TSDCourseType tsdCourseType = TSDCourseType.valueOf(courseTSDProcessPhaseTypeString);
 
@@ -26,7 +26,7 @@ public class SetTSDCourseType {
 
     private static final SetTSDCourseType serviceInstance = new SetTSDCourseType();
 
-    @Service
+    @Atomic
     public static void runSetTSDCourseType(String competenceCourseId, String tsdId, String executionPeriodId,
             String courseTSDProcessPhaseTypeString) throws NotAuthorizedException {
         try {

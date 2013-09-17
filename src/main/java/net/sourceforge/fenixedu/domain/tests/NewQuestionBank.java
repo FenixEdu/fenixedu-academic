@@ -21,9 +21,14 @@ public class NewQuestionBank extends NewQuestionBank_Base {
 
     @Override
     public void delete() {
-        this.removeOwner();
+        this.setOwner(null);
 
         super.delete();
+    }
+
+    @Deprecated
+    public boolean hasOwner() {
+        return getOwner() != null;
     }
 
 }

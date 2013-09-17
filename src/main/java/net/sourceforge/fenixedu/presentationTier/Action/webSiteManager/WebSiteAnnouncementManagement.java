@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
@@ -209,13 +209,12 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
         return showStickyAnnoucements(mapping, form, request, response);
     }
 
-    private void changeOrder(AnnouncementBoard board, HttpServletRequest request, int direction) throws 
-            FenixServiceException {
-        Integer oid = Integer.parseInt(request.getParameter("oid"));
+    private void changeOrder(AnnouncementBoard board, HttpServletRequest request, int direction) throws FenixServiceException {
+        String oid = request.getParameter("oid");
 
         IUserView userView = getUserView(request);
 
-        Announcement announcement = AbstractDomainObject.fromOID(oid);
+        Announcement announcement = FenixFramework.getDomainObject(oid);
         List<Announcement> orderedAnnouncements = getOrderedStickies(board, request);
 
         int index = orderedAnnouncements.indexOf(announcement);
@@ -281,7 +280,7 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
     }
 
     private List<Announcement> getOrderedStickies(AnnouncementBoard board, HttpServletRequest request)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         return super.getStickyAnnouncements(board, request);
 
     }

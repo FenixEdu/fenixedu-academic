@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentAdmOffice", path = "/vigilancy/examCoordinatorManagement", scope = "request", parameter = "method")
 @Forwards(
@@ -80,12 +80,12 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         String departmentId = request.getParameter("deparmentId");
         String unitId = request.getParameter("unitId");
 
-        ExamCoordinator coordinator = (ExamCoordinator) AbstractDomainObject.fromExternalId(oid);
+        ExamCoordinator coordinator = (ExamCoordinator) FenixFramework.getDomainObject(oid);
 
         DeleteExamCoordinator.run(coordinator);
 
-        Department deparment = (Department) AbstractDomainObject.fromExternalId(departmentId);
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitId);
+        Department deparment = (Department) FenixFramework.getDomainObject(departmentId);
+        Unit unit = (Unit) FenixFramework.getDomainObject(unitId);
 
         VigilantGroupBean bean = new VigilantGroupBean();
         bean.setSelectedDepartment(deparment);
@@ -102,8 +102,8 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         String departmentId = request.getParameter("deparmentId");
         String unitId = request.getParameter("unitId");
 
-        Department deparment = AbstractDomainObject.fromExternalId(departmentId);
-        Unit unit = AbstractDomainObject.fromExternalId(unitId);
+        Department deparment = FenixFramework.getDomainObject(departmentId);
+        Unit unit = FenixFramework.getDomainObject(unitId);
 
         VigilantGroupBean bean = new VigilantGroupBean();
         bean.setSelectedDepartment(deparment);
@@ -120,8 +120,8 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         String departmentId = request.getParameter("deparmentId");
         String unitId = request.getParameter("unitId");
 
-        Department deparment = (Department) AbstractDomainObject.fromExternalId(departmentId);
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitId);
+        Department deparment = (Department) FenixFramework.getDomainObject(departmentId);
+        Unit unit = (Unit) FenixFramework.getDomainObject(unitId);
 
         VigilantGroupBean bean = new VigilantGroupBean();
         bean.setSelectedDepartment(deparment);

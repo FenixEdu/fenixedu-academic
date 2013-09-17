@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Mota
@@ -49,7 +49,7 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
         }
 
         boolean result = false;
-        final BibliographicReference bibliographicReference = AbstractDomainObject.fromExternalId(bibliographicReferenceID);
+        final BibliographicReference bibliographicReference = FenixFramework.getDomainObject(bibliographicReferenceID);
         final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
         if (bibliographicReference != null && teacher != null) {

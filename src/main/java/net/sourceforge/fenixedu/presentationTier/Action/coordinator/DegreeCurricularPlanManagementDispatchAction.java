@@ -46,7 +46,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quit�rio 06/Nov/2003
@@ -161,7 +161,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
                 List<InfoCurricularCourseScope> equalCurricularCourseScopes = null;
                 if (lastKey != null) {
-                    InfoCurricularCourseScope lastIntroduced = curricularCourseScopesHashMap.get(lastKey).get(0);
+                    InfoCurricularCourseScope lastIntroduced = curricularCourseScopesHashMap.get(lastKey).iterator().next();
 
                     if (scopesAreEqual(curricularCourseScope, lastIntroduced)) {
                         equalCurricularCourseScopes = curricularCourseScopesHashMap.get(lastKey);
@@ -183,7 +183,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
     private List<InfoCurricularCourseScope> getInfoCurricularCourseScopes(InfoCurricularCourse infoCurricularCourse) {
         CurricularCourse curricularCourse =
-                (CurricularCourse) AbstractDomainObject.fromExternalId(infoCurricularCourse.getExternalId());
+                (CurricularCourse) FenixFramework.getDomainObject(infoCurricularCourse.getExternalId());
         List<InfoCurricularCourseScope> infoScopes =
                 (List) CollectionUtils.collect(curricularCourse.getScopes(), new Transformer() {
 

@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadTeachersInformation {
 
-    @Service
+    @Atomic
     public static List run(String executionDegreeId, Boolean basic, String executionYearString) {
 
         List<Professorship> professorships = null;
@@ -37,7 +37,7 @@ public class ReadTeachersInformation {
             List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear.getYear());
             List<DegreeCurricularPlan> degreeCurricularPlans = getDegreeCurricularPlans(executionDegrees);
             ExecutionYear executionDegressExecutionYear =
-                    (!degreeCurricularPlans.isEmpty()) ? executionDegrees.get(0).getExecutionYear() : null;
+                    (!degreeCurricularPlans.isEmpty()) ? executionDegrees.iterator().next().getExecutionYear() : null;
 
             if (basic == null) {
                 professorships =
@@ -49,7 +49,7 @@ public class ReadTeachersInformation {
                                 executionDegressExecutionYear, basic);
             }
         } else {
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
 
             if (basic == null) {
                 professorships =
@@ -103,7 +103,7 @@ public class ReadTeachersInformation {
 
     private static final ReadTeachersInformation serviceInstance = new ReadTeachersInformation();
 
-    @Service
+    @Atomic
     public static List runReadTeachersInformation(String executionDegreeId, Boolean basic, String executionYearString)
             throws NotAuthorizedException {
         try {

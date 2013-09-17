@@ -12,26 +12,26 @@ public class NewGroupElement extends NewGroupElement_Base {
     }
 
     public void deleteUp() {
-        this.removeParent();
+        this.setParent(null);
 
         this.delete();
     }
 
     public void deleteDown() {
-        this.removeChild();
+        this.setChild(null);
 
         this.delete();
     }
 
     public void deleteBothWays() {
-        this.removeChild();
-        this.removeParent();
+        this.setChild(null);
+        this.setParent(null);
 
         this.delete();
     }
 
     private void delete() {
-        this.removeRootDomainObject();
+        this.setRootDomainObject(null);
 
         this.deleteDomainObject();
     }
@@ -44,5 +44,25 @@ public class NewGroupElement extends NewGroupElement_Base {
     }
 
     public static final Comparator<NewGroupElement> POSITION_COMPARATOR = new PositionComparator();
+
+    @Deprecated
+    public boolean hasParent() {
+        return getParent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPosition() {
+        return getPosition() != null;
+    }
+
+    @Deprecated
+    public boolean hasChild() {
+        return getChild() != null;
+    }
 
 }

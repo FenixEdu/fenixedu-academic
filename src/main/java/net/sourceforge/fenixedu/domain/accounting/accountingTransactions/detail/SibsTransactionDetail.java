@@ -51,4 +51,14 @@ public class SibsTransactionDetail extends SibsTransactionDetail_Base {
         throw new DomainException("error.accounting.accountingTransactions.detail.SibsTransactionDetail.cannot.modify.sibsCode");
     }
 
+    @Deprecated
+    public boolean hasSibsCode() {
+        return getSibsCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasSibsTransactionId() {
+        return getSibsTransactionId() != null;
+    }
+
 }

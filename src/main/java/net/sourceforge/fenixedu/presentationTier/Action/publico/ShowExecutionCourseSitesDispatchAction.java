@@ -28,7 +28,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "publico", path = "/showExecutionCourseSites", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "show-exeution-course-site-list", path = "df.page.showDegreeCurricularPlanSites") })
@@ -57,7 +57,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction 
     }
 
     private Degree getDegreeAndSetInfoDegree(HttpServletRequest request, String degreeOID) {
-        final Degree degree = AbstractDomainObject.fromExternalId(degreeOID);
+        final Degree degree = FenixFramework.getDomainObject(degreeOID);
 
         final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
         request.setAttribute("infoDegree", infoDegree);

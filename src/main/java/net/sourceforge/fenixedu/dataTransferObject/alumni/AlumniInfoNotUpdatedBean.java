@@ -5,7 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.accessControl.NotUpdatedAlumniInfoForSpecificTimeGroup;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AlumniInfoNotUpdatedBean implements Serializable {
 
@@ -55,7 +55,7 @@ public class AlumniInfoNotUpdatedBean implements Serializable {
         this.personalDataInfo = personalDataInfo;
     }
 
-    @Service
+    @Atomic
     public void createRecipientGroup(Sender sender) {
         NotUpdatedAlumniInfoForSpecificTimeGroup recipientsGroup =
                 new NotUpdatedAlumniInfoForSpecificTimeGroup(getDaysNotUpdated(), getProfessionalInfo(), getFormationInfo(),

@@ -17,8 +17,23 @@ public class StudentNumber extends StudentNumber_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeStudent();
+        setRootDomainObject(null);
+        setStudent(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
 }

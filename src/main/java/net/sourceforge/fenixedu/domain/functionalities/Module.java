@@ -217,4 +217,19 @@ public class Module extends Module_Base implements IFunctionality {
     public void addChild(Content content) {
         createChildNode(content);
     }
+    @Deprecated
+    public boolean hasVisible() {
+        return getVisible() != null;
+    }
+
+    @Deprecated
+    public boolean hasModuleRootDomainObject() {
+        return getModuleRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPath() {
+        return getExecutionPath() != null;
+    }
+
 }

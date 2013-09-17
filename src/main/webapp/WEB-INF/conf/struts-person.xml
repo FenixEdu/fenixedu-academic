@@ -141,9 +141,7 @@
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-person.xml" property="pathnames"></set-property>
       </plug-in>
-      <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
-            <set-property value="/WEB-INF/fenix-renderers-config.xml" property="config"></set-property>
-      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin"></plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
             <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml, /WEB-INF/tiles/person/tiles-person-pages-definitions.xml, /WEB-INF/tiles/person/tiles-person-definitions.xml, /WEB-INF/tiles/teacher/tiles-teacher-definitions.xml, /WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml" property="definitions-config"></set-property>
             <set-property value="true" property="moduleAware"></set-property>

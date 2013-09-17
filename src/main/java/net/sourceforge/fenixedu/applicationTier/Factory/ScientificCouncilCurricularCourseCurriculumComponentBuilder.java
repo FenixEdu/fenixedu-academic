@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Mota
@@ -52,7 +52,7 @@ public class ScientificCouncilCurricularCourseCurriculumComponentBuilder {
      */
     private ISiteComponent getInfoSiteCurriculum(InfoSiteCurriculum component, String curricularCourseId)
             throws FenixServiceException {
-        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
+        CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
 
         Curriculum curriculum = curricularCourse.findLatestCurriculum();
 

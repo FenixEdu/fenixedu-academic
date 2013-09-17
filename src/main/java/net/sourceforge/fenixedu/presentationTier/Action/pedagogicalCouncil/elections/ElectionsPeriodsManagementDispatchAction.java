@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.elec
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 @Mapping(module = "pedagogicalCouncil", path = "/electionsPeriodsManagement", scope = "request", parameter = "method")
@@ -118,7 +119,7 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
         ElectionPeriodBean bean = (ElectionPeriodBean) getFromRequest(request, "electionPeriodBean");
 
         if (bean == null) {
-            final Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("degreeOID"));
+            final Degree degree = FenixFramework.getDomainObject(request.getParameter("degreeOID"));
 
             bean = new ElectionPeriodBean();
             bean.setDegree(degree);
@@ -153,8 +154,8 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         final YearDelegateElection yearDelegateElection =
-                (YearDelegateElection) AbstractDomainObject.fromExternalId(request.getParameter("selectedCandidacyPeriod"));
-        List<Student> candidates = yearDelegateElection.getCandidates();
+                (YearDelegateElection) FenixFramework.getDomainObject(request.getParameter("selectedCandidacyPeriod"));
+        Collection<Student> candidates = yearDelegateElection.getCandidatesSet();
 
         final ExecutionYear executionYear = yearDelegateElection.getExecutionYear();
 
@@ -183,8 +184,7 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         final YearDelegateElection yearDelegateElection =
-                (YearDelegateElection) AbstractDomainObject.fromExternalId((String) getFromRequest(request,
-                        "selectedVotingPeriod"));
+                (YearDelegateElection) FenixFramework.getDomainObject((String) getFromRequest(request, "selectedVotingPeriod"));
 
         final ExecutionYear executionYear = yearDelegateElection.getExecutionYear();
 
@@ -229,7 +229,7 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
     public ActionForward manageSingleYearDelegateCandidacyPeriod(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final DelegateElection election = AbstractDomainObject.fromExternalId(request.getParameter("selectedPeriod"));
+        final DelegateElection election = FenixFramework.getDomainObject(request.getParameter("selectedPeriod"));
 
         request.setAttribute("selectedPeriod", election);
 
@@ -265,7 +265,7 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
     public ActionForward manageSingleYearDelegateVotingPeriod(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final DelegateElection election = AbstractDomainObject.fromExternalId(request.getParameter("selectedPeriod"));
+        final DelegateElection election = FenixFramework.getDomainObject(request.getParameter("selectedPeriod"));
 
         request.setAttribute("selectedPeriod", election);
 
@@ -279,7 +279,7 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
     public ActionForward secondRoundElections(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final DelegateElection election = AbstractDomainObject.fromExternalId(request.getParameter("selectedPeriod"));
+        final DelegateElection election = FenixFramework.getDomainObject(request.getParameter("selectedPeriod"));
 
         List<Student> candidatesHadVoted = new LinkedList<Student>();
 

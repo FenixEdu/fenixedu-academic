@@ -1,5 +1,5 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
 <jsp:include page="/commons/functionalities/side-menu.jsp"/>

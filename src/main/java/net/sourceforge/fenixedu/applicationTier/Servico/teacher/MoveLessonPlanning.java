@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MoveLessonPlanning {
 
@@ -15,7 +15,7 @@ public class MoveLessonPlanning {
 
     private static final MoveLessonPlanning serviceInstance = new MoveLessonPlanning();
 
-    @Service
+    @Atomic
     public static void runMoveLessonPlanning(String executionCourseID, LessonPlanning lessonPlanning, Integer order)
             throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);

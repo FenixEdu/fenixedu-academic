@@ -24,8 +24,8 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class GenetareStudentTestForSimulation {
     protected List run(String executionCourseId, String testId, String path, TestType testType,
@@ -33,12 +33,12 @@ public class GenetareStudentTestForSimulation {
             throws FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
-        final Test test = AbstractDomainObject.fromExternalId(testId);
+        final Test test = FenixFramework.getDomainObject(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -56,7 +56,7 @@ public class GenetareStudentTestForSimulation {
         infoDistributedTest.setImsFeedback(imsfeedback);
         infoDistributedTest.setTitle(test.getTitle());
         infoDistributedTest.setTestInformation(testInformation);
-        infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
+        infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsSet().size());
 
         List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
         Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
@@ -109,7 +109,7 @@ public class GenetareStudentTestForSimulation {
 
     private static final GenetareStudentTestForSimulation serviceInstance = new GenetareStudentTestForSimulation();
 
-    @Service
+    @Atomic
     public static List runGenetareStudentTestForSimulation(String executionCourseId, String testId, String path,
             TestType testType, CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation)
             throws FenixServiceException, NotAuthorizedException {

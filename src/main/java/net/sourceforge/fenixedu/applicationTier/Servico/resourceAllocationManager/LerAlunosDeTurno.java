@@ -7,6 +7,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -14,21 +15,21 @@ import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class LerAlunosDeTurno {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static List<InfoStudent> run(ShiftKey keyTurno) {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
-        final ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(keyTurno.getInfoExecutionCourse().getExternalId());
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(keyTurno.getInfoExecutionCourse().getExternalId());
         final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
 
-        List<Registration> alunos = shift.getStudents();
+        Collection<Registration> alunos = shift.getStudents();
 
         List<InfoStudent> infoAlunos = new ArrayList<InfoStudent>(alunos.size());
         for (Registration elem : alunos) {

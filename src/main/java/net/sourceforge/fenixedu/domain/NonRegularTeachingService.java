@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class NonRegularTeachingService extends NonRegularTeachingService_Base {
 
@@ -13,7 +13,7 @@ public class NonRegularTeachingService extends NonRegularTeachingService_Base {
         setShift(shift);
     }
 
-    @Service
+    @Atomic
     public static void createOrEdit(Professorship professorship, Shift shift, Double percentage) {
 
         if (percentage != null) {
@@ -42,10 +42,30 @@ public class NonRegularTeachingService extends NonRegularTeachingService_Base {
     }
 
     private void delete() {
-        removeProfessorship();
-        removeShift();
-        removeRootDomainObject();
+        setProfessorship(null);
+        setShift(null);
+        setRootDomainObject(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasPercentage() {
+        return getPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
     }
 
 }

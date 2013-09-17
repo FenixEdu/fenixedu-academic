@@ -33,7 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import dml.DomainClass;
+import pt.ist.fenixframework.dml.DomainClass;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

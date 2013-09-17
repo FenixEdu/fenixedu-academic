@@ -67,8 +67,8 @@ abstract public class PhdAlert extends PhdAlert_Base {
 
     protected void disconnect() {
         super.setProcess(null);
-        removeRootDomainObjectForActiveAlerts();
-        removeRootDomainObject();
+        setRootDomainObjectForActiveAlerts(null);
+        setRootDomainObject(null);
     }
 
     public void delete() {
@@ -96,4 +96,9 @@ abstract public class PhdAlert extends PhdAlert_Base {
         AdministrativeOffice administrativeOffice = this.getProcess().getAdministrativeOffice();
         return administrativeOffice.getUnit().getUnitBasedSenderSet().iterator().next();
     }
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
 }

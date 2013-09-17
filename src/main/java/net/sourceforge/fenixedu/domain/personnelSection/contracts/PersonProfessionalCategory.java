@@ -90,4 +90,80 @@ public class PersonProfessionalCategory extends PersonProfessionalCategory_Base 
         }
         return false;
     }
+
+    @Deprecated
+    public boolean hasStep() {
+        return getStep() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalRegimeGiafId() {
+        return getProfessionalRegimeGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnulationDate() {
+        return getAnulationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCategoryGiafId() {
+        return getProfessionalCategoryGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalRelationGiafId() {
+        return getProfessionalRelationGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCategory() {
+        return getProfessionalCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasGiafProfessionalData() {
+        return getGiafProfessionalData() != null;
+    }
+
+    @Deprecated
+    public boolean hasModifiedDate() {
+        return getModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalRegime() {
+        return getProfessionalRegime() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalRelation() {
+        return getProfessionalRelation() != null;
+    }
+
+    @Deprecated
+    public boolean hasImportationDate() {
+        return getImportationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasLevel() {
+        return getLevel() != null;
+    }
+
 }

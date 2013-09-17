@@ -81,7 +81,7 @@ public class ParseSubQuestion extends DefaultHandler {
         } catch (Exception e) {
             throw new ParseQuestionException(e);
         }
-        return createSubQuestion(questionElementList.get(0));
+        return createSubQuestion(questionElementList.iterator().next());
     }
 
     public StudentTestQuestion parseStudentTestQuestion(StudentTestQuestion studentTestQuestion, String path) throws Exception,
@@ -579,7 +579,7 @@ public class ParseSubQuestion extends DefaultHandler {
                 for (int i = 0; responsesIt.hasNext(); i++) {
                     ResponseProcessing rp = (ResponseProcessing) responsesIt.next();
                     if (rp.getFeedback() != null && rp.getFeedback().size() > 0
-                            && (rp.getFeedback().get(0)).getValue().equals(ident)) {
+                            && (rp.getFeedback().iterator().next()).getValue().equals(ident)) {
                         rp.setFeedback(feedbackAuxList);
                     }
                     responses.set(i, rp);
@@ -762,7 +762,7 @@ public class ParseSubQuestion extends DefaultHandler {
                 isLID = true;
             }
 
-            newRpList.add(subQuestion.getResponseProcessingInstructions().get(0));
+            newRpList.add(subQuestion.getResponseProcessingInstructions().iterator().next());
             for (ResponseProcessing responseProcessing : subQuestion.getResponseProcessingInstructions()) {
                 if (!responseProcessing.isThisConditionListInResponseProcessingList(newRpList, isLID)) {
                     newRpList.add(responseProcessing);

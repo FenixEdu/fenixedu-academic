@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateStudentCurricularPlanEquivalencePlan {
 
-    @Service
+    @Atomic
     public static StudentCurricularPlanEquivalencePlan run(final Student student) {
         for (final Registration registration : student.getRegistrations()) {
             final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();

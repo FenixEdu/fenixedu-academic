@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -28,7 +29,7 @@ public class InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegree
         }
     }
 
-    private List copyICurricularCourseScope2InfoCurricularCourseScope(List associatedCurricularCourseScopes) {
+    private List copyICurricularCourseScope2InfoCurricularCourseScope(Collection associatedCurricularCourseScopes) {
         List associatedInfoCCScopes = (List) CollectionUtils.collect(associatedCurricularCourseScopes, new Transformer() {
 
             @Override

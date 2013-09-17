@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroupInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CycleCourseGroupInformationManagementBackingBean extends CurricularCourseManagementBackingBean {
 
@@ -23,7 +23,7 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
     private String editInformationExecutionYearId;
 
     public CycleCourseGroup getCourseGroup(String courseGroupID) {
-        return (CycleCourseGroup) AbstractDomainObject.fromExternalId(courseGroupID);
+        return (CycleCourseGroup) FenixFramework.getDomainObject(courseGroupID);
     }
 
     public List<CycleCourseGroupInformation> getCycleCourseGroupInformationList() {
@@ -114,7 +114,7 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
     }
 
     public ExecutionYear getInformationExecutionYear() {
-        return AbstractDomainObject.fromExternalId(getInformationExecutionYearId());
+        return FenixFramework.getDomainObject(getInformationExecutionYearId());
     }
 
     public String getInformationId() {
@@ -122,7 +122,7 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
     }
 
     public CycleCourseGroupInformation getInformation() {
-        return getInformationId() != null ? AbstractDomainObject.<CycleCourseGroupInformation> fromExternalId(getInformationId()) : null;
+        return getInformationId() != null ? FenixFramework.<CycleCourseGroupInformation> getDomainObject(getInformationId()) : null;
     }
 
     public void setInformationId(String informationId) {
@@ -154,7 +154,7 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
     }
 
     public ExecutionYear getEditInformationExecutionYear() {
-        return AbstractDomainObject.fromExternalId(getEditInformationExecutionYearId());
+        return FenixFramework.getDomainObject(getEditInformationExecutionYearId());
     }
 
 }

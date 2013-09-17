@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AuditProcessBean implements Serializable {
 
@@ -65,7 +65,7 @@ public class AuditProcessBean implements Serializable {
         this.approvedByStudent = approvedByStudent;
     }
 
-    @Service
+    @Atomic
     public void saveComments() {
         getExecutionCourseAudit().setMeasuresToTake(getMeasuresToTake());
         getExecutionCourseAudit().setConclusions(getConclusions());

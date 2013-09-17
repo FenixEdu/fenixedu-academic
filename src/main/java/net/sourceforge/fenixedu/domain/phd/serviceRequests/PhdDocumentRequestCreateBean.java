@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdDocumentRequestCreateBean extends PhdAcademicServiceRequestCreateBean {
     private static final long serialVersionUID = 1L;
@@ -68,7 +68,7 @@ public class PhdDocumentRequestCreateBean extends PhdAcademicServiceRequestCreat
         this.documentRequestType = documentRequestType;
     }
 
-    @Service
+    @Atomic
     @Override
     public PhdDocumentRequest createNewRequest() {
         switch (getDocumentRequestType()) {

@@ -104,4 +104,39 @@ public abstract class Alert extends Alert_Base {
         return isToFire();
     }
 
+    @Deprecated
+    public boolean hasActive() {
+        return getActive() != null;
+    }
+
+    @Deprecated
+    public boolean hasBody() {
+        return getBody() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubject() {
+        return getSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectForActiveAlerts() {
+        return getRootDomainObjectForActiveAlerts() != null;
+    }
+
+    @Deprecated
+    public boolean hasFireDate() {
+        return getFireDate() != null;
+    }
+
 }

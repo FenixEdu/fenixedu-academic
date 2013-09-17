@@ -9,16 +9,17 @@ import net.sourceforge.fenixedu.domain.Shift;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class RemoverTurno {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static Object run(final InfoShift infoShift, final InfoClass infoClass) {
-        final Shift shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
+        final Shift shift = FenixFramework.getDomainObject(infoShift.getExternalId());
         if (shift == null) {
             return Boolean.FALSE;
         }

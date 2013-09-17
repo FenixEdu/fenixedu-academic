@@ -9,4 +9,19 @@ public class LibraryDocument extends LibraryDocument_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    @Deprecated
+    public boolean hasCardDocument() {
+        return getCardDocument() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasLetterDocument() {
+        return getLetterDocument() != null;
+    }
+
 }

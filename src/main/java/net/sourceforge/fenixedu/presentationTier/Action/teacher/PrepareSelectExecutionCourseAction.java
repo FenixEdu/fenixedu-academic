@@ -43,9 +43,8 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
         }
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
         ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
-        readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCode, null);
+        readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCodeString, null);
 
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
@@ -63,7 +62,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
     }
 
     private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, String infoExecutionCourseCode,
-            Object obj1, Object obj2) throws FenixActionException {
+            String obj1, String obj2) throws FenixActionException {
 
         IUserView userView = getUserView(request);
 

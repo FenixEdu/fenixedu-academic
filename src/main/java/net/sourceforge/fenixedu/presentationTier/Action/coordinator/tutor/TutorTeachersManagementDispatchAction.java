@@ -23,12 +23,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/tutorTeachers", module = "coordinator")
 @Forwards({ @Forward(name = "manage", path = "/coordinator/tutors/tutorTeachers.jsp", tileProperties = @Tile(
@@ -219,10 +219,10 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(request.getParameter("degreeCurricularPlanID"));
+        return FenixFramework.getDomainObject(request.getParameter("degreeCurricularPlanID"));
     }
 
-    @Service
+    @Atomic
     private void save(List<TutorshipIntentionSelector> tutorshipIntentions) {
         for (TutorshipIntentionSelector selector : tutorshipIntentions) {
             selector.save();

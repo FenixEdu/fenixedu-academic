@@ -12,7 +12,7 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
 
     public void delete() {
         super.setResource(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -71,4 +71,14 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
     public boolean isNotLessonSpaceOccupation() {
         return isLessonInstanceSpaceOccupation() || isLessonSpaceOccupation();
     }
+    @Deprecated
+    public boolean hasResource() {
+        return getResource() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

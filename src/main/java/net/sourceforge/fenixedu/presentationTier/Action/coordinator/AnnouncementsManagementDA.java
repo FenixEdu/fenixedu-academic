@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +17,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AnnouncementsManagementDA extends AnnouncementManagement {
 
@@ -27,7 +26,7 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
             HttpServletResponse response) throws Exception {
         CoordinatedDegreeInfo.setCoordinatorContext(request);
         final String degreeCurricularPlanOID = (String) request.getAttribute("degreeCurricularPlanID");
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanOID);
         if (degreeCurricularPlan != null) {
             request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
         }
@@ -43,7 +42,7 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
         }
 
         try {
-            return AbstractDomainObject.fromExternalId(parameter);
+            return FenixFramework.getDomainObject(parameter);
         } catch (NumberFormatException e) {
             return null;
         }
@@ -62,11 +61,11 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
         if (unit == null || unit.getBoards().isEmpty()) {
             return mapping.findForward("noBoards");
         } else {
-            List<PartyAnnouncementBoard> boards = unit.getBoards();
+            Collection<PartyAnnouncementBoard> boards = unit.getBoards();
             if (boards.size() > 1) {
                 return start(mapping, actionForm, request, response);
             } else {
-                AnnouncementBoard board = boards.get(0);
+                AnnouncementBoard board = boards.iterator().next();
 
                 ActionForward forward = new ActionForward(mapping.findForward("viewAnnouncementsRedirect"));
                 forward.setPath(forward.getPath()

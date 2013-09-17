@@ -144,4 +144,19 @@ public class ReductionService extends ReductionService_Base {
         new TeacherServiceLog(getTeacherService(), log.toString());
     }
 
+    @Deprecated
+    public boolean hasCreditsReductionAttributed() {
+        return getCreditsReductionAttributed() != null;
+    }
+
+    @Deprecated
+    public boolean hasAttributionDate() {
+        return getAttributionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreditsReduction() {
+        return getCreditsReduction() != null;
+    }
+
 }

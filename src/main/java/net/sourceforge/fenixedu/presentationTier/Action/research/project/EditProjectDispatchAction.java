@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.project;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -183,7 +184,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         for (Project project : rootDomainObject.getProjects()) {
             if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
-                List<ProjectEventAssociation> associations = project.getAssociatedEvents();
+                Collection<ProjectEventAssociation> associations = project.getAssociatedEvents();
                 request.setAttribute("eventAssociations", associations);
             }
         }

@@ -5,11 +5,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gr
 
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteMarkSheet {
 
-    @Service
+    @Atomic
     public static void run(MarkSheet markSheet) {
         if (markSheet == null) {
             throw new DomainException("error.noMarkSheet");

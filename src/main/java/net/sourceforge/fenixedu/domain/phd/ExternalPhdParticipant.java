@@ -59,4 +59,29 @@ public class ExternalPhdParticipant extends ExternalPhdParticipant_Base {
     public boolean isTeacher() {
         return false;
     }
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasQualification() {
+        return getQualification() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhone() {
+        return getPhone() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmail() {
+        return getEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasAddress() {
+        return getAddress() != null;
+    }
+
 }

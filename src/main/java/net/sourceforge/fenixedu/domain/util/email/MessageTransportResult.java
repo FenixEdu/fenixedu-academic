@@ -14,9 +14,29 @@ public class MessageTransportResult extends MessageTransportResult_Base {
     }
 
     public void delete() {
-        removeEmail();
-        removeRootDomainObject();
+        setEmail(null);
+        setRootDomainObject(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmail() {
+        return getEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
     }
 
 }

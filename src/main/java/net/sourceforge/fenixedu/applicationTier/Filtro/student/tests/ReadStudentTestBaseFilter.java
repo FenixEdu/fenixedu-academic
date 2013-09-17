@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author jpvl
@@ -20,7 +20,7 @@ public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilte
     final public void execute(String testId) throws NotAuthorizedException {
         super.execute();
 
-        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testId);
+        DistributedTest distributedTest = FenixFramework.getDomainObject(testId);
 
         if (distributedTest != null) {
             Calendar now = Calendar.getInstance();

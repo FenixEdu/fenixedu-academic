@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadExecutionDegreesByExecutionYearAndDegreeInitials {
 
-    @Service
+    @Atomic
     public static InfoExecutionDegree run(final InfoExecutionYear infoExecutionYear, final String degreeInitials,
             final String nameDegreeCurricularPlan) {
 

@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class TSDCourseValuationAction extends FenixDispatchAction {
 
@@ -76,11 +76,11 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     }
 
     private TSDCourse getSelectedTSDCourse(DynaActionForm dynaForm) throws FenixServiceException {
-        return AbstractDomainObject.fromExternalId((String) dynaForm.get("tsdCourse"));
+        return FenixFramework.getDomainObject((String) dynaForm.get("tsdCourse"));
     }
 
     private TeacherServiceDistribution getSelectedTSD(DynaActionForm dynaForm) throws FenixServiceException {
-        return AbstractDomainObject.fromExternalId((String) dynaForm.get("tsd"));
+        return FenixFramework.getDomainObject((String) dynaForm.get("tsd"));
     }
 
     public ActionForward loadTSDCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -165,8 +165,8 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
 
     private ShiftType getSelectedShiftType(DynaActionForm dynaForm, TSDCourse course) {
         if (dynaForm.get("shiftType") == null || dynaForm.get("shiftType").equals("")) {
-            if (course.getTSDCurricularLoadsCount() > 0) {
-                return course.getTSDCurricularLoads().get(0).getType();
+            if (course.getTSDCurricularLoadsSet().size() > 0) {
+                return course.getTSDCurricularLoads().iterator().next().getType();
             } else {
                 return null;
             }
@@ -308,9 +308,9 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     public ActionForward defineSchoolClassCalculationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(request.getParameter("tsd"));
-        TSDCourse tsdCourse = AbstractDomainObject.fromExternalId(request.getParameter("tsdCourse"));
-        TSDProcess process = AbstractDomainObject.fromExternalId(request.getParameter("tsdProcessId"));
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(request.getParameter("tsd"));
+        TSDCourse tsdCourse = FenixFramework.getDomainObject(request.getParameter("tsdCourse"));
+        TSDProcess process = FenixFramework.getDomainObject(request.getParameter("tsdProcessId"));
         ShiftType type = ShiftType.valueOf(request.getParameter("shiftType"));
 
         request.setAttribute("curricularLoad", tsdCourse.getTSDCurricularLoadByShiftType(type));

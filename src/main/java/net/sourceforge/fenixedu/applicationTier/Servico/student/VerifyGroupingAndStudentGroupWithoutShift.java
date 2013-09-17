@@ -10,9 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -20,17 +21,17 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class VerifyGroupingAndStudentGroupWithoutShift {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Integer run(String studentGroupCode, String groupPropertiesCode, String shiftCodeString, String username)
             throws FenixServiceException {
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        check(RolePredicates.STUDENT_PREDICATE);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
 
         if (studentGroup == null) {
             throw new InvalidSituationServiceException();

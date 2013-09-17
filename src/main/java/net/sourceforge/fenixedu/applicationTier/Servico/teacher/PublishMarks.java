@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -32,9 +32,9 @@ public class PublishMarks {
     protected Object run(String executionCourseCode, String evaluationCode, String publishmentMessage, Boolean sendSMS,
             String announcementTitle) throws ExcepcaoInexistente, FenixServiceException {
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
         final ExecutionCourseSite site = executionCourse.getSite();
-        final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationCode);
+        final Evaluation evaluation = FenixFramework.getDomainObject(evaluationCode);
 
         if (publishmentMessage == null || publishmentMessage.length() == 0) {
             evaluation.setPublishmentMessage(" ");
@@ -82,7 +82,7 @@ public class PublishMarks {
 
     private static final PublishMarks serviceInstance = new PublishMarks();
 
-    @Service
+    @Atomic
     public static Object runPublishMarks(String executionCourseCode, String evaluationCode, String publishmentMessage,
             Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SearchPresidentForThesis implements AutoCompleteProvider<PersonName> {
 
@@ -25,7 +25,7 @@ public class SearchPresidentForThesis implements AutoCompleteProvider<PersonName
             return null;
         }
 
-        final Thesis thesis = AbstractDomainObject.fromExternalId(thesisIdString);
+        final Thesis thesis = FenixFramework.getDomainObject(thesisIdString);
         if (thesis == null) {
             return null;
         }

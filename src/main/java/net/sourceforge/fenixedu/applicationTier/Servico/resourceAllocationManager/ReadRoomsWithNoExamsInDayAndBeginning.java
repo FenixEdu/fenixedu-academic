@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadRoomsWithNoExamsInDayAndBeginning {
 
-    @Service
+    @Atomic
     public static List run(Calendar day, Calendar beginning) {
         List exams = Exam.getAllByDate(day, beginning);
         Collection<AllocatableSpace> allRooms = AllocatableSpace.getAllActiveAllocatableSpacesForEducation();

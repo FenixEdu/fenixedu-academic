@@ -55,13 +55,38 @@ public class PersonAccount extends PersonAccount_Base {
 
     public void delete() {
 
-        if (getTransactionsCount() > 0) {
+        if (getTransactionsSet().size() > 0) {
             throw new DomainException("error.person.cannot.be.deleted");
         }
 
-        removeRootDomainObject();
-        removePerson();
+        setRootDomainObject(null);
+        setPerson(null);
         super.deleteDomainObject();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.transactions.Transaction> getTransactions() {
+        return getTransactionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTransactions() {
+        return !getTransactionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBalance() {
+        return getBalance() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

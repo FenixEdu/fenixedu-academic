@@ -45,7 +45,7 @@ public class ReadPersonCandidatesAction extends FenixAction {
         }
 
         if (candidates.size() == 1) {
-            request.setAttribute("candidateID", candidates.get(0).getExternalId());
+            request.setAttribute("candidateID", candidates.iterator().next().getExternalId());
             return mapping.findForward("Success");
         }
 

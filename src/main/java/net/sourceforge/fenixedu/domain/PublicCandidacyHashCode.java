@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Base {
 
@@ -21,7 +21,7 @@ abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Ba
         setWhenCreated(new DateTime());
     }
 
-    @Service
+    @Atomic
     public void sendEmail(final String fromSubject, final String body) {
         SystemSender systemSender = getRootDomainObject().getSystemSender();
         new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, fromSubject, body, getEmail());
@@ -64,4 +64,24 @@ abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Ba
         }
         return result;
     }
+    @Deprecated
+    public boolean hasValue() {
+        return getValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmail() {
+        return getEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
 }

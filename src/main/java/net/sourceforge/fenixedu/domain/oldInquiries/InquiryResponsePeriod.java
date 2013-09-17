@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.oldInquiries;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -47,7 +47,8 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
     }
 
     public static InquiryResponsePeriod readOpenPeriod(final InquiryResponsePeriodType type) {
-        final List<InquiryResponsePeriod> inquiryResponsePeriods = RootDomainObject.getInstance().getInquiryResponsePeriods();
+        final Collection<InquiryResponsePeriod> inquiryResponsePeriods =
+                RootDomainObject.getInstance().getInquiryResponsePeriods();
         for (final InquiryResponsePeriod inquiryResponsePeriod : inquiryResponsePeriods) {
             if (inquiryResponsePeriod.getType() == type && inquiryResponsePeriod.isOpen()) {
                 return inquiryResponsePeriod;
@@ -79,4 +80,35 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
     public boolean isAfterNow() {
         return getBegin().isAfterNow();
     }
+
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasIntroduction() {
+        return getIntroduction() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasBegin() {
+        return getBegin() != null;
+    }
+
 }

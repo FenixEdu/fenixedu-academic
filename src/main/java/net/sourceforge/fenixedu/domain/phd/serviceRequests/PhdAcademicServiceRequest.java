@@ -53,4 +53,9 @@ abstract public class PhdAcademicServiceRequest extends PhdAcademicServiceReques
     public Campus getCampus() {
         return Campus.readActiveCampusByName("Alameda");
     }
+    @Deprecated
+    public boolean hasPhdIndividualProgramProcess() {
+        return getPhdIndividualProgramProcess() != null;
+    }
+
 }

@@ -121,4 +121,19 @@ public class EnrolmentOutOfPeriodPR extends EnrolmentOutOfPeriodPR_Base {
                 amountPerDay, maxAmount);
     }
 
+    @Deprecated
+    public boolean hasAmountPerDay() {
+        return getAmountPerDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasBaseAmount() {
+        return getBaseAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaxAmount() {
+        return getMaxAmount() != null;
+    }
+
 }

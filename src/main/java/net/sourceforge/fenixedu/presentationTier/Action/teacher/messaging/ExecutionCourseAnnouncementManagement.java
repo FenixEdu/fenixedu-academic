@@ -19,7 +19,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "teacher", path = "/announcementManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "viewAnnouncement", path = "teacher-view-announcement"),
@@ -35,7 +35,7 @@ public class ExecutionCourseAnnouncementManagement extends AnnouncementManagemen
     }
 
     protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(this.getRequestedExecutionCourseId(request));
+        return FenixFramework.getDomainObject(this.getRequestedExecutionCourseId(request));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ExecutionCourseAnnouncementManagement extends AnnouncementManagemen
 
     @Override
     protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
-        return AbstractDomainObject.<ExecutionCourse> fromExternalId(this.getRequestedExecutionCourseId(request)).getBoard();
+        return FenixFramework.<ExecutionCourse> getDomainObject(this.getRequestedExecutionCourseId(request)).getBoard();
     }
 
     @Override

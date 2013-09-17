@@ -15,10 +15,20 @@ public abstract class Restriction extends Restriction_Base {
     }
 
     public void delete() {
-        removePrecedence();
-        removeRootDomainObject();
+        setPrecedence(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     public abstract CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext);
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrecedence() {
+        return getPrecedence() != null;
+    }
+
 }

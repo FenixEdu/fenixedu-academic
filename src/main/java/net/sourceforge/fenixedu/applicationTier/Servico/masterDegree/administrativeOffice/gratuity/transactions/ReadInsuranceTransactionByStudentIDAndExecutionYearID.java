@@ -7,9 +7,10 @@ import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoInsuranceTra
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -25,15 +26,15 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID {
     public ReadInsuranceTransactionByStudentIDAndExecutionYearID() {
     }
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static InfoInsuranceTransaction run(String studentId, String executionYearId) throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         InfoInsuranceTransaction infoInsuranceTransaction = null;
 
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
+        ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearId);
 
-        Registration registration = AbstractDomainObject.fromExternalId(studentId);
+        Registration registration = FenixFramework.getDomainObject(studentId);
 
         if ((executionYear == null) || (registration == null)) {
             return null;
@@ -49,7 +50,7 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID {
 
         if (insuranceTransactionList.size() == 1) {
             infoInsuranceTransaction =
-                    InfoInsuranceTransaction.newInfoFromDomain((InsuranceTransaction) insuranceTransactionList.get(0));
+                    InfoInsuranceTransaction.newInfoFromDomain((InsuranceTransaction) insuranceTransactionList.iterator().next());
         }
 
         return infoInsuranceTransaction;

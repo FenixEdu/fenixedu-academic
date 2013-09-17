@@ -6,14 +6,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.CopyTSDProcessPhaseService;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CopyTSDProcessPhaseDataToTSDProcessPhase {
 
     protected void run(String oldTSDProcessPhaseId, String newTSDProcessPhaseId) {
-        TSDProcessPhase oldTSDProcessPhase = AbstractDomainObject.fromExternalId(oldTSDProcessPhaseId);
-        TSDProcessPhase newTSDProcessPhase = AbstractDomainObject.fromExternalId(newTSDProcessPhaseId);
+        TSDProcessPhase oldTSDProcessPhase = FenixFramework.getDomainObject(oldTSDProcessPhaseId);
+        TSDProcessPhase newTSDProcessPhase = FenixFramework.getDomainObject(newTSDProcessPhaseId);
 
         CopyTSDProcessPhaseService service = CopyTSDProcessPhaseService.getInstance();
 
@@ -25,7 +25,7 @@ public class CopyTSDProcessPhaseDataToTSDProcessPhase {
     private static final CopyTSDProcessPhaseDataToTSDProcessPhase serviceInstance =
             new CopyTSDProcessPhaseDataToTSDProcessPhase();
 
-    @Service
+    @Atomic
     public static void runCopyTSDProcessPhaseDataToTSDProcessPhase(String oldTSDProcessPhaseId, String newTSDProcessPhaseId)
             throws NotAuthorizedException {
         try {

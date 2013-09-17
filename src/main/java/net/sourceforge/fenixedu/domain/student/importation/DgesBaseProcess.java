@@ -72,4 +72,14 @@ public abstract class DgesBaseProcess extends DgesBaseProcess_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasEntryPhase() {
+        return getEntryPhase() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

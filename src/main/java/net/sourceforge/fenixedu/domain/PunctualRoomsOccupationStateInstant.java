@@ -8,19 +8,16 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-
 public class PunctualRoomsOccupationStateInstant extends PunctualRoomsOccupationStateInstant_Base {
 
     public static final Comparator<PunctualRoomsOccupationStateInstant> COMPARATOR_BY_INSTANT = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("instant"));
-        ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationStateInstants")
     public PunctualRoomsOccupationStateInstant(PunctualRoomsOccupationRequest request, RequestState state, DateTime instant) {
+//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationStateInstants);
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setRequest(request);
@@ -56,4 +53,25 @@ public class PunctualRoomsOccupationStateInstant extends PunctualRoomsOccupation
         }
         super.setInstant(instant);
     }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstant() {
+        return getInstant() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestState() {
+        return getRequestState() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequest() {
+        return getRequest() != null;
+    }
+
 }

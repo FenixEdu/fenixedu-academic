@@ -6,14 +6,15 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateGratuityExemption {
 
-    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-    @Service
+    @Atomic
     public static void run(final Person responsible, final CreateGratuityExemptionBean createGratuityExemptionBean) {
+        check(AcademicPredicates.MANAGE_STUDENT_PAYMENTS);
         if (createGratuityExemptionBean.isPercentageExemption()) {
             new PercentageGratuityExemption(responsible, createGratuityExemptionBean.getGratuityEvent(),
                     createGratuityExemptionBean.getExemptionJustificationType(), createGratuityExemptionBean.getReason(),

@@ -20,9 +20,10 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo </a>
@@ -31,13 +32,13 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class CreateMasterDegreeCandidate {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static InfoMasterDegreeCandidate run(Specialization degreeType, String executionDegreeID, String name,
             String identificationDocumentNumber, IDDocumentType identificationDocumentType) throws Exception {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         // Read the Execution of this degree in the current execution Year
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber, identificationDocumentType);
 
         if (person == null) {

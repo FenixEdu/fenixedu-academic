@@ -99,7 +99,7 @@ import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
@@ -408,7 +408,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         request.setAttribute("executionDegree", executionDegree);
 
         String proposalOID = (String) getFromRequest(request, "proposalOID");
-        final Proposal proposal = Proposal.fromExternalId(proposalOID);
+        final Proposal proposal = FenixFramework.getDomainObject(proposalOID);
         request.setAttribute("proposal", proposal);
         request.setAttribute("candidacies", proposal.getCandidacies());
         request.setAttribute("candidaciesCount", proposal.getCandidacies().size());
@@ -424,7 +424,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         request.setAttribute("executionDegree", executionDegree);
 
         String proposalOID = (String) getFromRequest(request, "proposalOID");
-        final Proposal proposal = Proposal.fromExternalId(proposalOID);
+        final Proposal proposal = FenixFramework.getDomainObject(proposalOID);
         request.setAttribute("proposal", proposal);
         return mapping.findForward("edit-proposal");
     }
@@ -440,7 +440,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeOID);
         request.setAttribute("executionDegreeOID", executionDegreeOID);
         request.setAttribute("executionDegree", executionDegree);
 
@@ -609,7 +609,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     public ActionForward viewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final String proposalOID = keepInRequest(request, "proposalOID");
-        final Proposal proposal = AbstractDomainObject.fromExternalId(proposalOID);
+        final Proposal proposal = FenixFramework.getDomainObject(proposalOID);
         final String finalDegreeWorkProposalOIDString = proposal.getExternalId();
         String executionDegreeOID = (String) getFromRequest(request, "executionDegreeOID");
         request.setAttribute("executionDegree", getDomainObject(request, "executionDegreeOID"));
@@ -694,7 +694,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                         finalWorkForm.set("branchList", branchList);
                     }
 
-                    final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOID);
+                    final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeOID);
                     final Scheduleing scheduleing = executionDegree.getScheduling();
                     final List branches = new ArrayList();
                     for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
@@ -862,13 +862,13 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         final DegreeType dt = (degreeType != null && degreeType.length() > 0) ? DegreeType.valueOf(degreeType) : null;
         infoFinalWorkProposal.setDegreeType(dt);
 
-        infoFinalWorkProposal.setOrientator(new InfoPerson((Person) AbstractDomainObject.fromExternalId(orientatorOID)));
+        infoFinalWorkProposal.setOrientator(new InfoPerson((Person) FenixFramework.getDomainObject(orientatorOID)));
         if (coorientatorOID != null && !coorientatorOID.equals("")) {
-            infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) AbstractDomainObject.fromExternalId(coorientatorOID)));
+            infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) FenixFramework.getDomainObject(coorientatorOID)));
         }
         // final ExecutionDegree executionDegree =
-        // AbstractDomainObject.fromExternalId(Integer.valueOf(degree));
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOID);
+        // FenixFramework.getDomainObject(Integer.valueOf(degree));
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeOID);
         if (!(coorientatorOID != null && !coorientatorOID.equals(""))
                 || executionDegree.getScheduling().getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
             infoFinalWorkProposal.setCompanionName(companionName);
@@ -885,7 +885,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             infoFinalWorkProposal.setBranches(new ArrayList());
             for (String brachOIDString : branchList) {
                 if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
-                    InfoBranch infoBranch = new InfoBranch(AbstractDomainObject.<Branch> fromExternalId(brachOIDString));
+                    InfoBranch infoBranch = new InfoBranch(FenixFramework.<Branch> getDomainObject(brachOIDString));
                     infoFinalWorkProposal.getBranches().add(infoBranch);
                 }
             }
@@ -1004,7 +1004,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         // degreeCurricularPlanID);
         request.setAttribute("degreeCurricularPlanID", request.getParameter("degreeCurricularPlanID"));
 
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(request.getParameter("executionDegreeOID"));
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(request.getParameter("executionDegreeOID"));
         // InfoExecutionDegree infoExecutionDegree =
         // CommonServiceRequests.getInfoExecutionDegree(userView, Integer
         // .valueOf(degreeId));
@@ -1124,7 +1124,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         Set<Proposal> proposals = new HashSet<Proposal>();
         if (selectedProposals != null) {
             for (String proposalOID : selectedProposals) {
-                proposals.add((Proposal) Proposal.fromExternalId(proposalOID));
+                proposals.add((Proposal) FenixFramework.getDomainObject(proposalOID));
             }
         }
         ChangeStatusOfFinalDegreeWorkProposals.run(proposals, status);
@@ -1162,10 +1162,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String executionDegreeOIDString = dynaActionForm.getString("executionDegreeOID");
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOIDString);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeOIDString);
         final String otherExecutionDegreeIDString = dynaActionForm.getString("otherExecutionDegreeID");
         if (otherExecutionDegreeIDString != null && otherExecutionDegreeIDString.length() > 0) {
-            final ExecutionDegree otherExecutionDegree = AbstractDomainObject.fromExternalId(otherExecutionDegreeIDString);
+            final ExecutionDegree otherExecutionDegree = FenixFramework.getDomainObject(otherExecutionDegreeIDString);
             AddExecutionDegreeToScheduling.runAddExecutionDegreeToScheduling(executionDegree.getScheduling(),
                     otherExecutionDegree);
         }
@@ -1177,9 +1177,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String executionDegreeOIDString = dynaActionForm.getString("executionDegreeOID");
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOIDString);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeOIDString);
         final String otherExecutionDegreeIDString = dynaActionForm.getString("otherExecutionDegreeID");
-        final ExecutionDegree otherExecutionDegree = AbstractDomainObject.fromExternalId(otherExecutionDegreeIDString);
+        final ExecutionDegree otherExecutionDegree = FenixFramework.getDomainObject(otherExecutionDegreeIDString);
 
         RemoveExecutionDegreeToScheduling.runRemoveExecutionDegreeToScheduling(executionDegree.getScheduling(),
                 otherExecutionDegree);

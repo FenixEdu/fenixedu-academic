@@ -18,15 +18,15 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class WriteCandidateEnrolments {
 
     protected void run(Set<String> selectedCurricularCoursesIDs, String candidateID, Double credits, String givenCreditsRemarks)
             throws FenixServiceException {
 
-        MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
         if (masterDegreeCandidate == null) {
             throw new NonExistingServiceException();
         }
@@ -37,7 +37,7 @@ public class WriteCandidateEnrolments {
             masterDegreeCandidate.setGivenCreditsRemarks(givenCreditsRemarks);
         }
 
-        List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+        Collection<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
         List<String> candidateEnrolmentsCurricularCoursesIDs =
                 (List<String>) CollectionUtils.collect(candidateEnrolments, new Transformer() {
                     @Override
@@ -81,8 +81,7 @@ public class WriteCandidateEnrolments {
         Iterator<String> iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
         while (iterCurricularCourseIds.hasNext()) {
 
-            CurricularCourse curricularCourse =
-                    (CurricularCourse) AbstractDomainObject.fromExternalId(iterCurricularCourseIds.next());
+            CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(iterCurricularCourseIds.next());
 
             if (curricularCourse == null) {
                 throw new NonExistingServiceException();
@@ -99,7 +98,7 @@ public class WriteCandidateEnrolments {
 
     private static final WriteCandidateEnrolments serviceInstance = new WriteCandidateEnrolments();
 
-    @Service
+    @Atomic
     public static void runWriteCandidateEnrolments(Set<String> selectedCurricularCoursesIDs, String candidateID, Double credits,
             String givenCreditsRemarks) throws FenixServiceException, NotAuthorizedException {
         WriteCandidateEnrolmentsAuhorizationFilter.instance.execute(selectedCurricularCoursesIDs, candidateID, credits,

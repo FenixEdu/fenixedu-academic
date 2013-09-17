@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
@@ -7,15 +9,13 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
+import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class LessonInstance extends LessonInstance_Base {
 
@@ -24,13 +24,13 @@ public class LessonInstance extends LessonInstance_Base {
         @Override
         public int compare(LessonInstance o1, LessonInstance o2) {
             final int c = o1.getBeginDateTime().compareTo(o2.getBeginDateTime());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
     public LessonInstance(Summary summary, Lesson lesson) {
+//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck);
 
         super();
 
@@ -70,8 +70,8 @@ public class LessonInstance extends LessonInstance_Base {
         lessonInstanceSpaceOccupationManagement(room);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
     public LessonInstance(Lesson lesson, YearMonthDay day) {
+//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck);
 
         super();
 
@@ -107,8 +107,8 @@ public class LessonInstance extends LessonInstance_Base {
         lessonInstanceSpaceOccupationManagement(room);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstances")
     public void delete() {
+        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstances);
 
         if (!canBeDeleted()) {
             throw new DomainException("error.LessonInstance.cannot.be.deleted");
@@ -122,12 +122,12 @@ public class LessonInstance extends LessonInstance_Base {
 
         super.setCourseLoad(null);
         super.setLesson(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
     public void summaryAndCourseLoadManagement(Summary summary, Lesson lesson) {
+        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck);
         CourseLoad courseLoad = null;
         if (lesson != null && summary != null) {
             courseLoad = lesson.getExecutionCourse().getCourseLoadByShiftType(summary.getSummaryType());
@@ -251,6 +251,41 @@ public class LessonInstance extends LessonInstance_Base {
         } else {
             setEndDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasLessonInstanceSpaceOccupation() {
+        return getLessonInstanceSpaceOccupation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCourseLoad() {
+        return getCourseLoad() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateTime() {
+        return getEndDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasLesson() {
+        return getLesson() != null;
+    }
+
+    @Deprecated
+    public boolean hasSummary() {
+        return getSummary() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDateTime() {
+        return getBeginDateTime() != null;
     }
 
 }

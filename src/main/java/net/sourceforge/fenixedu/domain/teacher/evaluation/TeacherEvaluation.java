@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
 
@@ -52,7 +52,7 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
         getTeacherEvaluationProcess().setApprovedEvaluationMark(mark);
     }
 
-    @Service
+    @Atomic
     public void lickAutoEvaluationStamp() {
         internalLickingBusiness();
     }
@@ -63,7 +63,7 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
         setUserWhoLockedAutoEvaluation(who == null ? null : who.getUser());
     }
 
-    @Service
+    @Atomic
     public void lickEvaluationStamp() {
         setEvaluationLock(new DateTime());
         final Person who = AccessControl.getPerson();
@@ -90,20 +90,20 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
     }
 
     public void delete() {
-        removeTeacherEvaluationProcess();
+        setTeacherEvaluationProcess(null);
         for (final TeacherEvaluationFile teacherEvaluationFile : getTeacherEvaluationFileSet()) {
             teacherEvaluationFile.delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
-    @Service
+    @Atomic
     public void rubAutoEvaluationStamp() {
         setAutoEvaluationLock(null);
     }
 
-    @Service
+    @Atomic
     public void rubEvaluationStamp() {
         setEvaluationLock(null);
     }
@@ -118,4 +118,59 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
             }
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFile> getTeacherEvaluationFile() {
+        return getTeacherEvaluationFileSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherEvaluationFile() {
+        return !getTeacherEvaluationFileSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAutoEvaluationLock() {
+        return getAutoEvaluationLock() != null;
+    }
+
+    @Deprecated
+    public boolean hasUserWhoLockedEvaluation() {
+        return getUserWhoLockedEvaluation() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherEvaluationProcess() {
+        return getTeacherEvaluationProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationMark() {
+        return getEvaluationMark() != null;
+    }
+
+    @Deprecated
+    public boolean hasUserWhoLockedAutoEvaluation() {
+        return getUserWhoLockedAutoEvaluation() != null;
+    }
+
+    @Deprecated
+    public boolean hasAutoEvaluationMark() {
+        return getAutoEvaluationMark() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreatedDate() {
+        return getCreatedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationLock() {
+        return getEvaluationLock() != null;
+    }
+
 }

@@ -89,7 +89,7 @@ public class MultipleChoiceTypeRenderer extends AnswerTypeRenderer {
      * String[] choiceIds = composedAnswer.split(" ");
      * 
      * for (String choiceId : choiceIds) { NewChoice choice =
-     * AbstractDomainObject.fromExternalId(
+     * FenixFramework.getDomainObject(
      * Integer.parseInt(choiceId)); choices.add(choice); }
      * 
      * return choices; }

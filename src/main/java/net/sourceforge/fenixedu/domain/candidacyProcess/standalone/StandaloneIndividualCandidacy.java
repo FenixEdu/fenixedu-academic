@@ -224,4 +224,14 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
         return true;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getCurricularCourses() {
+        return getCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularCourses() {
+        return !getCurricularCoursesSet().isEmpty();
+    }
+
 }

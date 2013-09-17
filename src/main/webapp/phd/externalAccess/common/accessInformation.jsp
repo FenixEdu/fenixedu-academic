@@ -1,6 +1,6 @@
 <%@ page language="java"%>
 <%@ page import="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"%>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <fr:slot name="email" required="true" validator="<%= EmailValidator.class.getName() %>">
 	<fr:property name="size" value="40" />

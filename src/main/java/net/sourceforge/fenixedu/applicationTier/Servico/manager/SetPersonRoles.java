@@ -4,14 +4,15 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class SetPersonRoles {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(final Person person, final Set<Role> roles) {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         person.indicatePrivledges(roles);
     }
 

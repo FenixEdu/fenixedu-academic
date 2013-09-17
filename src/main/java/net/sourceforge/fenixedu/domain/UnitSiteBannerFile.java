@@ -20,9 +20,19 @@ public class UnitSiteBannerFile extends UnitSiteBannerFile_Base {
 
     @Override
     public void delete() {
-        removeBackgroundBanner();
-        removeMainBanner();
+        setBackgroundBanner(null);
+        setMainBanner(null);
         super.delete();
+    }
+
+    @Deprecated
+    public boolean hasMainBanner() {
+        return getMainBanner() != null;
+    }
+
+    @Deprecated
+    public boolean hasBackgroundBanner() {
+        return getBackgroundBanner() != null;
     }
 
 }

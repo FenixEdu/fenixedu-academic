@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 import net.sourceforge.fenixedu.util.tests.XMLQuestion;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -34,7 +34,7 @@ public class CreateExercise {
             String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,
             Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox, String path) throws FenixServiceException {
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -44,7 +44,7 @@ public class CreateExercise {
                     new Metadata(executionCourse, author, description, questionDifficultyType.getTypeString(), learningTime,
                             mainSubject, secondarySubject, level);
         } else {
-            metadata = AbstractDomainObject.fromExternalId(metadataId);
+            metadata = FenixFramework.getDomainObject(metadataId);
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -91,7 +91,7 @@ public class CreateExercise {
 
     private static final CreateExercise serviceInstance = new CreateExercise();
 
-    @Service
+    @Atomic
     public static Boolean runCreateExercise(String executionCourseId, String metadataId, String author, String description,
             QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
             String level, SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options,

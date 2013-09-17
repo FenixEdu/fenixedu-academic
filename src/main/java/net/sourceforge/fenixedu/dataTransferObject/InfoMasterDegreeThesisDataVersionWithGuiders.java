@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
@@ -77,7 +78,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
      * @param externalPersons
      * @return
      */
-    private List<InfoExternalPerson> copyExternalPersons(List<ExternalContract> externalPersons) {
+    private List<InfoExternalPerson> copyExternalPersons(Collection<ExternalContract> externalPersons) {
 
         List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(externalPersons.size());
         for (ExternalContract externalPerson : externalPersons) {
@@ -91,7 +92,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
      * @param masterDegreeThesisDataVersion
      * @return
      */
-    private List<InfoTeacher> copyTeachers(List teachers) {
+    private List<InfoTeacher> copyTeachers(Collection<Teacher> teachers) {
         return (List<InfoTeacher>) CollectionUtils.collect(teachers, new Transformer() {
             @Override
             public Object transform(Object arg0) {

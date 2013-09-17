@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.EditPrizeFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.Prize;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RemovePartyFromPrize {
 
@@ -17,7 +17,7 @@ public class RemovePartyFromPrize {
 
     private static final RemovePartyFromPrize serviceInstance = new RemovePartyFromPrize();
 
-    @Service
+    @Atomic
     public static void runRemovePartyFromPrize(Party party, Prize prize) throws NotAuthorizedException {
         EditPrizeFilter.instance.execute(prize);
         serviceInstance.run(party, prize);

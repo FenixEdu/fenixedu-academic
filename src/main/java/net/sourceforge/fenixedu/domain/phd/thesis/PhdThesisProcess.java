@@ -64,7 +64,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingPr
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -166,7 +166,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public void swapJuryElementsOrder(ThesisJuryElement e1, ThesisJuryElement e2) {
-        if (hasThesisJuryElements(e1) && hasThesisJuryElements(e2)) {
+        if (getThesisJuryElementsSet().contains(e1) && getThesisJuryElementsSet().contains(e2)) {
             final Integer order1 = e1.getElementOrder();
             final Integer order2 = e2.getElementOrder();
             e1.setElementOrder(order2);
@@ -175,7 +175,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public void deleteJuryElement(ThesisJuryElement element) {
-        if (hasThesisJuryElements(element)) {
+        if (getThesisJuryElementsSet().contains(element)) {
             final Integer elementOrder = element.getElementOrder();
             element.delete();
             reorderJuryElements(elementOrder);
@@ -517,7 +517,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public void removeLastState() {
-        if (getStatesCount() <= 1) {
+        if (getStatesSet().size() <= 1) {
             throw new DomainException("phd.thesis.PhdThesisProcess.cannot.remove.state");
         }
 
@@ -550,9 +550,116 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
         return super.getPhdJuryElementsRatificationEntity();
     }
 
-    @Service
+    @Atomic
     public void createRequestFee() {
         new PhdThesisRequestFee(getIndividualProgramProcess());
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessState> getStates() {
+        return getStatesSet();
+    }
+
+    @Override
+    @Deprecated
+    public boolean hasAnyStates() {
+        return !getStatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement> getThesisJuryElements() {
+        return getThesisJuryElementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyThesisJuryElements() {
+        return !getThesisJuryElementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasWhenThesisDiscussionRequired() {
+        return getWhenThesisDiscussionRequired() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionDate() {
+        return getConclusionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenJuryValidated() {
+        return getWhenJuryValidated() != null;
+    }
+
+    @Deprecated
+    public boolean hasMeetingProcess() {
+        return getMeetingProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasPresidentJuryElement() {
+        return getPresidentJuryElement() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenJuryDesignated() {
+        return getWhenJuryDesignated() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdJuryElementsRatificationEntity() {
+        return getPhdJuryElementsRatificationEntity() != null;
+    }
+
+    @Deprecated
+    public boolean hasDiscussionPlace() {
+        return getDiscussionPlace() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenFinalThesisRatified() {
+        return getWhenFinalThesisRatified() != null;
+    }
+
+    @Deprecated
+    public boolean hasDiscussionDate() {
+        return getDiscussionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasIndividualProgramProcess() {
+        return getIndividualProgramProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasPresidentTitle() {
+        return getPresidentTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasMeetingDate() {
+        return getMeetingDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalGrade() {
+        return getFinalGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasRatificationEntityCustomMessage() {
+        return getRatificationEntityCustomMessage() != null;
+    }
+
+    @Deprecated
+    public boolean hasMeetingPlace() {
+        return getMeetingPlace() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenJuryRequired() {
+        return getWhenJuryRequired() != null;
     }
 
 }

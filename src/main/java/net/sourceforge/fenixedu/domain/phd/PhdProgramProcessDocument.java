@@ -119,8 +119,8 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
     @Override
     protected void disconnect() {
-        removeUploader();
-        removePhdProgramProcess();
+        setUploader(null);
+        setPhdProgramProcess(null);
         super.disconnect();
     }
 
@@ -218,6 +218,36 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         for (PhdProgramProcessDocument version : versions) {
             version.setDocumentAccepted(false);
         }
+    }
+
+    @Deprecated
+    public boolean hasPhdProgramProcess() {
+        return getPhdProgramProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentAccepted() {
+        return getDocumentAccepted() != null;
+    }
+
+    @Deprecated
+    public boolean hasRemarks() {
+        return getRemarks() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentType() {
+        return getDocumentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentVersion() {
+        return getDocumentVersion() != null;
+    }
+
+    @Deprecated
+    public boolean hasUploader() {
+        return getUploader() != null;
     }
 
 }

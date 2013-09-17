@@ -30,7 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Base {
@@ -137,7 +137,7 @@ public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Bas
         return isOpen() && acceptedTermsAndConditions() ? new InstitutionAffiliationEventTicket(this).getTicket() : StringUtils.EMPTY;
     }
 
-    @Service
+    @Atomic
     public void acceptTermsAndConditions() {
         final Person person = AccessControl.getPerson();
         if (person == null || person != getPerson()) {
@@ -167,6 +167,41 @@ public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Bas
         for (final InstitutionAffiliationEventTicket ticket : getGeneratedTicketSet()) {
             ticket.invalidate();
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEventTicket> getGeneratedTicket() {
+        return getGeneratedTicketSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGeneratedTicket() {
+        return !getGeneratedTicketSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.MicroPaymentEvent> getMicroPaymentEvent() {
+        return getMicroPaymentEventSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMicroPaymentEvent() {
+        return !getMicroPaymentEventSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAcceptedTermsAndConditions() {
+        return getAcceptedTermsAndConditions() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitutionWhereOpen() {
+        return getInstitutionWhereOpen() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitution() {
+        return getInstitution() != null;
     }
 
 }

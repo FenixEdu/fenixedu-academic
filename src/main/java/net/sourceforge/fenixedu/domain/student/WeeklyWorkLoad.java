@@ -8,7 +8,8 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.DurationFieldType;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<WeeklyWorkLoad> {
 
@@ -55,13 +56,43 @@ public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<We
         return new Interval(start, end);
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void delete() {
-        removeAttends();
-        removeRootDomainObject();
+        check(this, RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE);
+        setAttends(null);
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
 
+    }
+
+    @Deprecated
+    public boolean hasWeekOffset() {
+        return getWeekOffset() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasContact() {
+        return getContact() != null;
+    }
+
+    @Deprecated
+    public boolean hasOther() {
+        return getOther() != null;
+    }
+
+    @Deprecated
+    public boolean hasAttends() {
+        return getAttends() != null;
+    }
+
+    @Deprecated
+    public boolean hasAutonomousStudy() {
+        return getAutonomousStudy() != null;
     }
 
 }

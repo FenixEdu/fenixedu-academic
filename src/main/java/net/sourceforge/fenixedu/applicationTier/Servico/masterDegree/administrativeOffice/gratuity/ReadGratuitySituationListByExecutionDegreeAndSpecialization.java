@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,9 +25,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.Prese
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.WriteOnReadError;
 
 /**
  * 
@@ -50,10 +53,10 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
      * payed values 3. in third, a double with the total of list's remaning
      * values
      */
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static Object run(String executionDegreeId, String executionYearName, String persistentSupportecializationName,
             String gratuitySituationTypeName) throws FenixServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
 
         // at least one of the arguments it's obligator
         if (executionDegreeId == null && executionYearName == null) {
@@ -68,7 +71,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
 
             if (executionDegreeId != null) {
 
-                ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+                ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
                 executionDegreeList.add(executionDegree);
 
             } else {
@@ -106,7 +109,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
                     continue;
                 }
 
-                List allStudentCurricularPlans = executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans();
+                Collection allStudentCurricularPlans = executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans();
                 List filteredStudentCurricularPlans = (List) CollectionUtils.select(allStudentCurricularPlans, new Predicate() {
 
                     @Override
@@ -174,7 +177,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
             result.put(Integer.valueOf(0), infoGratuitySituationList);
             result.put(Integer.valueOf(1), new Double(totalPayedValue));
             result.put(Integer.valueOf(2), new Double(totalRemaingValue));
-        } catch (pt.ist.fenixframework.pstm.IllegalWriteException e) {
+        } catch (WriteOnReadError e) {
             throw e;
         } catch (Exception e) {
 
@@ -209,7 +212,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static Object runReadGratuitySituationListByExecutionDegreeAndSpecialization(String executionDegreeId,
             String executionYearName, String persistentSupportecializationName, String gratuitySituationTypeName)
             throws FenixServiceException, NotAuthorizedException {

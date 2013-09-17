@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -22,7 +21,8 @@ import net.sourceforge.fenixedu.util.Money;
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class PaymentPlan extends PaymentPlan_Base {
@@ -69,11 +69,11 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     }
 
     public Installment getLastInstallment() {
-        return (getInstallmentsCount() == 0) ? null : Collections.max(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
+        return (getInstallmentsSet().size() == 0) ? null : Collections.max(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
     }
 
     public Installment getFirstInstallment() {
-        return (getInstallmentsCount() == 0) ? null : Collections.min(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
+        return (getInstallmentsSet().size() == 0) ? null : Collections.min(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
     }
 
     public int getLastInstallmentOrder() {
@@ -87,18 +87,8 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     }
 
     @Override
-    public List<Installment> getInstallments() {
-        return Collections.unmodifiableList(super.getInstallments());
-    }
-
-    @Override
     public Set<Installment> getInstallmentsSet() {
         return Collections.unmodifiableSet(super.getInstallmentsSet());
-    }
-
-    @Override
-    public Iterator<Installment> getInstallmentsIterator() {
-        return getInstallmentsSet().iterator();
     }
 
     @Override
@@ -368,18 +358,18 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
 
     abstract public ServiceAgreementTemplate getServiceAgreementTemplate();
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void delete() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         if (!getGratuityEventsWithPaymentPlan().isEmpty()) {
             throw new DomainException("error.accounting.PaymentPlan.cannot.delete.with.already.associated.gratuity.events");
         }
 
         while (hasAnyInstallments()) {
-            getInstallments().get(0).delete();
+            getInstallments().iterator().next().delete();
         }
 
         removeParameters();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
 
     }
@@ -393,7 +383,47 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     }
 
     public boolean hasSingleInstallment() {
-        return getInstallmentsCount() == 1;
+        return getInstallmentsSet().size() == 1;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan> getGratuityEventsWithPaymentPlan() {
+        return getGratuityEventsWithPaymentPlanSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGratuityEventsWithPaymentPlan() {
+        return !getGratuityEventsWithPaymentPlanSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Installment> getInstallments() {
+        return getInstallmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInstallments() {
+        return !getInstallmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasDefaultPlan() {
+        return getDefaultPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
     }
 
 }

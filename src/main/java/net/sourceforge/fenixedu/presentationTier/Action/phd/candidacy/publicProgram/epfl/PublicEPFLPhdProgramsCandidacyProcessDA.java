@@ -673,28 +673,28 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
     }
 
     private void clearDocumentsInformation(final PhdProgramCandidacyProcessBean bean) {
-        bean.getCurriculumVitae().removeFile();
+        bean.getCurriculumVitae().setFile(null);
         RenderUtils.invalidateViewState("candidacyBean.curriculumVitae");
 
-        bean.getIdentificationDocument().removeFile();
+        bean.getIdentificationDocument().setFile(null);
         RenderUtils.invalidateViewState("candidacyBean.identificationDocument");
 
-        bean.getMotivationLetter().removeFile();
+        bean.getMotivationLetter().setFile(null);
         RenderUtils.invalidateViewState("candidacyBean.motivationLetter");
 
-        bean.getSocialSecurityDocument().removeFile();
+        bean.getSocialSecurityDocument().setFile(null);
         RenderUtils.invalidateViewState("candidacyBean.socialSecurityDocument");
 
-        bean.getResearchPlan().removeFile();
+        bean.getResearchPlan().setFile(null);
         RenderUtils.invalidateViewState("candidacyBean.researchPlan");
 
-        bean.getDissertationOrFinalWorkDocument().removeFile();
+        bean.getDissertationOrFinalWorkDocument().setFile(null);
         RenderUtils.invalidateViewState("candidacyBean.dissertationOrFinalWorkDocument");
 
         bean.removeHabilitationCertificateDocumentFiles();
         invalidateHabilitationCertificateDocumentViewStates();
 
-        bean.removePhdGuidingLetters();
+        bean.setPhdGuidingLetters(null);
         invalidatePhdGuidingLetterViewStates();
     }
 
@@ -1269,7 +1269,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         final PhdCandidacyRefereeLetterBean bean = getRenderedObject("createRefereeLetterBean");
         request.setAttribute("createRefereeLetterBean", bean);
         RenderUtils.invalidateViewState("createRefereeLetterBean.comments");
-        bean.removeFile();
+        bean.setFile(null);
         return mapping.findForward("createRefereeLetter");
     }
 

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.research.Prize;
 import net.sourceforge.fenixedu.presentationTier.Action.research.UnitNameBean;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AddPartyToPrize {
 
@@ -42,13 +42,13 @@ public class AddPartyToPrize {
 
     private static final AddPartyToPrize serviceInstance = new AddPartyToPrize();
 
-    @Service
+    @Atomic
     public static void runAddPartyToPrize(PersonNameBean bean, Prize prize) throws NotAuthorizedException {
         EditPrizeFilter.instance.execute(prize);
         serviceInstance.run(bean, prize);
     }
 
-    @Service
+    @Atomic
     public static void runAddPartyToPrize(UnitNameBean bean, Prize prize) throws NotAuthorizedException {
         EditPrizeFilter.instance.execute(prize);
         serviceInstance.run(bean, prize);

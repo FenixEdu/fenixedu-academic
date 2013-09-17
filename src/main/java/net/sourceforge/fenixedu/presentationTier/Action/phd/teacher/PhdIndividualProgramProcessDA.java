@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.teacher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,8 +95,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
             HttpServletResponse response) {
         RenderUtils.invalidateViewState();
         final PhdIndividualProgramProcess process = getProcess(request);
-        List<PhdParticipant> guidingsList = process.getGuidings();
-        List<PhdParticipant> assistantGuidingsList = process.getAssistantGuidings();
+        Collection<PhdParticipant> guidingsList = process.getGuidings();
+        Collection<PhdParticipant> assistantGuidingsList = process.getAssistantGuidings();
         request.setAttribute("guidingsList", guidingsList);
         request.setAttribute("assistantGuidingsList", assistantGuidingsList);
         return forwardToViewProcess(mapping, request);

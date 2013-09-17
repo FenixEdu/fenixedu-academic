@@ -31,8 +31,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.joda.time.Duration;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -42,7 +42,7 @@ public class ReadTeacherServiceDistributionByCourse {
 
     protected List run(String departmentId, List<String> executionPeriodsIDs) throws FenixServiceException {
 
-        Department department = AbstractDomainObject.fromExternalId(departmentId);
+        Department department = FenixFramework.getDomainObject(departmentId);
 
         // List<CompetenceCourse> competenceCourseList =
         // department.getCompetenceCourses();
@@ -50,7 +50,7 @@ public class ReadTeacherServiceDistributionByCourse {
 
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
         for (String executionPeriodID : executionPeriodsIDs) {
-            executionPeriodList.add(AbstractDomainObject.<ExecutionSemester> fromExternalId(executionPeriodID));
+            executionPeriodList.add(FenixFramework.<ExecutionSemester> getDomainObject(executionPeriodID));
         }
 
         DistributionTeacherServicesByCourseDTO returnDTO = new DistributionTeacherServicesByCourseDTO();
@@ -230,7 +230,7 @@ public class ReadTeacherServiceDistributionByCourse {
 
     private static final ReadTeacherServiceDistributionByCourse serviceInstance = new ReadTeacherServiceDistributionByCourse();
 
-    @Service
+    @Atomic
     public static List runReadTeacherServiceDistributionByCourse(String departmentId, List<String> executionPeriodsIDs)
             throws FenixServiceException, NotAuthorizedException {
         try {

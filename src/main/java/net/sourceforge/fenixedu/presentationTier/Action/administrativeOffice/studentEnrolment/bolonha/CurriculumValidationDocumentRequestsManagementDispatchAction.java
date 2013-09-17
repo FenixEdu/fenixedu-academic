@@ -75,15 +75,15 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
         String graduatedTitle = "";
         if (DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE.equals(documentRequest.getDocumentRequestType())) {
             AdministrativeOfficeDocument document =
-                    AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest).get(0);
+                    AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest).iterator().next();
             conlusionDate = (String) document.getParameters().get("degreeFinalizationDate");
             degreeDescription = (String) document.getParameters().get("degreeDescription");
             graduatedTitle = (String) document.getParameters().get("graduateTitle");
         } else if (DocumentRequestType.DIPLOMA_REQUEST.equals(documentRequest.getDocumentRequestType())) {
             AdministrativeOfficeDocument document =
-                    AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest).get(0);
+                    AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest).iterator().next();
             conlusionDate =
-                    (String) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest).get(0)
+                    (String) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest).iterator().next()
                             .getParameters().get("conclusionDate");
             degreeDescription = (String) document.getParameters().get("degreeFilteredName");
             graduatedTitle = (String) document.getParameters().get("graduateTitle");

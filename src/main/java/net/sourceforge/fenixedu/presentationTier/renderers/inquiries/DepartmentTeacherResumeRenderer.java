@@ -85,7 +85,7 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
         actionCell.setRowspan(departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().size());
 
         ExecutionSemester executionSemester =
-                departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().get(0).getProfessorship()
+                departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().iterator().next().getProfessorship()
                         .getExecutionCourse().getExecutionPeriod();
         String fillInParameters =
                 buildFillInParameters(teacher, executionSemester, departmentTeacherResultsResume.isBackToResume());
@@ -173,7 +173,7 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
     protected void createHeader(Object object, final HtmlTableRow headerRow) {
         List<DepartmentTeacherResultsResume> departmentTeacherResultsResumeList = (List<DepartmentTeacherResultsResume>) object;
         if (!departmentTeacherResultsResumeList.isEmpty()) {
-            DepartmentTeacherResultsResume departmentTeacherResultsResume = departmentTeacherResultsResumeList.get(0);
+            DepartmentTeacherResultsResume departmentTeacherResultsResume = departmentTeacherResultsResumeList.iterator().next();
 
             final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
             firstHeaderCell.setBody(new HtmlText("Docente"));

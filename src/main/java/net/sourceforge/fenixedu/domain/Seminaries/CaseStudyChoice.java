@@ -22,10 +22,10 @@ public class CaseStudyChoice extends CaseStudyChoice_Base {
     }
 
     public void delete() {
-        removeCaseStudy();
-        removeCandidacy();
+        setCaseStudy(null);
+        setCandidacy(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -37,6 +37,26 @@ public class CaseStudyChoice extends CaseStudyChoice_Base {
     @Deprecated
     public void setOrder(Integer order) {
         super.setPreferenceOrder(order);
+    }
+
+    @Deprecated
+    public boolean hasPreferenceOrder() {
+        return getPreferenceOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacy() {
+        return getCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasCaseStudy() {
+        return getCaseStudy() != null;
     }
 
 }

@@ -18,7 +18,7 @@ public class NewChoice extends NewChoice_Base implements Positionable {
     }
 
     protected Integer getNewPosition() {
-        return this.getMultipleChoiceQuestion().getChoicesCount();
+        return this.getMultipleChoiceQuestion().getChoicesSet().size();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class NewChoice extends NewChoice_Base implements Positionable {
             multipleChoiceQuestion.setValidator(null);
         }
 
-        this.removeMultipleChoiceQuestion();
+        this.setMultipleChoiceQuestion(null);
 
         multipleChoiceQuestion.resortChoices();
 
@@ -49,7 +49,7 @@ public class NewChoice extends NewChoice_Base implements Positionable {
 
     @Override
     public boolean isLast() {
-        return this.getPosition() == this.getMultipleChoiceQuestion().getChoicesCount();
+        return this.getPosition() == this.getMultipleChoiceQuestion().getChoicesSet().size();
     }
 
     @Override
@@ -90,6 +90,16 @@ public class NewChoice extends NewChoice_Base implements Positionable {
     @Override
     public void cleanTransformation(HashMap<Object, Object> trasformationMap) {
         // Left blank on purpose
+    }
+
+    @Deprecated
+    public boolean hasMultipleChoiceQuestion() {
+        return getMultipleChoiceQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasPosition() {
+        return getPosition() != null;
     }
 
 }

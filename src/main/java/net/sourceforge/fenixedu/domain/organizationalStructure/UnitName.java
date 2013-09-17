@@ -302,12 +302,42 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     public void delete() {
         final Set<UnitNamePart> unitNameParts = new HashSet<UnitNamePart>(getUnitNamePartSet());
         getUnitNamePartSet().clear();
-        removeUnit();
-        removeRootDomainObject();
+        setUnit(null);
+        setRootDomainObject(null);
         deleteDomainObject();
         for (final UnitNamePart unitNamePart : unitNameParts) {
             unitNamePart.deleteIfEmpty();
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart> getUnitNamePart() {
+        return getUnitNamePartSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyUnitNamePart() {
+        return !getUnitNamePartSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsExternalUnit() {
+        return getIsExternalUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
     }
 
 }

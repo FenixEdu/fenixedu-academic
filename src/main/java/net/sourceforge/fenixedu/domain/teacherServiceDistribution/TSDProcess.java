@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -60,8 +61,8 @@ public class TSDProcess extends TSDProcess_Base {
         return new TSDProcessPhase(this, tsdProcessPhaseName, getLastTSDProcessPhase(), null, TSDProcessPhaseStatus.OPEN);
     }
 
-    public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriodsAndDepartment(List<ExecutionSemester> executionSemesters,
-            Department department) {
+    public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriodsAndDepartment(
+            Collection<ExecutionSemester> executionSemesters, Department department) {
         Set<CompetenceCourse> returnCompetenceCourseSet = new HashSet<CompetenceCourse>();
         Set<CompetenceCourse> competenceCourseSet = new HashSet<CompetenceCourse>(department.getCompetenceCourses());
 
@@ -79,7 +80,7 @@ public class TSDProcess extends TSDProcess_Base {
         return returnCompetenceCourseSet;
     }
 
-    public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriods(List<ExecutionSemester> executionSemesters) {
+    public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriods(Collection<ExecutionSemester> executionSemesters) {
         return getCompetenceCoursesByExecutionPeriodsAndDepartment(executionSemesters, getDepartment());
     }
 
@@ -93,7 +94,7 @@ public class TSDProcess extends TSDProcess_Base {
 
     public TSDProcessPhase getCurrentTSDProcessPhase() {
         if (getTSDProcessPhases().size() > 0) {
-            return getTSDProcessPhases().get(0).getCurrentTSDProcessPhase();
+            return getTSDProcessPhases().iterator().next().getCurrentTSDProcessPhase();
         } else {
             return null;
         }
@@ -101,7 +102,7 @@ public class TSDProcess extends TSDProcess_Base {
 
     public TSDProcessPhase getFirstTSDProcessPhase() {
         if (getTSDProcessPhases().size() > 0) {
-            return getTSDProcessPhases().get(0).getFirstTSDProcessPhase();
+            return getTSDProcessPhases().iterator().next().getFirstTSDProcessPhase();
         } else {
             return null;
         }
@@ -109,7 +110,7 @@ public class TSDProcess extends TSDProcess_Base {
 
     public TSDProcessPhase getLastTSDProcessPhase() {
         if (getTSDProcessPhases().size() > 0) {
-            return getTSDProcessPhases().get(0).getLastTSDProcessPhase();
+            return getTSDProcessPhases().iterator().next().getLastTSDProcessPhase();
         } else {
             return null;
         }
@@ -127,7 +128,7 @@ public class TSDProcess extends TSDProcess_Base {
     }
 
     public ExecutionYear getPreviousExecutionYear() {
-        return getExecutionPeriods().get(0).getExecutionYear().getPreviousExecutionYear();
+        return getExecutionPeriods().iterator().next().getExecutionYear().getPreviousExecutionYear();
     }
 
     public List<TSDProcessPhase> getOrderedPublishedTSDProcessPhases() {
@@ -150,7 +151,7 @@ public class TSDProcess extends TSDProcess_Base {
     }
 
     public ExecutionSemester getFirstExecutionPeriod() {
-        ExecutionSemester firstExecutionPeriod = getExecutionPeriods().get(0);
+        ExecutionSemester firstExecutionPeriod = getExecutionPeriods().iterator().next();
 
         for (ExecutionSemester executionSemester : getExecutionPeriods()) {
             if (executionSemester.isBefore(firstExecutionPeriod)) {
@@ -162,7 +163,7 @@ public class TSDProcess extends TSDProcess_Base {
     }
 
     public ExecutionSemester getLastExecutionPeriod() {
-        ExecutionSemester lastExecutionPeriod = getExecutionPeriods().get(0);
+        ExecutionSemester lastExecutionPeriod = getExecutionPeriods().iterator().next();
 
         for (ExecutionSemester executionSemester : getExecutionPeriods()) {
             if (executionSemester.isAfter(lastExecutionPeriod)) {
@@ -174,7 +175,7 @@ public class TSDProcess extends TSDProcess_Base {
     }
 
     public ExecutionYear getExecutionYear() {
-        return getExecutionPeriods().get(0).getExecutionYear();
+        return getExecutionPeriods().iterator().next().getExecutionYear();
     }
 
     public Boolean getIsMemberOfPhasesManagementGroup(Person person) {
@@ -384,10 +385,70 @@ public class TSDProcess extends TSDProcess_Base {
             removeExecutionPeriods(executionSemester);
         }
 
-        removeCreator();
-        removeDepartment();
-        removeRootDomainObject();
+        setCreator(null);
+        setDepartment(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase> getTSDProcessPhases() {
+        return getTSDProcessPhasesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDProcessPhases() {
+        return !getTSDProcessPhasesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionSemester> getExecutionPeriods() {
+        return getExecutionPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionPeriods() {
+        return !getExecutionPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasTsdCoursesAndTeachersManagementGroup() {
+        return getTsdCoursesAndTeachersManagementGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasOmissionConfigurationGroup() {
+        return getOmissionConfigurationGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhasesManagementGroup() {
+        return getPhasesManagementGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasDepartment() {
+        return getDepartment() != null;
+    }
+
+    @Deprecated
+    public boolean hasAutomaticValuationGroup() {
+        return getAutomaticValuationGroup() != null;
     }
 
 }

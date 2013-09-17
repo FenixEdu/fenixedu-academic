@@ -55,7 +55,7 @@ public class CurricularCourseMarksheetManagementBean implements Serializable {
     }
 
     public String getKey() {
-        return String.valueOf(getCurricularCourse().getOID() + ":" + getExecutionSemester().getOID());
+        return String.valueOf(getCurricularCourse().getExternalId() + ":" + getExecutionSemester().getExternalId());
     }
 
     public String getName() {

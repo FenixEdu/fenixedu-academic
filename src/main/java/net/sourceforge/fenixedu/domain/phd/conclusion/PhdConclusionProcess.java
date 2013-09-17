@@ -90,4 +90,49 @@ public class PhdConclusionProcess extends PhdConclusionProcess_Base {
         return getThesisEctsCredits().add(getStudyPlanEctsCredits());
     }
 
+    @Deprecated
+    public boolean hasResponsible() {
+        return getResponsible() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyPlanEctsCredits() {
+        return getStudyPlanEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasThesisEctsCredits() {
+        return getThesisEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdProcess() {
+        return getPhdProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionDate() {
+        return getConclusionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasVersion() {
+        return getVersion() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalGrade() {
+        return getFinalGrade() != null;
+    }
+
 }

@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -10,10 +13,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class Building extends Building_Base {
 
@@ -51,9 +53,9 @@ public class Building extends Building_Base {
     }
 
     @Override
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted building", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkPermissionsToManageSpace);
         super.delete();
     }
 
@@ -90,7 +92,7 @@ public class Building extends Building_Base {
     }
 
     public Floor readFloorByLevel(Integer floorNumber) {
-        List<Space> containedSpaces = getContainedSpaces();
+        Collection<Space> containedSpaces = getContainedSpaces();
         for (Space space : containedSpaces) {
             if (space.isFloor() && ((Floor) space).getSpaceInformation().getLevel().equals(floorNumber)) {
                 return (Floor) space;

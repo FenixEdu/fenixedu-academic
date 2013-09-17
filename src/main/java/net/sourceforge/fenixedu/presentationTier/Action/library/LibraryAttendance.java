@@ -34,7 +34,7 @@ import org.joda.time.LocalDate;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class LibraryAttendance implements Serializable {
@@ -268,15 +268,11 @@ public class LibraryAttendance implements Serializable {
         return invitation;
     }
 
-    public List<GiafProfessionalData> getGiafProfessionalDataSet() {
+    public Collection<GiafProfessionalData> getGiafProfessionalDataSet() {
         return getPerson().getPersonProfessionalData() == null ? new ArrayList<GiafProfessionalData>() : getPerson()
                 .getPersonProfessionalData().getGiafProfessionalDatas();
     }
 
-    public GiafProfessionalData getGiafProfessionalDatas(int index) {
-        return getPerson().getPersonProfessionalData() == null ? null : getPerson().getPersonProfessionalData()
-                .getGiafProfessionalDatas().get(index);
-    }
 
     public Registration getStudentRegistration() {
         return studentRegistration;
@@ -361,19 +357,19 @@ public class LibraryAttendance implements Serializable {
 
     }
 
-    @Service
+    @Atomic
     public void generateCardNumber() {
         getPerson().setLibraryCardNumber(RootDomainObject.getInstance().getLibraryCardSystem().generateNewMilleniumCode());
         setPersonLibraryCardNumber(getPerson().getLibraryCardNumber());
     }
 
-    @Service
+    @Atomic
     public void enterSpace() {
         Space space = getSelectedSpace() != null ? getSelectedSpace() : library;
         setPersonAttendance(space.addAttendance(getPerson(), AccessControl.getPerson().getIstUsername()));
     }
 
-    @Service
+    @Atomic
     public void exitSpace() {
         getPersonAttendance().exit(AccessControl.getPerson().getIstUsername());
         if (getPerson() != null && getPerson().equals(getPersonAttendance().getPerson())) {

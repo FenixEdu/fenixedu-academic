@@ -297,7 +297,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
         if (getIndividualCandidacySeriesGrade().size() == 0) {
             return null;
         } else {
-            return (DegreeChangeIndividualCandidacySeriesGrade) getIndividualCandidacySeriesGrade().get(0);
+            return (DegreeChangeIndividualCandidacySeriesGrade) getIndividualCandidacySeriesGrade().iterator().next();
         }
     }
 
@@ -373,6 +373,36 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     @Override
     public void setSeriesCandidacyGrade(BigDecimal value) {
         getDegreeChangeIndividualCandidacySeriesGrade().setSeriesCandidacyGrade(value);
+    }
+
+    @Deprecated
+    public boolean hasApprovedEctsRate() {
+        return getApprovedEctsRate() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeNature() {
+        return getDegreeNature() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeriesCandidacyGrade() {
+        return getSeriesCandidacyGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeRate() {
+        return getGradeRate() != null;
+    }
+
+    @Deprecated
+    public boolean hasSelectedDegree() {
+        return getSelectedDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasAffinity() {
+        return getAffinity() != null;
     }
 
 }

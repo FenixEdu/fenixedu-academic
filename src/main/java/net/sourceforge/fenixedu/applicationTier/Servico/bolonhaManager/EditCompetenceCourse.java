@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.util.StringFormatter;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditCompetenceCourse {
 
@@ -68,7 +68,7 @@ public class EditCompetenceCourse {
     }
 
     private CompetenceCourse readCompetenceCourse(String competenceCourseID) throws FenixServiceException {
-        final CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);
+        final CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }
@@ -107,7 +107,7 @@ public class EditCompetenceCourse {
 
     private static final EditCompetenceCourse serviceInstance = new EditCompetenceCourse();
 
-    @Service
+    @Atomic
     public static void runEditCompetenceCourse(String competenceCourseID, String objectives, String program,
             String evaluationMethod, String objectivesEn, String programEn, String evaluationMethodEn)
             throws FenixServiceException, NotAuthorizedException {
@@ -126,7 +126,7 @@ public class EditCompetenceCourse {
         }
     }
 
-    @Service
+    @Atomic
     public static void runEditCompetenceCourse(String competenceCourseID, CurricularStage curricularStage)
             throws FenixServiceException, NotAuthorizedException {
         try {
@@ -142,7 +142,7 @@ public class EditCompetenceCourse {
         }
     }
 
-    @Service
+    @Atomic
     public static void runEditCompetenceCourse(String competenceCourseID, String acronym) throws FenixServiceException,
             NotAuthorizedException {
         try {
@@ -158,7 +158,7 @@ public class EditCompetenceCourse {
         }
     }
 
-    @Service
+    @Atomic
     public static void runEditCompetenceCourse(String competenceCourseID, String year, String title, String author,
             String reference, BibliographicReferenceType valueOf, String url) throws FenixServiceException {
         try {
@@ -174,7 +174,7 @@ public class EditCompetenceCourse {
         }
     }
 
-    @Service
+    @Atomic
     public static void runEditCompetenceCourse(String competenceCourseID, Integer bibliographicReferenceID, String year,
             String title, String author, String reference, BibliographicReferenceType valueOf, String url)
             throws FenixServiceException {
@@ -191,7 +191,7 @@ public class EditCompetenceCourse {
         }
     }
 
-    @Service
+    @Atomic
     public static void runEditCompetenceCourse(String competenceCourseID, Integer bibliographicReferenceIDToDelete)
             throws FenixServiceException {
         try {
@@ -207,7 +207,7 @@ public class EditCompetenceCourse {
         }
     }
 
-    @Service
+    @Atomic
     public static void runEditCompetenceCourse(String competenceCourseID, Integer oldPosition, Integer newPosition)
             throws FenixServiceException {
         try {
@@ -223,7 +223,7 @@ public class EditCompetenceCourse {
         }
     }
 
-    @Service
+    @Atomic
     public static void runEditCompetenceCourse(String competenceCourseID, String name, String nameEn, Boolean basic,
             CompetenceCourseLevel enumCompetenceCourseLevel, CompetenceCourseType enumCompetenceCourseType,
             CurricularStage valueOf) throws FenixServiceException {

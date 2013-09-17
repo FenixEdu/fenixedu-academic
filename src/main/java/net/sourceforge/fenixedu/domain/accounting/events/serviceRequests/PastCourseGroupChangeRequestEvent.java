@@ -37,4 +37,9 @@ public class PastCourseGroupChangeRequestEvent extends PastCourseGroupChangeRequ
         return labelFormatter;
     }
 
+    @Deprecated
+    public boolean hasPastAmount() {
+        return getPastAmount() != null;
+    }
+
 }

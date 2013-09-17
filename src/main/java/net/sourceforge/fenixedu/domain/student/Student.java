@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -81,8 +80,9 @@ import org.joda.time.YearMonthDay;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.StudentPredicates;import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class Student extends Student_Base {
 
@@ -264,7 +264,7 @@ public class Student extends Student_Base {
     }
 
     public Registration getLastRegistration() {
-        List<Registration> activeRegistrations = getRegistrations();
+        Collection<Registration> activeRegistrations = getRegistrationsSet();
         return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations,
                 Registration.COMPARATOR_BY_START_DATE);
     }
@@ -545,13 +545,13 @@ public class Student extends Student_Base {
 
     public void delete() {
 
-        for (; hasAnyStudentDataByExecutionYear(); getStudentDataByExecutionYear().get(0).delete()) {
+        for (; hasAnyStudentDataByExecutionYear(); getStudentDataByExecutionYear().iterator().next().delete()) {
             ;
         }
-        for (; !getRegistrations().isEmpty(); getRegistrations().get(0).delete()) {
+        for (; !getRegistrations().isEmpty(); getRegistrations().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyVotes(); getVotes().get(0).delete()) {
+        for (; hasAnyVotes(); getVotes().iterator().next().delete()) {
             ;
         }
 
@@ -560,8 +560,8 @@ public class Student extends Student_Base {
 
         setNumber(null);
 
-        removePerson();
-        removeRootDomainObject();
+        setPerson(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -891,10 +891,10 @@ public class Student extends Student_Base {
         return enrolments.isEmpty() ? null : enrolments.last();
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public void setSpentTimeInPeriodForInquiry(List<CurricularCourseInquiriesRegistryDTO> courses, Integer weeklySpentHours,
             ExecutionSemester executionSemester) {
+        check(this, RolePredicates.STUDENT_PREDICATE);
 
         if (!StudentInquiryRegistry.checkTotalPercentageDistribution(courses)) {
             throw new DomainException("error.weeklyHoursSpentPercentage.is.not.100.percent");
@@ -950,10 +950,10 @@ public class Student extends Student_Base {
         return inquiryTemplate == null ? null : getStudentInquiryExecutionPeriod(inquiryTemplate.getExecutionPeriod());
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public Collection<StudentInquiryRegistry> retrieveAndCreateMissingInquiryRegistriesForPeriod(
             ExecutionSemester executionSemester) {
+        check(this, RolePredicates.STUDENT_PREDICATE);
         final Map<ExecutionCourse, StudentInquiryRegistry> coursesToAnswer =
                 getExistingStudentInquiryRegistryMap(executionSemester);
 
@@ -1131,24 +1131,8 @@ public class Student extends Student_Base {
         return false;
     }
 
-    /**
-     * -> Temporary overrides due migrations - Filter 'InTransition'
-     * registrations -> Do not use this method to add new registrations directly
-     * (use {@link addRegistrations} method)
-     */
-    @Override
-    public List<Registration> getRegistrations() {
-        final List<Registration> result = new ArrayList<Registration>();
-        for (final Registration registration : super.getRegistrations()) {
-            if (!registration.isTransition()) {
-                result.add(registration);
-            }
-        }
-        return Collections.unmodifiableList(result);
-    }
-
     public Collection<Registration> getAllRegistrations() {
-        return Collections.unmodifiableCollection(super.getRegistrations());
+        return Collections.unmodifiableCollection(super.getRegistrationsSet());
     }
 
     /**
@@ -1167,18 +1151,8 @@ public class Student extends Student_Base {
         return Collections.unmodifiableSet(result);
     }
 
-    @Override
-    public Iterator<Registration> getRegistrationsIterator() {
-        return getRegistrationsSet().iterator();
-    }
-
-    @Override
-    public int getRegistrationsCount() {
-        return getRegistrations().size();
-    }
-
     public boolean hasTransitionRegistrations() {
-        for (final Registration registration : super.getRegistrations()) {
+        for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransition()) {
                 return true;
             }
@@ -1187,10 +1161,10 @@ public class Student extends Student_Base {
         return false;
     }
 
-    @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager")
     public List<Registration> getTransitionRegistrations() {
+        check(this, StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager);
         final List<Registration> result = new ArrayList<Registration>();
-        for (final Registration registration : super.getRegistrations()) {
+        for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransition()) {
                 result.add(registration);
             }
@@ -1198,10 +1172,10 @@ public class Student extends Student_Base {
         return result;
     }
 
-    @Checked("StudentPredicates.checkIfLoggedPersonIsCoordinator")
     public List<Registration> getTransitionRegistrationsForDegreeCurricularPlansManagedByCoordinator(final Person coordinator) {
+        check(this, StudentPredicates.checkIfLoggedPersonIsCoordinator);
         final List<Registration> result = new ArrayList<Registration>();
-        for (final Registration registration : super.getRegistrations()) {
+        for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransition()
                     && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),
                             ExecutionYear.readCurrentExecutionYear())) {
@@ -1211,10 +1185,10 @@ public class Student extends Student_Base {
         return result;
     }
 
-    @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager")
     public List<Registration> getTransitedRegistrations() {
+        check(this, StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager);
         List<Registration> result = new ArrayList<Registration>();
-        for (Registration registration : super.getRegistrations()) {
+        for (Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransited()) {
                 result.add(registration);
             }
@@ -1223,7 +1197,7 @@ public class Student extends Student_Base {
     }
 
     private boolean isAnyTuitionInDebt(final ExecutionYear executionYear) {
-        for (final Registration registration : super.getRegistrations()) {
+        for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.hasAnyNotPayedGratuityEventsForPreviousYears(executionYear)) {
                 return true;
             }
@@ -1264,7 +1238,7 @@ public class Student extends Student_Base {
 
     public List<Registration> getRegistrationsFor(final DegreeCurricularPlan degreeCurricularPlan) {
         final List<Registration> result = new ArrayList<Registration>();
-        for (final Registration registration : super.getRegistrations()) {
+        for (final Registration registration : super.getRegistrationsSet()) {
             for (final DegreeCurricularPlan degreeCurricularPlanToTest : registration.getDegreeCurricularPlans()) {
                 if (degreeCurricularPlanToTest.equals(degreeCurricularPlan)) {
                     result.add(registration);
@@ -1286,7 +1260,7 @@ public class Student extends Student_Base {
 
     public List<Registration> getRegistrationsFor(final Degree degree) {
         final List<Registration> result = new ArrayList<Registration>();
-        for (final Registration registration : super.getRegistrations()) {
+        for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.getDegree() == degree) {
                 result.add(registration);
             }
@@ -1831,9 +1805,9 @@ public class Student extends Student_Base {
         }
     }
 
-    @Service
-    public void acceptRegistrationsFromOtherStudent(java.util.List<Registration> otherRegistrations) {
-        List<Registration> registrations = super.getRegistrations();
+    @Atomic
+    public void acceptRegistrationsFromOtherStudent(java.util.Collection<Registration> otherRegistrations) {
+        Collection<Registration> registrations = super.getRegistrationsSet();
         registrations.addAll(otherRegistrations);
     }
 
@@ -2106,4 +2080,230 @@ public class Student extends Student_Base {
         }
         return false;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getRegistrations() {
+        return getRegistrationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRegistrations() {
+        return !getRegistrationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod> getStudentsInquiriesExecutionPeriods() {
+        return getStudentsInquiriesExecutionPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentsInquiriesExecutionPeriods() {
+        return !getStudentsInquiriesExecutionPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElection> getDelegateElections() {
+        return getDelegateElectionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDelegateElections() {
+        return !getDelegateElectionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit> getExecutionCourseAudits() {
+        return getExecutionCourseAuditsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionCourseAudits() {
+        return !getExecutionCourseAuditsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVote> getVotes() {
+        return getVotesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVotes() {
+        return !getVotesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear> getStudentDataByExecutionYear() {
+        return getStudentDataByExecutionYearSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentDataByExecutionYear() {
+        return !getStudentDataByExecutionYearSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.StudentDataShareAuthorization> getStudentDataShareAuthorization() {
+        return getStudentDataShareAuthorizationSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentDataShareAuthorization() {
+        return !getStudentDataShareAuthorizationSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod> getVotingPeriodForNewRoundElections() {
+        return getVotingPeriodForNewRoundElectionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVotingPeriodForNewRoundElections() {
+        return !getVotingPeriodForNewRoundElectionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesStudentExecutionPeriod> getInquiriesStudentExecutionPeriods() {
+        return getInquiriesStudentExecutionPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiriesStudentExecutionPeriods() {
+        return !getInquiriesStudentExecutionPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.scholarship.report.UTLScholarshipReport> getUtlScholarshipReport() {
+        return getUtlScholarshipReportSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyUtlScholarshipReport() {
+        return !getUtlScholarshipReportSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElection> getElectedElections() {
+        return getElectedElectionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyElectedElections() {
+        return !getElectedElectionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.StudentStatute> getStudentStatutes() {
+        return getStudentStatutesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentStatutes() {
+        return !getStudentStatutesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.PersonalIngressionData> getPersonalIngressionsData() {
+        return getPersonalIngressionsDataSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonalIngressionsData() {
+        return !getPersonalIngressionsDataSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry> getStudentsInquiryRegistries() {
+        return getStudentsInquiryRegistriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentsInquiryRegistries() {
+        return !getStudentsInquiryRegistriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.residence.StudentsPerformanceReport> getReports() {
+        return getReportsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReports() {
+        return !getReportsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication> getCareerWorkshopApplications() {
+        return getCareerWorkshopApplicationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCareerWorkshopApplications() {
+        return !getCareerWorkshopApplicationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmation> getCareerWorkshopConfirmations() {
+        return getCareerWorkshopConfirmationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCareerWorkshopConfirmations() {
+        return !getCareerWorkshopConfirmationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity> getExtraCurricularActivity() {
+        return getExtraCurricularActivitySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExtraCurricularActivity() {
+        return !getExtraCurricularActivitySet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElection> getElectionsWithStudentCandidacies() {
+        return getElectionsWithStudentCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyElectionsWithStudentCandidacies() {
+        return !getElectionsWithStudentCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod> getElectionsWithVotingStudents() {
+        return getElectionsWithVotingStudentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyElectionsWithVotingStudents() {
+        return !getElectionsWithVotingStudentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentNumber() {
+        return getStudentNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasAlumni() {
+        return getAlumni() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

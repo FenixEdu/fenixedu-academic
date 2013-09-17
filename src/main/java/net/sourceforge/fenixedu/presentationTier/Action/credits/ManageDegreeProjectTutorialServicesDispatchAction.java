@@ -18,7 +18,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ManageDegreeProjectTutorialServicesDispatchAction extends FenixDispatchAction {
 
@@ -26,7 +26,7 @@ public class ManageDegreeProjectTutorialServicesDispatchAction extends FenixDisp
             HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         String professorshipID = (String) getFromRequest(request, "professorshipID");
-        Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
+        Professorship professorship = FenixFramework.getDomainObject(professorshipID);
         if (professorship == null) {
             return mapping.findForward("teacher-not-found");
         }
@@ -46,7 +46,7 @@ public class ManageDegreeProjectTutorialServicesDispatchAction extends FenixDisp
     public ActionForward updateProjectTutorialService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String professorshipID = (String) getFromRequest(request, "professorshipID");
-        Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
+        Professorship professorship = FenixFramework.getDomainObject(professorshipID);
         List<ProjectTutorialServiceBean> projectTutorialServiceBeans = getRenderedObject("projectTutorialService");
         try {
             DegreeProjectTutorialService.updateProjectTutorialService(projectTutorialServiceBeans);

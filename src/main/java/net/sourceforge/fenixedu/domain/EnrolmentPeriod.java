@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author jpvl
@@ -89,11 +89,11 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
         return getDegreeCurricularPlan().getDegree();
     }
 
-    @Service
+    @Atomic
     public void delete() {
-        removeDegreeCurricularPlan();
-        removeExecutionPeriod();
-        removeRootDomainObject();
+        setDegreeCurricularPlan(null);
+        setExecutionPeriod(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -129,6 +129,31 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 
     public Interval getInterval() {
         return new Interval(getStartDateDateTime(), getEndDateDateTime());
+    }
+
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDateDateTime() {
+        return getStartDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateDateTime() {
+        return getEndDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
     }
 
 }

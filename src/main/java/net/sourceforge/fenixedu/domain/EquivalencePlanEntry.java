@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -29,8 +28,8 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     public static Comparator<EquivalencePlanEntry> COMPARATOR_BY_SOURCE_NUMBER = new Comparator<EquivalencePlanEntry>() {
         @Override
         public int compare(EquivalencePlanEntry o1, EquivalencePlanEntry o2) {
-            final Integer count1 = Integer.valueOf(o1.getOldDegreeModulesCount());
-            final Integer count2 = Integer.valueOf(o2.getOldDegreeModulesCount());
+            final Integer count1 = Integer.valueOf(o1.getOldDegreeModulesSet().size());
+            final Integer count2 = Integer.valueOf(o2.getOldDegreeModulesSet().size());
             return count1.compareTo(count2);
         }
     };
@@ -240,7 +239,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     }
 
     public List<DegreeModule> getNewDegreeModulesSortedByType() {
-        final List<DegreeModule> result = new ArrayList<DegreeModule>(super.getNewDegreeModules());
+        final List<DegreeModule> result = new ArrayList<DegreeModule>(super.getNewDegreeModulesSet());
         Collections.sort(result, new Comparator<DegreeModule>() {
             @Override
             public int compare(final DegreeModule o1, final DegreeModule o2) {
@@ -258,18 +257,8 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     }
 
     @Override
-    public List<DegreeModule> getNewDegreeModules() {
-        return Collections.unmodifiableList(super.getNewDegreeModules());
-    }
-
-    @Override
     public Set<DegreeModule> getNewDegreeModulesSet() {
         return Collections.unmodifiableSet(super.getNewDegreeModulesSet());
-    }
-
-    @Override
-    public Iterator<DegreeModule> getNewDegreeModulesIterator() {
-        return getNewDegreeModulesSet().iterator();
     }
 
     @Override
@@ -283,18 +272,8 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     }
 
     @Override
-    public List<DegreeModule> getOldDegreeModules() {
-        return Collections.unmodifiableList(super.getOldDegreeModules());
-    }
-
-    @Override
     public Set<DegreeModule> getOldDegreeModulesSet() {
         return Collections.unmodifiableSet(super.getOldDegreeModulesSet());
-    }
-
-    @Override
-    public Iterator<DegreeModule> getOldDegreeModulesIterator() {
-        return getOldDegreeModulesSet().iterator();
     }
 
     @Override
@@ -345,8 +324,8 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeEquivalencePlan();
+        setRootDomainObject(null);
+        setEquivalencePlan(null);
         super.setPreviousCourseGroupForNewDegreeModules(null);
         super.getEquivalencePlansSet().clear();
         super.getOldDegreeModulesSet().clear();
@@ -354,7 +333,6 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
         super.deleteDomainObject();
     }
 
-    @Override
     public void removeEquivalencePlan() {
         super.setEquivalencePlan(null);
     }
@@ -413,7 +391,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
                 return false;
             }
         }
-        return getNewDegreeModulesCount() > 0;
+        return getNewDegreeModulesSet().size() > 0;
     }
 
     public boolean hasOnlyCurricularCoursesInDestination() {
@@ -422,7 +400,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
                 return false;
             }
         }
-        return getNewDegreeModulesCount() > 0;
+        return getNewDegreeModulesSet().size() > 0;
     }
 
     public boolean isTransitiveSource() {
@@ -439,6 +417,71 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
             isApprovedInAll &= isApprovedOrEnroled;
         }
         return isApprovedInAll;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule> getOldDegreeModules() {
+        return getOldDegreeModulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOldDegreeModules() {
+        return !getOldDegreeModulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan> getEquivalencePlans() {
+        return getEquivalencePlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEquivalencePlans() {
+        return !getEquivalencePlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule> getNewDegreeModules() {
+        return getNewDegreeModulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNewDegreeModules() {
+        return !getNewDegreeModulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEquivalencePlan() {
+        return getEquivalencePlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTransitiveSource() {
+        return getTransitiveSource() != null;
+    }
+
+    @Deprecated
+    public boolean hasPreviousCourseGroupForNewDegreeModules() {
+        return getPreviousCourseGroupForNewDegreeModules() != null;
+    }
+
+    @Deprecated
+    public boolean hasNewDegreeModulesOperator() {
+        return getNewDegreeModulesOperator() != null;
+    }
+
+    @Deprecated
+    public boolean hasEctsCredits() {
+        return getEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasSourceDegreeModulesOperator() {
+        return getSourceDegreeModulesOperator() != null;
     }
 
 }

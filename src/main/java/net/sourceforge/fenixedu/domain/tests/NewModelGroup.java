@@ -49,18 +49,18 @@ public class NewModelGroup extends NewModelGroup_Base {
             testModel.unselectRestriction(atomicRestriction);
         }
 
-        while (this.getChildRestrictionsCount() > 0) {
-            this.getChildRestrictions().get(0).delete();
+        while (this.getChildRestrictionsSet().size() > 0) {
+            this.getChildRestrictions().iterator().next().delete();
         }
 
         super.delete();
     }
 
     public void deleteAsBag() {
-        this.getTestModel().removeBag();
+        this.getTestModel().setBag(null);
 
-        while (this.getChildRestrictionsCount() > 0) {
-            this.getChildRestrictions().get(0).delete();
+        while (this.getChildRestrictionsSet().size() > 0) {
+            this.getChildRestrictions().iterator().next().delete();
         }
 
         super.delete();
@@ -197,6 +197,26 @@ public class NewModelGroup extends NewModelGroup_Base {
     @Override
     public boolean isComposite() {
         return true;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewModelRestriction> getChildRestrictions() {
+        return getChildRestrictionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChildRestrictions() {
+        return !getChildRestrictionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasBagModel() {
+        return getBagModel() != null;
     }
 
 }

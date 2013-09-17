@@ -70,7 +70,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     public Over23CandidacyPeriod getOver23CandidacyPeriod() {
         final List<Over23CandidacyPeriod> candidacyPeriods =
                 (List<Over23CandidacyPeriod>) getCandidacyPeriods(Over23CandidacyPeriod.class);
-        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
     }
 
     public boolean hasOver23CandidacyPeriod() {
@@ -92,7 +92,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     public DegreeCandidacyForGraduatedPersonCandidacyPeriod getDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
         final List<DegreeCandidacyForGraduatedPersonCandidacyPeriod> candidacyPeriods =
                 (List<DegreeCandidacyForGraduatedPersonCandidacyPeriod>) getCandidacyPeriods(DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
-        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
     }
 
     public boolean hasDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
@@ -102,7 +102,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     public DegreeChangeCandidacyPeriod getDegreeChangeCandidacyPeriod() {
         final List<DegreeChangeCandidacyPeriod> candidacyPeriods =
                 (List<DegreeChangeCandidacyPeriod>) getCandidacyPeriods(DegreeChangeCandidacyPeriod.class);
-        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
     }
 
     public boolean hasDegreeChangeCandidacyPeriod() {
@@ -112,7 +112,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     public DegreeTransferCandidacyPeriod getDegreeTransferCandidacyPeriod() {
         final List<DegreeTransferCandidacyPeriod> candidacyPeriods =
                 (List<DegreeTransferCandidacyPeriod>) getCandidacyPeriods(DegreeTransferCandidacyPeriod.class);
-        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
     }
 
     public boolean hasDegreeTransferCandidacyPeriod() {
@@ -189,6 +189,76 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
         } else {
             setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction> getPersonFunction() {
+        return getPersonFunctionSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonFunction() {
+        return !getPersonFunctionSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping> getPaymentCodeMappings() {
+        return getPaymentCodeMappingsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPaymentCodeMappings() {
+        return !getPaymentCodeMappingsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.period.CandidacyPeriod> getCandidacyPeriods() {
+        return getCandidacyPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidacyPeriods() {
+        return !getCandidacyPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport> getExecutionDegreeCoursesReports() {
+        return getExecutionDegreeCoursesReportsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionDegreeCoursesReports() {
+        return !getExecutionDegreeCoursesReportsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasBeginDateYearMonthDay() {
+        return getBeginDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcademicInterval() {
+        return getAcademicInterval() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateYearMonthDay() {
+        return getEndDateYearMonthDay() != null;
     }
 
 }

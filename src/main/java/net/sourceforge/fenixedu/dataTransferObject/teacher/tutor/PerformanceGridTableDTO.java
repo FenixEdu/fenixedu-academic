@@ -107,7 +107,7 @@ public class PerformanceGridTableDTO extends DataTranferObject {
         }
 
         public Integer getApprovedRatioFirstSemester() {
-            return approvedRatioBySemester.get(0);
+            return approvedRatioBySemester.iterator().next();
         }
 
         public Integer getApprovedRatioSecondSemester() {

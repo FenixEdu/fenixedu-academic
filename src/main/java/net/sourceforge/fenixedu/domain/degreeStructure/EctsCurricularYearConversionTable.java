@@ -16,7 +16,12 @@ public abstract class EctsCurricularYearConversionTable extends EctsCurricularYe
 
     @Override
     public void delete() {
-        removeCurricularYear();
+        setCurricularYear(null);
         super.delete();
     }
+    @Deprecated
+    public boolean hasCurricularYear() {
+        return getCurricularYear() != null;
+    }
+
 }

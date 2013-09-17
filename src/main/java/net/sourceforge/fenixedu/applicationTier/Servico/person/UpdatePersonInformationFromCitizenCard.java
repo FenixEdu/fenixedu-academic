@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInform
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class UpdatePersonInformationFromCitizenCard {
 
-    @Service
+    @Atomic
     public static void run(PersonInformationFromUniqueCardDTO personDTO) {
         Collection<Person> persons = Person.readByDocumentIdNumber(personDTO.getDocumentIdNumber());
         if (persons.isEmpty() || persons.size() > 1) {

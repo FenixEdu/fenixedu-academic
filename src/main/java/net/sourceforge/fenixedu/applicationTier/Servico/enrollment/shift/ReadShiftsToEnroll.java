@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadShiftsToEnroll {
 
@@ -134,7 +134,7 @@ public class ReadShiftsToEnroll {
 
     private static final ReadShiftsToEnroll serviceInstance = new ReadShiftsToEnroll();
 
-    @Service
+    @Atomic
     public static List runReadShiftsToEnroll(Registration registration) throws FenixServiceException  , NotAuthorizedException {
         ClassEnrollmentAuthorizationFilter.instance.execute(registration);
         return serviceInstance.run(registration);

@@ -22,7 +22,7 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ResultsManagementAction extends FenixDispatchAction {
@@ -32,7 +32,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
             throws Exception {
         String unitId = request.getParameter("unitId");
         if (unitId != null) {
-            ResearchUnit unit = (ResearchUnit) AbstractDomainObject.fromExternalId(unitId);
+            ResearchUnit unit = (ResearchUnit) FenixFramework.getDomainObject(unitId);
             request.setAttribute("unit", unit);
         }
         return super.execute(mapping, form, request, response);
@@ -81,7 +81,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException {
 
         String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) AbstractDomainObject.fromExternalId(prizeID);
+        Prize prize = (Prize) FenixFramework.getDomainObject(prizeID);
         if (prize.isDeletableByUser((getLoggedPerson(request)))) {
             try {
                 DeletePrize.runDeletePrize(prize);
@@ -96,7 +96,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException {
 
         String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) AbstractDomainObject.fromExternalId(prizeID);
+        Prize prize = (Prize) FenixFramework.getDomainObject(prizeID);
         if (prize != null && prize.isEditableByUser(getLoggedPerson(request))) {
             request.setAttribute("prize", prize);
         }

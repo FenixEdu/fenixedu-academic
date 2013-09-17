@@ -1,19 +1,20 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.List;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.predicates.PersistentGroupMembersPredicates;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class PersistentGroupMembers extends PersistentGroupMembers_Base {
 
-    @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public PersistentGroupMembers(String name, PersistentGroupMembersType type) {
+//        check(this, PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups);
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setName(name);
@@ -21,26 +22,26 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
         checkIfPersistenGroupAlreadyExists(name, type);
     }
 
-    @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void edit(String name, PersistentGroupMembersType type) {
+        check(this, PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups);
         setName(name);
         setType(type);
         checkIfPersistenGroupAlreadyExists(name, type);
     }
 
-    @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void delete() {
+        check(this, PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups);
         getPersons().clear();
         if (hasUnit()) {
             getUnit().removeGroupFromUnitFiles(this);
         }
-        removeUnit();
-        removeRootDomainObject();
+        setUnit(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
-    @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void setNewPersonToMembersList(Person person) {
+        check(this, PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups);
         if (person == null) {
             throw new DomainException("error.PersistentGroupMembers.empty.person");
         }
@@ -48,8 +49,8 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
     }
 
     @Override
-    @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void removePersons(Person person) {
+        check(this, PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups);
         super.removePersons(person);
     }
 
@@ -75,7 +76,7 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
     }
 
     private void checkIfPersistenGroupAlreadyExists(String name, PersistentGroupMembersType type) {
-        List<PersistentGroupMembers> persistentGroupMembers = RootDomainObject.getInstance().getPersistentGroupMembers();
+        Collection<PersistentGroupMembers> persistentGroupMembers = RootDomainObject.getInstance().getPersistentGroupMembers();
         for (PersistentGroupMembers persistentGroup : persistentGroupMembers) {
             if (!persistentGroup.equals(this) && persistentGroup.getName().equalsIgnoreCase(name)
                     && persistentGroup.getType().equals(type)) {
@@ -83,4 +84,35 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
             }
         }
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getPersons() {
+        return getPersonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersons() {
+        return !getPersonsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

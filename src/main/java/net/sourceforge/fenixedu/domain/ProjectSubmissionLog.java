@@ -52,4 +52,54 @@ public class ProjectSubmissionLog extends ProjectSubmissionLog_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasFileSize() {
+        return getFileSize() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmissionDateTime() {
+        return getSubmissionDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasProject() {
+        return getProject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFileMimeType() {
+        return getFileMimeType() != null;
+    }
+
+    @Deprecated
+    public boolean hasFileChecksumAlgorithm() {
+        return getFileChecksumAlgorithm() != null;
+    }
+
+    @Deprecated
+    public boolean hasFileChecksum() {
+        return getFileChecksum() != null;
+    }
+
+    @Deprecated
+    public boolean hasAttends() {
+        return getAttends() != null;
+    }
+
+    @Deprecated
+    public boolean hasFilename() {
+        return getFilename() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentGroup() {
+        return getStudentGroup() != null;
+    }
+
 }

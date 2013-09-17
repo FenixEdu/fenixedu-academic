@@ -8,9 +8,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author jdnf, mrsp and Luis Cruz
@@ -23,12 +22,12 @@ public class DeleteExecutionCourses {
     //      (Admin -> Gest Estr Ensino -> Estr Cursos Antiga -> ...(curriculares)... -> Escolher disc exec)
     // called from ReadExecutionCourseAction
     //      (not present in any funcionality)
-    @Service
+    @Atomic
     public static List<String> run(final List<String> executionCourseIDs) throws FenixServiceException {
         final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
 
         for (final String executionCourseID : executionCourseIDs) {
-            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+            final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
             if (!executionCourse.canBeDeleted()) {
                 undeletedExecutionCoursesCodes.add(executionCourse.getSigla());

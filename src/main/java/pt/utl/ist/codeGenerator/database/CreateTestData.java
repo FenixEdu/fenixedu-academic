@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
@@ -147,23 +146,22 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateTestData {
 
-    public static abstract class AtomicAction extends Thread implements jvstm.TransactionalCommand {
+    public static abstract class AtomicAction extends Thread {
+        @Atomic
         @Override
         public void run() {
-            try {
-                Transaction.withTransaction(this);
-            } finally {
-                Transaction.forceFinish();
-            }
+            doIt();
         }
+
+        public abstract void doIt();
     }
 
     public static void doAction(AtomicAction action) {
@@ -596,7 +594,7 @@ public class CreateTestData {
 
         private void associateToDepartment(final Degree degree) {
             if (departmentIterator == null || !departmentIterator.hasNext()) {
-                departmentIterator = getRootDomainObject().getDepartmentsIterator();
+                departmentIterator = getRootDomainObject().getDepartmentsSet().iterator();
             }
             final Department department = departmentIterator.next();
             department.addDegrees(degree);
@@ -1086,17 +1084,20 @@ public class CreateTestData {
 
     public static void main(String[] args) {
         try {
-            FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig());
-
-            RootDomainObject.init();
-            setPrivledges();
-            createTestData();
+            doIt();
         } finally {
             System.err.flush();
             System.out.flush();
         }
         System.out.println("Creation of test data complete.");
         System.exit(0);
+    }
+
+    @Atomic(mode = TxMode.READ)
+    private static void doIt() {
+        RootDomainObject.initialize();
+        setPrivledges();
+        createTestData();
     }
 
     private static final LessonRoomManager lessonRoomManager = new LessonRoomManager();
@@ -1217,7 +1218,7 @@ public class CreateTestData {
             if (degreeType.isBolonhaType()) {
                 degree =
                         new Degree("Agricultura do Conhecimento", "Knowledge Agriculture", "CODE" + i, degreeType, 0d,
-                                gradeScale, null, RootDomainObject.getInstance().getAdministrativeOfficesIterator().next());
+                                gradeScale, null, RootDomainObject.getInstance().getAdministrativeOfficesSet().iterator().next());
                 degreeCurricularPlan = degree.createBolonhaDegreeCurricularPlan("DegreeCurricularPlanName", gradeScale, person);
                 degreeCurricularPlan.setCurricularStage(CurricularStage.PUBLISHED);
             } else {

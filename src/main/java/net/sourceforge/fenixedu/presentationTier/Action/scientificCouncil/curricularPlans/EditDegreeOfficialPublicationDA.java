@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/curricularPlans/editOfficialPublication", module = "scientificCouncil", formBeanClass = FenixActionForm.class)
 @Forwards({
@@ -43,7 +43,7 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
         DegreeOfficialPublication degreeOfficialPublication = (DegreeOfficialPublication) request.getAttribute("officialPub");
 
         if (degreeOfficialPublication == null) {
-            degreeOfficialPublication = DegreeOfficialPublication.fromExternalId(request.getParameter("officialPubId"));
+            degreeOfficialPublication = FenixFramework.getDomainObject(request.getParameter("officialPubId"));
         }
         if (degreeOfficialPublication == null) {
             degreeOfficialPublication = (DegreeOfficialPublication) getRenderedObject("officialPub");
@@ -105,7 +105,7 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         DegreeSpecializationArea specializationArea =
-                AbstractDomainObject.fromExternalId(request.getParameter("specializationId"));
+                FenixFramework.getDomainObject(request.getParameter("specializationId"));
 
         DegreeOfficialPublication degreeOfficialPublication = specializationArea.getOfficialPublication();
         OfficialPublicationBean bean = new OfficialPublicationBean(degreeOfficialPublication);
@@ -118,7 +118,7 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
 
     public ActionForward editSpecializationArea(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        DegreeSpecializationArea area = AbstractDomainObject.fromExternalId(request.getParameter("specializationId"));
+        DegreeSpecializationArea area = FenixFramework.getDomainObject(request.getParameter("specializationId"));
         request.setAttribute("specializationArea",
                 new OfficialPublicationBean(area.getOfficialPublication()).new SpecializationName(area));
         return mapping.findForward("prepareSpecializationArea");
@@ -146,7 +146,7 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
         String degreeId = request.getParameter("degreeId");
         String officialPubId = request.getParameter("officialPubId");
 
-        DegreeOfficialPublication publication = DegreeOfficialPublication.fromExternalId(officialPubId);
+        DegreeOfficialPublication publication = FenixFramework.getDomainObject(officialPubId);
 
         request.setAttribute("publication", publication);
         request.setAttribute("degreeId", degreeId);
@@ -166,7 +166,7 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
         String degreeId = request.getParameter("degreeId");
         String officialPubId = request.getParameter("officialPubId");
 
-        DegreeOfficialPublication publication = DegreeOfficialPublication.fromExternalId(officialPubId);
+        DegreeOfficialPublication publication = FenixFramework.getDomainObject(officialPubId);
 
         publication.delete();
 

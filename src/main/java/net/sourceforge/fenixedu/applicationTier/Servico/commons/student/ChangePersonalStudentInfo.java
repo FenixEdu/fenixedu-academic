@@ -19,17 +19,18 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ChangePersonalStudentInfo {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static InfoPerson run(InfoPersonEditor newInfoPerson) throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
-        final Person person = (Person) AbstractDomainObject.fromExternalId(newInfoPerson.getExternalId());
+        final Person person = (Person) FenixFramework.getDomainObject(newInfoPerson.getExternalId());
         if (person == null) {
             throw new ExcepcaoInexistente("error.changePersonalStudentInfo.noPerson");
         }

@@ -63,7 +63,8 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.DegreeCurricularPlanPredicates;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -84,7 +85,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 @Override
                 public int compare(DegreeCurricularPlan o1, DegreeCurricularPlan o2) {
                     final int c = o1.getPresentationName().compareTo(o2.getPresentationName());
-                    return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
                 }
 
             };
@@ -364,7 +365,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public void delete() {
         if (getCanBeDeleted()) {
-            removeDegree();
+            setDegree(null);
             if (hasRoot()) {
                 getRoot().delete();
             }
@@ -373,10 +374,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
             if (hasServiceAgreementTemplate()) {
                 DegreeCurricularPlanServiceAgreementTemplate template = getServiceAgreementTemplate();
-                removeServiceAgreementTemplate();
+                setServiceAgreementTemplate(null);
                 template.delete();
             }
-            removeRootDomainObject();
+            setRootDomainObject(null);
             deleteDomainObject();
         } else {
             throw new DomainException("error.degree.curricular.plan.cant.delete");
@@ -527,7 +528,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public Set<ExecutionCourse> getExecutionCoursesByExecutionPeriod(ExecutionSemester executionSemester) {
         final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
-        for (final CurricularCourse curricularCourse : super.getCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
             for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
                 if (executionCourse.getExecutionPeriod() == executionSemester) {
                     result.add(executionCourse);
@@ -746,7 +747,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         if (!result.isEmpty()) {
             Collections.sort(result, EnrolmentPeriodInCurricularCourses.COMPARATOR_BY_START);
-            return result.get(0);
+            return result.iterator().next();
         }
         return null;
     }
@@ -763,7 +764,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         if (!result.isEmpty()) {
             Collections.sort(result, EnrolmentPeriodInCurricularCoursesSpecialSeason.COMPARATOR_BY_START);
-            return result.get(0);
+            return result.iterator().next();
         }
         return null;
     }
@@ -780,7 +781,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         if (!result.isEmpty()) {
             Collections.sort(result, EnrolmentPeriodInCurricularCoursesFlunkedSeason.COMPARATOR_BY_START);
-            return result.get(0);
+            return result.iterator().next();
         }
         return null;
     }
@@ -917,20 +918,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return null;
     }
 
-    /**
-     * Method to get an unfiltered list of a dcp's curricular courses
-     * 
-     * @return All curricular courses that were or still are present in the dcp
-     */
-    @Override
-    public List<CurricularCourse> getCurricularCourses() {
-        return isBoxStructure() ? getCurricularCourses((ExecutionYear) null) : super.getCurricularCourses();
-    }
-
     @Override
     public Set<CurricularCourse> getCurricularCoursesSet() {
         if (isBoxStructure()) {
-            return new HashSet<CurricularCourse>(this.getCurricularCourses((ExecutionYear) null));
+            return this.getCurricularCourses((ExecutionYear) null);
         } else {
             return super.getCurricularCoursesSet();
         }
@@ -966,8 +957,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
      * 
      * @return All curricular courses that are present in the dcp
      */
-    private List<CurricularCourse> getCurricularCourses(final ExecutionYear executionYear) {
-        final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+    private Set<CurricularCourse> getCurricularCourses(final ExecutionYear executionYear) {
+        final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
         if (isBoxStructure()) {
             for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class, executionYear)) {
                 result.add((CurricularCourse) degreeModule);
@@ -988,7 +979,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 getRoot().applyToCurricularCourses(executionYear, predicate);
             }
         } else {
-            for (final CurricularCourse curricularCourse : super.getCurricularCourses()) {
+            for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
                 if (curricularCourse.hasAnyActiveDegreModuleScope(executionYear)) {
                     curricularCourse.applyToCurricularCourses(executionYear, predicate);
                 }
@@ -1186,56 +1177,50 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             return false;
         }
 
-        final List<ExecutionDegree> executionDegrees = getExecutionDegrees();
+        final Collection<ExecutionDegree> executionDegrees = getExecutionDegrees();
         return executionDegrees.size() > 1 ? false : executionDegrees.isEmpty()
-                || executionDegrees.get(0).getExecutionYear().isCurrent();
+                || executionDegrees.iterator().next().getExecutionYear().isCurrent();
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
-    public void removeDegree() {
-        super.removeDegree();
-    }
-
-    @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setCurricularPlanMembersGroup(Group curricularPlanMembersGroup) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setCurricularStage(CurricularStage curricularStage) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setCurricularStage(curricularStage);
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setDegree(Degree degree) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setDegree(degree);
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setRoot(RootCourseGroup courseGroup) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setRoot(courseGroup);
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setDegreeStructure(CurricularPeriod degreeStructure) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setDegreeStructure(degreeStructure);
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setGradeScale(GradeScale gradeScale) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setGradeScale(gradeScale);
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setName(String name) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setName(name);
     }
 
@@ -1984,7 +1969,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         Collections.sort(beginContextExecutionYears, ExecutionYear.COMPARATOR_BY_YEAR);
 
-        return beginContextExecutionYears.isEmpty() ? null : beginContextExecutionYears.get(0);
+        return beginContextExecutionYears.isEmpty() ? null : beginContextExecutionYears.iterator().next();
     }
 
     public MultiLanguageString getDescriptionI18N() {
@@ -2000,7 +1985,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
-    public List<CycleCourseGroup> getDestinationAffinities(final CycleType sourceCycleType) {
+    public Collection<CycleCourseGroup> getDestinationAffinities(final CycleType sourceCycleType) {
         if (hasRoot()) {
             final CycleCourseGroup cycleCourseGroup = getRoot().getCycleCourseGroup(sourceCycleType);
             if (cycleCourseGroup != null) {
@@ -2105,4 +2090,220 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         return result;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Branch> getAreas() {
+        return getAreasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAreas() {
+        return !getAreasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipIntention> getTutorshipIntention() {
+        return getTutorshipIntentionSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTutorshipIntention() {
+        return !getTutorshipIntentionSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegrees() {
+        return getExecutionDegreesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionDegrees() {
+        return !getExecutionDegreesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup> getTSDVirtualCourseGroups() {
+        return getTSDVirtualCourseGroupsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDVirtualCourseGroups() {
+        return !getTSDVirtualCourseGroupsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeContext> getDegreeContexts() {
+        return getDegreeContextsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeContexts() {
+        return !getDegreeContextsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan> getTargetEquivalencePlans() {
+        return getTargetEquivalencePlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTargetEquivalencePlans() {
+        return !getTargetEquivalencePlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getCurricularCourses() {
+        return getCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularCourses() {
+        return !getCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.StudentCurricularPlan> getStudentCurricularPlans() {
+        return getStudentCurricularPlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentCurricularPlans() {
+        return !getStudentCurricularPlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentPeriod> getEnrolmentPeriods() {
+        return getEnrolmentPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolmentPeriods() {
+        return !getEnrolmentPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseEquivalence> getCurricularCourseEquivalences() {
+        return getCurricularCourseEquivalencesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularCourseEquivalences() {
+        return !getCurricularCourseEquivalencesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDegreeStructure() {
+        return getDegreeStructure() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinimalYearForOptionalCourses() {
+        return getMinimalYearForOptionalCourses() != null;
+    }
+
+    @Deprecated
+    public boolean hasServiceAgreementTemplate() {
+        return getServiceAgreementTemplate() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumerusClausus() {
+        return getNumerusClausus() != null;
+    }
+
+    @Deprecated
+    public boolean hasApplyPreviousYearsEnrolmentRule() {
+        return getApplyPreviousYearsEnrolmentRule() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnotation() {
+        return getAnotation() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeScale() {
+        return getGradeScale() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasInitialDateYearMonthDay() {
+        return getInitialDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescriptionEn() {
+        return getDescriptionEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularPlanMembersGroup() {
+        return getCurricularPlanMembersGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasEquivalencePlan() {
+        return getEquivalencePlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasNeededCredits() {
+        return getNeededCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateYearMonthDay() {
+        return getEndDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasMarkType() {
+        return getMarkType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoot() {
+        return getRoot() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeDuration() {
+        return getDegreeDuration() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularStage() {
+        return getCurricularStage() != null;
+    }
+
 }

@@ -11,10 +11,30 @@ public class ShiftGroupingProperties extends ShiftGroupingProperties_Base {
     }
 
     public void delete() {
-        removeGrouping();
-        removeShift();
-        removeRootDomainObject();
+        setGrouping(null);
+        setShift(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasCapacity() {
+        return getCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrouping() {
+        return getGrouping() != null;
     }
 
 }

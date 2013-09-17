@@ -14,10 +14,25 @@ public class CandidateEnrolment extends CandidateEnrolment_Base {
     }
 
     public void delete() {
-        removeCurricularCourse();
-        removeMasterDegreeCandidate();
-        removeRootDomainObject();
+        setCurricularCourse(null);
+        setMasterDegreeCandidate(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMasterDegreeCandidate() {
+        return getMasterDegreeCandidate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
     }
 
 }

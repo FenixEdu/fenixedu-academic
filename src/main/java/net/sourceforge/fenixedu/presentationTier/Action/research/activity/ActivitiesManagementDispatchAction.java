@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "researcher", path = "/activities/activitiesManagement", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -159,23 +159,23 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
     }
 
     protected Cooperation getCooperationFromRequest(HttpServletRequest request) {
-        return (Cooperation) AbstractDomainObject.fromExternalId(request.getParameter("activityId"));
+        return (Cooperation) FenixFramework.getDomainObject(request.getParameter("activityId"));
     }
 
     protected JournalIssue getIssueFromRequest(HttpServletRequest request) {
-        return (JournalIssue) AbstractDomainObject.fromExternalId(request.getParameter("activityId"));
+        return (JournalIssue) FenixFramework.getDomainObject(request.getParameter("activityId"));
     }
 
     protected ScientificJournal getScientificJournalFromRequest(HttpServletRequest request) {
-        return (ScientificJournal) AbstractDomainObject.fromExternalId(request.getParameter("activityId"));
+        return (ScientificJournal) FenixFramework.getDomainObject(request.getParameter("activityId"));
     }
 
     protected ResearchEvent getEventFromRequest(HttpServletRequest request) {
-        return (ResearchEvent) AbstractDomainObject.fromExternalId(request.getParameter("activityId"));
+        return (ResearchEvent) FenixFramework.getDomainObject(request.getParameter("activityId"));
     }
 
     protected EventEdition getEventEditionFromRequest(HttpServletRequest request) {
-        return (EventEdition) AbstractDomainObject.fromExternalId(request.getParameter("activityId"));
+        return (EventEdition) FenixFramework.getDomainObject(request.getParameter("activityId"));
     }
 
 }

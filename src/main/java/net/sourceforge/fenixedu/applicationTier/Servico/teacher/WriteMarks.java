@@ -16,30 +16,31 @@ import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class WriteMarks {
 
-    @Service
-    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Atomic
     public static void writeByStudent(final String executioCourseOID, final String evaluationOID, final List<StudentMark> marks)
             throws FenixServiceException {
+        check(RolePredicates.TEACHER_PREDICATE);
 
-        final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationOID);
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executioCourseOID);
+        final Evaluation evaluation = FenixFramework.getDomainObject(evaluationOID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executioCourseOID);
 
         writeMarks(convertMarks(executionCourse, marks), executionCourse, evaluation);
     }
 
-    @Service
-    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Atomic
     public static void writeByAttend(final String executioCourseOID, final String evaluationOID, final List<AttendsMark> marks)
             throws FenixServiceException {
+        check(RolePredicates.TEACHER_PREDICATE);
 
-        final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationOID);
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executioCourseOID);
+        final Evaluation evaluation = FenixFramework.getDomainObject(evaluationOID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executioCourseOID);
 
         writeMarks(marks, executionCourse, evaluation);
     }
@@ -76,7 +77,7 @@ public class WriteMarks {
         }
 
         if (activeAttends.size() == 1) {
-            return activeAttends.get(0);
+            return activeAttends.iterator().next();
         }
 
         if (activeAttends.isEmpty()) {

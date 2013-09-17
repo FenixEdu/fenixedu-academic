@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneVa
 
 import org.apache.commons.lang.RandomStringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.PhoneUtil;
 
 public class PhoneValidation extends PhoneValidation_Base {
@@ -35,7 +35,7 @@ public class PhoneValidation extends PhoneValidation_Base {
     }
 
     @Override
-    @Service
+    @Atomic
     public void triggerValidationProcess() {
         if (!isValid()) {
             generateToken();

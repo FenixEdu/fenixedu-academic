@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
 
@@ -26,7 +26,7 @@ public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
         setStudentAuditor(student.getStudent());
     }
 
-    @Service
+    @Atomic
     public void sealProcess(boolean isTeacher) {
         if (isTeacher) {
             setApprovedByTeacher(true);
@@ -35,7 +35,7 @@ public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
         }
     }
 
-    @Service
+    @Atomic
     public void unsealProcess(boolean isTeacher) {
         if (isTeacher) {
             setApprovedByTeacher(false);
@@ -44,28 +44,28 @@ public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
         }
     }
 
-    @Service
+    @Atomic
     public void unsealProcess() {
         setApprovedByTeacher(false);
         setApprovedByStudent(false);
     }
 
-    @Service
+    @Atomic
     public void addFile(String filename, byte[] file) {
         new ExecutionCourseAuditFile(this, filename, file);
     }
 
-    @Service
+    @Atomic
     public void deleteFile(ExecutionCourseAuditFile executionCourseAuditFile) {
         executionCourseAuditFile.delete();
     }
 
-    @Service
+    @Atomic
     public void makeProcessAvailableToView() {
         setAvailableProcess(true);
     }
 
-    @Service
+    @Atomic
     public void makeProcessUnavailableToView() {
         setAvailableProcess(false);
     }
@@ -76,4 +76,59 @@ public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
         }
         return getAvailableProcess();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAuditFile> getExecutionCourseAuditFiles() {
+        return getExecutionCourseAuditFilesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionCourseAuditFiles() {
+        return !getExecutionCourseAuditFilesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasConclusions() {
+        return getConclusions() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasMeasuresToTake() {
+        return getMeasuresToTake() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovedByStudent() {
+        return getApprovedByStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasAvailableProcess() {
+        return getAvailableProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherAuditor() {
+        return getTeacherAuditor() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovedByTeacher() {
+        return getApprovedByTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentAuditor() {
+        return getStudentAuditor() != null;
+    }
+
 }

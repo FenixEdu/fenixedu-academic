@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteLessonPlanning {
 
@@ -22,7 +22,7 @@ public class DeleteLessonPlanning {
 
     private static final DeleteLessonPlanning serviceInstance = new DeleteLessonPlanning();
 
-    @Service
+    @Atomic
     public static void runDeleteLessonPlanning(String executionCourseID, LessonPlanning lessonPlanning,
             ExecutionCourse executionCourse, ShiftType shiftType) throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,7 @@ public class CopyTSDProcessPhaseService {
     }
 
     private Map<ExecutionSemester, ExecutionSemester> getExecutionPeriodTranslationMap(
-            List<ExecutionSemester> oldExecutionPeriodList, List<ExecutionSemester> newExecutionPeriodList) {
+            Collection<ExecutionSemester> oldExecutionPeriodList, Collection<ExecutionSemester> newExecutionPeriodList) {
         Map<ExecutionSemester, ExecutionSemester> translationMap = new HashMap<ExecutionSemester, ExecutionSemester>();
 
         for (ExecutionSemester oldExecutionPeriod : oldExecutionPeriodList) {
@@ -242,7 +243,7 @@ public class CopyTSDProcessPhaseService {
     }
 
     private Map<TSDTeacher, TSDTeacher> createAndCopyFromTSDTeacherList(TSDProcessPhase processPhase,
-            List<TSDTeacher> tsdTeacherList) {
+            Collection<TSDTeacher> tsdTeacherList) {
         Map<TSDTeacher, TSDTeacher> oldAndNewTSDTeacherMap = new HashMap<TSDTeacher, TSDTeacher>();
 
         Department thisDepartment = processPhase.getTSDProcess().getDepartment();
@@ -293,7 +294,7 @@ public class CopyTSDProcessPhaseService {
         return newTeacherServiceDistribution;
     }
 
-    private List<TSDTeacher> getNewTSDTeacherListFromMap(List<TSDTeacher> tsdTeachers,
+    private List<TSDTeacher> getNewTSDTeacherListFromMap(Collection<TSDTeacher> tsdTeachers,
             Map<TSDTeacher, TSDTeacher> oldAndNewTSDTeacherMap) {
         List<TSDTeacher> newTSDTeacherList = new ArrayList<TSDTeacher>();
 

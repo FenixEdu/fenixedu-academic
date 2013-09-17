@@ -30,18 +30,18 @@ public class NewModelRestriction extends NewModelRestriction_Base implements Pos
 
     protected void init(NewModelGroup parentGroup) {
         this.setParentGroup(parentGroup);
-        this.setPosition(parentGroup.getChildRestrictionsCount());
+        this.setPosition(parentGroup.getChildRestrictionsSet().size());
     }
 
     @Override
     public void delete() {
         NewModelGroup parentGroup = this.getParentGroup();
         if (parentGroup != null) {
-            this.removeParentGroup();
+            this.setParentGroup(null);
             parentGroup.resortChildRestrictions();
         }
 
-        this.removeQuestion();
+        this.setQuestion(null);
 
         super.delete();
     }
@@ -83,7 +83,7 @@ public class NewModelRestriction extends NewModelRestriction_Base implements Pos
 
     @Override
     public boolean isLast() {
-        return this.getPosition() == this.getParentGroup().getChildRestrictionsCount();
+        return this.getPosition() == this.getParentGroup().getChildRestrictionsSet().size();
     }
 
     @Override
@@ -126,6 +126,31 @@ public class NewModelRestriction extends NewModelRestriction_Base implements Pos
         }
 
         return null;
+    }
+
+    @Deprecated
+    public boolean hasValue() {
+        return getValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasCount() {
+        return getCount() != null;
+    }
+
+    @Deprecated
+    public boolean hasQuestion() {
+        return getQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasPosition() {
+        return getPosition() != null;
+    }
+
+    @Deprecated
+    public boolean hasParentGroup() {
+        return getParentGroup() != null;
     }
 
 }

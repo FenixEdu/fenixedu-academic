@@ -13,11 +13,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class SelectRooms {
 
-    @Service
+    @Atomic
     public static Object run(InfoRoomEditor infoRoom) {
 
         List<AllocatableSpace> salas =

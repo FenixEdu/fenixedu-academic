@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -191,7 +192,7 @@ public class VigilantBean implements Serializable {
         return person.getVigilantGroupsForExecutionYear(executionYear);
     }
 
-    public void setVigilantGroups(List<VigilantGroup> groups) {
+    public void setVigilantGroups(Collection<VigilantGroup> groups) {
         this.vigilantGroups = new ArrayList<VigilantGroup>();
         for (VigilantGroup group : groups) {
             if (group != null) {

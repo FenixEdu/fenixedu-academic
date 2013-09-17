@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,8 +21,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -36,12 +37,12 @@ public class RejectNewProjectProposal {
             return Boolean.FALSE;
         }
 
-        final Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesId);
+        final Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesId);
         if (groupProperties == null) {
             throw new NotAuthorizedException();
         }
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         final ExportGrouping groupPropertiesExecutionCourse = executionCourse.getExportGrouping(groupProperties);
         if (groupPropertiesExecutionCourse == null) {
             throw new ExistingServiceException();
@@ -53,7 +54,7 @@ public class RejectNewProjectProposal {
 
         List group = new ArrayList();
 
-        List groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
+        Collection groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
         Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
 
         while (iterGroupPropertiesExecutionCourseList.hasNext()) {
@@ -62,7 +63,7 @@ public class RejectNewProjectProposal {
             if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
                     || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
 
-                List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
+                Collection professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
 
                 Iterator iterProfessorship = professorships.iterator();
                 while (iterProfessorship.hasNext()) {
@@ -76,7 +77,7 @@ public class RejectNewProjectProposal {
             }
         }
 
-        List professorshipsAux = executionCourse.getProfessorships();
+        Collection professorshipsAux = executionCourse.getProfessorships();
 
         Iterator iterProfessorshipsAux = professorshipsAux.iterator();
         while (iterProfessorshipsAux.hasNext()) {
@@ -108,7 +109,7 @@ public class RejectNewProjectProposal {
 
     private static final RejectNewProjectProposal serviceInstance = new RejectNewProjectProposal();
 
-    @Service
+    @Atomic
     public static Boolean runRejectNewProjectProposal(String executionCourseId, String groupPropertiesId, String rejectorUserName)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

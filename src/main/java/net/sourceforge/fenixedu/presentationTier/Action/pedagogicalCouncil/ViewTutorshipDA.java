@@ -43,7 +43,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewTutorship", module = "pedagogicalCouncil")
 @Forwards({ @Forward(name = "viewTutorship", path = "/pedagogicalCouncil/tutorship/viewTutorship.jsp"),
@@ -92,14 +92,14 @@ public class ViewTutorshipDA extends FenixDispatchAction {
 
         // else
         String studentId = request.getParameter("studentId");
-        Person studentPerson = AbstractDomainObject.fromExternalId(studentId);
+        Person studentPerson = FenixFramework.getDomainObject(studentId);
         Student student = studentPerson.getStudent();
-        return student.getActiveTutorships().get(0);
+        return student.getActiveTutorships().iterator().next();
     }
 
     public ActionForward deleteTutorship(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Tutorship tutorship = AbstractDomainObject.fromExternalId(request.getParameter("tutorshipID"));
+        Tutorship tutorship = FenixFramework.getDomainObject(request.getParameter("tutorshipID"));
 
         ExecutionDegree executionDegree = getExecutionDegree(tutorship);
         deleteTutor(tutorship, executionDegree, request, mapping);
@@ -212,7 +212,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         ChangeTutorshipByEntryYearBean tutorshipByEntryYearBean = new ChangeTutorshipByEntryYearBean(executionYear);
         tutorshipByEntryYearBean.addTutorship(tutorship);
         // Only one tutorship inside
-        ChangeTutorshipBean changeTutorshipBean = tutorshipByEntryYearBean.getChangeTutorshipsBeans().get(0);
+        ChangeTutorshipBean changeTutorshipBean = tutorshipByEntryYearBean.getChangeTutorshipsBeans().iterator().next();
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("MM/yyyy");
         changeTutorshipBean.setTutorshipEndMonthYear(dateTimeFormatter.print(endDate));
@@ -312,7 +312,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
 
         // Person studentPerson = (Person) getRenderedObject("studentId");
         String studentPersonId = request.getParameter("studentId");
-        Person studentPerson = AbstractDomainObject.fromExternalId(studentPersonId);
+        Person studentPerson = FenixFramework.getDomainObject(studentPersonId);
         Student student = studentPerson.getStudent();
 
         student.getActiveRegistrations();
@@ -328,7 +328,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
             return mapping.findForward("viewTutorship");
         }
 
-        StudentCurricularPlan studentCurricularPlan = student.getActiveRegistrations().get(0).getActiveStudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlan = student.getActiveRegistrations().iterator().next().getActiveStudentCurricularPlan();
         Degree degree = studentCurricularPlan.getDegree();
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         ExecutionDegree executionDegree =
@@ -355,7 +355,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         TeacherTutorshipCreationBean teacherTutorshipCreationBean = (TeacherTutorshipCreationBean) getRenderedObject("tutors");
         String studentPersonId = request.getParameter("studentId");
-        Person studentPerson = AbstractDomainObject.fromExternalId(studentPersonId);
+        Person studentPerson = FenixFramework.getDomainObject(studentPersonId);
         Student student = studentPerson.getStudent();
         Partial endDate = createPartialForEndDate();
         Person teacherPerson = teacherTutorshipCreationBean.getTeacher();
@@ -382,7 +382,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         // Since there is only one
         if (creationCorrect) {
             List<Tutorship> tutorships = student.getActiveTutorships();
-            Tutorship tutorship = tutorships.get(0);
+            Tutorship tutorship = tutorships.iterator().next();
             request.setAttribute("tutorshipId", tutorship.getExternalId());
             request.setAttribute("success", "success");
         }

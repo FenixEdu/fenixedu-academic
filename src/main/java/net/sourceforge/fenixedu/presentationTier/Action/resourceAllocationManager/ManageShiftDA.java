@@ -44,7 +44,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -282,7 +282,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
         final Set<Registration> registrations = new HashSet<Registration>();
         if (studentIDs != null) {
             for (final String studentID : studentIDs) {
-                final Registration registration = AbstractDomainObject.fromExternalId(studentID);
+                final Registration registration = FenixFramework.getDomainObject(studentID);
                 registrations.add(registration);
             }
         }

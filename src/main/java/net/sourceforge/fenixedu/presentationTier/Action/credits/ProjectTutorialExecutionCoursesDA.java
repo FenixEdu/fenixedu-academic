@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "scientificCouncil", path = "/projectTutorialCourses", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "showDepartmentExecutionCourses", path = "/credits/showDepartmentExecutionCourses.jsp",
@@ -41,9 +41,9 @@ public class ProjectTutorialExecutionCoursesDA extends FenixDispatchAction {
             HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionCourseOid"));
+                FenixFramework.getDomainObject((String) getFromRequest(request, "executionCourseOid"));
         executionCourse.changeProjectTutorialCourse();
-        Department department = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "departmentOid"));
+        Department department = FenixFramework.getDomainObject((String) getFromRequest(request, "departmentOid"));
         DepartmentCreditsBean departmentCreditsBean =
                 new DepartmentCreditsBean(department, new ArrayList<Department>(rootDomainObject.getDepartments()));
         request.setAttribute("departmentCreditsBean", departmentCreditsBean);

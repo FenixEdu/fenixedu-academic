@@ -119,4 +119,9 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
         setDistrictSubdivisionOfResidence(studentCandidacy.getDistrictSubdivisionOfResidence());
     }
 
+    @Deprecated
+    public boolean hasCandidacyProcess() {
+        return getCandidacyProcess() != null;
+    }
+
 }

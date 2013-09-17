@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain.onlineTests;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -46,7 +47,7 @@ public class Test extends Test_Base {
 
     private void organizeTestQuestionsOrder(Integer testQuestionToInsertOrder) {
 
-        List<TestQuestion> testQuestions = getTestQuestions();
+        Collection<TestQuestion> testQuestions = getTestQuestions();
         for (final TestQuestion testQuestion : testQuestions) {
             Integer iterQuestionOrder = testQuestion.getTestQuestionOrder();
             if (testQuestionToInsertOrder.compareTo(iterQuestionOrder) <= 0) {
@@ -58,7 +59,7 @@ public class Test extends Test_Base {
     public void deleteTestQuestion(final TestQuestion testQuestionToDelete) {
         List<TestQuestion> aux = new ArrayList<TestQuestion>();
 
-        List<TestQuestion> testQuestions = getTestQuestions();
+        Collection<TestQuestion> testQuestions = getTestQuestions();
         for (final TestQuestion testQuestion : testQuestions) {
             if (!testQuestionToDelete.equals(testQuestion)) {
                 Integer iterQuestionOrder = testQuestion.getTestQuestionOrder();
@@ -87,11 +88,11 @@ public class Test extends Test_Base {
     }
 
     public void delete() {
-        for (; !getTestQuestions().isEmpty(); getTestQuestions().get(0).delete()) {
+        for (; !getTestQuestions().isEmpty(); getTestQuestions().iterator().next().delete()) {
             ;
         }
-        removeTestScope();
-        removeRootDomainObject();
+        setTestScope(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -142,6 +143,46 @@ public class Test extends Test_Base {
         } else {
             setLastModifiedDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.TestQuestion> getTestQuestions() {
+        return getTestQuestionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTestQuestions() {
+        return !getTestQuestionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasInformation() {
+        return getInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestScope() {
+        return getTestScope() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDateDateTime() {
+        return getLastModifiedDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateDateTime() {
+        return getCreationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
     }
 
 }

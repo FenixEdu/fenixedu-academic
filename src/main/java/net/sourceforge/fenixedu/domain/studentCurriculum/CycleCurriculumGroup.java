@@ -6,6 +6,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -28,7 +29,8 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.CycleCurriculumGroupPredicates;import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 /**
  * 
@@ -50,7 +52,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
                 final public int compare(final CycleCurriculumGroup o1, final CycleCurriculumGroup o2) {
                     final ComparatorChain comparatorChain = new ComparatorChain();
                     comparatorChain.addComparator(CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE);
-                    comparatorChain.addComparator(CycleCurriculumGroup.COMPARATOR_BY_ID);
+                    comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
                     return comparatorChain.compare(o1, o2);
                 }
@@ -146,8 +148,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     @Override
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void deleteRecursive() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         for (final CurriculumModule child : getCurriculumModules()) {
             child.deleteRecursive();
         }
@@ -185,8 +187,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
         return false;
     }
 
-    @Checked("CycleCurriculumGroupPredicates.MANAGE_CONCLUSION_PROCESS")
     public void conclude() {
+        check(this, CycleCurriculumGroupPredicates.MANAGE_CONCLUSION_PROCESS);
         if (isConclusionProcessed()) {
             if (!getRegistration().canRepeatConclusionProcess(AccessControl.getPerson())) {
                 throw new DomainException("error.CycleCurriculumGroup.cycle.is.already.concluded", getCycleCourseGroup()
@@ -366,6 +368,11 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     public BranchCourseGroup getMinorBranchCourseGroup() {
         return getBranchCourseGroup(BranchType.MINOR);
+    }
+
+    @Deprecated
+    public boolean hasConclusionProcess() {
+        return getConclusionProcess() != null;
     }
 
 }

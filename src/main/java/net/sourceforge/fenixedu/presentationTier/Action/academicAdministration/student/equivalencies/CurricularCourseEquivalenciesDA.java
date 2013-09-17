@@ -35,12 +35,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "academicAdministration", path = "/curricularCourseEquivalencies",
         input = "/curricularCourseEquivalencies.do?method=prepare&page=0", attribute = "curricularCourseEquivalenciesForm",
@@ -67,7 +67,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
             final String degreeCurricularPlanIDString = (String) actionForm.get("degreeCurricularPlanID");
             if (isValidObjectID(degreeCurricularPlanIDString)) {
-                DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanIDString);
+                DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanIDString);
                 List<CurricularCourseEquivalence> equivalences =
                         new ArrayList<CurricularCourseEquivalence>(degreeCurricularPlan.getCurricularCourseEquivalencesSet());
                 sortInfoCurricularCourseEquivalences(equivalences);

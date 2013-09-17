@@ -49,4 +49,9 @@ public class InsuranceExemptionJustificationByDispatch extends InsuranceExemptio
         return labelFormatter;
     }
 
+    @Deprecated
+    public boolean hasDispatchDate() {
+        return getDispatchDate() != null;
+    }
+
 }

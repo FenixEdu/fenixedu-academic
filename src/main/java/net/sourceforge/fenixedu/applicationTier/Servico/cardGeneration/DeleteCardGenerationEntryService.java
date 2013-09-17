@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.cardGeneration;
 
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteCardGenerationEntryService {
 
-    @Service
+    @Atomic
     public static void run(final CardGenerationEntry cardGenerationEntry) {
         cardGenerationEntry.delete();
     }

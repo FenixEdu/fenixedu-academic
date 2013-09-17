@@ -60,4 +60,34 @@ public class PublicationsNumber extends PublicationsNumber_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasLastModificationDateDateTime() {
+        return getLastModificationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublicationType() {
+        return getPublicationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasNational() {
+        return getNational() != null;
+    }
+
+    @Deprecated
+    public boolean hasInternational() {
+        return getInternational() != null;
+    }
+
 }

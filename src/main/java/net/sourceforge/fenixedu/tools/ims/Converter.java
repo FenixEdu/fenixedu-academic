@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewChoice;
 import net.sourceforge.fenixedu.domain.tests.NewCorrector;
@@ -39,8 +38,6 @@ import org.jdom.input.SAXBuilder;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import pt.ist.fenixframework.pstm.Transaction;
 
 public class Converter {
 
@@ -172,7 +169,7 @@ public class Converter {
             }
             predicate = andPredicate;
         } else {
-            predicate = predicates.get(0);
+            predicate = predicates.iterator().next();
         }
 
         Element setVar = respCondition.getChild("setvar");
@@ -362,18 +359,6 @@ public class Converter {
 
     private static NewPresentationMaterial processTextMaterial(Element element, NewTestElement testElement) {
         return new NewStringMaterial(testElement, true, element.getText());
-    }
-
-    public static void main(String[] args) throws Exception {
-        Transaction.begin();
-        // DomainObject.turnOffLockMode();
-        RootDomainObject.initTests();
-
-        String filePath = "/home/jpmsi/Desktop/ims/novos/caixaNumerica/caixaNumerica1.xml";
-        FileInputStream stream = new FileInputStream(filePath);
-        convert(stream, 1);
-
-        Transaction.abort();
     }
 
 }

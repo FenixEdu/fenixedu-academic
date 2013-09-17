@@ -13,7 +13,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ManageCreditsReductionsDispatchAction extends FenixDispatchAction {
 
@@ -21,8 +21,8 @@ public class ManageCreditsReductionsDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionPeriodOID"));
-        Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOID"));
+                FenixFramework.getDomainObject((String) getFromRequest(request, "executionPeriodOID"));
+        Teacher teacher = FenixFramework.getDomainObject((String) getFromRequest(request, "teacherOID"));
         TeacherService teacherService = TeacherService.getTeacherService(teacher, executionSemester);
         ReductionService reductionService = teacherService.getReductionService();
         if (reductionService != null) {

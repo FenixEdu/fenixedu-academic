@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -15,7 +15,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CheckIfUserCanAccessFile {
 
-    @Service
+    @Atomic
     public static Boolean run(final String username, final String externalStorageIdentification) {
         final Person person = Person.readPersonByUsername(username);
         final File file = File.readByExternalStorageIdentification(externalStorageIdentification);

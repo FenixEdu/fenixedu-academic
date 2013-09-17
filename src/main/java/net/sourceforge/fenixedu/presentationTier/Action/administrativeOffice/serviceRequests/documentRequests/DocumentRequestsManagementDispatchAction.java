@@ -44,7 +44,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/documentRequestsManagement", module = "academicAdministration",
         formBeanClass = AcademicServiceRequestsManagementDispatchAction.AcademicServiceRequestsManagementForm.class)
@@ -313,7 +313,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
         final List<Exam> result = new ArrayList<Exam>();
         for (final String examId : examIds) {
-            result.add((Exam) AbstractDomainObject.fromExternalId(examId));
+            result.add((Exam) FenixFramework.getDomainObject(examId));
         }
 
         return result;

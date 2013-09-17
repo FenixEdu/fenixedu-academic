@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CardGenerationProblem extends CardGenerationProblem_Base {
 
@@ -37,13 +37,13 @@ public class CardGenerationProblem extends CardGenerationProblem_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeCardGenerationBatch();
-        removeRootDomainObject();
+        setPerson(null);
+        setCardGenerationBatch(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
-    @Service
+    @Atomic
     public void setPersonForCardGenerationEntry(final CardGenerationEntry cardGenerationEntry, final Person person) {
         cardGenerationEntry.setPerson(person);
         final CardGenerationBatch cardGenerationBatchWithProblems = cardGenerationEntry.getCardGenerationBatch();
@@ -103,6 +103,31 @@ public class CardGenerationProblem extends CardGenerationProblem_Base {
             }
         }
         return new CardGenerationBatch("New Batch", executionYear, true);
+    }
+
+    @Deprecated
+    public boolean hasCardGenerationBatch() {
+        return getCardGenerationBatch() != null;
+    }
+
+    @Deprecated
+    public boolean hasArg() {
+        return getArg() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescriptionKey() {
+        return getDescriptionKey() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

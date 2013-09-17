@@ -108,4 +108,9 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
     public boolean isIndividualCandidacyEvent() {
         return true;
     }
+    @Deprecated
+    public boolean hasIndividualCandidacy() {
+        return getIndividualCandidacy() != null;
+    }
+
 }

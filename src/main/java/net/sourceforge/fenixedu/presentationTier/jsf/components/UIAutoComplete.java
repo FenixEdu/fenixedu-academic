@@ -20,7 +20,7 @@ import org.apache.commons.lang.CharEncoding;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class UIAutoComplete extends UIInput {
 
@@ -81,7 +81,7 @@ public class UIAutoComplete extends UIInput {
 
     private String getInputTextValue(IUserView userView, String externalId, String labelField) {
         try {
-            DomainObject domainObject = AbstractDomainObject.fromExternalId(externalId);
+            DomainObject domainObject = FenixFramework.getDomainObject(externalId);
 
             return BeanUtils.getProperty(domainObject, labelField);
 
@@ -218,7 +218,7 @@ public class UIAutoComplete extends UIInput {
             String labelField = (String) this.getAttributes().get("labelField");
 
             try {
-                DomainObject domainObject = AbstractDomainObject.fromExternalId((String) newValue);
+                DomainObject domainObject = FenixFramework.getDomainObject((String) newValue);
 
                 String correctLabelForExternalId = BeanUtils.getProperty(domainObject, labelField);
 

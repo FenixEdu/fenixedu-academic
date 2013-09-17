@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Pedro Santos (pmrsa)
@@ -38,14 +38,19 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
 
     @Override
     public void delete() {
-        removeSource();
+        setSource(null);
         super.delete();
     }
 
-    @Service
+    @Atomic
     public static void store(IDocumentRequest source, String filename, byte[] content) {
         if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
             new DocumentRequestGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
         }
     }
+    @Deprecated
+    public boolean hasSource() {
+        return getSource() != null;
+    }
+
 }

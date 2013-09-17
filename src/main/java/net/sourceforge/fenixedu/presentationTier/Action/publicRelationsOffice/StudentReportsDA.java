@@ -21,7 +21,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/studentReports", module = "publicRelations")
 @Forwards({ @Forward(name = "search", path = "/publicRelations/reports/studentReports.jsp"),
@@ -58,7 +58,7 @@ public class StudentReportsDA extends FenixDispatchAction {
 
     public StudentReportPredicate setBean(HttpServletRequest request) {
         final String executionYearIDString = request.getParameter("executionYearID");
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearIDString);
+        final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearIDString);
 
         final String degreeTypeString = request.getParameter("degreeType");
         final DegreeType degreeType = degreeTypeString == null ? null : DegreeType.valueOf(degreeTypeString);

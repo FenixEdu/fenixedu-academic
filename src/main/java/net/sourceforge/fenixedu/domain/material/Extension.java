@@ -1,34 +1,34 @@
 package net.sourceforge.fenixedu.domain.material;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation;
+import net.sourceforge.fenixedu.predicates.ResourcePredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class Extension extends Extension_Base {
 
-    @Checked("ResourcePredicates.checkPermissionsToManageMaterial")
     public Extension(String identification, String barCodeNumber, YearMonthDay acquisition, YearMonthDay cease, Unit owner) {
+//        check(this, ResourcePredicates.checkPermissionsToManageMaterial);
         super();
         super.init(identification, barCodeNumber, acquisition, cease, owner);
     }
 
-    @Checked("ResourcePredicates.checkPermissionsToManageMaterial")
     @Override
     public void edit(String identification, String barCodeNumber, YearMonthDay acquisition, YearMonthDay cease, Unit owner) {
+        check(this, ResourcePredicates.checkPermissionsToManageMaterial);
         super.edit(identification, barCodeNumber, acquisition, cease, owner);
     }
 
-    @Checked("ResourcePredicates.checkPermissionsToManageMaterial")
     @Override
     public void delete() {
+        check(this, ResourcePredicates.checkPermissionsToManageMaterial);
         super.delete();
     }
 
@@ -73,4 +73,15 @@ public class Extension extends Extension_Base {
         }
         return null;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.material.PersonExtension> getPersons() {
+        return getPersonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersons() {
+        return !getPersonsSet().isEmpty();
+    }
+
 }

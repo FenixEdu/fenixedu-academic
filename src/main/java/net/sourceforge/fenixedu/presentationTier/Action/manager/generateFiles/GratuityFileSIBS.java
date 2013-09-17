@@ -42,12 +42,12 @@ public class GratuityFileSIBS extends GratuityFile {
 
         try {
             // build the file's name with the first element
-            fileName = nameFile((InfoGratuitySituation) infoGratuitySituations.get(0));
+            fileName = nameFile((InfoGratuitySituation) infoGratuitySituations.iterator().next());
             file = new File(System.getProperty("java.io.tmpdir") + File.separator + fileName);
             writer = new BufferedWriter(new FileWriter(file));
 
             // errors if student hasn´t address or nothing to pay
-            fileNameErrors = "erros_" + nameFile((InfoGratuitySituation) infoGratuitySituations.get(0));
+            fileNameErrors = "erros_" + nameFile((InfoGratuitySituation) infoGratuitySituations.iterator().next());
             fileErrors = new File(System.getProperty("java.io.tmpdir") + File.separator + fileNameErrors);
             writerErrors = new BufferedWriter(new FileWriter(fileErrors));
 

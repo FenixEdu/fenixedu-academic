@@ -24,17 +24,62 @@ public class InquiryBlock extends InquiryBlock_Base {
     }
 
     public void delete() {
-        for (; !getInquiryGroupsQuestions().isEmpty(); getInquiryGroupsQuestions().get(0).delete()) {
-            removeRootDomainObject();
+        for (; !getInquiryGroupsQuestions().isEmpty(); getInquiryGroupsQuestions().iterator().next().delete()) {
+            setRootDomainObject(null);
         }
         if (hasInquiryQuestionHeader()) {
             getInquiryQuestionHeader().delete();
         }
-        removeResultQuestion();
-        removeGroupResultQuestion();
+        setResultQuestion(null);
+        setGroupResultQuestion(null);
         for (InquiryTemplate inquiryTemplate : getInquiries()) {
             removeInquiries(inquiryTemplate);
         }
         super.deleteDomainObject();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate> getInquiries() {
+        return getInquiriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiries() {
+        return !getInquiriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion> getInquiryGroupsQuestions() {
+        return getInquiryGroupsQuestionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryGroupsQuestions() {
+        return !getInquiryGroupsQuestionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasGroupResultQuestion() {
+        return getGroupResultQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasResultQuestion() {
+        return getResultQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasBlockOrder() {
+        return getBlockOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryQuestionHeader() {
+        return getInquiryQuestionHeader() != null;
+    }
+
 }

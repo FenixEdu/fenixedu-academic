@@ -192,4 +192,24 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
         super.setEctsForAmount(ectsForAmount);
         super.edit(bean);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionSemester> getExecutionSemesters() {
+        return getExecutionSemestersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionSemesters() {
+        return !getExecutionSemestersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEctsForAmount() {
+        return getEctsForAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasPenaltyAppliable() {
+        return getPenaltyAppliable() != null;
+    }
+
 }

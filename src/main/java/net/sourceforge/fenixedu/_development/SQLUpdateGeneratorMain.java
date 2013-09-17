@@ -5,39 +5,39 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerFactory;
-import org.apache.ojb.broker.accesslayer.LookupException;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.Config;
-import pt.ist.fenixframework.FenixFrameworkPlugin;
-import pt.ist.fenixframework.artifact.FenixFrameworkArtifact;
-import pt.ist.fenixframework.project.DmlFile;
-import pt.ist.fenixframework.project.exception.FenixFrameworkProjectException;
-import pt.ist.fenixframework.pstm.MetadataManager;
-import pt.ist.fenixframework.pstm.repository.SQLUpdateGenerator;
-import dml.DomainModel;
+import pt.ist.fenixframework.DomainModelParser;
+import pt.ist.fenixframework.backend.jvstmojb.ojb.OJBMetadataGenerator;
+import pt.ist.fenixframework.backend.jvstmojb.repository.SQLUpdateGenerator;
+import pt.ist.fenixframework.core.DmlFile;
+import pt.ist.fenixframework.core.Project;
+import pt.ist.fenixframework.core.exception.ProjectException;
+import pt.ist.fenixframework.dml.DomainModel;
 
 public class SQLUpdateGeneratorMain {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+
+        System.setProperty("OJB.properties", "pt/ist/fenixframework/OJB.properties");
+
         final List<URL> dmlFiles = new ArrayList<URL>();
         try {
-            for (DmlFile dmlFile : FenixFrameworkArtifact.fromName("fenix").getFullDmlSortedList()) {
+            for (DmlFile dmlFile : Project.fromName("fenix").getFullDmlSortedList()) {
                 dmlFiles.add(dmlFile.getUrl());
             }
-            MetadataManager.init(getConfig(dmlFiles));
-            final PersistenceBroker persistenceBroker = PersistenceBrokerFactory.defaultPersistenceBroker();
-            Connection connection = persistenceBroker.serviceConnectionManager().getConnection();
-            DomainModel model = MetadataManager.getDomainModel();
-            String updates = SQLUpdateGenerator.generateSqlUpdates(model, connection, "utf8", false);
+            DomainModel model = DomainModelParser.getDomainModel(dmlFiles);
+
+            OJBMetadataGenerator.updateOJBMappingFromDomainModel(model);
+
+            String updates = SQLUpdateGenerator.generateSqlUpdates(model, getNewConnection(), "utf8", false);
 
             final File file = new File("etc/database_operations/updates.sql");
             if (file.exists()) {
@@ -47,36 +47,29 @@ public class SQLUpdateGeneratorMain {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new Error(e);
-        } catch (LookupException e) {
-            e.printStackTrace();
-            throw new Error(e);
-        } catch (FenixFrameworkProjectException e) {
-            e.printStackTrace();
-            throw new Error(e);
         } catch (IOException e) {
+            e.printStackTrace();
+            throw new Error(e);
+        } catch (ProjectException e) {
             e.printStackTrace();
             throw new Error(e);
         }
     }
 
-    private static Config getConfig(final List<URL> domainModelUrls) throws IOException {
-        final InputStream configStream = SQLUpdateGeneratorMain.class.getResourceAsStream("/configuration.properties");
-        final Properties props = new Properties();
-        props.load(configStream);
+    private static Connection getNewConnection() throws IOException {
+        try {
+            final InputStream configStream = SQLUpdateGeneratorMain.class.getResourceAsStream("/fenix-framework.properties");
+            final Properties props = new Properties();
+            props.load(configStream);
 
-        return new Config() {
-            {
-                domainModelPaths = new String[0];
-                dbAlias = props.getProperty("db.alias");
-                dbUsername = props.getProperty("db.user");
-                dbPassword = props.getProperty("db.pass");
-                plugins = new FenixFrameworkPlugin[0];
-            }
-
-            @Override
-            public java.util.List<URL> getDomainModelURLs() {
-                return domainModelUrls;
-            };
-        };
+            final String url = "jdbc:mysql:" + props.getProperty("dbAlias");
+            final Connection connection =
+                    DriverManager.getConnection(url, props.getProperty("dbUsername"), props.getProperty("dbPassword"));
+            connection.setAutoCommit(false);
+            return connection;
+        } catch (SQLException ex) {
+            throw new Error(ex);
+        }
     }
+
 }

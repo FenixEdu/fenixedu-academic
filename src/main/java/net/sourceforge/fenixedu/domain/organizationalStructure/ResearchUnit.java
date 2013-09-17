@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ResearchUnit extends ResearchUnit_Base {
@@ -209,12 +209,22 @@ public class ResearchUnit extends ResearchUnit_Base {
     }
 
     @Override
-    @Service
+    @Atomic
     public UnitBasedSender getOneUnitBasedSender() {
         if (hasAnyUnitBasedSender()) {
-            return getUnitBasedSender().get(0);
+            return getUnitBasedSender().iterator().next();
         } else {
             return ResearchUnitBasedSender.newInstance(this);
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getPublicationCollaborators() {
+        return getPublicationCollaboratorsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPublicationCollaborators() {
+        return !getPublicationCollaboratorsSet().isEmpty();
+    }
+
 }

@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -20,7 +20,7 @@ public class ApproveCandidates {
 
         for (int i = 0; i < situations.length; i++) {
 
-            MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(ids[i]);
+            MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(ids[i]);
             CandidateSituation candidateSituationOldFromBD = masterDegreeCandidate.getActiveCandidateSituation();
 
             candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
@@ -48,7 +48,7 @@ public class ApproveCandidates {
 
     private static final ApproveCandidates serviceInstance = new ApproveCandidates();
 
-    @Service
+    @Atomic
     public static void runApproveCandidates(String[] situations, String[] ids, String[] remarks, String[] substitutes)
             throws NotAuthorizedException {
         CandidateApprovalAuthorizationFilter.instance.execute(situations, ids, remarks, substitutes);

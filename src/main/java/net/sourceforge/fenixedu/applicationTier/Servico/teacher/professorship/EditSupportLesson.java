@@ -15,14 +15,14 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditSupportLesson {
 
     protected void run(SupportLessonDTO supportLessonDTO, RoleType roleType) {
 
-        Professorship professorship = AbstractDomainObject.fromExternalId(supportLessonDTO.getProfessorshipID());
+        Professorship professorship = FenixFramework.getDomainObject(supportLessonDTO.getProfessorshipID());
         ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
         Teacher teacher = professorship.getTeacher();
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
@@ -33,7 +33,7 @@ public class EditSupportLesson {
 
         final StringBuilder log = new StringBuilder();
 
-        SupportLesson supportLesson = AbstractDomainObject.fromExternalId(supportLessonDTO.getExternalId());
+        SupportLesson supportLesson = FenixFramework.getDomainObject(supportLessonDTO.getExternalId());
         if (supportLesson == null) {
             supportLesson = new SupportLesson(supportLessonDTO, professorship, roleType);
             log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
@@ -63,7 +63,7 @@ public class EditSupportLesson {
 
     private static final EditSupportLesson serviceInstance = new EditSupportLesson();
 
-    @Service
+    @Atomic
     public static void runEditSupportLesson(SupportLessonDTO supportLessonDTO, RoleType roleType) throws NotAuthorizedException {
         try {
             ScientificCouncilAuthorizationFilter.instance.execute();

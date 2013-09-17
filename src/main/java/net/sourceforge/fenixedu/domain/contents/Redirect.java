@@ -6,4 +6,9 @@ public class Redirect extends Redirect_Base {
         super();
     }
 
+    @Deprecated
+    public boolean hasUrl() {
+        return getUrl() != null;
+    }
+
 }

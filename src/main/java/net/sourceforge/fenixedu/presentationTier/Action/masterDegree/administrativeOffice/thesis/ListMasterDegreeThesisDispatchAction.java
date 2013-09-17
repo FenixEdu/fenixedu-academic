@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administra
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Formatter;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +39,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException, IOException {
+            throws FenixServiceException, IOException {
 
         ListMasterDegreeProofsBean bean = getRenderedObject();
         if (bean == null) {
@@ -68,13 +67,14 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
             resultFormatter.format("%d\t%s\tFénix\t", thesis.getStudentCurricularPlan().getRegistration().getNumber(), thesis
                     .getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getNome());
 
-            List<Teacher> guiders = thesis.getActiveMasterDegreeThesisDataVersion().getGuiders();
+            Collection<Teacher> guiders = thesis.getActiveMasterDegreeThesisDataVersion().getGuiders();
             if (!guiders.isEmpty()) {
                 for (Teacher teacher : guiders) {
                     resultFormatter.format("%s\t", teacher.getPerson().getName());
                 }
             } else {
-                List<ExternalContract> externalGuiders = thesis.getActiveMasterDegreeThesisDataVersion().getExternalGuiders();
+                Collection<ExternalContract> externalGuiders =
+                        thesis.getActiveMasterDegreeThesisDataVersion().getExternalGuiders();
                 if (!externalGuiders.isEmpty()) {
                     for (ExternalContract externalPerson : externalGuiders) {
                         resultFormatter.format("%s\t", externalPerson.getPerson().getName());

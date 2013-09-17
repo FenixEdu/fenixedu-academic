@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
 <u><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong></u>:
 <p>

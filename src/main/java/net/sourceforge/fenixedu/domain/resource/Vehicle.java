@@ -1,22 +1,24 @@
 package net.sourceforge.fenixedu.domain.resource;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.predicates.ResourcePredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class Vehicle extends Vehicle_Base {
 
-    @Checked("ResourcePredicates.checkPermissionsToManageVehicle")
     public Vehicle(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease,
             BigDecimal allocationCostMultiplier) {
+//        check(this, ResourcePredicates.checkPermissionsToManageVehicle);
         super();
         setNumberPlate(numberPlate);
         setMake(make);
@@ -26,9 +28,9 @@ public class Vehicle extends Vehicle_Base {
         setAllocationCostMultiplier(allocationCostMultiplier);
     }
 
-    @Checked("ResourcePredicates.checkPermissionsToManageVehicle")
     public void edit(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease,
             BigDecimal allocationCostMultiplier) {
+        check(this, ResourcePredicates.checkPermissionsToManageVehicle);
         setNumberPlate(numberPlate);
         setMake(make);
         setModel(model);
@@ -37,9 +39,9 @@ public class Vehicle extends Vehicle_Base {
         setAllocationCostMultiplier(allocationCostMultiplier);
     }
 
-    @Checked("ResourcePredicates.checkPermissionsToManageVehicle")
     @Override
     public void delete() {
+        check(this, ResourcePredicates.checkPermissionsToManageVehicle);
         super.delete();
     }
 
@@ -107,7 +109,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     private void checksIfVehicleAlreadyExists(String numberPlate) {
-        List<Resource> resources = RootDomainObject.getInstance().getResources();
+        Collection<Resource> resources = RootDomainObject.getInstance().getResources();
         for (Resource resource : resources) {
             if (resource.isVehicle() && !resource.equals(this)
                     && ((Vehicle) resource).getNumberPlate().equalsIgnoreCase(numberPlate)) {
@@ -117,7 +119,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public static Vehicle getVehicleByNumberPlate(String numberPlate) {
-        List<Resource> resources = RootDomainObject.getInstance().getResources();
+        Collection<Resource> resources = RootDomainObject.getInstance().getResources();
         for (Resource resource : resources) {
             if (resource.isVehicle() && ((Vehicle) resource).getNumberPlate().equalsIgnoreCase(numberPlate)) {
                 return (Vehicle) resource;
@@ -129,7 +131,7 @@ public class Vehicle extends Vehicle_Base {
     public static List<Vehicle> getAllActiveVehicles() {
         List<Vehicle> result = new ArrayList<Vehicle>();
         YearMonthDay currentDate = new YearMonthDay();
-        List<Resource> resources = RootDomainObject.getInstance().getResources();
+        Collection<Resource> resources = RootDomainObject.getInstance().getResources();
         for (Resource resource : resources) {
             if (resource.isVehicle() && ((Vehicle) resource).isActive(currentDate)) {
                 result.add((Vehicle) resource);
@@ -140,7 +142,7 @@ public class Vehicle extends Vehicle_Base {
 
     public static List<Vehicle> getAllVehicles() {
         List<Vehicle> result = new ArrayList<Vehicle>();
-        List<Resource> resources = RootDomainObject.getInstance().getResources();
+        Collection<Resource> resources = RootDomainObject.getInstance().getResources();
         for (Resource resource : resources) {
             if (resource.isVehicle()) {
                 result.add((Vehicle) resource);
@@ -148,4 +150,35 @@ public class Vehicle extends Vehicle_Base {
         }
         return result;
     }
+
+    @Deprecated
+    public boolean hasAcquisition() {
+        return getAcquisition() != null;
+    }
+
+    @Deprecated
+    public boolean hasModel() {
+        return getModel() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllocationCostMultiplier() {
+        return getAllocationCostMultiplier() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberPlate() {
+        return getNumberPlate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCease() {
+        return getCease() != null;
+    }
+
+    @Deprecated
+    public boolean hasMake() {
+        return getMake() != null;
+    }
+
 }

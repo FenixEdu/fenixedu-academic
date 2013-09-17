@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.credits;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +27,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ricardo Rodrigues
@@ -61,8 +61,8 @@ public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends
 
         final ExecutionSemester executionSemester = getDomainObject(dynaForm, "executionPeriodId");
 
-        Teacher teacher = AbstractDomainObject.fromExternalId(dynaForm.getString("teacherId"));
-        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Teacher teacher = FenixFramework.getDomainObject(dynaForm.getString("teacherId"));
+        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
 
         if (teacher == null || teacher.getCurrentWorkingDepartment() == null
                 || !manageableDepartments.contains(teacher.getCurrentWorkingDepartment())) {

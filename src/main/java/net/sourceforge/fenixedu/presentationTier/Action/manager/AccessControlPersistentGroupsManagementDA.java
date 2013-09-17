@@ -17,7 +17,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "manager", path = "/accessControlPersistentGroupsManagement", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -64,11 +64,11 @@ public class AccessControlPersistentGroupsManagementDA extends FenixDispatchActi
 
     protected PersistentGroupMembers getPersistentGroupFromParameter(final HttpServletRequest request) {
         final String persistentGroupIDString = request.getParameter("persistentGroupID");
-        return AbstractDomainObject.fromExternalId(persistentGroupIDString);
+        return FenixFramework.getDomainObject(persistentGroupIDString);
     }
 
     protected Person getPersonFromParameter(final HttpServletRequest request) {
         final String personIDString = request.getParameter("personID");
-        return (Person) AbstractDomainObject.fromExternalId(personIDString);
+        return (Person) FenixFramework.getDomainObject(personIDString);
     }
 }

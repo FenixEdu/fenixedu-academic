@@ -21,9 +21,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -31,9 +32,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadGroupingShifts {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static InfoSiteShifts run(String groupingCode, String studentGroupCode) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         InfoSiteShifts infoSiteShifts = new InfoSiteShifts();
         List infoShifts = new ArrayList();
@@ -41,13 +42,13 @@ public class ReadGroupingShifts {
         boolean result = false;
 
         StudentGroup studentGroup = null;
-        grouping = AbstractDomainObject.fromExternalId(groupingCode);
+        grouping = FenixFramework.getDomainObject(groupingCode);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
         if (studentGroupCode != null) {
 
-            studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+            studentGroup = FenixFramework.getDomainObject(studentGroupCode);
 
             if (studentGroup == null) {
                 throw new InvalidSituationServiceException();

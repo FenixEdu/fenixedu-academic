@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -24,8 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
 
 public class ImportIdentificationCardDataFromFile {
 
@@ -33,7 +33,7 @@ public class ImportIdentificationCardDataFromFile {
         private final String name;
         private final Set<Integer> numbers;
         private final String identificationId;
-        private Person person;
+        private final Person person;
 
         public PersonEntry(final String name, final Set<Integer> numbers, final String identificationId, final Person person) {
             this.name = name;
@@ -84,17 +84,17 @@ public class ImportIdentificationCardDataFromFile {
 
     private final Set<Person> peopleWithBadNames = new HashSet<Person>();
 
-    private Map<Integer, Set<Person>> peopleByNumber = new HashMap<Integer, Set<Person>>();
-    private Map<String, Set<Person>> peopleByName = new HashMap<String, Set<Person>>();
+    private final Map<Integer, Set<Person>> peopleByNumber = new HashMap<Integer, Set<Person>>();
+    private final Map<String, Set<Person>> peopleByName = new HashMap<String, Set<Person>>();
 
     private int matched = 0;
     private int unmatched = 0;
     private int multipleIdMatches = 0;
     private int multipleNameMatches = 0;
-    private int matchedLines = 0;
-    private int newLines = 0;
+    private final int matchedLines = 0;
+    private final int newLines = 0;
 
-    private StringBuilder result = new StringBuilder();
+    private final StringBuilder result = new StringBuilder();
 
     protected String run(final String description, final ExecutionYear executionYear, final String contents) throws Exception {
 
@@ -237,7 +237,7 @@ public class ImportIdentificationCardDataFromFile {
 //	    checkDuplicateLine(person, line);
         final CardGenerationEntry cardGenerationEntry = createEntry(cardGenerationBatch, identificationId, line);
         cardGenerationEntry.setPerson(person);
-        if (person.getCardGenerationEntriesCount() > 1) {
+        if (person.getCardGenerationEntriesSet().size() > 1) {
             incrementVersionNumber(cardGenerationEntry);
         }
         return cardGenerationEntry;
@@ -456,7 +456,7 @@ public class ImportIdentificationCardDataFromFile {
                     final YearMonthDay yearMonthDay1 = o1.getStartDateYearMonthDay();
                     final YearMonthDay yearMonthDay2 = o2.getStartDateYearMonthDay();
                     final int c = yearMonthDay1.compareTo(yearMonthDay2);
-                    return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
                 } else {
                     return degreeType1.compareTo(degreeType2);
                 }
@@ -624,7 +624,7 @@ public class ImportIdentificationCardDataFromFile {
         return newLine.toString();
     }
 
-    @Service
+    @Atomic
     public static String crossReferenceFile(final String description, final ExecutionYear executionYear, final String contents)
             throws Exception {
         final ImportIdentificationCardDataFromFile importIdentificationCardDataFromFile =

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
@@ -14,14 +14,14 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
 
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTSDTeacher {
     protected Boolean run(String teacherName, String categoryId, Double requiredHours, String tsdId) {
 
-        ProfessionalCategory category = AbstractDomainObject.fromExternalId(categoryId);
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        ProfessionalCategory category = FenixFramework.getDomainObject(categoryId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
 
         if (existsVirtualTeacherWithSameName(tsd.getTSDTeachers(), teacherName)) {
             return false;
@@ -33,7 +33,7 @@ public class CreateTSDTeacher {
         return true;
     }
 
-    private boolean existsVirtualTeacherWithSameName(List<TSDTeacher> tsdTeachers, final String teacherName) {
+    private boolean existsVirtualTeacherWithSameName(Collection<TSDTeacher> tsdTeachers, final String teacherName) {
         return CollectionUtils.exists(tsdTeachers, new Predicate() {
             @Override
             public boolean evaluate(Object arg) {
@@ -50,7 +50,7 @@ public class CreateTSDTeacher {
 
     private static final CreateTSDTeacher serviceInstance = new CreateTSDTeacher();
 
-    @Service
+    @Atomic
     public static Boolean runCreateTSDTeacher(String teacherName, String categoryId, Double requiredHours, String tsdId)
             throws NotAuthorizedException {
         try {

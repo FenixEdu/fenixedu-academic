@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
@@ -13,16 +13,16 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID {
 
     protected InfoExecutionDegree run(final String degreeCurricularPlanID) {
 
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
-        final List executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+        final Collection executionDegrees = degreeCurricularPlan.getExecutionDegrees();
         final ExecutionDegree executionDegree = (ExecutionDegree) CollectionUtils.find(executionDegrees, new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
@@ -39,7 +39,7 @@ public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID {
     private static final ReadCurrentExecutionDegreeByDegreeCurricularPlanID serviceInstance =
             new ReadCurrentExecutionDegreeByDegreeCurricularPlanID();
 
-    @Service
+    @Atomic
     public static InfoExecutionDegree runReadCurrentExecutionDegreeByDegreeCurricularPlanID(String degreeCurricularPlanID)
             throws NotAuthorizedException {
         try {

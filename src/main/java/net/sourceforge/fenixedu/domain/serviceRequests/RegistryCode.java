@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -18,7 +19,7 @@ public class RegistryCode extends RegistryCode_Base {
             if (o1.getCode().compareTo(o2.getCode()) != 0) {
                 return o1.getCode().compareTo(o2.getCode());
             }
-            return COMPARATOR_BY_ID.compare(o1, o2);
+            return DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
         }
     };
 
@@ -120,4 +121,25 @@ public class RegistryCode extends RegistryCode_Base {
 
         return null;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest> getDocumentRequest() {
+        return getDocumentRequestSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDocumentRequest() {
+        return !getDocumentRequestSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRegistryCodeGenerator() {
+        return getRegistryCodeGenerator() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
 }

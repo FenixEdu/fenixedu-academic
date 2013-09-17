@@ -95,7 +95,7 @@ public class DegreeCurricularPlanProcessor extends PathProcessor {
                 return null;
             }
 
-            return this.curricularPlan = plans.get(0);
+            return this.curricularPlan = plans.iterator().next();
         }
 
     }

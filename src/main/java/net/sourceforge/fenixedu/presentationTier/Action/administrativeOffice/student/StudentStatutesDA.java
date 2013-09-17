@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -43,7 +43,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
     public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        final Student student = AbstractDomainObject.fromExternalId(request.getParameter("studentOID"));
+        final Student student = FenixFramework.getDomainObject(request.getParameter("studentOID"));
         request.setAttribute("student", student);
         request.setAttribute("schemaName", request.getParameter("schemaName"));
         request.setAttribute("manageStatuteBean", getRenderedObject());

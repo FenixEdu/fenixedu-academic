@@ -166,7 +166,7 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
 
         if (bean.hasDegreeToAdd() && !bean.containsDegree(bean.getDegreeToAdd())) {
             bean.addDegree(bean.getDegreeToAdd());
-            bean.removeDegreeToAdd();
+            bean.setDegreeToAdd(null);
         }
 
         request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);

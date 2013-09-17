@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.OperatorArg
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * The <code>$O</code> operator obtains a domain object by it's OID (domain
@@ -48,13 +48,13 @@ public class OidOperator extends OperatorArgument {
         Argument argument = argument(PARAMETER);
         if (argument instanceof StaticArgument) {
             StaticArgument staticArgument = (StaticArgument) argument;
-            return AbstractDomainObject.fromExternalId(staticArgument.getString());
+            return FenixFramework.getDomainObject(staticArgument.getString());
         }
 
         if (this.value == null) {
             this.value = new ParameterOperator(this, argument(PARAMETER));
         }
-        return AbstractDomainObject.fromExternalId((String) value.getValue());
+        return FenixFramework.getDomainObject((String) value.getValue());
     }
 
     @Override

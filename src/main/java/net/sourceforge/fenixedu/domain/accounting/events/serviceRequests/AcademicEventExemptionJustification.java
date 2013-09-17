@@ -37,4 +37,14 @@ public class AcademicEventExemptionJustification extends AcademicEventExemptionJ
         return new LabelFormatter().appendLabel(getJustificationType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES);
     }
 
+    @Deprecated
+    public boolean hasJustificationType() {
+        return getJustificationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasDispatchDate() {
+        return getDispatchDate() != null;
+    }
+
 }

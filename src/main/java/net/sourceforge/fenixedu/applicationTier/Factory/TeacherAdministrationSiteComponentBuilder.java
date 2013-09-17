@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -83,7 +84,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quit�rio
@@ -104,7 +105,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     }
 
     public ISiteComponent getComponent(ISiteComponent component, ExecutionCourseSite site, ISiteComponent commonComponent,
-            Object obj1, Object obj2) throws FenixServiceException {
+            String obj1, String obj2) throws FenixServiceException {
 
         if (component instanceof InfoSiteCommon) {
             return getInfoSiteCommon((InfoSiteCommon) component, site);
@@ -117,27 +118,27 @@ public class TeacherAdministrationSiteComponentBuilder {
         } else if (component instanceof InfoSitePrograms) {
             return getInfoSitePrograms((InfoSitePrograms) component, site);
         } else if (component instanceof InfoCurriculum) {
-            return getInfoCurriculum((InfoCurriculum) component, site, (String) obj1);
+            return getInfoCurriculum((InfoCurriculum) component, site, obj1);
         } else if (component instanceof InfoSiteTeachers) {
-            return getInfoSiteTeachers((InfoSiteTeachers) component, site, (String) obj2);
+            return getInfoSiteTeachers((InfoSiteTeachers) component, site, obj2);
         } else if (component instanceof InfoSiteEvaluation) {
             return getInfoSiteEvaluation((InfoSiteEvaluation) component, site);
         } else if (component instanceof InfoSiteExam) {
             return getInfoSiteExam((InfoSiteExam) component, site);
         } else if (component instanceof InfoSiteEvaluationExecutionCourses) {
-            return getInfoSiteEvaluationExecutionCourses((InfoSiteEvaluationExecutionCourses) component, site, (String) obj1);
+            return getInfoSiteEvaluationExecutionCourses((InfoSiteEvaluationExecutionCourses) component, site, obj1);
         } else if (component instanceof InfoSiteRootSections) {
             return getInfoSiteRootSections((InfoSiteRootSections) component, site);
         } else if (component instanceof InfoEvaluation) {
-            return getInfoEvaluation((InfoEvaluation) component, site, (String) obj1);
+            return getInfoEvaluation((InfoEvaluation) component, site, obj1);
         } else if (component instanceof InfoSiteSection) {
-            return getInfoSiteSection((InfoSiteSection) component, site, (String) obj1);
+            return getInfoSiteSection((InfoSiteSection) component, site, obj1);
         } else if (component instanceof InfoSiteRegularSections) {
-            return getInfoSiteRegularSections((InfoSiteRegularSections) component, site, (String) obj1);
+            return getInfoSiteRegularSections((InfoSiteRegularSections) component, site, obj1);
         } else if (component instanceof InfoSiteSections) {
-            return getInfoSiteSections((InfoSiteSections) component, site, (String) obj1);
+            return getInfoSiteSections((InfoSiteSections) component, site, obj1);
         } else if (component instanceof InfoSiteItems) {
-            return getInfoSiteItems((InfoSiteItems) component, site, (String) obj1);
+            return getInfoSiteItems((InfoSiteItems) component, site, obj1);
         } else if (component instanceof InfoSiteProjects) {
             return getInfoSiteProjects((InfoSiteProjects) component, site);
         } else if (component instanceof InfoSiteNewProjectProposals) {
@@ -145,15 +146,15 @@ public class TeacherAdministrationSiteComponentBuilder {
         } else if (component instanceof InfoSiteSentedProjectProposalsWaiting) {
             return getInfoSiteSentedProjectProposalsWaiting((InfoSiteSentedProjectProposalsWaiting) component, site);
         } else if (component instanceof InfoSiteShiftsAndGroups) {
-            return getInfoSiteShiftsAndGroups((InfoSiteShiftsAndGroups) component, (String) obj1);
+            return getInfoSiteShiftsAndGroups((InfoSiteShiftsAndGroups) component, obj1);
         } else if (component instanceof InfoSiteStudentGroup) {
-            return getInfoSiteStudentGroup((InfoSiteStudentGroup) component, (String) obj1);
+            return getInfoSiteStudentGroup((InfoSiteStudentGroup) component, obj1);
         } else if (component instanceof InfoSiteGrouping) {
-            return getInfoSiteGroupProperties((InfoSiteGrouping) component, (String) obj1);
+            return getInfoSiteGroupProperties((InfoSiteGrouping) component, obj1);
         } else if (component instanceof InfoSiteShifts) {
-            return getInfoSiteShifts((InfoSiteShifts) component, (String) obj1, (String) obj2);
+            return getInfoSiteShifts((InfoSiteShifts) component, obj1, obj2);
         } else if (component instanceof InfoSiteStudentGroupAndStudents) {
-            return getInfoSiteStudentGroupAndStudents((InfoSiteStudentGroupAndStudents) component, (String) obj1, (String) obj2);
+            return getInfoSiteStudentGroupAndStudents((InfoSiteStudentGroupAndStudents) component, obj1, obj2);
         }
         return null;
     }
@@ -181,7 +182,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
         component.setExecutionCourse(infoExecutionCourse);
 
-        final List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        final Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(curricularCourses.size());
         for (final CurricularCourse curricularCourse : curricularCourses) {
             infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
@@ -221,7 +222,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             throws FenixServiceException {
 
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        Collection curricularCourses = executionCourse.getAssociatedCurricularCourses();
         Iterator iter = curricularCourses.iterator();
         List<InfoCurriculum> infoCurriculums = new ArrayList<InfoCurriculum>();
 
@@ -248,7 +249,7 @@ public class TeacherAdministrationSiteComponentBuilder {
      */
     private ISiteComponent getInfoSitePrograms(InfoSitePrograms component, ExecutionCourseSite site) throws FenixServiceException {
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        Collection curricularCourses = executionCourse.getAssociatedCurricularCourses();
         Iterator iter = curricularCourses.iterator();
         List<InfoCurriculum> infoCurriculums = new ArrayList<InfoCurriculum>();
 
@@ -276,7 +277,7 @@ public class TeacherAdministrationSiteComponentBuilder {
      */
     private ISiteComponent getInfoCurriculum(InfoCurriculum component, ExecutionCourseSite site, String curricularCourseCode)
             throws FenixServiceException {
-        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
+        CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseCode);
 
         Curriculum curriculum = curricularCourse.findLatestCurriculum();
         InfoCurriculum infoCurriculum = null;
@@ -299,7 +300,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             throws FenixServiceException {
 
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        List teachers = executionCourse.getProfessorships();
+        Collection teachers = executionCourse.getProfessorships();
         List<InfoTeacher> infoTeachers = new ArrayList<InfoTeacher>();
         if (teachers != null) {
 
@@ -353,7 +354,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ExecutionCourseSite site) {
         ExecutionCourse executionCourse = site.getExecutionCourse();
 
-        List evaluations = executionCourse.getAssociatedEvaluations();
+        Collection evaluations = executionCourse.getAssociatedEvaluations();
         Iterator iter = evaluations.iterator();
 
         // boolean hasFinalEvaluation = false;
@@ -388,7 +389,7 @@ public class TeacherAdministrationSiteComponentBuilder {
      */
     private ISiteComponent getInfoSiteExam(InfoSiteExam component, ExecutionCourseSite site) {
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        List<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+        Collection<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
         List<Exam> exams = new ArrayList<Exam>();
         for (Evaluation evaluation : associatedEvaluations) {
             if (evaluation instanceof Exam) {
@@ -410,16 +411,16 @@ public class TeacherAdministrationSiteComponentBuilder {
     private ISiteComponent getInfoSiteEvaluationExecutionCourses(InfoSiteEvaluationExecutionCourses component,
             ExecutionCourseSite site, String evaluationID) {
 
-        final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationID);
+        final Evaluation evaluation = FenixFramework.getDomainObject(evaluationID);
 
         if (evaluation instanceof Exam) {
             final Exam exam = (Exam) evaluation;
             exam.checkIfCanDistributeStudentsByRooms();
             final InfoExam infoExam = InfoExamWithRoomOccupations.newInfoFromDomain(exam);
-            infoExam.setEnrolledStudents(exam.getWrittenEvaluationEnrolmentsCount());
+            infoExam.setEnrolledStudents(exam.getWrittenEvaluationEnrolments().size());
 
             final List<InfoExecutionCourse> infoExecutionCourses =
-                    new ArrayList<InfoExecutionCourse>(exam.getAssociatedExecutionCoursesCount());
+                    new ArrayList<InfoExecutionCourse>(exam.getAssociatedExecutionCourses().size());
             for (final ExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
                 infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
@@ -438,7 +439,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
     private ISiteComponent getInfoEvaluation(InfoEvaluation component, ExecutionCourseSite site, String evaluationCode)
             throws FenixServiceException {
-        Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationCode);
+        Evaluation evaluation = FenixFramework.getDomainObject(evaluationCode);
 
         InfoEvaluation infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
@@ -495,7 +496,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     private ISiteComponent getInfoSiteSection(InfoSiteSection component, ExecutionCourseSite site, String sectionCode)
             throws FenixServiceException {
 
-        final Section section = (Section) AbstractDomainObject.fromExternalId(sectionCode);
+        final Section section = (Section) FenixFramework.getDomainObject(sectionCode);
 
         final List<InfoItem> infoItemsList = new ArrayList<InfoItem>(section.getAssociatedItemsCount());
         for (final Item item : section.getAssociatedItems()) {
@@ -512,7 +513,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
     private ISiteComponent getInfoSiteRegularSections(InfoSiteRegularSections component, ExecutionCourseSite site,
             String sectionCode) throws FenixServiceException {
-        Section iSuperiorSection = (Section) AbstractDomainObject.fromExternalId(sectionCode);
+        Section iSuperiorSection = (Section) FenixFramework.getDomainObject(sectionCode);
         List allSections = site.getAssociatedSections();
 
         // build the result of this service
@@ -534,7 +535,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
     private ISiteComponent getInfoSiteSections(InfoSiteSections component, ExecutionCourseSite site, String sectionCode)
             throws FenixServiceException {
-        Section iSection = (Section) AbstractDomainObject.fromExternalId(sectionCode);
+        Section iSection = (Section) FenixFramework.getDomainObject(sectionCode);
 
         InfoSection infoSection = InfoSection.newInfoFromDomain(iSection);
         List allSections = site.getAssociatedSections();
@@ -570,7 +571,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     private ISiteComponent getInfoSiteItems(InfoSiteItems component, ExecutionCourseSite site, String itemCode)
             throws FenixServiceException {
 
-        final Item iItem = (Item) AbstractDomainObject.fromExternalId(itemCode);
+        final Item iItem = (Item) FenixFramework.getDomainObject(itemCode);
         final Section iSection = iItem.getSection();
 
         final InfoItem infoItem = InfoItem.newInfoFromDomain(iItem);
@@ -594,7 +595,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     private List readInfoCurricularCourses(ExecutionCourseSite site) {
 
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        Collection curricularCourses = executionCourse.getAssociatedCurricularCourses();
         Iterator iter = curricularCourses.iterator();
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
         while (iter.hasNext()) {
@@ -624,10 +625,10 @@ public class TeacherAdministrationSiteComponentBuilder {
         List<InfoGrouping> projects = null;
         Grouping groupProperties;
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
 
         List<Grouping> executionCourseProjects = new ArrayList<Grouping>();
-        List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
+        Collection groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
         Iterator iterGroupPropertiesExecutionCourse = groupPropertiesExecutionCourseList.iterator();
         while (iterGroupPropertiesExecutionCourse.hasNext()) {
             ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterGroupPropertiesExecutionCourse.next();
@@ -673,10 +674,10 @@ public class TeacherAdministrationSiteComponentBuilder {
         List<InfoGrouping> projects = null;
         Grouping groupProperties;
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
 
         List<Grouping> executionCourseProjects = new ArrayList<Grouping>();
-        List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
+        Collection groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
         Iterator iterGroupPropertiesExecutionCourse = groupPropertiesExecutionCourseList.iterator();
         while (iterGroupPropertiesExecutionCourse.hasNext()) {
             ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterGroupPropertiesExecutionCourse.next();
@@ -721,7 +722,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
         List<InfoGrouping> projects = null;
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
 
         List<Grouping> executionCourseSentedProjects = new ArrayList<Grouping>();
         List groupPropertiesList = executionCourse.getGroupings();
@@ -729,7 +730,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         while (iterGroupPropertiesList.hasNext()) {
             boolean found = false;
             Grouping groupProperties = (Grouping) iterGroupPropertiesList.next();
-            List groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
+            Collection groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
             Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
             while (iterGroupPropertiesExecutionCourseList.hasNext() && !found) {
                 ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterGroupPropertiesExecutionCourseList.next();
@@ -766,7 +767,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     private ISiteComponent getInfoSiteShiftsAndGroups(InfoSiteShiftsAndGroups component, String groupPropertiesCode)
             throws FenixServiceException {
 
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);
 
         List infoSiteShiftsAndGroups = ReadShiftsAndGroups.run(groupProperties).getInfoSiteGroupsByShiftList();
         component.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroups);
@@ -806,7 +807,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     private ISiteComponent getInfoSiteStudentGroup(InfoSiteStudentGroup component, String studentGroupID)
             throws FenixServiceException {
 
-        final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupID);
+        final StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupID);
         if (studentGroup == null) {
             return null;
         }
@@ -822,7 +823,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         component.setInfoStudentGroup(InfoStudentGroupWithAttendsAndGroupingAndShift.newInfoFromDomain(studentGroup));
 
         if (studentGroup.getGrouping().getMaximumCapacity() != null) {
-            int freeGroups = studentGroup.getGrouping().getMaximumCapacity() - studentGroup.getAttendsCount();
+            int freeGroups = studentGroup.getGrouping().getMaximumCapacity() - studentGroup.getAttends().size();
             component.setNrOfElements(Integer.valueOf(freeGroups));
         } else {
             component.setNrOfElements("Sem limite");
@@ -845,12 +846,12 @@ public class TeacherAdministrationSiteComponentBuilder {
 
         InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
 
-        Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        Grouping grouping = FenixFramework.getDomainObject(groupPropertiesCode);
         if (grouping == null) {
             return null;
         }
 
-        Shift shift = AbstractDomainObject.fromExternalId(shiftCode);
+        Shift shift = FenixFramework.getDomainObject(shiftCode);
 
         List<InfoSiteGroupsByShift> infoSiteGroupsByShiftList = new ArrayList<InfoSiteGroupsByShift>();
         InfoSiteShift infoSiteShift = new InfoSiteShift();
@@ -899,12 +900,12 @@ public class TeacherAdministrationSiteComponentBuilder {
         List<InfoSiteStudentsAndShiftByStudentGroup> infoSiteStudentsAndShiftByStudentGroupList =
                 new ArrayList<InfoSiteStudentsAndShiftByStudentGroup>();
 
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);
         if (groupProperties == null) {
             return null;
         }
 
-        Shift shift = AbstractDomainObject.fromExternalId(shiftCode);
+        Shift shift = FenixFramework.getDomainObject(shiftCode);
 
         List<StudentGroup> aux = new ArrayList<StudentGroup>();
         List studentGroupsWithShift = groupProperties.getStudentGroupsWithShift();
@@ -916,7 +917,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             }
         }
         List<StudentGroup> allStudentGroups = new ArrayList<StudentGroup>();
-        allStudentGroups.addAll(groupProperties.getStudentGroups());
+        allStudentGroups.addAll(groupProperties.getStudentGroupsSet());
 
         Iterator iterAux = aux.iterator();
         while (iterAux.hasNext()) {
@@ -934,7 +935,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             infoSiteStudentsAndShiftByStudentGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
             infoSiteStudentsAndShiftByStudentGroup.setInfoShift(InfoShift.newInfoFromDomain(turno));
 
-            List attendsList = studentGroup.getAttends();
+            Collection attendsList = studentGroup.getAttends();
 
             List<InfoSiteStudentInformation> studentGroupAttendInformationList = new ArrayList<InfoSiteStudentInformation>();
             Iterator iterAttendsList = attendsList.iterator();
@@ -981,7 +982,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     }
 
     private InfoGrouping readGroupProperties(String groupPropertiesCode) throws ExcepcaoInexistente, FenixServiceException {
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);
         return InfoGroupingWithAttends.newInfoFromDomain(groupProperties);
     }
 
@@ -996,12 +997,12 @@ public class TeacherAdministrationSiteComponentBuilder {
         List<InfoShift> infoShifts = new ArrayList<InfoShift>();
         ExecutionCourse executionCourse = null;
 
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);
         if (groupProperties == null) {
             return null;
         }
         if (studentGroupCode != null) {
-            StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+            StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
             if (studentGroup == null) {
                 component.setShifts(null);
                 return component;

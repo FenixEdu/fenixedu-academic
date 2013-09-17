@@ -4,7 +4,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.prizes;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DeletePrizeFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.research.Prize;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeletePrize {
 
@@ -15,7 +15,7 @@ public class DeletePrize {
 
     private static final DeletePrize serviceInstance = new DeletePrize();
 
-    @Service
+    @Atomic
     public static void runDeletePrize(Prize prize) throws NotAuthorizedException {
         DeletePrizeFilter.instance.execute(prize);
         serviceInstance.run(prize);

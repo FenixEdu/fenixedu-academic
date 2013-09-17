@@ -36,7 +36,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -48,7 +48,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 
         String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
-        request.setAttribute("degree", AbstractDomainObject.fromExternalId(degreeId));
+        request.setAttribute("degree", FenixFramework.getDomainObject(degreeId));
 
         String executionDegreeId = getFromRequest("executionDegreeID", request);
         request.setAttribute("executionDegreeID", executionDegreeId);
@@ -92,7 +92,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         // degreeID
         String degreeId = (String) chooseExamContextoForm.get("degreeID");
         request.setAttribute("degreeID", degreeId);
-        final Degree degree = AbstractDomainObject.fromExternalId(degreeId);
+        final Degree degree = FenixFramework.getDomainObject(degreeId);
         request.setAttribute("degree", degree);
 
         // curricularYearList
@@ -106,7 +106,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         if (StringUtils.isEmpty(degreeCurricularPlanId)) {
             degreeCurricularPlan = degree.getMostRecentDegreeCurricularPlan();
         } else {
-            degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+            degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
         }
 
         if (degreeCurricularPlan != null) {
@@ -142,7 +142,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
 
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
         ExecutionDegree executionDegree = null;
 
         if (degreeCurricularPlan != null) {

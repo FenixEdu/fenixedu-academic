@@ -28,7 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
@@ -73,7 +73,7 @@ public class SearchExecutionCourseLogAction extends FenixDispatchAction {
         String executionCourseID = request.getParameter("executionCourse");
         if (executionCourseID != null) {
             SearchExecutionCourseLogBean seclb =
-                    new SearchExecutionCourseLogBean(AbstractDomainObject.<ExecutionCourse> fromExternalId(executionCourseID));
+                    new SearchExecutionCourseLogBean(FenixFramework.<ExecutionCourse> getDomainObject(executionCourseID));
 
             String viewPhoto = request.getParameter("viewPhoto");
             if (viewPhoto != null && viewPhoto.equalsIgnoreCase("true")) {
@@ -95,7 +95,7 @@ public class SearchExecutionCourseLogAction extends FenixDispatchAction {
             if (professorships != null) {
                 List<Professorship> list = new ArrayList<Professorship>();
                 for (String professorship : professorships.split(":")) {
-                    list.add(AbstractDomainObject.<Professorship> fromExternalId(professorship));
+                    list.add(FenixFramework.<Professorship> getDomainObject(professorship));
                 }
                 seclb.setProfessorships(list);
             }
@@ -140,7 +140,6 @@ public class SearchExecutionCourseLogAction extends FenixDispatchAction {
     }
 
     // copied from ExecutionCourse, was public
-    // @Checked("ExecutionCoursePredicates.executionCourseLecturingTeacherOrDegreeCoordinator")
     private void searchLogs(SearchExecutionCourseLogBean bean) {
         final Predicate<ExecutionCourseLog> filter = bean.getFilters();
         final Collection<ExecutionCourseLog> validLogs = new HashSet<ExecutionCourseLog>();

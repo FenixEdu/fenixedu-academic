@@ -12,22 +12,23 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod, Integer year) {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
         List listInfoDE = new ArrayList();
 
         CurricularYear curricularYear = CurricularYear.readByYear(year);
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
         DegreeCurricularPlan degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
+                FenixFramework.getDomainObject(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 
         if (executionSemester != null) {
             List<ExecutionCourse> listDCDE =
@@ -46,16 +47,16 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
         return listInfoDE;
     }
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static List run(InfoExecutionDegree infoExecutionDegree, AcademicInterval academicInterval, Integer year) {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
         List listInfoDE = new ArrayList();
 
         CurricularYear curricularYear = CurricularYear.readByYear(year);
 
         DegreeCurricularPlan degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
+                FenixFramework.getDomainObject(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 
         if (academicInterval != null) {
             List<ExecutionCourse> listDCDE =

@@ -1,10 +1,10 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
-<%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="string" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="string" %>
 
 <logic:present name="currentUnit">
 	<bean:define id="initialCurrentUnit" name="currentUnit" toScope="request"/>

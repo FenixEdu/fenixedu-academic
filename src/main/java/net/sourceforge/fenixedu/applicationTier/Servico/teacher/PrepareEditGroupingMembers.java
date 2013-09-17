@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.util.ProposalState;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -23,9 +23,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class PrepareEditGroupingMembers {
 
-    @Service
+    @Atomic
     public static List run(String executionCourseCode, String groupingID) throws FenixServiceException {
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupingID);
+        final Grouping grouping = FenixFramework.getDomainObject(groupingID);
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();
         }

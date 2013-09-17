@@ -26,7 +26,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class Employee extends Employee_Base {
 
     public void delete() {
         super.setPerson(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -269,7 +269,7 @@ public class Employee extends Employee_Base {
         if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
             return "F" + getEmployeeNumber();
         } else {
-            return roleLoginAlias.get(0).getAlias();
+            return roleLoginAlias.iterator().next().getAlias();
         }
     }
 
@@ -335,31 +335,146 @@ public class Employee extends Employee_Base {
     }
 
     public boolean hasMultipleDepartments() {
-        List<Department> departments = RootDomainObject.getInstance().getDepartments();
+        Collection<Department> departments = RootDomainObject.getInstance().getDepartments();
         int count = 0;
         final int several = 2;
         for (Department department : departments) {
-            if (department.hasAssociatedPersons(getPerson())) {
+            if (department.getAssociatedPersonsSet().contains(getPerson())) {
                 count++;
             }
         }
         return count >= several ? true : false;
     }
 
-    @Service
+    @Atomic
     public void assignPermission(final Department department) {
         this.getPerson().getManageableDepartmentCredits().add(department);
         this.getPerson().addPersonRoleByRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER);
         this.getPerson().addPersonRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
     }
 
-    @Service
+    @Atomic
     public void removePermission(Department department) {
         if (!this.hasMultipleDepartments()) {
             this.getPerson().removeRoleByType(RoleType.DEPARTMENT_CREDITS_MANAGER);
             this.getPerson().removeRoleByType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
         }
         this.getPerson().getManageableDepartmentCredits().remove(department);
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisDataVersions() {
+        return getMasterDegreeThesisDataVersionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMasterDegreeThesisDataVersions() {
+        return !getMasterDegreeThesisDataVersionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeProofVersion> getMasterDegreeProofVersions() {
+        return getMasterDegreeProofVersionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMasterDegreeProofVersions() {
+        return !getMasterDegreeProofVersionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.GratuitySituation> getPenaltyExemptionGratuitySituations() {
+        return getPenaltyExemptionGratuitySituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPenaltyExemptionGratuitySituations() {
+        return !getPenaltyExemptionGratuitySituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EmployeeHistoric> getHistoricList() {
+        return getHistoricListSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyHistoricList() {
+        return !getHistoricListSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation> getReimbursementGuideSituations() {
+        return getReimbursementGuideSituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReimbursementGuideSituations() {
+        return !getReimbursementGuideSituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.GratuitySituation> getGratuitySituations() {
+        return getGratuitySituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGratuitySituations() {
+        return !getGratuitySituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EmployeeHistoric> getResponsibleEmployeeAssociatedEmployeeHistorics() {
+        return getResponsibleEmployeeAssociatedEmployeeHistoricsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResponsibleEmployeeAssociatedEmployeeHistorics() {
+        return !getResponsibleEmployeeAssociatedEmployeeHistoricsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.StudentCurricularPlan> getStudentCurricularPlans() {
+        return getStudentCurricularPlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentCurricularPlans() {
+        return !getStudentCurricularPlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.GratuityValues> getGratuityValues() {
+        return getGratuityValuesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGratuityValues() {
+        return !getGratuityValuesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEmployeeNumber() {
+        return getEmployeeNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWorkingHours() {
+        return getWorkingHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

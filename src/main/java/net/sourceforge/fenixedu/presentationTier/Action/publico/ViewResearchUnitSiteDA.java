@@ -19,7 +19,7 @@ import org.apache.struts.util.RequestUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "publico", path = "/researchSite/viewResearchUnitSite", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "announcementsAction", path = "/researchSite/manageResearchUnitAnnouncements.do"),
@@ -75,7 +75,7 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
         Container container = AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
         if (container == null) {
             String siteID = request.getParameter(getContextParamName(request));
-            return (ResearchUnitSite) AbstractDomainObject.fromExternalId(siteID);
+            return (ResearchUnitSite) FenixFramework.getDomainObject(siteID);
         } else {
             return (ResearchUnitSite) container;
         }

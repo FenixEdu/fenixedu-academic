@@ -10,8 +10,18 @@ public abstract class TeacherServiceItem extends TeacherServiceItem_Base {
     }
 
     public void delete() {
-        removeTeacherService();
-        removeRootDomainObject();
+        setTeacherService(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasTeacherService() {
+        return getTeacherService() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

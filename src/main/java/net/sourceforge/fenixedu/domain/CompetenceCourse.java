@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,7 +34,8 @@ import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.CompetenceCoursePredicates;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -190,7 +190,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             }
         }
         for (final Department department : departments) {
-            if (!hasDepartments(department)) {
+            if (!getDepartmentsSet().contains(department)) {
                 super.addDepartments(department);
             }
         }
@@ -254,10 +254,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             throw new DomainException("competenceCourse.approved");
         }
         getDepartments().clear();
-        for (; !getCompetenceCourseInformations().isEmpty(); getCompetenceCourseInformations().get(0).delete()) {
+        for (; !getCompetenceCourseInformations().isEmpty(); getCompetenceCourseInformations().iterator().next().delete()) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -474,18 +474,18 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getCompetenceCourseLevel(null);
     }
 
-    public List<CompetenceCourseLoad> getCompetenceCourseLoads(final ExecutionSemester period) {
+    public Collection<CompetenceCourseLoad> getCompetenceCourseLoads(final ExecutionSemester period) {
         final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
         return information != null ? information.getCompetenceCourseLoads() : null;
     }
 
-    public List<CompetenceCourseLoad> getCompetenceCourseLoads() {
+    public Collection<CompetenceCourseLoad> getCompetenceCourseLoads() {
         return getCompetenceCourseLoads(null);
     }
 
     public int getCompetenceCourseLoadsCount(final ExecutionSemester period) {
         final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
-        return information != null ? information.getCompetenceCourseLoadsCount() : 0;
+        return information != null ? information.getCompetenceCourseLoadsSet().size() : 0;
     }
 
     public int getCompetenceCourseLoadsCount() {
@@ -838,8 +838,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public Boolean hasActiveScopesInExecutionYear(ExecutionYear executionYear) {
-        List<ExecutionSemester> executionSemesters = executionYear.getExecutionPeriods();
-        List<CurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
+        Collection<ExecutionSemester> executionSemesters = executionYear.getExecutionPeriods();
+        Collection<CurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
         for (ExecutionSemester executionSemester : executionSemesters) {
             for (CurricularCourse curricularCourse : curricularCourses) {
                 if (curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(executionSemester.getAcademicInterval())
@@ -852,7 +852,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public boolean hasActiveScopesInExecutionPeriod(ExecutionSemester executionSemester) {
-        List<CurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
         for (CurricularCourse curricularCourse : curricularCourses) {
             if (curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(executionSemester.getAcademicInterval()).size() > 0) {
                 return true;
@@ -946,38 +946,38 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void addCompetenceCourseInformations(CompetenceCourseInformation competenceCourseInformations) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.addCompetenceCourseInformations(competenceCourseInformations);
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void addDepartments(Department departments) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.addDepartments(departments);
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void removeCompetenceCourseInformations(CompetenceCourseInformation competenceCourseInformations) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.removeCompetenceCourseInformations(competenceCourseInformations);
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void removeDepartments(Department departments) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.removeDepartments(departments);
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void setCode(String code) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.setCode(code);
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.editCurricularStagePredicate")
     public void setCurricularStage(CurricularStage curricularStage) {
+        check(this, CompetenceCoursePredicates.editCurricularStagePredicate);
         if (this.hasAnyAssociatedCurricularCourses() && curricularStage.equals(CurricularStage.DRAFT)) {
             throw new DomainException("competenceCourse.has.already.associated.curricular.courses");
         }
@@ -985,14 +985,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void setName(String name) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.setName(name);
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void addAssociatedCurricularCourses(CurricularCourse associatedCurricularCourses) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.addAssociatedCurricularCourses(associatedCurricularCourses);
     }
 
@@ -1171,7 +1171,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public boolean hasOneCourseLoad(final ExecutionYear executionYear) {
         final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionYear(executionYear);
-        return information != null && information.getCompetenceCourseLoadsCount() == 1;
+        return information != null && information.getCompetenceCourseLoadsSet().size() == 1;
     }
 
     public boolean matchesName(String name) {
@@ -1260,43 +1260,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     @Deprecated
     /**
      * 
-     * This direct association between CompetenceCourses and Departments should no longer be used.
-     * Instead, obtain the ScientificAreaUnit, the DepartmentUnit, and then the Department.
-     * 
-     * @see #getDepartmentUnit(ExecutionSemester)
-     * 
-     */
-    public List<Department> getDepartments() {
-        // TODO Auto-generated method stub
-        return super.getDepartments();
-    }
-
-    @Override
-    @Deprecated
-    /**
-     * 
-     * @see #getDepartments()
-     */
-    public int getDepartmentsCount() {
-        // TODO Auto-generated method stub
-        return super.getDepartmentsCount();
-    }
-
-    @Override
-    @Deprecated
-    /**
-     * 
-     * @see #getDepartments()
-     */
-    public Iterator<Department> getDepartmentsIterator() {
-        // TODO Auto-generated method stub
-        return super.getDepartmentsIterator();
-    }
-
-    @Override
-    @Deprecated
-    /**
-     * 
      * @see #getDepartments()
      */
     public Set<Department> getDepartmentsSet() {
@@ -1311,13 +1274,113 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @Deprecated
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void setCreationDate(java.util.Date date) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         if (date == null) {
             setCreationDateYearMonthDay(null);
         } else {
             setCreationDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsCompetenceCourseConversionTable> getEctsConversionTables() {
+        return getEctsConversionTablesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEctsConversionTables() {
+        return !getEctsConversionTablesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests() {
+        return getCompetenceCourseInformationChangeRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCompetenceCourseInformationChangeRequests() {
+        return !getCompetenceCourseInformationChangeRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Department> getDepartments() {
+        return getDepartmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDepartments() {
+        return !getDepartmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation> getCompetenceCourseInformations() {
+        return getCompetenceCourseInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCompetenceCourseInformations() {
+        return !getCompetenceCourseInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.InternalPhdStudyPlanEntry> getPhdStudyPlanEntries() {
+        return getPhdStudyPlanEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdStudyPlanEntries() {
+        return !getPhdStudyPlanEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCompetenceCourse> getTSDCompetenceCourses() {
+        return getTSDCompetenceCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDCompetenceCourses() {
+        return !getTSDCompetenceCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getAssociatedCurricularCourses() {
+        return getAssociatedCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedCurricularCourses() {
+        return !getAssociatedCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateYearMonthDay() {
+        return getCreationDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularStage() {
+        return getCurricularStage() != null;
     }
 
 }

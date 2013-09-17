@@ -24,4 +24,19 @@ public class ExternalUser extends ExternalUser_Base {
         return username.equals(getUsername()) && hash(password).equals(getPasswordHash());
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPasswordHash() {
+        return getPasswordHash() != null;
+    }
+
+    @Deprecated
+    public boolean hasUsername() {
+        return getUsername() != null;
+    }
+
 }

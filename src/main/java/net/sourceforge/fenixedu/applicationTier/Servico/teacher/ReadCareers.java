@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,14 +17,15 @@ import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadCareers {
 
-    @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
+    @Atomic
     public static SiteView run(CareerType careerType, String user) {
+        check(RolePredicates.TEACHER_PREDICATE);
         final Teacher teacher = Teacher.readTeacherByUsername(user);
 
         final InfoSiteCareers bodyComponent = new InfoSiteCareers();
@@ -42,7 +44,7 @@ public class ReadCareers {
         final List<InfoCareer> oldestCareers = new ArrayList();
         final List<InfoCareer> newestCareers = new ArrayList();
 
-        final List<Career> careers = teacher.getAssociatedCareers();
+        final Collection<Career> careers = teacher.getAssociatedCareers();
         for (final Career career : careers) {
             boolean addCareer = false;
             if (careerType == null

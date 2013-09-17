@@ -8,9 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.domain.Branch;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -18,10 +19,10 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditBranch {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(InfoBranch infoBranch) throws FenixServiceException {
-        Branch branch = AbstractDomainObject.fromExternalId(infoBranch.getExternalId());
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
+        Branch branch = FenixFramework.getDomainObject(infoBranch.getExternalId());
 
         if (branch == null) {
             throw new NonExistingServiceException();

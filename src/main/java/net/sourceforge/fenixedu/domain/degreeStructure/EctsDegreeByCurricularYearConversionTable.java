@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 
 public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurricularYearConversionTable_Base {
@@ -25,7 +25,7 @@ public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurri
         return getDegree();
     }
 
-    @Service
+    @Atomic
     public static void createConversionTable(Degree degree, AcademicInterval year, CurricularYear curricularYear, String[] table) {
         EctsDegreeByCurricularYearConversionTable conversion =
                 EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(degree, curricularYear);
@@ -45,8 +45,13 @@ public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurri
 
     @Override
     public void delete() {
-        removeDegree();
+        setDegree(null);
         super.delete();
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
     }
 
 }

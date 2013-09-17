@@ -30,8 +30,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Closure;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -98,7 +98,7 @@ public class CreateClassificationsForStudents {
         List<Registration> otherYearsStudents = new ArrayList<Registration>();
         List<Registration> firstYearStudents = new ArrayList<Registration>();
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         for (Registration registration : degreeCurricularPlan.getRegistrations()) {
             if (registration.isInRegisteredState() && registration.getRegistrationAgreement().isNormal()) {
                 if (registration.getRegistrationYear() == currentExecutionYear) {
@@ -268,7 +268,7 @@ public class CreateClassificationsForStudents {
 
     private static final CreateClassificationsForStudents serviceInstance = new CreateClassificationsForStudents();
 
-    @Service
+    @Atomic
     public static ByteArrayOutputStream runCreateClassificationsForStudents(Integer[] entryGradeLimits,
             Integer[] approvationRatioLimits, Integer[] arithmeticMeanLimits, String degreeCurricularPlanID)
             throws FileNotFoundException, NotAuthorizedException {

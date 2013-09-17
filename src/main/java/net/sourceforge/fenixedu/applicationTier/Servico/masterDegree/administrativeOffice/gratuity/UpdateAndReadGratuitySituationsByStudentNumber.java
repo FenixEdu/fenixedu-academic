@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
@@ -9,8 +10,9 @@ import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -20,18 +22,18 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class UpdateAndReadGratuitySituationsByStudentNumber {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static List<InfoGratuitySituation> run(Integer studentNumber) {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         List<InfoGratuitySituation> infoGratuitySituationsList = new ArrayList<InfoGratuitySituation>();
 
         for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE)) {
-            List<StudentCurricularPlan> studentCurricularPlansList = registration.getStudentCurricularPlans();
+            Collection<StudentCurricularPlan> studentCurricularPlansList = registration.getStudentCurricularPlans();
 
             for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlansList) {
 
-                List<GratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
+                Collection<GratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
                 for (GratuitySituation gratuitySituation : gratuitySituations) {
                     gratuitySituation.updateValues();
 

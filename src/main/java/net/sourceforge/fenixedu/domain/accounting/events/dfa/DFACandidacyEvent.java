@@ -19,7 +19,8 @@ import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DFACandidacyEvent extends DFACandidacyEvent_Base {
@@ -126,8 +127,8 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     }
 
     @Override
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     protected void disconnect() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setCandidacy(null);
         super.disconnect();
     }
@@ -135,6 +136,11 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     @Override
     public boolean isExemptionAppliable() {
         return true;
+    }
+
+    @Deprecated
+    public boolean hasCandidacy() {
+        return getCandidacy() != null;
     }
 
 }

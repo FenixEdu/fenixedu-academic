@@ -35,7 +35,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class StudentInquiryBean implements Serializable {
 
@@ -258,7 +258,7 @@ public class StudentInquiryBean implements Serializable {
         this.startedWhen = startedWhen;
     }
 
-    @Service
+    @Atomic
     public void setAnsweredInquiry() {
         if (getInquiryRegistry().getState() == InquiriesRegistryState.ANSWERED) {
             return;

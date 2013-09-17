@@ -93,8 +93,9 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.StudentCurricularPlanPredicates;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
@@ -279,12 +280,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         checkRulesToDelete();
 
-        removeDegreeCurricularPlan();
-        removeBranch();
-        removeEmployee();
-        removeMasterDegreeThesis();
+        setDegreeCurricularPlan(null);
+        setBranch(null);
+        setEmployee(null);
+        setMasterDegreeThesis(null);
 
-        for (; !getEnrolmentsSet().isEmpty(); getEnrolments().get(0).delete()) {
+        for (; !getEnrolmentsSet().isEmpty(); getEnrolmentsSet().iterator().next().delete()) {
             ;
         }
 
@@ -292,33 +293,34 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             getRoot().delete();
         }
 
-        for (Iterator<NotNeedToEnrollInCurricularCourse> iter = getNotNeedToEnrollCurricularCoursesIterator(); iter.hasNext();) {
+        for (Iterator<NotNeedToEnrollInCurricularCourse> iter = getNotNeedToEnrollCurricularCoursesSet().iterator(); iter
+                .hasNext();) {
             NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = iter.next();
             iter.remove();
-            notNeedToEnrollInCurricularCourse.removeStudentCurricularPlan();
+            notNeedToEnrollInCurricularCourse.setStudentCurricularPlan(null);
             notNeedToEnrollInCurricularCourse.delete();
         }
 
-        for (; !getCreditsInAnySecundaryAreas().isEmpty(); getCreditsInAnySecundaryAreas().get(0).delete()) {
+        for (; !getCreditsInAnySecundaryAreas().isEmpty(); getCreditsInAnySecundaryAreas().iterator().next().delete()) {
             ;
         }
 
-        for (Iterator<CreditsInScientificArea> iter = getCreditsInScientificAreasIterator(); iter.hasNext();) {
+        for (Iterator<CreditsInScientificArea> iter = getCreditsInScientificAreasSet().iterator(); iter.hasNext();) {
             CreditsInScientificArea creditsInScientificArea = iter.next();
             iter.remove();
-            creditsInScientificArea.removeStudentCurricularPlan();
+            creditsInScientificArea.setStudentCurricularPlan(null);
             creditsInScientificArea.delete();
         }
 
-        for (; hasAnyCredits(); getCredits().get(0).delete()) {
+        for (; hasAnyCredits(); getCredits().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyTutorships(); getTutorships().get(0).delete()) {
+        for (; hasAnyTutorships(); getTutorships().iterator().next().delete()) {
             ;
         }
 
-        removeStudent();
-        removeRootDomainObject();
+        setStudent(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }
@@ -520,7 +522,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public void setRegistration(final Registration registration) {
         if (registration != null) {
             if (registration.hasDegree()) {
-                if (!registration.getDegree().hasDegreeCurricularPlans(getDegreeCurricularPlan())) {
+                if (!registration.getDegree().getDegreeCurricularPlansSet().contains(getDegreeCurricularPlan())) {
                     throw new DomainException("error.StudentCurricularPlan.setting.registration.with.different.degree");
                 }
             } else {
@@ -532,7 +534,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean hasRegistration() {
-        return super.hasStudent();
+        return super.getStudent() != null;
     }
 
     public Set<CurriculumLine> getAllCurriculumLines() {
@@ -548,18 +550,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Override
-    final public List<Enrolment> getEnrolments() {
-        return hasRoot() ? getRoot().getEnrolments() : super.getEnrolments();
-    }
-
-    @Override
     final public Set<Enrolment> getEnrolmentsSet() {
         return hasRoot() ? getRoot().getEnrolmentsSet() : super.getEnrolmentsSet();
     }
 
-    @Override
     final public boolean hasAnyEnrolments() {
-        return hasRoot() ? getRoot().hasAnyEnrolments() : super.hasAnyEnrolments();
+        return hasRoot() ? getRoot().hasAnyEnrolments() : !getEnrolmentsSet().isEmpty();
     }
 
     final public boolean hasAnyCurriculumLines() {
@@ -590,9 +586,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return hasEnrolments(executionSemester);
     }
 
-    @Override
     final public boolean hasEnrolments(final Enrolment enrolment) {
-        return hasRoot() ? getRoot().hasCurriculumModule(enrolment) : super.hasEnrolments(enrolment);
+        return hasRoot() ? getRoot().hasCurriculumModule(enrolment) : getEnrolmentsSet().contains(enrolment);
     }
 
     final public boolean hasEnrolments(final ExecutionYear executionYear) {
@@ -622,9 +617,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
-    @Override
     final public int getEnrolmentsCount() {
-        return hasRoot() ? getEnrolmentsSet().size() : super.getEnrolmentsCount();
+        return hasRoot() ? getEnrolmentsSet().size() : super.getEnrolmentsSet().size();
     }
 
     final public int countCurrentEnrolments() {
@@ -1159,16 +1153,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public List<Enrolment> getAllEnrollments() {
         List<Enrolment> allEnrollments = new ArrayList<Enrolment>();
-        addNonInvisibleEnrolments(allEnrollments, getEnrolments());
+        addNonInvisibleEnrolments(allEnrollments, getEnrolmentsSet());
 
         for (final StudentCurricularPlan studentCurricularPlan : getRegistration().getStudentCurricularPlans()) {
-            addNonInvisibleEnrolments(allEnrollments, studentCurricularPlan.getEnrolments());
+            addNonInvisibleEnrolments(allEnrollments, studentCurricularPlan.getEnrolmentsSet());
         }
 
         return allEnrollments;
     }
 
-    private void addNonInvisibleEnrolments(List<Enrolment> allEnrollments, List<Enrolment> enrollmentsToAdd) {
+    private void addNonInvisibleEnrolments(Collection<Enrolment> allEnrollments, Collection<Enrolment> enrollmentsToAdd) {
         for (Enrolment enrolment : enrollmentsToAdd) {
             if (!enrolment.isInvisible()) {
                 allEnrollments.add(enrolment);
@@ -1253,8 +1247,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         int counter = 0;
 
         int size = getDegreeCurricularPlan().getCurricularCourses().size();
-        for (int i = 0; i < size; i++) {
-            CurricularCourse curricularCourse = getDegreeCurricularPlan().getCurricularCourses().get(i);
+        for (CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
             if (isCurricularCourseApproved(curricularCourse)) {
                 counter++;
             }
@@ -1330,7 +1323,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
     }
 
-    private boolean allNotNeedToEnroll(List<CurricularCourse> oldCurricularCourses) {
+    private boolean allNotNeedToEnroll(Collection<CurricularCourse> oldCurricularCourses) {
         for (CurricularCourse course : oldCurricularCourses) {
             if (!notNeedToEnroll(course)) {
                 return false;
@@ -1357,7 +1350,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
-    private boolean allCurricularCoursesInTheList(List<CurricularCourse> oldCurricularCourses, List<CurricularCourse> otherCourses) {
+    private boolean allCurricularCoursesInTheList(Collection<CurricularCourse> oldCurricularCourses,
+            List<CurricularCourse> otherCourses) {
         for (CurricularCourse oldCurricularCourse : oldCurricularCourses) {
             if (!isThisCurricularCoursesInTheList(oldCurricularCourse, otherCourses)
                     && !hasEquivalenceInNotNeedToEnroll(oldCurricularCourse)) {
@@ -2066,10 +2060,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return isBolonhaDegree() ? getRoot().getDegreeModulesToEvaluate(executionSemester) : Collections.EMPTY_SET;
     }
 
-    @Checked("StudentCurricularPlanPredicates.ENROL")
     final public RuleResult enrol(final ExecutionSemester executionSemester,
             final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
             final CurricularRuleLevel curricularRuleLevel) {
+        check(this, StudentCurricularPlanPredicates.ENROL);
 
         final EnrolmentContext enrolmentContext =
                 new EnrolmentContext(this, executionSemester, degreeModulesToEnrol, curriculumModulesToRemove,
@@ -2083,8 +2077,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return enrol(executionSemester, Collections.EMPTY_SET, Collections.EMPTY_LIST, curricularRuleLevel);
     }
 
-    @Checked("StudentCurricularPlanPredicates.ENROL_IN_AFFINITY_CYCLE")
     public void enrolInAffinityCycle(final CycleCourseGroup cycleCourseGroup, final ExecutionSemester executionSemester) {
+        check(this, StudentCurricularPlanPredicates.ENROL_IN_AFFINITY_CYCLE);
         CurriculumGroupFactory.createGroup(getRoot(), cycleCourseGroup, executionSemester);
     }
 
@@ -2135,7 +2129,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 EnrolmentContext.createForNoCourseGroupCurriculumGroupEnrolment(this, bean)).manage();
     }
 
-    @Service
+    @Atomic
     public RuleResult removeCurriculumModulesFromNoCourseGroupCurriculumGroup(final List<CurriculumModule> curriculumModules,
             final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType) {
         final EnrolmentContext context =
@@ -2477,7 +2471,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                         return candidate;
                     }
                 }
-            } else if (this.getPerson().getMasterDegreeCandidatesCount() == 1) {
+            } else if (this.getPerson().getMasterDegreeCandidatesSet().size() == 1) {
                 return this.getPerson().getMasterDegreeCandidates().iterator().next();
             }
         }
@@ -2557,7 +2551,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Tutorship getActiveTutorship() {
-        List<Tutorship> tutorships = getTutorships();
+        Collection<Tutorship> tutorships = getTutorships();
         if (!tutorships.isEmpty() && getLastTutorship().isActive()) {
             return getLastTutorship();
         }
@@ -2587,8 +2581,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return hasRegistration() && getRegistration().getLastStudentCurricularPlan() == this;
     }
 
-    @Checked("StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES")
     public void moveCurriculumLines(final MoveCurriculumLinesBean moveCurriculumLinesBean) {
+        check(this, StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES);
         boolean runRules = false;
         Person responsible = AccessControl.getPerson();
 
@@ -2633,9 +2627,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
     }
 
-    @Checked("StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES_WITHOUT_RULES")
     public void moveCurriculumLinesWithoutRules(final Person responsiblePerson,
             final MoveCurriculumLinesBean moveCurriculumLinesBean) {
+        check(this, StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES_WITHOUT_RULES);
 
         for (final CurriculumLineLocationBean curriculumLineLocationBean : moveCurriculumLinesBean.getCurriculumLineLocations()) {
 
@@ -2837,10 +2831,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Override
-    public List<EnrolmentOutOfPeriodEvent> getEnrolmentOutOfPeriodEvents() {
-        final List<EnrolmentOutOfPeriodEvent> result = new ArrayList<EnrolmentOutOfPeriodEvent>();
+    public Set<EnrolmentOutOfPeriodEvent> getEnrolmentOutOfPeriodEventsSet() {
+        final Set<EnrolmentOutOfPeriodEvent> result = new HashSet<EnrolmentOutOfPeriodEvent>();
 
-        for (final EnrolmentOutOfPeriodEvent each : super.getEnrolmentOutOfPeriodEvents()) {
+        for (final EnrolmentOutOfPeriodEvent each : super.getEnrolmentOutOfPeriodEventsSet()) {
             if (!each.isCancelled()) {
                 result.add(each);
             }
@@ -2953,7 +2947,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return this.getStartExecutionPeriod().isBefore(FENIX_START_DATE_SEMESTER) && !this.isBolonhaDegree();
     }
 
-    @Service
+    @Atomic
     public void setEvaluationsForCurriculumValidation(List<List<MarkSheetEnrolmentEvaluationBean>> enrolmentEvaluationsBeanList) {
         for (List<MarkSheetEnrolmentEvaluationBean> evaluationsList : enrolmentEvaluationsBeanList) {
             setIndividualEvaluationsForCurriculumValidation(evaluationsList);
@@ -2966,8 +2960,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             List<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationsBeanList) {
 
         if (enrolmentEvaluationsBeanList.size() > 0) {
-            Enrolment enrolmentForWeightSet = enrolmentEvaluationsBeanList.get(0).getEnrolment();
-            enrolmentForWeightSet.setWeigth(enrolmentEvaluationsBeanList.get(0).getWeight());
+            Enrolment enrolmentForWeightSet = enrolmentEvaluationsBeanList.iterator().next().getEnrolment();
+            enrolmentForWeightSet.setWeigth(enrolmentEvaluationsBeanList.iterator().next().getWeight());
         }
 
         for (MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean : enrolmentEvaluationsBeanList) {
@@ -2997,7 +2991,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return enrolmentEvaluationsBeanList;
     }
 
-    @Service
+    @Atomic
     public void editEndStageDate(LocalDate date) {
         this.setEndStageDate(date);
     }
@@ -3069,6 +3063,186 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isAllowedToManageAccountingEvents() {
         return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
                 AcademicOperationType.MANAGE_ACCOUNTING_EVENTS).contains(this.getDegree());
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent> getEnrolmentOutOfPeriodEvents() {
+        return getEnrolmentOutOfPeriodEventsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolmentOutOfPeriodEvents() {
+        return !getEnrolmentOutOfPeriodEventsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreeInformations() {
+        return getPrecedentDegreeInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPrecedentDegreeInformations() {
+        return !getPrecedentDegreeInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent> getGratuityEvents() {
+        return getGratuityEventsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGratuityEvents() {
+        return !getGratuityEventsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Tutorship> getTutorships() {
+        return getTutorshipsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTutorships() {
+        return !getTutorshipsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea> getCreditsInAnySecundaryAreas() {
+        return getCreditsInAnySecundaryAreasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCreditsInAnySecundaryAreas() {
+        return !getCreditsInAnySecundaryAreasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse> getNotNeedToEnrollCurricularCourses() {
+        return getNotNeedToEnrollCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNotNeedToEnrollCurricularCourses() {
+        return !getNotNeedToEnrollCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.Credits> getCredits() {
+        return getCreditsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCredits() {
+        return !getCreditsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CreditsInScientificArea> getCreditsInScientificAreas() {
+        return getCreditsInScientificAreasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCreditsInScientificAreas() {
+        return !getCreditsInScientificAreasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegreeInformation> getCandidacyPrecedentDegreeInformations() {
+        return getCandidacyPrecedentDegreeInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidacyPrecedentDegreeInformations() {
+        return !getCandidacyPrecedentDegreeInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.GratuitySituation> getGratuitySituations() {
+        return getGratuitySituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGratuitySituations() {
+        return !getGratuitySituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasBranch() {
+        return getBranch() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMasterDegreeThesis() {
+        return getMasterDegreeThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndStageDate() {
+        return getEndStageDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolledCourses() {
+        return getEnrolledCourses() != null;
+    }
+
+    @Deprecated
+    public boolean hasObservations() {
+        return getObservations() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpecialization() {
+        return getSpecialization() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurrentState() {
+        return getCurrentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmployee() {
+        return getEmployee() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasCompletedCourses() {
+        return getCompletedCourses() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenDateTime() {
+        return getWhenDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasEquivalencePlan() {
+        return getEquivalencePlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoot() {
+        return getRoot() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDateYearMonthDay() {
+        return getStartDateYearMonthDay() != null;
     }
 
 }

@@ -28,7 +28,7 @@ public class SantanderPIN extends SantanderPIN_Base {
     }
 
     public void delete() {
-        removePerson();
+        setPerson(null);
         deleteDomainObject();
     }
 

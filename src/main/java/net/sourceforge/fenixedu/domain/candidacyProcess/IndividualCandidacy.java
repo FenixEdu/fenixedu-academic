@@ -237,7 +237,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
         Degree degree = registration.getDegree();
         ExecutionYear startExecutionYear = registration.getStartExecutionYear();
         ExecutionDegree executionDegree =
-                ExecutionDegree.getAllByDegreeAndExecutionYear(degree, startExecutionYear.getName()).get(0);
+                ExecutionDegree.getAllByDegreeAndExecutionYear(degree, startExecutionYear.getName()).iterator().next();
         StudentCandidacy studentCandidacy = null;
 
         if (registration.getDegree().getDegreeType().isIntegratedMasterDegree()) {
@@ -298,7 +298,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
             return false;
         }
 
-        if ((registrationsFor.size() == 1) && registrationsFor.get(0) == getRegistration()) {
+        if ((registrationsFor.size() == 1) && registrationsFor.iterator().next() == getRegistration()) {
             return false;
         }
 
@@ -511,6 +511,216 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     void editPrecedentDegreeInformation(IndividualCandidacyProcessBean bean) {
         PrecedentDegreeInformationForIndividualCandidacyFactory.edit(bean);
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.Formation> getFormations() {
+        return getFormationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFormations() {
+        return !getFormationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile> getDocuments() {
+        return getDocumentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDocuments() {
+        return !getDocumentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGrade> getIndividualCandidacySeriesGrade() {
+        return getIndividualCandidacySeriesGradeSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyIndividualCandidacySeriesGrade() {
+        return !getIndividualCandidacySeriesGradeSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasHighSchoolType() {
+        return getHighSchoolType() != null;
+    }
+
+    @Deprecated
+    public boolean hasMotherSchoolLevel() {
+        return getMotherSchoolLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrantOwnerType() {
+        return getGrantOwnerType() != null;
+    }
+
+    @Deprecated
+    public boolean hasDistrictSubdivisionOfResidence() {
+        return getDistrictSubdivisionOfResidence() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyDate() {
+        return getCandidacyDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasFatherProfessionType() {
+        return getFatherProfessionType() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCondition() {
+        return getProfessionalCondition() != null;
+    }
+
+    @Deprecated
+    public boolean hasMotherProfessionType() {
+        return getMotherProfessionType() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyProcess() {
+        return getCandidacyProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrantOwnerProvider() {
+        return getGrantOwnerProvider() != null;
+    }
+
+    @Deprecated
+    public boolean hasUtlStudent() {
+        return getUtlStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaritalStatus() {
+        return getMaritalStatus() != null;
+    }
+
+    @Deprecated
+    public boolean hasFatherProfessionalCondition() {
+        return getFatherProfessionalCondition() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpouseSchoolLevel() {
+        return getSpouseSchoolLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpouseProfessionType() {
+        return getSpouseProfessionType() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsible() {
+        return getResponsible() != null;
+    }
+
+    @Deprecated
+    public boolean hasFatherSchoolLevel() {
+        return getFatherSchoolLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasSchoolTimeDistrictSubDivisionOfResidence() {
+        return getSchoolTimeDistrictSubDivisionOfResidence() != null;
+    }
+
+    @Deprecated
+    public boolean hasCountryOfResidence() {
+        return getCountryOfResidence() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvent() {
+        return getEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasFormerStudentNumber() {
+        return getFormerStudentNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasDislocatedFromPermanentResidence() {
+        return getDislocatedFromPermanentResidence() != null;
+    }
+
+    @Deprecated
+    public boolean hasObservations() {
+        return getObservations() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpouseProfessionalCondition() {
+        return getSpouseProfessionalCondition() != null;
+    }
+
+    @Deprecated
+    public boolean hasNotes() {
+        return getNotes() != null;
+    }
+
+    @Deprecated
+    public boolean hasRefactoredPrecedentDegreeInformation() {
+        return getRefactoredPrecedentDegreeInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfFlunksOnHighSchool() {
+        return getNumberOfFlunksOnHighSchool() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrecedentDegreeInformation() {
+        return getPrecedentDegreeInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonalDetails() {
+        return getPersonalDetails() != null;
+    }
+
+    @Deprecated
+    public boolean hasMotherProfessionalCondition() {
+        return getMotherProfessionalCondition() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionType() {
+        return getProfessionType() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfCandidaciesToHigherSchool() {
+        return getNumberOfCandidaciesToHigherSchool() != null;
     }
 
 }

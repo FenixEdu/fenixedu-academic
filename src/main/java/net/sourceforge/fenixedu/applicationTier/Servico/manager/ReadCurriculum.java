@@ -9,9 +9,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricularCourseAndInfoDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -19,14 +20,14 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadCurriculum {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static InfoCurriculum run(String curricularCourseId) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         CurricularCourse curricularCourse;
         Curriculum curriculum;
 
-        curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
+        curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }

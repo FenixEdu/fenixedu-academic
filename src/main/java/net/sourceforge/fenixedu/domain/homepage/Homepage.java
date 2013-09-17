@@ -103,7 +103,7 @@ public class Homepage extends Homepage_Base {
 
     @Override
     protected void disconnect() {
-        removePerson();
+        setPerson(null);
         super.disconnect();
     }
 
@@ -120,6 +120,116 @@ public class Homepage extends Homepage_Base {
     public void setNormalizedName(final MultiLanguageString normalizedName) {
         // unable to optimize because we cannot track changes to name correctly.
         // don't call super.setNormalizedName() !
+    }
+
+    @Deprecated
+    public boolean hasResearchUnitHomepage() {
+        return getResearchUnitHomepage() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowInterests() {
+        return getShowInterests() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowPublications() {
+        return getShowPublications() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowWorkTelephone() {
+        return getShowWorkTelephone() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowCategory() {
+        return getShowCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasActivated() {
+        return getActivated() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowPhoto() {
+        return getShowPhoto() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowResearchUnitHomepage() {
+        return getShowResearchUnitHomepage() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowPrizes() {
+        return getShowPrizes() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowUnit() {
+        return getShowUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowTelephone() {
+        return getShowTelephone() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowPatents() {
+        return getShowPatents() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowAlumniDegrees() {
+        return getShowAlumniDegrees() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowCurrentAttendingExecutionCourses() {
+        return getShowCurrentAttendingExecutionCourses() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowAlternativeHomepage() {
+        return getShowAlternativeHomepage() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowCurrentExecutionCourses() {
+        return getShowCurrentExecutionCourses() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowEmail() {
+        return getShowEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowMobileTelephone() {
+        return getShowMobileTelephone() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowActiveStudentCurricularPlans() {
+        return getShowActiveStudentCurricularPlans() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowParticipations() {
+        return getShowParticipations() != null;
+    }
+
+    @Deprecated
+    public boolean hasResearchUnit() {
+        return getResearchUnit() != null;
     }
 
 }

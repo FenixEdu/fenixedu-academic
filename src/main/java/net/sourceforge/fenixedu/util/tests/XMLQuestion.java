@@ -186,7 +186,7 @@ public class XMLQuestion extends FenixUtil {
             String thisResponse = (String) allOptions.get(i);
             ResponseProcessing newRp =
                     new ResponseProcessing(new ArrayList(), rp.getResponseValue(), rp.getAction(), null, false);
-            if (!(thisResponse.equals((rp.getResponseConditions().get(0)).getResponse()))) {
+            if (!(thisResponse.equals((rp.getResponseConditions().iterator().next()).getResponse()))) {
                 newRp.getResponseConditions()
                         .add(new ResponseCondition(ResponseCondition.VAREQUAL_XML_STRING, thisResponse, "1"));
                 all.add(newRp);

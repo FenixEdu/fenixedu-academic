@@ -58,7 +58,7 @@ public class GradesToSubmitExecutionCourseSendMailBean implements Serializable {
     }
 
     public int getNumberOfEnroledStudents() {
-        return executionCourse.getAttendsCount();
+        return executionCourse.getAttends().size();
     }
 
     public int getNumberOfStudentsWithoutGrade() {

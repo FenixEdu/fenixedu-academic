@@ -5,7 +5,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class AccountingTransactionDetail extends AccountingTransactionDetail_Base {
 
@@ -59,15 +60,45 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
         throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.transaction");
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     void delete() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setTransaction(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     public Event getEvent() {
         return getTransaction().getEvent();
+    }
+
+    @Deprecated
+    public boolean hasPaymentMode() {
+        return getPaymentMode() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenProcessed() {
+        return getWhenProcessed() != null;
+    }
+
+    @Deprecated
+    public boolean hasComments() {
+        return getComments() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTransaction() {
+        return getTransaction() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenRegistered() {
+        return getWhenRegistered() != null;
     }
 
 }

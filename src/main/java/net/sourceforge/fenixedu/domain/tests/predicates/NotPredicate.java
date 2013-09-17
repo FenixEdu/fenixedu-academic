@@ -13,7 +13,7 @@ public class NotPredicate extends CompositePredicate implements Predicate {
 
     @Override
     public boolean evaluate(NewQuestion question, Person person) {
-        return !getPredicates().get(0).evaluate(question, person);
+        return !getPredicates().iterator().next().evaluate(question, person);
     }
 
     @Override

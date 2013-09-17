@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.en
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteExternalEnrolments {
 
-    @Service
+    @Atomic
     public static void run(final Registration registration, String[] externalEnrolmentIDs) throws FenixServiceException {
         for (final String externalEnrolmentID : externalEnrolmentIDs) {
             final ExternalEnrolment externalEnrolment = getExternalEnrolmentByID(registration, externalEnrolmentID);

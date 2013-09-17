@@ -19,7 +19,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -72,7 +72,7 @@ public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
         }
 
         try {
-            return (Unit) AbstractDomainObject.fromExternalId(parameter);
+            return (Unit) FenixFramework.getDomainObject(parameter);
         } catch (NumberFormatException e) {
             return null;
         }

@@ -133,4 +133,49 @@ public class Role extends Role_Base implements Comparable {
         return roleOperationLogList;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getAssociatedPersons() {
+        return getAssociatedPersonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedPersons() {
+        return !getAssociatedPersonsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.RoleOperationLog> getRoleOperationLog() {
+        return getRoleOperationLogSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRoleOperationLog() {
+        return !getRoleOperationLogSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPage() {
+        return getPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoleType() {
+        return getRoleType() != null;
+    }
+
+    @Deprecated
+    public boolean hasPortalSubApplication() {
+        return getPortalSubApplication() != null;
+    }
+
+    @Deprecated
+    public boolean hasPageNameProperty() {
+        return getPageNameProperty() != null;
+    }
+
 }

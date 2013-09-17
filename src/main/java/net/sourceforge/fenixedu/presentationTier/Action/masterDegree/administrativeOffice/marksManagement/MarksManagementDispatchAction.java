@@ -132,7 +132,7 @@ public class MarksManagementDispatchAction extends FenixDispatchAction {
             return chooseCurricularCourses(mapping, form, request, response);
         }
 
-        InfoEnrolment oneInfoEnrollment = (InfoEnrolment) listEnrolmentEvaluation.get(0);
+        InfoEnrolment oneInfoEnrollment = (InfoEnrolment) listEnrolmentEvaluation.iterator().next();
         request.setAttribute("oneInfoEnrollment", oneInfoEnrollment);
 
         return mapping.findForward("showMarksManagementMenu");

@@ -52,12 +52,12 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -227,7 +227,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         return listScientificComission(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     public void removeScientificCommissionFromExecutionDegree(ScientificCommission scientificCommission,
             ExecutionDegree executionDegree) {
         scientificCommission.delete();
@@ -237,7 +237,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
             HttpServletResponse response) throws Exception {
         VariantBean bean = getRenderedObject("usernameChoice");
         if (bean != null) {
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(request.getParameter("executionDegreeID"));
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(request.getParameter("executionDegreeID"));
             Employee employee = Employee.readByNumber(bean.getInteger());
             if (employee == null || executionDegree.isPersonInScientificCommission(employee.getPerson())) {
                 addActionMessage("addError", request, "error.scientificComission.employee");
@@ -249,7 +249,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         return listScientificComission(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     public void addScientificCommissionFromExecutionDegree(ExecutionDegree executionDegree, Person person) {
         new ScientificCommission(executionDegree, person);
     }
@@ -360,7 +360,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         return viewThesis(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     public ActionForward changeThesisFilesVisibility(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         getThesis(request).swapFilesVisibility();
@@ -516,13 +516,13 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
                     executionYear = ExecutionYear.readCurrentExecutionYear();
                 }
             } else {
-                executionYear = AbstractDomainObject.fromExternalId(executionYearIdString);
+                executionYear = FenixFramework.getDomainObject(executionYearIdString);
             }
             thesisCreationPeriodFactoryExecutor.setExecutionYear(executionYear);
 
             final String executionDegreeIdString = request.getParameter("executionDegreeId");
             if (executionDegreeIdString != null) {
-                final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeIdString);
+                final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeIdString);
                 thesisCreationPeriodFactoryExecutor.setExecutionDegree(executionDegree);
             }
         }
@@ -587,7 +587,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
     public ActionForward downloadDissertationsList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String executionYearIdString = request.getParameter("executionYearId");
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearIdString);
+        final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearIdString);
 
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-disposition", "attachment; filename=dissertacoes" + executionYear.getYear().replace("/", "")

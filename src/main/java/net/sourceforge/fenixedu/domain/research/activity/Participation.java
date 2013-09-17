@@ -22,7 +22,7 @@ public abstract class Participation extends Participation_Base {
     public void delete() {
         super.setParty(null);
         super.setRole(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -155,6 +155,26 @@ public abstract class Participation extends Participation_Base {
 
             return eventEditionRoles;
         }
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoleMessage() {
+        return getRoleMessage() != null;
+    }
+
+    @Deprecated
+    public boolean hasRole() {
+        return getRole() != null;
     }
 
 }

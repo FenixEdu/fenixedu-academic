@@ -25,7 +25,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
@@ -34,7 +34,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
         private int maxElements = 0;
 
-        private Comparator<Announcement> comparator;
+        private final Comparator<Announcement> comparator;
 
         public AnnouncementPresentationBean(final int maxElements, final Comparator<Announcement> comparator) {
             super(comparator);
@@ -455,7 +455,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
         return actionPath.toString();
     }
 
-    @Service
+    @Atomic
     public FileContent addFileToBoard(String fileName, byte[] content, String creatorName) {
         return new PublicBoardFileContent(fileName, content, creatorName, this);
     }
@@ -477,6 +477,41 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
             }
         }
         return null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getBookmarkOwner() {
+        return getBookmarkOwnerSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyBookmarkOwner() {
+        return !getBookmarkOwnerSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasWriters() {
+        return getWriters() != null;
+    }
+
+    @Deprecated
+    public boolean hasManagers() {
+        return getManagers() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovers() {
+        return getApprovers() != null;
+    }
+
+    @Deprecated
+    public boolean hasReaders() {
+        return getReaders() != null;
+    }
+
+    @Deprecated
+    public boolean hasMandatory() {
+        return getMandatory() != null;
     }
 
 }

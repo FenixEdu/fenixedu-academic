@@ -152,4 +152,189 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
         setCompanySocialOrgans(infoTeacherPersonalExpectation.getCompanySocialOrgans());
         setCompanyPositions(infoTeacherPersonalExpectation.getCompanyPositions());
     }
+    @Deprecated
+    public boolean hasGraduationsDescription() {
+        return getGraduationsDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasOrientationsMainFocus() {
+        return getOrientationsMainFocus() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTutorComment() {
+        return getTutorComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasCientificPosGraduationsDescription() {
+        return getCientificPosGraduationsDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasPatentPublications() {
+        return getPatentPublications() != null;
+    }
+
+    @Deprecated
+    public boolean hasEducationMainFocus() {
+        return getEducationMainFocus() != null;
+    }
+
+    @Deprecated
+    public boolean hasMasterDegreeOrientations() {
+        return getMasterDegreeOrientations() != null;
+    }
+
+    @Deprecated
+    public boolean hasUniversityOrgans() {
+        return getUniversityOrgans() != null;
+    }
+
+    @Deprecated
+    public boolean hasSocietyService() {
+        return getSocietyService() != null;
+    }
+
+    @Deprecated
+    public boolean hasResearchAndDevProjects() {
+        return getResearchAndDevProjects() != null;
+    }
+
+    @Deprecated
+    public boolean hasConsulting() {
+        return getConsulting() != null;
+    }
+
+    @Deprecated
+    public boolean hasCientificPosGraduations() {
+        return getCientificPosGraduations() != null;
+    }
+
+    @Deprecated
+    public boolean hasResearchAndDevMainFocus() {
+        return getResearchAndDevMainFocus() != null;
+    }
+
+    @Deprecated
+    public boolean hasConferencePublications() {
+        return getConferencePublications() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalDegreeWorkOrientations() {
+        return getFinalDegreeWorkOrientations() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeminariesDescription() {
+        return getSeminariesDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalPosGraduations() {
+        return getProfessionalPosGraduations() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasJornalArticlePublications() {
+        return getJornalArticlePublications() != null;
+    }
+
+    @Deprecated
+    public boolean hasDepartmentOrgans() {
+        return getDepartmentOrgans() != null;
+    }
+
+    @Deprecated
+    public boolean hasBookPublications() {
+        return getBookPublications() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdOrientations() {
+        return getPhdOrientations() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalPosGraduationsDescription() {
+        return getProfessionalPosGraduationsDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasAutoEvaluation() {
+        return getAutoEvaluation() != null;
+    }
+
+    @Deprecated
+    public boolean hasTechnicalReportPublications() {
+        return getTechnicalReportPublications() != null;
+    }
+
+    @Deprecated
+    public boolean hasCompanyPositions() {
+        return getCompanyPositions() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeminaries() {
+        return getSeminaries() != null;
+    }
+
+    @Deprecated
+    public boolean hasOtherPublicationsDescription() {
+        return getOtherPublicationsDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasCientificComunityService() {
+        return getCientificComunityService() != null;
+    }
+
+    @Deprecated
+    public boolean hasGraduations() {
+        return getGraduations() != null;
+    }
+
+    @Deprecated
+    public boolean hasCompanySocialOrgans() {
+        return getCompanySocialOrgans() != null;
+    }
+
+    @Deprecated
+    public boolean hasOtherPublications() {
+        return getOtherPublications() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitutionOrgans() {
+        return getInstitutionOrgans() != null;
+    }
+
+    @Deprecated
+    public boolean hasUniversityServiceMainFocus() {
+        return getUniversityServiceMainFocus() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalActivityMainFocus() {
+        return getProfessionalActivityMainFocus() != null;
+    }
+
 }

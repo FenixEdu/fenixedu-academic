@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdAcademicServiceRequestBean implements Serializable, IPhdAcademicServiceRequest {
 
@@ -56,7 +56,7 @@ public class PhdAcademicServiceRequestBean implements Serializable, IPhdAcademic
         this.justification = justification;
     }
 
-    @Service
+    @Atomic
     public void handleNewSituation() {
 
         switch (getSituationType()) {

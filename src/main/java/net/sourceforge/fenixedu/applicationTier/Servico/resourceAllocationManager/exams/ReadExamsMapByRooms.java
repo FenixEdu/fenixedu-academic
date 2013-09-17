@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -26,12 +27,12 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExamsMapByRooms {
 
-    @Service
+    @Atomic
     public static List<InfoRoomExamsMap> run(InfoExecutionPeriod infoExecutionPeriod, List<InfoRoom> infoRooms) throws Exception {
         final List<InfoRoomExamsMap> infoRoomExamMapList = new ArrayList<InfoRoomExamsMap>();
 
@@ -48,8 +49,7 @@ public class ReadExamsMapByRooms {
             startSeason1.add(Calendar.DATE, shiftDays);
         }
 
-        final ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
 
         for (final InfoRoom infoRoom : infoRooms) {
             final InfoRoomExamsMap infoRoomExamsMap = new InfoRoomExamsMap();
@@ -76,11 +76,11 @@ public class ReadExamsMapByRooms {
 
     private static List<InfoExam> getInfoExams(final InfoRoom infoRoom, final ExecutionSemester executionSemester) {
         final List<InfoExam> result = new ArrayList<InfoExam>();
-        final AllocatableSpace oldRoom = (AllocatableSpace) AbstractDomainObject.fromExternalId(infoRoom.getExternalId());
-        for (final ResourceAllocation roomOccupation : oldRoom.getResourceAllocations()) {
+        final AllocatableSpace oldRoom = (AllocatableSpace) FenixFramework.getDomainObject(infoRoom.getExternalId());
+        for (final ResourceAllocation roomOccupation : oldRoom.getResourceAllocationsSet()) {
             if (roomOccupation.isWrittenEvaluationSpaceOccupation()) {
-                List<WrittenEvaluation> writtenEvaluations =
-                        ((WrittenEvaluationSpaceOccupation) roomOccupation).getWrittenEvaluations();
+                Collection<WrittenEvaluation> writtenEvaluations =
+                        ((WrittenEvaluationSpaceOccupation) roomOccupation).getWrittenEvaluationsSet();
                 for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
                     if (writtenEvaluation instanceof Exam) {
                         final Exam exam = (Exam) writtenEvaluation;
@@ -90,7 +90,7 @@ public class ReadExamsMapByRooms {
                         if (executionCourse != null && executionSemester == executionCourse.getExecutionPeriod()) {
                             InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
                             infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
-                                    .getAssociatedExecutionCourses().get(0)));
+                                    .getAssociatedExecutionCourses().iterator().next()));
                             result.add(infoExam);
                         }
                     }
@@ -106,7 +106,7 @@ public class ReadExamsMapByRooms {
     // InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
     // // Use one execution course
     // infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
-    // .getAssociatedExecutionCourses().get(0)));
+    // .getAssociatedExecutionCourses().iterator().next()));
     // result.add(infoExam);
     // }
     // return result;
@@ -115,7 +115,7 @@ public class ReadExamsMapByRooms {
     private static InfoPeriod calculateExamsSeason(final String year, final int semester) {
 
         ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
-        final List<ExecutionDegree> executionDegreesList = executionYear.getExecutionDegrees();
+        final Collection<ExecutionDegree> executionDegreesList = executionYear.getExecutionDegreesSet();
 
         Calendar startSeason1 = null, endSeason2 = null;
         Calendar startExams, endExams;

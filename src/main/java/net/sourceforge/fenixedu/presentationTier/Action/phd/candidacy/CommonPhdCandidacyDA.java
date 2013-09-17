@@ -104,7 +104,7 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 
         } catch (DomainException e) {
             addErrorMessage(request, e.getKey(), e.getArgs());
-            bean.removeFile();
+            bean.setFile(null);
             return uploadCandidacyReviewInvalid(mapping, actionForm, request, response);
         }
 

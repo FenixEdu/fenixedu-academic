@@ -47,6 +47,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @Mapping(path = "/phdIndividualProgramProcess", module = "coordinator",
@@ -314,7 +315,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         final PhdProgramEmailBean bean = new PhdProgramEmailBean();
         List<PhdProgram> coordinatedPrograms = getCoordinatedPhdPrograms();
         if (coordinatedPrograms.size() == 1) {
-            bean.setPhdProgram(coordinatedPrograms.get(0));
+            bean.setPhdProgram(coordinatedPrograms.iterator().next());
             bean.setShowProgramsChoice(false);
         }
 
@@ -423,7 +424,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         }
 
         for (String externalId : actionForm.getSelectedProcesses()) {
-            processList.add((PhdIndividualProgramProcess) PhdIndividualProgramProcess.fromExternalId(externalId));
+            processList.add((PhdIndividualProgramProcess) FenixFramework.getDomainObject(externalId));
         }
 
         return processList;

@@ -104,8 +104,8 @@ public class LoginRequestBean implements Serializable {
     public void setPerson(Person person) {
         this.person = person;
         this.name = person.getName();
-        this.documentIDNumber = person.getIdDocuments().get(0).getValue();
-        this.documentType = person.getIdDocuments().get(0).getIdDocumentType().getValue();
+        this.documentIDNumber = person.getIdDocuments().iterator().next().getValue();
+        this.documentType = person.getIdDocuments().iterator().next().getIdDocumentType().getValue();
         this.email = person.getEmail();
         this.gender = null;
         this.username = person.getUser().readUserLoginIdentification().getUsername();

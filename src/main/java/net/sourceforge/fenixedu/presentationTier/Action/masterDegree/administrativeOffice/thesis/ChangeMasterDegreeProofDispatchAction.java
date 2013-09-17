@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class ChangeMasterDegreeProofDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         final String scpID = request.getParameter("scpID");
-        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
+        StudentCurricularPlan studentCurricularPlan = FenixFramework.getDomainObject(scpID);
 
         new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
                 studentCurricularPlan);
@@ -124,7 +124,7 @@ public class ChangeMasterDegreeProofDispatchAction extends FenixDispatchAction {
 
     private void checkGratuityIsPayed(ActionMapping mapping, StudentCurricularPlan studentCurricularPlan)
             throws GratuitySituationNotRegularizedActionException {
-        List<GratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
+        Collection<GratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
         for (final GratuitySituation situation : gratuitySituations) {
             if (situation.getRemainingValue().doubleValue() > 0) {
                 throw new GratuitySituationNotRegularizedActionException("error.exception.masterDegree.gratuityNotRegularized",

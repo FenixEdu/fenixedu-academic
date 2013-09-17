@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -21,12 +21,12 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID {
 
     public List<Teacher> run(String departmentID, String executionYearID) throws FenixServiceException {
-        Department department = AbstractDomainObject.fromExternalId(departmentID);
+        Department department = FenixFramework.getDomainObject(departmentID);
 
         List<Teacher> teachersFromDepartment = new ArrayList<Teacher>();
 
         if (executionYearID != null) {
-            ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+            ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
 
             teachersFromDepartment =
                     department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
@@ -43,7 +43,7 @@ public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID {
     private static final ReadDepartmentTeachersByDepartmentIDAndExecutionYearID serviceInstance =
             new ReadDepartmentTeachersByDepartmentIDAndExecutionYearID();
 
-    @Service
+    @Atomic
     public static List<Teacher> runReadDepartmentTeachersByDepartmentIDAndExecutionYearID(String departmentID,
             String executionYearID) throws FenixServiceException, NotAuthorizedException {
         try {

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 /**
@@ -21,7 +21,7 @@ public class DeleteFileContent {
 
     private static final DeleteFileContent serviceInstance = new DeleteFileContent();
 
-    @Service
+    @Atomic
     public static void runDeleteFileContent(FileContent fileContent) throws FenixServiceException, DomainException, FileManagerException  , NotAuthorizedException {
         DeleteFileContentFilter.instance.execute(fileContent);
         serviceInstance.run(fileContent);

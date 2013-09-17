@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +29,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author João Mota
@@ -74,7 +75,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return professorShip;
     }
 
-    @Service
+    @Atomic
     public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse, Person person, Double hours)
             throws MaxResponsibleForExceed, InvalidCategory {
 
@@ -116,13 +117,13 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
             ProfessorshipManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
                     "log.executionCourse.professorship.removed", getPerson().getPresentationName(), getExecutionCourse()
                             .getNome(), getExecutionCourse().getDegreePresentationString());
-            removeExecutionCourse();
-            removePerson();
+            setExecutionCourse(null);
+            setPerson(null);
             if (super.getPermissions() != null) {
                 getPermissions().delete();
             }
-            removeRootDomainObject();
-            removeCreator();
+            setRootDomainObject(null);
+            setCreator(null);
             deleteDomainObject();
         }
     }
@@ -319,7 +320,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public void removeTeacher() {
-        removePerson();
+        setPerson(null);
     }
 
     public String getDegreeSiglas() {
@@ -349,7 +350,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public boolean hasMandatoryCommentsToMake() {
-        List<InquiryResult> inquiryResults = getInquiryResults();
+        Collection<InquiryResult> inquiryResults = getInquiryResults();
         for (InquiryResult inquiryResult : inquiryResults) {
             if (inquiryResult.getResultClassification() != null) {
                 if (inquiryResult.getResultClassification().isMandatoryComment()
@@ -367,7 +368,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public boolean hasMandatoryCommentsToMakeAsResponsible() {
         for (Professorship professorship : getExecutionCourse().getProfessorships()) {
-            List<InquiryResult> inquiryResults = professorship.getInquiryResults();
+            Collection<InquiryResult> inquiryResults = professorship.getInquiryResults();
             for (InquiryResult inquiryResult : inquiryResults) {
                 if (inquiryResult.getResultClassification() != null) {
                     if (inquiryResult.getResultClassification().isMandatoryComment()
@@ -398,7 +399,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return false;
     }
 
-    @Service
+    @Atomic
     public Boolean deleteInquiryResults() {
         boolean deletedResults = false;
         for (InquiryResult inquiryResult : getInquiryResultsSet()) {
@@ -408,7 +409,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return deletedResults;
     }
 
-    @Service
+    @Atomic
     public Boolean deleteInquiryResults(ShiftType shiftType, InquiryQuestion inquiryQuestion) {
         boolean deletedResults = false;
         for (InquiryResult inquiryResult : getInquiryResults(shiftType)) {
@@ -423,14 +424,184 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     public int getDegreeTeachingServiceLessonRows() {
         int lessonNumber = 0;
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
-            int associatedLessonsCount = degreeTeachingService.getShift().getAssociatedLessonsCount();
+            int associatedLessonsCount = degreeTeachingService.getShift().getAssociatedLessonsSet().size();
             if (associatedLessonsCount == 0) {
                 lessonNumber += 1;
             }
             lessonNumber += associatedLessonsCount;
         }
-        lessonNumber += getSupportLessonsCount();
+        lessonNumber += getSupportLessonsSet().size();
         return lessonNumber;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryStudentTeacherAnswer> getInquiryStudentTeacherAnswers() {
+        return getInquiryStudentTeacherAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryStudentTeacherAnswers() {
+        return !getInquiryStudentTeacherAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.NonRegularTeachingService> getNonRegularTeachingServices() {
+        return getNonRegularTeachingServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNonRegularTeachingServices() {
+        return !getNonRegularTeachingServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService> getDegreeProjectTutorialServices() {
+        return getDegreeProjectTutorialServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeProjectTutorialServices() {
+        return !getDegreeProjectTutorialServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection> getDegreeTeachingServiceCorrections() {
+        return getDegreeTeachingServiceCorrectionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeTeachingServiceCorrections() {
+        return !getDegreeTeachingServiceCorrectionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
+        return getAssociatedSummariesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedSummaries() {
+        return !getAssociatedSummariesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService> getTeacherMasterDegreeServices() {
+        return getTeacherMasterDegreeServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherMasterDegreeServices() {
+        return !getTeacherMasterDegreeServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResult> getInquiryResults() {
+        return getInquiryResultsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryResults() {
+        return !getInquiryResultsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult> getStudentInquiriesTeachingResults() {
+        return getStudentInquiriesTeachingResultsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentInquiriesTeachingResults() {
+        return !getStudentInquiriesTeachingResultsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ShiftProfessorship> getAssociatedShiftProfessorship() {
+        return getAssociatedShiftProfessorshipSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedShiftProfessorship() {
+        return !getAssociatedShiftProfessorshipSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesTeacher> getAssociatedInquiriesTeacher() {
+        return getAssociatedInquiriesTeacherSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedInquiriesTeacher() {
+        return !getAssociatedInquiriesTeacherSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.SupportLesson> getSupportLessons() {
+        return getSupportLessonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySupportLessons() {
+        return !getSupportLessonsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService> getDegreeTeachingServices() {
+        return getDegreeTeachingServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeTeachingServices() {
+        return !getDegreeTeachingServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasInquiryRegentAnswer() {
+        return getInquiryRegentAnswer() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryTeacherAnswer() {
+        return getInquiryTeacherAnswer() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasHours() {
+        return getHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeachingInquiry() {
+        return getTeachingInquiry() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsibleFor() {
+        return getResponsibleFor() != null;
+    }
+
+    @Deprecated
+    public boolean hasPermissions() {
+        return getPermissions() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

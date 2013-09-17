@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +38,7 @@ public class DepartmentTeacherDetailsBean extends GlobalCommentsResultsBean {
         setTeachersResultsToImproveMap(new HashMap<Professorship, List<TeacherShiftTypeResultsBean>>());
         for (Professorship teacherProfessorship : getProfessorships()) {
             ArrayList<TeacherShiftTypeResultsBean> teachersResults = new ArrayList<TeacherShiftTypeResultsBean>();
-            List<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
+            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                     List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);

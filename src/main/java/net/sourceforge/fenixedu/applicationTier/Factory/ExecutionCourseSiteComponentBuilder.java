@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -45,7 +46,7 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -93,7 +94,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
     private ISiteComponent getInfoSiteEvaluations(InfoSiteEvaluations component, ExecutionCourseSite site) {
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        List<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
+        Collection<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
         component.setEvaluations(evaluations);
         return component;
     }
@@ -102,7 +103,7 @@ public class ExecutionCourseSiteComponentBuilder {
         final Integer evaluationID = component.getEvaluationID();
 
         final ExecutionCourse executionCourse = site.getExecutionCourse();
-        final List<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
+        final Collection<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
         for (final Evaluation evaluation : evaluations) {
             if (evaluationID.equals(evaluation.getExternalId())) {
                 component.setEvaluation(evaluation);
@@ -156,7 +157,7 @@ public class ExecutionCourseSiteComponentBuilder {
         final InfoSection infoSection = (InfoSection) commonComponent.getSections().get(sectionIndex.intValue());
         component.setSection(infoSection);
 
-        final Section section = (Section) AbstractDomainObject.fromExternalId(infoSection.getExternalId());
+        final Section section = (Section) FenixFramework.getDomainObject(infoSection.getExternalId());
 
         final List<InfoItem> infoItemsList = new ArrayList<InfoItem>(section.getAssociatedItemsCount());
         for (final Item item : section.getAssociatedItems()) {
@@ -177,9 +178,9 @@ public class ExecutionCourseSiteComponentBuilder {
         Set<Shift> shifts = disciplinaExecucao.getAssociatedShifts();
 
         for (final Shift shift : shifts) {
-            List<Lesson> lessons = shift.getAssociatedLessons();
+            Collection<Lesson> lessons = shift.getAssociatedLessons();
             List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(lessons.size());
-            List<SchoolClass> classesShifts = shift.getAssociatedClasses();
+            Collection<SchoolClass> classesShifts = shift.getAssociatedClasses();
             List<InfoClass> infoClasses = new ArrayList<InfoClass>(classesShifts.size());
 
             for (final Lesson lesson : lessons) {
@@ -214,7 +215,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
         Set<Shift> shifts = executionCourse.getAssociatedShifts();
         for (Shift shift : shifts) {
-            List aulasTemp = shift.getAssociatedLessons();
+            Collection aulasTemp = shift.getAssociatedLessons();
             aulas.addAll(aulasTemp);
         }
 
@@ -269,7 +270,7 @@ public class ExecutionCourseSiteComponentBuilder {
     }
 
     private List<InfoTeacher> readLecturingTeachers(ExecutionCourse executionCourse) {
-        List domainLecturingTeachersList = executionCourse.getProfessorships();
+        Collection domainLecturingTeachersList = executionCourse.getProfessorships();
 
         List<InfoTeacher> lecturingInfoTeachersList = new ArrayList<InfoTeacher>();
         if (domainLecturingTeachersList != null) {
@@ -306,13 +307,11 @@ public class ExecutionCourseSiteComponentBuilder {
     private List<InfoCurricularCourse> readCurricularCourses(ExecutionCourse executionCourse) {
         List<InfoCurricularCourseScope> infoCurricularCourseScopeList;
         List<InfoCurricularCourse> infoCurricularCourseList = new ArrayList<InfoCurricularCourse>();
-        if (executionCourse.getAssociatedCurricularCourses() != null) {
-            for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-                CurricularCourse curricularCourse = executionCourse.getAssociatedCurricularCourses().get(i);
+        if (executionCourse.getAssociatedCurricularCoursesSet() != null) {
+            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                 InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
                 infoCurricularCourseScopeList = new ArrayList<InfoCurricularCourseScope>();
-                for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
-                    CurricularCourseScope curricularCourseScope = curricularCourse.getScopes().get(j);
+                for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
                     InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
                     infoCurricularCourseScopeList.add(infoCurricularCourseScope);
                 }
@@ -330,7 +329,7 @@ public class ExecutionCourseSiteComponentBuilder {
      * first page).
      */
     private List<InfoCurricularCourse> readCurricularCoursesOrganizedByDegree(ExecutionCourse executionCourse) {
-        final List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        final Collection curricularCourses = executionCourse.getAssociatedCurricularCourses();
         final int estimatedResultSize = curricularCourses.size();
 
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(estimatedResultSize);
@@ -391,7 +390,7 @@ public class ExecutionCourseSiteComponentBuilder {
         // String sigla = ((InfoDegree) ((InfoDegreeCurricularPlan)
         // ((InfoCurricularCourse)
         // ((List)
-        // infoCurricularCourseList.get(k)).get(0)).getInfoDegreeCurricularPlan()
+        // infoCurricularCourseList.get(k)).iterator().next()).getInfoDegreeCurricularPlan()
         // ).getInfoDegree()).getSigla();
         // if (sigla.equals(currentSigla)) {
         // ((List)infoCurricularCourseList.get(k)).add(infoCurricularCourse);

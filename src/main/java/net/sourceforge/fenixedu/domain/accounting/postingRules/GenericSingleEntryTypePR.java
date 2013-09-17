@@ -53,4 +53,9 @@ public abstract class GenericSingleEntryTypePR extends GenericSingleEntryTypePR_
                 transactionDetailDTO);
     }
 
+    @Deprecated
+    public boolean hasEntryType() {
+        return getEntryType() != null;
+    }
+
 }

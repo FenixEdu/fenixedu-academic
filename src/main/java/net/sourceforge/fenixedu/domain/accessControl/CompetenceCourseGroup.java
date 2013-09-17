@@ -59,7 +59,7 @@ public class CompetenceCourseGroup extends ExecutionCourseGroup {
             final Set<CompetenceCourse> competenceCourses = getExecutionCourse().getCompetenceCourses();
             for (final Registration registration : person.getStudent().getRegistrationsSet()) {
                 for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-                    for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+                    for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
                         final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
                         if (curricularCourse.hasCompetenceCourse()) {
                             final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();

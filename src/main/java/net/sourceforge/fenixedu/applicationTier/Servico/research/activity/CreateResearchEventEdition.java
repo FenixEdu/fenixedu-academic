@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateResearchEventEdition {
 
-    @Service
+    @Atomic
     public static EventEdition run(ResultEventAssociationBean eventBean) {
 
         ResearchEvent event = null;
@@ -29,7 +29,7 @@ public class CreateResearchEventEdition {
                 eventBean.getOrganization(), eventBean.getEventEditionUrl());
     }
 
-    @Service
+    @Atomic
     public static EventEdition run(ResearchEvent event, String edition, String eventLocation, YearMonthDay startDate,
             YearMonthDay endDate, String organization, String url) {
 
@@ -44,7 +44,7 @@ public class CreateResearchEventEdition {
         return eventEdition;
     }
 
-    @Service
+    @Atomic
     public static EventEdition run(ResearchEvent event, ResearchEventEditionCreationBean bean) {
         return run(event, bean.getEventEditionName(), bean.getEventLocation(), bean.getStartDate(), bean.getEndDate(),
                 bean.getOrganization(), bean.getEditionUrl());

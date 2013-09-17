@@ -14,8 +14,13 @@ public class InquiryRegentAnswer extends InquiryRegentAnswer_Base {
         if (hasAnyQuestionAnswers()) {
             throw new DomainException("error.inquiryAnswer.questionAnswersAssociated");
         }
-        removeProfessorship();
-        removeRootDomainObject();
+        setProfessorship(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
 }

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.thesis;
 import java.text.Collator;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -13,20 +14,19 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Base {
 
     private static KeepParticipationNumberAdapter KEEP_PARTICIPATION_NUMBER_ADAPTER = new KeepParticipationNumberAdapter();
     static {
-        ThesisHasParticipations.addListener(KEEP_PARTICIPATION_NUMBER_ADAPTER);
+        getRelationThesisHasParticipations().addListener(KEEP_PARTICIPATION_NUMBER_ADAPTER);
     }
 
     public final static Comparator<ThesisEvaluationParticipant> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("person.name", Collator.getInstance()));
-        ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public final static Comparator<ThesisEvaluationParticipant> COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator(
@@ -117,9 +117,9 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removePerson();
-        removeThesis();
+        setRootDomainObject(null);
+        setPerson(null);
+        setThesis(null);
 
         deleteDomainObject();
     }
@@ -131,11 +131,11 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         KEEP_PARTICIPATION_NUMBER_ADAPTER.changedType(this);
     }
 
-    public static class KeepParticipationNumberAdapter extends RelationAdapter<ThesisEvaluationParticipant, Thesis> {
+    public static class KeepParticipationNumberAdapter extends RelationAdapter<Thesis, ThesisEvaluationParticipant> {
 
         @Override
-        public void beforeAdd(ThesisEvaluationParticipant o1, Thesis o2) {
-            super.beforeAdd(o1, o2);
+        public void beforeAdd(Thesis o2, ThesisEvaluationParticipant o1) {
+            super.beforeAdd(o2, o1);
 
             if (o1 != null && o2 != null) {
                 keepTypeCount(o1, o2);
@@ -166,6 +166,41 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
             }
         }
 
+    }
+
+    @Deprecated
+    public boolean hasThesis() {
+        return getThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasAffiliation() {
+        return getAffiliation() != null;
+    }
+
+    @Deprecated
+    public boolean hasCategory() {
+        return getCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonName() {
+        return getPersonName() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

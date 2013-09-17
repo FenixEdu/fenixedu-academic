@@ -15,7 +15,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ManageTeacherServiceCommentsDispatchAction extends FenixDispatchAction {
 
@@ -23,13 +23,13 @@ public class ManageTeacherServiceCommentsDispatchAction extends FenixDispatchAct
             HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         TeacherServiceComment teacherServiceComment =
-                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherServiceCommentOid"));
+                FenixFramework.getDomainObject((String) getFromRequest(request, "teacherServiceCommentOid"));
         if (teacherServiceComment != null) {
             request.setAttribute("teacherServiceComment", teacherServiceComment);
         } else {
-            Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
+            Teacher teacher = FenixFramework.getDomainObject((String) getFromRequest(request, "teacherOid"));
             ExecutionYear executionYear =
-                    AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionYearOid"));
+                    FenixFramework.getDomainObject((String) getFromRequest(request, "executionYearOid"));
 
             ExecutionSemester firstExecutionPeriod = executionYear.getFirstExecutionPeriod();
             TeacherService teacherService = TeacherService.getTeacherService(teacher, firstExecutionPeriod);
@@ -43,7 +43,7 @@ public class ManageTeacherServiceCommentsDispatchAction extends FenixDispatchAct
             HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         TeacherServiceComment teacherServiceComment =
-                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherServiceCommentOid"));
+                FenixFramework.getDomainObject((String) getFromRequest(request, "teacherServiceCommentOid"));
         request.setAttribute("teacherOid", teacherServiceComment.getTeacherService().getTeacher().getExternalId());
         request.setAttribute("executionYearOid", teacherServiceComment.getTeacherService().getExecutionPeriod()
                 .getExecutionYear().getExternalId());

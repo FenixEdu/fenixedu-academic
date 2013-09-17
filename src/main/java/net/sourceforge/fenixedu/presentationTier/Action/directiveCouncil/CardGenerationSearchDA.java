@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "identificationCardManager", path = "/searchPeople", scope = "session", parameter = "method")
@@ -83,7 +83,7 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final String personIdString = request.getParameter("personId");
         if (personIdString != null) {
-            final Person person = (Person) AbstractDomainObject.fromExternalId(personIdString);
+            final Person person = (Person) FenixFramework.getDomainObject(personIdString);
             request.setAttribute("person", person);
         }
         return mapping.findForward("viewPersonCards");
@@ -93,7 +93,7 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final String cardGenerationEntryIdString = request.getParameter("cardGenerationEntryId");
         if (cardGenerationEntryIdString != null) {
-            final CardGenerationEntry cardGenerationEntry = AbstractDomainObject.fromExternalId(cardGenerationEntryIdString);
+            final CardGenerationEntry cardGenerationEntry = FenixFramework.getDomainObject(cardGenerationEntryIdString);
             request.setAttribute("cardGenerationEntry", cardGenerationEntry);
             final Person person = cardGenerationEntry.getPerson();
             request.setAttribute("person", person);

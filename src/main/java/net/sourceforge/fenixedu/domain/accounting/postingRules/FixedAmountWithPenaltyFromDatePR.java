@@ -63,4 +63,9 @@ public class FixedAmountWithPenaltyFromDatePR extends FixedAmountWithPenaltyFrom
 
     }
 
+    @Deprecated
+    public boolean hasWhenToApplyFixedAmountPenalty() {
+        return getWhenToApplyFixedAmountPenalty() != null;
+    }
+
 }

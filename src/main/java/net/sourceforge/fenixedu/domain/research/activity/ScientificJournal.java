@@ -32,13 +32,13 @@ public class ScientificJournal extends ScientificJournal_Base implements Partici
     }
 
     public void delete() {
-        for (; !this.getJournalIssues().isEmpty(); this.getJournalIssues().get(0).delete()) {
+        for (; !this.getJournalIssues().isEmpty(); this.getJournalIssues().iterator().next().delete()) {
             ;
         }
-        for (; !this.getParticipations().isEmpty(); this.getParticipations().get(0).delete()) {
+        for (; !this.getParticipations().isEmpty(); this.getParticipations().iterator().next().delete()) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -102,4 +102,59 @@ public class ScientificJournal extends ScientificJournal_Base implements Partici
             addParticipations(scientificJournalParticipation);
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation> getParticipations() {
+        return getParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipations() {
+        return !getParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.JournalIssue> getJournalIssues() {
+        return getJournalIssuesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyJournalIssues() {
+        return !getJournalIssuesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPublisher() {
+        return getPublisher() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrl() {
+        return getUrl() != null;
+    }
+
+    @Deprecated
+    public boolean hasLocationType() {
+        return getLocationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasIssn() {
+        return getIssn() != null;
+    }
+
+    @Deprecated
+    public boolean hasStage() {
+        return getStage() != null;
+    }
+
 }

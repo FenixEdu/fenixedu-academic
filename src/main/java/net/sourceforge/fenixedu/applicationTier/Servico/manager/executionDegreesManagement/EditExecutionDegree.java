@@ -10,32 +10,33 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditExecutionDegree {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String executionDegreeID, String executionYearID, String campusID, Boolean publishedExamMap,
             Date periodLessonsFirstSemesterBegin, Date periodLessonsFirstSemesterEnd, Date periodExamsFirstSemesterBegin,
             Date periodExamsFirstSemesterEnd, Date periodLessonsSecondSemesterBegin, Date periodLessonsSecondSemesterEnd,
             Date periodExamsSecondSemesterBegin, Date periodExamsSecondSemesterEnd, Date periodExamsSpecialSeasonBegin,
             Date periodExamsSpecialSeasonEnd, Date gradeSubmissionNormalSeason1EndDate, Date gradeSubmissionNormalSeason2EndDate,
             Date gradeSubmissionSpecialSeasonEndDate) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         if (executionDegree == null) {
             throw new FenixServiceException("error.noExecutionDegree");
         }
 
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+        final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
         if (executionYear == null) {
             throw new FenixServiceException("error.noExecutionDegree");
         }
 
-        final Campus campus = (Campus) AbstractDomainObject.fromExternalId(campusID);
+        final Campus campus = (Campus) FenixFramework.getDomainObject(campusID);
         if (campus == null) {
             throw new FenixServiceException("error.noCampus");
         }

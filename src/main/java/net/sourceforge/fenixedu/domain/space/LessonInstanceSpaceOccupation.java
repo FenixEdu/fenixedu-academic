@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -10,6 +13,7 @@ import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -18,12 +22,10 @@ import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation_Base {
 
-    @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck")
     public LessonInstanceSpaceOccupation(AllocatableSpace allocatableSpace) {
+//        check(this, SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck);
 
         super();
 
@@ -36,10 +38,10 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         setResource(allocatableSpace);
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck")
     public void edit(LessonInstance lessonInstance) {
+        check(this, SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck);
 
-        if (hasLessonInstances(lessonInstance)) {
+        if (getLessonInstancesSet().contains(lessonInstance)) {
             removeLessonInstances(lessonInstance);
         }
 
@@ -47,8 +49,8 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         //final ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
         if (/*!space.isOccupiedByExecutionCourse(executionCourse, lessonInstance.getBeginDateTime(),
                 lessonInstance.getEndDateTime())
-                &&*/ !space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(),
-                        lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
+                &&*/!space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(),
+                lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
 
             throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getIdentification(),
                     lessonInstance.getDay().toString("dd-MM-yy"));
@@ -58,8 +60,8 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     }
 
     @Override
-    @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupations")
     public void delete() {
+        check(this, SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupations);
         if (canBeDeleted()) {
             super.delete();
         }
@@ -83,7 +85,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
 
         List<Interval> result = new ArrayList<Interval>();
-        List<LessonInstance> lessonInstances = getLessonInstances();
+        Collection<LessonInstance> lessonInstances = getLessonInstances();
 
         DateTime startDateTime = startDateToSearch != null ? startDateToSearch.toDateTimeAtMidnight() : null;
         DateTime endDateTime = endDateToSearch != null ? endDateToSearch.toDateTime(new TimeOfDay(23, 59, 59)) : null;
@@ -159,8 +161,19 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     @Override
     public String getPresentationString() {
         if (hasAnyLessonInstances()) {
-            return getLessonInstances().get(0).getLesson().getShift().getExecutionCourse().getSigla();
+            return getLessonInstances().iterator().next().getLesson().getShift().getExecutionCourse().getSigla();
         }
         return getClass().getName();
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.LessonInstance> getLessonInstances() {
+        return getLessonInstancesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLessonInstances() {
+        return !getLessonInstancesSet().isEmpty();
+    }
+
 }

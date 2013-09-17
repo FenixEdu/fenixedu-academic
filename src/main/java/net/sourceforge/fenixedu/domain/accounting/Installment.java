@@ -144,7 +144,7 @@ public class Installment extends Installment_Base {
 
     public void delete() {
         super.setPaymentPlan(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -161,6 +161,71 @@ public class Installment extends Installment_Base {
 
         super.setStartDate(startDate);
         super.setEndDate(endDate);
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode> getPaymentCodes() {
+        return getPaymentCodesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPaymentCodes() {
+        return !getPaymentCodesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption> getInstallmentPenaltyExemptions() {
+        return getInstallmentPenaltyExemptionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInstallmentPenaltyExemptions() {
+        return !getInstallmentPenaltyExemptionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction> getAccountingTransactions() {
+        return getAccountingTransactionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAccountingTransactions() {
+        return !getAccountingTransactionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasInstallmentOrder() {
+        return getInstallmentOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasAmount() {
+        return getAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDate() {
+        return getStartDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasPaymentPlan() {
+        return getPaymentPlan() != null;
     }
 
 }

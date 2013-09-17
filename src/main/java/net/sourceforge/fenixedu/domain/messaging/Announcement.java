@@ -13,8 +13,9 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AnnouncementPredicates;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Announcement extends Announcement_Base {
@@ -112,9 +113,9 @@ public class Announcement extends Announcement_Base {
         this.updateLastModification();
     }
 
-    @Checked("AnnouncementPredicates.approvePredicate")
     @Override
     public void setApproved(Boolean aproved) {
+        check(this, AnnouncementPredicates.approvePredicate);
         super.setApproved(aproved);
         this.updateLastModification();
     }
@@ -319,7 +320,7 @@ public class Announcement extends Announcement_Base {
         return CAMPUS_EXTERNAL;
     }
 
-    @Service
+    @Atomic
     public static Announcement createAnnouncement(AnnouncementBoard board, String authorName, String authorEmail,
             MultiLanguageString body, Campus campus, List<AnnouncementCategory> categories, String place,
             DateTime publicationBeginDate, DateTime publicationEndDate, DateTime referedSubjectBeginDate,
@@ -382,7 +383,7 @@ public class Announcement extends Announcement_Base {
         for (final AnnouncementCategory category : getCategories()) {
             removeCategories(category);
         }
-        removeCampus();
+        setCampus(null);
         super.disconnectContent();
     }
 
@@ -394,13 +395,13 @@ public class Announcement extends Announcement_Base {
                 && (endPublication == null || endPublication.isAfterNow());
     }
 
-    @Service
+    @Atomic
     public void swap(AnnouncementBoard source, AnnouncementBoard destination) {
         source.removeAnnouncement(this);
         destination.addAnnouncements(this);
     }
 
-    @Service
+    @Atomic
     public void updatePriority(Integer priority) {
         setPriority(priority);
     }
@@ -423,7 +424,7 @@ public class Announcement extends Announcement_Base {
     }
 
     @Override
-    @Service
+    @Atomic
     public void setPriority(Integer priority) {
         super.setPriority(priority);
     }
@@ -492,6 +493,106 @@ public class Announcement extends Announcement_Base {
                 announcement.setPriority(announcement.getPriority() - 1);
             }
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory> getCategories() {
+        return getCategoriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCategories() {
+        return !getCategoriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSticky() {
+        return getSticky() != null;
+    }
+
+    @Deprecated
+    public boolean hasPlace() {
+        return getPlace() != null;
+    }
+
+    @Deprecated
+    public boolean hasReferedSubjectBegin() {
+        return getReferedSubjectBegin() != null;
+    }
+
+    @Deprecated
+    public boolean hasReferedSubjectEnd() {
+        return getReferedSubjectEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisible() {
+        return getVisible() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubject() {
+        return getSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasApproved() {
+        return getApproved() != null;
+    }
+
+    @Deprecated
+    public boolean hasExcerpt() {
+        return getExcerpt() != null;
+    }
+
+    @Deprecated
+    public boolean hasAuthor() {
+        return getAuthor() != null;
+    }
+
+    @Deprecated
+    public boolean hasCampus() {
+        return getCampus() != null;
+    }
+
+    @Deprecated
+    public boolean hasPressRelease() {
+        return getPressRelease() != null;
+    }
+
+    @Deprecated
+    public boolean hasEditorNotes() {
+        return getEditorNotes() != null;
+    }
+
+    @Deprecated
+    public boolean hasPriority() {
+        return getPriority() != null;
+    }
+
+    @Deprecated
+    public boolean hasAuthorEmail() {
+        return getAuthorEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublication() {
+        return getPublication() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModification() {
+        return getLastModification() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhotoUrl() {
+        return getPhotoUrl() != null;
+    }
+
+    @Deprecated
+    public boolean hasKeywords() {
+        return getKeywords() != null;
     }
 
 }

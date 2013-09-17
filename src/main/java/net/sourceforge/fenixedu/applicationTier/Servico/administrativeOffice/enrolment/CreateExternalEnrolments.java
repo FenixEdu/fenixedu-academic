@@ -5,11 +5,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.ExternalCurricularCourseEnrolmentBean;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateExternalEnrolments {
 
-    @Service
+    @Atomic
     public static void run(final Registration registration, final List<ExternalCurricularCourseEnrolmentBean> beans) {
         for (final ExternalCurricularCourseEnrolmentBean bean : beans) {
             new ExternalEnrolment(registration, bean.getExternalCurricularCourse(), bean.getGrade(), bean.getExecutionPeriod(),

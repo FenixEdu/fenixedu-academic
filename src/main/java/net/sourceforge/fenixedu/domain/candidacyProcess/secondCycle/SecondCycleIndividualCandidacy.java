@@ -170,7 +170,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
             individualCandidacyEvent.open();
 
-            List<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
+            Collection<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
 
             for (AccountingEventPaymentCode accountingEventPaymentCode : paymentCodes) {
                 accountingEventPaymentCode.setState(PaymentCodeState.NEW);
@@ -217,7 +217,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
             individualCandidacyEvent.open();
 
-            List<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
+            Collection<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
 
             for (AccountingEventPaymentCode accountingEventPaymentCode : paymentCodes) {
                 accountingEventPaymentCode.setState(PaymentCodeState.NEW);
@@ -262,7 +262,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
         if (bean.getState() == null) {
             setState(IndividualCandidacyState.STAND_BY);
-            removeRegistration();
+            setRegistration(null);
         } else {
             setState(bean.getState());
         }
@@ -370,7 +370,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         return result;
     }
 
-    @Override
     public boolean hasSelectedDegree() {
         throw new DomainException("error.second.cycle.individual.candidacy.relation.with.degree.obsolete");
     }
@@ -380,7 +379,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         throw new DomainException("error.second.cycle.individual.candidacy.relation.with.degree.obsolete");
     }
 
-    @Override
     public void removeSelectedDegree() {
         throw new DomainException("error.second.cycle.individual.candidacy.relation.with.degree.obsolete");
     }
@@ -406,11 +404,11 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     }
 
     public SecondCycleIndividualCandidacySeriesGrade getSecondCycleIndividualCandidacySeriesGrade() {
-        if (getIndividualCandidacySeriesGradeCount() == 0) {
+        if (getIndividualCandidacySeriesGradeSet().size() == 0) {
             return null;
         } else {
-            if (getIndividualCandidacySeriesGradeCount() == 1) {
-                return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegrees().get(0));
+            if (getIndividualCandidacySeriesGradeSet().size() == 1) {
+                return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegrees().iterator().next());
             } else {
                 return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegree());
             }
@@ -498,6 +496,56 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     @Override
     public void setDegreeNature(Integer value) {
         getSecondCycleIndividualCandidacySeriesGrade().setDegreeNature(value);
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Degree> getSelectedDegrees() {
+        return getSelectedDegreesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySelectedDegrees() {
+        return !getSelectedDegreesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasProfessionalStatus() {
+        return getProfessionalStatus() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalExperience() {
+        return getProfessionalExperience() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyGrade() {
+        return getCandidacyGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeNature() {
+        return getDegreeNature() != null;
+    }
+
+    @Deprecated
+    public boolean hasOtherEducation() {
+        return getOtherEducation() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeriesCandidacyGrade() {
+        return getSeriesCandidacyGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasInterviewGrade() {
+        return getInterviewGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasAffinity() {
+        return getAffinity() != null;
     }
 
 }

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
@@ -161,7 +162,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
     public CopyCheckBoxValuesController controller = new CopyCheckBoxValuesController();
 
     public boolean isContextValid(CurricularCourse curricularCourse) {
-        List<Context> parentContexts = curricularCourse.getParentContexts();
+        Collection<Context> parentContexts = curricularCourse.getParentContexts();
         for (Context context : parentContexts) {
             if (context.isValid(getBolonhaStudentEnrollmentBean().getExecutionPeriod())) {
                 return true;

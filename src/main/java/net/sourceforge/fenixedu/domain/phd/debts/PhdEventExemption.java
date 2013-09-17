@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdEventExemption extends PhdEventExemption_Base {
 
@@ -48,7 +48,7 @@ public class PhdEventExemption extends PhdEventExemption_Base {
         }
     }
 
-    @Service
+    @Atomic
     static public PhdEventExemption create(final Person responsible, final PhdEvent event, final Money value,
             final PhdEventExemptionJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
         return new PhdEventExemption(responsible, event, value, justificationType, dispatchDate, reason);
@@ -57,6 +57,11 @@ public class PhdEventExemption extends PhdEventExemption_Base {
     @Override
     public boolean isPhdEventExemption() {
         return true;
+    }
+
+    @Deprecated
+    public boolean hasValue() {
+        return getValue() != null;
     }
 
 }

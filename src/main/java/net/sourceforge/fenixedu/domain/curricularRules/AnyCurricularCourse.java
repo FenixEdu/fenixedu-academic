@@ -220,8 +220,8 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     @Override
     protected void removeOwnParameters() {
-        removeDegree();
-        removeDepartmentUnit();
+        setDegree(null);
+        setDepartmentUnit(null);
     }
 
     public boolean hasBolonhaDegreeType() {
@@ -244,4 +244,25 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     public VerifyRuleExecutor createVerifyRuleExecutor() {
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
+
+    @Deprecated
+    public boolean hasMaximumYear() {
+        return getMaximumYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasDepartmentUnit() {
+        return getDepartmentUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinimumYear() {
+        return getMinimumYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
 }

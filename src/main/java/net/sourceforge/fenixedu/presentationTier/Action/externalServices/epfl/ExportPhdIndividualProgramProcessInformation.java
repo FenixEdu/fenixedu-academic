@@ -29,7 +29,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "external", path = "/epflCandidateInformation", scope = "request", validate = false)
 public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
@@ -75,14 +75,14 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
     private void displayRefereePage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final String refereeOid = request.getParameter("refereeOid");
         final int count = Integer.parseInt(request.getParameter("count"));
-        final PhdCandidacyReferee referee = AbstractDomainObject.fromExternalId(refereeOid);
+        final PhdCandidacyReferee referee = FenixFramework.getDomainObject(refereeOid);
         final byte[] refereePage = ExportPhdIndividualProgramProcessesInHtml.drawLetter(referee, count);
         writeResponse(response, refereePage, "text/html");
     }
 
     private void downloadCandidateDocuments(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final String candidateOid = request.getParameter("candidateOid");
-        final PhdProgramPublicCandidacyHashCode code = AbstractDomainObject.fromExternalId(candidateOid);
+        final PhdProgramPublicCandidacyHashCode code = FenixFramework.getDomainObject(candidateOid);
         final byte[] documents = ExportPhdIndividualProgramProcessesInHtml.createZip(code);
         final String email = code.getEmail().substring(0, code.getEmail().indexOf("@"));
         final String documentName = email + "-documents.zip";
@@ -95,7 +95,7 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
         if (photoOid == null || photoOid.isEmpty()) {
             RetrievePersonalPhotoAction.writeUnavailablePhoto(response, getServlet());
         } else {
-            final Photograph photo = AbstractDomainObject.fromExternalId(photoOid);
+            final Photograph photo = FenixFramework.getDomainObject(photoOid);
             RetrievePersonalPhotoAction.writePhoto(response, photo);
         }
     }

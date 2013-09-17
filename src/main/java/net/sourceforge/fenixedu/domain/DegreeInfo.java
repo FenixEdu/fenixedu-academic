@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -24,7 +24,7 @@ public class DegreeInfo extends DegreeInfo_Base {
             if (result != 0) {
                 return result;
             }
-            return COMPARATOR_BY_ID.compare(info1, info2);
+            return DomainObjectUtil.COMPARATOR_BY_ID.compare(info1, info2);
         }
     };
 
@@ -127,9 +127,9 @@ public class DegreeInfo extends DegreeInfo_Base {
         getDegreeInfoCandidacy().delete();
         getDegreeInfoFuture().delete();
 
-        removeRootDomainObject();
-        removeDegree();
-        removeExecutionYear();
+        setRootDomainObject(null);
+        setDegree(null);
+        setExecutionYear(null);
 
         deleteDomainObject();
     }
@@ -278,13 +278,13 @@ public class DegreeInfo extends DegreeInfo_Base {
     public static String readAllDegreeInfos() {
         JSONArray infos = new JSONArray();
         for (Degree degree : RootDomainObject.getInstance().getDegrees()) {
-            List<DegreeInfo> degreeInfos = degree.getDegreeInfos();
+            Collection<DegreeInfo> degreeInfos = degree.getDegreeInfos();
             if (!degreeInfos.isEmpty()) {
                 for (DegreeInfo degreeInfo : degreeInfos) {
                     JSONObject obj = new JSONObject();
                     String degreeType = JSONObject.escape(degreeInfo.getDegree().getDegreeType().toString());
                     String degreeName = JSONObject.escape(degreeInfo.getName().getContent());
-                    String degreeOid = Long.toString(degreeInfo.getDegree().getOID());
+                    String degreeOid = degreeInfo.getDegree().getExternalId();
                     System.out.printf("with info : %s %s %s\n", degreeOid, degreeType, degreeName);
                     obj.put("degreeOid", degreeOid);
                     obj.put("degreeType", degreeType);
@@ -294,7 +294,7 @@ public class DegreeInfo extends DegreeInfo_Base {
                 }
             } else {
                 JSONObject obj = new JSONObject();
-                String degreeOid = Long.toString(degree.getOID());
+                String degreeOid = degree.getExternalId();
                 String degreeType = JSONObject.escape(degree.getDegreeType().toString());
                 String degreeName = JSONObject.escape(degree.getNome());
                 System.out.printf("no info : %s %s %s\n", degreeOid, degreeType, degreeName);
@@ -307,4 +307,95 @@ public class DegreeInfo extends DegreeInfo_Base {
         }
         return infos.toJSONString();
     }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeInfoCandidacy() {
+        return getDegreeInfoCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasGratuity() {
+        return getGratuity() != null;
+    }
+
+    @Deprecated
+    public boolean hasDriftsSecond() {
+        return getDriftsSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdditionalInfo() {
+        return getAdditionalInfo() != null;
+    }
+
+    @Deprecated
+    public boolean hasMarkMin() {
+        return getMarkMin() != null;
+    }
+
+    @Deprecated
+    public boolean hasOperationalRegime() {
+        return getOperationalRegime() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeInfoFuture() {
+        return getDegreeInfoFuture() != null;
+    }
+
+    @Deprecated
+    public boolean hasSchoolCalendar() {
+        return getSchoolCalendar() != null;
+    }
+
+    @Deprecated
+    public boolean hasLinks() {
+        return getLinks() != null;
+    }
+
+    @Deprecated
+    public boolean hasMarkMax() {
+        return getMarkMax() != null;
+    }
+
+    @Deprecated
+    public boolean hasHistory() {
+        return getHistory() != null;
+    }
+
+    @Deprecated
+    public boolean hasMarkAverage() {
+        return getMarkAverage() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasDriftsFirst() {
+        return getDriftsFirst() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasDriftsInitial() {
+        return getDriftsInitial() != null;
+    }
+
 }

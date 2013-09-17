@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "teacher",
         formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
@@ -77,7 +77,7 @@ public class ErasmusCandidacyProcessDA extends
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {
-            return AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
+            return FenixFramework.getDomainObject(degreeCurricularPlanOID);
         }
 
         return null;

@@ -6,7 +6,7 @@ import java.util.UUID;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EmailValidation extends EmailValidation_Base {
 
@@ -26,7 +26,7 @@ public class EmailValidation extends EmailValidation_Base {
     }
 
     @Override
-    @Service
+    @Atomic
     public void triggerValidationProcess() {
         if (!isValid()) {
             generateToken();

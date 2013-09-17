@@ -45,9 +45,9 @@ public class Curriculum extends Curriculum_Base {
     }
 
     public void delete() {
-        removeCurricularCourse();
-        removePersonWhoAltered();
-        removeRootDomainObject();
+        setCurricularCourse(null);
+        setPersonWhoAltered(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }
@@ -98,6 +98,56 @@ public class Curriculum extends Curriculum_Base {
         } else {
             setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasLastModificationDateDateTime() {
+        return getLastModificationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasGeneralObjectives() {
+        return getGeneralObjectives() != null;
+    }
+
+    @Deprecated
+    public boolean hasGeneralObjectivesEn() {
+        return getGeneralObjectivesEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasOperacionalObjectives() {
+        return getOperacionalObjectives() != null;
+    }
+
+    @Deprecated
+    public boolean hasOperacionalObjectivesEn() {
+        return getOperacionalObjectivesEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonWhoAltered() {
+        return getPersonWhoAltered() != null;
+    }
+
+    @Deprecated
+    public boolean hasProgramEn() {
+        return getProgramEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasProgram() {
+        return getProgram() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
     }
 
 }

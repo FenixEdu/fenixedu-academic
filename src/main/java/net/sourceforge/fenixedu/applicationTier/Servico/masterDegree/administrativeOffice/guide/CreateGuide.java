@@ -25,19 +25,20 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class CreateGuide {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
             GuideState situationOfGuide, String paymentType) throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         GuideSituation guideSituation = null;
 
@@ -76,10 +77,10 @@ public class CreateGuide {
         infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        Person person = (Person) AbstractDomainObject.fromExternalId(infoGuide.getInfoPerson().getExternalId());
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoGuide.getInfoExecutionDegree().getExternalId());
+        Person person = (Person) FenixFramework.getDomainObject(infoGuide.getInfoPerson().getExternalId());
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoGuide.getInfoExecutionDegree().getExternalId());
         final Party contributor =
-                infoGuide.getInfoContributor() != null ? AbstractDomainObject.<Party> fromExternalId(infoGuide
+                infoGuide.getInfoContributor() != null ? FenixFramework.<Party> getDomainObject(infoGuide
                         .getInfoContributor().getExternalId()) : person;
 
         Guide guide = new Guide();

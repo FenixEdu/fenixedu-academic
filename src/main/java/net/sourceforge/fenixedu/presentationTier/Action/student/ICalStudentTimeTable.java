@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/ICalTimeTable", module = "student")
 @Forwards({
@@ -37,7 +37,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         if (getRenderedObject("bean") == null) {
-            Registration registration = AbstractDomainObject.fromExternalId(request.getParameter("registrationId"));
+            Registration registration = FenixFramework.getDomainObject(request.getParameter("registrationId"));
 
             return forwardToShow(registration, mapping, request);
         } else {
@@ -55,7 +55,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
             throws Exception {
         List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
         if (registrations.size() == 1) {
-            return forwardToShow(registrations.get(0), mapping, request);
+            return forwardToShow(registrations.iterator().next(), mapping, request);
         } else {
             RegistrationsBean bean = new RegistrationsBean();
             bean.setRegistrations(registrations);

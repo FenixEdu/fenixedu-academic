@@ -52,7 +52,7 @@ public class Department extends Department_Base {
     public static final Comparator<Department> COMPARATOR_BY_NAME = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
-        ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public Department() {
@@ -151,7 +151,7 @@ public class Department extends Department_Base {
      * 
      */
     public List<CompetenceCourse> getCompetenceCoursesByExecutionYear(ExecutionYear executionYear) {
-        List<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
+        Collection<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
         List<CompetenceCourse> competenceCoursesByExecutionYear = new ArrayList<CompetenceCourse>();
         for (CompetenceCourse competenceCourse : competenceCourses) {
             if (competenceCourse.hasActiveScopesInExecutionYear(executionYear)) {
@@ -217,7 +217,7 @@ public class Department extends Department_Base {
     }
 
     @SuppressWarnings("unchecked")
-    public List<TSDProcess> getTSDProcessesByExecutionPeriods(final List<ExecutionSemester> executionPeriodList) {
+    public List<TSDProcess> getTSDProcessesByExecutionPeriods(final Collection<ExecutionSemester> executionPeriodList) {
         return (List<TSDProcess>) CollectionUtils.select(getTSDProcesses(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
@@ -363,8 +363,8 @@ public class Department extends Department_Base {
     }
 
     public void delete() {
-        removeDepartmentUnit();
-        removeRootDomainObject();
+        setDepartmentUnit(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -383,7 +383,7 @@ public class Department extends Department_Base {
     public Integer getCompetenceCourseInformationChangeRequestsCount() {
         int count = 0;
         for (CompetenceCourse course : getDepartmentUnit().getCompetenceCourses()) {
-            count += course.getCompetenceCourseInformationChangeRequestsCount();
+            count += course.getCompetenceCourseInformationChangeRequestsSet().size();
         }
 
         return count;
@@ -418,7 +418,7 @@ public class Department extends Department_Base {
         return null;
     }
 
-    private DepartmentForum getForumFromNodes(List<Node> siteNodes) {
+    private DepartmentForum getForumFromNodes(Collection<Node> siteNodes) {
         for (Node node : siteNodes) {
             if (node.getChild() instanceof DepartmentForum) {
                 return (DepartmentForum) node.getChild();
@@ -468,4 +468,125 @@ public class Department extends Department_Base {
         Collections.sort(departments, Department.COMPARATOR_BY_NAME);
         return departments;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Project> getProjects() {
+        return getProjectsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjects() {
+        return !getProjectsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization> getTeacherAuthorizationsAuthorized() {
+        return getTeacherAuthorizationsAuthorizedSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherAuthorizationsAuthorized() {
+        return !getTeacherAuthorizationsAuthorizedSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CompetenceCourse> getCompetenceCourses() {
+        return getCompetenceCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCompetenceCourses() {
+        return !getCompetenceCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.DepartmentCreditsPool> getDepartmentCreditsPools() {
+        return getDepartmentCreditsPoolsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDepartmentCreditsPools() {
+        return !getDepartmentCreditsPoolsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess> getTSDProcesses() {
+        return getTSDProcessesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDProcesses() {
+        return !getTSDProcessesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod> getTeacherPersonalExpectationPeriods() {
+        return getTeacherPersonalExpectationPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherPersonalExpectationPeriods() {
+        return !getTeacherPersonalExpectationPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Degree> getDegrees() {
+        return getDegreesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegrees() {
+        return !getDegreesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getAssociatedPersons() {
+        return getAssociatedPersonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedPersons() {
+        return !getAssociatedPersonsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasActive() {
+        return getActive() != null;
+    }
+
+    @Deprecated
+    public boolean hasDepartmentUnit() {
+        return getDepartmentUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRealNameEn() {
+        return getRealNameEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasRealName() {
+        return getRealName() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasCompetenceCourseMembersGroup() {
+        return getCompetenceCourseMembersGroup() != null;
+    }
+
 }

@@ -97,7 +97,7 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 
     @Override
     protected void disconnect() {
-        removeCandidacyProcess();
+        setCandidacyProcess(null);
         super.disconnect();
     }
 
@@ -106,7 +106,7 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
             return null;
         }
 
-        return (IndividualCandidacyPaymentCode) super.getAllPaymentCodes().get(0);
+        return (IndividualCandidacyPaymentCode) super.getAllPaymentCodes().iterator().next();
     }
 
     @Override
@@ -124,4 +124,9 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
     protected EntryType getEntryType() {
         return EntryType.CANDIDACY_ENROLMENT_FEE;
     }
+    @Deprecated
+    public boolean hasCandidacyProcess() {
+        return getCandidacyProcess() != null;
+    }
+
 }

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.manager.loginsManagement.LoginAliasBean;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.LoginAliasType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateNewLoginAlias {
 
@@ -27,7 +27,7 @@ public class CreateNewLoginAlias {
 
     private static final CreateNewLoginAlias serviceInstance = new CreateNewLoginAlias();
 
-    @Service
+    @Atomic
     public static void runCreateNewLoginAlias(LoginAliasBean bean) throws NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

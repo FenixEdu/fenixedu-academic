@@ -48,7 +48,11 @@ public class CourseLoadOverviewBean implements Serializable {
     public StyledExcelSpreadsheet getInconsistencySpreadsheet() {
         final StyledExcelSpreadsheet spreadsheet =
                 new StyledExcelSpreadsheet(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
-                        "label.course.load.inconsistency.filename") + "_" + executionSemester.getExecutionYear().getYear().replace('/', '_') + "_" + executionSemester.getSemester());
+                        "label.course.load.inconsistency.filename")
+                        + "_"
+                        + executionSemester.getExecutionYear().getYear().replace('/', '_')
+                        + "_"
+                        + executionSemester.getSemester());
         HSSFCellStyle normalStyle = spreadsheet.getExcelStyle().getValueStyle();
         normalStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
@@ -73,12 +77,17 @@ public class CourseLoadOverviewBean implements Serializable {
         spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.executionCourse"));
         spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.shift"));
         spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.shiftType"));
-        spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.load.competenceCourse"));
-        spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.load.curricularCourse"));
-        spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.load.executionCourse"));
-        spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.load.lessonInstances"));
+        spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                "label.load.competenceCourse"));
+        spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                "label.load.curricularCourse"));
+        spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                "label.load.executionCourse"));
+        spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                "label.load.lessonInstances"));
         spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.load.lesson.count"));
-        spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.load.lessonInstances.count"));
+        spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                "label.load.lessonInstances.count"));
 
         for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
             for (final CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
@@ -89,8 +98,10 @@ public class CourseLoadOverviewBean implements Serializable {
                     spreadsheet.addCell(executionCourse.getName());
                     spreadsheet.addCell(shift.getNome());
                     spreadsheet.addCell(courseLoad.getType().getFullNameTipoAula());
-                    final BigDecimal competenceCourseLoad = new BigDecimal(getCompetenceCourseLoad(courseLoad)).setScale(2, RoundingMode.HALF_EVEN);
-                    final BigDecimal curricularCourseLoad = new BigDecimal(getCurricularCourseLoad(courseLoad)).setScale(2, RoundingMode.HALF_EVEN);
+                    final BigDecimal competenceCourseLoad =
+                            new BigDecimal(getCompetenceCourseLoad(courseLoad)).setScale(2, RoundingMode.HALF_EVEN);
+                    final BigDecimal curricularCourseLoad =
+                            new BigDecimal(getCurricularCourseLoad(courseLoad)).setScale(2, RoundingMode.HALF_EVEN);
                     final BigDecimal executionLoad = courseLoad.getTotalQuantity().setScale(2, RoundingMode.HALF_EVEN);
                     final BigDecimal shiftCourseLoad = getShiftCourseLoad(shift).setScale(2, RoundingMode.HALF_EVEN);
                     if (competenceCourseLoad.signum() < 0) {
@@ -109,7 +120,8 @@ public class CourseLoadOverviewBean implements Serializable {
                         spreadsheet.addCell(executionLoad);
                     }
                     if (!shiftCourseLoad.equals(executionLoad)) {
-                        if (isLargeDifference(shiftCourseLoad, executionLoad, competenceCourseLoad.divide(new BigDecimal(14), 2, RoundingMode.HALF_EVEN))) {
+                        if (isLargeDifference(shiftCourseLoad, executionLoad,
+                                competenceCourseLoad.divide(new BigDecimal(14), 2, RoundingMode.HALF_EVEN))) {
                             spreadsheet.addCell(shiftCourseLoad, redStyle);
                         } else {
                             spreadsheet.addCell(shiftCourseLoad, yellowStyle);
@@ -117,7 +129,7 @@ public class CourseLoadOverviewBean implements Serializable {
                     } else {
                         spreadsheet.addCell(shiftCourseLoad);
                     }
-                    spreadsheet.addCell(shift.getAssociatedLessonsCount());
+                    spreadsheet.addCell(shift.getAssociatedLessonsSet().size());
                     spreadsheet.addCell(getLessonInstanceCount(shift));
                 }
             }
@@ -174,7 +186,7 @@ public class CourseLoadOverviewBean implements Serializable {
             final double curricularCourseLoad = getCurricularCourseLoad(curricularCourse, shiftType);
             if (result == -1d || result == curricularCourseLoad) {
                 result = curricularCourseLoad;
-            } else if (result != -1d && result != curricularCourseLoad) { 
+            } else if (result != -1d && result != curricularCourseLoad) {
                 return -1d;
             }
         }

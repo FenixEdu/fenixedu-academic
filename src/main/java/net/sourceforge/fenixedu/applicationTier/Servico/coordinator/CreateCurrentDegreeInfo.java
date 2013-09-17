@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateCurrentDegreeInfo {
 
-    @Service
+    @Atomic
     public static DegreeInfo run(Degree degree) {
         return degree.createCurrentDegreeInfo();
     }

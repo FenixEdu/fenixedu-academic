@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.joda.time.DateTime;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 
@@ -97,12 +97,12 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 
     @Override
     protected void disconnect() {
-        removeProcess();
+        setProcess(null);
         super.disconnect();
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     static public PhdCandidacyProcessState create(PhdProgramCandidacyProcess process, PhdProgramCandidacyProcessState type) {
+        AccessControl.check(RolePredicates.MANAGER_PREDICATE);
         final PhdCandidacyProcessState result = new PhdCandidacyProcessState();
 
         result.check(process, type);
@@ -178,4 +178,15 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 
         return new PhdCandidacyProcessState(process, type, person, remarks, stateDate);
     }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
 }

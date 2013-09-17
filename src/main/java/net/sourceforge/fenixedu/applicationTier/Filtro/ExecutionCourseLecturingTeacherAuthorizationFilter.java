@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Mota
@@ -80,11 +80,11 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
 
         } else if (argument instanceof InfoExecutionCourse) {
             final InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argument;
-            return AbstractDomainObject.fromExternalId(infoExecutionCourse.getExternalId());
+            return FenixFramework.getDomainObject(infoExecutionCourse.getExternalId());
 
         } else if (argument instanceof String) {
             final String executionCourseID = (String) argument;
-            return AbstractDomainObject.fromExternalId(executionCourseID);
+            return FenixFramework.getDomainObject(executionCourseID);
 
         } else if (argument instanceof SummariesManagementBean) {
             return ((SummariesManagementBean) argument).getExecutionCourse();

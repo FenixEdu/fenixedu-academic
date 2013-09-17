@@ -57,4 +57,29 @@ public abstract class ThesisLibraryOperation extends ThesisLibraryOperation_Base
     public void setOperation(DateTime operation) {
         throw new UnsupportedOperationException();
     }
+    @Deprecated
+    public boolean hasThesis() {
+        return getThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasNext() {
+        return getNext() != null;
+    }
+
+    @Deprecated
+    public boolean hasOperation() {
+        return getOperation() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrevious() {
+        return getPrevious() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerformer() {
+        return getPerformer() != null;
+    }
+
 }

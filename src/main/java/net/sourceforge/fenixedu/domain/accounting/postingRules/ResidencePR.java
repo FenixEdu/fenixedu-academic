@@ -78,4 +78,9 @@ public class ResidencePR extends ResidencePR_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasPenaltyPerDay() {
+        return getPenaltyPerDay() != null;
+    }
+
 }

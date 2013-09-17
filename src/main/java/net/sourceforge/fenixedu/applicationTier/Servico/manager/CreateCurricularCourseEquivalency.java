@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateCurricularCourseEquivalency {
 
@@ -19,20 +19,20 @@ public class CreateCurricularCourseEquivalency {
      * This method should check if the admin office should create the
      * equivalence or not
      */
-    @Service
+    @Atomic
     public static void run(final String degreeCurricularPlanID, final String curricularCourseID,
             final String oldCurricularCourseID) {
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
-        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
+        final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseID);
         final CurricularCourse oldCurricularCourse =
-                (CurricularCourse) AbstractDomainObject.fromExternalId(oldCurricularCourseID);
+                (CurricularCourse) FenixFramework.getDomainObject(oldCurricularCourseID);
 
         new CurricularCourseEquivalence(degreeCurricularPlan, curricularCourse, Collections.singleton(oldCurricularCourse));
     }
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static void runCreateCurricularCourseEquivalency(String degreeCurricularPlanID, String curricularCourseID,
             String oldCurricularCourseID) throws NotAuthorizedException {
         try {

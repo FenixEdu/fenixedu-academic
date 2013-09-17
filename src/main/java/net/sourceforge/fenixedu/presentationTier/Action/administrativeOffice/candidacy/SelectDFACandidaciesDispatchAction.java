@@ -187,11 +187,11 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
             List<SelectDFACandidacyBean> substituteCandidacies, List<SelectDFACandidacyBean> notAdmittedCandidacies) {
         ExecutionDegree executionDegree = null;
         if (admittedCandidacies != null && !admittedCandidacies.isEmpty()) {
-            executionDegree = admittedCandidacies.get(0).getCandidacy().getExecutionDegree();
+            executionDegree = admittedCandidacies.iterator().next().getCandidacy().getExecutionDegree();
         } else if (substituteCandidacies != null && !substituteCandidacies.isEmpty()) {
-            executionDegree = substituteCandidacies.get(0).getCandidacy().getExecutionDegree();
+            executionDegree = substituteCandidacies.iterator().next().getCandidacy().getExecutionDegree();
         } else {
-            executionDegree = notAdmittedCandidacies.get(0).getCandidacy().getExecutionDegree();
+            executionDegree = notAdmittedCandidacies.iterator().next().getCandidacy().getExecutionDegree();
         }
         return executionDegree;
     }

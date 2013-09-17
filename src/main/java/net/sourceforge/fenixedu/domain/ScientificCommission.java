@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ScientificCommission extends ScientificCommission_Base {
 
     static {
-        ScientificCommissionPerson.addListener(new ManageCoordinatorRole());
+        getRelationScientificCommissionPerson().addListener(new ManageCoordinatorRole());
     }
 
     public ScientificCommission(ExecutionDegree executionDegree, Person person) {
@@ -49,9 +49,9 @@ public class ScientificCommission extends ScientificCommission_Base {
         ScientificCommissionLog.createLog(getExecutionDegree().getDegree(), getExecutionDegree().getExecutionYear(),
                 "resources.MessagingResources", "log.degree.scientificcomission.removemember", this.getPerson().getName(), this
                         .getPerson().getIstUsername(), this.getExecutionDegree().getDegree().getPresentationName());
-        removePerson();
-        removeExecutionDegree();
-        removeRootDomainObject();
+        setPerson(null);
+        setExecutionDegree(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -105,4 +105,24 @@ public class ScientificCommission extends ScientificCommission_Base {
                 "resources.MessagingResources", "log.degree.scientificcomission.editmember", this.getPerson()
                         .getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasContact() {
+        return getContact() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

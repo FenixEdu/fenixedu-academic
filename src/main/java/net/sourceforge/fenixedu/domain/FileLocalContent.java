@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.util.ByteArray;
@@ -27,18 +25,10 @@ public class FileLocalContent extends FileLocalContent_Base {
 
     public Collection<FileSetMetaData> createMetadata() {
         Set<FileSetMetaData> metadata = new HashSet<FileSetMetaData>();
-        for (FileLocalContentMetadata entry : super.getMetadata()) {
+        for (FileLocalContentMetadata entry : super.getMetadataSet()) {
             metadata.add(entry.getEntry());
         }
         return metadata;
-    }
-
-    /**
-     * @use {@link #createMetadata()})
-     */
-    @Override
-    public List<FileLocalContentMetadata> getMetadata() {
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -49,20 +39,43 @@ public class FileLocalContent extends FileLocalContent_Base {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * @use {@link #createMetadata()})
-     */
-    @Override
-    public Iterator<FileLocalContentMetadata> getMetadataIterator() {
-        throw new UnsupportedOperationException();
-    }
-
     public void delete() {
-        removeFile();
+        setFile(null);
         for (FileLocalContentMetadata metadata : super.getMetadataSet()) {
             metadata.delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.FileLocalContentMetadata> getMetadata() {
+        return getMetadataSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMetadata() {
+        return !getMetadataSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFile() {
+        return getFile() != null;
+    }
+
+    @Deprecated
+    public boolean hasContent() {
+        return getContent() != null;
+    }
+
+    @Deprecated
+    public boolean hasPath() {
+        return getPath() != null;
+    }
+
 }

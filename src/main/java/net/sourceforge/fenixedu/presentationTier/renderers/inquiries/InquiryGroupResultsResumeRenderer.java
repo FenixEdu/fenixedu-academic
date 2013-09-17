@@ -338,7 +338,7 @@ public class InquiryGroupResultsResumeRenderer extends InputRenderer {
         if (questionHeader == null) {
             if (questionResultsSummaryBean.getScaleValues().size() > 0) {
                 questionHeader =
-                        questionResultsSummaryBean.getScaleValues().get(0).getInquiryQuestion().getInquiryQuestionHeader();
+                        questionResultsSummaryBean.getScaleValues().iterator().next().getInquiryQuestion().getInquiryQuestionHeader();
             }
         }
         if (questionHeader != null) {

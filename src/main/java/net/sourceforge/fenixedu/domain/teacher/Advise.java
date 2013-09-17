@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -11,10 +11,12 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
+
 public class Advise extends Advise_Base {
 
     static {
-        TeacherAdviseService.AdviseTeacherAdviseService.addListener(new AdviseTeacherAdviseServiceListener());
+        TeacherAdviseService.getRelationAdviseTeacherAdviseService().addListener(new AdviseTeacherAdviseServiceListener());
     }
 
     public Advise(Teacher teacher, Registration registration, AdviseType adviseType, ExecutionSemester startPeriod,
@@ -33,11 +35,11 @@ public class Advise extends Advise_Base {
 
     public void delete() {
         if (getTeacherAdviseServices() == null || getTeacherAdviseServices().isEmpty()) {
-            removeStudent();
-            removeTeacher();
-            removeEndExecutionPeriod();
-            removeStartExecutionPeriod();
-            removeRootDomainObject();
+            setStudent(null);
+            setTeacher(null);
+            setEndExecutionPeriod(null);
+            setStartExecutionPeriod(null);
+            setRootDomainObject(null);
             deleteDomainObject();
         } else {
             throw new DomainException("error.delete.Advise.hasTeacherAdviseServices");
@@ -96,13 +98,13 @@ public class Advise extends Advise_Base {
 
         private final String key;
 
-        private final List<Advise> advises;
+        private final Collection<Advise> advises;
 
         private final ExecutionSemester executionSemester;
 
         private final AdviseType adviseType;
 
-        public AdvisePercentageException(String key, List<Advise> advises, ExecutionSemester executionSemester,
+        public AdvisePercentageException(String key, Collection<Advise> advises, ExecutionSemester executionSemester,
                 AdviseType adviseType) {
             super(key);
             this.key = key;
@@ -111,7 +113,7 @@ public class Advise extends Advise_Base {
             this.adviseType = adviseType;
         }
 
-        public List<Advise> getAdvises() {
+        public Collection<Advise> getAdvises() {
             return advises;
         }
 
@@ -129,7 +131,7 @@ public class Advise extends Advise_Base {
         }
     }
 
-    private static class AdviseTeacherAdviseServiceListener extends dml.runtime.RelationAdapter<TeacherAdviseService, Advise> {
+    private static class AdviseTeacherAdviseServiceListener extends RelationAdapter<TeacherAdviseService, Advise> {
         @Override
         public void afterAdd(TeacherAdviseService teacherAdviseServices, Advise advise) {
             if (advise != null) {
@@ -159,4 +161,45 @@ public class Advise extends Advise_Base {
             }
         }
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService> getTeacherAdviseServices() {
+        return getTeacherAdviseServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherAdviseServices() {
+        return !getTeacherAdviseServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndExecutionPeriod() {
+        return getEndExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdviseType() {
+        return getAdviseType() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartExecutionPeriod() {
+        return getStartExecutionPeriod() != null;
+    }
+
 }

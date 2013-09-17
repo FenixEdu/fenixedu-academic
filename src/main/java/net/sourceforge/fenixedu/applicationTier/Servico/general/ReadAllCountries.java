@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.general;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
@@ -8,15 +9,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadAllCountries {
 
-    @Service
+    @Atomic
     public static Object run() throws ExcepcaoInexistente, FenixServiceException {
         List<InfoCountry> result = new ArrayList<InfoCountry>();
 
-        List<Country> countries = RootDomainObject.getInstance().getCountrys();
+        Collection<Country> countries = RootDomainObject.getInstance().getCountrys();
         if (countries.isEmpty()) {
             throw new ExcepcaoInexistente("Non existing Countries !!");
         }

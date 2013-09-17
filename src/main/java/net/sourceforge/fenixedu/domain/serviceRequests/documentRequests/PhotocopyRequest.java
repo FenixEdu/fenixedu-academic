@@ -91,4 +91,14 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
         return false;
     }
 
+    @Deprecated
+    public boolean hasSubject() {
+        return getSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPurpose() {
+        return getPurpose() != null;
+    }
+
 }

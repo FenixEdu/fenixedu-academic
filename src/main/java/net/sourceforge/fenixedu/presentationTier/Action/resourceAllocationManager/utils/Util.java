@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,8 +21,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Util {
 
-    public static List<LabelValueBean> readExistingBuldings(String name, String value) throws 
-            FenixServiceException {
+    public static List<LabelValueBean> readExistingBuldings(String name, String value) throws FenixServiceException {
         List<LabelValueBean> edificios = new ArrayList<LabelValueBean>();
 
         if (name != null) {
@@ -45,7 +45,7 @@ public class Util {
             tipos.add(new LabelValueBean(name, value));
         }
 
-        List<RoomClassification> roomClassifications = RootDomainObject.getInstance().getRoomClassification();
+        Collection<RoomClassification> roomClassifications = RootDomainObject.getInstance().getRoomClassification();
         for (RoomClassification classification : RoomClassification.sortByRoomClassificationAndCode(roomClassifications)) {
             if (classification.hasParentRoomClassification()) {
                 tipos.add(new LabelValueBean(classification.getPresentationCode() + " - "

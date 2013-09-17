@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDispatchAction {
 
@@ -44,11 +44,11 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
     }
 
     protected StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(request.getParameter("scpID"));
+        return FenixFramework.getDomainObject(request.getParameter("scpID"));
     }
 
     protected ExecutionSemester getExecutionSemester(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(request.getParameter("executionPeriodID"));
+        return FenixFramework.getDomainObject(request.getParameter("executionPeriodID"));
     }
 
     protected ActionForward showExtraEnrolments(NoCourseGroupEnrolmentBean bean, ActionMapping mapping, ActionForm actionForm,
@@ -143,7 +143,7 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
     }
 
     protected Enrolment getEnrolment(HttpServletRequest request) {
-        return (Enrolment) AbstractDomainObject.fromExternalId(request.getParameter("enrolment"));
+        return (Enrolment) FenixFramework.getDomainObject(request.getParameter("enrolment"));
     }
 
     public ActionForward back(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

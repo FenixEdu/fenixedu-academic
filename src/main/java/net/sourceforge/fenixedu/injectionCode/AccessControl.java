@@ -31,7 +31,7 @@ public class AccessControl {
         return getPerson() != null;
     }
 
-    static public void check(DomainObject c, AccessControlPredicate<DomainObject> predicate) {
+    public static <T extends DomainObject> void check(T c, AccessControlPredicate<T> predicate) {
         Person requester = AccessControl.getPerson();
         boolean result = false;
 
@@ -47,7 +47,7 @@ public class AccessControl {
         }
     }
 
-    static public void check(Object c, AccessControlPredicate<Object> predicate) {
+    public static <T> void check(T c, AccessControlPredicate<T> predicate) {
         Person requester = AccessControl.getPerson();
         boolean result = false;
 
@@ -63,7 +63,7 @@ public class AccessControl {
         }
     }
 
-    static public void check(AccessControlPredicate<Object> predicate) {
+    static public void check(AccessControlPredicate<?> predicate) {
         Person requester = AccessControl.getPerson();
         boolean result = false;
 

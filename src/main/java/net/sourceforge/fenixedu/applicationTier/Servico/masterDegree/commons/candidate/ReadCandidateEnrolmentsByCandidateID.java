@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,8 +13,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree;
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -25,13 +26,13 @@ public class ReadCandidateEnrolmentsByCandidateID {
     protected List run(String candidateID) throws FenixServiceException {
         List result = new ArrayList();
 
-        MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
 
         if (masterDegreeCandidate == null) {
             throw new NonExistingServiceException();
         }
 
-        List candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+        Collection candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
 
         if (candidateEnrolments == null) {
             throw new NonExistingServiceException();
@@ -52,7 +53,7 @@ public class ReadCandidateEnrolmentsByCandidateID {
 
     private static final ReadCandidateEnrolmentsByCandidateID serviceInstance = new ReadCandidateEnrolmentsByCandidateID();
 
-    @Service
+    @Atomic
     public static List runReadCandidateEnrolmentsByCandidateID(String candidateID) throws FenixServiceException,
             NotAuthorizedException {
         ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter.instance.execute(candidateID);

@@ -1,6 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
 <em><bean:message key="label.teacherPortal"/></em>
 <h2><bean:message key="label.teacher.tutor.operations"/></h2>

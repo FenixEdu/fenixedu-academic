@@ -33,7 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -60,7 +60,7 @@ public class ListPayedInsurancesDispatchAction extends FenixDispatchAction {
         request.setAttribute("months", Data.getMonthsStartingInOne());
         request.setAttribute(
                 "years",
-                Data.getCustomYears(executionYears.get(0).getBeginDateYearMonthDay().getYear(),
+                Data.getCustomYears(executionYears.iterator().next().getBeginDateYearMonthDay().getYear(),
                         Calendar.getInstance().get(Calendar.YEAR)));
 
         DynaActionForm actionForm = (DynaActionForm) form;
@@ -74,7 +74,7 @@ public class ListPayedInsurancesDispatchAction extends FenixDispatchAction {
 
         DynaActionForm actionForm = (DynaActionForm) form;
 
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId((String) actionForm.get("executionYearID"));
+        ExecutionYear executionYear = FenixFramework.getDomainObject((String) actionForm.get("executionYearID"));
 
         Integer endDateDay = (Integer) actionForm.get("endDateDay");
         Integer endDateMonth = (Integer) actionForm.get("endDateMonth");

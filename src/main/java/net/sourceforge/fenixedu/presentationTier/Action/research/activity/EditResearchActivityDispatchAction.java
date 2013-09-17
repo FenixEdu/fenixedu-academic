@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.activity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditResearchActivityDispatchAction extends ActivitiesManagementDispatchAction {
 
@@ -261,8 +262,7 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 
         String forwardTo = request.getParameter("forwardTo");
 
-        Participation participation =
-                (Participation) AbstractDomainObject.fromExternalId(request.getParameter("participationId"));
+        Participation participation = (Participation) FenixFramework.getDomainObject(request.getParameter("participationId"));
 
         if (participation != null) {
             try {
@@ -275,7 +275,7 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
         return mapping.findForward(forwardTo);
     }
 
-    private List<ResearchActivityParticipantEditionBean> createRoleBeans(List<? extends Participation> participations) {
+    private List<ResearchActivityParticipantEditionBean> createRoleBeans(Collection<? extends Participation> participations) {
         List<ResearchActivityParticipantEditionBean> participantBeans = new ArrayList<ResearchActivityParticipantEditionBean>();
         for (Participation participation : participations) {
             participantBeans.add(new ResearchActivityParticipantEditionBean(participation, participation.getRole(), participation

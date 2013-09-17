@@ -30,4 +30,24 @@ public class ResidenceManagementUnit extends ResidenceManagementUnit_Base {
         return getResidencePriceTable().isConfigured();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.residence.ResidenceYear> getResidenceYears() {
+        return getResidenceYearsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResidenceYears() {
+        return !getResidenceYearsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasResidencePriceTable() {
+        return getResidencePriceTable() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectForResidenceUnit() {
+        return getRootDomainObjectForResidenceUnit() != null;
+    }
+
 }

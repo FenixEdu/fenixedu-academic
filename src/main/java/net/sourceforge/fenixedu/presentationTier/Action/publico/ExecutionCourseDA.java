@@ -61,7 +61,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ExecutionCourseDA extends SiteVisualizationDA {
 
@@ -75,7 +75,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 
         ExecutionCourse executionCourse = null;
         if (executionCourseIDString != null) {
-            final DomainObject object = AbstractDomainObject.fromExternalId(executionCourseIDString);
+            final DomainObject object = FenixFramework.getDomainObject(executionCourseIDString);
             if (object instanceof ExecutionCourse) {
                 executionCourse = (ExecutionCourse) object;
             } else {
@@ -157,13 +157,13 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
             }
             final String shiftID = (String) dynaActionForm.get("shiftID");
             if (shiftID != null && shiftID.length() > 0) {
-                summariesSearchBean.setShift(AbstractDomainObject.<Shift> fromExternalId(shiftID));
+                summariesSearchBean.setShift(FenixFramework.<Shift> getDomainObject(shiftID));
             }
             final String professorshipID = (String) dynaActionForm.get("professorshipID");
             if (professorshipID != null && professorshipID.equals("-1")) {
                 summariesSearchBean.setShowOtherProfessors(Boolean.TRUE);
             } else if (professorshipID != null && !professorshipID.equals("0")) {
-                summariesSearchBean.setProfessorship(AbstractDomainObject.<Professorship> fromExternalId(professorshipID));
+                summariesSearchBean.setProfessorship(FenixFramework.<Professorship> getDomainObject(professorshipID));
             }
         }
         return mapping.findForward("execution-course-summaries");
@@ -313,12 +313,12 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
     }
 
     protected StudentGroup getStudentGroup(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(request.getParameter("studentGroupID"));
+        return FenixFramework.getDomainObject(request.getParameter("studentGroupID"));
     }
 
     protected Shift getShift(final HttpServletRequest request) {
         if (request.getParameter("shiftID") != null) {
-            return AbstractDomainObject.fromExternalId(request.getParameter("shiftID"));
+            return FenixFramework.getDomainObject(request.getParameter("shiftID"));
         } else {
             return null;
         }
@@ -366,7 +366,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 
             Map<Professorship, Set<ShiftType>> professorships = new HashMap<Professorship, Set<ShiftType>>();
             for (Professorship professorship : executionCourse.getProfessorships()) {
-                List<InquiryResult> professorshipResults = professorship.getInquiryResults();
+                Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
                 if (!professorshipResults.isEmpty()) {
                     professorships.put(professorship, getShiftTypes(professorshipResults));
                 }
@@ -380,7 +380,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
         }
     }
 
-    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+    private Set<ShiftType> getShiftTypes(Collection<InquiryResult> professorshipResults) {
         Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
         for (InquiryResult inquiryResult : professorshipResults) {
             shiftTypes.add(inquiryResult.getShiftType());

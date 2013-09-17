@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -26,7 +26,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.AbstractDomainObject;
 
 @Mapping(module = "scientificCouncil", path = "/competenceCourses/manageVersions", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -41,7 +42,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Set<Department> departments = RootDomainObject.readAllDomainObjects(Department.class);
+        Set<Department> departments = DomainObjectUtil.readAllDomainObjects(Department.class);
         request.setAttribute("departments", departments);
 
         return mapping.findForward("manageVersions");
@@ -51,7 +52,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
             HttpServletResponse response) {
 
         String departmentID = request.getParameter("departmentID");
-        Department department = (Department) AbstractDomainObject.fromExternalId(departmentID);
+        Department department = (Department) FenixFramework.getDomainObject(departmentID);
         putChangeRequestInRequest(request, department);
 
         return mapping.findForward("listRequests");
@@ -101,14 +102,13 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     private CompetenceCourseInformationChangeRequest getChangeRequest(HttpServletRequest request) {
         String competenceCourseInformationChangeRequestId = request.getParameter("changeRequestID");
         CompetenceCourseInformationChangeRequest changeRequest =
-                (CompetenceCourseInformationChangeRequest) AbstractDomainObject
-                        .fromExternalId(competenceCourseInformationChangeRequestId);
+                (CompetenceCourseInformationChangeRequest) FenixFramework.getDomainObject(competenceCourseInformationChangeRequestId);
         return changeRequest;
     }
 
     private CompetenceCourse getCompetenceCourse(HttpServletRequest request) {
         String competenceCourseID = request.getParameter("competenceCourseID");
-        CompetenceCourse course = (CompetenceCourse) AbstractDomainObject.fromExternalId(competenceCourseID);
+        CompetenceCourse course = (CompetenceCourse) FenixFramework.getDomainObject(competenceCourseID);
         return course;
     }
 

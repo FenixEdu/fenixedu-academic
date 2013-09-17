@@ -32,7 +32,7 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup {
 
     @Override
     public int getElementsCount() {
-        return this.getExecutionCourse().getAttendsCount();
+        return this.getExecutionCourse().getAttends().size();
     }
 
     @Override

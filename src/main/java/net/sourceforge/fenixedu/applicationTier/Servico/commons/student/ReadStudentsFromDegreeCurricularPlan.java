@@ -7,6 +7,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.StudentListByDegreeAuthorizationFilter;
@@ -22,16 +23,16 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentsFromDegreeCurricularPlan {
 
     protected List run(String degreeCurricularPlanID, DegreeType degreeType) throws FenixServiceException {
         // Read the Students
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
-        List students = degreeCurricularPlan.getStudentCurricularPlans();
+        Collection students = degreeCurricularPlan.getStudentCurricularPlans();
 
         if ((students == null) || (students.isEmpty())) {
             throw new NonExistingServiceException();
@@ -51,7 +52,7 @@ public class ReadStudentsFromDegreeCurricularPlan {
 
     private static final ReadStudentsFromDegreeCurricularPlan serviceInstance = new ReadStudentsFromDegreeCurricularPlan();
 
-    @Service
+    @Atomic
     public static List runReadStudentsFromDegreeCurricularPlan(String degreeCurricularPlanID, DegreeType degreeType)
             throws FenixServiceException, NotAuthorizedException {
         try {

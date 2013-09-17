@@ -176,4 +176,74 @@ public class Seminary extends Seminary_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy> getCandidacies() {
+        return getCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidacies() {
+        return !getCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency> getEquivalencies() {
+        return getEquivalenciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEquivalencies() {
+        return !getEquivalenciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentBeginYearMonthDay() {
+        return getEnrollmentBeginYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentTimeEndHourMinuteSecond() {
+        return getEnrollmentTimeEndHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentEndYearMonthDay() {
+        return getEnrollmentEndYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasHasCaseStudy() {
+        return getHasCaseStudy() != null;
+    }
+
+    @Deprecated
+    public boolean hasHasTheme() {
+        return getHasTheme() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentTimeBeginHourMinuteSecond() {
+        return getEnrollmentTimeBeginHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowedCandidaciesPerStudent() {
+        return getAllowedCandidaciesPerStudent() != null;
+    }
+
 }

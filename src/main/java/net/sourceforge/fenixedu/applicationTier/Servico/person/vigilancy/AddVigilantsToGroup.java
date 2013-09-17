@@ -7,11 +7,11 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AddVigilantsToGroup {
 
-    @Service
+    @Atomic
     public static void run(Map<VigilantGroup, List<Person>> peopleToAdd) {
 
         Set<VigilantGroup> groups = peopleToAdd.keySet();

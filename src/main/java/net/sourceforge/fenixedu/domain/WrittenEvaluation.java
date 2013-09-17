@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -33,7 +34,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
@@ -47,7 +47,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
                 return c1;
             }
             final int c2 = o1.getBeginningDateHourMinuteSecond().compareTo(o2.getBeginningDateHourMinuteSecond());
-            return c2 == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c2;
+            return c2 == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c2;
         }
 
     };
@@ -70,7 +70,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public String getName() {
-        List<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
         String name = "";
         int i = 0;
         for (ExecutionCourse course : courses) {
@@ -84,7 +84,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public String getFullName() {
-        List<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
         String fullName = "";
         int i = 0;
         for (ExecutionCourse course : courses) {
@@ -100,14 +100,14 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     public Campus getCampus() {
         List<AllocatableSpace> rooms = getAssociatedRooms();
         if (rooms.size() > 0) {
-            return rooms.get(0).getSpaceCampus();
+            return rooms.iterator().next().getSpaceCampus();
         } else {
             return null;
         }
     }
 
     public ExecutionYear getExecutionYear() {
-        return this.getAssociatedExecutionCourses().get(0).getExecutionYear();
+        return this.getAssociatedExecutionCourses().iterator().next().getExecutionYear();
     }
 
     public ExecutionDegree getExecutionDegree() {
@@ -377,7 +377,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     private void deleteAllRoomOccupations() {
         while (hasAnyWrittenEvaluationSpaceOccupations()) {
-            WrittenEvaluationSpaceOccupation occupation = getWrittenEvaluationSpaceOccupations().get(0);
+            WrittenEvaluationSpaceOccupation occupation = getWrittenEvaluationSpaceOccupations().iterator().next();
             occupation.removeWrittenEvaluations(this);
             occupation.delete();
         }
@@ -458,7 +458,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     private void deleteAllVigilanciesAssociated() {
-        for (; !this.getVigilancies().isEmpty(); this.getVigilancies().get(0).delete()) {
+        for (; !this.getVigilancies().isEmpty(); this.getVigilancies().iterator().next().delete()) {
             ;
         }
     }
@@ -661,7 +661,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public Integer getCountVacancies() {
-        final int writtenEvaluationEnrolmentsCount = getWrittenEvaluationEnrolmentsCount();
+        final int writtenEvaluationEnrolmentsCount = getWrittenEvaluationEnrolmentsSet().size();
         final int countNumberReservedSeats = getCountNumberReservedSeats().intValue();
         return Integer.valueOf(countNumberReservedSeats - writtenEvaluationEnrolmentsCount);
     }
@@ -844,8 +844,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
                 }
             }
         } else {
-            courseName = this.getAttendingExecutionCoursesFor(registration).get(0).getNome();
-            executionCourse = this.getAttendingExecutionCoursesFor(registration).get(0);
+            courseName = this.getAttendingExecutionCoursesFor(registration).iterator().next().getNome();
+            executionCourse = this.getAttendingExecutionCoursesFor(registration).iterator().next();
         }
 
         if (this.getEnrollmentBeginDayDateYearMonthDay() != null) {
@@ -1012,6 +1012,96 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         } else {
             setEnrollmentEndTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseScope> getAssociatedCurricularCourseScope() {
+        return getAssociatedCurricularCourseScopeSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedCurricularCourseScope() {
+        return !getAssociatedCurricularCourseScopeSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getAssociatedContexts() {
+        return getAssociatedContextsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedContexts() {
+        return !getAssociatedContextsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.Vigilancy> getVigilancies() {
+        return getVigilanciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVigilancies() {
+        return !getVigilanciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation> getWrittenEvaluationSpaceOccupations() {
+        return getWrittenEvaluationSpaceOccupationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWrittenEvaluationSpaceOccupations() {
+        return !getWrittenEvaluationSpaceOccupationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment> getWrittenEvaluationEnrolments() {
+        return getWrittenEvaluationEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWrittenEvaluationEnrolments() {
+        return !getWrittenEvaluationEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentEndTimeDateHourMinuteSecond() {
+        return getEnrollmentEndTimeDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentBeginTimeDateHourMinuteSecond() {
+        return getEnrollmentBeginTimeDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentEndDayDateYearMonthDay() {
+        return getEnrollmentEndDayDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentBeginDayDateYearMonthDay() {
+        return getEnrollmentBeginDayDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasDayDateYearMonthDay() {
+        return getDayDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateHourMinuteSecond() {
+        return getEndDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginningDateHourMinuteSecond() {
+        return getBeginningDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasVigilantsReport() {
+        return getVigilantsReport() != null;
     }
 
 }

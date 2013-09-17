@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.apache.commons.io.FileUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -34,7 +34,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
  */
 public class SaveCandidacyDocumentFiles {
 
-    @Service
+    @Atomic
     public static void run(List<CandidacyDocumentUploadBean> candidacyDocuments) {
 
         Group masterDegreeOfficeEmployeesGroup =

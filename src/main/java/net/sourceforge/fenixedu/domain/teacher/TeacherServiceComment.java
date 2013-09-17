@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TeacherServiceComment extends TeacherServiceComment_Base {
 
@@ -35,13 +35,33 @@ public class TeacherServiceComment extends TeacherServiceComment_Base {
         return ((IUserView) UserView.getUser()).getPerson().equals(getCreatedBy());
     }
 
-    @Service
+    @Atomic
     @Override
     public void delete() {
         new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
                 "resources.TeacherCreditsSheetResources", "label.teacher.teacherServiceComment.delete", getContent(),
                 getCreationDate().toString(), getLastModifiedDate().toString("yyyy-MM-dd HH:mm")));
-        removeCreatedBy();
+        setCreatedBy(null);
         super.delete();
     }
+    @Deprecated
+    public boolean hasCreatedBy() {
+        return getCreatedBy() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDate() {
+        return getLastModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasContent() {
+        return getContent() != null;
+    }
+
 }

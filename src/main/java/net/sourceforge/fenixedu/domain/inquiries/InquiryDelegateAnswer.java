@@ -12,4 +12,24 @@ public class InquiryDelegateAnswer extends InquiryDelegateAnswer_Base {
         setExecutionCourse(executionCourse);
         setExecutionDegree(executionDegree);
     }
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowAcademicPublicizing() {
+        return getAllowAcademicPublicizing() != null;
+    }
+
+    @Deprecated
+    public boolean hasDelegate() {
+        return getDelegate() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
 }

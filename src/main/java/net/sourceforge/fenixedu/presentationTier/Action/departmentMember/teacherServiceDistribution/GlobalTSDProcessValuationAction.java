@@ -67,7 +67,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
         } else if (selectedExecutionYear != null) {
             tsdProcessList = selectedDepartment.getTSDProcessesByExecutionYear(selectedExecutionYear);
         } else {
-            tsdProcessList = selectedDepartment.getTSDProcesses();
+            tsdProcessList = new ArrayList<>(selectedDepartment.getTSDProcesses());
         }
 
         tsdProcessList = selectOnlyTSDProcesssWithPublishedPhases(tsdProcessList);
@@ -95,7 +95,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
         dynaForm.set("tsdProcess", tsdProcessId);
 
         TSDProcess process = getTSDProcess(dynaForm);
-        TSDProcessPhase phase = process.getOrderedPublishedTSDProcessPhases().get(0);
+        TSDProcessPhase phase = process.getOrderedPublishedTSDProcessPhases().iterator().next();
         TeacherServiceDistribution rootTSD = phase.getRootTSD();
 
         dynaForm.set("tsd", rootTSD.getExternalId());

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AuditSelectPersonsECBean implements Serializable {
 
@@ -50,7 +50,7 @@ public class AuditSelectPersonsECBean implements Serializable {
         return executionCourse;
     }
 
-    @Service
+    @Atomic
     public void savePersons() {
         if (getTeacher() == null) {
             throw new DomainException("error.inquiry.audit.mandatoryTeacher");

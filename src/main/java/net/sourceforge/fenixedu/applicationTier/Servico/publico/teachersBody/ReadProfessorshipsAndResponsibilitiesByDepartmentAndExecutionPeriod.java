@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico.teachersBody;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -21,18 +22,18 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod {
 
-    @Service
+    @Atomic
     public static List run(String departmentId, String executionYearID, Integer semester, Integer teacherType)
             throws FenixServiceException {
 
         ExecutionYear executionYear = null;
         if (executionYearID != null) {
-            executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+            executionYear = FenixFramework.getDomainObject(executionYearID);
         }
 
         final ExecutionSemester executionSemester = executionYear.getExecutionSemesterFor(semester);
@@ -40,7 +41,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
             throw new FenixServiceException("error.noExecutionPeriod");
         }
 
-        final Department department = AbstractDomainObject.fromExternalId(departmentId);
+        final Department department = FenixFramework.getDomainObject(departmentId);
         if (department == null) {
             throw new FenixServiceException("error.noDepartment");
         }
@@ -53,7 +54,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
         List responsibleFors = new ArrayList();
         while (iter.hasNext()) {
             Teacher teacher = (Teacher) iter.next();
-            List teacherProfessorships = null;
+            Collection teacherProfessorships = null;
             if (executionYear == null) {
                 teacherProfessorships = teacher.getProfessorships();
             } else {

@@ -6,14 +6,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SetCoursesAndTeachersValuationPermission {
     protected void run(String tsdId, String personId, Boolean coursesValuationPermission, Boolean teachersValuationPermission,
             Boolean coursesManagementPermission, Boolean teachersManagementPermission) {
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
-        Person person = (Person) AbstractDomainObject.fromExternalId(personId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
+        Person person = (Person) FenixFramework.getDomainObject(personId);
 
         if (coursesValuationPermission) {
             tsd.addCourseValuationPermission(person);
@@ -45,7 +45,7 @@ public class SetCoursesAndTeachersValuationPermission {
     private static final SetCoursesAndTeachersValuationPermission serviceInstance =
             new SetCoursesAndTeachersValuationPermission();
 
-    @Service
+    @Atomic
     public static void runSetCoursesAndTeachersValuationPermission(String tsdId, String personId,
             Boolean coursesValuationPermission, Boolean teachersValuationPermission, Boolean coursesManagementPermission,
             Boolean teachersManagementPermission) throws NotAuthorizedException {

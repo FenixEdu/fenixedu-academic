@@ -42,7 +42,7 @@ public class DegreeCandidacyForGraduatedPersonCandidacyPeriod extends DegreeCand
     }
 
     public DegreeCandidacyForGraduatedPersonProcess getDegreeCandidacyForGraduatedPersonProcess() {
-        return (DegreeCandidacyForGraduatedPersonProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
+        return (DegreeCandidacyForGraduatedPersonProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().iterator().next() : null);
     }
 
     @Override

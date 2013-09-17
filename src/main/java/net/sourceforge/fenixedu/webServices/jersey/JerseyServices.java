@@ -14,12 +14,14 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.webServices.ExportPublications;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONArray;
@@ -106,6 +108,55 @@ public class JerseyServices {
             }
         }
         return builder.toString();
+    }
+
+    @GET
+    @Path("users")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String readUsers() {
+        JSONArray users = new JSONArray();
+        for (final User user : RootDomainObject.getInstance().getUsersSet()) {
+            if (!StringUtils.isEmpty(user.getUserUId()) && user.hasPerson()) {
+                JSONObject json = new JSONObject();
+                json.put("istId", user.getUserUId());
+                json.put("name", user.getPerson().getName());
+                if (user.getPerson().getEmailForSendingEmails() != null) {
+                    json.put("email", user.getPerson().getEmailForSendingEmails());
+                }
+                users.add(json);
+            }
+        }
+        return users.toJSONString();
+    }
+
+    @GET
+    @Path("researchers")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String readResearchers() {
+        JSONArray researchers = new JSONArray();
+        for (final User user : RootDomainObject.getInstance().getUsersSet()) {
+            if (!StringUtils.isEmpty(user.getUserUId()) && user.hasPerson() && user.getPerson().hasAnyResultParticipations()) {
+                JSONObject json = new JSONObject();
+                json.put("istId", user.getUserUId());
+                JSONArray array = new JSONArray();
+                for (ResearchUnit unit : user.getPerson().getWorkingResearchUnits()) {
+                    JSONObject element = new JSONObject();
+                    element.put("acronym", unit.getAcronym());
+                    element.put("name", unit.getName());
+                    array.add(element);
+                }
+                json.put("department", array);
+                researchers.add(json);
+            }
+        }
+        return researchers.toJSONString();
+    }
+
+    @GET
+    @Path("publications")
+    @Produces(MediaType.APPLICATION_XML)
+    public byte[] readPublications() {
+        return new ExportPublications().harverst();
     }
 
     @GET

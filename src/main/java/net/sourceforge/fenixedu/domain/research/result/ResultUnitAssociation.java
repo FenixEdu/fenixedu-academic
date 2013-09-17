@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.domain.research.result;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ResultUnitAssociation extends ResultUnitAssociation_Base {
 
@@ -28,8 +29,8 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
     }
 
     @Override
-    @Checked("ResultPredicates.unitWritePredicate")
     public void setRole(ResultUnitAssociationRole role) {
+        check(this, ResultPredicates.unitWritePredicate);
         if (role == null) {
             throw new DomainException("error.researcher.ResultUnitAssociation.role.null");
         }
@@ -45,7 +46,7 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
     }
 
     public final static ResultUnitAssociation readByOid(String oid) {
-        final ResultUnitAssociation association = AbstractDomainObject.fromExternalId(oid);
+        final ResultUnitAssociation association = FenixFramework.getDomainObject(oid);
 
         if (association == null) {
             throw new DomainException("error.researcher.ResultUnitAssociation.null");
@@ -59,7 +60,7 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
      */
     public final void delete() {
         removeReferences();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -102,13 +103,24 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
         throw new DomainException("error.researcher.ResultUnitAssociation.call", "setUnit");
     }
 
-    @Override
-    public void removeUnit() {
-        throw new DomainException("error.researcher.ResultUnitAssociation.call", "removeUnit");
+    @Deprecated
+    public boolean hasResult() {
+        return getResult() != null;
     }
 
-    @Override
-    public void removeResult() {
-        throw new DomainException("error.researcher.ResultUnitAssociation.call", "removeResult");
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
     }
+
+    @Deprecated
+    public boolean hasRole() {
+        return getRole() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

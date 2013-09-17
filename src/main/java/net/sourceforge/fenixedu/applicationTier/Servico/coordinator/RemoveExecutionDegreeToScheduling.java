@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RemoveExecutionDegreeToScheduling {
 
@@ -26,7 +26,7 @@ public class RemoveExecutionDegreeToScheduling {
 
     private static final RemoveExecutionDegreeToScheduling serviceInstance = new RemoveExecutionDegreeToScheduling();
 
-    @Service
+    @Atomic
     public static void runRemoveExecutionDegreeToScheduling(Scheduleing scheduleing, ExecutionDegree executionDegree)
             throws FenixServiceException, NotAuthorizedException {
         try {

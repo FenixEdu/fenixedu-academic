@@ -5,7 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -23,9 +23,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.struts.util.MessageResources;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -35,13 +36,13 @@ public class GroupStudentEnrolment {
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(String studentGroupCode, String username) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         ServiceMonitoring.logService(GroupStudentEnrolment.class, studentGroupCode, username);
 
-        final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        final StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -67,7 +68,7 @@ public class GroupStudentEnrolment {
             throw new InvalidArgumentsServiceException();
         }
 
-        checkIfStudentIsNotEnrolledInOtherGroups(grouping.getStudentGroups(), studentGroup, studentAttend);
+        checkIfStudentIsNotEnrolledInOtherGroups(grouping.getStudentGroupsSet(), studentGroup, studentAttend);
 
         studentGroup.addAttends(studentAttend);
 
@@ -87,7 +88,7 @@ public class GroupStudentEnrolment {
         }
     }
 
-    private static void checkIfStudentIsNotEnrolledInOtherGroups(final List<StudentGroup> studentGroups,
+    private static void checkIfStudentIsNotEnrolledInOtherGroups(final Collection<StudentGroup> studentGroups,
             final StudentGroup studentGroupEnrolled, final Attends studentAttend) throws InvalidSituationServiceException {
 
         for (final StudentGroup studentGroup : studentGroups) {

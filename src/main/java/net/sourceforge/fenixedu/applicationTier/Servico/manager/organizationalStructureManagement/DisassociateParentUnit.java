@@ -6,16 +6,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DisassociateParentUnit {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String accountabilityID) throws FenixServiceException {
-        Accountability accountability = AbstractDomainObject.fromExternalId(accountabilityID);
+        check(RolePredicates.MANAGER_PREDICATE);
+        Accountability accountability = FenixFramework.getDomainObject(accountabilityID);
         if (accountability == null) {
             throw new FenixServiceException("error.inexistent.accountability");
         }

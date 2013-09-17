@@ -22,7 +22,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
 
@@ -131,7 +131,7 @@ public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
             HttpServletResponse response) throws InvalidArgumentException {
         final String thesisIdString = request.getParameter("thesisID");
 
-        final Thesis thesis = AbstractDomainObject.fromExternalId(thesisIdString);
+        final Thesis thesis = FenixFramework.getDomainObject(thesisIdString);
         request.setAttribute("thesis", thesis);
 
         final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);;
@@ -150,7 +150,7 @@ public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
             HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
         final String thesisIdString = request.getParameter("thesisID");
 
-        final Thesis thesis = AbstractDomainObject.fromExternalId(thesisIdString);
+        final Thesis thesis = FenixFramework.getDomainObject(thesisIdString);
         ConfirmThesisDocumentSubmission.run(thesis);
 
         request.setAttribute("documentsConfirmed", Boolean.TRUE);

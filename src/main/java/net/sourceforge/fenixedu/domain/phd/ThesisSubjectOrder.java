@@ -33,12 +33,12 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
                     followingSubjectOrder.decreaseSubjectOrder();
                 }
             }
-            removePhdIndividualProgramProcess();
+            setPhdIndividualProgramProcess(null);
         }
 
-        removeThesisSubject();
+        setThesisSubject(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -56,6 +56,26 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
     @ConsistencyPredicate
     public boolean checkHasPhdIndividualProgramProcess() {
         return hasPhdIndividualProgramProcess();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasThesisSubject() {
+        return getThesisSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdIndividualProgramProcess() {
+        return getPhdIndividualProgramProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubjectOrder() {
+        return getSubjectOrder() != null;
     }
 
 }

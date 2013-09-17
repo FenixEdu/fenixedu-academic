@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreatePerformanceGridTable {
 
@@ -149,7 +149,7 @@ public class CreatePerformanceGridTable {
 
     private static final CreatePerformanceGridTable serviceInstance = new CreatePerformanceGridTable();
 
-    @Service
+    @Atomic
     public static PerformanceGridTableDTO runCreatePerformanceGridTable(List<Tutorship> tutorships,
             ExecutionYear studentEntryYear, ExecutionYear monitoringYear) throws NotAuthorizedException {
         try {

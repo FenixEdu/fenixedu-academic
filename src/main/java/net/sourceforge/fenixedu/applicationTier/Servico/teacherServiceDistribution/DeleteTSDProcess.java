@@ -5,12 +5,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilt
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteTSDProcess {
     protected void run(String tsdProcessId) {
-        TSDProcess tsdProcess = AbstractDomainObject.fromExternalId(tsdProcessId);
+        TSDProcess tsdProcess = FenixFramework.getDomainObject(tsdProcessId);
 
         tsdProcess.delete();
     }
@@ -19,7 +19,7 @@ public class DeleteTSDProcess {
 
     private static final DeleteTSDProcess serviceInstance = new DeleteTSDProcess();
 
-    @Service
+    @Atomic
     public static void runDeleteTSDProcess(String tsdProcessId) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

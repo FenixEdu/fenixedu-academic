@@ -47,4 +47,39 @@ public class TeacherCreditsState extends TeacherCreditsState_Base {
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCredits> getTeacherCredits() {
+        return getTeacherCreditsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherCredits() {
+        return !getTeacherCreditsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDate() {
+        return getLastModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreditState() {
+        return getCreditState() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

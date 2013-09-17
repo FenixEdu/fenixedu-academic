@@ -178,4 +178,14 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
         return false;
     }
 
+    @Deprecated
+    public boolean hasOtherDocumentPurposeTypeDescription() {
+        return getOtherDocumentPurposeTypeDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentPurposeType() {
+        return getDocumentPurposeType() != null;
+    }
+
 }

@@ -4,8 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -22,9 +22,10 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa and rmalo
@@ -33,16 +34,16 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UnEnrollGroupShift {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(String studentGroupCode, String groupPropertiesCode, String username) throws FenixServiceException {
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        check(RolePredicates.STUDENT_PREDICATE);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
 
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
@@ -78,7 +79,7 @@ public class UnEnrollGroupShift {
     private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup) {
         boolean found = false;
 
-        List studentGroupAttends = studentGroup.getAttends();
+        Collection studentGroupAttends = studentGroup.getAttends();
         Attends attend = null;
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {

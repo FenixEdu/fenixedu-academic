@@ -6,7 +6,7 @@ import java.util.Collections;
 import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -29,14 +29,14 @@ public class GenericApplicationLetterOfRecomentation extends GenericApplicationL
         return filePath;
     }
 
-    @Service
+    @Atomic
     public void deleteFromApplication() {
         delete();
     }
 
     @Override
     protected void disconnect() {
-        removeRecomentation();
+        setRecomentation(null);
         super.disconnect();
     }
 

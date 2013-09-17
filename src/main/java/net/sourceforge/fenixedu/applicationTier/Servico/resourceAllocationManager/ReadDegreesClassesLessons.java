@@ -20,26 +20,27 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * TODO Remove cloner deste servi�o...
  */
 public class ReadDegreesClassesLessons {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static List run(List infoExecutionDegrees, AcademicInterval academicInterval) {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
         List infoViewClassScheduleList = new ArrayList();
 
         List classes = new ArrayList();
         for (int i = 0; i < infoExecutionDegrees.size(); i++) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees.get(i);
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
-            List degreeClasses = executionDegree.getSchoolClasses();
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
+            Collection degreeClasses = executionDegree.getSchoolClasses();
             for (Iterator iterator = degreeClasses.iterator(); iterator.hasNext();) {
                 SchoolClass klass = (SchoolClass) iterator.next();
                 if (klass.getAcademicInterval().equals(academicInterval)) {
@@ -53,11 +54,11 @@ public class ReadDegreesClassesLessons {
             SchoolClass turma = (SchoolClass) classes.get(i);
 
             // read class lessons
-            List shiftList = turma.getAssociatedShifts();
-            Iterator iterator = shiftList.iterator();
+            Collection<Shift> shiftList = turma.getAssociatedShifts();
+            Iterator<Shift> iterator = shiftList.iterator();
             List infoLessonList = new ArrayList();
             while (iterator.hasNext()) {
-                Shift shift = (Shift) iterator.next();
+                Shift shift = iterator.next();
 
                 final Collection lessons = shift.getAssociatedLessons();
                 for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext();) {

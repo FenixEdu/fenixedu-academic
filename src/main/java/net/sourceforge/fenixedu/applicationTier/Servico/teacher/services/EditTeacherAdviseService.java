@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
@@ -23,8 +24,8 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ricardo Rodrigues
@@ -36,9 +37,9 @@ public class EditTeacherAdviseService {
     protected void run(Teacher teacher, String executionPeriodID, final Integer studentNumber, Double percentage,
             AdviseType adviseType, RoleType roleType) throws FenixServiceException {
 
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
 
-        List<Registration> students = RootDomainObject.getInstance().getRegistrations();
+        Collection<Registration> students = RootDomainObject.getInstance().getRegistrations();
         Registration registration = (Registration) CollectionUtils.find(students, new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
@@ -75,7 +76,7 @@ public class EditTeacherAdviseService {
 
     private static final EditTeacherAdviseService serviceInstance = new EditTeacherAdviseService();
 
-    @Service
+    @Atomic
     public static void runEditTeacherAdviseService(Teacher teacher, String executionPeriodID, Integer studentNumber,
             Double percentage, AdviseType adviseType, RoleType roleType) throws FenixServiceException, NotAuthorizedException {
         try {

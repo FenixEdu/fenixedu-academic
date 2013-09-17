@@ -8,11 +8,11 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RemoveVigilantsFromGroup {
 
-    @Service
+    @Atomic
     public static List<VigilantWrapper> run(Map<VigilantGroup, List<VigilantWrapper>> vigilantsToRemove) {
 
         List<VigilantWrapper> unableToRemove = new ArrayList<VigilantWrapper>();

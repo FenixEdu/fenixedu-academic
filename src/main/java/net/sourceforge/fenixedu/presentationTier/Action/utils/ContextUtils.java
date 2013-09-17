@@ -55,7 +55,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -462,7 +462,7 @@ public class ContextUtils {
     private static RoomClassification readTypeRoomRequestValue(HttpServletRequest request, String name) {
         String obj = readRequestValue(request, name);
         if (obj != null) {
-            return AbstractDomainObject.fromExternalId(obj);
+            return FenixFramework.getDomainObject(obj);
         }
 
         return null;
@@ -613,21 +613,21 @@ public class ContextUtils {
             }
             if (request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID) != null) {
                 executionDegree =
-                        AbstractDomainObject.fromExternalId((String) request
+                        FenixFramework.getDomainObject((String) request
                                 .getAttribute(PresentationConstants.EXECUTION_DEGREE_OID));
             } else if (request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID) != null) {
                 executionDegree =
-                        AbstractDomainObject.fromExternalId(request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID));
+                        FenixFramework.getDomainObject(request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID));
             }
             if (request.getAttribute(PresentationConstants.CURRICULAR_YEAR_OID) != null
                     && !request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID).equals("null")) {
                 curricularYear =
-                        AbstractDomainObject.fromExternalId((String) request
+                        FenixFramework.getDomainObject((String) request
                                 .getAttribute(PresentationConstants.CURRICULAR_YEAR_OID));
             } else if (request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID) != null
                     && !request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID).equals("null")) {
                 curricularYear =
-                        AbstractDomainObject.fromExternalId(request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID));
+                        FenixFramework.getDomainObject(request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID));
             }
             if (request.getAttribute("execution_course_name") != null) {
                 courseName = (String) request.getAttribute("execution_course_name");

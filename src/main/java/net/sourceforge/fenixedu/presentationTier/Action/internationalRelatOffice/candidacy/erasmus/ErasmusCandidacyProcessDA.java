@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.candidacy.erasmus;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -46,6 +47,7 @@ import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "internationalRelatOffice",
         formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
@@ -83,7 +85,7 @@ public class ErasmusCandidacyProcessDA extends
 
     @Override
     protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-        List<IndividualCandidacyProcess> processes = process.getChildProcesses();
+        Collection<IndividualCandidacyProcess> processes = process.getChildProcesses();
         List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses =
                 new ArrayList<IndividualCandidacyProcess>();
         Degree selectedDegree = getChooseDegreeBean(request).getDegree();
@@ -405,8 +407,7 @@ public class ErasmusCandidacyProcessDA extends
 
         if (actionForm.getSelectedProcesses() != null) {
             for (String externalId : actionForm.getSelectedProcesses()) {
-                processList.add((MobilityIndividualApplicationProcess) MobilityIndividualApplicationProcess
-                        .fromExternalId(externalId));
+                processList.add(FenixFramework.<MobilityIndividualApplicationProcess> getDomainObject(externalId));
             }
         }
 

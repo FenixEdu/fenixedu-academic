@@ -293,4 +293,9 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
         return RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement());
     }
 
+    @Deprecated
+    public boolean hasNumberOfUnits() {
+        return getNumberOfUnits() != null;
+    }
+
 }

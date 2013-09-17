@@ -7,29 +7,30 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditDegreeCurricularPlan {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String dcpId, String name, CurricularStage curricularStage,
             DegreeCurricularPlanState degreeCurricularPlanState, GradeScale gradeScale, String executionYearID)
             throws FenixServiceException {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         if (dcpId == null || name == null || curricularStage == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DegreeCurricularPlan dcpToEdit = AbstractDomainObject.fromExternalId(dcpId);
+        final DegreeCurricularPlan dcpToEdit = FenixFramework.getDomainObject(dcpId);
         if (dcpToEdit == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.no.existing.degreeCurricularPlan");
         }
 
         final ExecutionYear executionYear =
-                (executionYearID == null) ? null : AbstractDomainObject.<ExecutionYear> fromExternalId(executionYearID);
+                (executionYearID == null) ? null : FenixFramework.<ExecutionYear> getDomainObject(executionYearID);
 
         dcpToEdit.edit(name, curricularStage, degreeCurricularPlanState, gradeScale, executionYear);
     }

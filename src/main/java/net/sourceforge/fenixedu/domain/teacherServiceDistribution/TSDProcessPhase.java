@@ -9,7 +9,8 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.TSDProcessPhasePredicates;
 
 public class TSDProcessPhase extends TSDProcessPhase_Base {
 
@@ -94,47 +95,47 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
         return true;
     }
 
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setCurrent() {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         if (getStatus() == TSDProcessPhaseStatus.OPEN) {
             getCurrentTSDProcessPhase().setStatus(TSDProcessPhaseStatus.OPEN);
             setStatus(TSDProcessPhaseStatus.CURRENT);
         }
     }
 
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setClosed() {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         if (getStatus() == TSDProcessPhaseStatus.OPEN) {
             setStatus(TSDProcessPhaseStatus.CLOSED);
         }
     }
 
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setOpen() {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         if (getStatus() == TSDProcessPhaseStatus.CLOSED) {
             setStatus(TSDProcessPhaseStatus.OPEN);
         }
     }
 
     public TeacherServiceDistribution getRootTSD() {
-        return getGroupings().get(0).getRootTSD();
+        return getGroupings().iterator().next().getRootTSD();
     }
 
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void delete() {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         for (TeacherServiceDistribution tsd : getGroupings()) {
             removeGroupings(tsd);
         }
 
-        removeNextTSDProcessPhase();
-        removePreviousTSDProcessPhase();
-        removeTSDProcess();
-        removeRootDomainObject();
+        setNextTSDProcessPhase(null);
+        setPreviousTSDProcessPhase(null);
+        setTSDProcess(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void deleteTSDProcessPhaseData() {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         deleteTeacherServiceDistributions();
     }
 
@@ -151,8 +152,8 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
         }
     }
 
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void deleteDataAndPhase() {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         deleteTSDProcessPhaseData();
         delete();
     }
@@ -166,175 +167,175 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setIsPublished(Boolean isPublished) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setIsPublished(isPublished);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setTSDProcess(TSDProcess tsdProcess) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setTSDProcess(tsdProcess);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setName(String name) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
 
         super.setName(name);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setNextTSDProcessPhase(TSDProcessPhase nextTSDProcessPhase) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
 
         super.setNextTSDProcessPhase(nextTSDProcessPhase);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setPreviousTSDProcessPhase(TSDProcessPhase previousTSDProcessPhase) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
 
         super.setPreviousTSDProcessPhase(previousTSDProcessPhase);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setStatus(TSDProcessPhaseStatus status) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
 
         super.setStatus(status);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setStudentsPerLaboratorialShift(Integer studentsPerLaboratorialShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
 
         super.setStudentsPerLaboratorialShift(studentsPerLaboratorialShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setStudentsPerFieldWorkShift(Integer studentsPerFieldWorkShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setStudentsPerFieldWorkShift(studentsPerFieldWorkShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setStudentsPerProblemShift(Integer studentsPerProblemShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setStudentsPerProblemShift(studentsPerProblemShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setStudentsPerSeminaryShift(Integer studentsPerSeminaryShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setStudentsPerSeminaryShift(studentsPerSeminaryShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setStudentsPerTrainingPeriodShift(Integer studentsPerTrainingPeriodShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setStudentsPerTrainingPeriodShift(studentsPerTrainingPeriodShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setStudentsPerTutDirectionShift(Integer studentsPerTutDirectionShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setStudentsPerTutDirectionShift(studentsPerTutDirectionShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setStudentsPerTheoreticalShift(Integer studentsPerTheoreticalShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
 
         super.setStudentsPerTheoreticalShift(studentsPerTheoreticalShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightFirstTimeEnrolledStudentsPerLabShift(Double weightFirstTimeEnrolledStudentsPerLabShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
 
         super.setWeightFirstTimeEnrolledStudentsPerLabShift(weightFirstTimeEnrolledStudentsPerLabShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightFirstTimeEnrolledStudentsPerTheoShift(Double weightFirstTimeEnrolledStudentsPerTheoShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
 
         super.setWeightFirstTimeEnrolledStudentsPerTheoShift(weightFirstTimeEnrolledStudentsPerTheoShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightSecondTimeEnrolledStudentsPerLabShift(Double weightSecondTimeEnrolledStudentsPerLabShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
 
         super.setWeightSecondTimeEnrolledStudentsPerLabShift(weightSecondTimeEnrolledStudentsPerLabShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightSecondTimeEnrolledStudentsPerTheoShift(Double weightSecondTimeEnrolledStudentsPerTheoShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
 
         super.setWeightSecondTimeEnrolledStudentsPerTheoShift(weightSecondTimeEnrolledStudentsPerTheoShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightFirstTimeEnrolledStudentsPerFieldWorkShift(Double weightFirstTimeEnrolledStudentsPerFieldWorkShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setWeightFirstTimeEnrolledStudentsPerFieldWorkShift(weightFirstTimeEnrolledStudentsPerFieldWorkShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightFirstTimeEnrolledStudentsPerProblemShift(Double weightFirstTimeEnrolledStudentsPerProblemShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setWeightFirstTimeEnrolledStudentsPerProblemShift(weightFirstTimeEnrolledStudentsPerProblemShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightFirstTimeEnrolledStudentsPerSeminaryShift(Double weightFirstTimeEnrolledStudentsPerSeminaryShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setWeightFirstTimeEnrolledStudentsPerSeminaryShift(weightFirstTimeEnrolledStudentsPerSeminaryShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightFirstTimeEnrolledStudentsPerTrainingShift(Double weightFirstTimeEnrolledStudentsPerTrainingShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setWeightFirstTimeEnrolledStudentsPerTrainingShift(weightFirstTimeEnrolledStudentsPerTrainingShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightFirstTimeEnrolledStudentsPerTutDirectionShift(Double weightFirstTimeEnrolledStudentsPerTutDirectionShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setWeightFirstTimeEnrolledStudentsPerTutDirectionShift(weightFirstTimeEnrolledStudentsPerTutDirectionShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightSecondTimeEnrolledStudentsPerFieldWorkShift(Double weightSecondTimeEnrolledStudentsPerFieldWorkShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setWeightSecondTimeEnrolledStudentsPerFieldWorkShift(weightSecondTimeEnrolledStudentsPerFieldWorkShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightSecondTimeEnrolledStudentsPerProblemShift(Double weightSecondTimeEnrolledStudentsPerProblemShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setWeightSecondTimeEnrolledStudentsPerProblemShift(weightSecondTimeEnrolledStudentsPerProblemShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightSecondTimeEnrolledStudentsPerSeminaryShift(Double weightSecondTimeEnrolledStudentsPerSeminaryShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setWeightSecondTimeEnrolledStudentsPerSeminaryShift(weightSecondTimeEnrolledStudentsPerSeminaryShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightSecondTimeEnrolledStudentsPerTrainingShift(Double weightSecondTimeEnrolledStudentsPerTrainingShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setWeightSecondTimeEnrolledStudentsPerTrainingShift(weightSecondTimeEnrolledStudentsPerTrainingShift);
     }
 
     @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
     public void setWeightSecondTimeEnrolledStudentsPerTutDirectionShift(
             Double weightSecondTimeEnrolledStudentsPerTutDirectionShift) {
+        check(this, TSDProcessPhasePredicates.writePredicate);
         super.setWeightSecondTimeEnrolledStudentsPerTutDirectionShift(weightSecondTimeEnrolledStudentsPerTutDirectionShift);
     }
 
@@ -426,6 +427,156 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
         }
 
         return weight;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution> getGroupings() {
+        return getGroupingsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGroupings() {
+        return !getGroupingsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTSDProcess() {
+        return getTSDProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerTheoreticalShift() {
+        return getStudentsPerTheoreticalShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerSeminaryShift() {
+        return getWeightFirstTimeEnrolledStudentsPerSeminaryShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerTrainingShift() {
+        return getWeightFirstTimeEnrolledStudentsPerTrainingShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerFieldWorkShift() {
+        return getStudentsPerFieldWorkShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerTrainingShift() {
+        return getWeightSecondTimeEnrolledStudentsPerTrainingShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerTrainingPeriodShift() {
+        return getStudentsPerTrainingPeriodShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerTutDirectionShift() {
+        return getWeightSecondTimeEnrolledStudentsPerTutDirectionShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasPreviousTSDProcessPhase() {
+        return getPreviousTSDProcessPhase() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerLabShift() {
+        return getWeightSecondTimeEnrolledStudentsPerLabShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerTheoShift() {
+        return getWeightFirstTimeEnrolledStudentsPerTheoShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerSeminaryShift() {
+        return getWeightSecondTimeEnrolledStudentsPerSeminaryShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerLabShift() {
+        return getWeightFirstTimeEnrolledStudentsPerLabShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerLaboratorialShift() {
+        return getStudentsPerLaboratorialShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerSeminaryShift() {
+        return getStudentsPerSeminaryShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsPublished() {
+        return getIsPublished() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerProblemShift() {
+        return getWeightSecondTimeEnrolledStudentsPerProblemShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerFieldWorkShift() {
+        return getWeightSecondTimeEnrolledStudentsPerFieldWorkShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerFieldWorkShift() {
+        return getWeightFirstTimeEnrolledStudentsPerFieldWorkShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasNextTSDProcessPhase() {
+        return getNextTSDProcessPhase() != null;
+    }
+
+    @Deprecated
+    public boolean hasStatus() {
+        return getStatus() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerProblemShift() {
+        return getStudentsPerProblemShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerTutDirectionShift() {
+        return getWeightFirstTimeEnrolledStudentsPerTutDirectionShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerTutDirectionShift() {
+        return getStudentsPerTutDirectionShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerProblemShift() {
+        return getWeightFirstTimeEnrolledStudentsPerProblemShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerTheoShift() {
+        return getWeightSecondTimeEnrolledStudentsPerTheoShift() != null;
     }
 
 }

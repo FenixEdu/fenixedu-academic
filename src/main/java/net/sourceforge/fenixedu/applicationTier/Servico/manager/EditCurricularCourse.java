@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -13,9 +13,10 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -25,15 +26,15 @@ public class EditCurricularCourse {
     public EditCurricularCourse() {
     }
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(InfoCurricularCourseEditor newInfoCurricularCourse) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         CurricularCourse oldCurricularCourse = null;
         String newName = null;
         String newNameEn = null;
         String newCode = null;
 
-        oldCurricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(newInfoCurricularCourse.getExternalId());
+        oldCurricularCourse = (CurricularCourse) FenixFramework.getDomainObject(newInfoCurricularCourse.getExternalId());
 
         newName = newInfoCurricularCourse.getName();
         newNameEn = newInfoCurricularCourse.getNameEn();
@@ -44,7 +45,7 @@ public class EditCurricularCourse {
             throw new NonExistingServiceException();
         }
 
-        List curricularCourses = null;
+        Collection<CurricularCourse> curricularCourses = null;
         curricularCourses = oldCurricularCourse.getDegreeCurricularPlan().getCurricularCourses();
 
         CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses, new Predicate() {

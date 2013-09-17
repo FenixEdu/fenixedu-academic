@@ -13,14 +13,15 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class NotifyStudentGroup {
 
-    @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(ProjectSubmission submission, ExecutionCourse course, Person person) {
+        check(RolePredicates.TEACHER_PREDICATE);
 
         Set<Person> recievers = new HashSet<Person>();
 

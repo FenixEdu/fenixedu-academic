@@ -15,28 +15,28 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CriarTurma {
 
-    @Service
+    @Atomic
     public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
             final AcademicInterval academicInterval) throws ExistingServiceException {
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
 
         final SchoolClass schoolClass = new SchoolClass(executionDegree, academicInterval, className, curricularYear);
         return InfoClass.newInfoFromDomain(schoolClass);
     }
 
-    @Service
+    @Atomic
     public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
             final InfoExecutionPeriod infoExecutionPeriod) throws ExistingServiceException {
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
         final ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+                FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
 
         final SchoolClass schoolClass = new SchoolClass(executionDegree, executionSemester, className, curricularYear);
         return InfoClass.newInfoFromDomain(schoolClass);

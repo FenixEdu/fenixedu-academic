@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteEvaluation;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Project;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class CoordinatorProjectsManagementBackingBean extends CoordinatorProjectsInformationBackingBean {
@@ -77,7 +77,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
     public Evaluation getEvaluation() {
         try {
             if (this.evaluation == null && this.getEvaluationID() != null) {
-                this.evaluation = AbstractDomainObject.fromExternalId(getEvaluationID());
+                this.evaluation = FenixFramework.getDomainObject(getEvaluationID());
             }
             return this.evaluation;
         } catch (Exception e) {

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
     protected PersistentAccessGroup() {
@@ -35,7 +35,7 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
     protected void copy(PersistentAccessGroup old) {
         super.setOldGroup(old);
         old.setDeletedRootDomainObject(old.getRootDomainObject());
-        old.removeRootDomainObject();
+        old.setRootDomainObject(null);
         getMemberSet().addAll(old.getMemberSet());
     }
 
@@ -61,12 +61,12 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
         return newGroup;
     }
 
-    @Service
+    @Atomic
     public PersistentAccessGroup delete() {
         PersistentAccessGroup newGroup = instantiate();
         newGroup.copy(this);
         newGroup.setDeletedRootDomainObject(newGroup.getRootDomainObject());
-        newGroup.removeRootDomainObject();
+        newGroup.setRootDomainObject(null);
         return newGroup;
     }
 
@@ -110,4 +110,44 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
     public final boolean hasRootLink() {
         return super.getRootDomainObject() != null || super.getDeletedRootDomainObject() != null || super.getNewGroup() != null;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Party> getMember() {
+        return getMemberSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMember() {
+        return !getMemberSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasOldGroup() {
+        return getOldGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasNewGroup() {
+        return getNewGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasDeletedRootDomainObject() {
+        return getDeletedRootDomainObject() != null;
+    }
+
 }

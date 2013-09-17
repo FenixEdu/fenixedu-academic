@@ -103,4 +103,29 @@ public class ErasmusAlert extends ErasmusAlert_Base {
     public boolean isToSendMail() {
         return getSendEmail() && getProcess().getCandidacyProcess().hasOpenCandidacyPeriod();
     }
+    @Deprecated
+    public boolean hasSendEmail() {
+        return getSendEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenToFire() {
+        return getWhenToFire() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhoCreated() {
+        return getWhoCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasEntity() {
+        return getEntity() != null;
+    }
+
 }

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -25,8 +25,8 @@ public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleF
         try {
             final Person loggedPerson = id.getPerson();
 
-            Teacher teacher = AbstractDomainObject.fromExternalId(selectedTeacherID);
-            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+            Teacher teacher = FenixFramework.getDomainObject(selectedTeacherID);
+            ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
             Professorship selectedProfessorship = null;
             if (teacher != null) {

@@ -22,7 +22,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author tfc130
@@ -59,7 +59,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
             errors.add("not.found.rooms", new ActionError("message.public.notfound.rooms"));
             saveErrors(request, errors);
         } else if (infoRooms.size() == 1) {
-            InfoRoom infoRoom = (InfoRoom) infoRooms.get(0);
+            InfoRoom infoRoom = (InfoRoom) infoRooms.iterator().next();
             request.setAttribute("objectCode", infoExecutionPeriod.getExternalId().toString());
             request.setAttribute("roomName", infoRoom.getNome());
 
@@ -102,7 +102,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
     private RoomClassification readTypeRoomFormValue(DynaActionForm roomForm, String name) {
         String obj = readFormValue(roomForm, name);
         if (obj != null) {
-            return AbstractDomainObject.fromExternalId(obj);
+            return FenixFramework.getDomainObject(obj);
         }
 
         return null;

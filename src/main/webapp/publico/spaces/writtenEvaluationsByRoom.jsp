@@ -1,8 +1,8 @@
-<%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
-<%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
-<%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
-<%@ taglib uri="/WEB-INF/html_basic.tld" prefix="c"%>
-<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="c"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
 <ft:tilesView definition="definition.public.findSpaces" attributeName="body-inline">
 

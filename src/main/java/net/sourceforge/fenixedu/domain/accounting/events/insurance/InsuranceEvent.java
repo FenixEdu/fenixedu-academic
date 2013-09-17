@@ -29,15 +29,15 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import dml.runtime.RelationAdapter;
 
 public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEvent {
 
     static {
-        PersonAccountingEvent.addListener(new RelationAdapter<Event, Party>() {
+        getRelationPersonAccountingEvent().addListener(new RelationAdapter<Party, Event>() {
             @Override
-            public void beforeAdd(Event event, Party party) {
+            public void beforeAdd(Party party, Event event) {
                 if (event instanceof InsuranceEvent) {
                     Person person = (Person) party;
                     final InsuranceEvent insuranceEvent = ((InsuranceEvent) event);
@@ -111,8 +111,8 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
 
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
-        getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(), entryDTO.getAmountToPay(),
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
+        getNonProcessedPaymentCodes().iterator().next().update(new YearMonthDay(), calculatePaymentCodeEndDate(), entryDTO.getAmountToPay(),
                 entryDTO.getAmountToPay());
 
         return getNonProcessedPaymentCodes();
@@ -121,7 +121,7 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
 
     @Override
     protected List<AccountingEventPaymentCode> createPaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
 
         return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.INSURANCE, new YearMonthDay(),
                 calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()));

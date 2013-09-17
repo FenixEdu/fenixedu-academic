@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -22,11 +22,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class EditQualification {
 
     protected void run(String qualificationId, InfoQualification infoQualification) throws FenixServiceException {
-        Qualification qualification = AbstractDomainObject.fromExternalId(qualificationId);
+        Qualification qualification = FenixFramework.getDomainObject(qualificationId);
         // If it doesn't exist in the database, a new one has to be created
-        Country country = AbstractDomainObject.fromExternalId(infoQualification.getInfoCountry().getExternalId());
+        Country country = FenixFramework.getDomainObject(infoQualification.getInfoCountry().getExternalId());
         if (qualification == null) {
-            Person person = (Person) AbstractDomainObject.fromExternalId(infoQualification.getInfoPerson().getExternalId());
+            Person person = (Person) FenixFramework.getDomainObject(infoQualification.getInfoPerson().getExternalId());
             qualification = new Qualification(person, country, infoQualification);
 
         } else {
@@ -39,7 +39,7 @@ public class EditQualification {
 
     private static final EditQualification serviceInstance = new EditQualification();
 
-    @Service
+    @Atomic
     public static void runEditQualification(String qualificationId, InfoQualification infoQualification)
             throws FenixServiceException, NotAuthorizedException {
         QualificationManagerAuthorizationFilter.instance.execute(infoQualification);

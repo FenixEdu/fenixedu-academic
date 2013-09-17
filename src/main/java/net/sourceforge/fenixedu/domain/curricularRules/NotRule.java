@@ -5,14 +5,14 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class NotRule extends NotRule_Base {
 
     static {
-        CurricularRuleNotRule.addListener(new RelationAdapter<NotRule, CurricularRule>() {
+        getRelationCurricularRuleNotRule().addListener(new RelationAdapter<CurricularRule, NotRule>() {
             @Override
-            public void beforeAdd(NotRule notRule, CurricularRule curricularRule) {
+            public void beforeAdd(CurricularRule curricularRule, NotRule notRule) {
                 if (curricularRule.getParentCompositeRule() != null) {
                     throw new DomainException("error.curricular.rule.invalid.state");
                 }
@@ -26,7 +26,7 @@ public class NotRule extends NotRule_Base {
         }
 
         setDegreeModuleToApplyRule(rule.getDegreeModuleToApplyRule());
-        rule.removeDegreeModuleToApplyRule();
+        rule.setDegreeModuleToApplyRule(null);
         setBegin(rule.getBegin());
         setEnd(rule.getEnd());
         setWrappedRule(rule);
@@ -51,4 +51,10 @@ public class NotRule extends NotRule_Base {
     public VerifyRuleExecutor createVerifyRuleExecutor() {
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
+
+    @Deprecated
+    public boolean hasWrappedRule() {
+        return getWrappedRule() != null;
+    }
+
 }

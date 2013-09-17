@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EctsTableIndex extends EctsTableIndex_Base {
     public EctsTableIndex(AcademicInterval year) {
@@ -45,7 +45,7 @@ public class EctsTableIndex extends EctsTableIndex_Base {
         throw new NoEctsComparabilityTableFound(year);
     }
 
-    @Service
+    @Atomic
     public static EctsTableIndex readOrCreateByYear(AcademicInterval year) {
         EctsTableIndex index = readByYear(year);
         return index == null ? new EctsTableIndex(year) : index;
@@ -199,4 +199,29 @@ public class EctsTableIndex extends EctsTableIndex_Base {
         }
         throw new NoEctsComparabilityTableFound(year, cycleType);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsConversionTable> getTable() {
+        return getTableSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTable() {
+        return !getTableSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcessingDate() {
+        return getProcessingDate() != null;
+    }
+
 }

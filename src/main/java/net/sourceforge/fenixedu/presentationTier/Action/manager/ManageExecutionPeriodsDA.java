@@ -27,7 +27,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Crus & Sara Ribeiro
@@ -74,7 +74,7 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 
         final String externalId = request.getParameter("executionPeriodID");
         try {
-            ExecutionSemester executionSemester = (ExecutionSemester) AbstractDomainObject.fromExternalId(externalId);
+            ExecutionSemester executionSemester = (ExecutionSemester) FenixFramework.getDomainObject(externalId);
             request.setAttribute("executionPeriod", executionSemester);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage());

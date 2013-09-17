@@ -20,8 +20,8 @@ public class Researcher extends Researcher_Base {
 
         @Override
         public int compare(Researcher r1, Researcher r2) {
-            Integer resultParticipationsCount = r1.getPerson().getResultParticipationsCount();
-            Integer resultParticipationsCount2 = r2.getPerson().getResultParticipationsCount();
+            Integer resultParticipationsCount = r1.getPerson().getResultParticipationsSet().size();
+            Integer resultParticipationsCount2 = r2.getPerson().getResultParticipationsSet().size();
             return resultParticipationsCount.compareTo(resultParticipationsCount2);
         }
 
@@ -38,11 +38,11 @@ public class Researcher extends Researcher_Base {
     }
 
     public void delete() {
-        for (; hasAnyAvailableContacts(); getAvailableContacts().get(0).delete()) {
+        for (; hasAnyAvailableContacts(); getAvailableContacts().iterator().next().delete()) {
             ;
         }
-        removePerson();
-        removeRootDomainObject();
+        setPerson(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -131,6 +131,56 @@ public class Researcher extends Researcher_Base {
     public PersonContractSituation getCurrentContractedResearcherContractSituation() {
         return getPerson().getPersonProfessionalData() != null ? getPerson().getPersonProfessionalData()
                 .getCurrentPersonContractSituationByCategoryType(CategoryType.RESEARCHER) : null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.contacts.PartyContact> getAvailableContacts() {
+        return getAvailableContactsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAvailableContacts() {
+        return !getAvailableContactsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAllowsContactByMedia() {
+        return getAllowsContactByMedia() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowsContactByStudents() {
+        return getAllowsContactByStudents() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasKeywordsEn() {
+        return getKeywordsEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowsContactByOtherResearchers() {
+        return getAllowsContactByOtherResearchers() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasKeywordsPt() {
+        return getKeywordsPt() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowsToBeSearched() {
+        return getAllowsToBeSearched() != null;
     }
 
 }

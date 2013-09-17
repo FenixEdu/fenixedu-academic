@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.Site;
 
 public abstract class AbstractExecutionCourseContext extends ProcessingContext implements ExecutionCourseContext {
 
-    private String contexURI;
+    private final String contexURI;
 
     public AbstractExecutionCourseContext(ProcessingContext parent, String contextURI) {
         super(parent);

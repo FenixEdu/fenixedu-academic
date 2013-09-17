@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -12,16 +12,16 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RemoveProfessorshipWithPerson extends AbstractModifyProfessorshipWithPerson {
-    @Service
+    @Atomic
     public static Boolean run(Person person, ExecutionCourse executionCourse) throws NotAuthorizedException {
         AbstractModifyProfessorshipWithPerson.run(person);
 
         Professorship professorshipToDelete = person.getProfessorshipByExecutionCourse(executionCourse);
 
-        List shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
+        Collection shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
 
         boolean hasCredits = false;
 

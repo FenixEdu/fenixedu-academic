@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -27,19 +28,20 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class GenerateOutgoingSibsPaymentFileByExecutionYearID {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static byte[] run(String executionYearID, Date paymentEndDate) throws FenixServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
 
         StringBuilder outgoingSibsPaymentFile = new StringBuilder();
 
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+        ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
 
         InsuranceValue insuranceValue = executionYear.getInsuranceValue();
         if (insuranceValue == null) {
@@ -70,7 +72,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID {
 
             DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-            List studentCurricularPlanList = degreeCurricularPlan.getStudentCurricularPlans();
+            Collection studentCurricularPlanList = degreeCurricularPlan.getStudentCurricularPlans();
 
             // add insurance lines
             for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {
@@ -141,10 +143,10 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID {
      * @param outgoingSibsPaymentFile
      * @throws FileNotCreatedServiceException
      */
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     private static byte[] writeOutgoingSibsPaymentFile(ExecutionYear executionYear, StringBuilder outgoingSibsPaymentFile)
             throws FileNotCreatedServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
         ByteArrayOutputStream file = new ByteArrayOutputStream();
         /*
          * String year = executionYear.getYear().replace('/', '-'); try {

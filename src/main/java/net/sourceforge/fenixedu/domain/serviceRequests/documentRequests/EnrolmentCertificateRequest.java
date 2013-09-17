@@ -129,4 +129,9 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
         return (CertificateRequestEvent) super.getEvent();
     }
 
+    @Deprecated
+    public boolean hasDetailed() {
+        return getDetailed() != null;
+    }
+
 }

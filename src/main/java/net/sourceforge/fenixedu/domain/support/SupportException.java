@@ -22,4 +22,9 @@ public class SupportException extends SupportException_Base {
         // }
     }
 
+    @Deprecated
+    public boolean hasErrorLog() {
+        return getErrorLog() != null;
+    }
+
 }

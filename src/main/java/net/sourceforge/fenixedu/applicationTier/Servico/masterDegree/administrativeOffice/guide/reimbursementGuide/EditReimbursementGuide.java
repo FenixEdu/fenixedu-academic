@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -29,9 +29,10 @@ import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br/>
@@ -50,11 +51,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class EditReimbursementGuide {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String reimbursementGuideId, String situation, Date officialDate, String remarks, IUserView userView)
             throws FenixServiceException {
-        ReimbursementGuide reimbursementGuide = AbstractDomainObject.fromExternalId(reimbursementGuideId);
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
+        ReimbursementGuide reimbursementGuide = FenixFramework.getDomainObject(reimbursementGuideId);
         if (reimbursementGuide == null) {
             throw new NonExistingServiceException();
         }
@@ -87,7 +88,7 @@ public class EditReimbursementGuide {
 
         // REIMBURSEMENT TRANSACTIONS
         if (newState.equals(ReimbursementGuideState.PAYED)) {
-            List reimbursementGuideEntries = reimbursementGuide.getReimbursementGuideEntries();
+            Collection reimbursementGuideEntries = reimbursementGuide.getReimbursementGuideEntries();
             Iterator iterator = reimbursementGuideEntries.iterator();
             ReimbursementGuideEntry reimbursementGuideEntry = null;
             ReimbursementTransaction reimbursementTransaction = null;
@@ -209,7 +210,7 @@ public class EditReimbursementGuide {
         Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue() * guideEntry.getQuantity().intValue());
         Double sum = reimbursementGuideEntry.getValue();
 
-        List reimbursementGuideEntries = guideEntry.getReimbursementGuideEntries();
+        Collection<ReimbursementGuideEntry> reimbursementGuideEntries = guideEntry.getReimbursementGuideEntries();
 
         if (reimbursementGuideEntries == null) {
             return isGreaterThan(guideEntryValue, sum);
@@ -221,7 +222,7 @@ public class EditReimbursementGuide {
 
             // because of an OJB with cache bug we have to read the guide entry
             // again
-            reimbursementGuideEntryTmp = AbstractDomainObject.fromExternalId(reimbursementGuideEntryTmp.getExternalId());
+            reimbursementGuideEntryTmp = FenixFramework.getDomainObject(reimbursementGuideEntryTmp.getExternalId());
 
             if (reimbursementGuideEntryTmp.getReimbursementGuide().getActiveReimbursementGuideSituation()
                     .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {

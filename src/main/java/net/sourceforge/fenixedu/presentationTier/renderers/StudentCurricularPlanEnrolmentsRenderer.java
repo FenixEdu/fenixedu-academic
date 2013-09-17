@@ -253,21 +253,21 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
             while (!courseGroupsToEnrol.isEmpty() || !curriculumGroups.isEmpty()) {
 
                 if (!curriculumGroups.isEmpty() && courseGroupsToEnrol.isEmpty()) {
-                    generateModules(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionSemester, depth
+                    generateModules(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionSemester, depth
                             + getWidthDecreasePerLevel());
                     curriculumGroups.remove(0);
                 } else if (curriculumGroups.isEmpty() && !courseGroupsToEnrol.isEmpty()) {
-                    generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.get(0), depth + getWidthDecreasePerLevel());
+                    generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), depth + getWidthDecreasePerLevel());
                     courseGroupsToEnrol.remove(0);
                 } else {
-                    Context context = courseGroupsToEnrol.get(0).getContext();
-                    CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumGroups.get(0).getCurriculumModule();
+                    Context context = courseGroupsToEnrol.iterator().next().getContext();
+                    CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumGroups.iterator().next().getCurriculumModule();
                     if (curriculumGroup.getChildOrder(executionSemester) <= context.getChildOrder()) {
-                        generateModules(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionSemester, depth
+                        generateModules(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionSemester, depth
                                 + getWidthDecreasePerLevel());
                         curriculumGroups.remove(0);
                     } else {
-                        generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.get(0), depth
+                        generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), depth
                                 + getWidthDecreasePerLevel());
                         courseGroupsToEnrol.remove(0);
                     }
