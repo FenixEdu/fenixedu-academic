@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.candidate.degree;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -245,7 +246,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     }
 
-    private Object totalGratuityPaymentCode(List<PaymentCode> availablePaymentCodes) {
+    private Object totalGratuityPaymentCode(Collection<PaymentCode> availablePaymentCodes) {
         for (PaymentCode paymentCode : availablePaymentCodes) {
             if (PaymentCodeType.GRATUITY_FIRST_INSTALLMENT.equals(paymentCode.getType())
                     && !(paymentCode instanceof InstallmentPaymentCode)) {
@@ -256,7 +257,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         return null;
     }
 
-    private Object installmmentPaymentCodes(List<PaymentCode> availablePaymentCodes) {
+    private Object installmmentPaymentCodes(Collection<PaymentCode> availablePaymentCodes) {
         List<PaymentCode> installmentPaymentCodes = new ArrayList<PaymentCode>();
 
         CollectionUtils.select(availablePaymentCodes, new Predicate() {
@@ -278,7 +279,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         return installmentPaymentCodes;
     }
 
-    private Object administrativeOfficeFeeAndInsurancePaymentCode(List<PaymentCode> availablePaymentCodes) {
+    private Object administrativeOfficeFeeAndInsurancePaymentCode(Collection<PaymentCode> availablePaymentCodes) {
         for (PaymentCode paymentCode : availablePaymentCodes) {
             if (PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE.equals(paymentCode.getType())) {
                 return paymentCode;
@@ -288,7 +289,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         return null;
     }
 
-    private YearMonthDay calculateFirstInstallmentEndDate(final Registration registration, List<PaymentCode> availablePaymentCodes) {
+    private YearMonthDay calculateFirstInstallmentEndDate(final Registration registration,
+            Collection<PaymentCode> availablePaymentCodes) {
         for (PaymentCode paymentCode : availablePaymentCodes) {
             if (!paymentCode.isInstallmentPaymentCode()) {
                 continue;

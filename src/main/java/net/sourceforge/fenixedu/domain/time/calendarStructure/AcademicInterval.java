@@ -18,7 +18,7 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.joda.time.base.AbstractInterval;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AcademicInterval extends AbstractInterval implements Serializable {
 
@@ -129,21 +129,21 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     public AcademicCalendarRootEntry getAcademicCalendar() {
         if (academicCalendarRootEntry == null) {
-            academicCalendarRootEntry = AbstractDomainObject.fromExternalId(getAcademicCalendarExternalId());
+            academicCalendarRootEntry = FenixFramework.getDomainObject(getAcademicCalendarExternalId());
         }
         return academicCalendarRootEntry;
     }
 
     public AcademicCalendarEntry getAcademicCalendarEntry() {
         if (academicCalendarEntry == null) {
-            academicCalendarEntry = AbstractDomainObject.fromExternalId(getEntryExternalId());
+            academicCalendarEntry = FenixFramework.getDomainObject(getEntryExternalId());
         }
         return academicCalendarEntry;
     }
 
     private AcademicCalendarEntry getAcademicCalendarEntryIntervalWithoutClassNameCheck() {
         if (academicCalendarEntry == null) {
-            academicCalendarEntry = AbstractDomainObject.fromExternalId(getEntryExternalId());
+            academicCalendarEntry = FenixFramework.getDomainObject(getEntryExternalId());
         }
         return academicCalendarEntry;
     }

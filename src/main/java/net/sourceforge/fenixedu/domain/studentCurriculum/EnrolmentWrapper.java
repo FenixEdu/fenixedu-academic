@@ -27,7 +27,7 @@ abstract public class EnrolmentWrapper extends EnrolmentWrapper_Base {
 
     public void delete() {
         super.setCredits(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -45,4 +45,14 @@ abstract public class EnrolmentWrapper extends EnrolmentWrapper_Base {
             throw new DomainException("error.EnrolmentWrapper.unknown.enrolment");
         }
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCredits() {
+        return getCredits() != null;
+    }
+
 }

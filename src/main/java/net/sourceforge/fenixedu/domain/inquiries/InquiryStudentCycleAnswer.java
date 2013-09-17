@@ -20,4 +20,14 @@ public class InquiryStudentCycleAnswer extends InquiryStudentCycleAnswer_Base {
     public boolean checkHasRegistrationOrHasPhd() {
         return hasRegistration() || hasPhdProcess();
     }
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdProcess() {
+        return getPhdProcess() != null;
+    }
+
 }

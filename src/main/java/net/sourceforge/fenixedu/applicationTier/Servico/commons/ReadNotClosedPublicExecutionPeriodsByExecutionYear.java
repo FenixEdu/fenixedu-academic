@@ -8,19 +8,19 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadNotClosedPublicExecutionPeriodsByExecutionYear {
 
-    @Service
+    @Atomic
     public static List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
 
         final ExecutionYear executionYear;
         if (infoExecutionYear == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         } else {
-            executionYear = AbstractDomainObject.fromExternalId(infoExecutionYear.getExternalId());
+            executionYear = FenixFramework.getDomainObject(infoExecutionYear.getExternalId());
         }
 
         final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();

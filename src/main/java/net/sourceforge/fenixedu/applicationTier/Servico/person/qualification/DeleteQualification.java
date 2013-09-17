@@ -8,8 +8,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.qualification;
 import net.sourceforge.fenixedu.applicationTier.Filtro.person.ReadQualificationAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Qualification;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -17,15 +17,15 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class DeleteQualification {
 
-    @Service
+    @Atomic
     public static void run(String qualificationId) {
-        Qualification qualification = AbstractDomainObject.fromExternalId(qualificationId);
+        Qualification qualification = FenixFramework.getDomainObject(qualificationId);
         qualification.delete();
     }
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static void runDeleteQualification(String qualificationId) throws NotAuthorizedException {
         ReadQualificationAuthorizationFilter.instance.execute(qualificationId);
         run(qualificationId);

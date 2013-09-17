@@ -59,4 +59,9 @@ public class PastEquivalencePlanRevisionRequestEvent extends PastEquivalencePlan
         labelFormatter.appendLabel(")");
     }
 
+    @Deprecated
+    public boolean hasPastAmount() {
+        return getPastAmount() != null;
+    }
+
 }

@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.alumni;
 
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean;
 import net.sourceforge.fenixedu.domain.Job;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateProfessionalInformation {
 
-    @Service
+    @Atomic
     public static Job run(final AlumniJobBean bean) {
 
         return new Job(bean.getAlumni().getStudent().getPerson(), bean.getEmployerName(), bean.getCity(), bean.getCountry(),

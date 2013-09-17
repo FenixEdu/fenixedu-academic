@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/studentTutorship", module = "pedagogicalCouncil")
 @Forwards({
@@ -152,11 +152,11 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
         }
 
         if (registrationOID != null) {
-            registration = AbstractDomainObject.fromExternalId(registrationOID);
+            registration = FenixFramework.getDomainObject(registrationOID);
         } else {
             final Student student = Student.readStudentByNumber(bean.getNumber());
             if (student.getRegistrations().size() == 1) {
-                registration = student.getRegistrations().get(0);
+                registration = student.getRegistrations().iterator().next();
             } else {
                 request.setAttribute("student", student);
                 return mapping.findForward("chooseRegistration");

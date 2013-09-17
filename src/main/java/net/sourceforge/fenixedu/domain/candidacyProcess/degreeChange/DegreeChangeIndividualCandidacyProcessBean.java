@@ -35,7 +35,7 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
         setSelectedDegree(process.getCandidacySelectedDegree());
         setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getPrecedentDegreeInformation()));
         setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(process.getCandidacy()));
-        initializeFormation(process.getCandidacy().getFormations());
+        initializeFormation(process.getCandidacy().getFormationsSet());
         setObservations(process.getCandidacy().getObservations());
         setUtlStudent(process.getCandidacy().getUtlStudent());
     }

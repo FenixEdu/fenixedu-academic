@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/careerWorkshopApplication", module = "directiveCouncil")
 @Forwards({
@@ -58,7 +58,7 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
 
         ManageCareerWorkshopApplicationsBean applicationsBean = new ManageCareerWorkshopApplicationsBean();
         final String eventExternalId = request.getParameter("eventId");
-        CareerWorkshopApplicationEvent eventToDelete = AbstractDomainObject.fromExternalId(eventExternalId);
+        CareerWorkshopApplicationEvent eventToDelete = FenixFramework.getDomainObject(eventExternalId);
         applicationsBean.deleteEvent(eventToDelete);
 
         request.setAttribute("applicationsBean", applicationsBean);
@@ -71,7 +71,7 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final String eventExternalId = request.getParameter("eventId");
-        CareerWorkshopApplicationEvent eventToDownload = AbstractDomainObject.fromExternalId(eventExternalId);
+        CareerWorkshopApplicationEvent eventToDownload = FenixFramework.getDomainObject(eventExternalId);
         CareerWorkshopSpreadsheet spreadsheet = eventToDownload.getApplications();
         if (spreadsheet != null) {
             final ServletOutputStream writer = response.getOutputStream();
@@ -93,7 +93,7 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
 
         ManageCareerWorkshopApplicationsBean eventsBean = new ManageCareerWorkshopApplicationsBean();
         final String eventExternalId = request.getParameter("eventId");
-        CareerWorkshopApplicationEvent affectedEvent = AbstractDomainObject.fromExternalId(eventExternalId);
+        CareerWorkshopApplicationEvent affectedEvent = FenixFramework.getDomainObject(eventExternalId);
         eventsBean.setAffectedEvent(affectedEvent);
         request.setAttribute("eventsBean", eventsBean);
 
@@ -116,7 +116,7 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final String eventExternalId = request.getParameter("eventId");
-        CareerWorkshopApplicationEvent application = AbstractDomainObject.fromExternalId(eventExternalId);
+        CareerWorkshopApplicationEvent application = FenixFramework.getDomainObject(eventExternalId);
         CareerWorkshopConfirmationSpreadsheet spreadsheet = application.getCareerWorkshopConfirmationEvent().getConfirmations();
         if (spreadsheet != null) {
             final ServletOutputStream writer = response.getOutputStream();
@@ -136,7 +136,7 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
     public ActionForward purgeConfirmations(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String eventExternalId = request.getParameter("eventId");
-        CareerWorkshopApplicationEvent application = AbstractDomainObject.fromExternalId(eventExternalId);
+        CareerWorkshopApplicationEvent application = FenixFramework.getDomainObject(eventExternalId);
         List<CareerWorkshopConfirmation> confirmations =
                 new ArrayList<CareerWorkshopConfirmation>(application.getCareerWorkshopConfirmationEvent()
                         .getCareerWorkshopConfirmations());

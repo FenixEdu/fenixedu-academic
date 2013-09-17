@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -19,13 +18,13 @@ public class InfoSiteEvaluations extends DataTranferObject implements ISiteCompo
         comparator.addComparator(new BeanComparator("endDate.time"));
     }
 
-    private List<Evaluation> evaluations;
+    private Collection<Evaluation> evaluations;
 
-    public List<Evaluation> getEvaluations() {
+    public Collection<Evaluation> getEvaluations() {
         return evaluations;
     }
 
-    public void setEvaluations(List<Evaluation> evaluations) {
+    public void setEvaluations(Collection<Evaluation> evaluations) {
         this.evaluations = evaluations;
     }
 

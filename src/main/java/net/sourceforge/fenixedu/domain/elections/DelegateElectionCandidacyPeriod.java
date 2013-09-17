@@ -16,7 +16,7 @@ public class DelegateElectionCandidacyPeriod extends DelegateElectionCandidacyPe
 
     @Override
     public void delete() {
-        removeDelegateElection();
+        setDelegateElection(null);
         super.delete();
     }
 
@@ -33,6 +33,11 @@ public class DelegateElectionCandidacyPeriod extends DelegateElectionCandidacyPe
     @Override
     public boolean isOpenRoundElections() {
         return false;
+    }
+
+    @Deprecated
+    public boolean hasDelegateElection() {
+        return getDelegateElection() != null;
     }
 
 }

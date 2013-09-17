@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,7 +24,8 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class Receipt extends Receipt_Base {
 
@@ -178,16 +179,6 @@ public class Receipt extends Receipt_Base {
     }
 
     @Override
-    public List<Entry> getEntries() {
-        return Collections.unmodifiableList(super.getEntries());
-    }
-
-    @Override
-    public Iterator<Entry> getEntriesIterator() {
-        return getEntriesSet().iterator();
-    }
-
-    @Override
     public Set<Entry> getEntriesSet() {
         return Collections.unmodifiableSet(super.getEntriesSet());
     }
@@ -238,18 +229,8 @@ public class Receipt extends Receipt_Base {
     }
 
     @Override
-    public List<CreditNote> getCreditNotes() {
-        return Collections.unmodifiableList(super.getCreditNotes());
-    }
-
-    @Override
     public Set<CreditNote> getCreditNotesSet() {
         return Collections.unmodifiableSet(super.getCreditNotesSet());
-    }
-
-    @Override
-    public Iterator<CreditNote> getCreditNotesIterator() {
-        return getCreditNotesSet().iterator();
     }
 
     @Override
@@ -336,7 +317,7 @@ public class Receipt extends Receipt_Base {
     }
 
     private boolean hasAnyActiveCreditNotes() {
-        List<CreditNote> creditNotes = getCreditNotes();
+        Collection<CreditNote> creditNotes = getCreditNotesSet();
 
         for (CreditNote creditNote : creditNotes) {
             if (!creditNote.isAnnulled()) {
@@ -367,15 +348,15 @@ public class Receipt extends Receipt_Base {
         return result;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void deleteReceiptPrintVersions() {
-        for (; hasAnyReceiptsVersions(); getReceiptsVersions().get(0).delete()) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
+        for (; hasAnyReceiptsVersions(); getReceiptsVersions().iterator().next().delete()) {
             ;
         }
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void delete() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
 
         if (!canBeDeleted()) {
             throw new DomainException("error.accounting.Receipt.cannot.be.deleted");
@@ -385,10 +366,10 @@ public class Receipt extends Receipt_Base {
 
         super.setContributorParty(null);
         super.setResponsible(null);
-        super.getEntries().clear();
+        super.getEntriesSet().clear();
         super.setPerson(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
     }
@@ -415,14 +396,14 @@ public class Receipt extends Receipt_Base {
         return super.getNumber();
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void changeContributor(final Party contributor) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setContributorParty(contributor);
     }
 
     public List<CreditNote> getEmittedCreditNotes() {
         final List<CreditNote> result = new ArrayList<CreditNote>();
-        for (final CreditNote creditNote : super.getCreditNotes()) {
+        for (final CreditNote creditNote : super.getCreditNotesSet()) {
             if (creditNote.isEmitted()) {
                 result.add(creditNote);
             }
@@ -432,16 +413,16 @@ public class Receipt extends Receipt_Base {
 
     }
 
-    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
     public void edit(final Person responsible, final Party contributorParty, final String contributorName) {
+        check(this, AcademicPredicates.MANAGE_STUDENT_PAYMENTS);
         markChange(responsible);
         checkContributorParameters(contributorParty, contributorName);
         super.setContributorParty(contributorParty);
         super.setContributorName(contributorName);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void changeStateAndEntries(final ReceiptState state, final Set<Entry> newEntries) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
 
         super.setState(state);
 
@@ -454,7 +435,7 @@ public class Receipt extends Receipt_Base {
     }
 
     public boolean isSecondPrintVersion() {
-        return getReceiptsVersionsCount() >= 1;
+        return getReceiptsVersionsSet().size() >= 1;
     }
 
     static public Receipt readByYearAndNumber(final Integer year, final Integer number, final String series) {
@@ -469,6 +450,111 @@ public class Receipt extends Receipt_Base {
         }
 
         return null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.CreditNote> getCreditNotes() {
+        return getCreditNotesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCreditNotes() {
+        return !getCreditNotesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion> getReceiptsVersions() {
+        return getReceiptsVersionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReceiptsVersions() {
+        return !getReceiptsVersionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Entry> getEntries() {
+        return getEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEntries() {
+        return !getEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.documents.ReceiptGeneratedDocument> getDocument() {
+        return getDocumentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDocument() {
+        return !getDocumentSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasResponsible() {
+        return getResponsible() != null;
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenUpdated() {
+        return getWhenUpdated() != null;
+    }
+
+    @Deprecated
+    public boolean hasReceiptDate() {
+        return getReceiptDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasContributorName() {
+        return getContributorName() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasContributorParty() {
+        return getContributorParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasOwnerUnit() {
+        return getOwnerUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberSeries() {
+        return getNumberSeries() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

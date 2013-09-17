@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EnrolStudentInWrittenEvaluation {
 
@@ -22,7 +22,7 @@ public class EnrolStudentInWrittenEvaluation {
 
         ServiceMonitoring.logService(this.getClass(), username, writtenEvaluationOID);
 
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationOID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) FenixFramework.getDomainObject(writtenEvaluationOID);
         final Person person = Person.readPersonByUsername(username);
         final Student student = person.getStudent();
         final Registration registration = findCorrectRegistration(student, writtenEvaluation.getAssociatedExecutionCoursesSet());
@@ -55,7 +55,7 @@ public class EnrolStudentInWrittenEvaluation {
 
     private static final EnrolStudentInWrittenEvaluation serviceInstance = new EnrolStudentInWrittenEvaluation();
 
-    @Service
+    @Atomic
     public static void runEnrolStudentInWrittenEvaluation(String username, String writtenEvaluationOID)
             throws FenixServiceException, NotAuthorizedException {
         ExamStudentAuthorizationFilter.instance.execute(username, writtenEvaluationOID);

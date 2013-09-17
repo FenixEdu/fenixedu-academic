@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,11 +59,11 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
         if (unit == null || unit.getBoards().isEmpty()) {
             return mapping.findForward("noBoards");
         } else {
-            List<PartyAnnouncementBoard> boards = unit.getBoards();
+            Collection<PartyAnnouncementBoard> boards = unit.getBoards();
             if (boards.size() > 1) {
                 return start(mapping, actionForm, request, response);
             } else {
-                AnnouncementBoard board = boards.get(0);
+                AnnouncementBoard board = boards.iterator().next();
 
                 ActionForward forward = new ActionForward(mapping.findForward("viewAnnouncementsRedirect"));
                 forward.setPath(forward.getPath()

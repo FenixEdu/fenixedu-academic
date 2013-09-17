@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGroupingWithExportGroupin
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -27,12 +27,12 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadExecutionCourseProjects {
 
-    @Service
+    @Atomic
     public static ISiteComponent run(String executionCourseID, String userName) throws FenixServiceException {
 
         InfoSiteProjects infoSiteProjects = null;
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
         final List<Grouping> executionCourseProjects = executionCourse.getGroupings();
 

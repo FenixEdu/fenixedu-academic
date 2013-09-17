@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -32,8 +31,8 @@ import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.io.IOUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -51,23 +50,14 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
         }
 
         @Override
+        @Atomic(mode = TxMode.READ)
         public void run() {
-            try {
-                Transaction.withTransaction(true, new TransactionalCommand() {
-                    @Override
-                    public void doIt() {
-                        callService();
-                    }
-
-                });
-            } finally {
-                Transaction.forceFinish();
-            }
+            callService();
         }
 
-        @Service
+        @Atomic
         private void callService() {
-            for (final Thesis thesis : RootDomainObject.getInstance().getThesesPendingPublication()) {
+            for (final Thesis thesis : RootDomainObject.getInstance().getThesesPendingPublicationSet()) {
                 if (thesis.getExternalId().equals(thesisOid)) {
                     createResult(thesis);
                     thesis.setRootDomainObjectFromPendingPublication(null);
@@ -241,7 +231,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
     private static final ApproveThesisDiscussion serviceInstance = new ApproveThesisDiscussion();
 
-    @Service
+    @Atomic
     public static void runApproveThesisDiscussion(Thesis thesis) throws NotAuthorizedException {
         ScientificCouncilAuthorizationFilter.instance.execute();
         serviceInstance.run(thesis);

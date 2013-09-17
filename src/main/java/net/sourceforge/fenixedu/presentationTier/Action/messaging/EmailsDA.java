@@ -28,12 +28,12 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -141,7 +141,7 @@ public class EmailsDA extends FenixDispatchAction {
     }
 
     public ActionForward viewSentEmails(final ActionMapping mapping, final HttpServletRequest request, final String senderId) {
-        final Sender sender = AbstractDomainObject.fromExternalId(senderId);
+        final Sender sender = FenixFramework.getDomainObject(senderId);
         final int numberOfMessagesByPage = 40;
         final CollectionPager<Message> pager = new CollectionPager<Message>(sender.getMessagesSet(), numberOfMessagesByPage);
         request.setAttribute("numberOfPages", getNumberOfPages(pager));
@@ -169,7 +169,7 @@ public class EmailsDA extends FenixDispatchAction {
             final HttpServletResponse response) {
         final String messageParam = request.getParameter("messagesId");
         final Message message =
-                messageParam != null && !messageParam.isEmpty() ? AbstractDomainObject.<Message> fromExternalId(messageParam) : null;
+                messageParam != null && !messageParam.isEmpty() ? FenixFramework.<Message> getDomainObject(messageParam) : null;
         return viewEmail(mapping, request, message);
     }
 
@@ -177,7 +177,7 @@ public class EmailsDA extends FenixDispatchAction {
             final HttpServletRequest request, final HttpServletResponse response) {
         final String messageParam = request.getParameter("messagesId");
         final Message message =
-                messageParam != null && !messageParam.isEmpty() ? AbstractDomainObject.<Message> fromExternalId(messageParam) : null;
+                messageParam != null && !messageParam.isEmpty() ? FenixFramework.<Message> getDomainObject(messageParam) : null;
         if (message == null) {
             return viewSentEmails(mapping, actionForm, request, response);
         } else {
@@ -199,7 +199,7 @@ public class EmailsDA extends FenixDispatchAction {
         return FORWARD_TO_NEW_EMAIL;
     }
 
-    @Service
+    @Atomic
     public ActionForward resubmit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Message message = getMessageFromRequest(request);
@@ -212,7 +212,7 @@ public class EmailsDA extends FenixDispatchAction {
 
     private Message getMessageFromRequest(HttpServletRequest request) {
         final String messageParam = request.getParameter("messagesId");
-        return AbstractDomainObject.fromExternalId(messageParam);
+        return FenixFramework.getDomainObject(messageParam);
     }
 
     private int getNumberOfPages(CollectionPager pager) {

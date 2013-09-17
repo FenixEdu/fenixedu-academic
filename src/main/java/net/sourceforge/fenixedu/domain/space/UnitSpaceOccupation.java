@@ -1,18 +1,19 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 
@@ -20,10 +21,9 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
     static {
         ((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("begin"));
         ((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("unit.name"));
-        ((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created unit space occupation", parameters = { "space", "unit", "begin",
             "end" })
     public UnitSpaceOccupation(Unit unit, Space space, YearMonthDay begin, YearMonthDay end) {
@@ -36,16 +36,16 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
     }
 
     @Override
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted unit space occupation", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations);
         super.setUnit(null);
         super.delete();
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited unit space occupation", parameters = { "begin", "end" })
     public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations);
         checkUnitSpaceOccupationIntersection(begin, end, getSpace(), getUnit());
         super.setBegin(begin);
         super.setEnd(end);
@@ -115,4 +115,20 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
         final YearMonthDay end = getEnd();
         return start != null && (end == null || end.isAfter(start));
     }
+
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasBegin() {
+        return getBegin() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

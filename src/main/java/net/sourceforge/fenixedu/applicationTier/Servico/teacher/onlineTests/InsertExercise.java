@@ -32,9 +32,9 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 import com.sun.faces.el.impl.parser.ParseException;
 
@@ -50,7 +50,7 @@ public class InsertExercise {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
         boolean createAny = false;
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -228,7 +228,7 @@ public class InsertExercise {
 
     private static final InsertExercise serviceInstance = new InsertExercise();
 
-    @Service
+    @Atomic
     public static List<String> runInsertExercise(String executionCourseId, UploadedFile xmlZipFile, String path)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

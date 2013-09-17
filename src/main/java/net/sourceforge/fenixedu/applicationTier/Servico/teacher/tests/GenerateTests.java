@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.domain.tests.NewTestModel;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class GenerateTests {
-    @Service
+    @Atomic
     public static void run(NewTestModel testModel, String name, ExecutionCourse executionCourse, Integer variations,
             DateTime finalDate) throws FenixServiceException {
         testModel.generateTests(name, executionCourse, variations, finalDate);

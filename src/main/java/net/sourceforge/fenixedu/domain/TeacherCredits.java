@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TeacherCredits extends TeacherCredits_Base {
 
@@ -32,9 +32,9 @@ public class TeacherCredits extends TeacherCredits_Base {
         return null;
     }
 
-    @Service
+    @Atomic
     public static void closeAllTeacherCredits(ExecutionSemester executionSemester) throws ParseException {
-        List<Teacher> teachers = RootDomainObject.getInstance().getTeachers();
+        Collection<Teacher> teachers = RootDomainObject.getInstance().getTeachers();
         TeacherCreditsState teacherCreditsState = TeacherCreditsState.getTeacherCreditsState(executionSemester);
         if (teacherCreditsState == null) {
             teacherCreditsState = new TeacherCreditsState(executionSemester);
@@ -45,7 +45,7 @@ public class TeacherCredits extends TeacherCredits_Base {
         teacherCreditsState.setCloseState();
     }
 
-    @Service
+    @Atomic
     public static void closeTeacherCredits(Teacher teacher, TeacherCreditsState teacherCreditsState) throws ParseException {
         TeacherCredits teacherCredits = teacher.getTeacherCredits(teacherCreditsState.getExecutionSemester());
         if (teacherCredits == null) {
@@ -55,13 +55,13 @@ public class TeacherCredits extends TeacherCredits_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static void openAllTeacherCredits(ExecutionSemester executionSemester) throws ParseException {
         TeacherCreditsState teacherCreditsState = TeacherCreditsState.getTeacherCreditsState(executionSemester);
         teacherCreditsState.setOpenState();
     }
 
-    @Service
+    @Atomic
     public void editTeacherCredits(ExecutionSemester executionSemester) throws ParseException {
         saveTeacherCredits();
     }
@@ -129,6 +129,111 @@ public class TeacherCredits extends TeacherCredits_Base {
             }
         }
         return lastTeacherCreditsDocument;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCreditsDocument> getTeacherCreditsDocument() {
+        return getTeacherCreditsDocumentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherCreditsDocument() {
+        return !getTeacherCreditsDocumentSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasOtherCredits() {
+        return getOtherCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasServiceExemptionCredits() {
+        return getServiceExemptionCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasManagementCredits() {
+        return getManagementCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDate() {
+        return getLastModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCategory() {
+        return getProfessionalCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasTotalCredits() {
+        return getTotalCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasSupportLessonHours() {
+        return getSupportLessonHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasMasterDegreeCredits() {
+        return getMasterDegreeCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasTfcAdviseCredits() {
+        return getTfcAdviseCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasPastServiceCredits() {
+        return getPastServiceCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeachingDegreeCredits() {
+        return getTeachingDegreeCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasThesesCredits() {
+        return getThesesCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasMandatoryLessonHours() {
+        return getMandatoryLessonHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherCreditsState() {
+        return getTeacherCreditsState() != null;
+    }
+
+    @Deprecated
+    public boolean hasBalanceOfCredits() {
+        return getBalanceOfCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitutionWorkingHours() {
+        return getInstitutionWorkingHours() != null;
     }
 
 }

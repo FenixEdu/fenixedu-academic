@@ -44,7 +44,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -140,7 +140,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
         String oldDegreeCPId = request.getParameter("degreeCurricularPlanId");
-        final Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("degreeId"));
+        final Degree degree = FenixFramework.getDomainObject(request.getParameter("degreeId"));
 
         InfoDegreeCurricularPlanEditor newInfoDegreeCP = new InfoDegreeCurricularPlanEditor();
         newInfoDegreeCP.setExternalId(oldDegreeCPId);

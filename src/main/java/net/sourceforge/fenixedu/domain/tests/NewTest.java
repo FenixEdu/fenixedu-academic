@@ -15,7 +15,7 @@ public class NewTest extends NewTest_Base implements Positionable {
 
         this.setTestGroup(testGroup);
         this.setScale(scale);
-        this.setPosition(testGroup.getTestsCount());
+        this.setPosition(testGroup.getTestsSet().size());
     }
 
     @Override
@@ -30,7 +30,7 @@ public class NewTest extends NewTest_Base implements Positionable {
 
     @Override
     public boolean isLast() {
-        return this.getPosition() == this.getTestGroup().getTestsCount();
+        return this.getPosition() == this.getTestGroup().getTestsSet().size();
     }
 
     @Override
@@ -59,9 +59,9 @@ public class NewTest extends NewTest_Base implements Positionable {
 
     @Override
     public void delete() {
-        this.removeTestGroup();
+        this.setTestGroup(null);
 
-        for (; this.hasAnyPersons(); this.removePersons(this.getPersons().get(0))) {
+        for (; this.hasAnyPersons(); this.removePersons(this.getPersons().iterator().next())) {
             ;
         }
 
@@ -71,6 +71,31 @@ public class NewTest extends NewTest_Base implements Positionable {
     @Override
     public Person getPerson() {
         return AccessControl.getPerson();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getPersons() {
+        return getPersonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersons() {
+        return !getPersonsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPosition() {
+        return getPosition() != null;
+    }
+
+    @Deprecated
+    public boolean hasScale() {
+        return getScale() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestGroup() {
+        return getTestGroup() != null;
     }
 
 }

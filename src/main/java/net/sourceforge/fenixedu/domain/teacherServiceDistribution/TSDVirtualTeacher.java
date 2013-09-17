@@ -102,4 +102,14 @@ public class TSDVirtualTeacher extends TSDVirtualTeacher_Base {
         return null;
     }
 
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequiredHours() {
+        return getRequiredHours() != null;
+    }
+
 }

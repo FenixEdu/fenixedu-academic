@@ -150,7 +150,7 @@ public class PerformanceGridRenderer extends OutputRenderer {
             for (PerformanceGridLine performanceByStudent : (Collection<PerformanceGridLine>) collection) {
                 metaObjects.add(MetaObjectFactory.createObject(performanceByStudent, findSchema()));
             }
-            numberOfSlots = this.metaObjects.get(0).getSlots().size();
+            numberOfSlots = this.metaObjects.iterator().next().getSlots().size();
         }
 
         @Override
@@ -239,7 +239,7 @@ public class PerformanceGridRenderer extends OutputRenderer {
 
         @Override
         protected HtmlComponent getHeaderComponent(int columnIndex) {
-            MetaObject one = metaObjects.get(0);
+            MetaObject one = metaObjects.iterator().next();
 
             if (columnIndex < one.getSlots().size()) {
                 return new HtmlText(one.getSlots().get(columnIndex).getLabel());

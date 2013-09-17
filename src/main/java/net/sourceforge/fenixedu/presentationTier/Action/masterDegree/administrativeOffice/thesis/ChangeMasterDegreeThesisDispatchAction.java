@@ -15,7 +15,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -30,7 +30,7 @@ public class ChangeMasterDegreeThesisDispatchAction extends FenixDispatchAction 
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         final String scpID = request.getParameter("scpID");
-        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
+        StudentCurricularPlan studentCurricularPlan = FenixFramework.getDomainObject(scpID);
 
         new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
                 studentCurricularPlan);

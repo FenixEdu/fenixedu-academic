@@ -153,10 +153,35 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     public abstract boolean canExecuteOperationAutomatically();
 
     public void delete() {
-        removeCandidacy();
-        removePerson();
-        removeRootDomainObject();
+        setCandidacy(null);
+        setPerson(null);
+        setRootDomainObject(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasCandidacy() {
+        return getCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSituationDate() {
+        return getSituationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasRemarks() {
+        return getRemarks() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

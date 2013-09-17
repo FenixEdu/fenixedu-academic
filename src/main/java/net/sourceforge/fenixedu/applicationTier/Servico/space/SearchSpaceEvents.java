@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class SearchSpaceEvents {
 
@@ -41,7 +41,7 @@ public class SearchSpaceEvents {
         return null;
     }
 
-    @Service
+    @Atomic
     public static Collection<SpaceOccupationEventBean> run(Building building, DateTime start, DateTime end,
             List<OccupationType> types) {
         final Set<SpaceOccupationEventBean> beans = new HashSet<SpaceOccupationEventBean>();

@@ -121,7 +121,7 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public Integer getNumberOfAttendingStudents() {
-        return getExecutionCourse().getAttendsCount();
+        return getExecutionCourse().getAttends().size();
     }
 
     public String getCourseReportFilled() {
@@ -255,7 +255,7 @@ public class InfoExecutionCourse extends InfoObject {
         }
     }
 
-    public List<CourseLoad> getCourseLoads() {
+    public Collection<CourseLoad> getCourseLoads() {
         return getExecutionCourse().getCourseLoads();
     }
 

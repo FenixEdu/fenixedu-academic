@@ -72,7 +72,7 @@ public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
 
     @Override
     protected void disconnect() {
-        removeMetaDomainObject();
+        setMetaDomainObject(null);
         for (Content content : getPoolSet()) {
             if (!content.hasAnyParents()) {
                 content.delete();
@@ -80,6 +80,21 @@ public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
             removePool(content);
         }
         super.disconnect();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.contents.Content> getPool() {
+        return getPoolSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPool() {
+        return !getPoolSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasMetaDomainObject() {
+        return getMetaDomainObject() != null;
     }
 
 }

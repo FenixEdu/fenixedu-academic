@@ -33,7 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "parkingManager", path = "/manageParkingPeriods", input = "/exportParkingDB.do?method=prepareExportFile",
         attribute = "parkingRenewalForm", formBean = "parkingRenewalForm", scope = "request", parameter = "method")
@@ -84,7 +84,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
         }
         String parkingGroupID = request.getParameter("parkingGroupID");
         if (!StringUtils.isEmpty(parkingGroupID)) {
-            parkingCardSearchBean.setParkingGroup(AbstractDomainObject.<ParkingGroup> fromExternalId(parkingGroupID));
+            parkingCardSearchBean.setParkingGroup(FenixFramework.<ParkingGroup> getDomainObject(parkingGroupID));
         }
         String actualEndDate = request.getParameter("actualEndDate");
         if (!StringUtils.isEmpty(actualEndDate)) {
@@ -106,7 +106,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
         parkingCardSearchBean.getSelectedParkingParties().clear();
         for (String selectedParkingCard : selectedParkingCards) {
             parkingCardSearchBean.getSelectedParkingParties().add(
-                    AbstractDomainObject.<ParkingParty> fromExternalId(selectedParkingCard));
+                    FenixFramework.<ParkingParty> getDomainObject(selectedParkingCard));
         }
         if (parkingCardSearchBean.getSelectedParkingParties().isEmpty()) {
             setMessage(request, "message.noParkingPartiesSelected");
@@ -144,7 +144,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
     public ActionForward showParkingDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         ParkingCardSearchBean parkingCardSearchBean = getSearchParameters(request);
-        request.setAttribute("parkingParty", AbstractDomainObject.fromExternalId(request.getParameter("parkingPartyID")));
+        request.setAttribute("parkingParty", FenixFramework.getDomainObject(request.getParameter("parkingPartyID")));
         request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
         return mapping.findForward("showParkingDetails");
     }
@@ -161,7 +161,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
     public ActionForward editRequestPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("parkingRequestPeriodToEdit",
-                AbstractDomainObject.fromExternalId(request.getParameter("externalId")));
+                FenixFramework.getDomainObject(request.getParameter("externalId")));
         return prepareManageRequestsPeriods(mapping, actionForm, request, response);
     }
 

@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ex
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteExternalUnit {
 
-    @Service
+    @Atomic
     public static void run(final Unit externalUnit) throws FenixServiceException {
         if (externalUnit.isOfficialExternal()) {
             externalUnit.delete();

@@ -14,7 +14,7 @@ public class SearchPartyByNif extends SearchParties<Party> {
     @Override
     protected Collection<Party> search(String value, int size) {
         List<Party> result = new ArrayList<Party>();
-        List<PartySocialSecurityNumber> partySocialSecurityNumbers =
+        Collection<PartySocialSecurityNumber> partySocialSecurityNumbers =
                 RootDomainObject.getInstance().getPartySocialSecurityNumbers();
         for (PartySocialSecurityNumber partySocialSecurityNumber : partySocialSecurityNumbers) {
             if (partySocialSecurityNumber.getSocialSecurityNumber().startsWith(value)) {

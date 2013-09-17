@@ -474,4 +474,24 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
                 student);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getStudentCandidacy() {
+        return getStudentCandidacySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentCandidacy() {
+        return !getStudentCandidacySet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDgesStudentImportationFile() {
+        return getDgesStudentImportationFile() != null;
+    }
+
+    @Deprecated
+    public boolean hasDgesStudentImportationForCampus() {
+        return getDgesStudentImportationForCampus() != null;
+    }
+
 }

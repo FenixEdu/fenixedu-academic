@@ -10,7 +10,8 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 
 public class OldMarkSheet extends OldMarkSheet_Base {
@@ -36,9 +37,9 @@ public class OldMarkSheet extends OldMarkSheet_Base {
 
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     private void addEnrolmentEvaluationToMarkSheet(Teacher responsibleTeacher,
             final MarkSheetEnrolmentEvaluationBean evaluationBean) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         EnrolmentEvaluation enrolmentEvaluation =
                 evaluationBean.getEnrolment().getEnrolmentEvaluation(
@@ -82,8 +83,8 @@ public class OldMarkSheet extends OldMarkSheet_Base {
     }
 
     @Override
-    @Checked("MarkSheetPredicates.confirmPredicate")
     public void confirm(Person validator) {
+        check(this, MarkSheetPredicates.confirmPredicate);
         if (validator == null) {
             throw new DomainException("error.markSheet.invalid.arguments");
         }
@@ -110,8 +111,8 @@ public class OldMarkSheet extends OldMarkSheet_Base {
     }
 
     @Override
-    @Checked("MarkSheetPredicates.editPredicate")
     protected void editEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToEdit) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         for (final MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean : evaluationBeansToEdit) {
 

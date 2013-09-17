@@ -10,25 +10,26 @@ import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditGratuitySituationById {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static Object run(InfoGratuitySituation infoGratuitySituation) throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         if (infoGratuitySituation == null) {
             throw new FenixServiceException();
         }
 
         StudentCurricularPlan studentCurricularPlan =
-                AbstractDomainObject.fromExternalId(infoGratuitySituation.getInfoStudentCurricularPlan()
+                FenixFramework.getDomainObject(infoGratuitySituation.getInfoStudentCurricularPlan()
                         .getExternalId());
 
         GratuityValues gratuityValues =
-                AbstractDomainObject.fromExternalId(infoGratuitySituation.getInfoGratuityValues().getExternalId());
+                FenixFramework.getDomainObject(infoGratuitySituation.getInfoGratuityValues().getExternalId());
 
         final GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 

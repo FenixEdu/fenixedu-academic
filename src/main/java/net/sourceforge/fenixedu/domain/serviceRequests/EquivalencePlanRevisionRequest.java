@@ -98,4 +98,9 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
         return false;
     }
 
+    @Deprecated
+    public boolean hasEquivalencePlanRequest() {
+        return getEquivalencePlanRequest() != null;
+    }
+
 }

@@ -23,9 +23,9 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -38,12 +38,12 @@ public class InsertExerciseVariation {
             throws FenixServiceException, NotExecuteException {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Metadata metadata = AbstractDomainObject.fromExternalId(metadataId);
+        Metadata metadata = FenixFramework.getDomainObject(metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -108,7 +108,7 @@ public class InsertExerciseVariation {
 
     private static final InsertExerciseVariation serviceInstance = new InsertExerciseVariation();
 
-    @Service
+    @Atomic
     public static List runInsertExerciseVariation(String executionCourseId, String metadataId, UploadedFile xmlZipFile,
             String path) throws FenixServiceException, NotExecuteException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

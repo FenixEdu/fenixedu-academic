@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyContest_Base implements
         Comparable<OutboundMobilityCandidacyContest> {
@@ -144,21 +144,21 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
         //        When the relation is initialized but never traversed, the consistency predicate always
         //        fails. Forcing a traversal will resolve this issue. The bug has already been solved in
         //        the framework, but the framework has not yet been updated on this project.
-        getExecutionDegreeCount();
+        getExecutionDegreeSet().size();
     }
 
-    @Service
+    @Atomic
     public void delete() {
         final OutboundMobilityCandidacyContestGroup mobilityGroup = getOutboundMobilityCandidacyContestGroup();
         for (final OutboundMobilityCandidacy candidacy : getOutboundMobilityCandidacySet()) {
             candidacy.deleteWithNotification();
         }
         getExecutionDegreeSet().clear();
-        removeMobilityAgreement();
-        removeOutboundMobilityCandidacyContestGroup();
-        removeOutboundMobilityCandidacyPeriod();
-        removeRootDomainObject();
-        if (mobilityGroup != null && mobilityGroup.getOutboundMobilityCandidacyContestCount() == 0) {
+        setMobilityAgreement(null);
+        setOutboundMobilityCandidacyContestGroup(null);
+        setOutboundMobilityCandidacyPeriod(null);
+        setRootDomainObject(null);
+        if (mobilityGroup != null && mobilityGroup.getOutboundMobilityCandidacyContestSet().size() == 0) {
             mobilityGroup.delete();
         }
         deleteDomainObject();
@@ -179,9 +179,54 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
         return vacancies == null || vacancies.intValue() > countSelectedCandidates();
     }
 
-    @Service
+    @Atomic
     public void editVacancies(final Integer vacancies) {
         setVacancies(vacancies);
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy> getOutboundMobilityCandidacy() {
+        return getOutboundMobilityCandidacySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOutboundMobilityCandidacy() {
+        return !getOutboundMobilityCandidacySet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegree() {
+        return getExecutionDegreeSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionDegree() {
+        return !getExecutionDegreeSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasOutboundMobilityCandidacyContestGroup() {
+        return getOutboundMobilityCandidacyContestGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityAgreement() {
+        return getMobilityAgreement() != null;
+    }
+
+    @Deprecated
+    public boolean hasOutboundMobilityCandidacyPeriod() {
+        return getOutboundMobilityCandidacyPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasVacancies() {
+        return getVacancies() != null;
     }
 
 }

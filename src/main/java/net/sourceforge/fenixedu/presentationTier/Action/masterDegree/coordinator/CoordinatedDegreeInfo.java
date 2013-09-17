@@ -33,7 +33,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CoordinatedDegreeInfo extends FenixAction {
 
@@ -42,7 +42,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {
-            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
+            final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanOID);
             if (degreeCurricularPlan != null) {
                 final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
 
@@ -99,7 +99,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {
-            final DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.fromExternalId(degreeCurricularPlanOID);
+            final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanOID);
             if (degreeCurricularPlan != null) {
                 final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
 
@@ -116,7 +116,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
         final String executionDegreePlanOID = newFindExecutionDegreeID(request);
         if (executionDegreePlanOID != null) {
             request.setAttribute("executionDegreeOID", executionDegreePlanOID);
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreePlanOID);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreePlanOID);
             request.setAttribute("executionDegree", executionDegree);
         }
     }

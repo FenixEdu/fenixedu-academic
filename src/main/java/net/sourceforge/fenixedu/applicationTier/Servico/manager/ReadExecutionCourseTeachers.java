@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,8 +17,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -32,8 +33,8 @@ public class ReadExecutionCourseTeachers {
 
     protected List<InfoTeacher> run(String executionCourseId) throws FenixServiceException {
 
-        List professorShips = null;
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        Collection professorShips = null;
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         professorShips = executionCourse.getProfessorships();
 
         if (professorShips == null || professorShips.isEmpty()) {
@@ -56,7 +57,7 @@ public class ReadExecutionCourseTeachers {
 
     private static final ReadExecutionCourseTeachers serviceInstance = new ReadExecutionCourseTeachers();
 
-    @Service
+    @Atomic
     public static List<InfoTeacher> runReadExecutionCourseTeachers(String executionCourseId) throws FenixServiceException,
             NotAuthorizedException {
         try {

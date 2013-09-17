@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -22,7 +22,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExecutionCourseResponsiblesIds {
 
     protected List<String> run(String executionCourseId) throws FenixServiceException {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
 
         List<Professorship> responsibles = executionCourse.responsibleFors();
 
@@ -39,7 +39,7 @@ public class ReadExecutionCourseResponsiblesIds {
 
     private static final ReadExecutionCourseResponsiblesIds serviceInstance = new ReadExecutionCourseResponsiblesIds();
 
-    @Service
+    @Atomic
     public static List<String> runReadExecutionCourseResponsiblesIds(String executionCourseId) throws FenixServiceException,
             NotAuthorizedException {
         try {

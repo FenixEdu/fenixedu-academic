@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class EmailAddress extends EmailAddress_Base {
@@ -104,7 +104,7 @@ public class EmailAddress extends EmailAddress_Base {
         return true;
     }
 
-    @Service
+    @Atomic
     public void edit(final String value) {
         if (!isInstitutionalType()) {
             if (!StringUtils.equals(value, getValue())) {
@@ -168,4 +168,5 @@ public class EmailAddress extends EmailAddress_Base {
     public void logRefuse(Person person) {
         logRefuseAux(person, "label.partyContacts.EmailAddress");
     }
+
 }

@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality;
 import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -28,7 +29,7 @@ public class GetAllModalities {
     protected List run() throws BDException {
         List infoCases = new LinkedList();
 
-        List cases = Modality.getAllModalities();
+        Collection cases = Modality.getAllModalities();
 
         for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
             Modality modality = (Modality) iterator.next();
@@ -43,8 +44,8 @@ public class GetAllModalities {
 
     private static final GetAllModalities serviceInstance = new GetAllModalities();
 
-    @Service
-    public static List runGetAllModalities() throws BDException  , NotAuthorizedException {
+    @Atomic
+    public static List runGetAllModalities() throws BDException, NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run();
     }

@@ -10,7 +10,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ResearchEventManagement extends FenixDispatchAction {
 
@@ -19,7 +19,7 @@ public class ResearchEventManagement extends FenixDispatchAction {
 
         String eventId = request.getParameter("eventId");
         if (eventId != null) {
-            ResearchEvent event = AbstractDomainObject.fromExternalId(eventId);
+            ResearchEvent event = FenixFramework.getDomainObject(eventId);
             request.setAttribute("event", event);
         }
 

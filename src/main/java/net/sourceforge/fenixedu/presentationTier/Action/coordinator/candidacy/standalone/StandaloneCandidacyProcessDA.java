@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(
         path = "/caseHandlingStandaloneCandidacyProcess",
@@ -97,6 +97,6 @@ public class StandaloneCandidacyProcessDA extends
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request) {
         final String param = request.getParameter("degreeCurricularPlanID");
-        return (DegreeCurricularPlan) (param == null || param.isEmpty() ? null : AbstractDomainObject.fromExternalId(param));
+        return (DegreeCurricularPlan) (param == null || param.isEmpty() ? null : FenixFramework.getDomainObject(param));
     }
 }

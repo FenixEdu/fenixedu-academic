@@ -125,16 +125,16 @@ public class Qualification extends Qualification_Base {
     public void delete() {
         super.setPerson(null);
         super.setCreator(null);
-        removeModifiedBy();
-        removeCountry();
-        removeRootDomainObject();
+        setModifiedBy(null);
+        setCountry(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     public void edit(InfoQualification infoQualification, Country country) {
         setBasicProperties(infoQualification);
         if (country == null) {
-            removeCountry();
+            setCountry(null);
         } else {
             setCountry(country);
         }
@@ -232,6 +232,116 @@ public class Qualification extends Qualification_Base {
         } else {
             setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasEquivalenceSchool() {
+        return getEquivalenceSchool() != null;
+    }
+
+    @Deprecated
+    public boolean hasBranch() {
+        return getBranch() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpecializationArea() {
+        return getSpecializationArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeRecognition() {
+        return getDegreeRecognition() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasModifiedBy() {
+        return getModifiedBy() != null;
+    }
+
+    @Deprecated
+    public boolean hasDateYearMonthDay() {
+        return getDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasCountry() {
+        return getCountry() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModificationDateDateTime() {
+        return getLastModificationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasMark() {
+        return getMark() != null;
+    }
+
+    @Deprecated
+    public boolean hasEquivalenceDateYearMonthDay() {
+        return getEquivalenceDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasAttendedEnd() {
+        return getAttendedEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasSchool() {
+        return getSchool() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasAttendedBegin() {
+        return getAttendedBegin() != null;
+    }
+
+    @Deprecated
+    public boolean hasDesignation() {
+        return getDesignation() != null;
     }
 
 }

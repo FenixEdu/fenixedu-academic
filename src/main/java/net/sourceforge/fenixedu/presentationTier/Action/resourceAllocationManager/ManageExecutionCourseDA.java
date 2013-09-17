@@ -26,7 +26,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -129,6 +129,6 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     private CourseLoad getCourseLoadFromParameter(final HttpServletRequest request) {
         final String idString =
                 request.getParameterMap().containsKey("courseLoadID") ? request.getParameter("courseLoadID") : null;
-        return AbstractDomainObject.fromExternalId(idString);
+        return FenixFramework.getDomainObject(idString);
     }
 }

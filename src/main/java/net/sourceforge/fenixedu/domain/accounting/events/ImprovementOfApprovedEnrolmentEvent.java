@@ -120,4 +120,14 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getImprovementEnrolmentEvaluations() {
+        return getImprovementEnrolmentEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyImprovementEnrolmentEvaluations() {
+        return !getImprovementEnrolmentEvaluationsSet().isEmpty();
+    }
+
 }

@@ -8,7 +8,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class BibliographicReference extends BibliographicReference_Base {
 
@@ -24,7 +24,7 @@ public class BibliographicReference extends BibliographicReference_Base {
                 chain.addComparator(new BeanComparator("referenceOrder", new NullComparator(true)));
                 chain.addComparator(new BeanComparator("title"));
                 chain.addComparator(new BeanComparator("year"));
-                chain.addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+                chain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
             }
 
             return chain.compare(one, other);
@@ -82,12 +82,52 @@ public class BibliographicReference extends BibliographicReference_Base {
                 "log.executionCourse.curricular.bibliographic.removed", type, blBibliographicReference,
                 executionCourse.getName(), executionCourse.getDegreePresentationString());
 
-        removeExecutionCourse();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     public boolean isOptional() {
         return getOptional() == null || getOptional();
     }
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasReference() {
+        return getReference() != null;
+    }
+
+    @Deprecated
+    public boolean hasAuthors() {
+        return getAuthors() != null;
+    }
+
+    @Deprecated
+    public boolean hasReferenceOrder() {
+        return getReferenceOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasOptional() {
+        return getOptional() != null;
+    }
+
 }

@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "manager", path = "/unitsMerge", attribute = "unitsMergeForm", formBean = "unitsMergeForm", scope = "request",
         parameter = "method")
@@ -119,12 +119,12 @@ public class ExternalUnitsMergeDA extends FenixDispatchAction {
 
     private Unit getFromUnitFromParameter(final HttpServletRequest request) {
         final String unitIDString = request.getParameter("fromUnitID");
-        return (Unit) AbstractDomainObject.fromExternalId(unitIDString);
+        return (Unit) FenixFramework.getDomainObject(unitIDString);
     }
 
     private Unit getDestinationUnitFromParameter(final HttpServletRequest request) {
         final String unitIDString = request.getParameter("unitID");
-        return (Unit) AbstractDomainObject.fromExternalId(unitIDString);
+        return (Unit) FenixFramework.getDomainObject(unitIDString);
     }
 
     private void saveMessages(HttpServletRequest request, DomainException e) {

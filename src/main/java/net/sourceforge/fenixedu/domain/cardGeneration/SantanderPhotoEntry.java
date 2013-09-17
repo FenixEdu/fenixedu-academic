@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.photograph.PictureSize;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class SantanderPhotoEntry extends SantanderPhotoEntry_Base {
 
@@ -21,7 +21,7 @@ public class SantanderPhotoEntry extends SantanderPhotoEntry_Base {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setWhenGenerated(new DateTime());
-        if (person.hasSantanderPhotoEntry()) {
+        if (person.getSantanderPhotoEntry() != null) {
             setNext(person.getSantanderPhotoEntry());
         }
         setPerson(person);
@@ -29,7 +29,7 @@ public class SantanderPhotoEntry extends SantanderPhotoEntry_Base {
         setSequenceNumber(SantanderSequenceNumberGenerator.getNewPhotoSequenceNumber());
     }
 
-    @Service
+    @Atomic
     public static SantanderPhotoEntry getOrCreatePhotoEntryForPerson(final Person person) {
         final Photograph personalPhoto = person.getPersonalPhoto();
         if (personalPhoto != null) {

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EmailAddressThread extends Thread {
 
@@ -17,7 +17,7 @@ public class EmailAddressThread extends Thread {
     }
 
     @Override
-    @Service
+    @Atomic
     public void run() {
         for (final Person person : group.getElements()) {
             final String emailAddress = person.getEmail();

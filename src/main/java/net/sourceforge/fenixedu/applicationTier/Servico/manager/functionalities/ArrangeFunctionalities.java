@@ -5,8 +5,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 /**
@@ -24,9 +25,9 @@ public class ArrangeFunctionalities {
      * @param arrangements
      *            list of pairs (parent, child)
      */
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(List<Pair<Module, Content>> arrangements) {
+        check(RolePredicates.MANAGER_PREDICATE);
         for (Pair<Module, Content> pair : arrangements) {
             ((IFunctionality) pair.getValue()).setModule(pair.getKey());
         }

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AffinityCyclesManagement {
     private StudentCurricularPlan studentCurricularPlan;
@@ -24,7 +24,7 @@ public class AffinityCyclesManagement {
         return new SeparationCyclesManagement().separateSecondCycle(getStudentCurricularPlan());
     }
 
-    @Service
+    @Atomic
     public void createCycleOrRepeateSeparate() {
 
         if (studentCurricularPlan.isActive() && canSeparate()) {

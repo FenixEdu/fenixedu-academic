@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -97,7 +98,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -160,7 +161,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         List<Metadata> metadataList =
                 new ArrayList<Metadata>(Metadata.findVisibleMetadataFromExecutionCourseNotOfTest(executionCourse, test));
         String order = request.getParameter("order");
@@ -195,10 +196,10 @@ public class TestsManagementAction extends FenixDispatchAction {
             throw new FenixActionException(e);
         }
 
-        final Metadata metadata = AbstractDomainObject.fromExternalId(metadataCode);
+        final Metadata metadata = FenixFramework.getDomainObject(metadataCode);
         Question question = null;
         if (exerciseCode == null || exerciseCode.equals(new Integer(-1))) {
-            question = metadata.getVisibleQuestions().get(0);
+            question = metadata.getVisibleQuestions().iterator().next();
         } else {
             for (Question visibleQuestion : metadata.getVisibleQuestions()) {
                 if (visibleQuestion.getExternalId().equals(exerciseCode)) {
@@ -344,11 +345,11 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward showTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final String executionCourseId = getStringFromRequest(request, "objectCode");
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         final TestScope testScope = executionCourse.getTestScope();
         List<Test> testList = new ArrayList<Test>();
         if (testScope != null) {
-            testList = testScope.getTests();
+            testList = new ArrayList<>(testScope.getTests());
         }
         request.setAttribute("testList", testList);
         request.setAttribute("objectCode", executionCourseId);
@@ -575,7 +576,7 @@ public class TestsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         final String objectCode = getStringFromRequest(request, "objectCode");
         final String testCode = getStringFromRequest(request, "testCode");
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(objectCode);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(objectCode);
         if (executionCourse == null) {
             throw new FenixActionException();
         }
@@ -592,7 +593,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String objectCode = getStringFromRequest(request, "objectCode");
         final String testCode = getStringFromRequest(request, "testCode");
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(objectCode);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(objectCode);
         final List<Registration> studentList = new ArrayList<Registration>();
         for (final Attends attends : executionCourse.getAttends()) {
             if (!studentList.contains(attends.getRegistration())) {
@@ -677,11 +678,11 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward showDistributedTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final String objectCode = getStringFromRequest(request, "objectCode");
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(objectCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(objectCode);
         final TestScope testScope = executionCourse.getTestScope();
         List<DistributedTest> distributedTestList = new ArrayList<DistributedTest>();
         if (testScope != null) {
-            distributedTestList = testScope.getDistributedTests();
+            distributedTestList = new ArrayList<>(testScope.getDistributedTests());
         }
         request.setAttribute("distributedTests", distributedTestList);
         request.setAttribute("objectCode", objectCode);
@@ -692,7 +693,7 @@ public class TestsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         final Object objectCode = getFromRequest(request, "objectCode");
         final String distributedTestCode = getStringFromRequest(request, "distributedTestCode");
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestCode);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCode);
         if (distributedTest == null) {
             throw new FenixActionException();
         }
@@ -756,8 +757,8 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String objectCode = getStringFromRequest(request, "objectCode");
         final String distributedTestCode = getStringFromRequest(request, "distributedTestCode");
 
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestCode);
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(objectCode);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCode);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(objectCode);
         if (executionCourse == null) {
             throw new FenixActionException();
         }
@@ -765,7 +766,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final Set<Shift> associatedShifts = executionCourse.getAssociatedShifts();
         List<Shift> shiftList = new ArrayList<Shift>();
         for (Shift shift : associatedShifts) {
-            List<Registration> shiftStudents = shift.getStudents();
+            Collection<Registration> shiftStudents = shift.getStudents();
             if (!students.containsAll(shiftStudents)) {
                 shiftList.add(shift);
             }
@@ -782,9 +783,9 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String objectCode = getStringFromRequest(request, "objectCode");
         final String distributedTestCode = getStringFromRequest(request, "distributedTestCode");
         final List<Registration> studentList = new ArrayList<Registration>();
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(objectCode);
-        final List<Attends> attendList = executionCourse.getAttends();
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestCode);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(objectCode);
+        final Collection<Attends> attendList = executionCourse.getAttends();
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCode);
         final Set<Registration> students = distributedTest.findStudents();
         for (Attends attend : attendList) {
             if (!students.contains(attend.getRegistration())) {
@@ -869,7 +870,7 @@ public class TestsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         final String objectCode = getStringFromRequest(request, "objectCode");
         final String distributedTestCode = getStringFromRequest(request, "distributedTestCode");
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestCode);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCode);
         if (distributedTest == null) {
             throw new FenixActionException();
         }
@@ -968,11 +969,11 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String objectCode = getStringFromRequest(request, "objectCode");
         final String distributedTestCode = getStringFromRequest(request, "distributedTestCode");
         final String studentCode = getStringFromRequest(request, "studentCode");
-        final Registration student = AbstractDomainObject.fromExternalId(studentCode);
+        final Registration student = FenixFramework.getDomainObject(studentCode);
         if (student == null) {
             throw new FenixActionException();
         }
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestCode);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCode);
         if (distributedTest == null) {
             throw new FenixActionException();
         }
@@ -992,11 +993,11 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String objectCode = getStringFromRequest(request, "objectCode");
         final String distributedTestCode = getStringFromRequest(request, "distributedTestCode");
         final String studentCode = getStringFromRequest(request, "studentCode");
-        final Registration student = AbstractDomainObject.fromExternalId(studentCode);
+        final Registration student = FenixFramework.getDomainObject(studentCode);
         if (student == null) {
             throw new FenixActionException();
         }
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestCode);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCode);
         if (distributedTest == null) {
             throw new FenixActionException();
         }
@@ -1013,11 +1014,11 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String distributedTestCode = getStringFromRequest(request, "distributedTestCode");
         final String studentCode = getStringFromRequest(request, "studentCode");
 
-        final Registration student = AbstractDomainObject.fromExternalId(studentCode);
+        final Registration student = FenixFramework.getDomainObject(studentCode);
         if (student == null) {
             throw new FenixActionException();
         }
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestCode);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCode);
         if (distributedTest == null) {
             throw new FenixActionException();
         }
@@ -1140,8 +1141,8 @@ public class TestsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         final String executionCourseId = getStringFromRequest(request, "objectCode");
         final String distributedTestId = getStringFromRequest(request, "distributedTestCode");
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         Set<Metadata> metadataList =
                 Metadata.findVisibleMetadataFromExecutionCourseNotOfDistributedTest(executionCourse, distributedTest);
         request.setAttribute("objectCode", executionCourseId);
@@ -1440,7 +1441,7 @@ public class TestsManagementAction extends FenixDispatchAction {
                         request.setAttribute("question" + i, ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse());
                     }
                 }
-                if (((InfoStudentTestQuestion) infoSiteStudentTestFeedback.getStudentTestQuestionList().get(0))
+                if (((InfoStudentTestQuestion) infoSiteStudentTestFeedback.getStudentTestQuestionList().iterator().next())
                         .getDistributedTest().getCorrectionAvailability().getAvailability().intValue() == CorrectionAvailability.ALWAYS) {
                     request.setAttribute("infoStudentTestQuestionList", infoSiteStudentTestFeedback.getStudentTestQuestionList());
                 }

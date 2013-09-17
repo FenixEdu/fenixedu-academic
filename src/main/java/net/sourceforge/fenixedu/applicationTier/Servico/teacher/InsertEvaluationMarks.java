@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -29,8 +28,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério
@@ -48,17 +47,17 @@ public class InsertEvaluationMarks {
         HashMap<String, String> newHashMarks = new HashMap<String, String>();
 
         // Site
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
         site = executionCourse.getSite();
 
         // Evaluation
-        evaluation = AbstractDomainObject.fromExternalId(evaluationCode);
+        evaluation = FenixFramework.getDomainObject(evaluationCode);
 
         // Attend List
-        attendList = executionCourse.getAttends();
+        attendList = new ArrayList(executionCourse.getAttends());
 
         marksErrorsInvalidMark = new ArrayList<InfoMarkEditor>();
-        ListIterator iterAttends = attendList.listIterator();
+        Iterator iterAttends = attendList.iterator();
 
         while (iterAttends.hasNext()) {
             Attends attend = (Attends) iterAttends.next();
@@ -152,7 +151,7 @@ public class InsertEvaluationMarks {
 
     private static final InsertEvaluationMarks serviceInstance = new InsertEvaluationMarks();
 
-    @Service
+    @Atomic
     public static TeacherAdministrationSiteView runInsertEvaluationMarks(String executionCourseCode, String evaluationCode,
             HashMap hashMarks) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

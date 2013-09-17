@@ -36,10 +36,25 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
      * Deletes this object from persistent storage.
      */
     public void delete() {
-        removeContent();
-        removeRootDomainObject();
+        setContent(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
     public abstract Group getTargetGroup();
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasContentId() {
+        return getContentId() != null;
+    }
+
+    @Deprecated
+    public boolean hasContent() {
+        return getContent() != null;
+    }
+
 }

@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/professionalInformation", module = "manager")
 @Forwards({ @Forward(name = "showProfessionalInformation",
@@ -39,7 +39,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showProfessioanlData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Person person = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        Person person = FenixFramework.getDomainObject((String) getFromRequest(request, "personId"));
 
         if (person.getPersonProfessionalData() != null) {
             request.setAttribute("professionalData", person.getPersonProfessionalData());
@@ -50,7 +50,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showSituations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Person person = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        Person person = FenixFramework.getDomainObject((String) getFromRequest(request, "personId"));
 
         List<PersonContractSituation> situations = new ArrayList<PersonContractSituation>();
         if (person.getPersonProfessionalData() != null) {
@@ -69,7 +69,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showCategories(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Person person = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        Person person = FenixFramework.getDomainObject((String) getFromRequest(request, "personId"));
 
         List<PersonProfessionalCategory> categories = new ArrayList<PersonProfessionalCategory>();
         if (person.getPersonProfessionalData() != null) {
@@ -89,7 +89,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showRegimes(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Person person = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        Person person = FenixFramework.getDomainObject((String) getFromRequest(request, "personId"));
 
         List<PersonProfessionalRegime> regimes = new ArrayList<PersonProfessionalRegime>();
         if (person.getPersonProfessionalData() != null) {
@@ -108,7 +108,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showRelations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Person person = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        Person person = FenixFramework.getDomainObject((String) getFromRequest(request, "personId"));
 
         List<PersonProfessionalRelation> relations = new ArrayList<PersonProfessionalRelation>();
         if (person.getPersonProfessionalData() != null) {
@@ -128,7 +128,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showContracts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Person person = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        Person person = FenixFramework.getDomainObject((String) getFromRequest(request, "personId"));
 
         List<PersonProfessionalContract> contracts = new ArrayList<PersonProfessionalContract>();
         if (person.getPersonProfessionalData() != null) {
@@ -148,7 +148,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showFunctionsAccumulations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Person person = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        Person person = FenixFramework.getDomainObject((String) getFromRequest(request, "personId"));
 
         List<PersonFunctionsAccumulation> functionsAccumulations = new ArrayList<PersonFunctionsAccumulation>();
         if (person.getPersonProfessionalData() != null) {
@@ -168,7 +168,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showSabbaticals(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Person person = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        Person person = FenixFramework.getDomainObject((String) getFromRequest(request, "personId"));
 
         List<PersonProfessionalExemption> sabbaticals = new ArrayList<PersonProfessionalExemption>();
         if (person.getPersonProfessionalData() != null) {
@@ -189,7 +189,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showServiceExemptions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Person person = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        Person person = FenixFramework.getDomainObject((String) getFromRequest(request, "personId"));
 
         List<PersonProfessionalExemption> serviceExemptions = new ArrayList<PersonProfessionalExemption>();
         if (person.getPersonProfessionalData() != null) {
@@ -210,7 +210,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showGrantOwnerEquivalences(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Person person = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        Person person = FenixFramework.getDomainObject((String) getFromRequest(request, "personId"));
 
         List<PersonProfessionalExemption> grantOwnerEquivalences = new ArrayList<PersonProfessionalExemption>();
         if (person.getPersonProfessionalData() != null) {
@@ -231,7 +231,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showAbsences(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Person person = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        Person person = FenixFramework.getDomainObject((String) getFromRequest(request, "personId"));
 
         List<PersonProfessionalExemption> absences = new ArrayList<PersonProfessionalExemption>();
         if (person.getPersonProfessionalData() != null) {
@@ -252,7 +252,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showEmployeeWorkingUnits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Person person = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        Person person = FenixFramework.getDomainObject((String) getFromRequest(request, "personId"));
         List<Contract> workingUnits = new ArrayList<Contract>();
         Employee employee = person.getEmployee();
         if (employee != null) {

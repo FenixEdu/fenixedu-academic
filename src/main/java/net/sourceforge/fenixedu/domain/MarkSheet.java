@@ -33,8 +33,9 @@ import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -79,7 +80,7 @@ public class MarkSheet extends MarkSheet_Base {
         final public int compare(MarkSheet o1, MarkSheet o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_EVALUATION_DATE);
-            comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_ID);
+            comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
             return comparatorChain.compare(o1, o2);
         }
@@ -92,7 +93,7 @@ public class MarkSheet extends MarkSheet_Base {
                     final ComparatorChain comparatorChain = new ComparatorChain();
                     comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_EVALUATION_DATE);
                     comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_CREATION_DATE);
-                    comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_ID);
+                    comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
                     return comparatorChain.compare(o1, o2);
                 }
@@ -261,9 +262,9 @@ public class MarkSheet extends MarkSheet_Base {
         setCreator(creator);
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     private void addEnrolmentEvaluationsWithoutResctrictions(Teacher responsibleTeacher,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, EnrolmentEvaluationState enrolmentEvaluationState) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         final ExecutionDegree executionDegree = getExecutionDegree(getCurricularCourse(), getExecutionPeriod());
 
@@ -282,9 +283,9 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     private void addEnrolmentEvaluationsWithResctrictions(Teacher responsibleTeacher,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, EnrolmentEvaluationState enrolmentEvaluationState) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         final ExecutionDegree executionDegree = getExecutionDegree(getCurricularCourse(), getExecutionPeriod());
         final Set<Enrolment> enrolmentsNotInAnyMarkSheet =
@@ -307,9 +308,9 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     private void addEnrolmentEvaluationToMarkSheet(Teacher responsibleTeacher, EnrolmentEvaluationState enrolmentEvaluationState,
             final MarkSheetEnrolmentEvaluationBean evaluationBean, ExecutionDegree executionDegree) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(), executionDegree, getExecutionPeriod(),
                 evaluationBean.getEvaluationDate(), getMarkSheetType());
@@ -347,8 +348,8 @@ public class MarkSheet extends MarkSheet_Base {
         return hasMarkSheetState(MarkSheetState.RECTIFICATION) || hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED);
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     public void editNormal(Teacher responsibleTeacher, Date newEvaluationDate) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
@@ -374,8 +375,8 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     public void editRectification(MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
@@ -392,9 +393,9 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     private void editMarkSheetEnrolmentEvaluationsWithSameEvaluationDate(Teacher responsibleTeacher, Date oldEvaluationDate,
             Date newEvaluationDate, Set<EnrolmentEvaluation> enrolmentEvaluationsToEdit) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         String dateFormat = "dd/MM/yyyy";
         final ExecutionDegree executionDegree = getExecutionDegree(getCurricularCourse(), getExecutionPeriod());
@@ -407,10 +408,10 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     public void editNormal(Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToEdit,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToAppend,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToRemove) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
@@ -432,13 +433,13 @@ public class MarkSheet extends MarkSheet_Base {
     private void checkIfEnrolmentEvaluationsNumberIsValid(Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToAppend,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToRemove) {
 
-        if (evaluationBeansToAppend.size() == 0 && evaluationBeansToRemove.size() == getEnrolmentEvaluationsCount()) {
+        if (evaluationBeansToAppend.size() == 0 && evaluationBeansToRemove.size() == getEnrolmentEvaluationsSet().size()) {
             throw new DomainException("error.markSheet.edit.with.invalid.enrolmentEvaluations.number");
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     protected void editEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToEdit) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         final ExecutionDegree executionDegree = getExecutionDegree(getCurricularCourse(), getExecutionPeriod());
 
@@ -459,8 +460,8 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     private void removeEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToRemove) {
+        check(this, MarkSheetPredicates.editPredicate);
         for (MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean : enrolmentEvaluationBeansToRemove) {
             enrolmentEvaluationBean.getEnrolmentEvaluation().removeFromMarkSheet();
             enrolmentEvaluationBean.getEnrolmentEvaluation().setGrade(Grade.createEmptyGrade());
@@ -472,8 +473,8 @@ public class MarkSheet extends MarkSheet_Base {
                 EnrolmentEvaluationState.TEMPORARY_OBJ);
     }
 
-    @Checked("MarkSheetPredicates.confirmPredicate")
     public void confirm(Person validator) {
+        check(this, MarkSheetPredicates.confirmPredicate);
         if (validator == null) {
             throw new DomainException("error.markSheet.invalid.arguments");
         }
@@ -527,24 +528,24 @@ public class MarkSheet extends MarkSheet_Base {
             throw new DomainException("error.markSheet.cannot.be.deleted");
         }
 
-        removeExecutionPeriod();
-        removeCurricularCourse();
-        removeResponsibleTeacher();
-        removeValidator();
-        removeCreator();
+        setExecutionPeriod(null);
+        setCurricularCourse(null);
+        setResponsibleTeacher(null);
+        setValidator(null);
+        setCreator(null);
 
         if (hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED)) {
             changeRectifiedEnrolmentEvaluationToPreviowsState();
-            for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().get(0).delete()) {
+            for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().iterator().next().delete()) {
                 ;
             }
         } else {
-            for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().get(0).removeFromMarkSheet()) {
+            for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().iterator().next().removeFromMarkSheet()) {
                 ;
             }
         }
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -558,7 +559,7 @@ public class MarkSheet extends MarkSheet_Base {
             return;
         }
 
-        EnrolmentEvaluation enrolmentEvaluation = this.getEnrolmentEvaluations().get(0).getRectified();
+        EnrolmentEvaluation enrolmentEvaluation = this.getEnrolmentEvaluations().iterator().next().getRectified();
         enrolmentEvaluation
                 .setEnrolmentEvaluationState((enrolmentEvaluation.getMarkSheet().getMarkSheetState() == MarkSheetState.RECTIFICATION) ? EnrolmentEvaluationState.RECTIFICATION_OBJ : EnrolmentEvaluationState.FINAL_OBJ);
     }
@@ -593,7 +594,7 @@ public class MarkSheet extends MarkSheet_Base {
         return null;
     }
 
-    @Service
+    @Atomic
     static public void printMarksheet(MarkSheet markSheet, String printerName) throws FenixServiceException {
         if (markSheet == null) {
             throw new InvalidArgumentsServiceException("mark sheet cannot be null");
@@ -608,7 +609,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Service
+    @Atomic
     static public void printMarksheets(final Collection<MarkSheet> markSheets, final Person person, final String printerName)
             throws FenixServiceException {
         for (final MarkSheet markSheet : markSheets) {
@@ -666,30 +667,27 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Override
     public void removeCurricularCourse() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeCurricularCourse();
+            super.setCurricularCourse(null);
         }
     }
 
-    @Override
     public void removeValidator() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeValidator();
+            super.setValidator(null);
         }
     }
 
-    @Override
     public void removeCreator() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeCreator();
+            super.setCreator(null);
         }
     }
 
@@ -702,30 +700,27 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Override
     public void removeExecutionPeriod() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeExecutionPeriod();
+            super.setExecutionPeriod(null);
         }
     }
 
-    @Override
     public void removeResponsibleTeacher() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeResponsibleTeacher();
+            super.setResponsibleTeacher(null);
         }
     }
 
-    @Override
     public void removeRootDomainObject() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeRootDomainObject();
+            super.setRootDomainObject(null);
         }
     }
 
@@ -920,14 +915,14 @@ public class MarkSheet extends MarkSheet_Base {
 
     private void removeEvaluationFromMarkSheet(EnrolmentEvaluation enrolmentEvaluation) {
         changeEvaluationStateToTemporaryState(enrolmentEvaluation);
-        enrolmentEvaluation.removeMarkSheet();
+        enrolmentEvaluation.setMarkSheet(null);
         enrolmentEvaluation.setGrade(Grade.createEmptyGrade());
         enrolmentEvaluation.setCheckSum(null);
         enrolmentEvaluation.setExamDateYearMonthDay(null);
-        enrolmentEvaluation.removePerson();
+        enrolmentEvaluation.setPerson(null);
         enrolmentEvaluation.setGradeAvailableDateYearMonthDay(null);
-        enrolmentEvaluation.removePersonResponsibleForGrade();
-        enrolmentEvaluation.removeRectified();
+        enrolmentEvaluation.setPersonResponsibleForGrade(null);
+        enrolmentEvaluation.setRectified(null);
     }
 
     private void changeEvaluationStateToTemporaryState(final EnrolmentEvaluation enrolmentEvaluation) {
@@ -1012,6 +1007,96 @@ public class MarkSheet extends MarkSheet_Base {
     public java.util.Date getEvaluationDate() {
         org.joda.time.DateTime dt = getEvaluationDateDateTime();
         return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getEnrolmentEvaluations() {
+        return getEnrolmentEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolmentEvaluations() {
+        return !getEnrolmentEvaluationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasResponsibleTeacher() {
+        return getResponsibleTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasMarkSheetType() {
+        return getMarkSheetType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateDateTime() {
+        return getCreationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationDateDateTime() {
+        return getEvaluationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidator() {
+        return getValidator() != null;
+    }
+
+    @Deprecated
+    public boolean hasConfirmationDateDateTime() {
+        return getConfirmationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasArchiveInformation() {
+        return getArchiveInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasCheckSum() {
+        return getCheckSum() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrinted() {
+        return getPrinted() != null;
+    }
+
+    @Deprecated
+    public boolean hasMarkSheetState() {
+        return getMarkSheetState() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmittedByTeacher() {
+        return getSubmittedByTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasReason() {
+        return getReason() != null;
     }
 
 }

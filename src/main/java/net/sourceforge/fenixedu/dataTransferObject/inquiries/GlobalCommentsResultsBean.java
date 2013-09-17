@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,7 +22,7 @@ import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public abstract class GlobalCommentsResultsBean implements Serializable {
 
@@ -59,7 +60,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
         }
     }
 
-    public List<InquiryResultComment> getOtherInquiryResultComments() {
+    public Collection<InquiryResultComment> getOtherInquiryResultComments() {
         if (getInquiryGlobalComment() == null) {
             return getInquiryGlobalComment().getInquiryResultComments();
         }
@@ -79,7 +80,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
         setTeachersResultsMap(new HashMap<Professorship, List<TeacherShiftTypeResultsBean>>());
         for (Professorship teacherProfessorship : getProfessorships()) {
             ArrayList<TeacherShiftTypeResultsBean> teachersResults = new ArrayList<TeacherShiftTypeResultsBean>();
-            List<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
+            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                     List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
@@ -95,7 +96,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
         }
     }
 
-    protected Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+    protected Set<ShiftType> getShiftTypes(Collection<InquiryResult> professorshipResults) {
         Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
         for (InquiryResult inquiryResult : professorshipResults) {
             shiftTypes.add(inquiryResult.getShiftType());
@@ -103,13 +104,13 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
         return shiftTypes;
     }
 
-    protected List<Professorship> getProfessorships() {
+    protected Collection<Professorship> getProfessorships() {
         return getExecutionCourse().getProfessorships();
     }
 
     public abstract InquiryGlobalComment getInquiryGlobalComment();
 
-    @Service
+    @Atomic
     public void saveComment() {
         if (!StringUtils.isEmpty(getComment())) {
             if (getInquiryGlobalComment() != null) {
@@ -120,7 +121,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
                     getInquiryResultComment().setComment(getComment());
                 } else {
                     new InquiryResultComment(getInquiryGlobalComment(), getPerson(), getPersonCategory(),
-                            getInquiryGlobalComment().getInquiryResultCommentsCount() + 1, getComment());
+                            getInquiryGlobalComment().getInquiryResultComments().size() + 1, getComment());
                 }
             } else {
                 InquiryGlobalComment inquiryGlobalComment = createGlobalComment();

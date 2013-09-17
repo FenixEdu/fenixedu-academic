@@ -147,7 +147,7 @@ public abstract class Forum extends Forum_Base {
     }
 
     public int getConversationThreadsCount() {
-        return getChildrenCount();
+        return getChildrenSet().size();
     }
 
     @Override
@@ -167,6 +167,16 @@ public abstract class Forum extends Forum_Base {
             forumSubscription.delete();
         }
         super.disconnect();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.ForumSubscription> getForumSubscriptions() {
+        return getForumSubscriptionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyForumSubscriptions() {
+        return !getForumSubscriptionsSet().isEmpty();
     }
 
 }

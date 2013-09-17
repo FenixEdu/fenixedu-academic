@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.institution;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -11,7 +11,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadAllInstitutions {
 
-    @Service
+    @Atomic
     public static Object run() throws FenixServiceException {
         return UnitUtils.readAllExternalInstitutionUnits();
     }

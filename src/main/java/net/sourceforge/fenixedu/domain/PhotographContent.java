@@ -18,4 +18,19 @@ public class PhotographContent extends PhotographContent_Base {
     public byte[] getBytes() {
         return getContent().getBytes();
     }
+    @Deprecated
+    public boolean hasPhotograph() {
+        return getPhotograph() != null;
+    }
+
+    @Deprecated
+    public boolean hasContent() {
+        return getContent() != null;
+    }
+
+    @Deprecated
+    public boolean hasSize() {
+        return getSize() != null;
+    }
+
 }

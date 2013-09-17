@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "SpaceManager", path = "/manageSpaceResponsibility", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -122,20 +122,20 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
         final String spaceInformationIDString =
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
-        return AbstractDomainObject.fromExternalId(spaceInformationIDString);
+        return FenixFramework.getDomainObject(spaceInformationIDString);
     }
 
     private SpaceResponsibility getSpaceResponsibility(final HttpServletRequest request) {
         final String spaceResponsibilityIDString =
                 request.getParameterMap().containsKey("spaceResponsibilityID") ? request.getParameter("spaceResponsibilityID") : (String) request
                         .getAttribute("spaceResponsibilityID");
-        return (SpaceResponsibility) AbstractDomainObject.fromExternalId(spaceResponsibilityIDString);
+        return (SpaceResponsibility) FenixFramework.getDomainObject(spaceResponsibilityIDString);
     }
 
     private Unit getResponsibleUnit(final HttpServletRequest request) {
         final String unitIDString =
                 request.getParameterMap().containsKey("unitID") ? request.getParameter("unitID") : (String) request
                         .getAttribute("unitID");
-        return (Unit) AbstractDomainObject.fromExternalId(unitIDString);
+        return (Unit) FenixFramework.getDomainObject(unitIDString);
     }
 }

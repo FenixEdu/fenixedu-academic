@@ -27,10 +27,30 @@ public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCa
     }
 
     public void delete() {
-        removeOutboundMobilityCandidacyContestGroup();
-        removeOutboundMobilityCandidacySubmission();
-        removeRootDomainObject();
+        setOutboundMobilityCandidacyContestGroup(null);
+        setOutboundMobilityCandidacySubmission(null);
+        setRootDomainObject(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasOutboundMobilityCandidacySubmission() {
+        return getOutboundMobilityCandidacySubmission() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrade() {
+        return getGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasOutboundMobilityCandidacyContestGroup() {
+        return getOutboundMobilityCandidacyContestGroup() != null;
     }
 
 }

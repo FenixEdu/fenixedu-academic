@@ -65,7 +65,7 @@ public class DepartmentCreditsBean implements Serializable {
     public void setAvailableDepartments(List<Department> availableDepartments) {
         this.availableDepartments = availableDepartments;
         if (availableDepartments.size() == 1) {
-            setDepartment(availableDepartments.get(0));
+            setDepartment(availableDepartments.iterator().next());
         }
     }
 

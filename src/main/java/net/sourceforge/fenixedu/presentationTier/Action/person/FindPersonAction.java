@@ -31,7 +31,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -209,13 +209,13 @@ public class FindPersonAction extends FenixDispatchAction {
                 bean.setRoleType(RoleType.valueOf(roleType));
             }
             if (degreeId != null) {
-                bean.setDegree(AbstractDomainObject.<Degree> fromExternalId(degreeId));
+                bean.setDegree(FenixFramework.<Degree> getDomainObject(degreeId));
             }
             if (!StringUtils.isEmpty(degreeType)) {
                 bean.setDegreeType(DegreeType.valueOf(degreeType));
             }
             if (departmentId != null) {
-                bean.setDepartment(AbstractDomainObject.<Department> fromExternalId(departmentId));
+                bean.setDepartment(FenixFramework.<Department> getDomainObject(departmentId));
             }
             System.out.printf("%s %s %s %s %s %s\n", bean.getRoleType(), bean.getName(), bean.getViewPhoto(), bean.getDegree(),
                     bean.getDegreeType(), bean.getDepartment());

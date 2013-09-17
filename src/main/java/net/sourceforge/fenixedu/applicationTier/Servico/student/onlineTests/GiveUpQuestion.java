@@ -20,18 +20,19 @@ import net.sourceforge.fenixedu.util.tests.ResponseLID;
 import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Susana Fernandes
  */
 public class GiveUpQuestion {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Registration registration, DistributedTest distributedTest, String exerciseCode, Integer itemCode,
             String path) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
         if (distributedTest == null) {
             throw new FenixServiceException();
         }

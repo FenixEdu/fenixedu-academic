@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthoriz
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeletePersonFunction {
 
     protected void run(String personFunctionID) throws FenixServiceException {
-        PersonFunction personFunction = (PersonFunction) AbstractDomainObject.fromExternalId(personFunctionID);
+        PersonFunction personFunction = (PersonFunction) FenixFramework.getDomainObject(personFunctionID);
         if (personFunction == null) {
             throw new FenixServiceException("error.delete.personFunction.no.personFunction");
         }
@@ -27,7 +27,7 @@ public class DeletePersonFunction {
 
     private static final DeletePersonFunction serviceInstance = new DeletePersonFunction();
 
-    @Service
+    @Atomic
     public static void runDeletePersonFunction(String personFunctionID) throws FenixServiceException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

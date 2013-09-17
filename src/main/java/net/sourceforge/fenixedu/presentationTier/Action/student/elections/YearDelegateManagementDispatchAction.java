@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.elections;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
                 request.setAttribute("candidatedYearDelegate", Collections.singletonList(personDelegateElection));
             }
 
-            final List<Student> candidates = new ArrayList<Student>(yearDelegateElection.getCandidates());
+            final List<Student> candidates = new ArrayList<Student>(yearDelegateElection.getCandidatesSet());
             Collections.sort(candidates, Student.NAME_COMPARATOR);
             request.setAttribute("candidates", candidates);
         }
@@ -71,14 +72,14 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
                 request.setAttribute("votedYearDelegate", yearDelegateElection);
             } else {
                 // aluno ainda nao votou: pode votar
-                final List<Student> candidatesList = yearDelegateElection.getCandidates();
+                final Collection<Student> candidatesList = yearDelegateElection.getCandidatesSet();
 
                 List<StudentVoteBean> candidatesBeanList = new ArrayList<StudentVoteBean>();
                 for (final Student student : candidatesList) {
                     candidatesBeanList.add(new StudentVoteBean(student));
                 }
 
-                final List<Student> otherStudentsList = yearDelegateElection.getNotCandidatedStudents();
+                final Collection<Student> otherStudentsList = yearDelegateElection.getNotCandidatedStudents();
 
                 List<StudentVoteBean> otherStudentsBeanList = new ArrayList<StudentVoteBean>();
                 for (final Student student : otherStudentsList) {
@@ -148,7 +149,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward vote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, Exception {
+            HttpServletResponse response) throws FenixServiceException, Exception {
 
         final Person person = getLoggedPerson(request);
         final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(person.getStudent());
@@ -167,7 +168,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareVote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, Exception {
+            HttpServletResponse response) throws FenixServiceException, Exception {
 
         final Person person = getLoggedPerson(request);
         final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(person.getStudent());

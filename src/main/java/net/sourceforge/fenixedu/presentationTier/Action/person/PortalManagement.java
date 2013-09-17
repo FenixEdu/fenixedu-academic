@@ -23,7 +23,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "person", path = "/portalManagement", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -93,7 +93,7 @@ public class PortalManagement extends FenixDispatchAction {
             HttpServletResponse response) {
 
         String elementId = request.getParameter("elementId");
-        Element element = elementId != null ? (Element) AbstractDomainObject.fromExternalId(elementId) : null;
+        Element element = elementId != null ? (Element) FenixFramework.getDomainObject(elementId) : null;
         Portal portal = getPortal(request);
 
         try {
@@ -120,7 +120,7 @@ public class PortalManagement extends FenixDispatchAction {
 
         Portal portal = getPortal(request);
         String elementId = request.getParameter("elementId");
-        Element element = (elementId != null) ? (Element) AbstractDomainObject.fromExternalId(elementId) : null;
+        Element element = (elementId != null) ? (Element) FenixFramework.getDomainObject(elementId) : null;
         try {
             AddContentToPool.run((MetaDomainObjectPortal) portal, element);
         } catch (Exception e) {
@@ -132,11 +132,11 @@ public class PortalManagement extends FenixDispatchAction {
 
     private Portal getPortal(HttpServletRequest request) {
         String portalID = request.getParameter("pid");
-        return (Portal) AbstractDomainObject.fromExternalId(portalID);
+        return (Portal) FenixFramework.getDomainObject(portalID);
     }
 
     private MetaDomainObject getMetaDomainObject(HttpServletRequest request) {
         String metaObjectID = request.getParameter("oid");
-        return AbstractDomainObject.fromExternalId(metaObjectID);
+        return FenixFramework.getDomainObject(metaObjectID);
     }
 }

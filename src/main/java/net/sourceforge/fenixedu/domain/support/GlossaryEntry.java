@@ -18,8 +18,23 @@ public class GlossaryEntry extends GlossaryEntry_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTerm() {
+        return getTerm() != null;
+    }
+
+    @Deprecated
+    public boolean hasDefinition() {
+        return getDefinition() != null;
     }
 
 }

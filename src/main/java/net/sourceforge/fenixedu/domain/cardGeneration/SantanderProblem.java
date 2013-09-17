@@ -17,9 +17,29 @@ public class SantanderProblem extends SantanderProblem_Base {
     }
 
     public void delete() {
-        removeSantanderBatch();
-        removeRootDomainObject();
+        setSantanderBatch(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasArg() {
+        return getArg() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescriptionKey() {
+        return getDescriptionKey() != null;
+    }
+
+    @Deprecated
+    public boolean hasSantanderBatch() {
+        return getSantanderBatch() != null;
     }
 
 }

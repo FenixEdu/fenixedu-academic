@@ -19,7 +19,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.sun.faces.util.Base64;
@@ -67,9 +67,9 @@ public class AnnouncementManagement implements IAnnouncementManagement {
 
             AnnouncementBoard board = null;
             if (announcementBoard.equals(EVENT_ANNOUNCEMENT_BOARD)) {
-                board = (AnnouncementBoard) AbstractDomainObject.fromExternalId(EVENT_BOARD_ID);
+                board = (AnnouncementBoard) FenixFramework.getDomainObject(EVENT_BOARD_ID);
             } else if (announcementBoard.equals(NEWS_ANNOUNCEMENT_BOARD)) {
-                board = (AnnouncementBoard) AbstractDomainObject.fromExternalId(NEWS_BOARD_ID);
+                board = (AnnouncementBoard) FenixFramework.getDomainObject(NEWS_BOARD_ID);
             } else {
                 return FAILURE + " - " + "announcementBoard value must be EVENT_BOARD or NEWS_BOARD";
             }

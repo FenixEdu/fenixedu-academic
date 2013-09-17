@@ -28,7 +28,7 @@ public class OptionalEnrolmentLog extends OptionalEnrolmentLog_Base {
 
     @Override
     protected void disconnect() {
-        removeOptionalCurricularCourse();
+        setOptionalCurricularCourse(null);
         super.disconnect();
     }
 
@@ -36,4 +36,9 @@ public class OptionalEnrolmentLog extends OptionalEnrolmentLog_Base {
     public String getDescription() {
         return getOptionalCurricularCourse().getName(getExecutionPeriod()) + " (" + super.getDescription() + ")";
     }
+    @Deprecated
+    public boolean hasOptionalCurricularCourse() {
+        return getOptionalCurricularCourse() != null;
+    }
+
 }

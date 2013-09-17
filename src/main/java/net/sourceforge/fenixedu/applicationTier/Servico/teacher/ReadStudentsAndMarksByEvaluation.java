@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -26,8 +27,8 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Tânia Pousão
@@ -40,21 +41,21 @@ public class ReadStudentsAndMarksByEvaluation {
         InfoEvaluation infoEvaluation = new InfoEvaluation();
 
         // Execution Course
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
 
         // Site
         final ExecutionCourseSite site = executionCourse.getSite();
 
         // Evaluation
-        Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationCode);
+        Evaluation evaluation = FenixFramework.getDomainObject(evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
         // Attends
-        List attendList = executionCourse.getAttends();
+        Collection attendList = executionCourse.getAttends();
 
         // Marks
-        List<Mark> marksList = evaluation.getMarks();
+        Collection<Mark> marksList = evaluation.getMarks();
 
         List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
             @Override
@@ -106,7 +107,7 @@ public class ReadStudentsAndMarksByEvaluation {
 
     private static final ReadStudentsAndMarksByEvaluation serviceInstance = new ReadStudentsAndMarksByEvaluation();
 
-    @Service
+    @Atomic
     public static Object runReadStudentsAndMarksByEvaluation(String executionCourseCode, String evaluationCode)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

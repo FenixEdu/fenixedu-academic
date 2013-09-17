@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -41,12 +41,12 @@ public class ResidenceRoleManagementDA extends FenixDispatchAction {
         return residencePersonsManagement(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     public void addPersonToRole(Person person, Role role) {
         person.addPersonRoles(role);
     }
 
-    @Service
+    @Atomic
     public void removePersonFromRole(Person person, Role role) {
         person.removePersonRoles(role);
     }

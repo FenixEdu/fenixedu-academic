@@ -100,4 +100,14 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
     public VerifyRuleExecutor createVerifyRuleExecutor() {
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
+    @Deprecated
+    public boolean hasMinimumLimit() {
+        return getMinimumLimit() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaximumLimit() {
+        return getMaximumLimit() != null;
+    }
+
 }

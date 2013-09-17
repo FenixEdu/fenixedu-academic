@@ -112,7 +112,7 @@ public class NewQuestionGroup extends NewQuestionGroup_Base {
             this.removeChildElements(childElement);
             childElement.deleteDown();
 
-            if (child.getParentElementsCount() == 0) {
+            if (child.getParentElementsSet().size() == 0) {
                 child.delete();
             }
         }
@@ -225,6 +225,21 @@ public class NewQuestionGroup extends NewQuestionGroup_Base {
         }
 
         return (grades == 0 || grades == this.getChildAtomicQuestionsCount());
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewGroupElement> getChildElements() {
+        return getChildElementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChildElements() {
+        return !getChildElementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
     }
 
 }

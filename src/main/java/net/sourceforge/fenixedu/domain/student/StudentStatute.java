@@ -80,10 +80,10 @@ public class StudentStatute extends StudentStatute_Base {
 
     public void delete() {
         checkRules();
-        removeBeginExecutionPeriod();
-        removeEndExecutionPeriod();
-        removeStudent();
-        removeRootDomainObject();
+        setBeginExecutionPeriod(null);
+        setEndExecutionPeriod(null);
+        setStudent(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -205,6 +205,36 @@ public class StudentStatute extends StudentStatute_Base {
 
     public boolean hasSeniorStatuteForRegistration(Registration registration) {
         return false;
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasStatuteType() {
+        return getStatuteType() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginExecutionPeriod() {
+        return getBeginExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndExecutionPeriod() {
+        return getEndExecutionPeriod() != null;
     }
 
 }

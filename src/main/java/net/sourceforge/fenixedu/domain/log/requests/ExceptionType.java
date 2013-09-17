@@ -28,4 +28,24 @@ public class ExceptionType extends ExceptionType_Base {
         return new ExceptionType(type);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.log.requests.ErrorLog> getErrorLogs() {
+        return getErrorLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyErrorLogs() {
+        return !getErrorLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
 }

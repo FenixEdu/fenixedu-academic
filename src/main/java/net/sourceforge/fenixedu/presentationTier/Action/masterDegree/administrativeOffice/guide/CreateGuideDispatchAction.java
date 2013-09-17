@@ -39,7 +39,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -97,8 +97,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
                         DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
 
         final InfoExecutionDegree infoExecutionDegree =
-                InfoExecutionDegree.newInfoFromDomain(AbstractDomainObject
-                        .<ExecutionDegree> fromExternalId((String) createGuideForm.get("executionDegreeID")));
+                InfoExecutionDegree.newInfoFromDomain(FenixFramework.<ExecutionDegree> getDomainObject((String) createGuideForm.get("executionDegreeID")));
 
         try {
 

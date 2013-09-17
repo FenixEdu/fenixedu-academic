@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class SearchPersonWithCard extends SearchPerson {
@@ -67,7 +67,7 @@ public class SearchPersonWithCard extends SearchPerson {
 
     private static final SearchPersonWithCard serviceInstance = new SearchPersonWithCard();
 
-    @Service
+    @Atomic
     public static CollectionPager<Person> runSearchPersonWithCard(SearchParameters searchParameters, Predicate predicate) {
         return serviceInstance.run(searchParameters, predicate);
     }

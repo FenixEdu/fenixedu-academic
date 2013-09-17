@@ -48,7 +48,7 @@ import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
@@ -339,7 +339,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     @SuppressWarnings("unchecked")
     protected <T extends DomainObject> T getDomainObject(final HttpServletRequest request, final String name) {
         final String parameter = request.getParameter(name);
-        return (T) AbstractDomainObject.fromExternalId(parameter != null ? parameter : (String) request.getAttribute(name));
+        return (T) FenixFramework.getDomainObject(parameter != null ? parameter : (String) request.getAttribute(name));
     }
 
     /**
@@ -362,7 +362,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         if (StringUtils.isEmpty(parameter) || parameter.startsWith("-")) {
             return null;
         } else {
-            return AbstractDomainObject.fromExternalId(parameter);
+            return FenixFramework.getDomainObject(parameter);
         }
     }
 

@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -28,7 +29,7 @@ public class GetAllThemes {
     protected List run() throws BDException {
         List seminariesInfo = new LinkedList();
 
-        List themes = Theme.getAllThemes();
+        Collection themes = Theme.getAllThemes();
         for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
 
             InfoTheme infoTheme = InfoTheme.newInfoFromDomain((Theme) iterator.next());
@@ -43,8 +44,8 @@ public class GetAllThemes {
 
     private static final GetAllThemes serviceInstance = new GetAllThemes();
 
-    @Service
-    public static List runGetAllThemes() throws BDException  , NotAuthorizedException {
+    @Atomic
+    public static List runGetAllThemes() throws BDException, NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run();
     }

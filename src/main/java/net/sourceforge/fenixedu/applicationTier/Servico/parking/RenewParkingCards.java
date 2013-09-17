@@ -16,15 +16,16 @@ import net.sourceforge.fenixedu.domain.util.email.Sender;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class RenewParkingCards {
 
-    @Checked("RolePredicates.PARKING_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(List<ParkingParty> parkingParties, DateTime newEndDate, ParkingGroup newParkingGroup, String emailText) {
+        check(RolePredicates.PARKING_MANAGER_PREDICATE);
         DateTime newBeginDate = new DateTime();
         for (ParkingParty parkingParty : parkingParties) {
             parkingParty.renewParkingCard(newBeginDate, newEndDate, newParkingGroup);

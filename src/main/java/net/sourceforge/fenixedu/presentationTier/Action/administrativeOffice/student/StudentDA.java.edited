@@ -36,7 +36,7 @@ public class StudentDA extends StudentRegistrationDA {
 
     private Student getAndSetStudent(final HttpServletRequest request) {
 	final String studentID = getFromRequest(request, "studentID").toString();
-	final Student student = AbstractDomainObject.fromExternalId(Integer.valueOf(studentID));
+	final Student student = FenixFramework.getDomainObject(Integer.valueOf(studentID));
 	request.setAttribute("student", student);
 	request.setAttribute("choosePhdOrRegistration", new ChooseRegistrationOrPhd(student));
 	return student;

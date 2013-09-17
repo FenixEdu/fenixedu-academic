@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateExternalUnit {
 
-    @Service
+    @Atomic
     public static Unit run(final CreateExternalUnitBean externalUnitBean) throws FenixServiceException {
 
         if (externalUnitBean.getUnitType() == PartyTypeEnum.DEPARTMENT) {

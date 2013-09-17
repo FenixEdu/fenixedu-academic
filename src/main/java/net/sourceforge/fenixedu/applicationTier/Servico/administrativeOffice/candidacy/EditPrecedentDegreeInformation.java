@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ca
 
 
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -13,7 +13,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class EditPrecedentDegreeInformation {
 
-    @Service
+    @Atomic
     public static void run(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
         precedentDegreeInformationBean.getPrecedentDegreeInformation().edit(precedentDegreeInformationBean);
     }

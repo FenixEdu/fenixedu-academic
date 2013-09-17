@@ -30,25 +30,25 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentsAndMarksByCurricularCourse {
 
-    @Service
+    @Atomic
     public static InfoSiteEnrolmentEvaluation run(String curricularCourseCode, String yearString) throws FenixServiceException {
 
         List infoEnrolmentEvaluations = new ArrayList();
         Date lastEvaluationDate = null;
 
-        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
+        final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseCode);
         final List<Enrolment> enrolments =
                 (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString) : curricularCourse.getEnrolments();
 
         final List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
         for (final Enrolment enrolment : enrolments) {
             if (enrolment.getDegreeCurricularPlanOfStudent().getDegreeType() == DegreeType.MASTER_DEGREE) {
-                enrolmentEvaluations.add(enrolment.getEvaluations().get(enrolment.getEvaluationsCount() - 1));
+                enrolmentEvaluations.add(enrolment.getLatestEnrolmentEvaluation());
             }
         }
 
@@ -79,7 +79,7 @@ public class ReadStudentsAndMarksByCurricularCourse {
                     });
 
             if (enrolmentEvaluationsWithResponsiblePerson.size() > 0) {
-                Person person = enrolmentEvaluationsWithResponsiblePerson.get(0).getPersonResponsibleForGrade();
+                Person person = enrolmentEvaluationsWithResponsiblePerson.iterator().next().getPersonResponsibleForGrade();
                 Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
                 infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
             }
@@ -102,10 +102,10 @@ public class ReadStudentsAndMarksByCurricularCourse {
         }
 
         // get last evaluation date to show in interface
-        if (((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0)).getExamDate() == null) {
+        if (((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.iterator().next()).getExamDate() == null) {
             lastEvaluationDate = getLastEvaluationDate(yearString, curricularCourse);
         } else {
-            lastEvaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0)).getExamDate();
+            lastEvaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.iterator().next()).getExamDate();
         }
 
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
@@ -118,9 +118,9 @@ public class ReadStudentsAndMarksByCurricularCourse {
     private static Date getLastEvaluationDate(String yearString, CurricularCourse curricularCourse) {
 
         Date lastEvaluationDate = null;
-        Iterator iterator = curricularCourse.getAssociatedExecutionCourses().listIterator();
+        Iterator<ExecutionCourse> iterator = curricularCourse.getAssociatedExecutionCoursesSet().iterator();
         while (iterator.hasNext()) {
-            ExecutionCourse executionCourse = (ExecutionCourse) iterator.next();
+            ExecutionCourse executionCourse = iterator.next();
             if (executionCourse.getExecutionPeriod().getExecutionYear().getYear().equals(yearString)) {
 
                 if (executionCourse.getAssociatedEvaluations() != null && executionCourse.getAssociatedEvaluations().size() > 0) {

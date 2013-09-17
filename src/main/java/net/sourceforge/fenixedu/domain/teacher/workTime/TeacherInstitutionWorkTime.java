@@ -17,7 +17,7 @@ public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base 
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -49,6 +49,36 @@ public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base 
         } else {
             setStartTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndTimeHourMinuteSecond() {
+        return getEndTimeHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartTimeHourMinuteSecond() {
+        return getStartTimeHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeekDay() {
+        return getWeekDay() != null;
     }
 
 }

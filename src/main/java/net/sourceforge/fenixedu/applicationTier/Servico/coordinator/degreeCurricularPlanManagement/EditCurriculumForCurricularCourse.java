@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério 21/Nov/2003
@@ -37,7 +37,7 @@ public class EditCurriculumForCurricularCourse {
             throw new FenixServiceException("nullUsername");
         }
 
-        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
+        CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");
         }
@@ -47,7 +47,7 @@ public class EditCurriculumForCurricularCourse {
             throw new NonExistingServiceException("noPerson");
         }
 
-        Curriculum oldCurriculum = AbstractDomainObject.fromExternalId(oldCurriculumId);
+        Curriculum oldCurriculum = FenixFramework.getDomainObject(oldCurriculumId);
         if (oldCurriculum == null) {
             oldCurriculum = new Curriculum();
 
@@ -83,7 +83,7 @@ public class EditCurriculumForCurricularCourse {
 
     private static final EditCurriculumForCurricularCourse serviceInstance = new EditCurriculumForCurricularCourse();
 
-    @Service
+    @Atomic
     public static Boolean runEditCurriculumForCurricularCourse(String infoExecutionDegreeId, String oldCurriculumId,
             String curricularCourseCode, InfoCurriculum newInfoCurriculum, String username, String language)
             throws FenixServiceException, NotAuthorizedException {

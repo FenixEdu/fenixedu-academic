@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.consult;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewStudent", module = "externalSupervision")
 @Forwards({ @Forward(name = "selectStudent", path = "/externalSupervision/consult/selectStudent.jsp"),
@@ -66,7 +67,7 @@ public class ExternalSupervisorViewStudentDA extends FenixDispatchAction {
         if (bean == null) {
 
             final String personId = request.getParameter("personId");
-            Person student = AbstractDomainObject.fromExternalId(personId);
+            Person student = FenixFramework.getDomainObject(personId);
 
             RegistrationProtocol protocol = supervisor.getOnlyRegistrationProtocol();
 
@@ -97,7 +98,7 @@ public class ExternalSupervisorViewStudentDA extends FenixDispatchAction {
         }*/
 
         final Person personStudent = bean.getStudent();
-        final List<Registration> registrations = personStudent.getStudent().getRegistrations();
+        final Collection<Registration> registrations = personStudent.getStudent().getRegistrations();
         Boolean hasDissertations;
 
         List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registrations);
@@ -124,7 +125,7 @@ public class ExternalSupervisorViewStudentDA extends FenixDispatchAction {
      * Imported from /student/tutor/TutorInfoDispatchAction.java
      * along with all statistics logic used above on showStats()
      */
-    private List<ExecutionPeriodStatisticsBean> getStudentStatistics(List<Registration> registrations) {
+    private List<ExecutionPeriodStatisticsBean> getStudentStatistics(Collection<Registration> registrations) {
         List<ExecutionPeriodStatisticsBean> studentStatistics = new ArrayList<ExecutionPeriodStatisticsBean>();
 
         Map<ExecutionSemester, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod =

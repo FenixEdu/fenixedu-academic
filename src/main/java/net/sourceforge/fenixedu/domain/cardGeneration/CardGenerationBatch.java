@@ -11,6 +11,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -31,8 +32,7 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
 
 public class CardGenerationBatch extends CardGenerationBatch_Base {
 
@@ -41,7 +41,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         @Override
         public int compare(CardGenerationBatch o1, CardGenerationBatch o2) {
             final int c = o1.getCreated().compareTo(o2.getCreated());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };
@@ -94,8 +94,8 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
     }
 
     public void delete() {
-        removeExecutionYear();
-        removeRootDomainObject();
+        setExecutionYear(null);
+        setRootDomainObject(null);
         for (final CardGenerationProblem cardGenerationProblem : getCardGenerationProblemsSet()) {
             cardGenerationProblem.delete();
         }
@@ -106,7 +106,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
     }
 
     @Override
-    @Service
+    @Atomic
     public void setSent(DateTime dateTime) {
         super.setSent(dateTime);
     }
@@ -300,7 +300,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
                     final YearMonthDay yearMonthDay1 = o1.getStartDateYearMonthDay();
                     final YearMonthDay yearMonthDay2 = o2.getStartDateYearMonthDay();
                     final int c = yearMonthDay1.compareTo(yearMonthDay2);
-                    return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
                 } else {
                     return degreeType1.compareTo(degreeType2);
                 }
@@ -320,7 +320,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         return cardGenerationBatchs;
     }
 
-    @Service
+    @Atomic
     public void createCardGenerationEntry(final Student student) {
         final ExecutionYear executionYear = getExecutionYear();
         final DateTime begin = executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight();
@@ -353,7 +353,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
             final CardGenerationEntry cardGenerationEntry =
                     createCardGenerationEntries(record.getLine(), record.getIdentificationId());
             cardGenerationEntry.setPerson(person);
-            if (person.getCardGenerationEntriesCount() > 1) {
+            if (person.getCardGenerationEntriesSet().size() > 1) {
                 cardGenerationEntry.incrementVersionNumber();
             }
             return cardGenerationEntry;
@@ -371,7 +371,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static CardGenerationBatch findOrCreate(ExecutionYear executionYear, String description) {
         for (final CardGenerationBatch cardGenerationBatch : executionYear.getCardGenerationBatchesSet()) {
             if (description.equals(cardGenerationBatch.getDescription())) {
@@ -381,7 +381,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         return new CardGenerationBatch(description, executionYear, true);
     }
 
-    @Service
+    @Atomic
     public ImportationReport importCardIdentificationsFromFile(String contents) {
         ImportationReport report = new ImportationReport();
         CardGenerationBatch cardGenerationBatchWithProblems = this.getCardGenerationBatchProblems();
@@ -671,10 +671,10 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         private static Pattern workplacePattern = Pattern.compile("[&,_/:\\.]");
         private static Pattern lineRemainderPattern = Pattern.compile("[,\\.]");
 
-        private String record;
-        private String identificationId;
-        private String line;
-        private String name;
+        private final String record;
+        private final String identificationId;
+        private final String line;
+        private final String name;
 
         private Set<Integer> numbers;
 
@@ -756,7 +756,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	 */
         private static final long serialVersionUID = 1L;
 
-        private String key;
+        private final String key;
         public java.util.List<Person> duplicatedPersons;
         public Set<Integer> numbers;
         public Boolean created;
@@ -824,12 +824,12 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         private static final long serialVersionUID = 1L;
 
         private int matches;
-        private java.util.List<ReportEntry> duplicatedPersonsByName;
-        private java.util.List<ReportEntry> duplicatedPersonsById;
-        private java.util.List<ReportEntry> unmatchedEntries;
-        private StringBuilder duplicatedLinesBuilder;
-        private java.util.List<ReportEntry> matchedEntriesWithId;
-        private java.util.List<ReportEntry> matchedEntriesWithName;
+        private final java.util.List<ReportEntry> duplicatedPersonsByName;
+        private final java.util.List<ReportEntry> duplicatedPersonsById;
+        private final java.util.List<ReportEntry> unmatchedEntries;
+        private final StringBuilder duplicatedLinesBuilder;
+        private final java.util.List<ReportEntry> matchedEntriesWithId;
+        private final java.util.List<ReportEntry> matchedEntriesWithName;
 
         public ImportationReport() {
             this.duplicatedPersonsById = new java.util.ArrayList<ReportEntry>();
@@ -921,6 +921,61 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         public Integer getMatches() {
             return this.matchedEntriesWithId.size() + this.matchedEntriesWithName.size();
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry> getCardGenerationEntries() {
+        return getCardGenerationEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCardGenerationEntries() {
+        return !getCardGenerationEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem> getCardGenerationProblems() {
+        return getCardGenerationProblemsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCardGenerationProblems() {
+        return !getCardGenerationProblemsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasUpdated() {
+        return getUpdated() != null;
+    }
+
+    @Deprecated
+    public boolean hasSent() {
+        return getSent() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPeopleForEntryCreation() {
+        return getPeopleForEntryCreation() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
     }
 
 }

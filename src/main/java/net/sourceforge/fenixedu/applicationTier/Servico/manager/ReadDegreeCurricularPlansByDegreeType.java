@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Luis Cruz
@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadDegreeCurricularPlansByDegreeType {
 
-    @Service
+    @Atomic
     public static List<InfoDegreeCurricularPlan> run(final DegreeType degreeType) {
         final List<DegreeCurricularPlan> dcps = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
         final List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>(dcps.size());

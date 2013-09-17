@@ -69,7 +69,7 @@ public class ParkingRequestPeriod extends ParkingRequestPeriod_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

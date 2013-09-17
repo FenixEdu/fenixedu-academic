@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -12,15 +13,16 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class UpdateDepartmentsCompetenceCourseManagementGroup {
 
-    @Checked("RolePredicates.DEPARTMENT_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Department department, String[] add, String[] remove) {
+        check(RolePredicates.DEPARTMENT_ADMINISTRATIVE_OFFICE_PREDICATE);
         List<Person> toAdd = materializePersons(add);
         List<Person> toRemove = materializePersons(remove);
         List<Person> finalList = new ArrayList<Person>();
@@ -57,7 +59,7 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup {
             List<Person> result = new ArrayList<Person>();
 
             for (String personID : personsIDs) {
-                result.add((Person) AbstractDomainObject.fromExternalId(personID));
+                result.add((Person) FenixFramework.getDomainObject(personID));
             }
 
             return result;
@@ -73,7 +75,7 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup {
     }
 
     private static boolean belongsToOtherGroupsWithSameRole(Department departmentWhoAsks, Person person) {
-        List<Department> departments = RootDomainObject.getInstance().getDepartments();
+        Collection<Department> departments = RootDomainObject.getInstance().getDepartments();
         for (Department department : departments) {
             if (department != departmentWhoAsks) {
                 Group group = department.getCompetenceCourseMembersGroup();

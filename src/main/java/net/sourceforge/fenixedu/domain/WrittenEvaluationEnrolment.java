@@ -32,7 +32,7 @@ public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base 
         this.setWrittenEvaluation(null);
         this.setStudent(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -43,6 +43,26 @@ public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base 
             }
         }
         return false;
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasWrittenEvaluation() {
+        return getWrittenEvaluation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoom() {
+        return getRoom() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
     }
 
 }

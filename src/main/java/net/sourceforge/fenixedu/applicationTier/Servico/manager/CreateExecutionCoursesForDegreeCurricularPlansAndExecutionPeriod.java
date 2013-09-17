@@ -3,9 +3,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 /**
@@ -24,9 +24,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
  */
 public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
 
-    @Service
+    @Atomic
     public static HashMap<String, Pair<Integer, String>> run(String[] degreeCurricularPlansIDs, String executionPeriodID) {
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
         if (executionSemester == null) {
             throw new DomainException("error.selection.noPeriod");
         }
@@ -40,8 +40,8 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
         for (final String degreeCurricularPlanID : degreeCurricularPlansIDs) {
             int numberExecutionCourses = 0;
             StringBuilder curricularCodes = new StringBuilder();
-            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
-            final List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+            final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
+            final Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
             for (final CurricularCourse curricularCourse : curricularCourses) {
 
                 if (curricularCourse.isOptionalCurricularCourse()

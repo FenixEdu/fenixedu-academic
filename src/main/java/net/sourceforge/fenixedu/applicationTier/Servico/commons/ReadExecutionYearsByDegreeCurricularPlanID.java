@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -27,9 +27,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadExecutionYearsByDegreeCurricularPlanID {
 
-    @Service
+    @Atomic
     public static List run(String degreeCurricularPlanID) {
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         List<ExecutionYear> executionYears =
                 (List<ExecutionYear>) CollectionUtils.collect(degreeCurricularPlan.getExecutionDegrees(), new Transformer() {

@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MakeThesisDocumentsUnavailable {
 
-    @Service
+    @Atomic
     public static void run(Thesis thesis) {
         final ThesisFile thesisFile = thesis.getDissertation();
 

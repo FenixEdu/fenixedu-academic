@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -51,7 +51,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixServiceException {
-        return AbstractDomainObject.fromExternalId(getDegreeCurricularPlanID());
+        return FenixFramework.getDomainObject(getDegreeCurricularPlanID());
     }
 
     public String getCourseGroupID() {
@@ -63,7 +63,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     }
 
     public CourseGroup getCourseGroup() {
-        return (CourseGroup) AbstractDomainObject.fromExternalId(getCourseGroupID());
+        return (CourseGroup) FenixFramework.getDomainObject(getCourseGroupID());
     }
 
     public String getName() throws FenixServiceException {

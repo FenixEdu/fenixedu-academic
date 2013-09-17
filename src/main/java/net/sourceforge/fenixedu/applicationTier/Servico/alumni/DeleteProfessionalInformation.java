@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.alumni;
 
 
 import net.sourceforge.fenixedu.domain.Job;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteProfessionalInformation {
 
-    @Service
+    @Atomic
     public static void run(Job job) {
         job.delete();
     }

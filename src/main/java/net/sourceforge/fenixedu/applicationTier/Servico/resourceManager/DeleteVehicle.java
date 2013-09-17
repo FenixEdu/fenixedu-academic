@@ -2,14 +2,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceManager;
 
 
 import net.sourceforge.fenixedu.domain.resource.Vehicle;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteVehicle {
 
-    @Checked("RolePredicates.RESOURCE_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Vehicle vehicle) {
+        check(RolePredicates.RESOURCE_MANAGER_PREDICATE);
         if (vehicle != null) {
             vehicle.delete();
         }

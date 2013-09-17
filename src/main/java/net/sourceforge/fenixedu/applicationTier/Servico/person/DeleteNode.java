@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 
 import net.sourceforge.fenixedu.domain.contents.Node;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteNode {
 
-    @Service
+    @Atomic
     public static void run(Node node) {
         node.delete();
     }

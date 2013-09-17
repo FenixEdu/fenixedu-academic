@@ -1,6 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
 <em><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.portal"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.bookmarked"/></h2>

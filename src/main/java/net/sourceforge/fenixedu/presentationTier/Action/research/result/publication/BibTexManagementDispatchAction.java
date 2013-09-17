@@ -52,7 +52,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
 import bibtex.dom.BibtexPerson;
@@ -68,7 +68,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     public ActionForward exportPublicationToBibtex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        ResearchResultPublication publication = AbstractDomainObject.fromExternalId(request.getParameter("publicationId"));
+        ResearchResultPublication publication = FenixFramework.getDomainObject(request.getParameter("publicationId"));
 
         if (publication != null) {
             BibtexEntry bibtexEntry = publication.exportToBibtexEntry();
@@ -83,7 +83,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
 
         String personId = request.getParameter("personOID");
-        Person person = (Person) AbstractDomainObject.fromExternalId(personId);
+        Person person = (Person) FenixFramework.getDomainObject(personId);
 
         List<ResearchResultPublication> publications = person.getResearchResultPublications();
         List<String> entries = new ArrayList<String>();
@@ -492,7 +492,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("importBibtexBean", importBibtexBean);
         String resultId = request.getParameter("resultId");
-        ResearchResultPublication result = AbstractDomainObject.fromExternalId(resultId);
+        ResearchResultPublication result = FenixFramework.getDomainObject(resultId);
         request.setAttribute("fileBean", getResultDocumentFileBean(request, result));
         request.setAttribute("unitBean", getResultUnitBean(request, result));
         return mapping.findForward("dealWithAssociations");

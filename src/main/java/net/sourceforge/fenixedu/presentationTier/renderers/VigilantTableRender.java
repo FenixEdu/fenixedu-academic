@@ -325,13 +325,13 @@ public class VigilantTableRender extends OutputRenderer {
 
     private class VigilantTableRenderLayout extends TabularLayout {
 
-        private ArrayList<VigilantWrapper> vigilants;
+        private final ArrayList<VigilantWrapper> vigilants;
 
-        private ArrayList<MetaObject> objects;
+        private final ArrayList<MetaObject> objects;
 
-        private Schema vigilantSchema;
+        private final Schema vigilantSchema;
 
-        private Schema convokeSchema;
+        private final Schema convokeSchema;
 
         private boolean empty;
 
@@ -449,8 +449,8 @@ public class VigilantTableRender extends OutputRenderer {
         private MetaObject getConvokeMetaObject(MetaObject vigilantMetaObject) {
 
             if (convokeMetaObjectCache == null) {
-                List<Vigilancy> convokes = ((VigilantWrapper) getVigilantWithConvokes().getObject()).getVigilancies();
-                Vigilancy oneConvoke = convokes.get(0);
+                Collection<Vigilancy> convokes = ((VigilantWrapper) getVigilantWithConvokes().getObject()).getVigilancies();
+                Vigilancy oneConvoke = convokes.iterator().next();
 
                 convokeMetaObjectCache = MetaObjectFactory.createObject(oneConvoke, this.convokeSchema);
             }
@@ -482,7 +482,8 @@ public class VigilantTableRender extends OutputRenderer {
                 return (convokeMetaObject == null) ? findVigilantWithConvokesToGetLabels(index) : new HtmlText(
                         getConvokeMetaObject(one).getSlots().get(index).getLabel());
             } else {
-                return new HtmlText(RenderUtils.getResourceString(one.getSlots().get(0).getBundle(), "label.avgVigilancies"));
+                return new HtmlText(RenderUtils.getResourceString(one.getSlots().iterator().next().getBundle(),
+                        "label.avgVigilancies"));
             }
 
         }
@@ -525,7 +526,7 @@ public class VigilantTableRender extends OutputRenderer {
                 if (convokes.isEmpty()) {
                     return numberOfConvokeSlotCache = 0;
                 } else {
-                    MetaObject convokeMetaObject = MetaObjectFactory.createObject(convokes.get(0), this.convokeSchema);
+                    MetaObject convokeMetaObject = MetaObjectFactory.createObject(convokes.iterator().next(), this.convokeSchema);
                     return numberOfConvokeSlotCache = convokeMetaObject.getSlots().size();
                 }
             }
@@ -533,7 +534,7 @@ public class VigilantTableRender extends OutputRenderer {
         }
 
         private int getNumberOfVigilantsSlots() {
-            MetaObject vigilantMetaObject = this.objects.get(0);
+            MetaObject vigilantMetaObject = this.objects.iterator().next();
             return vigilantMetaObject.getSlots().size();
         }
 

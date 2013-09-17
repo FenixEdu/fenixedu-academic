@@ -47,12 +47,32 @@ public class MobilityCoordinator extends MobilityCoordinator_Base {
     }
 
     public void delete() {
-        removeDegree();
-        removeMobilityApplicationProcess();
-        removeTeacher();
-        removeRootDomainObject();
+        setDegree(null);
+        setMobilityApplicationProcess(null);
+        setTeacher(null);
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityApplicationProcess() {
+        return getMobilityApplicationProcess() != null;
     }
 
 }

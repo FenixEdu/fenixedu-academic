@@ -90,7 +90,7 @@ public abstract class ComputeCourseStatistics {
 
         // TODO: should query by chain of responsability to know how to compute
         // this should be changed
-        return approvedGrades.get(0).getGradeType().average(approvedGrades);
+        return approvedGrades.iterator().next().getGradeType().average(approvedGrades);
     }
 
     protected EnrolmentEvaluation getBestEnrollmentEvaluation(Enrolment enrollment) {

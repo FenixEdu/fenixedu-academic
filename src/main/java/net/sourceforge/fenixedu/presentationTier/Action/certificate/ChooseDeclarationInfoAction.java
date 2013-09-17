@@ -106,7 +106,7 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
         if (enrolmentList.size() == 0) {
             anoLectivo = infoExecutionYear.getYear();
         } else {
-            anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+            anoLectivo = ((InfoEnrolment) enrolmentList.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
         }
 
         Locale locale = new Locale("pt", "PT");

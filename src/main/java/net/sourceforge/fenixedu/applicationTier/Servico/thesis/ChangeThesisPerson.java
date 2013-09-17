@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ChangeThesisPerson {
 
@@ -54,7 +54,7 @@ public class ChangeThesisPerson {
         }
     }
 
-    @Service
+    @Atomic
     public static void run(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis, PersonChange change)
             throws FenixServiceException {
         Person person = getPerson(change);
@@ -106,7 +106,7 @@ public class ChangeThesisPerson {
         }
     }
 
-    @Service
+    @Atomic
     public static void remove(final ThesisEvaluationParticipant thesisEvaluationParticipant) {
         final Thesis thesis = thesisEvaluationParticipant.getThesis();
         if (!AccessControl.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
@@ -120,7 +120,7 @@ public class ChangeThesisPerson {
         }
     }
 
-    @Service
+    @Atomic
     public static void add(final Thesis thesis, final ThesisParticipationType thesisParticipationType, final Person person) {
         if (person != null) {
             if (!AccessControl.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {

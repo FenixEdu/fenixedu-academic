@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.result;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteResultUnitAssociation {
 
-    @Service
+    @Atomic
     public static void run(String oid) {
         final ResultUnitAssociation association = ResultUnitAssociation.readByOid(oid);
         final ResearchResult result = association.getResult();

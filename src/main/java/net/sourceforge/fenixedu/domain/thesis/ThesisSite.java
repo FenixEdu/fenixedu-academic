@@ -24,8 +24,13 @@ public class ThesisSite extends ThesisSite_Base {
 
     @Override
     protected void disconnect() {
-        removeThesis();
+        setThesis(null);
         super.disconnect();
 
     }
+    @Deprecated
+    public boolean hasThesis() {
+        return getThesis() != null;
+    }
+
 }

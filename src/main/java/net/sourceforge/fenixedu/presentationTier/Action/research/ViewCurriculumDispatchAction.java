@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -47,7 +48,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "researcher", path = "/viewCurriculum", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "Success", path = "/researcher/viewCurriculum.jsp", tileProperties = @Tile(
@@ -61,7 +62,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
         String personId = request.getParameter("personOID");
 
         final Person person =
-                ((personId != null && personId.length() > 0) ? (Person) AbstractDomainObject.fromExternalId(personId) : getLoggedPerson(request));
+                ((personId != null && personId.length() > 0) ? (Person) FenixFramework.getDomainObject(personId) : getLoggedPerson(request));
 
         request.setAttribute("person", person);
 
@@ -92,7 +93,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 
         putInformationOnRequestForGivenExecutionYear(firstExecutionYear, finalExecutionYear, person, request);
 
-        final List<ResearchInterest> researchInterests = person.getResearchInterests();
+        final Collection<ResearchInterest> researchInterests = person.getResearchInterests();
         request.setAttribute("researchInterests", researchInterests);
 
         return mapping.findForward("Success");

@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SetTSDProfessorship {
     protected TSDProfessorship run(String tsdCourseId, String tsdTeacherId, Map<String, Object> tsdCourseParameters) {
 
-        TSDCourse tsdCourse = AbstractDomainObject.fromExternalId(tsdCourseId);
-        TSDTeacher tsdTeacher = AbstractDomainObject.fromExternalId(tsdTeacherId);
+        TSDCourse tsdCourse = FenixFramework.getDomainObject(tsdCourseId);
+        TSDTeacher tsdTeacher = FenixFramework.getDomainObject(tsdTeacherId);
         ShiftType type = ShiftType.valueOf((String) tsdCourseParameters.get("shiftType"));
 
         TSDProfessorship tsdProfessorship = tsdCourse.getTSDProfessorshipByTSDTeacherAndShiftType(tsdTeacher, type);
@@ -37,7 +37,7 @@ public class SetTSDProfessorship {
 
     private static final SetTSDProfessorship serviceInstance = new SetTSDProfessorship();
 
-    @Service
+    @Atomic
     public static TSDProfessorship runSetTSDProfessorship(String tsdCourseId, String tsdTeacherId,
             Map<String, Object> tsdCourseParameters) throws NotAuthorizedException {
         try {

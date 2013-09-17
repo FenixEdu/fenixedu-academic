@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -78,13 +78,13 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction {
 
         if (bean == null) {
             final String registrationProtocolId = request.getParameter("registrationProtocolId");
-            RegistrationProtocol registrationProtocol = AbstractDomainObject.fromExternalId(registrationProtocolId);
+            RegistrationProtocol registrationProtocol = FenixFramework.getDomainObject(registrationProtocolId);
 
             final String executionYearId = request.getParameter("executionYearId");
-            ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
+            ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearId);
 
             final String executionDegreeId = request.getParameter("executionDegreeId");
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
 
             Boolean megavisor = Boolean.valueOf(request.getParameter("megavisor"));
 

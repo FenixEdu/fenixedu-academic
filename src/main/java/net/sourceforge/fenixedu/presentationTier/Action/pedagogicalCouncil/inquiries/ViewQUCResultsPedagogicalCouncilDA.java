@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewQucResults", module = "pedagogicalCouncil")
 @Forwards({
@@ -66,7 +66,7 @@ public class ViewQUCResultsPedagogicalCouncilDA extends ViewQUCResultsDA {
             DepartmentExecutionSemester departmentExecutionSemester = getRenderedObject("executionSemesterBean");
             departmentUnitOID = departmentExecutionSemester.getDepartmentUnitOID();
         }
-        DepartmentUnit departmentUnit = AbstractDomainObject.fromExternalId(departmentUnitOID);
+        DepartmentUnit departmentUnit = FenixFramework.getDomainObject(departmentUnitOID);
         request.setAttribute("fromPedagogicalCouncil", "true");
         request.setAttribute("departmentName", departmentUnit.getName());
         return departmentUnit;

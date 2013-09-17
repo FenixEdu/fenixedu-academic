@@ -15,7 +15,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ManageHolidaysDA extends FenixDispatchAction {
 
@@ -35,7 +35,7 @@ public class ManageHolidaysDA extends FenixDispatchAction {
             throws FenixServiceException {
         final String holidayIDString = request.getParameter("holidayID");
         if (holidayIDString != null && StringUtils.isNumeric(holidayIDString)) {
-            final Holiday holiday = AbstractDomainObject.fromExternalId(holidayIDString);
+            final Holiday holiday = FenixFramework.getDomainObject(holidayIDString);
 
             DeleteHoliday.run(holiday);
         }

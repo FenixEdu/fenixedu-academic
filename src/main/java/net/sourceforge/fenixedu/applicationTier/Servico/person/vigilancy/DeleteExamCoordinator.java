@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteExamCoordinator {
 
-    @Service
+    @Atomic
     public static void run(ExamCoordinator coordinator) {
 
         Person person = coordinator.getPerson();

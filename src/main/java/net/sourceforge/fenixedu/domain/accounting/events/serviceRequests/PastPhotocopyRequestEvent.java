@@ -24,4 +24,9 @@ public class PastPhotocopyRequestEvent extends PastPhotocopyRequestEvent_Base im
         throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
     }
 
+    @Deprecated
+    public boolean hasPastAmount() {
+        return getPastAmount() != null;
+    }
+
 }

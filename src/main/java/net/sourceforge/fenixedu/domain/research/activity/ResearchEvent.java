@@ -33,13 +33,13 @@ public class ResearchEvent extends ResearchEvent_Base implements ParticipationsI
     }
 
     public void delete() {
-        for (; this.hasAnyParticipations(); getParticipations().get(0).delete()) {
+        for (; this.hasAnyParticipations(); getParticipations().iterator().next().delete()) {
             ;
         }
-        for (; this.hasAnyEventEditions(); this.getEventEditions().get(0).removeEvent()) {
+        for (; this.hasAnyEventEditions(); this.getEventEditions().iterator().next().setEvent(null)) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -106,4 +106,56 @@ public class ResearchEvent extends ResearchEvent_Base implements ParticipationsI
         }
 
     }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.EventParticipation> getParticipations() {
+        return getParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipations() {
+        return !getParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.EventEdition> getEventEditions() {
+        return getEventEditionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEventEditions() {
+        return !getEventEditionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrl() {
+        return getUrl() != null;
+    }
+
+    @Deprecated
+    public boolean hasLocationType() {
+        return getLocationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasEventType() {
+        return getEventType() != null;
+    }
+
+    @Deprecated
+    public boolean hasStage() {
+        return getStage() != null;
+    }
+
 }

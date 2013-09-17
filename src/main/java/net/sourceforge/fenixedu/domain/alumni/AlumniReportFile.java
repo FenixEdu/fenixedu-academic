@@ -11,13 +11,13 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.Job;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -229,7 +229,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
             return person.getStudent().getAlumni().getLastPersonalAddress();
         }
 
-        SortedSet<PhysicalAddress> addressSet = new TreeSet<PhysicalAddress>(PartyContact.COMPARATOR_BY_ID);
+        SortedSet<PhysicalAddress> addressSet = new TreeSet<PhysicalAddress>(DomainObjectUtil.COMPARATOR_BY_ID);
         addressSet.addAll(person.getPhysicalAddresses());
         return !addressSet.isEmpty() && addressSet.last() != null ? addressSet.last() : null;
     }
@@ -283,7 +283,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
         // "DATA_FIM", "FORMA_COLOCACAO", "TIPO_CONTRATO", "SALARIO",
         // "TIPO_SALARIO", "DATA_ALTERACAO", "DATA_REGISTO"
         final Row row = sheet.addRow();
-        row.setCell(String.valueOf(job.getOID()));
+        row.setCell(job.getExternalId());
         row.setCell(alumniName);
         row.setCell(studentNumber);
         row.setCell(job.getEmployerName());
@@ -310,7 +310,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
         // "AREA_EDUCATIVA", "INICIO", "CONCLUSAO", "CREDITOS_ECTS",
         // "NUMERO_HORAS", "DATA_ALTERACAO", "DATA_REGISTO"
         final Row row = sheet.addRow();
-        row.setCell(String.valueOf(formation.getOID()));
+        row.setCell(formation.getExternalId());
         row.setCell(alumniName);
         row.setCell(studentNumber);
         row.setCell(formation.getFormationType() != null ? eBundle.getString(formation.getFormationType().getQualifiedName()) : NOT_AVAILABLE);
@@ -368,4 +368,10 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     public static Boolean canRequestReport() {
         return readPendingJobs().isEmpty();
     }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

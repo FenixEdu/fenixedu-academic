@@ -111,12 +111,12 @@ public class Tutorship extends Tutorship_Base {
     }
 
     public void delete() {
-        removeStudentCurricularPlan();
-        removeTeacher();
+        setStudentCurricularPlan(null);
+        setTeacher(null);
         if (hasTutorshipLog()) {
             getTutorshipLog().delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -217,6 +217,41 @@ public class Tutorship extends Tutorship_Base {
     public boolean getTutorshipLogEditable() {
         DegreeCurricularPlan degreeCurricularPlan = getStudent().getLastDegreeCurricularPlan();
         return !(degreeCurricularPlan == null || getTutorshipLog() == null);
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipSummaryRelation> getTutorshipSummaryRelations() {
+        return getTutorshipSummaryRelationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTutorshipSummaryRelations() {
+        return !getTutorshipSummaryRelationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDate() {
+        return getStartDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCurricularPlan() {
+        return getStudentCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasTutorshipLog() {
+        return getTutorshipLog() != null;
     }
 
 }

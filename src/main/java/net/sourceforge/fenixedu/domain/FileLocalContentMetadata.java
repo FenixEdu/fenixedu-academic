@@ -15,7 +15,17 @@ public class FileLocalContentMetadata extends FileLocalContentMetadata_Base {
     }
 
     public void delete() {
-        removeContent();
+        setContent(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasEntry() {
+        return getEntry() != null;
+    }
+
+    @Deprecated
+    public boolean hasContent() {
+        return getContent() != null;
+    }
+
 }

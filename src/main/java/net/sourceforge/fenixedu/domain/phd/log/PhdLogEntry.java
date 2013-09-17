@@ -25,7 +25,7 @@ public class PhdLogEntry extends PhdLogEntry_Base {
     }
 
     public String getResponsibleName() {
-        if (!hasResponsible()) {
+        if (getResponsible() == null) {
             return "-";
         }
 

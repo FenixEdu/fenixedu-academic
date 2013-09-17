@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "webSiteManager", path = "/manageResearchUnitSite", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "confirmDeleteFunction", path = "researchSite-confirmDeleteFunction"),
@@ -104,7 +104,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
     public ActionForward prepareAddNewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
         IViewState viewState = RenderUtils.getViewState();
-        if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
+        if (viewState != null && getSite(request).getManagersSet().contains(getLoggedPerson(request))) {
             ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
             Person person = bean.getPerson();
             if (person != null) {
@@ -120,7 +120,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
     public ActionForward addNewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
         IViewState viewState = RenderUtils.getViewState("extraInfo");
-        if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
+        if (viewState != null && getSite(request).getManagersSet().contains(getLoggedPerson(request))) {
             ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
             try {
                 CreateResearchContract.run(bean, getLoggedPerson(request), LoginRequestManagement.getRequestURL(request));
@@ -139,7 +139,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
             HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("createPersonContract");
-        if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
+        if (viewState != null && getSite(request).getManagersSet().contains(getLoggedPerson(request))) {
             ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
             if (bean.getPerson() == null) {
                 return managePeoplePostBack(mapping, actionForm, request, response);
@@ -174,7 +174,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
         String contractID = request.getParameter("cid");
 
         if (contractID != null) {
-            ResearchContract contract = AbstractDomainObject.fromExternalId(contractID);
+            ResearchContract contract = FenixFramework.getDomainObject(contractID);
             request.setAttribute("contract", contract);
             return mapping.findForward("editContract");
         }

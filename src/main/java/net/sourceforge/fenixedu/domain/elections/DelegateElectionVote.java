@@ -19,9 +19,9 @@ public class DelegateElectionVote extends DelegateElectionVote_Base {
     }
 
     public void delete() {
-        removeStudent();
-        removeDelegateElection();
-        removeRootDomainObject();
+        setStudent(null);
+        setDelegateElection(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -32,6 +32,21 @@ public class DelegateElectionVote extends DelegateElectionVote_Base {
         if (votingPeriod == null) {
             throw new DomainException("error.votingPeriod.cannot.be.null");
         }
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDelegateElection() {
+        return getDelegateElection() != null;
     }
 
 }

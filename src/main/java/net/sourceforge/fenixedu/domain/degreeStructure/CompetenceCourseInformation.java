@@ -154,13 +154,13 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public void delete() {
-        removeExecutionPeriod();
-        removeCompetenceCourse();
-        removeCompetenceCourseGroupUnit();
-        for (; !getCompetenceCourseLoads().isEmpty(); getCompetenceCourseLoads().get(0).delete()) {
+        setExecutionPeriod(null);
+        setCompetenceCourse(null);
+        setCompetenceCourseGroupUnit(null);
+        for (; !getCompetenceCourseLoads().isEmpty(); getCompetenceCourseLoads().iterator().next().delete()) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -266,7 +266,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     private List<CompetenceCourseLoadBean> getCompetenceCourseLoadBeans(final Integer order) {
 
         if (isSemestrial()) {
-            return Collections.singletonList(new CompetenceCourseLoadBean(getCompetenceCourseLoads().get(0)));
+            return Collections.singletonList(new CompetenceCourseLoadBean(getCompetenceCourseLoads().iterator().next()));
         }
 
         if (isAnual()) {
@@ -276,8 +276,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
                 result.add(new CompetenceCourseLoadBean(competenceCourseLoad));
             }
 
-            if (getCompetenceCourseLoadsCount() == 1) { // hack
-                final CompetenceCourseLoad courseLoad = getCompetenceCourseLoads().get(0);
+            if (getCompetenceCourseLoadsSet().size() == 1) { // hack
+                final CompetenceCourseLoad courseLoad = getCompetenceCourseLoads().iterator().next();
                 final CompetenceCourseLoadBean courseLoadBean = new CompetenceCourseLoadBean(courseLoad);
                 courseLoadBean.setLoadOrder(courseLoad.getLoadOrder() + 1);
                 result.add(courseLoadBean);
@@ -340,6 +340,101 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public ExecutionYear getExecutionYear() {
         return getExecutionPeriod().getExecutionYear();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad> getCompetenceCourseLoads() {
+        return getCompetenceCourseLoadsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCompetenceCourseLoads() {
+        return !getCompetenceCourseLoadsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBibliographicReferences() {
+        return getBibliographicReferences() != null;
+    }
+
+    @Deprecated
+    public boolean hasObjectivesEn() {
+        return getObjectivesEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasCompetenceCourseLevel() {
+        return getCompetenceCourseLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasBasic() {
+        return getBasic() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegime() {
+        return getRegime() != null;
+    }
+
+    @Deprecated
+    public boolean hasObjectives() {
+        return getObjectives() != null;
+    }
+
+    @Deprecated
+    public boolean hasNameEn() {
+        return getNameEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcronym() {
+        return getAcronym() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationMethod() {
+        return getEvaluationMethod() != null;
+    }
+
+    @Deprecated
+    public boolean hasCompetenceCourse() {
+        return getCompetenceCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasProgram() {
+        return getProgram() != null;
+    }
+
+    @Deprecated
+    public boolean hasProgramEn() {
+        return getProgramEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasCompetenceCourseGroupUnit() {
+        return getCompetenceCourseGroupUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationMethodEn() {
+        return getEvaluationMethodEn() != null;
     }
 
 }

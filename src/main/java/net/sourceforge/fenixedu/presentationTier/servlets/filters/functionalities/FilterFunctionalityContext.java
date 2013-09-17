@@ -196,7 +196,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 
     @Override
     public Container getSelectedTopLevelContainer() {
-        return contents.isEmpty() ? null : (Container) contents.get(0);
+        return contents.isEmpty() ? null : (Container) contents.iterator().next();
     }
 
     @Override

@@ -13,4 +13,9 @@ public abstract class RestrictionByNumberOfCurricularCourses extends Restriction
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    @Deprecated
+    public boolean hasNumberOfCurricularCourses() {
+        return getNumberOfCurricularCourses() != null;
+    }
+
 }

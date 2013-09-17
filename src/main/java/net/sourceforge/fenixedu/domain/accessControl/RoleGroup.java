@@ -45,7 +45,7 @@ public class RoleGroup extends LeafGroup {
 
     @Override
     public int getElementsCount() {
-        return getRole().getAssociatedPersonsCount();
+        return getRole().getAssociatedPersons().size();
     }
 
     @Override

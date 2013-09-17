@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdProgramInformation extends PhdProgramInformation_Base {
 
@@ -76,7 +76,7 @@ public class PhdProgramInformation extends PhdProgramInformation_Base {
         return false;
     }
 
-    @Service
+    @Atomic
     public void edit(final PhdProgramInformationBean bean) {
         checkParameters(bean);
 
@@ -89,9 +89,54 @@ public class PhdProgramInformation extends PhdProgramInformation_Base {
         setNumberOfSemesters(bean.getNumberOfSemesters());
     }
 
-    @Service
+    @Atomic
     public static PhdProgramInformation createInformation(final PhdProgramInformationBean bean) {
         return new PhdProgramInformation(bean);
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfYears() {
+        return getNumberOfYears() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaxStudyPlanEctsCredits() {
+        return getMaxStudyPlanEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfSemesters() {
+        return getNumberOfSemesters() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdProgram() {
+        return getPhdProgram() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinThesisEctsCredits() {
+        return getMinThesisEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinStudyPlanEctsCredits() {
+        return getMinStudyPlanEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaxThesisEctsCredits() {
+        return getMaxThesisEctsCredits() != null;
     }
 
 }

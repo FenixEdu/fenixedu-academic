@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdMeeting extends PhdMeeting_Base {
 
@@ -59,9 +59,39 @@ public class PhdMeeting extends PhdMeeting_Base {
                 responsible);
     }
 
-    @Service
+    @Atomic
     public void editAttributes(PhdEditMeetingBean bean) {
         setMeetingDate(bean.getScheduledDate());
         setMeetingPlace(bean.getScheduledPlace());
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingMinutesDocument> getDocuments() {
+        return getDocumentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDocuments() {
+        return !getDocumentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasMeetingPlace() {
+        return getMeetingPlace() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMeetingProcess() {
+        return getMeetingProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasMeetingDate() {
+        return getMeetingDate() != null;
+    }
+
 }

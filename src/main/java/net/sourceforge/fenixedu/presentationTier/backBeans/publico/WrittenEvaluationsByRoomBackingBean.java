@@ -20,21 +20,21 @@ public class WrittenEvaluationsByRoomBackingBean extends
         net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean {
 
     @Override
-    public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws 
-            FenixServiceException {
+    public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixServiceException {
         final Collection<AllocatableSpace> rooms = getRoomsToDisplayMap();
         if (rooms != null) {
             final Map<AllocatableSpace, List<CalendarLink>> calendarLinksMap =
                     new HashMap<AllocatableSpace, List<CalendarLink>>();
             for (final AllocatableSpace room : rooms) {
                 final List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
-                for (final ResourceAllocation roomOccupation : room.getResourceAllocations()) {
+                for (final ResourceAllocation roomOccupation : room.getResourceAllocationsSet()) {
                     if (roomOccupation.isWrittenEvaluationSpaceOccupation()) {
-                        List<WrittenEvaluation> writtenEvaluations =
-                                ((WrittenEvaluationSpaceOccupation) roomOccupation).getWrittenEvaluations();
+                        Collection<WrittenEvaluation> writtenEvaluations =
+                                ((WrittenEvaluationSpaceOccupation) roomOccupation).getWrittenEvaluationsSet();
                         for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
                             if (verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, getAcademicIntervalObject(), null)) {
-                                final ExecutionCourse executionCourse = writtenEvaluation.getAssociatedExecutionCourses().get(0);
+                                final ExecutionCourse executionCourse =
+                                        writtenEvaluation.getAssociatedExecutionCoursesSet().iterator().next();
                                 final CalendarLink calendarLink =
                                         new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
                                 calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));

@@ -30,4 +30,29 @@ public class DegreeContext extends DegreeContext_Base {
          */
     }
 
+    @Deprecated
+    public boolean hasPeriod() {
+        return getPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndInterval() {
+        return getEndInterval() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginInterval() {
+        return getBeginInterval() != null;
+    }
+
 }

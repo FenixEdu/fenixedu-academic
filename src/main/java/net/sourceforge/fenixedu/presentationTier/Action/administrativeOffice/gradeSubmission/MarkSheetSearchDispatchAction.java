@@ -32,7 +32,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @Mapping(path = "/markSheetManagement", module = "academicAdministration", formBean = "markSheetManagementForm",
@@ -229,7 +229,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         List<EnrolmentEvaluation> res = new ArrayList<EnrolmentEvaluation>();
         String[] evaluationsToRemove = (String[]) actionForm.get("evaluationsToRemove");
         for (String eeID : evaluationsToRemove) {
-            EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(eeID);
+            EnrolmentEvaluation enrolmentEvaluation = FenixFramework.getDomainObject(eeID);
             if (enrolmentEvaluation != null) {
                 res.add(enrolmentEvaluation);
             }

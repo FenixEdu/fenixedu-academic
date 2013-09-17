@@ -1,19 +1,19 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Room.RoomFactoryEditor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class RoomInformation extends RoomInformation_Base {
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created room information", parameters = { "room", "blueprintNumber",
             "identification", "description", "roomClassification", "area", "heightQuality", "illuminationQuality",
             "distanceFromSanitaryInstalationsQuality", "securityQuality", "ageQuality", "observations", "begin", "end",
@@ -40,7 +40,6 @@ public class RoomInformation extends RoomInformation_Base {
         setDoorNumber(doorNumber);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited room information", parameters = { "blueprintNumber",
             "identification", "description", "roomClassification", "area", "heightQuality", "illuminationQuality",
             "distanceFromSanitaryInstalationsQuality", "securityQuality", "ageQuality", "observations", "begin", "end",
@@ -50,6 +49,7 @@ public class RoomInformation extends RoomInformation_Base {
             Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality, Boolean ageQuality, String observations,
             YearMonthDay begin, YearMonthDay end, String doorNumber, Integer normalCapacity, Integer examCapacity, String emails) {
 
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation);
         editTimeInterval(begin, end);
         setBlueprintNumber(blueprintNumber);
         setIdentification(identification);
@@ -68,7 +68,6 @@ public class RoomInformation extends RoomInformation_Base {
         setEmails(emails);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited room information", parameters = { "blueprintNumber",
             "identification", "description", "roomClassification", "observations", "begin", "end", "doorNumber",
             "normalCapacity", "examCapacity" })
@@ -76,6 +75,7 @@ public class RoomInformation extends RoomInformation_Base {
             RoomClassification roomClassification, String observations, YearMonthDay begin, YearMonthDay end, String doorNumber,
             Integer normalCapacity, Integer examCapacity) {
 
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation);
         editTimeInterval(begin, end);
         setBlueprintNumber(blueprintNumber);
         setIdentification(identification);
@@ -96,15 +96,15 @@ public class RoomInformation extends RoomInformation_Base {
     }
 
     @Override
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room information", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation);
         super.delete();
     }
 
     @Override
     public void deleteWithoutCheckNumberOfSpaceInformations() {
-        removeRoomClassification();
+        setRoomClassification(null);
         super.deleteWithoutCheckNumberOfSpaceInformations();
     }
 
@@ -164,4 +164,60 @@ public class RoomInformation extends RoomInformation_Base {
     public Room getRoom() {
         return (Room) getSpace();
     }
+
+    @Deprecated
+    public boolean hasIlluminationQuality() {
+        return getIlluminationQuality() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasDistanceFromSanitaryInstalationsQuality() {
+        return getDistanceFromSanitaryInstalationsQuality() != null;
+    }
+
+    @Deprecated
+    public boolean hasHeightQuality() {
+        return getHeightQuality() != null;
+    }
+
+    @Deprecated
+    public boolean hasDoorNumber() {
+        return getDoorNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoomClassification() {
+        return getRoomClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasArea() {
+        return getArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasAgeQuality() {
+        return getAgeQuality() != null;
+    }
+
+    @Deprecated
+    public boolean hasObservations() {
+        return getObservations() != null;
+    }
+
+    @Deprecated
+    public boolean hasIdentification() {
+        return getIdentification() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecurityQuality() {
+        return getSecurityQuality() != null;
+    }
+
 }

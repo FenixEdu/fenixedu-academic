@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -82,8 +83,9 @@ public class CycleEnrolmentBean implements Serializable {
         this.cycleTypeToEnrol = cycleTypeToEnrol;
     }
 
-    public List<CycleCourseGroup> getCycleDestinationAffinities() {
-        final List<CycleCourseGroup> affinities = getDegreeCurricularPlan().getDestinationAffinities(getSourceCycleAffinity());
+    public Collection<CycleCourseGroup> getCycleDestinationAffinities() {
+        final Collection<CycleCourseGroup> affinities =
+                getDegreeCurricularPlan().getDestinationAffinities(getSourceCycleAffinity());
 
         if (affinities.isEmpty()) {
             return Collections.emptyList();

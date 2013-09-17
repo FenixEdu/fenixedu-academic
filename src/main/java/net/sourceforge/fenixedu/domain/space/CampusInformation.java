@@ -1,17 +1,16 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus.CampusFactoryEditor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class CampusInformation extends CampusInformation_Base {
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created campus information", parameters = { "campus", "name", "begin",
             "end", "blueprintNumber" })
     public CampusInformation(Campus campus, String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
@@ -22,19 +21,19 @@ public class CampusInformation extends CampusInformation_Base {
         setFirstTimeInterval(begin, end);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited campus information", parameters = { "name", "begin", "end",
             "blueprintNumber" })
     public void editCampusCharacteristics(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation);
         setName(name);
         setBlueprintNumber(blueprintNumber);
         editTimeInterval(begin, end);
     }
 
     @Override
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted campus information", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation);
         super.delete();
     }
 
@@ -73,6 +72,16 @@ public class CampusInformation extends CampusInformation_Base {
     public RoomClassification getRoomClassification() {
         // Necessary for Renderers
         return null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasLocality() {
+        return getLocality() != null;
     }
 
 }

@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/manageExternalSupervision", module = "directiveCouncil")
 @Forwards({
@@ -74,9 +74,9 @@ public class ManageExternalSupervisionDA extends FenixDispatchAction {
     public ActionForward deleteSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final String personId = request.getParameter("supervisorId");
-        Person person = (Person) AbstractDomainObject.fromExternalId(personId);
+        Person person = (Person) FenixFramework.getDomainObject(personId);
         final String registrationProtocolId = request.getParameter("registrationProtocolId");
-        RegistrationProtocol registrationProtocol = AbstractDomainObject.fromExternalId(registrationProtocolId);
+        RegistrationProtocol registrationProtocol = FenixFramework.getDomainObject(registrationProtocolId);
 
         ManageExternalSupervisionBean bean = new ManageExternalSupervisionBean(registrationProtocol);
         bean.removeSupervisor(person);

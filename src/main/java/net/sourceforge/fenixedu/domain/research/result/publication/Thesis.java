@@ -10,7 +10,8 @@ import net.sourceforge.fenixedu.util.Month;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
@@ -51,10 +52,10 @@ public class Thesis extends Thesis_Base {
                 monthBegin, url);
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setEditAll(ThesisType thesisType, String title, MultiLanguageString keywords, String school, Integer year,
             String address, MultiLanguageString note, Integer numberPages, String language, Month month, Integer yearBegin,
             Month monthBegin, String url) {
+        check(this, ResultPredicates.writePredicate);
         super.checkRequiredParameters(keywords, note);
         checkRequiredParameters(thesisType, title, school, year);
         fillAllAttributes(thesisType, title, keywords, school, year, address, note, numberPages, language, month, yearBegin,
@@ -293,4 +294,44 @@ public class Thesis extends Thesis_Base {
     public YearMonthDay getYearMonth() {
         return new YearMonthDay(getYear(), getMonth().getNumberOfMonth(), 1);
     }
+    @Deprecated
+    public boolean hasThesis() {
+        return getThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasMonthBegin() {
+        return getMonthBegin() != null;
+    }
+
+    @Deprecated
+    public boolean hasThesisType() {
+        return getThesisType() != null;
+    }
+
+    @Deprecated
+    public boolean hasAddress() {
+        return getAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasScientificArea() {
+        return getScientificArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberPages() {
+        return getNumberPages() != null;
+    }
+
+    @Deprecated
+    public boolean hasYearBegin() {
+        return getYearBegin() != null;
+    }
+
 }

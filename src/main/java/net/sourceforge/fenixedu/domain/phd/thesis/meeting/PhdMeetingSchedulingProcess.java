@@ -126,4 +126,29 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
         return (PhdMeetingSchedulingProcessState) super.getMostRecentState();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessState> getStates() {
+        return getStatesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStates() {
+        return !getStatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeeting> getMeetings() {
+        return getMeetingsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMeetings() {
+        return !getMeetingsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasThesisProcess() {
+        return getThesisProcess() != null;
+    }
+
 }

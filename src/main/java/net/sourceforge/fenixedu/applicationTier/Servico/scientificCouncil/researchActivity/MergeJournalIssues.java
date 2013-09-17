@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.MergeJournalIssuePageContainerBean;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 
 public class MergeJournalIssues {
@@ -38,7 +38,7 @@ public class MergeJournalIssues {
 
     private static final MergeJournalIssues serviceInstance = new MergeJournalIssues();
 
-    @Service
+    @Atomic
     public static void runMergeJournalIssues(MergeJournalIssuePageContainerBean mergeJournalIssuePageContainerBean)
             throws NotAuthorizedException {
         try {

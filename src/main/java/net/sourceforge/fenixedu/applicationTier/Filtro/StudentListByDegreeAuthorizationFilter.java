@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -53,7 +53,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
      */
     private boolean hasPrivilege(IUserView id, String degreeCurricularPlanID, DegreeType degreeType) {
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         if ((degreeCurricularPlan == null) || (!degreeCurricularPlan.getDegree().getDegreeType().equals(degreeType))) {
             return false;
@@ -69,20 +69,21 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
         }
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
-            List executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+            Collection executionDegrees = degreeCurricularPlan.getExecutionDegrees();
             if (executionDegrees == null || executionDegrees.isEmpty()) {
                 return false;
             }
             // IMPORTANT: It's assumed that the coordinator for a Degree is
             // ALWAYS the same
             // modified by Tânia Pousão
-            List<Coordinator> coodinatorsList = ((ExecutionDegree) executionDegrees.get(0)).getCoordinatorsList();
+            Collection<Coordinator> coodinatorsList =
+                    ((ExecutionDegree) executionDegrees.iterator().next()).getCoordinatorsList();
             if (coodinatorsList == null) {
                 return false;
             }
-            ListIterator listIterator = coodinatorsList.listIterator();
+            Iterator<Coordinator> listIterator = coodinatorsList.iterator();
             while (listIterator.hasNext()) {
-                Coordinator coordinator = (Coordinator) listIterator.next();
+                Coordinator coordinator = listIterator.next();
 
                 if (coordinator.getPerson() == id.getPerson()) {
                     return true;

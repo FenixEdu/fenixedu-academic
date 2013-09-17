@@ -53,8 +53,8 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
     }
 
     public void delete() {
-        removeCompetenceCourseInformation();
-        removeRootDomainObject();
+        setCompetenceCourseInformation(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -85,6 +85,71 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
     @Deprecated
     public void setOrder(Integer order) {
         super.setLoadOrder(order);
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeminaryHours() {
+        return getSeminaryHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasEctsCredits() {
+        return getEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasLoadOrder() {
+        return getLoadOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasLaboratorialHours() {
+        return getLaboratorialHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasTrainingPeriodHours() {
+        return getTrainingPeriodHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasProblemsHours() {
+        return getProblemsHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasAutonomousWorkHours() {
+        return getAutonomousWorkHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasCompetenceCourseInformation() {
+        return getCompetenceCourseInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcademicPeriod() {
+        return getAcademicPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasFieldWorkHours() {
+        return getFieldWorkHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasTheoreticalHours() {
+        return getTheoreticalHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasTutorialOrientationHours() {
+        return getTutorialOrientationHours() != null;
     }
 
 }

@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,9 +16,12 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.httpclient.HttpStatus;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
+@WebServlet(urlPatterns = "/downloadFile/*")
 public class FileDownloadServlet extends HttpServlet {
+
+    private static final long serialVersionUID = 6954413451468325605L;
 
     @Override
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
@@ -27,7 +31,7 @@ public class FileDownloadServlet extends HttpServlet {
             sendBadRequest(response);
         } else {
             final String oid = uri.substring(lastSlash + 1);
-            final File file = AbstractDomainObject.fromExternalId(oid);
+            final File file = FenixFramework.getDomainObject(oid);
             if (file == null) {
                 sendBadRequest(response);
             } else {

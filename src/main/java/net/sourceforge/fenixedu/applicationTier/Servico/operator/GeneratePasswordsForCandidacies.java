@@ -9,14 +9,15 @@ import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.person.PasswordBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class GeneratePasswordsForCandidacies {
 
-    @Checked("RolePredicates.OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static List<PasswordBean> run(final List<String> studentCandidacyIds) {
+        check(RolePredicates.OPERATOR_PREDICATE);
 
         final Set<StudentCandidacy> studentCandidacies = StudentCandidacy.readByIds(studentCandidacyIds);
         final List<PasswordBean> result = new ArrayList<PasswordBean>();

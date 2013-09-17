@@ -16,19 +16,20 @@ import net.sourceforge.fenixedu.domain.Shift;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadAvailableShiftsForClass {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static Object run(InfoClass infoClass) {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
         List infoShifts = null;
 
-        SchoolClass schoolClass = AbstractDomainObject.fromExternalId(infoClass.getExternalId());
+        SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
         Set<Shift> shifts = schoolClass.findAvailableShifts();
 
         infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {

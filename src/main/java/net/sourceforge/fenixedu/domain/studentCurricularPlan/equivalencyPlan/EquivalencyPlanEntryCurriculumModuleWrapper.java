@@ -6,10 +6,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EquivalencyPlanEntryCurriculumModuleWrapper {
 
@@ -21,7 +21,7 @@ public class EquivalencyPlanEntryCurriculumModuleWrapper {
                     final DegreeModule d1 = o1.getCurriculumModule().getDegreeModule();
                     final DegreeModule d2 = o2.getCurriculumModule().getDegreeModule();
                     final int c = Collator.getInstance().compare(d1.getName(), d2.getName());
-                    return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(d1, d2) : c;
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(d1, d2) : c;
                 }
 
             };

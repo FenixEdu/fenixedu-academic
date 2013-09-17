@@ -10,11 +10,21 @@ public abstract class TeacherEvaluationCoEvaluator extends TeacherEvaluationCoEv
     }
 
     public void delete() {
-        removeTeacherEvaluationProcessFromEvaluee();
-        removeRootDomainObject();
+        setTeacherEvaluationProcessFromEvaluee(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
     public abstract String getDescription();
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherEvaluationProcessFromEvaluee() {
+        return getTeacherEvaluationProcessFromEvaluee() != null;
+    }
 
 }

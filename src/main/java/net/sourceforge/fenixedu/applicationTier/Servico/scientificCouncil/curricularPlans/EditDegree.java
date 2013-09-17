@@ -9,23 +9,24 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EditDegree {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String externalId, String name, String nameEn, String acronym, DegreeType degreeType,
             Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear)
             throws FenixServiceException {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         if (externalId == null || name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degreeToEdit = AbstractDomainObject.fromExternalId(externalId);
+        final Degree degreeToEdit = FenixFramework.getDomainObject(externalId);
 
         if (degreeToEdit == null) {
             throw new NonExistingServiceException();

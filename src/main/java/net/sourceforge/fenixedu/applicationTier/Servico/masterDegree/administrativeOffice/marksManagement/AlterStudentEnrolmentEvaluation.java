@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Angela 04/07/2003
@@ -16,7 +16,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class AlterStudentEnrolmentEvaluation {
 
-    @Service
+    @Atomic
     public static void run(Integer curricularCourseCode, String enrolmentEvaluationCode,
             InfoEnrolmentEvaluation infoEnrolmentEvaluation, String teacherId, IUserView userView) throws FenixServiceException {
 
@@ -30,7 +30,7 @@ public class AlterStudentEnrolmentEvaluation {
             throw new NonExistingServiceException();
         }
 
-        EnrolmentEvaluation enrolmentEvaluationCopy = AbstractDomainObject.fromExternalId(enrolmentEvaluationCode);
+        EnrolmentEvaluation enrolmentEvaluationCopy = FenixFramework.getDomainObject(enrolmentEvaluationCode);
         if (enrolmentEvaluationCopy == null) {
             throw new NonExistingServiceException();
         }

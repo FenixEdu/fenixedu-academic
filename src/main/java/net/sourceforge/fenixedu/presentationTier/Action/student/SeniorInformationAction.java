@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Egidio, luis.egidio@ist.utl.pt
@@ -50,10 +50,10 @@ public class SeniorInformationAction extends FenixDispatchAction {
         final Student loggedStudent = getUserView(request).getPerson().getStudent();
 
         if (registrationOID != null) {
-            registration = AbstractDomainObject.fromExternalId(registrationOID);
+            registration = FenixFramework.getDomainObject(registrationOID);
         } else if (loggedStudent != null) {
             if (loggedStudent.getRegistrations().size() == 1) {
-                registration = loggedStudent.getRegistrations().get(0);
+                registration = loggedStudent.getRegistrations().iterator().next();
             } else {
                 request.setAttribute("student", loggedStudent);
                 return mapping.findForward("chooseRegistration");

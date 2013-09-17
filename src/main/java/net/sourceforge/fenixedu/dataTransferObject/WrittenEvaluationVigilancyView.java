@@ -25,7 +25,7 @@ public class WrittenEvaluationVigilancyView {
     }
 
     public int getTotalVigilancies() {
-        return getWrittenEvaluation().getVigilanciesCount();
+        return getWrittenEvaluation().getVigilancies().size();
     }
 
     public int getVigilanciesFromTeachers() {

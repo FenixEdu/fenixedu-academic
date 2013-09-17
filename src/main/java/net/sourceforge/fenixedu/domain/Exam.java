@@ -190,4 +190,19 @@ public class Exam extends Exam_Base {
         return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.exam") + " "
                 + BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", getSeason().getKey());
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest> getExamDateCertificateRequests() {
+        return getExamDateCertificateRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExamDateCertificateRequests() {
+        return !getExamDateCertificateRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSeason() {
+        return getSeason() != null;
+    }
+
 }

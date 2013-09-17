@@ -13,19 +13,20 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.util.StringFormatter;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateCompetenceCourse {
 
-    @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType,
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, String unitID, ExecutionSemester startSemester)
             throws FenixServiceException {
+        check(RolePredicates.BOLONHA_MANAGER_PREDICATE);
 
-        final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) AbstractDomainObject.fromExternalId(unitID);
+        final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) FenixFramework.getDomainObject(unitID);
         if (unit == null) {
             throw new FenixServiceException("error.invalidUnit");
         }

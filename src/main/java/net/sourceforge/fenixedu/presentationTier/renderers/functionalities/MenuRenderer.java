@@ -165,7 +165,7 @@ public class MenuRenderer extends OutputRenderer {
                     item.addChild(getFunctionalityNameComponent(context, entry, true, subPath));
 
                     if (!entry.getChildren().isEmpty()) {
-                        HtmlComponent child = item.getChildren().get(0);
+                        HtmlComponent child = item.getChildren().iterator().next();
 
                         HtmlText text;
                         if (child instanceof HtmlText) {

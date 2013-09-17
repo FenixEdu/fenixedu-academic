@@ -131,7 +131,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         }
 
         if (infoStudentCurricularPlans.size() == 1) {
-            request.setAttribute("studentCurricularPlanID", (infoStudentCurricularPlans.get(0)).getExternalId());
+            request.setAttribute("studentCurricularPlanID", (infoStudentCurricularPlans.iterator().next()).getExternalId());
             return mapping.findForward("readExemptionGratuity");
         }
 

@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -22,7 +22,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class EditGrouping {
 
     protected List run(String executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException {
-        final Grouping grouping = AbstractDomainObject.fromExternalId(infoGroupProperties.getExternalId());
+        final Grouping grouping = FenixFramework.getDomainObject(infoGroupProperties.getExternalId());
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -57,11 +57,11 @@ public class EditGrouping {
         if (grouping.getMaximumCapacity() == null && grouping.getMinimumCapacity() == null) {
             return result;
         }
-        for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
-            if (grouping.getMaximumCapacity() != null && studentGroup.getAttendsCount() > grouping.getMaximumCapacity()) {
+        for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
+            if (grouping.getMaximumCapacity() != null && studentGroup.getAttendsSet().size() > grouping.getMaximumCapacity()) {
                 errors[0] = -2;
             }
-            if (grouping.getMinimumCapacity() != null && studentGroup.getAttendsCount() < grouping.getMinimumCapacity()) {
+            if (grouping.getMinimumCapacity() != null && studentGroup.getAttendsSet().size() < grouping.getMinimumCapacity()) {
                 errors[1] = -3;
             }
             if (errors[0] != 0 && errors[1] != 0) {
@@ -79,7 +79,7 @@ public class EditGrouping {
 
     private Integer testGroupMaximumNumber(final Grouping grouping) {
         if (grouping.getGroupMaximumNumber() != null) {
-            for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
+            for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
                 Integer groupCapacity;
                 if (studentGroup.getShift() != null) {
                     if (grouping.getDifferentiatedCapacity()) {
@@ -91,7 +91,7 @@ public class EditGrouping {
                         return -1;
                     }
                 } else if (!grouping.getDifferentiatedCapacity()
-                        && grouping.getStudentGroupsCount() > grouping.getGroupMaximumNumber()) {
+                        && grouping.getStudentGroupsSet().size() > grouping.getGroupMaximumNumber()) {
                     return -1;
                 }
             }
@@ -103,7 +103,7 @@ public class EditGrouping {
 
     private static final EditGrouping serviceInstance = new EditGrouping();
 
-    @Service
+    @Atomic
     public static List runEditGrouping(String executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);

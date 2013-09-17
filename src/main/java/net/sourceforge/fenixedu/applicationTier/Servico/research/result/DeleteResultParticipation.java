@@ -5,10 +5,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteResultParticipation {
-    @Service
+    @Atomic
     public static void run(ResultParticipation participation) throws FenixServiceException {
         ResearchResult result = participation.getResult();
         result.removeParticipation(participation);

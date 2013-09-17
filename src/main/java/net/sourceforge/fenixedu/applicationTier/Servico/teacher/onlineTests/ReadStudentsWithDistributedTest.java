@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -25,7 +25,7 @@ public class ReadStudentsWithDistributedTest {
     protected List run(String executionCourseId, String distributedTestId) throws FenixServiceException {
         final List<InfoStudent> result = new ArrayList<InfoStudent>();
 
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         if (distributedTest == null) {
             throw new FenixServiceException();
         }
@@ -42,7 +42,7 @@ public class ReadStudentsWithDistributedTest {
 
     private static final ReadStudentsWithDistributedTest serviceInstance = new ReadStudentsWithDistributedTest();
 
-    @Service
+    @Atomic
     public static List runReadStudentsWithDistributedTest(String executionCourseId, String distributedTestId)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

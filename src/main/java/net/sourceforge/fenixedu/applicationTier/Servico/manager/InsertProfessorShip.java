@@ -9,15 +9,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class InsertProfessorShip {
 
     protected void run(final String executionCourseId, final String teacherId, final Boolean responsibleFor, final Double hours)
             throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }
@@ -33,7 +33,7 @@ public class InsertProfessorShip {
 
     private static final InsertProfessorShip serviceInstance = new InsertProfessorShip();
 
-    @Service
+    @Atomic
     public static void runInsertProfessorShip(String executionCourseId, String teacherId, Boolean responsibleFor, Double hours)
             throws FenixServiceException, NotAuthorizedException {
         try {
@@ -51,7 +51,7 @@ public class InsertProfessorShip {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static void runInsertProfessorshipByDepartment(String executionCourseId, String teacherId, Boolean responsibleFor,
             Double hours) throws FenixServiceException, NotAuthorizedException {
         DepartmentInsertProfessorshipAuthorization.instance.execute(teacherId);

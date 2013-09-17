@@ -27,7 +27,7 @@ public class DegreeClassification extends DegreeClassification_Base {
         for (DegreeDesignation designation : getDegreeDesignations()) {
             removeDegreeDesignations(designation);
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -39,4 +39,44 @@ public class DegreeClassification extends DegreeClassification_Base {
         }
         return null;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.raides.DegreeDesignation> getDegreeDesignations() {
+        return getDegreeDesignationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeDesignations() {
+        return !getDegreeDesignationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasClassificationOrder() {
+        return getClassificationOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription1() {
+        return getDescription1() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasAbbreviation() {
+        return getAbbreviation() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription2() {
+        return getDescription2() != null;
+    }
+
 }

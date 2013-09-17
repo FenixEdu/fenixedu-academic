@@ -32,7 +32,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 
     public FinalDegreeWorkProposalHeader(final Proposal proposal) {
         proposalDomainReference = proposal;
-        executionDegreeDomainReference = proposal.getScheduleing().getExecutionDegrees().get(0);
+        executionDegreeDomainReference = proposal.getScheduleing().getExecutionDegrees().iterator().next();
     }
 
     public FinalDegreeWorkProposalHeader(final Proposal proposal, final ExecutionDegree executionDegree) {
@@ -76,14 +76,6 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
     @Override
     public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
-    }
-
-    /**
-     * @return Returns the OID.
-     */
-
-    public Long getProposalOID() {
-        return getProposal().getOID();
     }
 
     /**

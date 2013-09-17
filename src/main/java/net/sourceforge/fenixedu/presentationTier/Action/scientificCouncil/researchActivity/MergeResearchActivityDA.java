@@ -57,7 +57,7 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
             HttpServletResponse response) {
         MergeResearchActivityPageContainerBean mergeResearchActivityPageContainerBean = getRenderedObject("mergeList");
         RenderUtils.invalidateViewState();
-        mergeResearchActivityPageContainerBean.removeSelected();
+        mergeResearchActivityPageContainerBean.setSelected(null);
         return setObjects(mapping, form, request, response, mergeResearchActivityPageContainerBean);
     }
 

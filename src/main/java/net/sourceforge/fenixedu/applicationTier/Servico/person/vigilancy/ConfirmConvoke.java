@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
 
 import net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ConfirmConvoke {
 
-    @Service
+    @Atomic
     public static void run(OtherCourseVigilancy convoke) {
         convoke.setConfirmed(true);
     }

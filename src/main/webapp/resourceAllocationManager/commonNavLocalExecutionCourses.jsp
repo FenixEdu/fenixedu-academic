@@ -1,4 +1,4 @@
-<%@ page language="java" %><%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page language="java" %><%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@page import="net.sourceforge.fenixedu.domain.ResourceAllocationRole"%>
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>

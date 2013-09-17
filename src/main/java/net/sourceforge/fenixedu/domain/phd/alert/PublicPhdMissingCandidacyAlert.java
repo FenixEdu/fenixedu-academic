@@ -103,7 +103,12 @@ public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAle
 
     @Override
     protected void disconnect() {
-        removeCandidacyHashCode();
+        setCandidacyHashCode(null);
         super.disconnect();
     }
+    @Deprecated
+    public boolean hasCandidacyHashCode() {
+        return getCandidacyHashCode() != null;
+    }
+
 }

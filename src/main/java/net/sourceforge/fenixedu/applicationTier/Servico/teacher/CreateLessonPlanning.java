@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateLessonPlanning {
@@ -20,7 +20,7 @@ public class CreateLessonPlanning {
 
     private static final CreateLessonPlanning serviceInstance = new CreateLessonPlanning();
 
-    @Service
+    @Atomic
     public static void runCreateLessonPlanning(String executionCourseId, MultiLanguageString title, MultiLanguageString planning,
             ShiftType lessonType, ExecutionCourse executionCourse) throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

@@ -20,7 +20,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
     }
 
     public void delete() {
-        if (getSpace().getSpaceInformationsCount() == 1) {
+        if (getSpace().getSpaceInformationsSet().size() == 1) {
             throw new DomainException("space.must.have.at.least.one.space.information");
         }
         deleteWithoutCheckNumberOfSpaceInformations();
@@ -28,7 +28,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
 
     public void deleteWithoutCheckNumberOfSpaceInformations() {
         super.setSpace(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -126,4 +126,40 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
             }
         }
     }
+
+    @Deprecated
+    public boolean hasEmails() {
+        return getEmails() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidFrom() {
+        return getValidFrom() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidUntil() {
+        return getValidUntil() != null;
+    }
+
+    @Deprecated
+    public boolean hasBlueprintNumber() {
+        return getBlueprintNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasCapacity() {
+        return getCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpace() {
+        return getSpace() != null;
+    }
+
 }

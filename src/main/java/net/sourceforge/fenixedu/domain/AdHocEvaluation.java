@@ -86,4 +86,19 @@ public class AdHocEvaluation extends AdHocEvaluation_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateTime() {
+        return getCreationDateTime() != null;
+    }
+
 }

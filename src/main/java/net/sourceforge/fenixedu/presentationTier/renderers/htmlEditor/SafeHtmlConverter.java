@@ -263,7 +263,7 @@ public class SafeHtmlConverter extends TidyConverter {
         int size = contents.size();
         if (size > 0) {
             Content lastContent = contents.get(size - 1);
-            if (contents.get(0) instanceof MetaDomainObjectPortal
+            if (contents.iterator().next() instanceof MetaDomainObjectPortal
                     && (lastContent instanceof Section || lastContent instanceof Item)) {
                 // if it's a public section or item they can deal with their own
                 // availability policy hence we'll let create the link.

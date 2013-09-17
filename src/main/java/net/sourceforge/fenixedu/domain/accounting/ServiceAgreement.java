@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public abstract class ServiceAgreement extends ServiceAgreement_Base {
 
     static {
-        ServiceAgreementPerson.addListener(new RelationAdapter<ServiceAgreement, Person>() {
+        getRelationServiceAgreementPerson().addListener(new RelationAdapter<ServiceAgreement, Person>() {
             @Override
             public void beforeAdd(ServiceAgreement serviceAgreementToAdd, Person person) {
                 if (serviceAgreementToAdd != null && person != null) {
@@ -69,7 +69,7 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
 
         super.setPerson(null);
         super.setServiceAgreementTemplate(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -90,6 +90,36 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
 
     public boolean hasCustomGratuityPaymentPlan(final ExecutionYear executionYear) {
         return getCustomGratuityPaymentPlan(executionYear) != null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ServiceAgreementPaymentPlan> getPaymentPlans() {
+        return getPaymentPlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPaymentPlans() {
+        return !getPaymentPlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasServiceAgreementTemplate() {
+        return getServiceAgreementTemplate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

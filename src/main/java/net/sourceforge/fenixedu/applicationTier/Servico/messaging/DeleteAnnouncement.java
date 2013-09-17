@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.messaging;
 
 
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
@@ -14,7 +14,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteAnnouncement {
 
-    @Service
+    @Atomic
     public static void run(Announcement announcement) {
 
         announcement.delete();

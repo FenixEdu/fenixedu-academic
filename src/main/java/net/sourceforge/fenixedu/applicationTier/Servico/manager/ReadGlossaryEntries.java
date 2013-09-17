@@ -6,11 +6,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoGlossaryEntry;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.support.GlossaryEntry;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadGlossaryEntries {
 
-    @Service
+    @Atomic
     public static List<InfoGlossaryEntry> run() {
         List<InfoGlossaryEntry> result = new ArrayList<InfoGlossaryEntry>();
 

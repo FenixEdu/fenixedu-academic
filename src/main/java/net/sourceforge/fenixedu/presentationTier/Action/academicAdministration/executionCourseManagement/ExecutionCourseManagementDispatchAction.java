@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +30,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/executionCourseManagement", module = "academicAdministration",
         formBeanClass = ExecutionCourseManagementForm.class)
@@ -378,7 +380,7 @@ public class ExecutionCourseManagementDispatchAction extends FenixDispatchAction
         }
 
         for (String externalId : curricularCourseIds) {
-            result.add((CurricularCourse) CurricularCourse.fromExternalId(externalId));
+            result.add((CurricularCourse) FenixFramework.getDomainObject(externalId));
         }
 
         return result;
@@ -394,15 +396,15 @@ public class ExecutionCourseManagementDispatchAction extends FenixDispatchAction
         }
 
         for (String externalId : shiftsIds) {
-            result.add((Shift) Shift.fromExternalId(externalId));
+            result.add((Shift) FenixFramework.getDomainObject(externalId));
         }
 
         return result;
     }
 
-    private List<ExecutionCourse> resultsForSearchBean(final ExecutionCourseSearchBean searchBean) {
+    private Collection<ExecutionCourse> resultsForSearchBean(final ExecutionCourseSearchBean searchBean) {
 
-        List<ExecutionCourse> semesterResult = new ArrayList<ExecutionCourse>();
+        Collection<ExecutionCourse> semesterResult = new ArrayList<ExecutionCourse>();
 
         if (searchBean.getSemester() == null) {
             return semesterResult;

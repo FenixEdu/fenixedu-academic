@@ -21,10 +21,35 @@ public class SantanderEntry extends SantanderEntry_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeSantanderBatch();
-        removeRootDomainObject();
+        setPerson(null);
+        setSantanderBatch(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasSantanderBatch() {
+        return getSantanderBatch() != null;
+    }
+
+    @Deprecated
+    public boolean hasLine() {
+        return getLine() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

@@ -123,7 +123,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     }
 
     public ActionForward searchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final PhdProgramCandidacyProcessBean bean = getCreateCandidacyProcessBean();
         request.setAttribute("createCandidacyBean", bean);
@@ -456,7 +456,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
         request.setAttribute("idDocument", process.hasAnyDocuments(PhdIndividualProgramDocumentType.ID_DOCUMENT));
         request.setAttribute("personalPhoto", process.getPerson().hasPersonalPhoto());
         request.setAttribute("healthBulletin", process.hasAnyDocuments(PhdIndividualProgramDocumentType.HEALTH_BULLETIN));
-        request.setAttribute("habilitationsCertificates", person.getAssociatedQualificationsCount() == process
+        request.setAttribute("habilitationsCertificates", person.getAssociatedQualificationsSet().size() == process
                 .getDocumentsCount(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT));
 
         if (!process.hasStudyPlan()) {

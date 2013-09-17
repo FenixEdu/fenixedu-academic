@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -19,12 +19,12 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class CreateCourseReports {
 
-    @Service
+    @Atomic
     public static void run(String executionPeriodID) {
         Set<String> courseReportsExecutionCoursesIDs = new HashSet<String>();
 
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
-        List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
+        Collection<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
 
         for (ExecutionCourse executionCourse : executionCourses) {
             if (executionCourse.getCourseReport() == null) {

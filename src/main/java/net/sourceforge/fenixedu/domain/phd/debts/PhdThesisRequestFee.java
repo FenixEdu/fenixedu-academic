@@ -37,7 +37,7 @@ public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
 
     @Override
     protected void disconnect() {
-        removeProcess();
+        setProcess(null);
         super.disconnect();
     }
 
@@ -59,6 +59,11 @@ public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
     @Override
     public boolean isPhdThesisRequestFee() {
         return true;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
     }
 
 }

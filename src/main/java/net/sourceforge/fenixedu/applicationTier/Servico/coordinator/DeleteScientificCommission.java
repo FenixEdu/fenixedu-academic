@@ -5,13 +5,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteScientificCommission {
 
     protected void run(String executionDegreeId, ScientificCommission commission) {
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
 
         if (!executionDegree.getScientificCommissionMembers().contains(commission)) {
             throw new DomainException("scientificCommission.delete.incorrectExecutionDegree");
@@ -24,7 +24,7 @@ public class DeleteScientificCommission {
 
     private static final DeleteScientificCommission serviceInstance = new DeleteScientificCommission();
 
-    @Service
+    @Atomic
     public static void runDeleteScientificCommission(String executionDegreeId, ScientificCommission commission)
             throws NotAuthorizedException {
         ResponsibleDegreeCoordinatorAuthorizationFilter.instance.execute(executionDegreeId);

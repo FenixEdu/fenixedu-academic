@@ -65,7 +65,27 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
         final List<AnyCurricularCourse> result =
                 (List<AnyCurricularCourse>) getCurricularRules(CurricularRuleType.ANY_CURRICULAR_COURSE, executionSemester);
         // must have only one
-        return result.isEmpty() ? null : (AnyCurricularCourse) result.get(0);
+        return result.isEmpty() ? null : (AnyCurricularCourse) result.iterator().next();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.log.OptionalEnrolmentLog> getOptionalEnrolmentLogs() {
+        return getOptionalEnrolmentLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOptionalEnrolmentLogs() {
+        return !getOptionalEnrolmentLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.OptionalEnrolment> getOptionalEnrolments() {
+        return getOptionalEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOptionalEnrolments() {
+        return !getOptionalEnrolmentsSet().isEmpty();
     }
 
 }

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -15,7 +15,7 @@ public class StudentTeacherInquiryTemplate extends StudentTeacherInquiryTemplate
     }
 
     public static StudentTeacherInquiryTemplate getCurrentTemplate() {
-        final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof StudentTeacherInquiryTemplate && inquiryTemplate.isOpen()) {
                 return (StudentTeacherInquiryTemplate) inquiryTemplate;
@@ -25,7 +25,7 @@ public class StudentTeacherInquiryTemplate extends StudentTeacherInquiryTemplate
     }
 
     public static StudentTeacherInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {
-        final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof StudentTeacherInquiryTemplate
                     && executionSemester == inquiryTemplate.getExecutionPeriod()) {

@@ -2,10 +2,10 @@
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
-<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:html xhtml="true">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

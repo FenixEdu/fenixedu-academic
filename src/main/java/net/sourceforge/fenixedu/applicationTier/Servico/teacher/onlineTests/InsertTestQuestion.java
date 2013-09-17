@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class InsertTestQuestion {
 
@@ -32,20 +32,20 @@ public class InsertTestQuestion {
         this.path = path.replace('\\', '/');
 
         for (String element : metadataId) {
-            Metadata metadata = AbstractDomainObject.fromExternalId(element);
+            Metadata metadata = FenixFramework.getDomainObject(element);
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }
             Question question = null;
             if (metadata.getVisibleQuestions() != null && metadata.getVisibleQuestions().size() != 0) {
-                question = metadata.getVisibleQuestions().get(0);
+                question = metadata.getVisibleQuestions().iterator().next();
             } else {
                 throw new InvalidArgumentsServiceException();
             }
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            Test test = AbstractDomainObject.fromExternalId(testId);
+            Test test = FenixFramework.getDomainObject(testId);
             if (test == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -103,7 +103,7 @@ public class InsertTestQuestion {
 
     private static final InsertTestQuestion serviceInstance = new InsertTestQuestion();
 
-    @Service
+    @Atomic
     public static void runInsertTestQuestion(String executionCourseId, String testId, String[] metadataId, Integer questionOrder,
             Double questionValue, CorrectionFormula formula, String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

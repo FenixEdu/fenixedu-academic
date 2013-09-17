@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /*
  * 
@@ -16,14 +16,14 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class AssociateCurricularCoursesToExecutionCourse {
 
-    @Service
+    @Atomic
     public static void run(String executionCourseId, List<String> curricularCourseIds) throws FenixServiceException {
         if (executionCourseId == null) {
             throw new FenixServiceException("nullExecutionCourseId");
         }
 
         if (curricularCourseIds != null && !curricularCourseIds.isEmpty()) {
-            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+            ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
 
             if (executionCourse == null) {
                 throw new DomainException("message.nonExisting.executionCourse");
@@ -33,11 +33,11 @@ public class AssociateCurricularCoursesToExecutionCourse {
             while (iter.hasNext()) {
                 String curricularCourseId = iter.next();
 
-                CurricularCourse curricularCourse = AbstractDomainObject.fromExternalId(curricularCourseId);
+                CurricularCourse curricularCourse = FenixFramework.getDomainObject(curricularCourseId);
                 if (curricularCourse == null) {
                     throw new DomainException("message.nonExistingDegreeCurricularPlan");
                 }
-                if (!curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
+                if (!curricularCourse.getAssociatedExecutionCoursesSet().contains(executionCourse)) {
                     curricularCourse.addAssociatedExecutionCourses(executionCourse);
                 }
             }

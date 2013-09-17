@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.Acad
 import net.sourceforge.fenixedu.domain.accounting.CreditNote;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Pedro Santos (pmrsa)
@@ -27,14 +27,19 @@ public class CreditNoteGeneratedDocument extends CreditNoteGeneratedDocument_Bas
 
     @Override
     public void delete() {
-        removeSource();
+        setSource(null);
         super.delete();
     }
 
-    @Service
+    @Atomic
     public static void store(CreditNote source, String filename, byte[] content) {
         if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
             new CreditNoteGeneratedDocument(source, source.getReceipt().getPerson(), AccessControl.getPerson(), filename, content);
         }
     }
+    @Deprecated
+    public boolean hasSource() {
+        return getSource() != null;
+    }
+
 }

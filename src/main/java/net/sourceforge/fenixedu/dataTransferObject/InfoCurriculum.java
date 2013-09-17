@@ -10,7 +10,7 @@ import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Mota
@@ -50,8 +50,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
     }
 
     public ExecutionYear getExecutionYear() {
-        return this.executionYearId == null || this.executionYearId == null ? ExecutionYear.readCurrentExecutionYear() : AbstractDomainObject
-                .<ExecutionYear> fromExternalId(this.executionYearId);
+        return this.executionYearId == null || this.executionYearId == null ? ExecutionYear.readCurrentExecutionYear() : FenixFramework.<ExecutionYear> getDomainObject(this.executionYearId);
     }
 
     public InfoCurriculum(InfoCurricularCourse infoCurricularCourse) {

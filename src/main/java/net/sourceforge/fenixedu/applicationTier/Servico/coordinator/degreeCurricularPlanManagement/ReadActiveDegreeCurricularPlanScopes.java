@@ -5,7 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCurricularPlanBaseService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Fernanda Quitério 5/Nov/2003
@@ -26,7 +26,7 @@ public class ReadActiveDegreeCurricularPlanScopes extends ReadDegreeCurricularPl
 
     private static final ReadActiveDegreeCurricularPlanScopes serviceInstance = new ReadActiveDegreeCurricularPlanScopes();
 
-    @Service
+    @Atomic
     public static List runReadActiveDegreeCurricularPlanScopes(String degreeCurricularPlanId) throws NotAuthorizedException {
         CoordinatorAuthorizationFilter.instance.execute();
         return serviceInstance.run(degreeCurricularPlanId);

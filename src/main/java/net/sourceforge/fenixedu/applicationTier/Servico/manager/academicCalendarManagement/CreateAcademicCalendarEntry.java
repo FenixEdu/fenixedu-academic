@@ -14,11 +14,11 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInN
 import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInSpecialSeasonCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateAcademicCalendarEntry {
 
-    @Service
+    @Atomic
     public static AcademicCalendarEntry run(CalendarEntryBean bean, boolean toCreate) {
 
         if (toCreate) {

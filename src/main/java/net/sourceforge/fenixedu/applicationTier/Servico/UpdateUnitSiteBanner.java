@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerFile;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class UpdateUnitSiteBanner extends UnitSiteBannerFileService {
 
@@ -33,7 +33,7 @@ public class UpdateUnitSiteBanner extends UnitSiteBannerFileService {
 
     private static final UpdateUnitSiteBanner serviceInstance = new UpdateUnitSiteBanner();
 
-    @Service
+    @Atomic
     public static void runUpdateUnitSiteBanner(UnitSite site, UnitSiteBanner banner, File mainFile, String mainName,
             File backFile, String backName, UnitSiteBannerRepeatType repeat, String color, String link, Integer weight)
             throws FenixServiceException, IOException, NotAuthorizedException {

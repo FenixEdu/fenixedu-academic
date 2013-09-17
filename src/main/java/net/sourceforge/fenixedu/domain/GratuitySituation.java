@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
@@ -49,8 +50,8 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     public void delete() {
-        removeStudentCurricularPlan();
-        removeRootDomainObject();
+        setStudentCurricularPlan(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -102,7 +103,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     public double calculatePayedValue(final YearMonthDay date) {
-        final List<GratuityTransaction> transactions = (date == null ? getTransactionList() : getTransactionsUntil(date));
+        final Collection<GratuityTransaction> transactions = (date == null ? getTransactionList() : getTransactionsUntil(date));
         BigDecimal result = BigDecimal.ZERO;
         for (final GratuityTransaction transaction : transactions) {
             result = result.add(transaction.getValueWithAdjustment());
@@ -160,7 +161,6 @@ public class GratuitySituation extends GratuitySituation_Base {
         throw new DomainException("error.GratuitySituation.paymentCode.cannot.be.accessed.directly");
     }
 
-    @Override
     public boolean hasPaymentCode() {
         return (super.getPaymentCode() != null);
     }
@@ -367,6 +367,91 @@ public class GratuitySituation extends GratuitySituation_Base {
         } else {
             setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.transactions.GratuityTransaction> getTransactionList() {
+        return getTransactionListSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTransactionList() {
+        return !getTransactionListSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasHasPenaltyExemption() {
+        return getHasPenaltyExemption() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCurricularPlan() {
+        return getStudentCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmployee() {
+        return getEmployee() != null;
+    }
+
+    @Deprecated
+    public boolean hasExemptionDescription() {
+        return getExemptionDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasExemptionType() {
+        return getExemptionType() != null;
+    }
+
+    @Deprecated
+    public boolean hasPenaltyExemptionDate() {
+        return getPenaltyExemptionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasTotalValue() {
+        return getTotalValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasGratuityValues() {
+        return getGratuityValues() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenDateTime() {
+        return getWhenDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasPenaltyExemptionEmployee() {
+        return getPenaltyExemptionEmployee() != null;
+    }
+
+    @Deprecated
+    public boolean hasRemainingValue() {
+        return getRemainingValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasExemptionPercentage() {
+        return getExemptionPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasPenaltyExemptionJustification() {
+        return getPenaltyExemptionJustification() != null;
+    }
+
+    @Deprecated
+    public boolean hasExemptionValue() {
+        return getExemptionValue() != null;
     }
 
 }

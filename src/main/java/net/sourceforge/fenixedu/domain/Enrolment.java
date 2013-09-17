@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.studentCurriculum.InternalCreditsSourceCurriculumGroup;
@@ -55,7 +54,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -86,7 +85,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         final public int compare(Enrolment o1, Enrolment o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION);
-            comparatorChain.addComparator(CurriculumLine.COMPARATOR_BY_ID);
+            comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
             return comparatorChain.compare(o1, o2);
         }
@@ -296,7 +295,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     protected void deleteInformation() {
 
-        final Iterator<Thesis> theses = getThesesIterator();
+        final Iterator<Thesis> theses = getThesesSet().iterator();
         while (theses.hasNext()) {
             final Thesis thesis = theses.next();
             if (!thesis.canBeDeleted()) {
@@ -308,23 +307,23 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         final Registration registration = getRegistration();
 
         getStudentCurricularPlan().setIsFirstTimeToNull();
-        removeExecutionPeriod();
-        removeStudentCurricularPlan();
-        removeDegreeModule();
-        removeCurriculumGroup();
+        setExecutionPeriod(null);
+        setStudentCurricularPlan(null);
+        setDegreeModule(null);
+        setCurriculumGroup(null);
         getNotNeedToEnrollCurricularCourses().clear();
 
-        Iterator<Attends> attendsIter = getAttendsIterator();
+        Iterator<Attends> attendsIter = getAttendsSet().iterator();
         while (attendsIter.hasNext()) {
             Attends attends = attendsIter.next();
 
             attendsIter.remove();
-            attends.removeEnrolment();
+            attends.setEnrolment(null);
 
             if (!attends.hasAnyAssociatedMarks() && !attends.hasAnyStudentGroups()) {
                 boolean hasShiftEnrolment = false;
                 for (Shift shift : attends.getExecutionCourse().getAssociatedShifts()) {
-                    if (shift.hasStudents(registration)) {
+                    if (shift.getStudentsSet().contains(registration)) {
                         hasShiftEnrolment = true;
                         break;
                     }
@@ -336,14 +335,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             }
         }
 
-        Iterator<EnrolmentEvaluation> evalsIter = getEvaluationsIterator();
+        Iterator<EnrolmentEvaluation> evalsIter = getEvaluationsSet().iterator();
         while (evalsIter.hasNext()) {
             EnrolmentEvaluation eval = evalsIter.next();
             evalsIter.remove();
             eval.delete();
         }
 
-        Iterator<CreditsInAnySecundaryArea> creditsInAnysecundaryAreaIterator = getCreditsInAnySecundaryAreasIterator();
+        Iterator<CreditsInAnySecundaryArea> creditsInAnysecundaryAreaIterator = getCreditsInAnySecundaryAreasSet().iterator();
 
         while (creditsInAnysecundaryAreaIterator.hasNext()) {
             CreditsInAnySecundaryArea credits = creditsInAnysecundaryAreaIterator.next();
@@ -351,7 +350,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             credits.delete();
         }
 
-        Iterator<CreditsInScientificArea> creditsInScientificAreaIterator = getCreditsInScientificAreasIterator();
+        Iterator<CreditsInScientificArea> creditsInScientificAreaIterator = getCreditsInScientificAreasSet().iterator();
 
         while (creditsInScientificAreaIterator.hasNext()) {
             CreditsInScientificArea credits = creditsInScientificAreaIterator.next();
@@ -485,7 +484,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                 }
             }
         } else if (executionCourses.size() == 1) {
-            executionCourse = executionCourses.get(0);
+            executionCourse = executionCourses.iterator().next();
         }
 
         if (executionCourse != null) {
@@ -545,7 +544,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                 });
 
         if (currentExecutionCourse != null) {
-            List attends = currentExecutionCourse.getAttends();
+            Collection attends = currentExecutionCourse.getAttends();
             Attends attend = (Attends) CollectionUtils.find(attends, new Predicate() {
 
                 @Override
@@ -586,7 +585,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public boolean isImprovementForExecutionCourse(ExecutionCourse executionCourse) {
-        return getCurricularCourse().hasAssociatedExecutionCourses(executionCourse)
+        return getCurricularCourse().getAssociatedExecutionCoursesSet().contains(executionCourse)
                 && getExecutionPeriod() != executionCourse.getExecutionPeriod();
     }
 
@@ -783,7 +782,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public Grade getEctsGrade(StudentCurricularPlan scp, DateTime processingDate) {
         Grade grade = getGrade();
-        if (getEnrolmentWrappersCount() > 0) {
+        if (getEnrolmentWrappersSet().size() > 0) {
             Set<Dismissal> dismissals = new HashSet<Dismissal>();
             for (EnrolmentWrapper wrapper : getEnrolmentWrappersSet()) {
                 if (wrapper.getCredits().getStudentCurricularPlan().isBolonhaDegree()) {
@@ -1212,7 +1211,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return isEnroledInExecutionPeriod(curricularCourse, executionSemester) && isEnroled();
     }
 
-    final public List<ExecutionCourse> getExecutionCourses() {
+    final public Collection<ExecutionCourse> getExecutionCourses() {
         return this.getCurricularCourse().getAssociatedExecutionCourses();
     }
 
@@ -1338,11 +1337,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     private boolean isStudentFromDegree(final Degree degree, final DegreeCurricularPlan degreeCurricularPlanOfStudent) {
-        return degree.hasDegreeCurricularPlans(degreeCurricularPlanOfStudent);
+        return degree.getDegreeCurricularPlansSet().contains(degreeCurricularPlanOfStudent);
     }
 
     private boolean isDegreeModuleFromDegree(final Degree degree, DegreeCurricularPlan degreeCurricularPlanOfDegreeModule) {
-        return degree.hasDegreeCurricularPlans(degreeCurricularPlanOfDegreeModule);
+        return degree.getDegreeCurricularPlansSet().contains(degreeCurricularPlanOfDegreeModule);
     }
 
     /**
@@ -1488,7 +1487,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
      */
     @Override
     final public Thesis getThesis() {
-        List<Thesis> theses = getTheses();
+        Collection<Thesis> theses = getTheses();
 
         switch (theses.size()) {
         case 0:
@@ -1639,7 +1638,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     static public Enrolment getEnrolmentWithLastExecutionPeriod(List<Enrolment> enrolments) {
         Collections.sort(enrolments, Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
-        return enrolments.get(0);
+        return enrolments.iterator().next();
     }
 
     /**
@@ -1738,7 +1737,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
     }
 
-    @Service
+    @Atomic
     public void markAsTemporaryEnrolled() {
         if (!getStudentCurricularPlan().getEvaluationForCurriculumValidationAllowed()) {
             throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");
@@ -1765,6 +1764,187 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public String getModuleTypeName() {
         ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
         return enumerationResources.getString(this.getClass().getName());
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest> getStandaloneEnrolmentRequests() {
+        return getStandaloneEnrolmentRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStandaloneEnrolmentRequests() {
+        return !getStandaloneEnrolmentRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.thesis.Thesis> getTheses() {
+        return getThesesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTheses() {
+        return !getThesesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.ExtraExamRequest> getExtraExamRequests() {
+        return getExtraExamRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExtraExamRequests() {
+        return !getExtraExamRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExtraCurricularCertificateRequest> getExtraCurricularRequests() {
+        return getExtraCurricularRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExtraCurricularRequests() {
+        return !getExtraCurricularRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest> getProgramCertificateRequests() {
+        return getProgramCertificateRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProgramCertificateRequests() {
+        return !getProgramCertificateRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
+        return getAttendsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAttends() {
+        return !getAttendsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper> getEnrolmentWrappers() {
+        return getEnrolmentWrappersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolmentWrappers() {
+        return !getEnrolmentWrappersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse> getNotNeedToEnrollCurricularCourses() {
+        return getNotNeedToEnrollCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNotNeedToEnrollCurricularCourses() {
+        return !getNotNeedToEnrollCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getConclusionProcessVersions() {
+        return getConclusionProcessVersionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyConclusionProcessVersions() {
+        return !getConclusionProcessVersionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea> getCreditsInAnySecundaryAreas() {
+        return getCreditsInAnySecundaryAreasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCreditsInAnySecundaryAreas() {
+        return !getCreditsInAnySecundaryAreasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getEvaluations() {
+        return getEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEvaluations() {
+        return !getEvaluationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest> getCourseLoadRequests() {
+        return getCourseLoadRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCourseLoadRequests() {
+        return !getCourseLoadRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CreditsInScientificArea> getCreditsInScientificAreas() {
+        return getCreditsInScientificAreasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCreditsInScientificAreas() {
+        return !getCreditsInScientificAreasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest> getExamDateCertificateRequests() {
+        return getExamDateCertificateRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExamDateCertificateRequests() {
+        return !getExamDateCertificateRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasIsFirstTime() {
+        return getIsFirstTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentState() {
+        return getEnrollmentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsExtraCurricular() {
+        return getIsExtraCurricular() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeigth() {
+        return getWeigth() != null;
+    }
+
+    @Override
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCurricularPlan() {
+        return getStudentCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentEvaluationType() {
+        return getEnrolmentEvaluationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentCondition() {
+        return getEnrolmentCondition() != null;
     }
 
 }

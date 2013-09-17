@@ -71,7 +71,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
         float marks = 0;
         int numberOfCourses = 0;
 
-        for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+        for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
 
             if (enrolment.isEnrolmentStateApproved()
                     && !enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE)) {
@@ -99,7 +99,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
         float marks = 0;
         float numberOfWeigths = 0;
 
-        for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+        for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
 
             if (enrolment.isEnrolmentStateApproved()
                     && !enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE)) {

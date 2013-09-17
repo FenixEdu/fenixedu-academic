@@ -13,9 +13,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ana e Ricardo
@@ -23,10 +24,10 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadExecutionCourseWithAssociatedCurricularCourses {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static InfoExecutionCourse run(String executionCourseID) throws FenixServiceException {
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
         if (executionCourse == null) {
             throw new FenixServiceException("error.noExecutionCourse");
         }

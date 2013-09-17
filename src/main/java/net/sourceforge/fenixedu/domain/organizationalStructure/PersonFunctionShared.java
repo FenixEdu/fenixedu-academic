@@ -49,4 +49,9 @@ public class PersonFunctionShared extends PersonFunctionShared_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasPercentage() {
+        return getPercentage() != null;
+    }
+
 }

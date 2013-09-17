@@ -6,4 +6,9 @@ public class InquiryRoomAnswer extends InquiryRoomAnswer_Base {
         super();
     }
 
+    @Deprecated
+    public boolean hasRoom() {
+        return getRoom() != null;
+    }
+
 }

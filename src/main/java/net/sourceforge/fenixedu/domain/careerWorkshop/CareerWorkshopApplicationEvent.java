@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
@@ -52,8 +52,8 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
         if (getCareerWorkshopConfirmationEvent() != null) {
             throw new DomainException("error.careerWorkshop.deletingEvent: A confirmation period is already defined.");
         }
-        removeRootDomainObject();
-        removeSpreadsheet();
+        setRootDomainObject(null);
+        setSpreadsheet(null);
         deleteDomainObject();
     }
 
@@ -69,7 +69,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
         return getSpreadsheet();
     }
 
-    @Service
+    @Atomic
     public void generateSpreadsheet() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("ISTCareerWorkshopsApplications-");
@@ -245,6 +245,51 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
             }
         }
         return null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication> getCareerWorkshopApplications() {
+        return getCareerWorkshopApplicationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCareerWorkshopApplications() {
+        return !getCareerWorkshopApplicationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasRelatedInformation() {
+        return getRelatedInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastUpdate() {
+        return getLastUpdate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCareerWorkshopConfirmationEvent() {
+        return getCareerWorkshopConfirmationEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpreadsheet() {
+        return getSpreadsheet() != null;
     }
 
 }

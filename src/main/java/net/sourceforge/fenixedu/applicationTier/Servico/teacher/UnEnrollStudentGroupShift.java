@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa and rmalo
@@ -26,13 +26,13 @@ public class UnEnrollStudentGroupShift {
     protected Boolean run(String executionCourseCode, String studentGroupCode, String groupPropertiesCode)
             throws FenixServiceException {
 
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
 
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
@@ -52,7 +52,7 @@ public class UnEnrollStudentGroupShift {
 
     private static final UnEnrollStudentGroupShift serviceInstance = new UnEnrollStudentGroupShift();
 
-    @Service
+    @Atomic
     public static Boolean runUnEnrollStudentGroupShift(String executionCourseCode, String studentGroupCode,
             String groupPropertiesCode) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

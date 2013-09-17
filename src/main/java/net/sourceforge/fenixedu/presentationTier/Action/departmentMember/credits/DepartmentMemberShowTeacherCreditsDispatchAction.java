@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DepartmentMemberShowTeacherCreditsDispatchAction extends ShowTeacherCreditsDispatchAction {
 
@@ -29,9 +29,9 @@ public class DepartmentMemberShowTeacherCreditsDispatchAction extends ShowTeache
 
         DynaActionForm teacherCreditsForm = (DynaActionForm) form;
         ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("executionPeriodId"));
+                FenixFramework.getDomainObject((String) teacherCreditsForm.get("executionPeriodId"));
 
-        Teacher requestedTeacher = AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
+        Teacher requestedTeacher = FenixFramework.getDomainObject((String) teacherCreditsForm.get("teacherId"));
 
         IUserView userView = UserView.getUser();
         Teacher loggedTeacher = userView.getPerson().getTeacher();

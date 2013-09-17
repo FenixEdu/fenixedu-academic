@@ -18,7 +18,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ExternalPersonDA extends FenixDispatchAction {
 
@@ -95,7 +95,7 @@ public class ExternalPersonDA extends FenixDispatchAction {
         final String personIDString = request.getParameter("personID");
         final Person person;
         if (personIDString != null) {
-            person = (Person) AbstractDomainObject.fromExternalId(personIDString);
+            person = (Person) FenixFramework.getDomainObject(personIDString);
         } else {
             person = (Person) request.getAttribute("person");
         }

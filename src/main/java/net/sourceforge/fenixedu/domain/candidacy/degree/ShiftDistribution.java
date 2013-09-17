@@ -40,7 +40,7 @@ public class ShiftDistribution extends ShiftDistribution_Base {
         }
         super.setExecutionYear(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -66,6 +66,26 @@ public class ShiftDistribution extends ShiftDistribution_Base {
             }
         }
         return false;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry> getShiftDistributionEntries() {
+        return getShiftDistributionEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyShiftDistributionEntries() {
+        return !getShiftDistributionEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
     }
 
 }

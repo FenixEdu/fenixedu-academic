@@ -1,15 +1,15 @@
 package net.sourceforge.fenixedu.domain.research.activity;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public interface ParticipationsInterface {
 
-    public List<? extends Participation> getParticipationsFor(Party party);
+    public Collection<? extends Participation> getParticipationsFor(Party party);
 
-    public List<? extends Participation> getParticipations();
+    public Collection<? extends Participation> getParticipations();
 
     public void addUniqueParticipation(Participation participation);
 

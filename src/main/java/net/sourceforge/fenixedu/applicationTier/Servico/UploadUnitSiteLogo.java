@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.io.FileUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -100,7 +100,7 @@ public class UploadUnitSiteLogo {
 
     private static final UploadUnitSiteLogo serviceInstance = new UploadUnitSiteLogo();
 
-    @Service
+    @Atomic
     public static File runUploadUnitSiteLogo(UnitSite site, java.io.File fileToUpload, String name) throws IOException,
             FenixServiceException {
         ResearchSiteManagerAuthorizationFilter.instance.execute(site);

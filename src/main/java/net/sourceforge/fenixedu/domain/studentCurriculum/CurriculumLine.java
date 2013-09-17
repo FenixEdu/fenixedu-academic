@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -34,7 +35,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
             int result =
                     (o1.getApprovementDate() != null && o2.getApprovementDate() != null) ? o1.getApprovementDate().compareTo(
                             o2.getApprovementDate()) : 0;
-            return result == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : result;
+            return result == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : result;
         }
     };
 
@@ -307,5 +308,10 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     abstract public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester);
 
     abstract public String getModuleTypeName();
+
+    @Deprecated
+    public boolean hasUsedInSeparationCycle() {
+        return getUsedInSeparationCycle() != null;
+    }
 
 }

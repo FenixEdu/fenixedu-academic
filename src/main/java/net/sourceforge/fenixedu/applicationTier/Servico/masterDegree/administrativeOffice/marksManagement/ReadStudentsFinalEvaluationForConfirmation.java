@@ -25,30 +25,31 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentsFinalEvaluationForConfirmation {
 
-    @Service
+    @Atomic
     public static InfoSiteEnrolmentEvaluation run(String curricularCourseCode, String yearString) throws FenixServiceException {
 
         List infoEnrolmentEvaluations = new ArrayList();
         InfoTeacher infoTeacher = null;
 
-        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
+        final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseCode);
         final List<Enrolment> enrolments =
                 (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString) : curricularCourse.getEnrolments();
 
         final List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
         for (final Enrolment enrolment : enrolments) {
-            enrolmentEvaluations.add(enrolment.getEvaluations().get(enrolment.getEvaluationsCount() - 1));
+            enrolmentEvaluations.add(enrolment.getLatestEnrolmentEvaluation());
         }
 
         if (!enrolmentEvaluations.isEmpty()) {
 
             List temporaryEnrolmentEvaluations = checkForInvalidSituations(enrolmentEvaluations);
-            Person person = ((EnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
+            Person person =
+                    ((EnrolmentEvaluation) temporaryEnrolmentEvaluations.iterator().next()).getPersonResponsibleForGrade();
             Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
             infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
@@ -72,7 +73,7 @@ public class ReadStudentsFinalEvaluationForConfirmation {
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
         infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
         infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
-        Date evaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0)).getGradeAvailableDate();
+        Date evaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.iterator().next()).getGradeAvailableDate();
         infoSiteEnrolmentEvaluation.setLastEvaluationDate(evaluationDate);
         infoSiteEnrolmentEvaluation.setInfoExecutionPeriod(infoExecutionPeriod);
 

@@ -10,19 +10,19 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTSDCurricularCourseGroup {
     protected TSDCurricularCourseGroup run(String tsdId, String[] tsdCurricularCourseToGroupArray) {
 
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
         List<TSDCurricularCourse> tsdCurricularCourseList = new ArrayList<TSDCurricularCourse>();
         TSDCurricularCourseGroup tsdCurricularCourseGroup = null;
 
         for (String tsdCurricularCourseId : tsdCurricularCourseToGroupArray) {
             TSDCurricularCourse tsdCurricularCourse =
-                    (TSDCurricularCourse) AbstractDomainObject.fromExternalId(tsdCurricularCourseId);
+                    (TSDCurricularCourse) FenixFramework.getDomainObject(tsdCurricularCourseId);
 
             if (tsdCurricularCourse != null) {
                 tsdCurricularCourseList.add(tsdCurricularCourse);
@@ -41,7 +41,7 @@ public class CreateTSDCurricularCourseGroup {
 
     private static final CreateTSDCurricularCourseGroup serviceInstance = new CreateTSDCurricularCourseGroup();
 
-    @Service
+    @Atomic
     public static TSDCurricularCourseGroup runCreateTSDCurricularCourseGroup(String tsdId,
             String[] tsdCurricularCourseToGroupArray) throws NotAuthorizedException {
         try {

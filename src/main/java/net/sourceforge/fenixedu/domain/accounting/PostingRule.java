@@ -19,9 +19,10 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import dml.runtime.RelationAdapter;
 
 public abstract class PostingRule extends PostingRule_Base {
 
@@ -60,25 +61,26 @@ public abstract class PostingRule extends PostingRule_Base {
     };
 
     static {
-        ServiceAgreementTemplatePostingRule.addListener(new RelationAdapter<PostingRule, ServiceAgreementTemplate>() {
-            @Override
-            public void beforeAdd(PostingRule postingRule, ServiceAgreementTemplate serviceAgreementTemplate) {
-                checkIfPostingRuleOverlapsExisting(serviceAgreementTemplate, postingRule);
-            }
+        getRelationServiceAgreementTemplatePostingRule().addListener(
+                new RelationAdapter<ServiceAgreementTemplate, PostingRule>() {
+                    @Override
+                    public void beforeAdd(ServiceAgreementTemplate serviceAgreementTemplate, PostingRule postingRule) {
+                        checkIfPostingRuleOverlapsExisting(serviceAgreementTemplate, postingRule);
+                    }
 
-            private void checkIfPostingRuleOverlapsExisting(ServiceAgreementTemplate serviceAgreementTemplate,
-                    PostingRule postingRule) {
-                if (serviceAgreementTemplate != null) {
-                    for (final PostingRule existingPostingRule : serviceAgreementTemplate.getPostingRules()) {
-                        if (postingRule.overlaps(existingPostingRule)) {
-                            throw new DomainException(
-                                    "error.accounting.agreement.ServiceAgreementTemplate.postingRule.overlaps.existing.one");
+                    private void checkIfPostingRuleOverlapsExisting(ServiceAgreementTemplate serviceAgreementTemplate,
+                            PostingRule postingRule) {
+                        if (serviceAgreementTemplate != null) {
+                            for (final PostingRule existingPostingRule : serviceAgreementTemplate.getPostingRules()) {
+                                if (postingRule.overlaps(existingPostingRule)) {
+                                    throw new DomainException(
+                                            "error.accounting.agreement.ServiceAgreementTemplate.postingRule.overlaps.existing.one");
+                                }
+                            }
                         }
                     }
-                }
-            }
 
-        });
+                });
     }
 
     protected PostingRule() {
@@ -195,9 +197,9 @@ public abstract class PostingRule extends PostingRule_Base {
         throw new DomainException("error.accounting.agreement.postingRule.cannot.modify.eventType");
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     @Override
     public void setStartDate(DateTime startDate) {
+        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         super.setStartDate(startDate);
     }
 
@@ -218,10 +220,10 @@ public abstract class PostingRule extends PostingRule_Base {
         super.setEndDate(when.minus(10000));
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public final void delete() {
+        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         super.setServiceAgreementTemplate(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         removeOtherRelations();
         deleteDomainObject();
     }
@@ -370,4 +372,29 @@ public abstract class PostingRule extends PostingRule_Base {
         }
         return result;
     }
+    @Deprecated
+    public boolean hasServiceAgreementTemplate() {
+        return getServiceAgreementTemplate() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDate() {
+        return getStartDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasEventType() {
+        return getEventType() != null;
+    }
+
 }

@@ -21,7 +21,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author tfc130
@@ -44,7 +44,7 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Feni
             return mapping.getInputForward();
         }
 
-        final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(classIdString);
+        final SchoolClass schoolClass = FenixFramework.getDomainObject(classIdString);
         final InfoExecutionDegree infoExecutionDegree =
                 ReadExecutionDegreesByExecutionYearAndDegreeInitials.getInfoExecutionDegree(schoolClass.getExecutionDegree());
         request.setAttribute("exeDegree", infoExecutionDegree);

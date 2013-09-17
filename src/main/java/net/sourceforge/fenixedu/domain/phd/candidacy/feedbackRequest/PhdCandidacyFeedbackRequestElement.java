@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequestElement_Base {
 
@@ -56,7 +56,7 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
         return getProcess().getCandidacyProcess();
     }
 
-    @Service
+    @Atomic
     public void delete() {
         checkIfCanBeDeleted();
         disconnect();
@@ -72,11 +72,11 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
     private void disconnect() {
 
         final PhdParticipant participant = getParticipant();
-        removeParticipant();
+        setParticipant(null);
         participant.tryDelete();
 
-        removeProcess();
-        removeRootDomainObject();
+        setProcess(null);
+        setRootDomainObject(null);
     }
 
     public PhdCandidacyFeedbackRequestDocument getLastFeedbackDocument() {
@@ -118,6 +118,41 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
     static public PhdCandidacyFeedbackRequestElement create(final PhdCandidacyFeedbackRequestProcess process,
             final PhdParticipant participant, final PhdCandidacyFeedbackRequestElementBean bean) {
         return new PhdCandidacyFeedbackRequestElement().init(process, participant, bean);
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument> getFeedbackDocuments() {
+        return getFeedbackDocumentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFeedbackDocuments() {
+        return !getFeedbackDocumentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMailBody() {
+        return getMailBody() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasParticipant() {
+        return getParticipant() != null;
+    }
+
+    @Deprecated
+    public boolean hasMailSubject() {
+        return getMailSubject() != null;
     }
 
 }

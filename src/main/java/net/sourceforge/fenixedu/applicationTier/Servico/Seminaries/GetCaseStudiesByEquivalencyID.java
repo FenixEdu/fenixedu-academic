@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,8 +16,8 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -30,9 +31,9 @@ public class GetCaseStudiesByEquivalencyID {
     protected List run(String equivalencyID) {
         List<InfoCaseStudy> infoCases = new LinkedList<InfoCaseStudy>();
 
-        CourseEquivalency equivalency = AbstractDomainObject.fromExternalId(equivalencyID);
+        CourseEquivalency equivalency = FenixFramework.getDomainObject(equivalencyID);
         List<CaseStudy> cases = new LinkedList<CaseStudy>();
-        List themes = equivalency.getThemes();
+        Collection themes = equivalency.getThemes();
 
         for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
             Theme theme = (Theme) iterator.next();
@@ -51,7 +52,7 @@ public class GetCaseStudiesByEquivalencyID {
 
     private static final GetCaseStudiesByEquivalencyID serviceInstance = new GetCaseStudiesByEquivalencyID();
 
-    @Service
+    @Atomic
     public static List runGetCaseStudiesByEquivalencyID(String equivalencyID) throws NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run(equivalencyID);

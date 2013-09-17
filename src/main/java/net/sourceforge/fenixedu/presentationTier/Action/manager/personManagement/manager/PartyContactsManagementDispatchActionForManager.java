@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "manager", path = "/partyContacts", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "visualizePersonalInformation", path = "/manager/personManagement/viewPerson.jsp"),
@@ -27,13 +28,13 @@ public class PartyContactsManagementDispatchActionForManager extends
     @Override
     protected Party getParty(HttpServletRequest request) {
         final String personID = (String) getFromRequest(request, "personID");
-        return Party.fromExternalId(personID);
+        return FenixFramework.getDomainObject(personID);
     }
 
     public ActionForward validate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final String partyContactValidationExtId = (String) getFromRequest(request, "partyContactValidation");
-        final PartyContactValidation partyContactValidation = PartyContactValidation.fromExternalId(partyContactValidationExtId);
+        final PartyContactValidation partyContactValidation = FenixFramework.getDomainObject(partyContactValidationExtId);
         partyContactValidation.setState(PartyContactValidationState.VALID);
         request.setAttribute("personID", partyContactValidation.getPartyContact().getParty().getExternalId());
         return backToShowInformation(mapping, actionForm, request, response);
@@ -56,7 +57,7 @@ public class PartyContactsManagementDispatchActionForManager extends
     public ActionForward resetValidationRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final String personID = (String) getFromRequest(request, "personID");
-        Person person = Person.fromExternalId(personID);
+        Person person = FenixFramework.getDomainObject(personID);
         if (person != null) {
             person.setNumberOfValidationRequests(0);
         }

@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreat
 
 import org.apache.commons.io.FileUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -106,7 +106,7 @@ public class CreateFileContent extends FileContentService {
 
     private static final CreateFileContent serviceInstance = new CreateFileContent();
 
-    @Service
+    @Atomic
     public static void runCreateFileContent(Site site, Container container, File file, String originalFilename,
             String displayName, Group permittedGroup, Person person, EducationalResourceType type) throws FenixServiceException,
             DomainException, IOException, NotAuthorizedException {

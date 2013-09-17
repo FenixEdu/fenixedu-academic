@@ -12,20 +12,21 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteLessons {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(final List<String> lessonOIDs) throws FenixServiceException {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
         for (final String lessonOID : lessonOIDs) {
             try {
-                Lesson lesson = AbstractDomainObject.fromExternalId(lessonOID);
+                Lesson lesson = FenixFramework.getDomainObject(lessonOID);
                 if (lesson != null) {
                     lesson.delete();
                 }

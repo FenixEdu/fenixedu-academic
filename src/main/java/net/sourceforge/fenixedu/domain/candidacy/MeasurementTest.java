@@ -45,7 +45,8 @@ public class MeasurementTest extends MeasurementTest_Base {
 
     public void assignToRoom(Registration registration) {
         for (final MeasurementTestShift shift : getSortedShifts()) {
-            if (shift.hasForDegreeCurricularPlan(registration.getActiveDegreeCurricularPlan()) && shift.hasAvailableRoom()) {
+            if (shift.getForDegreeCurricularPlanSet().contains(registration.getActiveDegreeCurricularPlan())
+                    && shift.hasAvailableRoom()) {
                 shift.getAvailableRoom().addRegistrations(registration);
 
                 return;
@@ -98,6 +99,36 @@ public class MeasurementTest extends MeasurementTest_Base {
         }
 
         return null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift> getShifts() {
+        return getShiftsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyShifts() {
+        return !getShiftsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEntryPhase() {
+        return getEntryPhase() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCampus() {
+        return getCampus() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
     }
 
 }

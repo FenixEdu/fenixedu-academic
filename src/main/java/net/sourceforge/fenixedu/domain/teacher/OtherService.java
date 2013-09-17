@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.teacher;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class OtherService extends OtherService_Base {
 
@@ -36,13 +36,13 @@ public class OtherService extends OtherService_Base {
     }
 
     @Override
-    @Service
+    @Atomic
     public void delete() {
         new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
                 "resources.TeacherCreditsSheetResources", "label.teacher.otherService.delete", getCredits().toString(),
                 getReason(), getCorrectedExecutionSemester().getExecutionYear().getQualifiedName()));
-        removeTeacherService();
-        removeCorrectedExecutionSemester();
+        setTeacherService(null);
+        setCorrectedExecutionSemester(null);
         super.delete();
     }
 
@@ -54,4 +54,19 @@ public class OtherService extends OtherService_Base {
     private Double round(double n) {
         return Math.round((n * 100.0)) / 100.0;
     }
+    @Deprecated
+    public boolean hasCorrectedExecutionSemester() {
+        return getCorrectedExecutionSemester() != null;
+    }
+
+    @Deprecated
+    public boolean hasCredits() {
+        return getCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasReason() {
+        return getReason() != null;
+    }
+
 }

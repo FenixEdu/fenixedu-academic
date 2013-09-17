@@ -17,9 +17,29 @@ public class FakeEnrollment extends FakeEnrollment_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeRootDomainObject();
+        setPerson(null);
+        setRootDomainObject(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasStuff() {
+        return getStuff() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

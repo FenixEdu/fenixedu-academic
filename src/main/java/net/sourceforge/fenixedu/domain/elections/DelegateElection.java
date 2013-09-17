@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain.elections;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -88,25 +90,25 @@ public abstract class DelegateElection extends DelegateElection_Base {
                 deleteVotingPeriod(votingPeriod);
             }
         }
-        super.getStudents().clear();
-        super.getCandidates().clear();
+        super.getStudentsSet().clear();
+        super.getCandidatesSet().clear();
 
-        removeElectedStudent();
-        removeDegree();
-        removeExecutionYear();
+        setElectedStudent(null);
+        setDegree(null);
+        setExecutionYear(null);
 
-        super.removeRootDomainObject();
+        super.setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     protected void deleteVotingPeriod(DelegateElectionVotingPeriod votingPeriod) {
 
-        for (; votingPeriod.hasAnyVotes(); votingPeriod.getVotes().get(0).delete()) {
+        for (; votingPeriod.hasAnyVotes(); votingPeriod.getVotes().iterator().next().delete()) {
             ;
         }
 
         if (hasElectedStudent()) {
-            removeElectedStudent();
+            setElectedStudent(null);
         }
 
         votingPeriod.getVotingStudents().clear();
@@ -150,7 +152,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
 
     public List<Student> getCandidaciesHadVoted(DelegateElectionVotingPeriod votingPeriod) {
         List<Student> candidateshadVoted = new ArrayList<Student>();
-        for (Student student : getCandidates()) {
+        for (Student student : getCandidatesSet()) {
             if (votingPeriod.hasVotedStudent(student)) {
                 candidateshadVoted.add(student);
             }
@@ -183,7 +185,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
     }
 
     public boolean hasLastVotingPeriod() {
-        return getVotingPeriodCount() > 0;
+        return getVotingPeriodSet().size() > 0;
     }
 
     public boolean hasVotingPeriod(YearMonthDay startDate, YearMonthDay endDate) {
@@ -213,15 +215,15 @@ public abstract class DelegateElection extends DelegateElection_Base {
     }
 
     @Override
-    public List<Student> getCandidates() {
+    public Set<Student> getCandidatesSet() {
         if (!hasLastVotingPeriod() || getLastVotingPeriod().isFirstRoundElections()) {
-            return super.getCandidates();
+            return super.getCandidatesSet();
         }
         return getLastVotingPeriod().getCandidatesForNewRoundElections();
 
     }
 
-    public List<Student> getNotCandidatedStudents() {
+    public Collection<Student> getNotCandidatedStudents() {
         if (!hasLastVotingPeriod() || getLastVotingPeriod().isFirstRoundElections()) {
             return getNotCandidates();
         }
@@ -229,9 +231,9 @@ public abstract class DelegateElection extends DelegateElection_Base {
         return new LinkedList<Student>();
     }
 
-    private List<Student> getNotCandidates() {
-        List<Student> result = new ArrayList<Student>(super.getStudents());
-        result.removeAll(getCandidates());
+    private Collection<Student> getNotCandidates() {
+        List<Student> result = new ArrayList<Student>(super.getStudentsSet());
+        result.removeAll(getCandidatesSet());
         return result;
     }
 
@@ -247,5 +249,60 @@ public abstract class DelegateElection extends DelegateElection_Base {
     public abstract void deleteCandidacyPeriod();
 
     public abstract void deleteVotingPeriod(DelegateElectionVotingPeriod votingPeriod, boolean removeElection);
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod> getVotingPeriod() {
+        return getVotingPeriodSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVotingPeriod() {
+        return !getVotingPeriodSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getStudents() {
+        return getStudentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudents() {
+        return !getStudentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidates() {
+        return !getCandidatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasElectedStudent() {
+        return getElectedStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSentResultsToCandidates() {
+        return getSentResultsToCandidates() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyPeriod() {
+        return getCandidacyPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
 
 }

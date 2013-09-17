@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -83,7 +83,7 @@ public class ViewInquiriesResultsForPedagogicalCouncilDA extends ViewInquiriesRe
 
     public ActionForward showOthersTeacherCourses(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Professorship professorship = AbstractDomainObject.fromOID(getLongFromRequest(request, "professorshipID"));
+        Professorship professorship = FenixFramework.getDomainObject(getStringFromRequest(request, "professorshipID"));
         Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
         ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
         for (Professorship anotherProfessorship : professorship.getPerson().getProfessorships(executionSemester)) {

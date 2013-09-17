@@ -52,11 +52,11 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/postingRules", module = "manager", formBeanClass = PostingRulesManagementDA.PostingRulesManagementForm.class)
 @Forwards({
@@ -338,7 +338,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
     private void setRequestAttributesToShowPaymentPlans(HttpServletRequest request, final PostingRulesManagementForm form) {
 
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(form.getExecutionYearId());
+        final ExecutionYear executionYear = FenixFramework.getDomainObject(form.getExecutionYearId());
 
         request.setAttribute("executionYears", new ArrayList<ExecutionYear>(rootDomainObject.getExecutionYears()));
         request.setAttribute("paymentPlans", getDegreeCurricularPlan(request).getServiceAgreementTemplate()
@@ -835,7 +835,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         return mapping.findForward("prepareAddFCTPostingRule");
     }
 
-    @Service
+    @Atomic
     public void createFCTScolarshipPostingRule(FctScolarshipPostingRuleBean bean) {
         ExternalScholarshipPhdGratuityContribuitionPR postingRule =
                 new ExternalScholarshipPhdGratuityContribuitionPR(bean.getStartDate(), bean.getEndDate(), AdministrativeOffice
@@ -853,7 +853,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     public ActionForward prepareEditFCTScolarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         ExternalScholarshipPhdGratuityContribuitionPR postingRule =
-                (ExternalScholarshipPhdGratuityContribuitionPR) PostingRule.fromExternalId(request.getParameter("postingRule"));
+                (ExternalScholarshipPhdGratuityContribuitionPR) FenixFramework.getDomainObject(request.getParameter("postingRule"));
         FctScolarshipPostingRuleBean bean = new FctScolarshipPostingRuleBean();
 
         bean.setStartDate(postingRule.getStartDate());
@@ -863,12 +863,12 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         return mapping.findForward("prepareEditFCTScolarshipPostingRule");
     }
 
-    @Service
+    @Atomic
     public ActionForward editFCTScolarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         FctScolarshipPostingRuleBean bean = getRenderedObject("bean");
         ExternalScholarshipPhdGratuityContribuitionPR postingRule =
-                (ExternalScholarshipPhdGratuityContribuitionPR) PostingRule.fromExternalId(bean.getExternalId());
+                (ExternalScholarshipPhdGratuityContribuitionPR) FenixFramework.getDomainObject(bean.getExternalId());
 
         postingRule.setStartDate(bean.getStartDate());
         postingRule.setEndDate(bean.getEndDate());
@@ -876,11 +876,11 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         return showFCTScolarshipPostingRules(mapping, form, request, response);
     }
 
-    @Service
+    @Atomic
     public ActionForward deleteFCTScolarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         ExternalScholarshipPhdGratuityContribuitionPR postingRule =
-                (ExternalScholarshipPhdGratuityContribuitionPR) PostingRule.fromExternalId(request.getParameter("postingRule"));
+                (ExternalScholarshipPhdGratuityContribuitionPR) FenixFramework.getDomainObject(request.getParameter("postingRule"));
         postingRule.delete();
 
         return showFCTScolarshipPostingRules(mapping, form, request, response);

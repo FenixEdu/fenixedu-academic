@@ -20,7 +20,7 @@ public class NewSection extends NewSection_Base {
         this();
 
         this.setSection(parentSection);
-        this.setSectionPosition(parentSection.getTestElementsCount());
+        this.setSectionPosition(parentSection.getTestElementsSet().size());
     }
 
     @Override
@@ -96,7 +96,7 @@ public class NewSection extends NewSection_Base {
 
     @Override
     public void delete() {
-        for (; this.hasAnyTestElements(); this.getTestElements().get(0).delete()) {
+        for (; this.hasAnyTestElements(); this.getTestElements().iterator().next().delete()) {
             ;
         }
 
@@ -259,6 +259,21 @@ public class NewSection extends NewSection_Base {
         }
 
         return grade;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestElement> getTestElements() {
+        return getTestElementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTestElements() {
+        return !getTestElementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPreCondition() {
+        return getPreCondition() != null;
     }
 
 }

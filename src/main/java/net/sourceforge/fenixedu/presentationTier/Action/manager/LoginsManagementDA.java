@@ -26,7 +26,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class LoginsManagementDA extends FenixDispatchAction {
@@ -194,23 +194,21 @@ public class LoginsManagementDA extends FenixDispatchAction {
 
     private Person getPersonFromParameter(HttpServletRequest request) {
         String personIDString = request.getParameter("personID");
-        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : AbstractDomainObject.fromExternalId(personIDString));
+        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : FenixFramework.getDomainObject(personIDString));
     }
 
     private Login getLoginFromParameter(HttpServletRequest request) {
         String loginIDString = request.getParameter("loginID");
-        return (Login) ((StringUtils.isEmpty(loginIDString)) ? null : AbstractDomainObject.fromExternalId(loginIDString));
+        return (Login) ((StringUtils.isEmpty(loginIDString)) ? null : FenixFramework.getDomainObject(loginIDString));
     }
 
     private LoginAlias getLoginAliasFromParameter(HttpServletRequest request) {
         String loginAliasIDString = request.getParameter("loginAliasID");
-        return (LoginAlias) ((StringUtils.isEmpty(loginAliasIDString)) ? null : AbstractDomainObject
-                .fromExternalId(loginAliasIDString));
+        return (LoginAlias) ((StringUtils.isEmpty(loginAliasIDString)) ? null : FenixFramework.getDomainObject(loginAliasIDString));
     }
 
     private LoginPeriod getLoginPeriodFromParameter(HttpServletRequest request) {
         String loginPeriodIDString = request.getParameter("loginPeriodID");
-        return (LoginPeriod) ((StringUtils.isEmpty(loginPeriodIDString)) ? null : AbstractDomainObject
-                .fromExternalId(loginPeriodIDString));
+        return (LoginPeriod) ((StringUtils.isEmpty(loginPeriodIDString)) ? null : FenixFramework.getDomainObject(loginPeriodIDString));
     }
 }

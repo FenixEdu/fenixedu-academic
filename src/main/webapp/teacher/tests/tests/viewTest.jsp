@@ -1,10 +1,10 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-<%@ taglib uri="/WEB-INF/app.tld" prefix="f" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="f" %>
 
 <h3><bean:message key="message.tests.manage" bundle="TESTS_RESOURCES" /></h3>
 <h2><bean:message key="title.viewTest" bundle="TESTS_RESOURCES" /> <fr:view name="test" property="position" /></h2>

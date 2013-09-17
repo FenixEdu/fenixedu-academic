@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gr
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ConfirmMarkSheet {
 
-    @Service
+    @Atomic
     public static void run(MarkSheet markSheet, Person person) throws InvalidArgumentsServiceException {
         if (markSheet == null) {
             throw new InvalidArgumentsServiceException();

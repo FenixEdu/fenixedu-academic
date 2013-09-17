@@ -24,9 +24,9 @@ public class EventReportQueueJobFile extends EventReportQueueJobFile_Base {
 
     @Override
     public void delete() {
-        removeEventReportQueueJobForExemptions();
-        removeEventReportQueueJobForTransactions();
-        removeEventReportQueueJobForDebts();
+        setEventReportQueueJobForExemptions(null);
+        setEventReportQueueJobForTransactions(null);
+        setEventReportQueueJobForDebts(null);
         super.delete();
     }
 

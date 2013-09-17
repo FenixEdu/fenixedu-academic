@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
@@ -23,26 +24,26 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentsEnrolledInWrittenEvaluation {
 
     protected SiteView run(String executionCourseID, String writtenEvaluationID) throws FenixServiceException {
 
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) FenixFramework.getDomainObject(writtenEvaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
         final ExecutionCourseSite site = executionCourse.getSite();
         if (site == null) {
             throw new FenixServiceException("error.noSite");
         }
 
-        final List<WrittenEvaluationEnrolment> writtenEvaluationEnrolmentList =
-                writtenEvaluation.getWrittenEvaluationEnrolments();
+        final Collection<WrittenEvaluationEnrolment> writtenEvaluationEnrolmentList =
+                writtenEvaluation.getWrittenEvaluationEnrolmentsSet();
 
         final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>(writtenEvaluationEnrolmentList.size());
         final List<InfoWrittenEvaluationEnrolment> infoWrittenEvaluationEnrolments =
@@ -77,7 +78,7 @@ public class ReadStudentsEnrolledInWrittenEvaluation {
 
     private static final ReadStudentsEnrolledInWrittenEvaluation serviceInstance = new ReadStudentsEnrolledInWrittenEvaluation();
 
-    @Service
+    @Atomic
     public static SiteView runReadStudentsEnrolledInWrittenEvaluation(String executionCourseID, String writtenEvaluationID)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);

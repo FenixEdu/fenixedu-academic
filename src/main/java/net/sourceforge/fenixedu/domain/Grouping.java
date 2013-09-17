@@ -6,11 +6,11 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -213,7 +213,7 @@ public class Grouping extends Grouping_Base {
         return grouping;
     }
 
-    private static void addGroupingToAttends(final Grouping grouping, final List<Attends> attends) {
+    private static void addGroupingToAttends(final Grouping grouping, final Collection<Attends> attends) {
         for (final Attends attend : attends) {
             attend.addGroupings(grouping);
         }
@@ -249,20 +249,20 @@ public class Grouping extends Grouping_Base {
         checkIfGroupingAlreadyExists(goupingName);
 
         if (getDifferentiatedCapacity() && !differentiatedCapacity) {
-            if (!super.getStudentGroups().isEmpty()) {
+            if (!super.getStudentGroupsSet().isEmpty()) {
                 throw new DomainException(this.getClass().getName(), "error.groupProperties.edit.attendsSet.withGroups");
             }
 
-            List<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
+            Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
             for (ShiftGroupingProperties shiftGP : shiftGroupingProperties) {
                 shiftGP.delete();
             }
         } else if (getDifferentiatedCapacity() && differentiatedCapacity && isShiftTypeDifferent(shiftType)) {
-            if (!super.getStudentGroups().isEmpty()) {
+            if (!super.getStudentGroupsSet().isEmpty()) {
                 throw new DomainException(this.getClass().getName(), "error.groupProperties.edit.attendsSet.withGroups");
             }
 
-            List<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
+            Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
             for (ShiftGroupingProperties shiftGP : shiftGroupingProperties) {
                 shiftGP.delete();
             }
@@ -306,7 +306,7 @@ public class Grouping extends Grouping_Base {
         if (differentiatedCapacity) {
             createOrEditShiftGroupingProperties(infoShifts);
         } else {
-            List<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
+            Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
             for (ShiftGroupingProperties shiftGP : shiftGroupingProperties) {
                 shiftGP.delete();
             }
@@ -335,7 +335,7 @@ public class Grouping extends Grouping_Base {
 
     private Integer getMaxStudentGroupsCount() {
         final Map<Object, Integer> shiftCountMap = new HashMap<Object, Integer>();
-        for (final StudentGroup studentGroup : super.getStudentGroups()) {
+        for (final StudentGroup studentGroup : super.getStudentGroupsSet()) {
             if (!studentGroup.wasDeleted()) {
                 final Shift shift = studentGroup.getShift();
                 final int count = shiftCountMap.containsKey(shift) ? shiftCountMap.get(shift) + 1 : 1;
@@ -361,7 +361,7 @@ public class Grouping extends Grouping_Base {
         }
     }
 
-    private void unEnrollStudentGroups(List<StudentGroup> studentGroups) {
+    private void unEnrollStudentGroups(Collection<StudentGroup> studentGroups) {
         for (final StudentGroup studentGroup : studentGroups) {
             studentGroup.setShift(null);
         }
@@ -428,7 +428,7 @@ public class Grouping extends Grouping_Base {
 
     public void delete() {
 
-        if (!super.getStudentGroups().isEmpty()) {
+        if (!super.getStudentGroupsSet().isEmpty()) {
             throw new DomainException(this.getClass().getName(), "");
         }
 
@@ -439,14 +439,14 @@ public class Grouping extends Grouping_Base {
                     ec.getDegreePresentationString());
         }
 
-        List<Attends> attends = this.getAttends();
+        Collection<Attends> attends = this.getAttends();
         List<Attends> attendsAux = new ArrayList<Attends>();
         attendsAux.addAll(attends);
         for (Attends attend : attendsAux) {
             attend.removeGroupings(this);
         }
 
-        List<ExportGrouping> exportGroupings = this.getExportGroupings();
+        Collection<ExportGrouping> exportGroupings = this.getExportGroupings();
         List<ExportGrouping> exportGroupingsAux = new ArrayList<ExportGrouping>();
         exportGroupingsAux.addAll(exportGroupings);
         for (ExportGrouping exportGrouping : exportGroupingsAux) {
@@ -463,13 +463,13 @@ public class Grouping extends Grouping_Base {
             project.delete();
         }
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     public int findMaxGroupNumber() {
         int max = 0;
-        for (final StudentGroup studentGroup : super.getStudentGroups()) {
+        for (final StudentGroup studentGroup : super.getStudentGroupsSet()) {
             max = Math.max(max, studentGroup.getGroupNumber().intValue());
         }
         return max;
@@ -535,47 +535,24 @@ public class Grouping extends Grouping_Base {
     }
 
     @Override
-    public List<StudentGroup> getStudentGroups() {
-        List<StudentGroup> result = new ArrayList<StudentGroup>();
-        for (StudentGroup sg : super.getStudentGroups()) {
+    public Set<StudentGroup> getStudentGroupsSet() {
+        Set<StudentGroup> result = new TreeSet<StudentGroup>();
+        for (StudentGroup sg : super.getStudentGroupsSet()) {
             if (!sg.wasDeleted()) {
                 result.add(sg);
             }
         }
-        return Collections.unmodifiableList(result);
+        return Collections.unmodifiableSet(result);
     }
 
     public List<StudentGroup> getDeletedStudentGroups() {
         List<StudentGroup> result = new ArrayList<StudentGroup>();
-        for (StudentGroup sg : super.getStudentGroups()) {
+        for (StudentGroup sg : super.getStudentGroupsSet()) {
             if (!sg.getValid()) {
                 result.add(sg);
             }
         }
         return result;
-    }
-
-    @Override
-    public int getStudentGroupsCount() {
-        return this.getStudentGroups().size();
-    }
-
-    @Override
-    public Iterator<StudentGroup> getStudentGroupsIterator() {
-        // TODO Auto-generated method stub
-        return this.getStudentGroups().iterator();
-    }
-
-    @Override
-    public Set<StudentGroup> getStudentGroupsSet() {
-        // TODO Auto-generated method stub
-        return new TreeSet<StudentGroup>(this.getStudentGroups());
-    }
-
-    @Override
-    public boolean hasStudentGroups(StudentGroup studentGroups) {
-        // TODO Auto-generated method stub
-        return this.getStudentGroups().contains(studentGroups);
     }
 
     @Deprecated
@@ -606,6 +583,120 @@ public class Grouping extends Grouping_Base {
         } else {
             setEnrolmentEndDayDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExportGrouping> getExportGroupings() {
+        return getExportGroupingsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExportGroupings() {
+        return !getExportGroupingsSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
+        return getAttendsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAttends() {
+        return !getAttendsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentGroups() {
+        return !getStudentGroupsSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Project> getProjects() {
+        return getProjectsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjects() {
+        return !getProjectsSet().isEmpty();
+    }
+
+    @Override
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ShiftGroupingProperties> getShiftGroupingProperties() {
+        return getShiftGroupingPropertiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyShiftGroupingProperties() {
+        return !getShiftGroupingPropertiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasProjectDescription() {
+        return getProjectDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentPolicy() {
+        return getEnrolmentPolicy() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasIdealCapacity() {
+        return getIdealCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasShiftType() {
+        return getShiftType() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaximumCapacity() {
+        return getMaximumCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasDifferentiatedCapacity() {
+        return getDifferentiatedCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinimumCapacity() {
+        return getMinimumCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentEndDayDateDateTime() {
+        return getEnrolmentEndDayDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasAutomaticEnrolment() {
+        return getAutomaticEnrolment() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentBeginDayDateDateTime() {
+        return getEnrolmentBeginDayDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasGroupMaximumNumber() {
+        return getGroupMaximumNumber() != null;
     }
 
 }

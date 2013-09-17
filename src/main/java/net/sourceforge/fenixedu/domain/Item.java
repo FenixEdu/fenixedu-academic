@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DuplicatedNameException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -34,7 +34,7 @@ public class Item extends Item_Base {
             if (cn != 0) {
                 return cn;
             }
-            return AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2);
+            return DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
         }
     };
 
@@ -248,6 +248,16 @@ public class Item extends Item_Base {
     public void logEditItemPermission() {
         final Site site = getSection().getSite();
         site.logEditItemPermission(this);
+    }
+
+    @Deprecated
+    public boolean hasEnabled() {
+        return getEnabled() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowName() {
+        return getShowName() != null;
     }
 
 }

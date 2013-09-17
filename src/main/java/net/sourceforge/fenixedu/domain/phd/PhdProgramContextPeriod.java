@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationExceptio
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
 
@@ -81,12 +81,12 @@ public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
         return new Interval(getBeginDate(), getEndDate());
     }
 
-    @Service
+    @Atomic
     public void edit(DateTime beginDate, DateTime endDate) {
         checkParameters(getPhdProgram(), beginDate, endDate);
     }
 
-    @Service
+    @Atomic
     public void closePeriod(DateTime endPeriod) {
         if (endPeriod == null) {
             throw new DomainException(
@@ -96,25 +96,45 @@ public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
         setEndDate(endPeriod);
     }
 
-    @Service
+    @Atomic
     public static PhdProgramContextPeriod create(final PhdProgram phdProgram, DateTime beginPeriod, DateTime endPeriod) {
         return new PhdProgramContextPeriod(phdProgram, beginPeriod, endPeriod);
     }
 
-    @Service
+    @Atomic
     public static PhdProgramContextPeriod create(PhdProgramContextPeriodBean bean) {
         return create(bean.getPhdProgram(), bean.getBeginDateAtMidnight(), bean.getEndDateBeforeMidnight());
     }
 
-    @Service
+    @Atomic
     public void deletePeriod() {
         delete();
     }
 
     private void delete() {
-        removePhdProgram();
-        removeRootDomainObject();
+        setPhdProgram(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdProgram() {
+        return getPhdProgram() != null;
+    }
+
 }

@@ -33,7 +33,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.LookupDispatchAction;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -235,7 +235,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
         Date thesisDeliveryDate = buildThesisDeliveryDate(thesisDeliveryDateDay, thesisDeliveryDateMonth, thesisDeliveryDateYear);
 
-        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
+        StudentCurricularPlan studentCurricularPlan = FenixFramework.getDomainObject(scpID);
 
         MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
         ActionErrors actionErrors = new ActionErrors();

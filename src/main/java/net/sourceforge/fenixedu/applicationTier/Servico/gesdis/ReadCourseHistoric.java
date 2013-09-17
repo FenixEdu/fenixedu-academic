@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -18,20 +19,20 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCourseHistoric {
 
     protected List run(String executionCourseId) throws FenixServiceException {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         Integer semester = executionCourse.getExecutionPeriod().getSemester();
-        List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
         return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester);
     }
 
     private List<InfoSiteCourseHistoric> getInfoSiteCoursesHistoric(ExecutionCourse executionCourse,
-            List<CurricularCourse> curricularCourses, Integer semester) {
+            Collection<CurricularCourse> curricularCourses, Integer semester) {
         List<InfoSiteCourseHistoric> result = new ArrayList<InfoSiteCourseHistoric>();
 
         for (CurricularCourse curricularCourse : curricularCourses) {
@@ -49,7 +50,7 @@ public class ReadCourseHistoric {
         InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
         infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
-        final List<CourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
+        final Collection<CourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
 
         // the historic must only show info regarding the years previous to the
         // year chosen by the user
@@ -79,7 +80,7 @@ public class ReadCourseHistoric {
 
     private static final ReadCourseHistoric serviceInstance = new ReadCourseHistoric();
 
-    @Service
+    @Atomic
     public static List runReadCourseHistoric(String executionCourseId) throws FenixServiceException, NotAuthorizedException {
         try {
             ReadCourseInformationAuthorizationFilter.instance.execute(executionCourseId);

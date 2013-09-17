@@ -3,15 +3,16 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -22,10 +23,10 @@ public class ConfirmAttributionOfFinalDegreeWork {
         super();
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(String username, String selectedGroupProposalOID) throws FenixServiceException {
-        GroupProposal groupProposal = AbstractDomainObject.fromExternalId(selectedGroupProposalOID);
+        check(RolePredicates.STUDENT_PREDICATE);
+        GroupProposal groupProposal = FenixFramework.getDomainObject(selectedGroupProposalOID);
 
         if (groupProposal != null) {
             FinalDegreeWorkGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher();
@@ -40,10 +41,9 @@ public class ConfirmAttributionOfFinalDegreeWork {
                     throw new NoAttributionToConfirmException();
                 }
 
-                List groupStudents = group.getGroupStudents();
+                Collection<GroupStudent> groupStudents = group.getGroupStudents();
                 if (groupStudents != null && !groupStudents.isEmpty()) {
-                    for (int i = 0; i < groupStudents.size(); i++) {
-                        GroupStudent groupStudent = (GroupStudent) groupStudents.get(i);
+                    for (GroupStudent groupStudent : groupStudents) {
                         if (groupStudent != null && groupStudent.getRegistration().getPerson().hasUsername(username)) {
                             groupStudent.setFinalDegreeWorkProposalConfirmation(groupProposal.getFinalDegreeWorkProposal());
                         }

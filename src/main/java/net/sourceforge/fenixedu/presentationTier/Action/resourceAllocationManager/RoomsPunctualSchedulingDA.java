@@ -37,7 +37,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "resourceAllocationManager", path = "/roomsPunctualScheduling", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "seeHistory", path = "see-rooms-punctual-scheduling-history"),
@@ -207,7 +207,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
         String[] selectedRooms = request.getParameterValues("selectedRoom");
         if (selectedRooms != null && selectedRooms.length > 0) {
             for (String selectedRoom : selectedRooms) {
-                AllocatableSpace room = (AllocatableSpace) AbstractDomainObject.fromExternalId(selectedRoom);
+                AllocatableSpace room = (AllocatableSpace) FenixFramework.getDomainObject(selectedRoom);
                 bean.removeRoom(room);
             }
         }
@@ -328,6 +328,6 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 
     protected GenericEvent getGenericEventFromParameter(final HttpServletRequest request) {
         final String genericEventIDString = request.getParameter("genericEventID");
-        return AbstractDomainObject.fromExternalId(genericEventIDString);
+        return FenixFramework.getDomainObject(genericEventIDString);
     }
 }

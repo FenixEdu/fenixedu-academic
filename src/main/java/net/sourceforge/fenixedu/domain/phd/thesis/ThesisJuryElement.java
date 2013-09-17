@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ThesisJuryElement extends ThesisJuryElement_Base {
@@ -92,7 +92,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
                 .getElementOrder().intValue() + 1);
     }
 
-    @Service
+    @Atomic
     public void delete() {
         checkIfCanBeDeleted();
         disconnect();
@@ -108,12 +108,12 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     protected void disconnect() {
 
         final PhdParticipant participant = getParticipant();
-        removeParticipant();
+        setParticipant(null);
         participant.tryDelete();
 
-        removeProcess();
-        removeProcessForPresidentJuryElement();
-        removeRootDomainObject();
+        setProcess(null);
+        setProcessForPresidentJuryElement(null);
+        setRootDomainObject(null);
     }
 
     public boolean isInternal() {
@@ -179,7 +179,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     public boolean isBottomElement() {
-        return getElementOrder().intValue() == getProcess().getThesisJuryElementsCount();
+        return getElementOrder().intValue() == getProcess().getThesisJuryElementsSet().size();
     }
 
     static public ThesisJuryElement create(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
@@ -229,6 +229,56 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     public boolean isPresident() {
         return hasProcessForPresidentJuryElement();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument> getFeedbackDocuments() {
+        return getFeedbackDocumentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFeedbackDocuments() {
+        return !getFeedbackDocumentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasProcessForPresidentJuryElement() {
+        return getProcessForPresidentJuryElement() != null;
+    }
+
+    @Deprecated
+    public boolean hasExpert() {
+        return getExpert() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasParticipant() {
+        return getParticipant() != null;
+    }
+
+    @Deprecated
+    public boolean hasElementOrder() {
+        return getElementOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasReporter() {
+        return getReporter() != null;
     }
 
 }

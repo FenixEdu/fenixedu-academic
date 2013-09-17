@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Jo�o Mota
@@ -28,11 +28,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class RoomSiteComponentServiceByExecutionPeriodID {
 
-    @Service
+    @Atomic
     public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, String executionPeriodID)
             throws Exception {
         final Calendar day = findMonday(someDay);
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
         return (executionSemester != null) ? runService(bodyComponent, roomKey, day, executionSemester) : RoomSiteComponentService
                 .run(bodyComponent, roomKey, day);
     }

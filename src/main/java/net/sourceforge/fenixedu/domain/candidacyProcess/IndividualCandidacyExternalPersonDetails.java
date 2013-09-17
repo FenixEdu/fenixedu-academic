@@ -152,4 +152,104 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
         }
     }
 
+    @Deprecated
+    public boolean hasExpirationDateOfDocumentIdYearMonthDay() {
+        return getExpirationDateOfDocumentIdYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasCountryOfResidence() {
+        return getCountryOfResidence() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfession() {
+        return getProfession() != null;
+    }
+
+    @Deprecated
+    public boolean hasTelephoneContact() {
+        return getTelephoneContact() != null;
+    }
+
+    @Deprecated
+    public boolean hasArea() {
+        return getArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasFiscalCode() {
+        return getFiscalCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasNationality() {
+        return getNationality() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmissionLocationOfDocumentId() {
+        return getEmissionLocationOfDocumentId() != null;
+    }
+
+    @Deprecated
+    public boolean hasInternalized() {
+        return getInternalized() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasAreaCode() {
+        return getAreaCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasAreaOfAreaCode() {
+        return getAreaOfAreaCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmail() {
+        return getEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasAddress() {
+        return getAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasGender() {
+        return getGender() != null;
+    }
+
+    @Deprecated
+    public boolean hasDateOfBirthYearMonthDay() {
+        return getDateOfBirthYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasIdDocumentType() {
+        return getIdDocumentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmissionDateOfDocumentIdYearMonthDay() {
+        return getEmissionDateOfDocumentIdYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaritalStatus() {
+        return getMaritalStatus() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentIdNumber() {
+        return getDocumentIdNumber() != null;
+    }
+
 }

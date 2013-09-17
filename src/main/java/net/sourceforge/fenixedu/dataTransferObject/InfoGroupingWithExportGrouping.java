@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExportGrouping;
@@ -12,7 +13,7 @@ public class InfoGroupingWithExportGrouping extends InfoGrouping {
     public void copyFromDomain(Grouping grouping) {
         super.copyFromDomain(grouping);
         if (grouping != null) {
-            final List<ExportGrouping> exportGroupings = grouping.getExportGroupings();
+            final Collection<ExportGrouping> exportGroupings = grouping.getExportGroupings();
             final List<InfoExportGrouping> infoExportGroupings = new ArrayList<InfoExportGrouping>(exportGroupings.size());
             for (final ExportGrouping exportGrouping : exportGroupings) {
                 infoExportGroupings.add(InfoExportGrouping.newInfoFromDomain(exportGrouping));

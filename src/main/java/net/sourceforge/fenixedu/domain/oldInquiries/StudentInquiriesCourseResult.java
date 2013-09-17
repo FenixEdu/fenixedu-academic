@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesCourseResultsBean;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -23,8 +24,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_Base {
 
@@ -35,7 +36,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
                 public int compare(StudentInquiriesCourseResult o1, StudentInquiriesCourseResult o2) {
                     final int c =
                             Collator.getInstance().compare(o1.getExecutionCourse().getNome(), o2.getExecutionCourse().getNome());
-                    return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
                 }
 
             };
@@ -735,7 +736,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
         return getValuesMap().containsKey("Repres_div_publica") ? fieldToBoolean(getValuesMap().get("Repres_div_publica")) : false;
     }
 
-    @Service
+    @Atomic
     public static void importResults(String headers, String values, UploadStudentInquiriesCourseResultsBean resultsBean) {
 
         String[] headersSplitted = headers.split("\t");
@@ -750,12 +751,12 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
         for (String row : values.split("\n")) {
             String[] columns = row.split("\t");
 
-            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(columns[executionCourseHeaderIndex]);
+            ExecutionCourse executionCourse = FenixFramework.getDomainObject(columns[executionCourseHeaderIndex]);
             if (executionCourse == null) {
                 throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
                         columns[executionCourseHeaderIndex]);
             }
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(columns[executionDegreeHeaderIndex]);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(columns[executionDegreeHeaderIndex]);
             if (executionDegree == null) {
                 throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
                         columns[executionDegreeHeaderIndex]);
@@ -790,7 +791,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 
     }
 
-    @Service
+    @Atomic
     public static Boolean resetCourseAndTeachingResults(UploadStudentInquiriesCourseResultsBean coursesBean) {
         boolean resetedItems = false;
         Set<Professorship> professorships = new HashSet<Professorship>();
@@ -802,7 +803,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
                     resetedItems = true;
                 }
             } else {
-                ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(coursesBean.getKeyExecutionCourseHeader());
+                ExecutionCourse executionCourse = FenixFramework.getDomainObject(coursesBean.getKeyExecutionCourseHeader());
                 if (executionCourse == null) {
                     throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
                             coursesBean.getKeyExecutionCourseHeader());
@@ -826,14 +827,14 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
         return resetedItems;
     }
 
-    @Service
+    @Atomic
     public void delete() {
         if (hasCoordinatorComment()) {
             throw new DomainException("error.StudentInquiriesCourseResult.cannotDelete.hasCoordinatorComment");
         }
-        removeExecutionCourse();
-        removeExecutionDegree();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setExecutionDegree(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -1027,6 +1028,921 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
         } else {
             setUploadDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasPerc_P5_3() {
+        return getPerc_P5_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_3_5() {
+        return getPerc_P3_3_5() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P1_3_4() {
+        return getPerc_P1_3_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P5_4() {
+        return getPerc_P5_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_3_6() {
+        return getPerc_P3_3_6() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P1_3_3() {
+        return getPerc_P1_3_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P5_1() {
+        return getPerc_P5_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_3_3() {
+        return getPerc_P3_3_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_2_8() {
+        return getPerc_P3_2_8() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P1_3_2() {
+        return getPerc_P1_3_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P5_2() {
+        return getPerc_P5_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_3_4() {
+        return getPerc_P3_3_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_2_9() {
+        return getPerc_P3_2_9() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P1_3_1() {
+        return getPerc_P1_3_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P5_7() {
+        return getPerc_P5_7() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_3_1() {
+        return getPerc_P3_3_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P1_3_8() {
+        return getPerc_P1_3_8() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P5_8() {
+        return getPerc_P5_8() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_3_2() {
+        return getPerc_P3_3_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P1_3_7() {
+        return getPerc_P1_3_7() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P5_5() {
+        return getPerc_P5_5() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P1_3_6() {
+        return getPerc_P1_3_6() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P5_6() {
+        return getPerc_P5_6() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P1_3_5() {
+        return getPerc_P1_3_5() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_2_2() {
+        return getPerc_P3_2_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_2_3() {
+        return getPerc_P3_2_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_perc_NHTA() {
+        return getNumber_perc_NHTA() != null;
+    }
+
+    @Deprecated
+    public boolean hasEstimatedEctsNumber() {
+        return getEstimatedEctsNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P5_9() {
+        return getPerc_P5_9() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_2_1() {
+        return getPerc_P3_2_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasNoInquiryAnswersRatio() {
+        return getNoInquiryAnswersRatio() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P1_3_9() {
+        return getPerc_P1_3_9() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_3_9() {
+        return getPerc_P3_3_9() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_2_6() {
+        return getPerc_P3_2_6() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_2_7() {
+        return getPerc_P3_2_7() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_3_7() {
+        return getPerc_P3_3_7() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_2_4() {
+        return getPerc_P3_2_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_3_8() {
+        return getPerc_P3_3_8() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_2_5() {
+        return getPerc_P3_2_5() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidInquiryAnswersNumber() {
+        return getValidInquiryAnswersNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnsatisfactoryResultsCUEvaluation() {
+        return getUnsatisfactoryResultsCUEvaluation() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublicDisclosure() {
+        return getPublicDisclosure() != null;
+    }
+
+    @Deprecated
+    public boolean hasNoInquiryAnswersNumber() {
+        return getNoInquiryAnswersNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_19_20() {
+        return getPerc_19_20() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_1_9() {
+        return getPerc_P3_1_9() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_1_8() {
+        return getPerc_P3_1_8() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluatedRatio() {
+        return getEvaluatedRatio() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_1_7() {
+        return getPerc_P3_1_7() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_2_0() {
+        return getPerc_P2_2_0() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_1_6() {
+        return getPerc_P3_1_6() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_1_5() {
+        return getPerc_P3_1_5() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_1_4() {
+        return getPerc_P3_1_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_1_3() {
+        return getPerc_P3_1_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_P5() {
+        return getStandardDeviation_P5() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_1_2() {
+        return getPerc_P3_1_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_perc_weeklyHours() {
+        return getAverage_perc_weeklyHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_1_1() {
+        return getPerc_P3_1_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_P2_1() {
+        return getAverage_P2_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_P2_2() {
+        return getAverage_P2_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_P4() {
+        return getStandardDeviation_P4() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_P1_4() {
+        return getAverage_P1_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P1_4_1() {
+        return getPerc_P1_4_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_2_2() {
+        return getPerc_P2_2_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_2_1() {
+        return getPerc_P2_2_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P1_4_3() {
+        return getPerc_P1_4_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P1_4_2() {
+        return getPerc_P1_4_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_2_3() {
+        return getPerc_P2_2_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_3_1() {
+        return getPerc_P2_3_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_3_0() {
+        return getPerc_P2_3_0() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_3_3() {
+        return getPerc_P2_3_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_3_2() {
+        return getPerc_P2_3_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_NHTA() {
+        return getAverage_NHTA() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_P1_3() {
+        return getAverage_P1_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_P2_3() {
+        return getAverage_P2_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_P2_4() {
+        return getAverage_P2_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasCoordinatorComment() {
+        return getCoordinatorComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnsatisfactoryResultsCUOrganization() {
+        return getUnsatisfactoryResultsCUOrganization() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_4_3() {
+        return getPerc_P2_4_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_perc_NHTA() {
+        return getStandardDeviation_perc_NHTA() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_4_0() {
+        return getPerc_P2_4_0() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_4_1() {
+        return getPerc_P2_4_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_4_2() {
+        return getPerc_P2_4_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasCourseResultsCoordinatorComment() {
+        return getCourseResultsCoordinatorComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_4_4() {
+        return getPerc_P3_4_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasHeaders() {
+        return getHeaders() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_4_5() {
+        return getPerc_P3_4_5() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_4_2() {
+        return getPerc_P3_4_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_4_3() {
+        return getPerc_P3_4_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_4_1() {
+        return getPerc_P3_4_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidInquiryAnswersRatio() {
+        return getValidInquiryAnswersRatio() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_4_8() {
+        return getPerc_P3_4_8() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_4_9() {
+        return getPerc_P3_4_9() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_4_6() {
+        return getPerc_P3_4_6() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P3_4_7() {
+        return getPerc_P3_4_7() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P4() {
+        return getNumber_P4() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P5() {
+        return getNumber_P5() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc__P1_2_g() {
+        return getPerc__P1_2_g() != null;
+    }
+
+    @Deprecated
+    public boolean hasInternalDisclosure() {
+        return getInternalDisclosure() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc__P1_2_f() {
+        return getPerc__P1_2_f() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc__P1_2_e() {
+        return getPerc__P1_2_e() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_15_16() {
+        return getPerc_15_16() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_P3_1() {
+        return getAverage_P3_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P1_2_g() {
+        return getNumber_P1_2_g() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovedRatio() {
+        return getApprovedRatio() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P1_2_e() {
+        return getNumber_P1_2_e() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc__P1_2_a() {
+        return getPerc__P1_2_a() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc__P1_2_b() {
+        return getPerc__P1_2_b() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_13_14() {
+        return getPerc_13_14() != null;
+    }
+
+    @Deprecated
+    public boolean hasInvalidInquiryAnswersNumber() {
+        return getInvalidInquiryAnswersNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasInvalidInquiryAnswersRatio() {
+        return getInvalidInquiryAnswersRatio() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc__P1_2_c() {
+        return getPerc__P1_2_c() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc__P1_2_d() {
+        return getPerc__P1_2_d() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P2_4() {
+        return getNumber_P2_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P2_3() {
+        return getNumber_P2_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidInitialFormAnswersRatio() {
+        return getValidInitialFormAnswersRatio() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_P3_4() {
+        return getAverage_P3_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_P3_2() {
+        return getAverage_P3_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P2_2() {
+        return getNumber_P2_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_P3_3() {
+        return getAverage_P3_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P2_1() {
+        return getNumber_P2_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasCourseResultsCoordinatorCommentDate() {
+        return getCourseResultsCoordinatorCommentDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P1_2_c() {
+        return getNumber_P1_2_c() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P1_2_d() {
+        return getNumber_P1_2_d() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P1_2_a() {
+        return getNumber_P1_2_a() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P1_2_b() {
+        return getNumber_P1_2_b() != null;
+    }
+
+    @Deprecated
+    public boolean hasUploadDateTime() {
+        return getUploadDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_P1_3() {
+        return getStandardDeviation_P1_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_P1_4() {
+        return getStandardDeviation_P1_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_P2_1() {
+        return getStandardDeviation_P2_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfEnrolled() {
+        return getNumberOfEnrolled() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P3_4() {
+        return getNumber_P3_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P3_2() {
+        return getNumber_P3_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasScheduleLoad() {
+        return getScheduleLoad() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P3_3() {
+        return getNumber_P3_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P3_1() {
+        return getNumber_P3_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_P2_4() {
+        return getStandardDeviation_P2_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_NHTA() {
+        return getStandardDeviation_NHTA() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P_1_2_f() {
+        return getNumber_P_1_2_f() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_P2_3() {
+        return getStandardDeviation_P2_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_P2_2() {
+        return getStandardDeviation_P2_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_P3_4() {
+        return getStandardDeviation_P3_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_P3_3() {
+        return getStandardDeviation_P3_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_P3_2() {
+        return getStandardDeviation_P3_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_P3_1() {
+        return getStandardDeviation_P3_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_17_18() {
+        return getPerc_17_18() != null;
+    }
+
+    @Deprecated
+    public boolean hasResultsDate() {
+        return getResultsDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_P5() {
+        return getAverage_P5() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_NDE() {
+        return getAverage_NDE() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage_P4() {
+        return getAverage_P4() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P4_1() {
+        return getPerc_P4_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasAvailableToInquiry() {
+        return getAvailableToInquiry() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P4_3() {
+        return getPerc_P4_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P4_2() {
+        return getPerc_P4_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_nonEvaluated() {
+        return getPerc_nonEvaluated() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P4_5() {
+        return getPerc_P4_5() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P4_4() {
+        return getPerc_P4_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P4_7() {
+        return getPerc_P4_7() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P4_6() {
+        return getPerc_P4_6() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P4_9() {
+        return getPerc_P4_9() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P4_8() {
+        return getPerc_P4_8() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnsatisfactoryResultsEsfECTSCU() {
+        return getUnsatisfactoryResultsEsfECTSCU() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_NHTA() {
+        return getNumber_NHTA() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidInitialFormAnswersNumber() {
+        return getValidInitialFormAnswersNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAuditCU() {
+        return getAuditCU() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_1_3() {
+        return getPerc_P2_1_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_1_2() {
+        return getPerc_P2_1_2() != null;
+    }
+
+    @Deprecated
+    public boolean hasRawValues() {
+        return getRawValues() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P1_1() {
+        return getNumber_P1_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasEcts() {
+        return getEcts() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P1_3() {
+        return getNumber_P1_3() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_P1_4() {
+        return getNumber_P1_4() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandardDeviation_NDE() {
+        return getStandardDeviation_NDE() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber_NDE() {
+        return getNumber_NDE() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_1_0() {
+        return getPerc_P2_1_0() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_P2_1_1() {
+        return getPerc_P2_1_1() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_flunked() {
+        return getPerc_flunked() != null;
+    }
+
+    @Deprecated
+    public boolean hasEstimatedEctsStandardDeviation() {
+        return getEstimatedEctsStandardDeviation() != null;
+    }
+
+    @Deprecated
+    public boolean hasEstimatedEctsAverage() {
+        return getEstimatedEctsAverage() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeAverage() {
+        return getGradeAverage() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerc_10_12() {
+        return getPerc_10_12() != null;
     }
 
 }

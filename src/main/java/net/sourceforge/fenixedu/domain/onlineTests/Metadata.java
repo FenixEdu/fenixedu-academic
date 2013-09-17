@@ -99,11 +99,11 @@ public class Metadata extends Metadata_Base {
     }
 
     public void delete() {
-        for (; !getQuestions().isEmpty(); getQuestions().get(0).delete()) {
+        for (; !getQuestions().isEmpty(); getQuestions().iterator().next().delete()) {
             ;
         }
-        removeExecutionCourse();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -170,6 +170,71 @@ public class Metadata extends Metadata_Base {
         } else {
             setLearningTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.Question> getQuestions() {
+        return getQuestionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyQuestions() {
+        return !getQuestionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondarySubject() {
+        return getSecondarySubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasLearningTimeDateHourMinuteSecond() {
+        return getLearningTimeDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasDifficulty() {
+        return getDifficulty() != null;
+    }
+
+    @Deprecated
+    public boolean hasAuthor() {
+        return getAuthor() != null;
+    }
+
+    @Deprecated
+    public boolean hasMainSubject() {
+        return getMainSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibility() {
+        return getVisibility() != null;
+    }
+
+    @Deprecated
+    public boolean hasLevel() {
+        return getLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasMetadataFile() {
+        return getMetadataFile() != null;
     }
 
 }

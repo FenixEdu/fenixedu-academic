@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.DeleteProfessorshipAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério
@@ -24,15 +24,15 @@ public class DeleteProfessorship {
 
     protected Boolean run(String infoExecutionCourseCode, String teacherCode) throws FenixServiceException {
 
-        Teacher teacher = AbstractDomainObject.fromExternalId(teacherCode);
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourseCode);
+        Teacher teacher = FenixFramework.getDomainObject(teacherCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(infoExecutionCourseCode);
 
         Professorship professorshipToDelete = null;
         if (teacher != null) {
             professorshipToDelete = teacher.getProfessorshipByExecutionCourse(executionCourse);
         }
 
-        List shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
+        Collection shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
 
         boolean hasCredits = false;
 
@@ -71,7 +71,7 @@ public class DeleteProfessorship {
 
     private static final DeleteProfessorship serviceInstance = new DeleteProfessorship();
 
-    @Service
+    @Atomic
     public static Boolean runDeleteProfessorship(String infoExecutionCourseCode, String teacherCode)
             throws FenixServiceException, NotAuthorizedException {
         DeleteProfessorshipAuthorizationFilter.instance.execute(infoExecutionCourseCode, teacherCode);

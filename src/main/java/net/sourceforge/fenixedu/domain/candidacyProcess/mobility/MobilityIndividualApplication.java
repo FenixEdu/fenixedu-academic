@@ -105,9 +105,11 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         getMobilityStudentData().setSelectedOpening(bean.determineMobilityQuota());
 
         for (CurricularCourse curricularCourse : setOne) {
-            if (hasCurricularCourses(curricularCourse) && !bean.getSelectedCurricularCourses().contains(curricularCourse)) {
+            if (getCurricularCoursesSet().contains(curricularCourse)
+                    && !bean.getSelectedCurricularCourses().contains(curricularCourse)) {
                 removeCurricularCourses(curricularCourse);
-            } else if (!hasCurricularCourses(curricularCourse) && bean.getSelectedCurricularCourses().contains(curricularCourse)) {
+            } else if (!getCurricularCoursesSet().contains(curricularCourse)
+                    && bean.getSelectedCurricularCourses().contains(curricularCourse)) {
                 addCurricularCourses(curricularCourse);
             }
         }
@@ -149,7 +151,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         Collections.sort(approvedLearningAgreement,
                 Collections.reverseOrder(ApprovedLearningAgreementDocumentFile.SUBMISSION_DATE_COMPARATOR));
 
-        return approvedLearningAgreement.get(0);
+        return approvedLearningAgreement.iterator().next();
     }
 
     public boolean isMostRecentApprovedLearningAgreementNotViewed() {
@@ -270,7 +272,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
                 continue;
             }
 
-            Context selectedContext = contextList.get(0); // WTF?.. /facepalm
+            Context selectedContext = contextList.iterator().next(); // WTF?.. /facepalm
 
             CurriculumGroup curriculumGroup = null;
             if (selectedCurricularCourse.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
@@ -308,6 +310,46 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         MobilityQuota selectedOpening = getMobilityStudentData().getSelectedOpening();
 
         return selectedOpening.getMobilityAgreement().getMobilityProgram();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile> getApprovedLearningAgreements() {
+        return getApprovedLearningAgreementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyApprovedLearningAgreements() {
+        return !getApprovedLearningAgreementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getCurricularCourses() {
+        return getCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularCourses() {
+        return !getCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasIdCardAvoidanceOtherReason() {
+        return getIdCardAvoidanceOtherReason() != null;
+    }
+
+    @Deprecated
+    public boolean hasNationalIdCardAvoidanceQuestion() {
+        return getNationalIdCardAvoidanceQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityStudentData() {
+        return getMobilityStudentData() != null;
+    }
+
+    @Deprecated
+    public boolean hasNationalIdCardAvoidanceAnswerDate() {
+        return getNationalIdCardAvoidanceAnswerDate() != null;
     }
 
 }

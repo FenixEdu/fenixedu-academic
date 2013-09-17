@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -24,12 +25,12 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SeperateExecutionCourse {
 
-    @Service
+    @Atomic
     public static ExecutionCourse run(final ExecutionCourse originExecutionCourse, ExecutionCourse destinationExecutionCourse,
             final List<Shift> shiftsToTransfer, final List<CurricularCourse> curricularCourseToTransfer) {
 
@@ -69,7 +70,7 @@ public class SeperateExecutionCourse {
     private static void transferCurricularCourses(final ExecutionCourse originExecutionCourse,
             final ExecutionCourse destinationExecutionCourse, final List<CurricularCourse> curricularCoursesToTransfer) {
         // The last curricular course must not be removed.
-        if (originExecutionCourse.getAssociatedCurricularCoursesCount() - curricularCoursesToTransfer.size() < 1) {
+        if (originExecutionCourse.getAssociatedCurricularCourses().size() - curricularCoursesToTransfer.size() < 1) {
             throw new DomainException("error.manager.executionCourseManagement.lastCurricularCourse");
         }
 
@@ -81,13 +82,12 @@ public class SeperateExecutionCourse {
 
     private static void transferAttends(final ExecutionCourse originExecutionCourse,
             final ExecutionCourse destinationExecutionCourse) {
-        final List<CurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
-        for (int i = 0; i < originExecutionCourse.getAttends().size(); i++) {
-            final Attends attends = originExecutionCourse.getAttends().get(i);
+        final Collection<CurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
+        List<Attends> allAttends = new ArrayList<>(originExecutionCourse.getAttendsSet());
+        for (Attends attends : allAttends) {
             final Enrolment enrolment = attends.getEnrolment();
             if (enrolment != null && curricularCourses.contains(enrolment.getCurricularCourse())) {
                 attends.setDisciplinaExecucao(destinationExecutionCourse);
-                i--;
             }
         }
     }
@@ -96,7 +96,7 @@ public class SeperateExecutionCourse {
             final ExecutionCourse destinationExecutionCourse, final List<Shift> shiftsToTransfer) {
         for (final Shift shift : shiftsToTransfer) {
 
-            List<CourseLoad> courseLoads = shift.getCourseLoads();
+            Collection<CourseLoad> courseLoads = shift.getCourseLoads();
             for (Iterator<CourseLoad> iter = courseLoads.iterator(); iter.hasNext();) {
                 CourseLoad courseLoad = iter.next();
                 CourseLoad newCourseLoad = destinationExecutionCourse.getCourseLoadByShiftType(courseLoad.getType());
@@ -115,8 +115,7 @@ public class SeperateExecutionCourse {
 
     private static void fixStudentShiftEnrolements(final ExecutionCourse executionCourse) {
         for (final Shift shift : executionCourse.getAssociatedShifts()) {
-            for (int i = 0; i < shift.getStudents().size(); i++) {
-                final Registration registration = shift.getStudents().get(i);
+            for (Registration registration : shift.getStudentsSet()) {
                 if (!registration.attends(executionCourse)) {
                     shift.removeStudents(registration);
                 }
@@ -127,7 +126,7 @@ public class SeperateExecutionCourse {
     private static void associateGroupings(final ExecutionCourse originExecutionCourse,
             final ExecutionCourse destinationExecutionCourse) {
         for (final Grouping grouping : originExecutionCourse.getGroupings()) {
-            for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
+            for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
                 studentGroup.getAttends().clear();
                 studentGroup.delete();
             }
@@ -184,7 +183,7 @@ public class SeperateExecutionCourse {
     }
 
     private static Set<String> getExecutionCourseCodes(ExecutionSemester executionSemester) {
-        List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
         return new HashSet<String>(CollectionUtils.collect(executionCourses, new Transformer() {
             @Override
             public Object transform(Object arg0) {
@@ -204,12 +203,12 @@ public class SeperateExecutionCourse {
         return false;
     }
 
-    @Service
+    @Atomic
     public static ExecutionCourse run(String executionCourseId, String destinationExecutionCourseID, String[] shiftIdsToTransfer,
             String[] curricularCourseIdsToTransfer) {
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
-        ExecutionCourse destinationExecutionCourse = AbstractDomainObject.fromExternalId(destinationExecutionCourseID);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
+        ExecutionCourse destinationExecutionCourse = FenixFramework.getDomainObject(destinationExecutionCourseID);
         List<Shift> shiftsToTransfer = readShiftsOIDsToTransfer(shiftIdsToTransfer);
         List<CurricularCourse> curricularCoursesToTransfer = readCurricularCoursesOIDsToTransfer(curricularCourseIdsToTransfer);
 
@@ -224,7 +223,7 @@ public class SeperateExecutionCourse {
         }
 
         for (String oid : shiftIdsToTransfer) {
-            result.add(AbstractDomainObject.<Shift> fromExternalId(oid));
+            result.add(FenixFramework.<Shift> getDomainObject(oid));
         }
 
         return result;
@@ -238,7 +237,7 @@ public class SeperateExecutionCourse {
         }
 
         for (String oid : curricularCourseIdsToTransfer) {
-            result.add((CurricularCourse) AbstractDomainObject.fromExternalId(oid));
+            result.add((CurricularCourse) FenixFramework.getDomainObject(oid));
         }
 
         return result;

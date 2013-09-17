@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DepartmentManagementBackingBean extends FenixBackingBean {
 
@@ -57,7 +57,7 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
     public Department getDepartment() {
         String selectedDepartmentUnitID = getAndHoldStringParameter("selectedDepartmentUnitID");
         if (selectedDepartmentUnitID != null) {
-            Unit departmentUnit = (Unit) AbstractDomainObject.fromExternalId(selectedDepartmentUnitID);
+            Unit departmentUnit = (Unit) FenixFramework.getDomainObject(selectedDepartmentUnitID);
             return departmentUnit.getDepartment();
         } else {
             return null;

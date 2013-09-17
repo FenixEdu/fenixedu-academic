@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.InvocationResult;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class AccountingEventsManager {
@@ -358,7 +358,7 @@ public class AccountingEventsManager {
 
     }
 
-    @Service
+    @Atomic
     public InvocationResult createInsuranceEvent(final Person person, final ExecutionYear executionYear) {
 
         final InvocationResult result = InvocationResult.createSuccess();

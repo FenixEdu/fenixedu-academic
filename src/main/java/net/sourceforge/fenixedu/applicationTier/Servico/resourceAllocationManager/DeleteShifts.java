@@ -12,20 +12,21 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteShifts {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(final List<String> shiftOIDs) throws FenixServiceException {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
         for (final String shiftID : shiftOIDs) {
             try {
-                AbstractDomainObject.<Shift> fromExternalId(shiftID).delete();
+                FenixFramework.<Shift> getDomainObject(shiftID).delete();
             } catch (DomainException e) {
                 exceptionList.add(e);
             }

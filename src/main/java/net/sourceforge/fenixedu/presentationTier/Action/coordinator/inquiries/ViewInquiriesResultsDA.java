@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
@@ -54,7 +54,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
             degreeCurricularPlanID = ((ViewInquiriesResultPageDTO) actionForm).getDegreeCurricularPlanID();
         }
         final DegreeCurricularPlan degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(getStringFromRequest(request, "degreeCurricularPlanID"));
+                FenixFramework.getDomainObject(getStringFromRequest(request, "degreeCurricularPlanID"));
         final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
         for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
             final ExecutionYear executionYear = executionDegree.getExecutionYear();
@@ -80,7 +80,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
             return prepare(actionMapping, actionForm, request, response);
         }
 
-        resultPageDTO.setExecutionDegreeID(executionDegree.getOid());
+        resultPageDTO.setExecutionDegreeID(executionDegree.getExternalId());
 
         Collection<StudentInquiriesCourseResult> otherExecutionCourses = new ArrayList<StudentInquiriesCourseResult>();
         Collection<StudentInquiriesCourseResult> executionCoursesToImproove = new ArrayList<StudentInquiriesCourseResult>();
@@ -183,10 +183,10 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
         StudentInquiriesCourseResult courseResult = getRenderedObject();
 
         final ExecutionCourse executionCourse =
-                courseResult == null ? (ExecutionCourse) AbstractDomainObject.fromOID(getLongFromRequest(request,
+                courseResult == null ? (ExecutionCourse) FenixFramework.getDomainObject(getStringFromRequest(request,
                         "executionCourseID")) : courseResult.getExecutionCourse();
         final ExecutionDegree executionDegree =
-                courseResult == null ? (ExecutionDegree) AbstractDomainObject.fromOID(getLongFromRequest(request,
+                courseResult == null ? (ExecutionDegree) FenixFramework.getDomainObject(getStringFromRequest(request,
                         "executionDegreeID")) : courseResult.getExecutionDegree();
 
         request.setAttribute("canComment", coordinatorCanComment(executionDegree, executionCourse.getExecutionPeriod()));
@@ -198,8 +198,8 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
                 request.setAttribute("courseResultsCoordinatorCommentEdit", true);
             }
 
-            ((ViewInquiriesResultPageDTO) actionForm).setExecutionCourseID(executionCourse.getOid());
-            ((ViewInquiriesResultPageDTO) actionForm).setExecutionDegreeID(executionDegree.getOid());
+            ((ViewInquiriesResultPageDTO) actionForm).setExecutionCourseID(executionCourse.getExternalId());
+            ((ViewInquiriesResultPageDTO) actionForm).setExecutionDegreeID(executionDegree.getExternalId());
             // ((ViewInquiriesResultPageDTO)
             // actionForm).setDegreeCurricularPlanID(executionDegree.getDegreeCurricularPlan().getExternalId());
 

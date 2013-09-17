@@ -18,13 +18,13 @@ public class RequestLogDay extends RequestLogDay_Base {
         rls.addAll(this.getLogs());
         for (RequestLog rl : rls) {
             this.removeLogs(rl);
-            rl.removeDay();
+            rl.setDay(null);
         }
-        this.removeRootDomainObject();
+        this.setRootDomainObject(null);
         this.getMonth().removeDays(this);
-        this.removeNext();
-        this.removePrevious();
-        this.removeRootDomainObjectRequestLogDay();
+        this.setNext(null);
+        this.setPrevious(null);
+        this.setRootDomainObjectRequestLogDay(null);
         super.deleteDomainObject();
     }
 
@@ -74,6 +74,46 @@ public class RequestLogDay extends RequestLogDay_Base {
                 }
             }
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.log.requests.RequestLog> getLogs() {
+        return getLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLogs() {
+        return !getLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectRequestLogDay() {
+        return getRootDomainObjectRequestLogDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasDayOfMonth() {
+        return getDayOfMonth() != null;
+    }
+
+    @Deprecated
+    public boolean hasNext() {
+        return getNext() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrevious() {
+        return getPrevious() != null;
+    }
+
+    @Deprecated
+    public boolean hasMonth() {
+        return getMonth() != null;
     }
 
 }

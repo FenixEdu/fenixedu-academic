@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.SituationName;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -61,7 +61,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
         // Read The DegreeCurricularPlan
         try {
 
-            executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+            executionDegree = FenixFramework.getDomainObject(executionDegreeID);
 
         } catch (Exception e) {
             return false;
@@ -82,13 +82,13 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
             // modified by Tânia Pousão
-            List<Coordinator> coodinatorsList = executionDegree.getCoordinatorsList();
+            Collection<Coordinator> coodinatorsList = executionDegree.getCoordinatorsList();
             if (coodinatorsList == null) {
                 return false;
             }
-            ListIterator listIterator = coodinatorsList.listIterator();
+            Iterator<Coordinator> listIterator = coodinatorsList.iterator();
             while (listIterator.hasNext()) {
-                Coordinator coordinator = (Coordinator) listIterator.next();
+                Coordinator coordinator = listIterator.next();
 
                 if (coordinator.getPerson() == id.getPerson()) {
                     return true;

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -25,14 +26,14 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class SelectCandidaciesService {
 
     protected SelectCandidaciesDTO run(Boolean inEnrollmentPeriod, String seminaryID) throws FenixServiceException {
         SelectCandidaciesDTO result = new SelectCandidaciesDTO();
 
-        List<Seminary> seminaries = RootDomainObject.getInstance().getSeminarys();
+        Collection<Seminary> seminaries = RootDomainObject.getInstance().getSeminarys();
         List infoSeminaries = getSeminaries(inEnrollmentPeriod, seminaries);
         result.setSeminaries(infoSeminaries);
 
@@ -46,7 +47,7 @@ public class SelectCandidaciesService {
             candidacyDTO.setName(registration.getPerson().getName());
             candidacyDTO.setUsername(registration.getPerson().getUsername());
             candidacyDTO.setEmail(registration.getPerson().getName());
-            candidacyDTO.setInfoClassification(getInfoClassification(studentCurricularPlan.getEnrolments()));
+            candidacyDTO.setInfoClassification(getInfoClassification(studentCurricularPlan.getEnrolmentsSet()));
             candidacyDTO.setCandidacyId(candidacy.getExternalId());
             if (candidacy.getApproved() != null) {
                 candidacyDTO.setApproved(candidacy.getApproved());
@@ -60,7 +61,7 @@ public class SelectCandidaciesService {
         return result;
     }
 
-    private InfoClassification getInfoClassification(List<Enrolment> enrollments) {
+    private InfoClassification getInfoClassification(Collection<Enrolment> enrollments) {
         InfoClassification infoClassification = new InfoClassification();
         int auxInt = 0;
         float acc = 0;
@@ -92,7 +93,7 @@ public class SelectCandidaciesService {
         return selectedSCP;
     }
 
-    private List<SeminaryCandidacy> getCandidacies(final String seminaryID, List seminaries) {
+    private Collection<SeminaryCandidacy> getCandidacies(final String seminaryID, Collection seminaries) {
         Seminary seminary = (Seminary) CollectionUtils.find(seminaries, new Predicate() {
 
             @Override
@@ -105,7 +106,7 @@ public class SelectCandidaciesService {
         return seminary.getCandidacies();
     }
 
-    private List<InfoSeminary> getSeminaries(Boolean inEnrollmentPeriod, List<Seminary> seminaries) {
+    private List<InfoSeminary> getSeminaries(Boolean inEnrollmentPeriod, Collection<Seminary> seminaries) {
         List<InfoSeminary> result = new ArrayList<InfoSeminary>();
 
         for (Seminary seminary : seminaries) {
@@ -130,7 +131,7 @@ public class SelectCandidaciesService {
 
     private static final SelectCandidaciesService serviceInstance = new SelectCandidaciesService();
 
-    @Service
+    @Atomic
     public static SelectCandidaciesDTO runSelectCandidaciesService(Boolean inEnrollmentPeriod, String seminaryID)
             throws FenixServiceException, NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();

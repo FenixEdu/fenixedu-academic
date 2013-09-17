@@ -8,15 +8,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.SituationName;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class ReadSubstituteCandidates {
 
-    @Service
+    @Atomic
     public static List<InfoMasterDegreeCandidate> run(String[] candidateList, String[] ids) throws FenixServiceException {
 
         List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
@@ -32,7 +32,7 @@ public class ReadSubstituteCandidates {
 
                 String externalId = ids[i];
 
-                MasterDegreeCandidate masterDegreeCandidateToWrite = AbstractDomainObject.fromExternalId(externalId);
+                MasterDegreeCandidate masterDegreeCandidateToWrite = FenixFramework.getDomainObject(externalId);
                 result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidateToWrite));
             }
         }

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PrepareDegreesListByStudentNumber {
 
@@ -37,7 +37,7 @@ public class PrepareDegreesListByStudentNumber {
 
     private static final PrepareDegreesListByStudentNumber serviceInstance = new PrepareDegreesListByStudentNumber();
 
-    @Service
+    @Atomic
     public static List<ExecutionDegree> runPrepareDegreesListByStudentNumber(Registration registration, DegreeType degreeType,
             ExecutionSemester executionSemester) throws FenixServiceException, NotAuthorizedException {
         try {

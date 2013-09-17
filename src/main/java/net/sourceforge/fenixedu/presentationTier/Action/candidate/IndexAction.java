@@ -34,8 +34,8 @@ public class IndexAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        if (getUserView(request).getPerson().getCandidaciesCount() == 1) {
-            final Candidacy candidacy = getUserView(request).getPerson().getCandidaciesIterator().next();
+        if (getUserView(request).getPerson().getCandidaciesSet().size() == 1) {
+            final Candidacy candidacy = getUserView(request).getPerson().getCandidaciesSet().iterator().next();
 
             if (candidacy instanceof DegreeCandidacy || candidacy instanceof IMDCandidacy) {
                 request.setAttribute("candidacyID", candidacy.getExternalId());

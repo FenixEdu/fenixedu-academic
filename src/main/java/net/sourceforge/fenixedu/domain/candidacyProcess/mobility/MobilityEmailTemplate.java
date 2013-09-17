@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MobilityEmailTemplate extends MobilityEmailTemplate_Base {
 
@@ -58,19 +58,19 @@ public class MobilityEmailTemplate extends MobilityEmailTemplate_Base {
     }
 
     public void delete() {
-        removeMobilityProgram();
-        removePeriod();
-        removeRootDomainObject();
+        setMobilityProgram(null);
+        setPeriod(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
-    @Service
+    @Atomic
     public void sendEmailFor(final DegreeOfficePublicCandidacyHashCode hashCode) {
         getType().sendEmailFor(this, hashCode);
     }
 
-    @Service
-    public void sendMultiEmailFor(final List<MobilityIndividualApplicationProcess> processes) {
+    @Atomic
+    public void sendMultiEmailFor(final Collection<MobilityIndividualApplicationProcess> processes) {
         getType().sendMultiEmailFor(this, processes);
     }
 

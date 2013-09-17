@@ -12,15 +12,40 @@ public class CreditsInScientificArea extends CreditsInScientificArea_Base {
     }
 
     public void delete() {
-        removeScientificArea();
-        removeEnrolment();
-        removeStudentCurricularPlan();
-        removeRootDomainObject();
+        setScientificArea(null);
+        setEnrolment(null);
+        setStudentCurricularPlan(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     public double getEctsCredits() {
         return 7.5;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolment() {
+        return getEnrolment() != null;
+    }
+
+    @Deprecated
+    public boolean hasGivenCredits() {
+        return getGivenCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCurricularPlan() {
+        return getStudentCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasScientificArea() {
+        return getScientificArea() != null;
     }
 
 }

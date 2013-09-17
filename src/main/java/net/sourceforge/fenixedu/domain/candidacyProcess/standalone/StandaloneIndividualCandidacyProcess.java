@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.standalone;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -84,14 +85,14 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
     public List<CurricularCourseByExecutionSemesterBean> getCurricularCourseBeans() {
         final List<CurricularCourseByExecutionSemesterBean> result =
-                new ArrayList<CurricularCourseByExecutionSemesterBean>(getCandidacy().getCurricularCoursesCount());
+                new ArrayList<CurricularCourseByExecutionSemesterBean>(getCandidacy().getCurricularCoursesSet().size());
         for (final CurricularCourse curricularCourse : getCandidacy().getCurricularCoursesSet()) {
             result.add(new CurricularCourseByExecutionSemesterBean(curricularCourse, getCandidacyExecutionInterval()));
         }
         return result;
     }
 
-    public List<CurricularCourse> getCurricularCourses() {
+    public Collection<CurricularCourse> getCurricularCourses() {
         return getCandidacy().getCurricularCourses();
     }
 

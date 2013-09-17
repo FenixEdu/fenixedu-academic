@@ -28,7 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Tânia Pousão Created on 31/Out/2003
@@ -87,7 +87,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
         }
 
         try {
-            return AbstractDomainObject.fromExternalId(parameter);
+            return FenixFramework.getDomainObject(parameter);
         } catch (NumberFormatException e) {
             return null;
         }
@@ -113,7 +113,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
         RequestUtils.getAndSetStringToRequest(request, "info");
 
         String degreeCurricularPlanID = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         DegreeInfo currentDegreeInfo = currentExecutionYear.getDegreeInfo(degreeCurricularPlan.getDegree());
@@ -152,7 +152,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
     public ActionForward viewDescriptionCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         String degreeCurricularPlanID = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             final ActionErrors errors = new ActionErrors();
             errors.add("noDegreeCurricularPlan", new ActionError("error.coordinator.chosenDegree"));
@@ -174,7 +174,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
             HttpServletResponse response) {
         // read execution degree
         String degreeCurricularPlanID = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         if (degreeCurricularPlan.hasAnyExecutionDegrees()) {
             final IUserView userView = UserView.getUser();

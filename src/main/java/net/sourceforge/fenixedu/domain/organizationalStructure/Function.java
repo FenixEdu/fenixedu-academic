@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -16,7 +18,6 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Function extends Function_Base {
@@ -31,7 +32,7 @@ public class Function extends Function_Base {
                 chain.addComparator(new BeanComparator("functionOrder", new NullComparator()));
                 chain.addComparator(new BeanComparator("functionType", new NullComparator()));
                 chain.addComparator(new BeanComparator("name"));
-                chain.addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+                chain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
             }
             return chain.compare(one, other);
         }
@@ -91,9 +92,9 @@ public class Function extends Function_Base {
         if (!canBeDeleted()) {
             throw new DomainException("error.delete.function");
         }
-        removeParentInherentFunction();
+        setParentInherentFunction(null);
         super.setUnit(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -144,7 +145,7 @@ public class Function extends Function_Base {
         if (parentInherentFunction.equals(this)) {
             throw new DomainException("error.function.parentInherentFunction.equals.function");
         }
-        removeParentInherentFunction();
+        setParentInherentFunction(null);
         setParentInherentFunction(parentInherentFunction);
     }
 
@@ -172,7 +173,7 @@ public class Function extends Function_Base {
     public static Set<Function> readAllActiveFunctionsByType(FunctionType functionType) {
         Set<Function> result = new HashSet<Function>();
         YearMonthDay currentDate = new YearMonthDay();
-        List<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
+        Collection<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
         for (AccountabilityType accountabilityType : accountabilityTypes) {
             if (accountabilityType.isFunction() && ((Function) accountabilityType).getFunctionType() != null
                     && ((Function) accountabilityType).getFunctionType().equals(functionType)
@@ -185,7 +186,7 @@ public class Function extends Function_Base {
 
     public static Set<Function> readAllFunctionsByType(FunctionType functionType) {
         Set<Function> result = new HashSet<Function>();
-        List<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
+        Collection<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
         for (AccountabilityType accountabilityType : accountabilityTypes) {
             if (accountabilityType.isFunction() && ((Function) accountabilityType).getFunctionType() != null
                     && ((Function) accountabilityType).getFunctionType().equals(functionType)) {
@@ -241,6 +242,46 @@ public class Function extends Function_Base {
         } else {
             setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Function> getInherentFunctions() {
+        return getInherentFunctionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInherentFunctions() {
+        return !getInherentFunctionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasParentInherentFunction() {
+        return getParentInherentFunction() != null;
+    }
+
+    @Deprecated
+    public boolean hasFunctionOrder() {
+        return getFunctionOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDateYearMonthDay() {
+        return getBeginDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateYearMonthDay() {
+        return getEndDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasFunctionType() {
+        return getFunctionType() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
     }
 
 }

@@ -35,16 +35,17 @@ import net.sourceforge.fenixedu.util.State;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class ChangeGuideSituation {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Integer guideNumber, Integer guideYear, Integer guideVersion, Date paymentDate, String remarks,
             String situationOfGuideString, String paymentType, IUserView userView) throws ExcepcaoInexistente,
             FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         Guide guide = Guide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
 

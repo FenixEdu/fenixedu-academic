@@ -40,7 +40,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -507,7 +507,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public Unit getUnit() throws FenixServiceException {
         if (parentUnit == null) {
-            this.parentUnit = (Unit) AbstractDomainObject.fromExternalId((String) getUnitIDHidden().getValue());
+            this.parentUnit = (Unit) FenixFramework.getDomainObject((String) getUnitIDHidden().getValue());
         }
         return parentUnit;
     }

@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,8 +23,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -38,12 +39,12 @@ public class AcceptNewProjectProposal {
             return Boolean.FALSE;
         }
 
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesId);
+        final Grouping grouping = FenixFramework.getDomainObject(groupPropertiesId);
         if (grouping == null) {
             throw new NotAuthorizedException();
         }
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         final ExportGrouping groupPropertiesExecutionCourse = executionCourse.getExportGrouping(grouping);
 
         if (groupPropertiesExecutionCourse == null) {
@@ -59,14 +60,14 @@ public class AcceptNewProjectProposal {
         }
 
         List attendsStudentNumbers = new ArrayList();
-        List attends = groupPropertiesExecutionCourse.getGrouping().getAttends();
+        Collection<Attends> attends = groupPropertiesExecutionCourse.getGrouping().getAttends();
         Iterator iterAttendsInAttendsSet = attends.iterator();
         while (iterAttendsInAttendsSet.hasNext()) {
             Attends attend = (Attends) iterAttendsInAttendsSet.next();
             attendsStudentNumbers.add(attend.getRegistration().getNumber());
         }
 
-        List attendsAux = executionCourse.getAttends();
+        Collection<Attends> attendsAux = executionCourse.getAttends();
         Iterator iterAttends = attendsAux.iterator();
         while (iterAttends.hasNext()) {
             Attends attend = (Attends) iterAttends.next();
@@ -76,7 +77,7 @@ public class AcceptNewProjectProposal {
         }
 
         Person senderPerson = groupPropertiesExecutionCourse.getSenderPerson();
-        List groupPropertiesExecutionCourseList = grouping.getExportGroupings();
+        Collection groupPropertiesExecutionCourseList = grouping.getExportGroupings();
         Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
         List groupTeachers = new ArrayList();
         while (iterGroupPropertiesExecutionCourseList.hasNext()) {
@@ -84,7 +85,7 @@ public class AcceptNewProjectProposal {
             if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
                     || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
                 ExecutionCourse personExecutionCourse = groupPropertiesExecutionCourseAux.getExecutionCourse();
-                List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
+                Collection professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
                 Iterator iterProfessorship = professorships.iterator();
                 while (iterProfessorship.hasNext()) {
                     Professorship professorship = (Professorship) iterProfessorship.next();
@@ -97,7 +98,7 @@ public class AcceptNewProjectProposal {
         }
 
         List groupAux = new ArrayList();
-        List professorshipsAux = executionCourse.getProfessorships();
+        Collection<Professorship> professorshipsAux = executionCourse.getProfessorships();
 
         Iterator iterProfessorshipsAux = professorshipsAux.iterator();
         while (iterProfessorshipsAux.hasNext()) {
@@ -128,7 +129,7 @@ public class AcceptNewProjectProposal {
 
     private static final AcceptNewProjectProposal serviceInstance = new AcceptNewProjectProposal();
 
-    @Service
+    @Atomic
     public static Boolean runAcceptNewProjectProposal(String executionCourseId, String groupPropertiesId,
             String acceptancePersonUserName) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

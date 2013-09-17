@@ -42,9 +42,39 @@ public class TSDProfessorship extends TSDProfessorship_Base {
     }
 
     public void delete() {
-        removeTSDCourse();
-        removeTSDTeacher();
-        removeRootDomainObject();
+        setTSDCourse(null);
+        setTSDTeacher(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasHoursManual() {
+        return getHoursManual() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasHoursType() {
+        return getHoursType() != null;
+    }
+
+    @Deprecated
+    public boolean hasTSDCourse() {
+        return getTSDCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasTSDTeacher() {
+        return getTSDTeacher() != null;
+    }
+
 }

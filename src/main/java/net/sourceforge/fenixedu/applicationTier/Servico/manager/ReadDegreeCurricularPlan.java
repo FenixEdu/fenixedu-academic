@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -23,7 +23,7 @@ public class ReadDegreeCurricularPlan {
 
     protected InfoDegreeCurricularPlan run(final String externalId) throws FenixServiceException {
 
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(externalId);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(externalId);
 
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException();
@@ -36,7 +36,7 @@ public class ReadDegreeCurricularPlan {
 
     private static final ReadDegreeCurricularPlan serviceInstance = new ReadDegreeCurricularPlan();
 
-    @Service
+    @Atomic
     public static InfoDegreeCurricularPlan runReadDegreeCurricularPlan(String externalId) throws FenixServiceException,
             NotAuthorizedException {
         try {

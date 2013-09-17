@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.UnitFile;
@@ -13,7 +14,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class UnitFileBean implements Serializable {
 
-    private UnitFile file;
+    private final UnitFile file;
 
     private String name;
 
@@ -36,7 +37,7 @@ public class UnitFileBean implements Serializable {
         setupTags(file.getUnitFileTags());
     }
 
-    private void setupTags(List<UnitFileTag> unitFileTags) {
+    private void setupTags(Collection<UnitFileTag> unitFileTags) {
         String tags = "";
         int i = unitFileTags.size();
         for (UnitFileTag tag : unitFileTags) {

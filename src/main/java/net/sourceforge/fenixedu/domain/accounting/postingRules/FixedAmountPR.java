@@ -110,4 +110,9 @@ public class FixedAmountPR extends FixedAmountPR_Base {
                 fixedAmount);
     }
 
+    @Deprecated
+    public boolean hasFixedAmount() {
+        return getFixedAmount() != null;
+    }
+
 }

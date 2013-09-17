@@ -6,15 +6,16 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditDelegateVotingPeriod {
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(ElectionPeriodBean bean) throws FenixServiceException {
+        check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
 
         DelegateElection election = bean.getElection();
 
@@ -25,11 +26,11 @@ public class EditDelegateVotingPeriod {
         }
     }
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
+        check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        final Degree degree = AbstractDomainObject.fromExternalId(degreeOID);
+        final Degree degree = FenixFramework.getDomainObject(degreeOID);
 
         DelegateElection electionToEdit =
                 degree.getYearDelegateElectionWithLastVotingPeriod(executionYear, bean.getCurricularYear());

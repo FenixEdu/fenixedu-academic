@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -32,7 +32,7 @@ public class DeleteGroupingMembers {
     protected Boolean run(String executionCourseCode, String groupingCode, List<String> studentUsernames)
             throws FenixServiceException {
 
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupingCode);
+        final Grouping grouping = FenixFramework.getDomainObject(groupingCode);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
@@ -75,7 +75,7 @@ public class DeleteGroupingMembers {
 
     private void removeAttendFromStudentGroups(final Grouping grouping, Attends attend) {
         if (attend != null) {
-            for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
+            for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
                 studentGroup.removeAttends(attend);
             }
         }
@@ -85,7 +85,7 @@ public class DeleteGroupingMembers {
 
     private static final DeleteGroupingMembers serviceInstance = new DeleteGroupingMembers();
 
-    @Service
+    @Atomic
     public static Boolean runDeleteGroupingMembers(String executionCourseCode, String groupingCode, List<String> studentUsernames)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

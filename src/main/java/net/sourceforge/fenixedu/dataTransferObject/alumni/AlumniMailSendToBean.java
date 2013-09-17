@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.accessControl.ConclusionYearDegreesStuden
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AlumniMailSendToBean implements Serializable {
 
@@ -50,7 +50,7 @@ public class AlumniMailSendToBean implements Serializable {
         this.degrees = degrees;
     }
 
-    @Service
+    @Atomic
     public void createRecipientGroup(Sender sender) {
         ConclusionYearDegreesStudentsGroup recipientsGroup =
                 new ConclusionYearDegreesStudentsGroup(getDegrees(), getEndExecutionYear());

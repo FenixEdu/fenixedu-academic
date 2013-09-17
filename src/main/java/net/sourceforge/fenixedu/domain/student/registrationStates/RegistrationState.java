@@ -27,9 +27,10 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import dml.runtime.RelationAdapter;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RegistrationStatePredicates;
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
  * 
@@ -39,7 +40,7 @@ import dml.runtime.RelationAdapter;
 public abstract class RegistrationState extends RegistrationState_Base implements IState {
 
     static {
-        RegistrationStateRegistration.addListener(new RelationAdapter<RegistrationState, Registration>() {
+        getRelationRegistrationStateRegistration().addListener(new RelationAdapter<RegistrationState, Registration>() {
 
             @Override
             public void afterAdd(RegistrationState state, Registration registration) {
@@ -206,8 +207,8 @@ public abstract class RegistrationState extends RegistrationState_Base implement
         return ExecutionYear.readByDateTime(getStateDate());
     }
 
-    @Checked("RegistrationStatePredicates.deletePredicate")
     public void delete() {
+        check(this, RegistrationStatePredicates.deletePredicate);
         RegistrationState nextState = getNext();
         RegistrationState previousState = getPrevious();
         if (nextState != null && previousState != null
@@ -221,9 +222,9 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     public void deleteWithoutCheckRules() {
         final Registration registration = getRegistration();
         try {
-            removeRegistration();
-            removeResponsiblePerson();
-            removeRootDomainObject();
+            setRegistration(null);
+            setResponsiblePerson(null);
+            setRootDomainObject(null);
             super.deleteDomainObject();
         } finally {
             registration.getStudent().updateStudentRole();
@@ -281,7 +282,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
         @Override
         public Object execute() {
-            AbstractDomainObject.<RegistrationState> fromExternalId(getString()).delete();
+            FenixFramework.<RegistrationState> getDomainObject(getString()).delete();
             return null;
         }
     }
@@ -347,6 +348,31 @@ public abstract class RegistrationState extends RegistrationState_Base implement
         }
 
         return false;
+    }
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStateDate() {
+        return getStateDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasRemarks() {
+        return getRemarks() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsiblePerson() {
+        return getResponsiblePerson() != null;
     }
 
 }

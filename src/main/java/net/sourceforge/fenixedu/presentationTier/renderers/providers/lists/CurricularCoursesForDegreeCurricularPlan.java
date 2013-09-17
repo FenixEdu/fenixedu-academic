@@ -20,7 +20,8 @@ public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
         final List<DegreeModule> result = new ArrayList<DegreeModule>();
         if (executionDegreeListBean.getDegree() != null && executionDegreeListBean.getDegreeCurricularPlan() != null) {
 
-            if (executionDegreeListBean.getDegree().hasDegreeCurricularPlans(executionDegreeListBean.getDegreeCurricularPlan())) {
+            if (executionDegreeListBean.getDegree().getDegreeCurricularPlansSet()
+                    .contains(executionDegreeListBean.getDegreeCurricularPlan())) {
                 if (executionDegreeListBean.getDegree().isBolonhaDegree()) {
                     result.addAll(executionDegreeListBean.getDegreeCurricularPlan().getDcpDegreeModules(CurricularCourse.class));
                 } else {

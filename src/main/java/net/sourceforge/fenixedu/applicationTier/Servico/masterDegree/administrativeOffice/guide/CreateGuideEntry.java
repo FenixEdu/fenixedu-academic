@@ -4,9 +4,10 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -15,12 +16,12 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class CreateGuideEntry {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String guideID, GraduationType graduationType, DocumentType documentType, String description,
             Double price, Integer quantity) {
+        check(RolePredicates.MANAGER_PREDICATE);
 
-        Guide guide = AbstractDomainObject.fromExternalId(guideID);
+        Guide guide = FenixFramework.getDomainObject(guideID);
 
         GuideEntry guideEntry = new GuideEntry();
 

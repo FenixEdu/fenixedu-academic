@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.domain.Seminaries;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
@@ -31,8 +31,43 @@ public class CaseStudy extends CaseStudy_Base {
         this.setCode(code);
     }
 
-    public static List<CaseStudy> getAllCaseStudies() {
+    public static Collection<CaseStudy> getAllCaseStudies() {
         return RootDomainObject.getInstance().getCaseStudys();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice> getSeminaryCandidacies() {
+        return getSeminaryCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySeminaryCandidacies() {
+        return !getSeminaryCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeminaryTheme() {
+        return getSeminaryTheme() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
     }
 
 }

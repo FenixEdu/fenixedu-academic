@@ -85,7 +85,7 @@ public class LoginAlias extends LoginAlias_Base {
 
     public void delete() {
         super.setLogin(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -190,4 +190,29 @@ public class LoginAlias extends LoginAlias_Base {
         }
         return null;
     }
+    @Deprecated
+    public boolean hasLogin() {
+        return getLogin() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAlias() {
+        return getAlias() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoleType() {
+        return getRoleType() != null;
+    }
+
 }

@@ -4,19 +4,19 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExercise {
     protected Metadata run(String executionCourseId, String metadataId) throws FenixServiceException {
-        return AbstractDomainObject.fromExternalId(metadataId);
+        return FenixFramework.getDomainObject(metadataId);
     }
 
     // Service Invokers migrated from Berserk
 
     private static final ReadExercise serviceInstance = new ReadExercise();
 
-    @Service
+    @Atomic
     public static Metadata runReadExercise(String executionCourseId, String metadataId) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

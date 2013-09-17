@@ -35,7 +35,7 @@ public class GroupResultsSummaryBean implements Serializable {
             } else {
                 InquiryResult inquiryResult = null;
                 if (questionResults.size() > 0) {
-                    inquiryResult = questionResults.get(0);
+                    inquiryResult = questionResults.iterator().next();
                 }
                 resultsSummaryBean = new QuestionResultsSummaryBean(inquiryQuestion, inquiryResult);
             }

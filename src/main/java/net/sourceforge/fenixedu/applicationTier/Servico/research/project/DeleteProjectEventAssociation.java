@@ -2,16 +2,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteProjectEventAssociation {
 
-    @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(String associationId) throws FenixServiceException {
-        ProjectEventAssociation association = AbstractDomainObject.fromExternalId(associationId);
+        check(ResultPredicates.author);
+        ProjectEventAssociation association = FenixFramework.getDomainObject(associationId);
         if (association == null) {
             throw new FenixServiceException();
         }

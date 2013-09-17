@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
@@ -77,8 +77,8 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
                 addCell("Semestre", summary.getSemester().getSemester() + " - "
                         + summary.getSemester().getExecutionYear().getYear());
                 addCell("Curso", summary.getDegree().getSigla());
-                addCell(bundle.getString("label.tutorshipSummary.form.relationsSize"),
-                        summary.getTutorshipSummaryRelationsCount());
+                addCell(bundle.getString("label.tutorshipSummary.form.relationsSize"), summary.getTutorshipSummaryRelationsSet()
+                        .size());
                 addCell(bundle.getString("label.tutorshipSummary.form.howManyReunionsGroup"), summary.getHowManyReunionsGroup());
                 addCell(bundle.getString("label.tutorshipSummary.form.howManyReunionsIndividual"),
                         summary.getHowManyReunionsIndividual());
@@ -203,7 +203,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
         String summaryId = (String) getFromRequest(request, "summaryId");
 
         if (summaryId != null) {
-            TutorshipSummary tutorshipSummary = AbstractDomainObject.fromExternalId(summaryId);
+            TutorshipSummary tutorshipSummary = FenixFramework.getDomainObject(summaryId);
 
             if (tutorshipSummary != null) {
                 bean = new EditSummaryBean(tutorshipSummary);
@@ -213,9 +213,9 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
             String degreeId = (String) getFromRequest(request, "degreeId");
             String semesterId = (String) getFromRequest(request, "semesterId");
 
-            Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
-            Degree degree = AbstractDomainObject.fromExternalId(degreeId);
-            ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(semesterId);
+            Teacher teacher = FenixFramework.getDomainObject(teacherId);
+            Degree degree = FenixFramework.getDomainObject(degreeId);
+            ExecutionSemester executionSemester = FenixFramework.getDomainObject(semesterId);
 
             if (teacher != null && degree != null && executionSemester != null) {
                 bean = new CreateSummaryBean(teacher, executionSemester, degree);
@@ -249,7 +249,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String summaryId = (String) getFromRequest(request, "summaryId");
-        TutorshipSummary tutorshipSummary = AbstractDomainObject.fromExternalId(summaryId);
+        TutorshipSummary tutorshipSummary = FenixFramework.getDomainObject(summaryId);
 
         request.setAttribute("tutorshipSummary", tutorshipSummary);
 

@@ -57,7 +57,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -161,13 +161,13 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
             throw new Exception(e);
         }
         if (result.size() != 0) {
-            InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
+            InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.iterator().next();
             degreeName =
                     infoMasterDegreeCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getNome()
                             + "-" + infoMasterDegreeCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName();
         }
         if (result.size() == 1) {
-            InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
+            InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.iterator().next();
             request.setAttribute("candidateID", infoMasterDegreeCandidate.getExternalId());
             request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
             return mapping.findForward("ActionReady");
@@ -433,7 +433,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
         InfoMasterDegreeCandidate infoMasterDegreeCandidateChanged = null;
         try {
-            final MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
+            final MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
 
             infoMasterDegreeCandidateChanged = EditMasterDegreeCandidate.run(masterDegreeCandidate, newCandidate, infoPerson);
         } catch (ExistingServiceException e) {
@@ -463,7 +463,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
         String pass = null;
         try {
             final Person person =
-                    (Person) AbstractDomainObject.fromExternalId(infoMasterDegreeCandidate.getInfoPerson().getExternalId());
+                    (Person) FenixFramework.getDomainObject(infoMasterDegreeCandidate.getInfoPerson().getExternalId());
             pass = GenerateNewPasswordService.run(person);
         } catch (FenixServiceException e) {
             throw new FenixActionException();

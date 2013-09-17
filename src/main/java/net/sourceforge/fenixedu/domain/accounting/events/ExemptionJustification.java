@@ -39,16 +39,31 @@ public abstract class ExemptionJustification extends ExemptionJustification_Base
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeExemption();
+        setRootDomainObject(null);
+        setExemption(null);
 
         super.deleteDomainObject();
     }
 
-    @Override
     public void removeExemption() {
         super.setExemption(null);
     }
 
     abstract public LabelFormatter getDescription();
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExemption() {
+        return getExemption() != null;
+    }
+
+    @Deprecated
+    public boolean hasReason() {
+        return getReason() != null;
+    }
+
 }

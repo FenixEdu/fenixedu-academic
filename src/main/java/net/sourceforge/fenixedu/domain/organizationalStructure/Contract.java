@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -19,7 +20,7 @@ public abstract class Contract extends Contract_Base {
         @Override
         public int compare(Contract o1, Contract o2) {
             final int c = o1.getBeginDate().compareTo(o2.getBeginDate());
-            return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };
@@ -28,7 +29,7 @@ public abstract class Contract extends Contract_Base {
         @Override
         public int compare(Contract o1, Contract o2) {
             final int c = o1.getPerson().getName().compareTo(o2.getPerson().getName());
-            return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };

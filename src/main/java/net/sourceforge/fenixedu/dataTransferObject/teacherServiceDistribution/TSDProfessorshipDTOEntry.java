@@ -17,11 +17,11 @@ public class TSDProfessorshipDTOEntry extends DataTranferObject {
     }
 
     public TSDCourseDTOEntry getTSDCourseDTOEntry() {
-        return new TSDCourseDTOEntry(tsdProfessorshipList.get(0).getTSDCourse(), executionPeriodList);
+        return new TSDCourseDTOEntry(tsdProfessorshipList.iterator().next().getTSDCourse(), executionPeriodList);
     }
 
     public TSDTeacherDTOEntry getTSDTeacherDTOEntry() {
-        return new TSDTeacherDTOEntry(tsdProfessorshipList.get(0).getTSDTeacher(), executionPeriodList);
+        return new TSDTeacherDTOEntry(tsdProfessorshipList.iterator().next().getTSDTeacher(), executionPeriodList);
     }
 
     /*

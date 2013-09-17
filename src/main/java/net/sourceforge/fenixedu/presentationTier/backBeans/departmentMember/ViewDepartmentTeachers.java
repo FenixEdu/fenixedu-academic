@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,7 +39,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -241,7 +242,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
     private String computeDegreeAcronyms(ExecutionCourse executionCourse) {
         StringBuilder degreeAcronyms = new StringBuilder();
 
-        List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
         Set<String> processedAcronyns = new HashSet<String>();
 
         for (CurricularCourse curricularCourse : curricularCourses) {
@@ -302,7 +303,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         if (this.teacherFunctions == null && this.getSelectedExecutionYearID() != null) {
             String executionYearID = this.getSelectedExecutionYearID();
 
-            Teacher teacher = AbstractDomainObject.fromExternalId(getSelectedTeacherID());
+            Teacher teacher = FenixFramework.getDomainObject(getSelectedTeacherID());
 
             List<PersonFunction> result =
                     new ArrayList<PersonFunction>(ReadPersonFunctionsByPersonIDAndExecutionYearID.run(teacher.getPerson()

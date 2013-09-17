@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
@@ -36,18 +34,8 @@ public class ExternalProgramCertificateRequest extends ExternalProgramCertificat
     }
 
     @Override
-    public List<Enrolment> getEnrolments() {
-        return Collections.unmodifiableList(super.getEnrolments());
-    }
-
-    @Override
     public Set<Enrolment> getEnrolmentsSet() {
         return Collections.unmodifiableSet(super.getEnrolmentsSet());
-    }
-
-    @Override
-    public Iterator<Enrolment> getEnrolmentsIterator() {
-        return getEnrolmentsSet().iterator();
     }
 
     @Override
@@ -74,6 +62,16 @@ public class ExternalProgramCertificateRequest extends ExternalProgramCertificat
     protected void disconnect() {
         super.setInstitution(null);
         super.disconnect();
+    }
+
+    @Deprecated
+    public boolean hasNumberOfPrograms() {
+        return getNumberOfPrograms() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitution() {
+        return getInstitution() != null;
     }
 
 }

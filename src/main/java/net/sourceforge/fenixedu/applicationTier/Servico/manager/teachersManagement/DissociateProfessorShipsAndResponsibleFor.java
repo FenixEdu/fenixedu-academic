@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,16 +14,17 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.SupportLesson;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DissociateProfessorShipsAndResponsibleFor {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static Map run(String personNumber, List<String> professorships, List<String> responsibleFors)
             throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         if (personNumber == null) {
             throw new FenixServiceException("nullPersonNumber");
@@ -38,7 +40,7 @@ public class DissociateProfessorShipsAndResponsibleFor {
         if (professorships != null && responsibleFors != null) {
             List<Professorship> newProfessorships = new ArrayList<Professorship>();
             for (String professorshipId : professorships) {
-                Professorship professorship = AbstractDomainObject.fromExternalId(professorshipId);
+                Professorship professorship = FenixFramework.getDomainObject(professorshipId);
                 if (professorship == null) {
                     throw new FenixServiceException("nullPSNorRF");
                 }
@@ -51,7 +53,7 @@ public class DissociateProfessorShipsAndResponsibleFor {
 
             List<Professorship> newResponsibleFor = new ArrayList<Professorship>();
             for (String responsibleForId : responsibleFors) {
-                Professorship responsibleFor = AbstractDomainObject.fromExternalId(responsibleForId);
+                Professorship responsibleFor = FenixFramework.getDomainObject(responsibleForId);
                 if (responsibleFor == null) {
                     throw new FenixServiceException("nullPSNorRF");
                 }
@@ -65,16 +67,16 @@ public class DissociateProfessorShipsAndResponsibleFor {
             // everything is ok for removal, but first check
             // professorships with support lessons and shifts
             for (Professorship professorship : newProfessorships) {
-                List<SupportLesson> supportLessons = professorship.getSupportLessons();
-                List<ShiftProfessorship> shiftProfessorships = professorship.getAssociatedShiftProfessorship();
+                Collection<SupportLesson> supportLessons = professorship.getSupportLessons();
+                Collection<ShiftProfessorship> shiftProfessorships = professorship.getAssociatedShiftProfessorship();
 
                 if ((shiftProfessorships == null || shiftProfessorships.isEmpty())
                         && (supportLessons == null || supportLessons.isEmpty())) {
 
-                    List<Summary> summaryList = professorship.getAssociatedSummaries();
+                    Collection<Summary> summaryList = professorship.getAssociatedSummaries();
                     if (summaryList != null && !summaryList.isEmpty()) {
                         for (Summary summary : summaryList) {
-                            summary.removeProfessorship();
+                            summary.setProfessorship(null);
                         }
                     }
 

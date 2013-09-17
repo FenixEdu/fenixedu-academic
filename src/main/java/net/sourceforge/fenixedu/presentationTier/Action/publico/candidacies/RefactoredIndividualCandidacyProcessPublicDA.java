@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
@@ -121,7 +121,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     @SuppressWarnings("unchecked")
     protected CandidacyProcess getCurrentOpenParentProcess() {
-        Set<CandidacyProcess> degreeChangeCandidacyProcesses = RootDomainObject.readAllDomainObjects(getParentProcessType());
+        Set<CandidacyProcess> degreeChangeCandidacyProcesses = DomainObjectUtil.readAllDomainObjects(getParentProcessType());
 
         for (CandidacyProcess candidacyProcess : degreeChangeCandidacyProcesses) {
             if (candidacyProcess.hasOpenCandidacyPeriod()) {

@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -28,9 +28,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadExecutionDegreesByDegreeCurricularPlanID {
 
-    @Service
+    @Atomic
     public static List<InfoExecutionDegree> run(String degreeCurricularPlanID) {
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
 
@@ -43,7 +43,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlanID {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static List<InfoExecutionDegree> runReadExecutionDegreesByDegreeCurricularPlanID(String degreeCurricularPlanID)
             throws NotAuthorizedException {
         try {

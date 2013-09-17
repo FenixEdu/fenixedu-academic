@@ -106,4 +106,29 @@ public class TeacherPersonalExpectationPeriod extends TeacherPersonalExpectation
         }
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateYearMonthDay() {
+        return getEndDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasDepartment() {
+        return getDepartment() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDateYearMonthDay() {
+        return getStartDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

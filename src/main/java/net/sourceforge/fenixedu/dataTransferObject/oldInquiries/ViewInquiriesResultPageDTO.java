@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.oldInquiries;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ViewInquiriesResultPageDTO extends SearchInquiriesResultPageDTO {
 
@@ -17,7 +17,7 @@ public class ViewInquiriesResultPageDTO extends SearchInquiriesResultPageDTO {
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
         final String degreeCurricularPlanID = getDegreeCurricularPlanID();
-        return AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        return FenixFramework.getDomainObject(degreeCurricularPlanID);
     }
 
 }

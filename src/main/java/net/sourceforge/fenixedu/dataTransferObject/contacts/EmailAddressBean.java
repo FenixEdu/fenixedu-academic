@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.dataTransferObject.contacts;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class EmailAddressBean extends PartyContactBean {
 
@@ -33,7 +34,7 @@ public class EmailAddressBean extends PartyContactBean {
     }
 
     @Override
-    @Service
+    @Atomic
     public Boolean edit() {
         boolean isValueChanged = super.edit();
         if (isValueChanged) {
@@ -48,8 +49,8 @@ public class EmailAddressBean extends PartyContactBean {
     }
 
     @Override
-    @Checked("RolePredicates.PARTY_CONTACT_BEAN_PREDICATE")
     public PartyContact createNewContact() {
+        check(this, RolePredicates.PARTY_CONTACT_BEAN_PREDICATE);
         return EmailAddress.createEmailAddress(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
                 getVisibleToStudents(), getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
     }

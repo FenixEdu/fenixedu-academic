@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -58,7 +58,7 @@ public class ThesisSubject extends ThesisSubject_Base {
         }
     }
 
-    @Service
+    @Atomic
     public void edit(MultiLanguageString name, MultiLanguageString description, Teacher teacher, String externalAdvisor) {
         checkParameters(getPhdProgramFocusArea(), name, description, teacher);
 
@@ -68,24 +68,24 @@ public class ThesisSubject extends ThesisSubject_Base {
         setExternalAdvisorName(externalAdvisor);
     }
 
-    @Service
+    @Atomic
     public void delete() {
         for (ThesisSubjectOrder order : getThesisSubjectOrders()) {
             if (isCandidacyPeriodOpen(order.getPhdIndividualProgramProcess())) {
                 order.delete();
             }
         }
-        removePhdProgramFocusArea();
+        setPhdProgramFocusArea(null);
 
         if (!hasAnyThesisSubjectOrders()) {
-            removeTeacher();
+            setTeacher(null);
 
-            removeRootDomainObject();
+            setRootDomainObject(null);
             deleteDomainObject();
         }
     }
 
-    @Service
+    @Atomic
     public static ThesisSubject createThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name,
             MultiLanguageString description, Teacher teacher, String externalAdvisor) {
         return new ThesisSubject(focusArea, name, description, teacher, externalAdvisor);
@@ -95,4 +95,44 @@ public class ThesisSubject extends ThesisSubject_Base {
         return process.getCandidacyProcess().getPublicPhdCandidacyPeriod() != null
                 && process.getCandidacyProcess().getPublicPhdCandidacyPeriod().isOpen();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder> getThesisSubjectOrders() {
+        return getThesisSubjectOrdersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyThesisSubjectOrders() {
+        return !getThesisSubjectOrdersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasExternalAdvisorName() {
+        return getExternalAdvisorName() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdProgramFocusArea() {
+        return getPhdProgramFocusArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

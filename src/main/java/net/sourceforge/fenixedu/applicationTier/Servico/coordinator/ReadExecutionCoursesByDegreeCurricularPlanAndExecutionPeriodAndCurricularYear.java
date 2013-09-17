@@ -16,27 +16,27 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear {
 
     public List<ExecutionCourse> run(String degreeCurricularPlanID, String executionPeriodID, String curricularYearID)
             throws FenixServiceException {
 
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
         if (executionSemester == null) {
             throw new FenixServiceException("error.no.executionPeriod");
         }
 
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.coordinator.noDegreeCurricularPlan");
         }
 
         CurricularYear curricularYear = null;
         if (curricularYearID != null) {
-            curricularYear = AbstractDomainObject.fromExternalId(curricularYearID);
+            curricularYear = FenixFramework.getDomainObject(curricularYearID);
             if (curricularYear == null) {
                 throw new FenixServiceException("error.no.curYear");
             }
@@ -68,7 +68,7 @@ public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurr
     private static final ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear serviceInstance =
             new ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear();
 
-    @Service
+    @Atomic
     public static List<ExecutionCourse> runReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear(
             String degreeCurricularPlanID, String executionPeriodID, String curricularYearID) throws FenixServiceException,
             NotAuthorizedException {

@@ -81,4 +81,159 @@ public class MobilityStudentData extends MobilityStudentData_Base {
         setApplyFor(erasmusStudentDataBean.getApplyFor());
 
     }
+    @Deprecated
+    public boolean hasIntensivePortugueseCourseFebruary() {
+        return getIntensivePortugueseCourseFebruary() != null;
+    }
+
+    @Deprecated
+    public boolean hasSelectedOpening() {
+        return getSelectedOpening() != null;
+    }
+
+    @Deprecated
+    public boolean hasHomeInstitutionPhone() {
+        return getHomeInstitutionPhone() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExperienceCarryingOutProject() {
+        return getExperienceCarryingOutProject() != null;
+    }
+
+    @Deprecated
+    public boolean hasHomeInstitutionAddress() {
+        return getHomeInstitutionAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasDateOfArrival() {
+        return getDateOfArrival() != null;
+    }
+
+    @Deprecated
+    public boolean hasHomeInstitutionFax() {
+        return getHomeInstitutionFax() != null;
+    }
+
+    @Deprecated
+    public boolean hasPtAbleFollowLecures() {
+        return getPtAbleFollowLecures() != null;
+    }
+
+    @Deprecated
+    public boolean hasDiplomaConclusionYear() {
+        return getDiplomaConclusionYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasSelectedVacancy() {
+        return getSelectedVacancy() != null;
+    }
+
+    @Deprecated
+    public boolean hasHomeInstitutionEmail() {
+        return getHomeInstitutionEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasSchoolLevel() {
+        return getSchoolLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasHasDiplomaOrDegree() {
+        return getHasDiplomaOrDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasDateOfDeparture() {
+        return getDateOfDeparture() != null;
+    }
+
+    @Deprecated
+    public boolean hasPtStudyingLanguage() {
+        return getPtStudyingLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasNameOfContact() {
+        return getNameOfContact() != null;
+    }
+
+    @Deprecated
+    public boolean hasIntensivePortugueseCourseSeptember() {
+        return getIntensivePortugueseCourseSeptember() != null;
+    }
+
+    @Deprecated
+    public boolean hasOtherSchoolLevel() {
+        return getOtherSchoolLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasPtAbleToFollowLectureWithExtraPreparation() {
+        return getPtAbleToFollowLectureWithExtraPreparation() != null;
+    }
+
+    @Deprecated
+    public boolean hasHomeInstitutionCoordinatorName() {
+        return getHomeInstitutionCoordinatorName() != null;
+    }
+
+    @Deprecated
+    public boolean hasHasContactedOtherStaff() {
+        return getHasContactedOtherStaff() != null;
+    }
+
+    @Deprecated
+    public boolean hasApplyFor() {
+        return getApplyFor() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityIndividualApplication() {
+        return getMobilityIndividualApplication() != null;
+    }
+
+    @Deprecated
+    public boolean hasTypesOfProgramme() {
+        return getTypesOfProgramme() != null;
+    }
+
+    @Deprecated
+    public boolean hasHomeInstitutionName() {
+        return getHomeInstitutionName() != null;
+    }
+
+    @Deprecated
+    public boolean hasMainSubjectThesis() {
+        return getMainSubjectThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasDiplomaName() {
+        return getDiplomaName() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnAbleFollowLecures() {
+        return getEnAbleFollowLecures() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnStudyingLanguage() {
+        return getEnStudyingLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnAbleToFollowLectureWithExtraPreparation() {
+        return getEnAbleToFollowLectureWithExtraPreparation() != null;
+    }
+
 }

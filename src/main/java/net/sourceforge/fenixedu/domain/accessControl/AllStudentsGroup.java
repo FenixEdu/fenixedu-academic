@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -34,7 +34,7 @@ public class AllStudentsGroup extends Group {
     @Override
     public Set<Person> getElements() {
         Set<Person> elements = new HashSet<Person>();
-        List<Person> people = Role.getRoleByRoleType(RoleType.STUDENT).getAssociatedPersons();
+        Collection<Person> people = Role.getRoleByRoleType(RoleType.STUDENT).getAssociatedPersons();
 
         for (Person person : people) {
             if (!person.getStudent().getActiveRegistrations().isEmpty()) {

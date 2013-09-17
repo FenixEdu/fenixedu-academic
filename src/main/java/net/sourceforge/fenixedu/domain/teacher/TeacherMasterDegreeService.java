@@ -30,8 +30,8 @@ public class TeacherMasterDegreeService extends TeacherMasterDegreeService_Base 
 
     @Override
     public void delete() {
-        removeProfessorship();
-        removeTeacherService();
+        setProfessorship(null);
+        setTeacherService(null);
         super.delete();
     }
 
@@ -60,4 +60,19 @@ public class TeacherMasterDegreeService extends TeacherMasterDegreeService_Base 
         }
         super.setHours(hours);
     }
+    @Deprecated
+    public boolean hasCredits() {
+        return getCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasHours() {
+        return getHours() != null;
+    }
+
 }

@@ -19,7 +19,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewTimetable", module = "externalSupervision", formBean = "studentTimeTableForm")
 @Forwards({ @Forward(name = "chooseRegistration", path = "/student/timeTable/chooseRegistration.jsp"),
@@ -30,7 +30,7 @@ public class ShowStudentTimeTable extends ViewStudentTimeTable {
             HttpServletResponse response) throws FenixActionException,  FenixServiceException {
 
         final String personId = request.getParameter("personId");
-        Person person = AbstractDomainObject.fromExternalId(personId);
+        Person person = FenixFramework.getDomainObject(personId);
         final Student student = person.getStudent();
 
         request.setAttribute("student", student);
@@ -39,7 +39,7 @@ public class ShowStudentTimeTable extends ViewStudentTimeTable {
         if (registrations.size() == 0) {
             return forwardToShowTimeTableForSupervisor(person.getStudent().getLastRegistration(), mapping, request);
         } else if (registrations.size() == 1) {
-            return forwardToShowTimeTableForSupervisor(registrations.get(0), mapping, request);
+            return forwardToShowTimeTableForSupervisor(registrations.iterator().next(), mapping, request);
         } else {
             request.setAttribute("registrations", registrations);
             return mapping.findForward("chooseRegistration");

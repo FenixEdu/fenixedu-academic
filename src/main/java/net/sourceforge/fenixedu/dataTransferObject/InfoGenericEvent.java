@@ -83,7 +83,7 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
     public InfoRoomOccupation getInfoRoomOccupation() {
         final GenericEvent genericEvent = getGenericEvent();
         return (genericEvent == null || genericEvent.getGenericEventSpaceOccupations().isEmpty()) ? null : InfoRoomOccupation
-                .newInfoFromDomain(genericEvent.getGenericEventSpaceOccupations().get(0));
+                .newInfoFromDomain(genericEvent.getGenericEventSpaceOccupations().iterator().next());
     }
 
     @Override

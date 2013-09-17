@@ -41,7 +41,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -148,13 +148,13 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
         if (searchExecutionCourse.get("curricularYearOID") != null && !searchExecutionCourse.get("curricularYearOID").equals("")
                 && !searchExecutionCourse.get("curricularYearOID").equals("null")) {
             curricularYearOID = (String) searchExecutionCourse.get("curricularYearOID");
-            infoCurricularYear = new InfoCurricularYear(AbstractDomainObject.<CurricularYear> fromExternalId(curricularYearOID));
+            infoCurricularYear = new InfoCurricularYear(FenixFramework.<CurricularYear> getDomainObject(curricularYearOID));
             request.setAttribute("curricularYearOID", curricularYearOID);
         } else {
             if ((request.getParameter("curricularYearOID") != null) && (request.getParameter("curricularYearOID").length() != 0)
                     && (!searchExecutionCourse.get("curricularYearOID").equals("null"))) {
                 infoCurricularYear =
-                        new InfoCurricularYear(AbstractDomainObject.<CurricularYear> fromExternalId(request
+                        new InfoCurricularYear(FenixFramework.<CurricularYear> getDomainObject(request
                                 .getParameter("curricularYearOID")));
             }
         }
@@ -168,7 +168,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
         InfoExecutionPeriod infoExecutionPeriod =
                 InfoExecutionPeriod
-                        .newInfoFromDomain(AbstractDomainObject.<ExecutionSemester> fromExternalId(executionPeriodOID));
+                        .newInfoFromDomain(FenixFramework.<ExecutionSemester> getDomainObject(executionPeriodOID));
 
         if ((executionCourseName != null) && (executionCourseName.length() == 0)) {
             executionCourseName = null;

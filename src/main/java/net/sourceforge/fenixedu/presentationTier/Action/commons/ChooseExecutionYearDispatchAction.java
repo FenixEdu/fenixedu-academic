@@ -27,7 +27,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -127,7 +127,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
         request.setAttribute("degreeCurricularPlanID", curricularPlanID);
 
         if (executionDegreeID != null) {
-            ExecutionDegree executionDegree = (ExecutionDegree) AbstractDomainObject.fromExternalId(executionDegreeID);
+            ExecutionDegree executionDegree = (ExecutionDegree) FenixFramework.getDomainObject(executionDegreeID);
             ExecutionYear executionYear = executionDegree.getExecutionYear();
             request.setAttribute(PresentationConstants.EXECUTION_YEAR, executionYear.getName());
         }

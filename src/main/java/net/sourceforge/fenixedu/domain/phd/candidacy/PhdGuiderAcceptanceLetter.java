@@ -64,4 +64,9 @@ public class PhdGuiderAcceptanceLetter extends PhdGuiderAcceptanceLetter_Base {
         return true;
     }
 
+    @Deprecated
+    public boolean hasPhdGuider() {
+        return getPhdGuider() != null;
+    }
+
 }

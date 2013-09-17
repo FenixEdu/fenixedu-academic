@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadExecutionDegreesByExecutionYear {
 
-    @Service
+    @Atomic
     public static List run(InfoExecutionYear infoExecutionYear) {
 
         final List infoExecutionDegreeList = new ArrayList();

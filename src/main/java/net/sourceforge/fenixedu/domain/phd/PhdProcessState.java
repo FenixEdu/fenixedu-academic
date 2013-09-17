@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 abstract public class PhdProcessState extends PhdProcessState_Base {
 
@@ -75,8 +75,8 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
     }
 
     protected void disconnect() {
-        removePerson();
-        removeRootDomainObject();
+        setPerson(null);
+        setRootDomainObject(null);
     }
 
     abstract public PhdProcessStateType getType();
@@ -85,7 +85,7 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
 
     public abstract PhdProgramProcess getProcess();
 
-    @Service
+    @Atomic
     public void editStateDate(PhdProcessStateBean bean) {
         if (bean.getStateDate() == null) {
             throw new PhdDomainOperationException("error.PhdProcessState.state.date.required");
@@ -111,6 +111,31 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
         builder.delete(builder.length() - 2, builder.length());
 
         return builder.toString();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStateDate() {
+        return getStateDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasRemarks() {
+        return getRemarks() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

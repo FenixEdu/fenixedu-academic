@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +27,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TeacherInquiryBean implements Serializable {
 
@@ -53,7 +54,7 @@ public class TeacherInquiryBean implements Serializable {
 
     private void initTeachersResults(Professorship professorship, Person person) {
         setTeachersResults(new ArrayList<TeacherShiftTypeResultsBean>());
-        List<InquiryResult> professorshipResults = professorship.getInquiryResults();
+        Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
         if (!professorshipResults.isEmpty()) {
             for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                 List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
@@ -68,7 +69,7 @@ public class TeacherInquiryBean implements Serializable {
         Collections.sort(getTeachersResults(), new BeanComparator("shiftType"));
     }
 
-    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+    private Set<ShiftType> getShiftTypes(Collection<InquiryResult> professorshipResults) {
         Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
         for (InquiryResult inquiryResult : professorshipResults) {
             shiftTypes.add(inquiryResult.getShiftType());
@@ -138,7 +139,7 @@ public class TeacherInquiryBean implements Serializable {
         return Boolean.toString(true);
     }
 
-    @Service
+    @Atomic
     public void saveChanges(Person person, ResultPersonCategory teacher) {
         for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : getTeachersResults()) {
             saveComments(person, teacher, teacherShiftTypeResultsBean.getBlockResults());

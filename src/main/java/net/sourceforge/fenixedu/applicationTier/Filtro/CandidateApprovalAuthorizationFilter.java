@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -48,7 +48,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 
             for (String id2 : ids) {
 
-                MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(id2);
+                MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(id2);
 
                 // modified by Tânia Pousão
                 Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(person);

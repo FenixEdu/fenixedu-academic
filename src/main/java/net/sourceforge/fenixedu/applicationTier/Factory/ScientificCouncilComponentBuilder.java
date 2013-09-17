@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Jo�o Mota
@@ -71,7 +72,7 @@ public class ScientificCouncilComponentBuilder {
     private ISiteComponent getInfoSiteBasicCurricularCourses(InfoSiteBasicCurricularCourses component,
             String degreeCurricularPlanId) throws FenixServiceException {
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
         if (degreeCurricularPlan == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -111,12 +112,12 @@ public class ScientificCouncilComponentBuilder {
     private ISiteComponent getInfoSiteCurricularCourses(InfoSiteCurricularCourses component, String degreeCurricularPlanId)
             throws FenixServiceException {
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
         if (degreeCurricularPlan == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
         Iterator iter = curricularCourses.iterator();
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
@@ -140,7 +141,7 @@ public class ScientificCouncilComponentBuilder {
     private ISiteComponent getInfoSiteDegreeCurricularPlans(InfoSiteDegreeCurricularPlans component, String degreeId)
             throws FenixServiceException {
 
-        Degree degree = AbstractDomainObject.fromExternalId(degreeId);
+        Degree degree = FenixFramework.getDomainObject(degreeId);
         if (degree == null) {
             throw new InvalidArgumentsServiceException();
         }

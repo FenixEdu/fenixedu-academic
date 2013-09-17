@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionReques
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RegistrationAcademicServiceRequestCreator extends RegistrationAcademicServiceRequestCreateBean implements
         FactoryExecutor {
@@ -25,7 +25,7 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
     }
 
     @Override
-    @Service
+    @Atomic
     public Object execute() {
         final Object result;
         switch (getAcademicServiceRequestType()) {

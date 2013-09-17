@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "SpaceManager", path = "/roomClassification", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "ViewRoomClassifications", path = "/spaceManager/roomClassification.jsp",
@@ -71,7 +71,7 @@ public class RoomClassificationDA extends FenixDispatchAction {
 
     private RoomClassification retrieveRoomClassification(HttpServletRequest request) {
         final String roomClassificationIDString = request.getParameter("roomClassificationID");
-        return AbstractDomainObject.fromExternalId(roomClassificationIDString);
+        return FenixFramework.getDomainObject(roomClassificationIDString);
     }
 
 }

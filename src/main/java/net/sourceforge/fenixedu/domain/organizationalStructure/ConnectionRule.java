@@ -17,10 +17,30 @@ public class ConnectionRule extends ConnectionRule_Base {
     }
 
     public void delete() {
-        removeAccountabilityType();
-        removeAllowedChildPartyType();
-        removeAllowedParentPartyType();
-        removeRootDomainObject();
+        setAccountabilityType(null);
+        setAllowedChildPartyType(null);
+        setAllowedParentPartyType(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasAccountabilityType() {
+        return getAccountabilityType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowedParentPartyType() {
+        return getAllowedParentPartyType() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowedChildPartyType() {
+        return getAllowedChildPartyType() != null;
+    }
+
 }

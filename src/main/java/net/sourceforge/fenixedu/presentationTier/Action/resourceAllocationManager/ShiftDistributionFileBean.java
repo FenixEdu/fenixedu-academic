@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class ShiftDistributionFileBean implements Serializable {
@@ -29,7 +29,7 @@ public class ShiftDistributionFileBean implements Serializable {
         setFirstPhase(true);
     }
 
-    @Service
+    @Atomic
     protected void writeDistribution() {
         final ExecutionYear executionYear = ExecutionSemester.readActualExecutionSemester().getExecutionYear();
         final ShiftDistribution shiftDistribution =

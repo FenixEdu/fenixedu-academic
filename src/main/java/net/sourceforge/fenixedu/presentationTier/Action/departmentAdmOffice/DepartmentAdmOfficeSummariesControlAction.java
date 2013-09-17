@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,12 +27,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class DepartmentAdmOfficeSummariesControlAction extends SummariesControlAction {
 
     @Override
-    protected void readAndSaveAllDepartments(HttpServletRequest request) throws  FenixServiceException {
+    protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixServiceException {
 
         List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
         final IUserView userView = UserView.getUser();
         Person person = userView.getPerson();
-        List<Department> manageableDepartments = person.getManageableDepartmentCredits();
+        Collection<Department> manageableDepartments = person.getManageableDepartmentCredits();
         for (Department department : manageableDepartments) {
             LabelValueBean bean = new LabelValueBean();
             bean.setLabel(department.getRealName());

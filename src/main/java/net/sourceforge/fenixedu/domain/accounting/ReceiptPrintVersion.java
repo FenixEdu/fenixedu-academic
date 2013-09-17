@@ -6,7 +6,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
 
@@ -53,11 +54,31 @@ public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
         throw new DomainException("error.accounting.receiptVersion.cannot.modify.whenCreated");
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     void delete() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setPerson(null);
         super.setReceipt(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasReceipt() {
+        return getReceipt() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

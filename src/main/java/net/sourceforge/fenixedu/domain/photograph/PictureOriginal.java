@@ -25,7 +25,7 @@ public class PictureOriginal extends PictureOriginal_Base {
 
     @Override
     public void delete() {
-        removePhotograph();
+        setPhotograph(null);
         super.delete();
     }
 

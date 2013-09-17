@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -24,8 +23,9 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
@@ -46,7 +46,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
         for (ResultParticipation participation : getOrderedResultParticipations()) {
             resume = resume + participation.getPerson().getName();
             i++;
-            if (i < getResultParticipationsCount()) {
+            if (i < getResultParticipationsSet().size()) {
                 resume = resume + ", ";
             } else {
                 resume = resume + " - ";
@@ -67,8 +67,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
         return resume;
     }
 
-    @Checked("ResultPredicates.createPredicate")
     private void setOnCreateAtributes() {
+        check(this, ResultPredicates.createPredicate);
         if (AccessControl.getUserView() != null) {
             super.setModifiedBy(AccessControl.getPerson().getName());
             setCreator(AccessControl.getPerson());
@@ -76,21 +76,21 @@ public abstract class ResearchResult extends ResearchResult_Base {
         super.setLastModificationDate(new DateTime());
     }
 
-    @Checked("ResultPredicates.createPredicate")
     public ResultParticipation setCreatorParticipation(Person participator, ResultParticipationRole role) {
-        return new ResultParticipation(this, participator, role, this.getResultParticipationsCount());
+        check(this, ResultPredicates.createPredicate);
+        return new ResultParticipation(this, participator, role, this.getResultParticipationsSet().size());
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public ResultParticipation addParticipation(Person participator, ResultParticipationRole role) {
+        check(this, ResultPredicates.writePredicate);
         final ResultParticipation participation =
-                new ResultParticipation(this, participator, role, this.getResultParticipationsCount());
+                new ResultParticipation(this, participator, role, this.getResultParticipationsSet().size());
         updateModifiedByAndDate();
         return participation;
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void removeParticipation(ResultParticipation participation) {
+        check(this, ResultPredicates.writePredicate);
 
         Person person = participation.getPerson();
         if (person.equals(this.getCreator())) {
@@ -111,30 +111,30 @@ public abstract class ResearchResult extends ResearchResult_Base {
         return false;
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public ResultUnitAssociation addUnitAssociation(Unit unit, ResultUnitAssociationRole role) {
+        check(this, ResultPredicates.writePredicate);
         final ResultUnitAssociation association = new ResultUnitAssociation(this, unit, role);
         updateModifiedByAndDate();
         return association;
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void removeUnitAssociation(ResultUnitAssociation association) {
+        check(this, ResultPredicates.writePredicate);
         association.delete();
         updateModifiedByAndDate();
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public ResearchResultDocumentFile addDocumentFile(final VirtualPath path, Collection<FileSetMetaData> metadata,
             byte[] content, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
             Group permittedGroup) {
+        check(this, ResultPredicates.writePredicate);
         return addDocumentFile(path, metadata, content, filename, displayName, permittedGroupType, permittedGroup, Boolean.TRUE);
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public ResearchResultDocumentFile addDocumentFile(final VirtualPath path, Collection<FileSetMetaData> metadata,
             byte[] content, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
             Group permittedGroup, Boolean isVisible) {
+        check(this, ResultPredicates.writePredicate);
         final ResearchResultDocumentFile documentFile =
                 new ResearchResultDocumentFile(path, metadata, content, this, filename, displayName, permittedGroupType,
                         permittedGroup);
@@ -143,40 +143,40 @@ public abstract class ResearchResult extends ResearchResult_Base {
         return documentFile;
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void removeDocumentFile(ResearchResultDocumentFile documentFile) {
+        check(this, ResultPredicates.writePredicate);
         documentFile.delete();
         updateModifiedByAndDate();
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setParticipationsOrder(List<ResultParticipation> newParticipationsOrder) {
+        check(this, ResultPredicates.writePredicate);
         reOrderParticipations(newParticipationsOrder);
         updateModifiedByAndDate();
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setModifiedByAndDate() {
+        check(this, ResultPredicates.writePredicate);
         updateModifiedByAndDate();
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void delete() {
+        check(this, ResultPredicates.writePredicate);
         Person requestingPerson = AccessControl.getPerson();
         if (!hasPersonParticipation(requestingPerson) && !this.getCreator().equals(requestingPerson)) {
             throw new DomainException("error.researcher.Result.onlyParticipantsCanDelete");
         }
 
-        for (; !getResultTeachers().isEmpty(); getResultTeachers().get(0).delete()) {
+        for (; !getResultTeachers().isEmpty(); getResultTeachers().iterator().next().delete()) {
             ;
         }
         removeAssociations();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
     public final static ResearchResult readByOid(String oid) {
-        final ResearchResult result = AbstractDomainObject.fromExternalId(oid);
+        final ResearchResult result = FenixFramework.getDomainObject(oid);
 
         if (result == null) {
             throw new DomainException("error.researcher.Result.null");
@@ -188,7 +188,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
      * Returns participations list ordered.
      */
     public List<ResultParticipation> getOrderedResultParticipations() {
-        return Collections.unmodifiableList(sort(super.getResultParticipations()));
+        return Collections.unmodifiableList(sort(super.getResultParticipationsSet()));
     }
 
     private List<ResultParticipation> filterResultParticipationsByRole(ResultParticipationRole role) {
@@ -246,7 +246,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
      */
     public boolean hasAssociationWithUnitRole(Unit unit, ResultUnitAssociationRole role) {
         if (unit != null && role != null && this.hasAnyResultUnitAssociations()) {
-            final List<ResultUnitAssociation> list = this.getResultUnitAssociations();
+            final Collection<ResultUnitAssociation> list = this.getResultUnitAssociations();
 
             for (ResultUnitAssociation association : list) {
                 if (association.getUnit() != null && association.getUnit().equals(unit) && association.getRole().equals(role)) {
@@ -299,9 +299,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
     private void reOrderParticipations(List<ResultParticipation> newParticipationsOrder) {
         int order = 0;
         for (ResultParticipation participation : newParticipationsOrder) {
-            int index = this.getResultParticipations().indexOf(participation);
-            ResultParticipation aux = this.getResultParticipations().get(index);
-            aux.setPersonOrder(order++);
+            participation.setPersonOrder(order++);
         }
     }
 
@@ -310,25 +308,25 @@ public abstract class ResearchResult extends ResearchResult_Base {
      */
     private void removeAssociations() {
         super.setCountry(null);
-        removeCreator();
-        for (; !getAllResultDocumentFiles().isEmpty(); getAllResultDocumentFiles().get(0).delete()) {
+        setCreator(null);
+        for (; !getAllResultDocumentFiles().isEmpty(); getAllResultDocumentFiles().iterator().next().delete()) {
 
         }
 
-        for (; !getPrizes().isEmpty(); getPrizes().get(0).delete()) {
+        for (; !getPrizes().isEmpty(); getPrizes().iterator().next().delete()) {
 
         }
 
-        for (; !getResultUnitAssociations().isEmpty(); getResultUnitAssociations().get(0).delete()) {
+        for (; !getResultUnitAssociations().isEmpty(); getResultUnitAssociations().iterator().next().delete()) {
 
         }
 
-        for (; !getResultTeachers().isEmpty(); getResultTeachers().get(0).delete()) {
+        for (; !getResultTeachers().isEmpty(); getResultTeachers().iterator().next().delete()) {
 
         }
         // These should be the last to remove, because of access control
         // verifications.
-        for (; !getResultParticipations().isEmpty(); getResultParticipations().get(0).delete()) {
+        for (; !getResultParticipations().isEmpty(); getResultParticipations().iterator().next().delete()) {
 
         }
     }
@@ -344,11 +342,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
         throw new DomainException("error.researcher.Result.call", "setLastModificationDate");
     }
 
-    @Override
-    public void removeCountry() {
-        throw new DomainException("error.researcher.Result.call", "removeCountry");
-    }
-
     /**
      * Block operations on relation lists.
      */
@@ -360,16 +353,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
     @Override
     public void removeResultParticipations(ResultParticipation resultParticipations) {
         throw new DomainException("error.researcher.Result.call", "removeResultParticipations");
-    }
-
-    @Override
-    public List<ResultParticipation> getResultParticipations() {
-        return Collections.unmodifiableList(super.getResultParticipations());
-    }
-
-    @Override
-    public Iterator<ResultParticipation> getResultParticipationsIterator() {
-        return getResultParticipationsSet().iterator();
     }
 
     @Override
@@ -388,28 +371,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     @Override
-    public List<ResultUnitAssociation> getResultUnitAssociations() {
-        return Collections.unmodifiableList(super.getResultUnitAssociations());
-    }
-
-    @Override
-    public Iterator<ResultUnitAssociation> getResultUnitAssociationsIterator() {
-        return getResultUnitAssociationsSet().iterator();
-    }
-
-    @Override
     public Set<ResultUnitAssociation> getResultUnitAssociationsSet() {
         return Collections.unmodifiableSet(super.getResultUnitAssociationsSet());
-    }
-
-    @Override
-    public List<ResearchResultDocumentFile> getResultDocumentFiles() {
-        return Collections.unmodifiableList(getVisibleResultDocumentFiles());
-    }
-
-    @Override
-    public Iterator<ResearchResultDocumentFile> getResultDocumentFilesIterator() {
-        return getResultDocumentFilesSet().iterator();
     }
 
     @Override
@@ -417,8 +380,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
         return Collections.unmodifiableSet(getVisibleResultDocumentFilesSet());
     }
 
-    public List<ResearchResultDocumentFile> getAllResultDocumentFiles() {
-        return Collections.unmodifiableList(super.getResultDocumentFiles());
+    public Set<ResearchResultDocumentFile> getAllResultDocumentFiles() {
+        return Collections.unmodifiableSet(super.getResultDocumentFilesSet());
     }
 
     private List<ResearchResultDocumentFile> getVisibleResultDocumentFiles() {
@@ -443,7 +406,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     private List<ResearchResultDocumentFile> getVisibleFiles() {
-        List<ResearchResultDocumentFile> files = super.getResultDocumentFiles();
+        Set<ResearchResultDocumentFile> files = super.getResultDocumentFilesSet();
         List<ResearchResultDocumentFile> visibleDocuments = new ArrayList<ResearchResultDocumentFile>();
         for (ResearchResultDocumentFile file : files) {
             if (file.getVisible()) {
@@ -479,5 +442,100 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     public abstract String getSchema();
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultParticipation> getResultParticipations() {
+        return getResultParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResultParticipations() {
+        return !getResultParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation> getResultUnitAssociations() {
+        return getResultUnitAssociationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResultUnitAssociations() {
+        return !getResultUnitAssociationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.Prize> getPrizes() {
+        return getPrizesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPrizes() {
+        return !getPrizesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile> getResultDocumentFiles() {
+        return getResultDocumentFilesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResultDocumentFiles() {
+        return !getResultDocumentFilesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultTeacher> getResultTeachers() {
+        return getResultTeachersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResultTeachers() {
+        return !getResultTeachersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrl() {
+        return getUrl() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasModifiedBy() {
+        return getModifiedBy() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModificationDate() {
+        return getLastModificationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasNote() {
+        return getNote() != null;
+    }
+
+    @Deprecated
+    public boolean hasCountry() {
+        return getCountry() != null;
+    }
+
+    @Deprecated
+    public boolean hasUniqueStorageId() {
+        return getUniqueStorageId() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
 
 }

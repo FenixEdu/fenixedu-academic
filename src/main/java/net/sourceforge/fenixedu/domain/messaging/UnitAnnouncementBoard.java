@@ -66,4 +66,19 @@ public class UnitAnnouncementBoard extends UnitAnnouncementBoard_Base {
 
         return base + actionPath.toString();
     }
+    @Deprecated
+    public boolean hasUnitPermittedManagementGroupType() {
+        return getUnitPermittedManagementGroupType() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnitPermittedReadGroupType() {
+        return getUnitPermittedReadGroupType() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnitPermittedWriteGroupType() {
+        return getUnitPermittedWriteGroupType() != null;
+    }
+
 }

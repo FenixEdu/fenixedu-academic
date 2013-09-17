@@ -19,18 +19,18 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadQuestionImage {
 
-    @Service
+    @Atomic
     public static String run(String exerciseId, Integer imageId, Integer feedbackId, Integer itemIndex, String path)
             throws FenixServiceException {
-        Question question = AbstractDomainObject.fromExternalId(exerciseId);
+        Question question = FenixFramework.getDomainObject(exerciseId);
         if (question != null) {
             if (question.getSubQuestions() == null || question.getSubQuestions().size() == 0) {
                 ParseSubQuestion parse = new ParseSubQuestion();
@@ -48,12 +48,12 @@ public class ReadQuestionImage {
         return null;
     }
 
-    @Service
+    @Atomic
     public static String run(String distributedTestId, String questionId, String optionShuffle, Integer imageId,
             Integer feedbackId, String path) throws FenixServiceException {
 
         Question question = null;
-        Test test = AbstractDomainObject.fromExternalId(distributedTestId);
+        Test test = FenixFramework.getDomainObject(distributedTestId);
         for (TestQuestion testQuestion : test.getTestQuestions()) {
             if (testQuestion.getQuestion().getExternalId().equals(questionId)) {
                 question = testQuestion.getQuestion();

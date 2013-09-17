@@ -18,7 +18,7 @@ public class NewCorrector extends NewCorrector_Base implements Positionable {
         this.setAtomicQuestion(atomicQuestion);
         this.setPredicate(predicate);
         this.setPercentage(percentage);
-        this.setPosition(atomicQuestion.getCorrectorsCount());
+        this.setPosition(atomicQuestion.getCorrectorsSet().size());
     }
 
     public void delete() {
@@ -32,8 +32,8 @@ public class NewCorrector extends NewCorrector_Base implements Positionable {
             }
         }
 
-        this.removeAtomicQuestion();
-        this.removeRootDomainObject();
+        this.setAtomicQuestion(null);
+        this.setRootDomainObject(null);
 
         atomicQuestion.resortCorrectors();
 
@@ -47,7 +47,7 @@ public class NewCorrector extends NewCorrector_Base implements Positionable {
 
     @Override
     public boolean isLast() {
-        return this.getPosition() == this.getAtomicQuestion().getCorrectorsCount();
+        return this.getPosition() == this.getAtomicQuestion().getCorrectorsSet().size();
     }
 
     @Override
@@ -76,6 +76,31 @@ public class NewCorrector extends NewCorrector_Base implements Positionable {
 
     public NewCorrector copy() {
         return new NewCorrector(this.getAtomicQuestion(), this.getPredicate(), this.getPercentage());
+    }
+
+    @Deprecated
+    public boolean hasPercentage() {
+        return getPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPredicate() {
+        return getPredicate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPosition() {
+        return getPosition() != null;
+    }
+
+    @Deprecated
+    public boolean hasAtomicQuestion() {
+        return getAtomicQuestion() != null;
     }
 
 }

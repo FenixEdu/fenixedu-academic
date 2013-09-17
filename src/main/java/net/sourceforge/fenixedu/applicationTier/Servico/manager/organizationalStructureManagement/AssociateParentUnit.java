@@ -3,19 +3,20 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AssociateParentUnit {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String unitID, String parentUnitID, AccountabilityType accountabilityType)
             throws FenixServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
 
         Unit parentUnit = getParentUnit(parentUnitID);
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitID);
+        Unit unit = (Unit) FenixFramework.getDomainObject(unitID);
 
         if (unit == null) {
             throw new FenixServiceException("error.inexistent.unit");
@@ -26,7 +27,7 @@ public class AssociateParentUnit {
     private static Unit getParentUnit(String parentUnitID) {
         Unit parentUnit = null;
         if (parentUnitID != null) {
-            parentUnit = (Unit) AbstractDomainObject.fromExternalId(parentUnitID);
+            parentUnit = (Unit) FenixFramework.getDomainObject(parentUnitID);
         }
         return parentUnit;
     }

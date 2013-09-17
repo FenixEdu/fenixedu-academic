@@ -21,8 +21,13 @@ public class ProjectSubmissionFile extends ProjectSubmissionFile_Base {
 
     @Override
     public void delete() {
-        removeProjectSubmission();
+        setProjectSubmission(null);
         super.delete();
+    }
+
+    @Deprecated
+    public boolean hasProjectSubmission() {
+        return getProjectSubmission() != null;
     }
 
 }

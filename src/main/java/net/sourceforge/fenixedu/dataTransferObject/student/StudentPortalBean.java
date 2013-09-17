@@ -93,7 +93,7 @@ public class StudentPortalBean implements Serializable {
             }
 
             private boolean isStudentEnrolled(Grouping grouping) {
-                for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
+                for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
                     for (Attends attends : studentGroup.getAttends()) {
                         if (attends.getAluno().getStudent() == getStudent()) {
                             return true;

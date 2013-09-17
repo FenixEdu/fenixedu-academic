@@ -22,8 +22,9 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base {
 
@@ -335,10 +336,10 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
         return registry != null ? registry.getRegistryCode() : null;
     }
 
-    @Service
+    @Atomic
     @Override
-    @Checked("AcademicPredicates.SERVICE_REQUESTS_REVERT_TO_PROCESSING_STATE")
     public void revertToProcessingState() {
+        check(this, AcademicPredicates.SERVICE_REQUESTS_REVERT_TO_PROCESSING_STATE);
         internalRevertToProcessingState();
     }
 
@@ -346,4 +347,60 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     protected void createCertificateRequestEvent() {
         new DegreeFinalizationCertificateRequestEvent(getAdministrativeOffice(), getRegistration().getPerson(), this);
     }
+
+    @Deprecated
+    public boolean hasDetailed() {
+        return getDetailed() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestedCycle() {
+        return getRequestedCycle() != null;
+    }
+
+    @Deprecated
+    public boolean hasIgnoreExternalEntries() {
+        return getIgnoreExternalEntries() != null;
+    }
+
+    @Deprecated
+    public boolean hasBranch() {
+        return getBranch() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyPlan() {
+        return getStudyPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasInternshipAbolished() {
+        return getInternshipAbolished() != null;
+    }
+
+    @Deprecated
+    public boolean hasIgnoreCurriculumInAdvance() {
+        return getIgnoreCurriculumInAdvance() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage() {
+        return getAverage() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityProgram() {
+        return getMobilityProgram() != null;
+    }
+
+    @Deprecated
+    public boolean hasInternshipApproved() {
+        return getInternshipApproved() != null;
+    }
+
+    @Deprecated
+    public boolean hasTechnicalEngineer() {
+        return getTechnicalEngineer() != null;
+    }
+
 }

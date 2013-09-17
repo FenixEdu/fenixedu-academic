@@ -64,7 +64,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -111,7 +111,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
         final String objectCode = request.getParameter("objectCode");
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(objectCode);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(objectCode);
 
         final Student student = userView.getPerson().getStudent();
         Map<Registration, Set<DistributedTest>> distributedTestList =
@@ -182,7 +182,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         String testCode = request.getParameter("testCode");
         request.setAttribute("date", getDate());
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -263,7 +263,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         final Integer itemIndex = getRequestParameterAsInteger(request, "item");
         final String path = getServlet().getServletContext().getRealPath("/");
 
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -323,7 +323,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         String testCode = request.getParameter("testCode");
 
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -448,7 +448,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         final String logId = request.getParameter("logId");
         final IUserView userView = getUserView(request);
         if (logId != null && logId.length() != 0) {
-            StudentTestLog studentTestLog = AbstractDomainObject.fromExternalId(logId);
+            StudentTestLog studentTestLog = FenixFramework.getDomainObject(logId);
             if (studentTestLog.getStudent().getPerson().equals(userView.getPerson())) {
                 List<StudentTestLog> studentTestLogs = new ArrayList<StudentTestLog>();
                 studentTestLogs.add(studentTestLog);
@@ -497,7 +497,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
         }
-        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
+        DistributedTest distributedTest = FenixFramework.getDomainObject(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -536,7 +536,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
         }
-        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
+        DistributedTest distributedTest = FenixFramework.getDomainObject(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -569,7 +569,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         final String path = getServlet().getServletContext().getRealPath("/");
 
         String testCode = request.getParameter("testCode");
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -672,7 +672,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     private Registration getRegistration(HttpServletRequest request) {
         String registrationCode = request.getParameter("student");
 
-        final Registration registration = AbstractDomainObject.fromExternalId(registrationCode);
+        final Registration registration = FenixFramework.getDomainObject(registrationCode);
         if (registration == null) {
             return null;
         }

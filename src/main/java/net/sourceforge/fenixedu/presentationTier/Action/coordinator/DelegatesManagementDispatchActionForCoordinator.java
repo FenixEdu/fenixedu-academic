@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "coordinator", path = "/delegatesManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "createEditDelegates", path = "/coordinator/viewDelegates.jsp", tileProperties = @Tile(
@@ -34,7 +34,7 @@ public class DelegatesManagementDispatchActionForCoordinator extends DelegatesMa
             HttpServletResponse response) throws Exception {
 
         ExecutionDegree executionDegree =
-                (ExecutionDegree) AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionDegreeId"));
+                (ExecutionDegree) FenixFramework.getDomainObject((String) getFromRequest(request, "executionDegreeId"));
         DelegateBean bean = new DelegateBean();
         bean.setDegreeType(executionDegree.getDegreeType());
         bean.setDegree(executionDegree.getDegree());

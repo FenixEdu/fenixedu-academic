@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -41,8 +40,10 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.bennu.backend.util.ConnectionManager;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
@@ -182,8 +183,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     private List<String> getAllEventsExternalIds() {
         try {
-            Connection connection =
-                    Transaction.currentFenixTransaction().getOJBBroker().serviceConnectionManager().getConnection();
+            Connection connection = ConnectionManager.getCurrentSQLConnection();
 
             PreparedStatement prepareStatement = connection.prepareStatement("SELECT OID FROM EVENT");
             ResultSet executeQuery = prepareStatement.executeQuery();
@@ -224,32 +224,26 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             Thread thread = new Thread() {
 
                 @Override
+                @Atomic(mode = TxMode.READ)
                 public void run() {
-                    Transaction.withTransaction(true, new TransactionalCommand() {
+                    for (String oid : block) {
+                        Event event = null;
+                        try {
+                            event = FenixFramework.getDomainObject(oid);
 
-                        @Override
-                        public void doIt() {
+                            if (!isAccountingEventForReport(event)) {
+                                continue;
+                            }
 
-                            for (String oid : block) {
-                                Event event = null;
-                                try {
-                                    event = Event.fromExternalId(oid);
-
-                                    if (!isAccountingEventForReport(event)) {
-                                        continue;
-                                    }
-
-                                    result.add(writeEvent(event));
-                                } catch (Throwable e) {
-                                    e.printStackTrace(System.err);
-                                    if (event != null) {
-                                        System.err.println("Error on event -> " + event.getExternalId());
-                                    }
-                                }
-
+                            result.add(writeEvent(event));
+                        } catch (Throwable e) {
+                            e.printStackTrace(System.err);
+                            if (event != null) {
+                                System.err.println("Error on event -> " + event.getExternalId());
                             }
                         }
-                    });
+
+                    }
                 }
             };
 
@@ -474,30 +468,25 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             Thread thread = new Thread() {
 
                 @Override
+                @Atomic(mode = TxMode.READ)
                 public void run() {
-                    Transaction.withTransaction(true, new TransactionalCommand() {
+                    for (String oid : block) {
+                        Event event = FenixFramework.getDomainObject(oid);
 
-                        @Override
-                        public void doIt() {
-                            for (String oid : block) {
-                                Event event = Event.fromExternalId(oid);
+                        try {
+                            if (!isAccountingEventForReport(event)) {
+                                continue;
+                            }
 
-                                try {
-                                    if (!isAccountingEventForReport(event)) {
-                                        continue;
-                                    }
-
-                                    result.addAll(writeExemptionInformation(event));
-                                } catch (Throwable e) {
-                                    e.printStackTrace(System.err);
-                                    if (event != null) {
-                                        System.err.println("Error on event -> " + event.getExternalId());
-                                    }
-                                }
-
+                            result.addAll(writeExemptionInformation(event));
+                        } catch (Throwable e) {
+                            e.printStackTrace(System.err);
+                            if (event != null) {
+                                System.err.println("Error on event -> " + event.getExternalId());
                             }
                         }
-                    });
+
+                    }
                 }
             };
 
@@ -588,30 +577,25 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             Thread thread = new Thread() {
 
                 @Override
+                @Atomic(mode = TxMode.READ)
                 public void run() {
-                    Transaction.withTransaction(true, new TransactionalCommand() {
+                    for (String oid : block) {
+                        Event event = FenixFramework.getDomainObject(oid);
 
-                        @Override
-                        public void doIt() {
-                            for (String oid : block) {
-                                Event event = Event.fromExternalId(oid);
+                        try {
+                            if (!isAccountingEventForReport(event)) {
+                                continue;
+                            }
 
-                                try {
-                                    if (!isAccountingEventForReport(event)) {
-                                        continue;
-                                    }
-
-                                    result.addAll(writeTransactionInformation(event));
-                                } catch (Throwable e) {
-                                    e.printStackTrace(System.err);
-                                    if (event != null) {
-                                        System.err.println("Error on event -> " + event.getExternalId());
-                                    }
-                                }
-
+                            result.addAll(writeTransactionInformation(event));
+                        } catch (Throwable e) {
+                            e.printStackTrace(System.err);
+                            if (event != null) {
+                                System.err.println("Error on event -> " + event.getExternalId());
                             }
                         }
-                    });
+
+                    }
                 }
             };
 
@@ -810,7 +794,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         return all;
     }
 
-    @Service
+    @Atomic
     public static EventReportQueueJob createRequest(EventReportQueueJobBean bean) {
         return new EventReportQueueJob(bean);
     }
@@ -865,4 +849,85 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     public boolean isBrokenInThree() {
         return hasDebts();
     }
+
+    @Deprecated
+    public boolean hasExportIndividualCandidacyEvents() {
+        return getExportIndividualCandidacyEvents() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasExportGratuityEvents() {
+        return getExportGratuityEvents() != null;
+    }
+
+    @Deprecated
+    public boolean hasExemptions() {
+        return getExemptions() != null;
+    }
+
+    @Deprecated
+    public boolean hasForDegreeAdministrativeOffice() {
+        return getForDegreeAdministrativeOffice() != null;
+    }
+
+    @Deprecated
+    public boolean hasExportPhdEvents() {
+        return getExportPhdEvents() != null;
+    }
+
+    @Deprecated
+    public boolean hasExportResidenceEvents() {
+        return getExportResidenceEvents() != null;
+    }
+
+    @Deprecated
+    public boolean hasForExecutionYear() {
+        return getForExecutionYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasTransactions() {
+        return getTransactions() != null;
+    }
+
+    @Deprecated
+    public boolean hasErrors() {
+        return getErrors() != null;
+    }
+
+    @Deprecated
+    public boolean hasForAdministrativeOffice() {
+        return getForAdministrativeOffice() != null;
+    }
+
+    @Deprecated
+    public boolean hasForMasterDegreeAdministrativeOffice() {
+        return getForMasterDegreeAdministrativeOffice() != null;
+    }
+
+    @Deprecated
+    public boolean hasExportAcademicServiceRequestEvents() {
+        return getExportAcademicServiceRequestEvents() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasDebts() {
+        return getDebts() != null;
+    }
+
+    @Deprecated
+    public boolean hasExportOthers() {
+        return getExportOthers() != null;
+    }
+
 }

@@ -12,18 +12,19 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditPosGradStudentCurricularPlanStateAndCredits {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static void run(IUserView userView, String studentCurricularPlanId, String currentState, Double credits,
             String startDate, List<String> extraCurricularOIDs, String observations, String branchId, String specialization)
             throws FenixServiceException {
-        final StudentCurricularPlan scp = AbstractDomainObject.fromExternalId(studentCurricularPlanId);
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
+        final StudentCurricularPlan scp = FenixFramework.getDomainObject(studentCurricularPlanId);
         if (scp == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -38,7 +39,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Branch branch = AbstractDomainObject.fromExternalId(branchId);
+        final Branch branch = FenixFramework.getDomainObject(branchId);
         if (branch == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -51,7 +52,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits {
         scp.setBranch(branch);
         scp.setSpecialization(Specialization.valueOf(specialization));
 
-        for (final Enrolment enrolment : scp.getEnrolments()) {
+        for (final Enrolment enrolment : scp.getEnrolmentsSet()) {
             if (extraCurricularOIDs.contains(enrolment.getExternalId())) {
                 if (enrolment.isExtraCurricular()) {
                     enrolment.setIsExtraCurricular(false);

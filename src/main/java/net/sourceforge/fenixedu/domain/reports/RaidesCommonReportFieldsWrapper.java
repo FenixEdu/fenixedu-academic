@@ -123,7 +123,7 @@ public class RaidesCommonReportFieldsWrapper {
         final Row row = sheet.addRow();
         final Person graduate = registration.getPerson();
         //List<Registration> registrationPath = getFullRegistrationPath(registration);
-        Registration sourceRegistration = registrationPath.get(0);
+        Registration sourceRegistration = registrationPath.iterator().next();
         final PersonalInformationBean personalInformationBean = registration.getPersonalInformationBean(executionYear);
         StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
 

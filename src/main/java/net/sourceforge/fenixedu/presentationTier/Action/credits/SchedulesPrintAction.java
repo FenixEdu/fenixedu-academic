@@ -17,7 +17,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
 
@@ -25,8 +25,8 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String executionPeriodId = request.getParameter("executionPeriodId");
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
-        Teacher teacher = AbstractDomainObject.fromExternalId(request.getParameter("teacherId"));
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
+        Teacher teacher = FenixFramework.getDomainObject(request.getParameter("teacherId"));
 
         getAllTeacherCredits(request, executionSemester, teacher);
 

@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %> 
 <tiles:insert definition="definition.public.mainPage" beanName="" flush="true">
   <tiles:put name="navGeral" value="/commons/blank.jsp" />
   <tiles:put name="navbarGeral" value="/publico/commonNavLocalPub.jsp" />

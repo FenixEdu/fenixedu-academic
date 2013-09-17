@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -132,7 +132,7 @@ public class CountryUnit extends CountryUnit_Base {
         return (Set) partyType.getPartiesSet();
     }
 
-    @Service
+    @Atomic
     public void associateCountry(Country country) {
         if (country == null) {
             throw new DomainException("error.country.unit.country.is.empty");
@@ -163,4 +163,14 @@ public class CountryUnit extends CountryUnit_Base {
 
         return null;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Formation> getAssociatedCountryUnitFormations() {
+        return getAssociatedCountryUnitFormationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedCountryUnitFormations() {
+        return !getAssociatedCountryUnitFormationsSet().isEmpty();
+    }
+
 }

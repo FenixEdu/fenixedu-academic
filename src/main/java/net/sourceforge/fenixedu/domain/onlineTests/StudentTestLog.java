@@ -42,9 +42,9 @@ public class StudentTestLog extends StudentTestLog_Base {
     }
 
     public void delete() {
-        removeStudent();
-        removeDistributedTest();
-        removeRootDomainObject();
+        setStudent(null);
+        setDistributedTest(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -74,6 +74,36 @@ public class StudentTestLog extends StudentTestLog_Base {
         } else {
             setDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasChecksum() {
+        return getChecksum() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDistributedTest() {
+        return getDistributedTest() != null;
+    }
+
+    @Deprecated
+    public boolean hasDateDateTime() {
+        return getDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvent() {
+        return getEvent() != null;
     }
 
 }

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -17,7 +18,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccupation_Base {
 
@@ -42,7 +44,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     // )
     public void edit(WrittenEvaluation writtenEvaluation) {
 
-        if (hasWrittenEvaluations(writtenEvaluation)) {
+        if (getWrittenEvaluationsSet().contains(writtenEvaluation)) {
             removeWrittenEvaluations(writtenEvaluation);
         }
 
@@ -54,8 +56,8 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     }
 
     @Override
-    @Checked("SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations")
     public void delete() {
+        check(this, SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations);
         if (canBeDeleted()) {
             super.delete();
         }
@@ -69,7 +71,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
 
         List<Interval> result = new ArrayList<Interval>();
-        List<WrittenEvaluation> writtenEvaluations = getWrittenEvaluations();
+        Collection<WrittenEvaluation> writtenEvaluations = getWrittenEvaluationsSet();
 
         for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
             YearMonthDay writtenEvaluationDay = writtenEvaluation.getDayDateYearMonthDay();
@@ -155,8 +157,18 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
         if (!hasAnyWrittenEvaluations()) {
             return StringUtils.EMPTY;
         }
-        final WrittenEvaluation eval = getWrittenEvaluations().get(0);
+        final WrittenEvaluation eval = getWrittenEvaluations().iterator().next();
         return String.format("(%s) %s", eval.getEvaluationType(), eval.getName());
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluation> getWrittenEvaluations() {
+        return getWrittenEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWrittenEvaluations() {
+        return !getWrittenEvaluationsSet().isEmpty();
     }
 
 }

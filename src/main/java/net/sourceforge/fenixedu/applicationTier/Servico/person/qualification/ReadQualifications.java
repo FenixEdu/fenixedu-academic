@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadQualifications {
 
@@ -68,7 +68,7 @@ public class ReadQualifications {
 
     private static final ReadQualifications serviceInstance = new ReadQualifications();
 
-    @Service
+    @Atomic
     public static InfoSiteQualifications runReadQualifications(String user) throws NotAuthorizedException {
         ReadQualificationsAuthorizationFilter.instance.execute(user);
         return serviceInstance.run(user);

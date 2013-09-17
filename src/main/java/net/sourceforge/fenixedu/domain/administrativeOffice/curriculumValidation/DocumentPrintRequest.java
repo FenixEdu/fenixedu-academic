@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DocumentPrintRequest extends DocumentPrintRequest_Base {
 
@@ -37,7 +37,7 @@ public class DocumentPrintRequest extends DocumentPrintRequest_Base {
         super.setNewGraduatedTitleValue(graduatedTitleValue);
     }
 
-    @Service
+    @Atomic
     public static DocumentPrintRequest logRequest(String conclusionDateValue, String degreeDescriptionValue,
             String graduatedTitleValue, DocumentRequest request) {
         return new DocumentPrintRequest(conclusionDateValue, degreeDescriptionValue, graduatedTitleValue, request);
@@ -71,6 +71,41 @@ public class DocumentPrintRequest extends DocumentPrintRequest_Base {
     @Override
     public void setWhoRequested(Person whoRequested) {
         throw new DomainException("administrativeOffice.curriculumValidation.DocumentPrintRequest.cannot.modify.value");
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNewGraduatedTitleValue() {
+        return getNewGraduatedTitleValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentRequest() {
+        return getDocumentRequest() != null;
+    }
+
+    @Deprecated
+    public boolean hasNewConclusionDateValue() {
+        return getNewConclusionDateValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasNewDegreeDescriptionValue() {
+        return getNewDegreeDescriptionValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhoRequested() {
+        return getWhoRequested() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenRequested() {
+        return getWhenRequested() != null;
     }
 
 }

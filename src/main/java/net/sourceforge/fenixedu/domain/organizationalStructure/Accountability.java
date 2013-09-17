@@ -26,7 +26,7 @@ public class Accountability extends Accountability_Base {
         super.setAccountabilityType(null);
         super.setChildParty(null);
         super.setParentParty(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -91,6 +91,41 @@ public class Accountability extends Accountability_Base {
         final YearMonthDay start = getBeginDate();
         final YearMonthDay end = getEndDate();
         return start != null && (end == null || !start.isAfter(end));
+    }
+
+    @Deprecated
+    public boolean hasAccountabilityImportRegister() {
+        return getAccountabilityImportRegister() != null;
+    }
+
+    @Deprecated
+    public boolean hasAccountabilityType() {
+        return getAccountabilityType() != null;
+    }
+
+    @Deprecated
+    public boolean hasParentParty() {
+        return getParentParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasChildParty() {
+        return getChildParty() != null;
     }
 
 }

@@ -139,8 +139,8 @@ public class TeachingInquiry extends TeachingInquiry_Base {
     }
 
     public void delete() {
-        removeProfessorship();
-        removeRootDomainObject();
+        setProfessorship(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -157,6 +157,421 @@ public class TeachingInquiry extends TeachingInquiry_Base {
         } else {
             setResponseDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasDisturbingEventsInClassesReasonIndiscipline() {
+        return getDisturbingEventsInClassesReasonIndiscipline() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterStartAverageStudentNumberInProblems() {
+        return getSemesterStartAverageStudentNumberInProblems() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfQuizzesAndMiniTests() {
+        return getNumberOfQuizzesAndMiniTests() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfExams() {
+        return getNumberOfExams() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterStartActiveAndInteressedStudentsRatioInTheorical() {
+        return getSemesterStartActiveAndInteressedStudentsRatioInTheorical() != null;
+    }
+
+    @Deprecated
+    public boolean hasStrongPointsOfCUTeachingProcess() {
+        return getStrongPointsOfCUTeachingProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeakPointsOfCUTeachingProcess() {
+        return getWeakPointsOfCUTeachingProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasEstablishedScheduleSuitable() {
+        return getEstablishedScheduleSuitable() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterStartActiveAndInteressedStudentsRatioInLabs() {
+        return getSemesterStartActiveAndInteressedStudentsRatioInLabs() != null;
+    }
+
+    @Deprecated
+    public boolean hasGlobalClassificationOfThisCU() {
+        return getGlobalClassificationOfThisCU() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterEndActiveAndInteressedStudentsRatioInProblems() {
+        return getSemesterEndActiveAndInteressedStudentsRatioInProblems() != null;
+    }
+
+    @Deprecated
+    public boolean hasClassesAndOtherActivitiesFrequency() {
+        return getClassesAndOtherActivitiesFrequency() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisturbingEventsInClassesReasonLowAssiduity() {
+        return getDisturbingEventsInClassesReasonLowAssiduity() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterMiddleAverageStudentNumberInProject() {
+        return getSemesterMiddleAverageStudentNumberInProject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterStartAverageStudentNumberInLabs() {
+        return getSemesterStartAverageStudentNumberInLabs() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponseDateTime() {
+        return getResponseDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsReadyForFollowingCU() {
+        return getStudentsReadyForFollowingCU() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisturbingEventsInClassesReasonIntermediateEvaluations() {
+        return getDisturbingEventsInClassesReasonIntermediateEvaluations() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterEndAverageStudentNumberInTheorical() {
+        return getSemesterEndAverageStudentNumberInTheorical() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterMiddleAverageStudentNumberInTheorical() {
+        return getSemesterMiddleAverageStudentNumberInTheorical() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterStartAverageStudentNumberInSeminary() {
+        return getSemesterStartAverageStudentNumberInSeminary() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfWorksOrProjects() {
+        return getNumberOfWorksOrProjects() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterStartAverageStudentNumberInTheorical() {
+        return getSemesterStartAverageStudentNumberInTheorical() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterMiddleActiveAndInteressedStudentsRatioInTheorica() {
+        return getSemesterMiddleActiveAndInteressedStudentsRatioInTheorica() != null;
+    }
+
+    @Deprecated
+    public boolean hasActiveAndInteressedStudentsRatio() {
+        return getActiveAndInteressedStudentsRatio() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisturbingEventsInClassesDescription() {
+        return getDisturbingEventsInClassesDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasGeneralCommentToCUOperation() {
+        return getGeneralCommentToCUOperation() != null;
+    }
+
+    @Deprecated
+    public boolean hasComprehensionApplicationOfCU() {
+        return getComprehensionApplicationOfCU() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterMiddleAverageStudentNumberInProblems() {
+        return getSemesterMiddleAverageStudentNumberInProblems() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsibleTeacherReportDisclosureToAcademicComunity() {
+        return getResponsibleTeacherReportDisclosureToAcademicComunity() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationMethodSuitableForCUTeachingTypeAndObjective() {
+        return getEvaluationMethodSuitableForCUTeachingTypeAndObjective() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisturbingEventsInClasses() {
+        return getDisturbingEventsInClasses() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnswerDuration() {
+        return getAnswerDuration() != null;
+    }
+
+    @Deprecated
+    public boolean hasWorkLoadClassificationReasons() {
+        return getWorkLoadClassificationReasons() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterMiddleActiveAndInteressedStudentsRatioInProject() {
+        return getSemesterMiddleActiveAndInteressedStudentsRatioInProject() != null;
+    }
+
+    @Deprecated
+    public boolean hasReportDisclosureToAcademicComunity() {
+        return getReportDisclosureToAcademicComunity() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerformance() {
+        return getStudentsPerformance() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterStartActiveAndInteressedStudentsRatioInProblems() {
+        return getSemesterStartActiveAndInteressedStudentsRatioInProblems() != null;
+    }
+
+    @Deprecated
+    public boolean hasPositionOfCUInStudentCurricularPlan() {
+        return getPositionOfCUInStudentCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasClassesAndOtherActivitiesPonctuality() {
+        return getClassesAndOtherActivitiesPonctuality() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterEndActiveAndInteressedStudentsRatioInLabs() {
+        return getSemesterEndActiveAndInteressedStudentsRatioInLabs() != null;
+    }
+
+    @Deprecated
+    public boolean hasOtherTeachingLanguage() {
+        return getOtherTeachingLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasGlobalQualityOfTeachingInCU() {
+        return getGlobalQualityOfTeachingInCU() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterEndAverageStudentNumberInProject() {
+        return getSemesterEndAverageStudentNumberInProject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterStartActiveAndInteressedStudentsRatioInProject() {
+        return getSemesterStartActiveAndInteressedStudentsRatioInProject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterMiddleAverageStudentNumberInSeminary() {
+        return getSemesterMiddleAverageStudentNumberInSeminary() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterStartActiveAndInteressedStudentsRatioInSeminary() {
+        return getSemesterStartActiveAndInteressedStudentsRatioInSeminary() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterEndActiveAndInteressedStudentsRatioInTheorical() {
+        return getSemesterEndActiveAndInteressedStudentsRatioInTheorical() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfElectronicQuizzes() {
+        return getNumberOfElectronicQuizzes() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalCommentsAndImproovements() {
+        return getFinalCommentsAndImproovements() != null;
+    }
+
+    @Deprecated
+    public boolean hasPedagogicalActivitiesDeveloped() {
+        return getPedagogicalActivitiesDeveloped() != null;
+    }
+
+    @Deprecated
+    public boolean hasCooperationAndCommunicationCapacity() {
+        return getCooperationAndCommunicationCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasIncreaseAutonoumousLearningCapacity() {
+        return getIncreaseAutonoumousLearningCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasRelativePedagogicalInitiatives() {
+        return getRelativePedagogicalInitiatives() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterMiddleActiveAndInteressedStudentsRatioInSeminary() {
+        return getSemesterMiddleActiveAndInteressedStudentsRatioInSeminary() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfStudyVisitsOrOtherActivitiesReports() {
+        return getNumberOfStudyVisitsOrOtherActivitiesReports() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterMiddleActiveAndInteressedStudentsRatioInLabs() {
+        return getSemesterMiddleActiveAndInteressedStudentsRatioInLabs() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterMiddleAverageStudentNumberInLabs() {
+        return getSemesterMiddleAverageStudentNumberInLabs() != null;
+    }
+
+    @Deprecated
+    public boolean hasCriticalSenseAndReflexiveSpirit() {
+        return getCriticalSenseAndReflexiveSpirit() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfTests() {
+        return getNumberOfTests() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterMiddleActiveAndInteressedStudentsRatioInProblems() {
+        return getSemesterMiddleActiveAndInteressedStudentsRatioInProblems() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterEndAverageStudentNumberInLabs() {
+        return getSemesterEndAverageStudentNumberInLabs() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterEndAverageStudentNumberInSeminary() {
+        return getSemesterEndAverageStudentNumberInSeminary() != null;
+    }
+
+    @Deprecated
+    public boolean hasAvailableInfrastructureSuitableReason() {
+        return getAvailableInfrastructureSuitableReason() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterEndActiveAndInteressedStudentsRatioInSeminary() {
+        return getSemesterEndActiveAndInteressedStudentsRatioInSeminary() != null;
+    }
+
+    @Deprecated
+    public boolean hasAutonomousWork() {
+        return getAutonomousWork() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeachingLanguage() {
+        return getTeachingLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasLoadAndClassTypeContributionToFullfilmentOfCUProgram() {
+        return getLoadAndClassTypeContributionToFullfilmentOfCUProgram() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisturbingEventsInClassesReasonInfrastructure() {
+        return getDisturbingEventsInClassesReasonInfrastructure() != null;
+    }
+
+    @Deprecated
+    public boolean hasClarificationOfDoubtsOutsideClasses() {
+        return getClarificationOfDoubtsOutsideClasses() != null;
+    }
+
+    @Deprecated
+    public boolean hasNegativeResultsResolutionAndImproovementPlanOfAction() {
+        return getNegativeResultsResolutionAndImproovementPlanOfAction() != null;
+    }
+
+    @Deprecated
+    public boolean hasEstablishedScheduleNotSuitableReason() {
+        return getEstablishedScheduleNotSuitableReason() != null;
+    }
+
+    @Deprecated
+    public boolean hasComprehensionAndKnowledgeOfCU() {
+        return getComprehensionAndKnowledgeOfCU() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherNumberSuitableForCUOperation() {
+        return getTeacherNumberSuitableForCUOperation() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterStartAverageStudentNumberInProject() {
+        return getSemesterStartAverageStudentNumberInProject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSocialAndProfessionalContextAnalysis() {
+        return getSocialAndProfessionalContextAnalysis() != null;
+    }
+
+    @Deprecated
+    public boolean hasWorkLoadClassification() {
+        return getWorkLoadClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasResultsDisclosureToAcademicComunity() {
+        return getResultsDisclosureToAcademicComunity() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterEndAverageStudentNumberInProblems() {
+        return getSemesterEndAverageStudentNumberInProblems() != null;
+    }
+
+    @Deprecated
+    public boolean hasAvailableInfrastructureSuitable() {
+        return getAvailableInfrastructureSuitable() != null;
+    }
+
+    @Deprecated
+    public boolean hasSemesterEndActiveAndInteressedStudentsRatioInProject() {
+        return getSemesterEndActiveAndInteressedStudentsRatioInProject() != null;
     }
 
 }

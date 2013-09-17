@@ -14,14 +14,14 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DomainObjectActionLog extends DomainObjectActionLog_Base {
 
     public final static Comparator<DomainObjectActionLog> COMPARATOR_BY_INSTANT = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new ReverseComparator(new BeanComparator("instant")));
-        ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public DomainObjectActionLog(Person person, DomainObject domainObject, String action, Map<String, Object> parameters) {
@@ -121,4 +121,54 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
         }
         return resultList;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.DomainObjectActionLogEntry> getDomainObjectActionLogEntries() {
+        return getDomainObjectActionLogEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDomainObjectActionLogEntries() {
+        return !getDomainObjectActionLogEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstant() {
+        return getInstant() != null;
+    }
+
+    @Deprecated
+    public boolean hasAction() {
+        return getAction() != null;
+    }
+
+    @Deprecated
+    public boolean hasKeyDomainObject() {
+        return getKeyDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDomainObjectExternalId() {
+        return getDomainObjectExternalId() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonUsername() {
+        return getPersonUsername() != null;
+    }
+
+    @Deprecated
+    public boolean hasDomainObjectClassName() {
+        return getDomainObjectClassName() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

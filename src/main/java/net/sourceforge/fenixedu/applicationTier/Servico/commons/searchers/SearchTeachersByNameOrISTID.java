@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Predicate;
 
@@ -37,7 +37,7 @@ public class SearchTeachersByNameOrISTID implements AutoCompleteProvider<Teacher
     }
 
     @Override
-    @Service
+    @Atomic
     public Collection<Teacher> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         return search(value, maxCount);
     }

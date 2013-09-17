@@ -4,11 +4,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RemoveExecutionCoursesFromGroup {
 
-    @Service
+    @Atomic
     public static void run(VigilantGroup group, List<ExecutionCourse> executionCourses) {
 
         for (ExecutionCourse course : executionCourses) {

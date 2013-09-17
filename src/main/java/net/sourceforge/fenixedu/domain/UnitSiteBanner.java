@@ -1,17 +1,17 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class UnitSiteBanner extends UnitSiteBanner_Base {
 
-    private static final class CheckBannerAuthorization extends RelationAdapter<UnitSiteBanner, UnitSite> {
+    private static final class CheckBannerAuthorization extends RelationAdapter<UnitSite, UnitSiteBanner> {
         @Override
-        public void beforeAdd(UnitSiteBanner banner, UnitSite site) {
-            super.beforeAdd(banner, site);
+        public void beforeAdd(UnitSite site, UnitSiteBanner banner) {
+            super.beforeAdd(site, banner);
 
             if (banner != null && site != null) {
                 if (!UnitSitePredicates.managers.evaluate(site)) {
@@ -22,7 +22,7 @@ public class UnitSiteBanner extends UnitSiteBanner_Base {
     }
 
     static {
-        UnitSiteHasBanners.addListener(new CheckBannerAuthorization());
+        getRelationUnitSiteHasBanners().addListener(new CheckBannerAuthorization());
     }
 
     protected UnitSiteBanner() {
@@ -59,14 +59,14 @@ public class UnitSiteBanner extends UnitSiteBanner_Base {
         if (getBackgroundImage() != null) {
             getBackgroundImage().delete();
         }
-        removeSite();
-        removeRootDomainObject();
+        setSite(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
     public float getWeightPercentage() {
         Integer weight = getWeight();
-        List<UnitSiteBanner> banners = getSite().getBanners();
+        Collection<UnitSiteBanner> banners = getSite().getBanners();
 
         if (weight == null) {
             for (UnitSiteBanner banner : banners) {
@@ -90,4 +90,45 @@ public class UnitSiteBanner extends UnitSiteBanner_Base {
         }
 
     }
+
+    @Deprecated
+    public boolean hasBackgroundImage() {
+        return getBackgroundImage() != null;
+    }
+
+    @Deprecated
+    public boolean hasSite() {
+        return getSite() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasLink() {
+        return getLink() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeight() {
+        return getWeight() != null;
+    }
+
+    @Deprecated
+    public boolean hasMainImage() {
+        return getMainImage() != null;
+    }
+
+    @Deprecated
+    public boolean hasRepeatType() {
+        return getRepeatType() != null;
+    }
+
+    @Deprecated
+    public boolean hasColor() {
+        return getColor() != null;
+    }
+
 }

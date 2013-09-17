@@ -24,4 +24,19 @@ public class FirstTimeCandidacyLog extends FirstTimeCandidacyLog_Base {
     protected RootDomainObject getRootDomainObject() {
         return RootDomainObject.getInstance();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.log.FirstTimeCandidacyLogEntry> getFirstTimeCandidacyLogEntry() {
+        return getFirstTimeCandidacyLogEntrySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFirstTimeCandidacyLogEntry() {
+        return !getFirstTimeCandidacyLogEntrySet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasStudentCandidacy() {
+        return getStudentCandidacy() != null;
+    }
+
 }

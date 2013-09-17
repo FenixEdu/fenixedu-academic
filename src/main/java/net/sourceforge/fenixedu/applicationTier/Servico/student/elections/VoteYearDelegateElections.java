@@ -15,16 +15,17 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class VoteYearDelegateElections {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static void run(YearDelegateElection yearDelegateElection, Student student, Student votedStudent)
             throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.DelegateResources", Language.getLocale());
         DelegateElectionVotingPeriod votingPeriod = yearDelegateElection.getCurrentVotingPeriod();

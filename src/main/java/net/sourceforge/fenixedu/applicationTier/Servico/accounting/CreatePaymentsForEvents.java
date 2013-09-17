@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreatePaymentsForEvents {
 
-    @Service
+    @Atomic
     public static Receipt run(final User responsibleUser, final Collection<EntryDTO> entryDTOs, final PaymentMode paymentMode,
             final boolean differedPayment, final DateTime whenRegistered, final Person person, final Party contributorParty,
             final String contributorName) {

@@ -354,4 +354,29 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
     private boolean isProgramAllowedAsTarget() {
         return getOperation().isProgramAllowedAsTarget();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.AcademicProgram> getProgram() {
+        return getProgramSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProgram() {
+        return !getProgramSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice> getOffice() {
+        return getOfficeSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOffice() {
+        return !getOfficeSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasOperation() {
+        return getOperation() != null;
+    }
+
 }

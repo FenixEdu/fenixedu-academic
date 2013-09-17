@@ -6,8 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.sibs.InfoSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -16,9 +17,9 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadNonProcessedSibsEntries {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static List run() throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         final List<InfoSibsPaymentFileEntry> result = new ArrayList<InfoSibsPaymentFileEntry>();
         for (final SibsPaymentFileEntry sibsPaymentFileEntry : SibsPaymentFileEntry.readNonProcessed()) {
             result.add(InfoSibsPaymentFileEntry.newInfoFromDomain(sibsPaymentFileEntry));

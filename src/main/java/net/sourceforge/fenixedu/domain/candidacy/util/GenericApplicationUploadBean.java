@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationLetterOfRecomentation;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class GenericApplicationUploadBean implements Serializable {
 
@@ -76,7 +76,7 @@ public class GenericApplicationUploadBean implements Serializable {
         return contents;
     }
 
-    @Service
+    @Atomic
     public GenericApplicationFile uploadTo(final GenericApplication application) {
         try {
             final byte[] content = readStreamContents();
@@ -89,14 +89,14 @@ public class GenericApplicationUploadBean implements Serializable {
         return null;
     }
 
-    @Service
+    @Atomic
     public GenericApplicationLetterOfRecomentation uploadTo(final GenericApplicationRecomentation recomentation) {
         try {
             final byte[] content = readStreamContents();
             if (content != null && content.length > 0) {
-                if (recomentation.hasLetterOfRecomentation()) {
+                if (recomentation.getLetterOfRecomentation() != null) {
                     recomentation.getLetterOfRecomentation().delete();
-                }                
+                }
                 return new GenericApplicationLetterOfRecomentation(recomentation, displayName, fileName, content);
             }
         } catch (final IOException ex) {

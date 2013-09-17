@@ -6,11 +6,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AddExecutionCourseToGroup {
 
-    @Service
+    @Atomic
     public static List<ExecutionCourse> run(VigilantGroup group, List<ExecutionCourse> executionCourses) {
 
         List<ExecutionCourse> executionCoursesUnableToAdd = new ArrayList<ExecutionCourse>();

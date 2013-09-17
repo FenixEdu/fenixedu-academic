@@ -86,4 +86,9 @@ public class Equivalence extends Equivalence_Base {
         return getGrade() != null;
     }
 
+    @Deprecated
+    public boolean hasGrade() {
+        return getGrade() != null;
+    }
+
 }

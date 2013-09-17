@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -21,9 +22,10 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -31,16 +33,16 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadStudentGroupInformation {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static ISiteComponent run(String studentGroupCode) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
         StudentGroup studentGroup = null;
         Grouping grouping = null;
-        List groupAttendsList = null;
+        Collection groupAttendsList = null;
 
-        studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        studentGroup = FenixFramework.getDomainObject(studentGroupCode);
 
         if (studentGroup == null) {
             return null;

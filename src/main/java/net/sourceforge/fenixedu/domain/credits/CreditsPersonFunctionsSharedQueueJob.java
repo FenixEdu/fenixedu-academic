@@ -35,4 +35,9 @@ public class CreditsPersonFunctionsSharedQueueJob extends CreditsPersonFunctions
         queueJobResult.setDone(true);
         return queueJobResult;
     }
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
+    }
+
 }

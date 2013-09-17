@@ -27,7 +27,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -139,14 +139,14 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
 
         Collections.sort(pendingReports, Collections.reverseOrder(COMPARE_BY_REQUEST_DATE));
 
-        return pendingReports.get(0);
+        return pendingReports.iterator().next();
     }
 
     public static boolean hasPendingReports(final ExecutionSemester executionSemester) {
         return readPendingReport(executionSemester) != null;
     }
 
-    @Service
+    @Atomic
     public static StudentsPerformanceReport launchJob(final ExecutionSemester executionSemester, List<Student> students) {
         return new StudentsPerformanceReport(executionSemester, students);
     }
@@ -243,7 +243,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
             throw new DomainException("student.has.more.than.one.active.registration");
         }
 
-        Registration registration = registrations.get(0);
+        Registration registration = registrations.iterator().next();
         final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
         if (!studentCurricularPlan.isBolonhaDegree()) {
 
@@ -281,4 +281,19 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
         row.setCell(getA(student).add(getB(student)).multiply(BigDecimal.valueOf(100)).intValue());
 
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getStudents() {
+        return getStudentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudents() {
+        return !getStudentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
+    }
+
 }

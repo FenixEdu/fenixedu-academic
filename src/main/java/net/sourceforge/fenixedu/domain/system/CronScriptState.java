@@ -177,10 +177,75 @@ public class CronScriptState extends CronScriptState_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         for (final CronScriptInvocation cronScriptInvocation : getCronScriptInvocations()) {
             cronScriptInvocation.delete();
         }
         deleteDomainObject();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.system.CronScriptInvocation> getCronScriptInvocations() {
+        return getCronScriptInvocationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCronScriptInvocations() {
+        return !getCronScriptInvocationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasWhenToSendEmail() {
+        return getWhenToSendEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasActive() {
+        return getActive() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmails() {
+        return getEmails() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsCurrentlyRunning() {
+        return getIsCurrentlyRunning() != null;
+    }
+
+    @Deprecated
+    public boolean hasContext() {
+        return getContext() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistrationDate() {
+        return getRegistrationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasAbsoluteExecutionOrder() {
+        return getAbsoluteExecutionOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasRunNow() {
+        return getRunNow() != null;
+    }
+
+    @Deprecated
+    public boolean hasCronScriptClassname() {
+        return getCronScriptClassname() != null;
+    }
+
+    @Deprecated
+    public boolean hasInvocationPeriod() {
+        return getInvocationPeriod() != null;
+    }
+
 }

@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.io.FileUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -31,7 +31,7 @@ public class CreateUnitFile {
         }
     }
 
-    @Service
+    @Atomic
     public static void run(java.io.File file, String originalFilename, String displayName, String description, String tags,
             Group permittedGroup, Unit unit, Person person) throws FenixServiceException {
 

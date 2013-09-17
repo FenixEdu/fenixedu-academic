@@ -31,8 +31,13 @@ public class CareerWorkshopSpreadsheet extends CareerWorkshopSpreadsheet_Base {
 
     @Override
     public void delete() {
-        removeCareerWorkshopApplicationEvent();
+        setCareerWorkshopApplicationEvent(null);
         super.delete();
+    }
+
+    @Deprecated
+    public boolean hasCareerWorkshopApplicationEvent() {
+        return getCareerWorkshopApplicationEvent() != null;
     }
 
 }

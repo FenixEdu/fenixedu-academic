@@ -2,7 +2,8 @@ package net.sourceforge.fenixedu.util.domain;
 
 import java.util.Collection;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
  * This relation adapter is similar to the {@link net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter} but can
@@ -11,10 +12,10 @@ import dml.runtime.RelationAdapter;
  * 
  * @author cfgi
  */
-public class InverseOrderedRelationAdapter<ObjectType, HolderType> extends RelationAdapter<ObjectType, HolderType> implements
-        OrderedAdapter<HolderType, ObjectType> {
+public class InverseOrderedRelationAdapter<ObjectType extends DomainObject, HolderType extends DomainObject> extends
+        RelationAdapter<ObjectType, HolderType> implements OrderedAdapter<HolderType, ObjectType> {
 
-    private OrderedRelationAdapter<HolderType, ObjectType> adapter;
+    private final OrderedRelationAdapter<HolderType, ObjectType> adapter;
 
     /**
      * Creates a new adaptor using the given selector to obtain the relation

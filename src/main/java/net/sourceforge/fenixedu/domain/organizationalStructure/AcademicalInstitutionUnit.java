@@ -97,4 +97,34 @@ public abstract class AcademicalInstitutionUnit extends AcademicalInstitutionUni
     }
 
     public abstract String getFullPresentationName();
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.internship.InternshipCandidacySession> getInternshipCandidacySession() {
+        return getInternshipCandidacySessionSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInternshipCandidacySession() {
+        return !getInternshipCandidacySessionSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.internship.InternshipCandidacy> getInternshipCandidacy() {
+        return getInternshipCandidacySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInternshipCandidacy() {
+        return !getInternshipCandidacySet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasInstitutionType() {
+        return getInstitutionType() != null;
+    }
+
+    @Deprecated
+    public boolean hasOfficial() {
+        return getOfficial() != null;
+    }
+
 }

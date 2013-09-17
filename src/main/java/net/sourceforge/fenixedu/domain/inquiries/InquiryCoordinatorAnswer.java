@@ -11,4 +11,24 @@ public class InquiryCoordinatorAnswer extends InquiryCoordinatorAnswer_Base {
         setExecutionSemester(executionSemester);
     }
 
+    @Deprecated
+    public boolean hasLastUpdatedBy() {
+        return getLastUpdatedBy() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
+    }
+
+    @Deprecated
+    public boolean hasCoordinator() {
+        return getCoordinator() != null;
+    }
+
 }

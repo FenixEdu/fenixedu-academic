@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
 import net.sourceforge.fenixedu.domain.Formation;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EditFormation extends FormationManagement {
 
@@ -29,7 +29,7 @@ public class EditFormation extends FormationManagement {
 
     private static final EditFormation serviceInstance = new EditFormation();
 
-    @Service
+    @Atomic
     public static void runEditFormation(AlumniFormation formation) {
         serviceInstance.run(formation);
     }

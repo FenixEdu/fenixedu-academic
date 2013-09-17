@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -26,7 +27,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 public abstract class AllocatableSpace extends AllocatableSpace_Base {
 
@@ -36,7 +38,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
         ((ComparatorChain) ROOM_COMPARATOR_BY_NAME).addComparator(new BeanComparator("externalId"));
     }
 
-    public abstract List<ResourceAllocation> getResourceAllocationsForCheck();
+    public abstract Collection<ResourceAllocation> getResourceAllocationsForCheck();
 
     public abstract String getIdentification();
 
@@ -95,8 +97,8 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
         return !StringUtils.isEmpty(getIdentification());
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManageRoomCapacities")
     public void editCapacities(Integer capacidadeNormal, Integer capacidadeExame) {
+        check(this, SpacePredicates.checkPermissionsToManageRoomCapacities);
         setNormalCapacity(capacidadeNormal);
         setExamCapacity(capacidadeExame);
     }
@@ -490,7 +492,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 
     public ResourceAllocation getFirstOccurrenceOfResourceAllocationByClass(Class<? extends ResourceAllocation> clazz) {
         if (clazz != null) {
-            List<ResourceAllocation> resourceAllocations = getResourceAllocations();
+            Collection<ResourceAllocation> resourceAllocations = getResourceAllocations();
             for (ResourceAllocation resourceAllocation : resourceAllocations) {
                 if (resourceAllocation.getClass().equals(clazz)) {
                     return resourceAllocation;
@@ -548,6 +550,46 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 
     public boolean isActiveManager(Person person) {
         return getSpaceManagementAccessGroupWithChainOfResponsibility().isMember(person);
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryRoomAnswer> getInquiryRoomAnswers() {
+        return getInquiryRoomAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryRoomAnswers() {
+        return !getInquiryRoomAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment> getWrittenEvaluationEnrolments() {
+        return getWrittenEvaluationEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWrittenEvaluationEnrolments() {
+        return !getWrittenEvaluationEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
+        return getAssociatedSummariesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedSummaries() {
+        return !getAssociatedSummariesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRoom> getAssociatedInquiriesRooms() {
+        return getAssociatedInquiriesRoomsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedInquiriesRooms() {
+        return !getAssociatedInquiriesRoomsSet().isEmpty();
     }
 
 }

@@ -115,4 +115,19 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
     public boolean hasPersonalInfo() {
         return false;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRequest> getEquivalencePlanRevisionRequests() {
+        return getEquivalencePlanRevisionRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEquivalencePlanRevisionRequests() {
+        return !getEquivalencePlanRevisionRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasNumberOfEquivalences() {
+        return getNumberOfEquivalences() != null;
+    }
+
 }

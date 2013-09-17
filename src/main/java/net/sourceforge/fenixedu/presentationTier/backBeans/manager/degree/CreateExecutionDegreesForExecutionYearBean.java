@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.Data;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -358,7 +358,7 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
     }
 
     public ExecutionYear getChoosenExecutionYear() {
-        return AbstractDomainObject.fromExternalId(getChoosenExecutionYearID());
+        return FenixFramework.getDomainObject(getChoosenExecutionYearID());
     }
 
     public String getChoosenExecutionYearID() {

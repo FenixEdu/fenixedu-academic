@@ -6,14 +6,15 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class TransitToBolonha {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(final Person person, final Registration sourceRegistrationForTransition, final DateTime dateTime) {
+        check(RolePredicates.MANAGER_PREDICATE);
         sourceRegistrationForTransition.transitToBolonha(person, dateTime);
     }
 

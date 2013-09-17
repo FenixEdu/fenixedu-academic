@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -132,7 +133,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
         // return getCandidacy().getSelectedDegree();
     }
 
-    public List<Degree> getSelectedDegrees() {
+    public Collection<Degree> getSelectedDegrees() {
         return getCandidacy().getSelectedDegrees();
     }
 
@@ -783,7 +784,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
             new SecondCycleIndividualCandidacyExemption(userView.getPerson(), event,
                     CandidacyExemptionJustificationType.TRANSFERED_APPLICATION);
 
-            List<IndividualCandidacyDocumentFile> documents = process.getCandidacy().getDocuments();
+            Collection<IndividualCandidacyDocumentFile> documents = process.getCandidacy().getDocuments();
 
             for (IndividualCandidacyDocumentFile individualCandidacyDocumentFile : documents) {
                 individualCandidacyDocumentFile.addIndividualCandidacy(newProcess.getCandidacy());

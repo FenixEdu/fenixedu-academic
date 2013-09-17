@@ -37,4 +37,9 @@ public class PastExtraExamRequestEvent extends PastExtraExamRequestEvent_Base im
         return labelFormatter;
     }
 
+    @Deprecated
+    public boolean hasPastAmount() {
+        return getPastAmount() != null;
+    }
+
 }

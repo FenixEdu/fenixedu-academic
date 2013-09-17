@@ -216,7 +216,6 @@ enum net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodType							
 enum net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity										  as PhdJuryElementsRatificationEntity;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion							  as NationalIdCardAvoidanceQuestion;
 enum net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
-enum net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
 enum net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance                                                       as BackendInstance;
 enum net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
 enum net.sourceforge.fenixedu.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
@@ -238,6 +237,14 @@ valueType java.util.UUID as UUID {
     }
 
     internalizeWith fromString();
+}
+
+valueType pt.utl.ist.fenix.tools.util.Strings as Strings {
+    externalizeWith {
+        String exportAsString();
+    }
+
+    internalizeWith importFromString();
 }
 
 valueType net.sourceforge.fenixedu.domain.Grade as Grade {
@@ -282,26 +289,26 @@ valueType net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPerce
 
 valueType net.sourceforge.fenixedu.domain.tests.TestsGrade as TestsGrade {
     externalizeWith {
-        bytearray pt.ist.fenixframework.Externalization.externalizeSerializableGZiped();
+        bytearray pt.ist.fenixframework.core.Externalization.externalizeSerializableGZiped();
     }
 
-    internalizeWith pt.ist.fenixframework.Externalization.internalizeSerializableGZiped();
+    internalizeWith pt.ist.fenixframework.core.Externalization.internalizeSerializableGZiped();
 }
 
 valueType net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer as ConcreteAnswer {
     externalizeWith {
-        bytearray pt.ist.fenixframework.Externalization.externalizeSerializableGZiped();
+        bytearray pt.ist.fenixframework.core.Externalization.externalizeSerializableGZiped();
     }
 
-    internalizeWith pt.ist.fenixframework.Externalization.internalizeSerializableGZiped();
+    internalizeWith pt.ist.fenixframework.core.Externalization.internalizeSerializableGZiped();
 }
 
 valueType net.sourceforge.fenixedu.domain.tests.predicates.Predicate as Predicate {
     externalizeWith {
-        bytearray pt.ist.fenixframework.Externalization.externalizeSerializableGZiped();
+        bytearray pt.ist.fenixframework.core.Externalization.externalizeSerializableGZiped();
     }
 
-    internalizeWith pt.ist.fenixframework.Externalization.internalizeSerializableGZiped();
+    internalizeWith pt.ist.fenixframework.core.Externalization.internalizeSerializableGZiped();
 }
 
 valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval as AcademicInterval {
@@ -530,10 +537,10 @@ valueType org.joda.time.Duration as Duration {
 
 valueType org.joda.time.Period as Period {
     externalizeWith {
-        bytearray pt.ist.fenixframework.Externalization.externalizeSerializable();
+        bytearray pt.ist.fenixframework.core.Externalization.externalizeSerializable();
     }
 
-    internalizeWith pt.ist.fenixframework.Externalization.internalizeSerializable();
+    internalizeWith pt.ist.fenixframework.core.Externalization.internalizeSerializable();
 }
 
 valueType org.joda.time.YearMonthDay as YearMonthDay {
@@ -1766,6 +1773,11 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
 
     class RootDomainObject  {
+    }
+    
+    relation RootDomainObjectDomainRoot {
+        .pt.ist.fenixframework.DomainRoot playsRole domainRoot;
+        RootDomainObject playsRole rootDomainObject;
     }
 
     class SchoolClass  {
@@ -20677,7 +20689,6 @@ relation AnnualTeachingCreditsDocumentAnnualTeachingCredits {
 	credits.AnnualTeachingCredits playsRole annualTeachingCredits;
 }
 
-
 relation RootDomainObjectGenericApplication {
 	RootDomainObject playsRole rootDomainObject; 
 	candidacy.GenericApplication playsRole genericApplication {
@@ -20770,4 +20781,33 @@ relation PhotographSantanderPhotoEntry {
 	cardGeneration.SantanderPhotoEntry playsRole santanderPhotoEntry {
 		multiplicity *;
 	}
+}
+
+/**
+ * Former Remote Plugin
+ */
+
+package pt.ist.fenixframework.plugins.remote.domain;
+
+class RemoteSystem {
+}
+
+class RemoteHost {
+    String name;
+    Strings url;
+    String username;
+    String password;
+    Boolean allowInvocationAccess;
+}
+
+relation RemoteSystemRemoteHost {
+    RemoteSystem playsRole remoteSystem;
+    RemoteHost playsRole remoteHosts {
+        multiplicity *;
+    }
+}
+
+relation RemoteSystemDomainRoot {
+    RemoteSystem playsRole remoteSystem;
+    .pt.ist.fenixframework.DomainRoot playsRole domainRoot;
 }

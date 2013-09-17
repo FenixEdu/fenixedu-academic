@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
@@ -19,7 +21,6 @@ import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -50,7 +51,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
         @Override
         public int compare(final AcademicCalendarEntry o1, final AcademicCalendarEntry o2) {
             int c1 = o1.getBegin().compareTo(o2.getBegin());
-            return c1 == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c1;
+            return c1 == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c1;
         }
 
     };
@@ -67,7 +68,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
         getBasedEntries().clear();
         super.setParentEntry(null);
         super.setTemplateEntry(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -161,7 +162,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     private AcademicCalendarEntry getVirtualOrRedefinedEntryIn(AcademicCalendarRootEntry rootEntry) {
         if (rootEntry != null) {
-            List<AcademicCalendarEntry> basedEntries = getBasedEntries();
+            Collection<AcademicCalendarEntry> basedEntries = getBasedEntries();
             for (AcademicCalendarEntry entry : basedEntries) {
                 if (entry.getRootEntry().equals(rootEntry)) {
                     return entry;
@@ -405,7 +406,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
             result.add(new AcademicInterval(this, rootEntry));
         }
 
-        List<AcademicCalendarEntry> childEntries =
+        Collection<AcademicCalendarEntry> childEntries =
                 getTemplateEntry() != null ? getChildEntriesWithTemplateEntries() : getChildEntries();
         for (AcademicCalendarEntry child : childEntries) {
             child.getChildFullPathInDeep(result, rootEntry);
@@ -424,7 +425,9 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     public MultiLanguageString getType() {
         MultiLanguageString type = new MultiLanguageString();
         String key = "label." + getClass().getSimpleName() + ".type";
-        type =type.with(Language.pt,ResourceBundle.getBundle("resources/ManagerResources", new Locale("pt", "PT")).getString(key));
+        type =
+                type.with(Language.pt,
+                        ResourceBundle.getBundle("resources/ManagerResources", new Locale("pt", "PT")).getString(key));
         return type;
     }
 
@@ -780,4 +783,60 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
         }
         return count;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry> getBasedEntries() {
+        return getBasedEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyBasedEntries() {
+        return !getBasedEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry> getChildEntries() {
+        return getChildEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChildEntries() {
+        return !getChildEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasParentEntry() {
+        return getParentEntry() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTemplateEntry() {
+        return getTemplateEntry() != null;
+    }
+
+    @Deprecated
+    public boolean hasBegin() {
+        return getBegin() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
 }

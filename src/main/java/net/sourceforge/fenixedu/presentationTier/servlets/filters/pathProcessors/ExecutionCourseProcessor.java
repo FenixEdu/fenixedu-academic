@@ -132,7 +132,7 @@ public class ExecutionCourseProcessor extends PathProcessor {
 
         @Override
         public List<ExecutionCourse> getExecutionCourses() {
-            return getCurricularCourse().getAssociatedExecutionCourses();
+            return new ArrayList<>(getCurricularCourse().getAssociatedExecutionCourses());
         }
 
         @Override
@@ -154,7 +154,7 @@ public class ExecutionCourseProcessor extends PathProcessor {
         ExecutionSemester currentPeriod = ExecutionSemester.readActualExecutionSemester();
         ExecutionSemester period = executionCourse.getExecutionPeriod();
 
-        CurricularCourse course = executionCourse.getAssociatedCurricularCourses().get(0);
+        CurricularCourse course = executionCourse.getAssociatedCurricularCourses().iterator().next();
         Degree degree = course.getDegree();
 
         DegreeCurricularPlan mostRecent = degree.getMostRecentDegreeCurricularPlan();

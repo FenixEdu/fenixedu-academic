@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base implements Comparable<FacultyEvaluationProcess> {
@@ -307,12 +307,12 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
         return facultyEvaluationProcessYear == null ? new FacultyEvaluationProcessYear(this, year) : facultyEvaluationProcessYear;
     }
 
-    @Service
+    @Atomic
     public void delete() {
         for (final TeacherEvaluationProcess teacherEvaluationProcess : getTeacherEvaluationProcessSet()) {
             teacherEvaluationProcess.delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -330,4 +330,50 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
     public int compareTo(FacultyEvaluationProcess o) {
         return COMPARATOR_BY_INTERVAL.compare(this, o);
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess> getTeacherEvaluationProcess() {
+        return getTeacherEvaluationProcessSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherEvaluationProcess() {
+        return !getTeacherEvaluationProcessSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessYear> getFacultyEvaluationProcessYear() {
+        return getFacultyEvaluationProcessYearSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFacultyEvaluationProcessYear() {
+        return !getFacultyEvaluationProcessYearSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSuffix() {
+        return getSuffix() != null;
+    }
+
+    @Deprecated
+    public boolean hasAutoEvaluationInterval() {
+        return getAutoEvaluationInterval() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationInterval() {
+        return getEvaluationInterval() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
 }

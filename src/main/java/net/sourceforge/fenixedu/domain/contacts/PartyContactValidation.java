@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public abstract class PartyContactValidation extends PartyContactValidation_Base {
@@ -68,7 +68,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
         return isValid();
     }
 
-    @Service
+    @Atomic
     public Boolean processValidation(String token) {
 
         if (isRefused()) {
@@ -151,7 +151,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
     }
 
     @Override
-    @Service
+    @Atomic
     public void setState(PartyContactValidationState state) {
         switch (state) {
         case INVALID:
@@ -175,4 +175,44 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
             triggerValidationProcess();
         }
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestDate() {
+        return getRequestDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasToBeDefault() {
+        return getToBeDefault() != null;
+    }
+
+    @Deprecated
+    public boolean hasTries() {
+        return getTries() != null;
+    }
+
+    @Deprecated
+    public boolean hasToken() {
+        return getToken() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastChangeDate() {
+        return getLastChangeDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPartyContact() {
+        return getPartyContact() != null;
+    }
+
 }

@@ -9,12 +9,12 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ProjectSubmission extends ProjectSubmission_Base {
 
     static {
-        ProjectSubmissionProject.addListener(new ProjectSubmissionProjectListener());
+        getRelationProjectSubmissionProject().addListener(new ProjectSubmissionProjectListener());
     }
 
     private static class ProjectSubmissionProjectListener extends RelationAdapter<ProjectSubmission, Project> {
@@ -75,10 +75,10 @@ public class ProjectSubmission extends ProjectSubmission_Base {
 
     public void delete() {
         getProjectSubmissionFile().delete();
-        removeAttends();
-        removeProject();
-        removeStudentGroup();
-        removeRootDomainObject();
+        setAttends(null);
+        setProject(null);
+        setStudentGroup(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
 
     }
@@ -100,6 +100,41 @@ public class ProjectSubmission extends ProjectSubmission_Base {
         } else {
             setSubmissionDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasProjectSubmissionFile() {
+        return getProjectSubmissionFile() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherObservation() {
+        return getTeacherObservation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmissionDateTime() {
+        return getSubmissionDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasProject() {
+        return getProject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAttends() {
+        return getAttends() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentGroup() {
+        return getStudentGroup() != null;
     }
 
 }

@@ -3,14 +3,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class RemoveProposalFromFinalDegreeWorkStudentGroup {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(final FinalDegreeWorkGroup group, String groupProposalOID) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
         final GroupProposal groupProposal = findGroupProposal(group, groupProposalOID);
         if (groupProposal != null) {
             if (group.getProposalAttributed() == groupProposal.getFinalDegreeWorkProposal()) {
@@ -19,8 +20,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup {
                 throw new GroupProposalAttributedByTeacherException();
             }
 
-            for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                final GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
+            for (GroupProposal otherGroupProposal : group.getGroupProposalsSet()) {
                 if (!groupProposal.equals(otherGroupProposal)
                         && groupProposal.getOrderOfPreference().intValue() < otherGroupProposal.getOrderOfPreference().intValue()) {
                     otherGroupProposal

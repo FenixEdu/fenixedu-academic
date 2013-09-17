@@ -22,7 +22,7 @@ public class EditJuryElement extends PhdThesisActivity {
         final PhdThesisJuryElementBean bean = (PhdThesisJuryElementBean) object;
         final ThesisJuryElement juryElement = bean.getJuryElement();
 
-        if (process.hasThesisJuryElements(juryElement)) {
+        if (process.getThesisJuryElementsSet().contains(juryElement)) {
             juryElement.edit(bean);
         }
 

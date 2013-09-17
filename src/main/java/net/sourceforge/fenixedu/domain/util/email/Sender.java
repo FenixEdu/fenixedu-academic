@@ -8,13 +8,14 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class Sender extends Sender_Base {
 
@@ -25,7 +26,7 @@ public class Sender extends Sender_Base {
         @Override
         public int compare(final Sender sender1, final Sender sender2) {
             final int c = sender1.getFromName().compareTo(sender2.getFromName());
-            return c == 0 ? COMPARATOR_BY_ID.compare(sender1, sender2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(sender1, sender2) : c;
         }
 
     };
@@ -47,13 +48,13 @@ public class Sender extends Sender_Base {
             message.delete();
         }
         for (final Recipient recipient : getRecipientsSet()) {
-            if (recipient.getSendersCount() == 1) {
+            if (recipient.getSendersSet().size() == 1) {
                 recipient.delete();
             } else {
                 removeRecipients(recipient);
             }
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -99,7 +100,7 @@ public class Sender extends Sender_Base {
         return senders;
     }
 
-    @Service
+    @Atomic
     public List<ReplyTo> getConcreteReplyTos() {
         List<ReplyTo> replyTos = new ArrayList<ReplyTo>();
         for (ReplyTo replyTo : getReplyTos()) {
@@ -133,6 +134,56 @@ public class Sender extends Sender_Base {
                 }
             }
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Recipient> getRecipients() {
+        return getRecipientsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRecipients() {
+        return !getRecipientsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessages() {
+        return getMessagesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMessages() {
+        return !getMessagesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.ReplyTo> getReplyTos() {
+        return getReplyTosSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReplyTos() {
+        return !getReplyTosSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFromName() {
+        return getFromName() != null;
+    }
+
+    @Deprecated
+    public boolean hasFromAddress() {
+        return getFromAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasMembers() {
+        return getMembers() != null;
     }
 
 }

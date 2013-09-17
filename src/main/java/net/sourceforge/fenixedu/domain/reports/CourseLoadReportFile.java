@@ -62,7 +62,7 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
                         row.setCell(courseLoad.getTotalQuantity() != null ? courseLoad.getTotalQuantity().toPlainString()
                                 .replace('.', ',') : StringUtils.EMPTY);
                         row.setCell(shift.getTotalHours() != null ? shift.getTotalHours().toPlainString().replace('.', ',') : StringUtils.EMPTY);
-                        row.setCell(courseLoad.getShiftsCount());
+                        row.setCell(courseLoad.getShiftsSet().size());
                         row.setCell(String.valueOf(executionCourse.getOid()));
 
                     }

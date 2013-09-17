@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadClassTimeTableByStudent {
 
@@ -45,7 +45,7 @@ public class ReadClassTimeTableByStudent {
 
     private static final ReadClassTimeTableByStudent serviceInstance = new ReadClassTimeTableByStudent();
 
-    @Service
+    @Atomic
     public static List<InfoShowOccupation> runReadClassTimeTableByStudent(Registration registration, SchoolClass schoolClass,
             ExecutionCourse executionCourse) throws FenixServiceException, NotAuthorizedException {
         ClassEnrollmentAuthorizationFilter.instance.execute(registration);

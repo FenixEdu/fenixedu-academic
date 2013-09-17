@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
@@ -194,7 +193,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
 
         final CerimonyInquiry cerimonyInquiry = getDomainObject(request, "cerimonyInquiryId");
         if (cerimonyInquiry != null) {
-            List<CerimonyInquiryPerson> requests = cerimonyInquiry.getCerimonyInquiryPerson();
+            Collection<CerimonyInquiryPerson> requests = cerimonyInquiry.getCerimonyInquiryPerson();
 
             final ResourceBundle bundle = ResourceBundle.getBundle("resources/AlumniResources", Language.getLocale());
             String inquiryName =

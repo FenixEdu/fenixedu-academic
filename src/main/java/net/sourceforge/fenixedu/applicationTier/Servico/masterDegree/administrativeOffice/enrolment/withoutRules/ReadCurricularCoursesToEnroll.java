@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.enrolment.withoutRules;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter;
@@ -17,8 +18,8 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCurricularCoursesToEnroll {
 
@@ -26,7 +27,7 @@ public class ReadCurricularCoursesToEnroll {
 
     private static final int MAX_CURRICULAR_SEMESTERS = 2;
 
-    protected List<CurricularCourse> findCurricularCourses(final List<CurricularCourse> curricularCourses,
+    protected List<CurricularCourse> findCurricularCourses(final Collection<CurricularCourse> curricularCourses,
             final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 
         final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
@@ -48,7 +49,7 @@ public class ReadCurricularCoursesToEnroll {
             throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
         }
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         if (executionDegree == null) {
             throw new FenixServiceException("error.degree.noData");
         }
@@ -191,7 +192,7 @@ public class ReadCurricularCoursesToEnroll {
 
     private static final ReadCurricularCoursesToEnroll serviceInstance = new ReadCurricularCoursesToEnroll();
 
-    @Service
+    @Atomic
     public static List<CurricularCourse2Enroll> runReadCurricularCoursesToEnroll(StudentCurricularPlan studentCurricularPlan,
             DegreeType degreeType, ExecutionSemester executionSemester, String executionDegreeID,
             List<Integer> curricularYearsList, List<Integer> curricularSemestersList) throws FenixServiceException,

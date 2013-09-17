@@ -15,7 +15,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Pedro Santos (pedro.miguel.santos@ist.utl.pt)
@@ -27,7 +27,7 @@ public class StudentExtraCurricularActivitiesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Student student = AbstractDomainObject.fromExternalId(request.getParameter("studentId"));
+        Student student = FenixFramework.getDomainObject(request.getParameter("studentId"));
         request.setAttribute("student", student);
         return mapping.findForward("manageActivities");
     }
@@ -42,7 +42,7 @@ public class StudentExtraCurricularActivitiesDA extends FenixDispatchAction {
 
     public ActionForward deleteActivity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        ExtraCurricularActivity activity = AbstractDomainObject.fromExternalId(request.getParameter("activityId"));
+        ExtraCurricularActivity activity = FenixFramework.getDomainObject(request.getParameter("activityId"));
         RenderUtils.invalidateViewState();
         final Student student = activity.getStudent();
         activity.delete();

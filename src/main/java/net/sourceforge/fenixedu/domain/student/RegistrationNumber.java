@@ -12,9 +12,24 @@ public class RegistrationNumber extends RegistrationNumber_Base {
     }
 
     public void delete() {
-        removeRegistration();
-        removeRootDomainObject();
+        setRegistration(null);
+        setRootDomainObject(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
     }
 
 }

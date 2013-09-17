@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,6 +34,7 @@ import net.sourceforge.fenixedu.domain.resource.ResourceResponsibility;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
@@ -40,7 +43,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
@@ -128,9 +130,9 @@ public abstract class Space extends Space_Base {
         setCreatedOn(new YearMonthDay());
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
     @FenixDomainObjectActionLogAnnotation(actionName = "Set new Parent space", parameters = { "this", "newParentSpace" })
     public void setNewPossibleParentSpace(Space newParentSpace) {
+        check(this, SpacePredicates.checkPermissionsToManageSpace);
         if (newParentSpace != null) {
             setSuroundingSpace(newParentSpace);
         }
@@ -458,10 +460,11 @@ public abstract class Space extends Space_Base {
             throw new DomainException("error.space.cannot.be.deleted");
         }
 
-        for (; !getBlueprints().isEmpty(); getBlueprints().get(0).delete()) {
+        for (; !getBlueprints().isEmpty(); getBlueprints().iterator().next().delete()) {
             ;
         }
-        for (; !getSpaceInformations().isEmpty(); getSpaceInformations().get(0).deleteWithoutCheckNumberOfSpaceInformations()) {
+        for (; !getSpaceInformations().isEmpty(); getSpaceInformations().iterator().next()
+                .deleteWithoutCheckNumberOfSpaceInformations()) {
             ;
         }
         for (SpaceAttendances attendance : getPastAttendancesSet()) {
@@ -568,7 +571,7 @@ public abstract class Space extends Space_Base {
 
     public List<AllocatableSpace> getAllActiveSubRoomsForEducation() {
         List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
-        List<Space> containedSpaces = getContainedSpaces();
+        Collection<Space> containedSpaces = getContainedSpaces();
         for (Space space : containedSpaces) {
             if (space.isAllocatableSpace() && space.isActive() && ((AllocatableSpace) space).isForEducation()) {
                 result.add((AllocatableSpace) space);
@@ -727,11 +730,11 @@ public abstract class Space extends Space_Base {
         return null;
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonIsSpaceAdministrator")
     @FenixDomainObjectActionLogAnnotation(actionName = "Add or remove person from access group", parameters = { "this",
             "accessGroupType", "toAdd", "isToMaintainElements", "expression" })
     public void addOrRemovePersonFromAccessGroup(SpaceAccessGroupType accessGroupType, Boolean toAdd,
             Boolean isToMaintainElements, String expression) throws DomainException {
+        check(this, SpacePredicates.checkIfLoggedPersonIsSpaceAdministrator);
 
         if (StringUtils.isEmpty(expression)) {
             throw new DomainException("error.space.access.groups.management.no.person");
@@ -895,7 +898,7 @@ public abstract class Space extends Space_Base {
                 }
             }
         }
-        return (Group) (existentGroups.isEmpty() ? null : existentGroups.size() == 1 ? existentGroups.get(0) : new GroupUnion(
+        return (Group) (existentGroups.isEmpty() ? null : existentGroups.size() == 1 ? existentGroups.iterator().next() : new GroupUnion(
                 existentGroups));
     }
 
@@ -1213,10 +1216,111 @@ public abstract class Space extends Space_Base {
     }
 
     public int currentAttendaceCount() {
-        int occupants = getCurrentAttendanceCount();
+        int occupants = getCurrentAttendanceSet().size();
         for (Space space : getActiveContainedSpaces()) {
             occupants += space.currentAttendaceCount();
         }
         return occupants;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.SpaceAttendances> getCurrentAttendance() {
+        return getCurrentAttendanceSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurrentAttendance() {
+        return !getCurrentAttendanceSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.SpaceAttendances> getPastAttendances() {
+        return getPastAttendancesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPastAttendances() {
+        return !getPastAttendancesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.SpaceInformation> getSpaceInformations() {
+        return getSpaceInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySpaceInformations() {
+        return !getSpaceInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.Blueprint> getBlueprints() {
+        return getBlueprintsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyBlueprints() {
+        return !getBlueprintsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.Space> getContainedSpaces() {
+        return getContainedSpacesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyContainedSpaces() {
+        return !getContainedSpacesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSuroundingSpace() {
+        return getSuroundingSpace() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpaceManagementAccessGroup() {
+        return getSpaceManagementAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreatedOn() {
+        return getCreatedOn() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonOccupationsAccessGroup() {
+        return getPersonOccupationsAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasLessonOccupationsAccessGroup() {
+        return getLessonOccupationsAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasExtensionOccupationsAccessGroup() {
+        return getExtensionOccupationsAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectForLibrary() {
+        return getRootDomainObjectForLibrary() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnitOccupationsAccessGroup() {
+        return getUnitOccupationsAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasGenericEventOccupationsAccessGroup() {
+        return getGenericEventOccupationsAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasWrittenEvaluationOccupationsAccessGroup() {
+        return getWrittenEvaluationOccupationsAccessGroup() != null;
+    }
+
 }

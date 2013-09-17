@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,24 +22,25 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério 13/Nov/2003
  */
 public class ReadCurrentCurriculumByCurricularCourseCode {
 
-    @Checked("RolePredicates.COORDINATOR_PREDICATE")
-    @Service
+    @Atomic
     public static InfoCurriculum run(String executionDegreeCode, String curricularCourseCode) throws FenixServiceException {
+        check(RolePredicates.COORDINATOR_PREDICATE);
 
         if (curricularCourseCode == null) {
             throw new FenixServiceException("nullCurricularCourse");
         }
 
-        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
+        CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }
@@ -59,7 +61,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode {
         final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 
         List<ExecutionCourse> associatedExecutionCourses = new ArrayList<ExecutionCourse>();
-        List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
         for (ExecutionCourse executionCourse : executionCourses) {
             if (executionCourse.getExecutionPeriod().equals(executionSemester)) {
                 associatedExecutionCourses.add(executionCourse);

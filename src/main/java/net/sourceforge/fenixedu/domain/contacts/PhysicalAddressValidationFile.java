@@ -23,4 +23,9 @@ public class PhysicalAddressValidationFile extends PhysicalAddressValidationFile
         return filePath;
     }
 
+    @Deprecated
+    public boolean hasPyhsicalAddressValidation() {
+        return getPyhsicalAddressValidation() != null;
+    }
+
 }

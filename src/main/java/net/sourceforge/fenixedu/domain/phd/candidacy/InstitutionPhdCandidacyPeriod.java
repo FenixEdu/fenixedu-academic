@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -47,7 +47,7 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
         return true;
     }
 
-    @Service
+    @Atomic
     public void addPhdProgramToPeriod(final PhdProgram phdProgram) {
         if (phdProgram == null) {
             throw new DomainException("phd.InstitutionPhdCandidacyPeriod.phdProgram.required");
@@ -56,12 +56,12 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
         super.addPhdPrograms(phdProgram);
     }
 
-    @Service
+    @Atomic
     public void addPhdProgramListToPeriod(final List<PhdProgram> phdProgramList) {
         super.getPhdProgramsSet().addAll(phdProgramList);
     }
 
-    @Service
+    @Atomic
     public void removePhdProgramInPeriod(final PhdProgram phdProgram) {
         if (phdProgram == null) {
             throw new DomainException("phd.InstitutionPhdCandidacyPeriod.phdProgram.required");
@@ -80,7 +80,7 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
         throw new DomainException("call removePhdProgramInPeriod()");
     }
 
-    @Service
+    @Atomic
     public static InstitutionPhdCandidacyPeriod create(final PhdCandidacyPeriodBean phdCandidacyPeriodBean) {
         final ExecutionYear executionYear = phdCandidacyPeriodBean.getExecutionYear();
         final DateTime start = phdCandidacyPeriodBean.getStart();
@@ -205,6 +205,16 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
         }
 
         return null;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgram> getPhdPrograms() {
+        return getPhdProgramsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdPrograms() {
+        return !getPhdProgramsSet().isEmpty();
     }
 
 }

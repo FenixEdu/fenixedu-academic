@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction.DegreesMergeBean;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -23,7 +24,7 @@ public class DestinationExecutionCoursesProvider implements DataProvider {
         List<ExecutionCourse> destinationExecutionCourses =
                 destinationDegree.getExecutionCourses(degreeBean.getAcademicInterval());
 
-        Collections.sort(destinationExecutionCourses, ExecutionCourse.COMPARATOR_BY_ID);
+        Collections.sort(destinationExecutionCourses, DomainObjectUtil.COMPARATOR_BY_ID);
 
         removeDuplicates(destinationExecutionCourses);
 

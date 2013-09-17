@@ -28,8 +28,8 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
 
         checkParameters(bean);
         checkRulesToCreate(bean);
-        super.getEnrolments().addAll(bean.getEnrolments());
-        super.getExams().addAll(bean.getExams());
+        super.getEnrolmentsSet().addAll(bean.getEnrolments());
+        super.getExamsSet().addAll(bean.getExams());
         super.setExecutionPeriod(bean.getExecutionPeriod());
     }
 
@@ -113,6 +113,31 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
             return true;
         }
         return super.isFree();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Exam> getExams() {
+        return getExamsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExams() {
+        return !getExamsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
+        return getEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolments() {
+        return !getEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
     }
 
 }

@@ -4,8 +4,9 @@ import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class MobilePhoneBean extends PartyContactBean {
 
@@ -28,7 +29,7 @@ public class MobilePhoneBean extends PartyContactBean {
     }
 
     @Override
-    @Service
+    @Atomic
     public Boolean edit() {
         boolean isValueChanged = super.edit();
         if (isValueChanged) {
@@ -40,8 +41,8 @@ public class MobilePhoneBean extends PartyContactBean {
     }
 
     @Override
-    @Checked("RolePredicates.PARTY_CONTACT_BEAN_PREDICATE")
     public PartyContact createNewContact() {
+        check(this, RolePredicates.PARTY_CONTACT_BEAN_PREDICATE);
         return MobilePhone.createMobilePhone(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
                 getVisibleToStudents(), getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
     }

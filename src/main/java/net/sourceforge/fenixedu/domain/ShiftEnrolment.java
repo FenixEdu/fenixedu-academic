@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ShiftEnrolment extends ShiftEnrolment_Base {
 
@@ -14,7 +14,7 @@ public class ShiftEnrolment extends ShiftEnrolment_Base {
         @Override
         public int compare(ShiftEnrolment o1, ShiftEnrolment o2) {
             final int c = o1.getCreatedOn().compareTo(o2.getCreatedOn());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
     };
 
@@ -27,14 +27,34 @@ public class ShiftEnrolment extends ShiftEnrolment_Base {
     }
 
     public void delete() {
-        removeShift();
-        removeRegistration();
-        removeRootDomainObject();
+        setShift(null);
+        setRegistration(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
     public boolean hasRegistration(final Registration registration) {
         return getRegistration() == registration;
+    }
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreatedOn() {
+        return getCreatedOn() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
     }
 
 }

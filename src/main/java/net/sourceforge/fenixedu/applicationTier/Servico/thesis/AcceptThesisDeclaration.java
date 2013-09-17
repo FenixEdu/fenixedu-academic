@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AcceptThesisDeclaration {
 
@@ -20,7 +20,7 @@ public class AcceptThesisDeclaration {
 
     private static final AcceptThesisDeclaration serviceInstance = new AcceptThesisDeclaration();
 
-    @Service
+    @Atomic
     public static void runAcceptThesisDeclaration(Thesis thesis, ThesisVisibilityType visibility, DateTime availableAfter)
             throws NotAuthorizedException {
         StudentThesisAuthorizationFilter.instance.execute(thesis);

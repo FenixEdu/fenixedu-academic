@@ -3,6 +3,7 @@ target/
 jetty/
 deploy/
 configuration.properties
+fenix-framework.properties
 output/
 .classpath
 build.properties.fenixIST

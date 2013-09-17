@@ -13,7 +13,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdGratuityEvent extends PhdGratuityEvent_Base {
@@ -60,7 +60,7 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
         return getPhdIndividualProgramProcess().getPhdProgram();
     }
 
-    @Service
+    @Atomic
     static public PhdGratuityEvent create(PhdIndividualProgramProcess phdIndividualProgramProcess, int year,
             DateTime phdGratuityDate) {
         return new PhdGratuityEvent(phdIndividualProgramProcess, year, phdGratuityDate);
@@ -122,6 +122,21 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
         }
 
         return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdGratuityDate() {
+        return getPhdGratuityDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdIndividualProgramProcess() {
+        return getPhdIndividualProgramProcess() != null;
     }
 
 }

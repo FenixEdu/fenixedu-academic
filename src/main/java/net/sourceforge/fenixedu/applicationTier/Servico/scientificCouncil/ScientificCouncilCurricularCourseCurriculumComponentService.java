@@ -9,8 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Factory.ScientificCouncilCurricu
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author João Mota
@@ -20,10 +21,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ScientificCouncilCurricularCourseCurriculumComponentService {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static SiteView run(ISiteComponent bodyComponent, String curricularCourseId, Integer curriculumId)
             throws FenixServiceException {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         ScientificCouncilCurricularCourseCurriculumComponentBuilder componentBuilder =
                 ScientificCouncilCurricularCourseCurriculumComponentBuilder.getInstance();

@@ -84,7 +84,7 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 
     @Override
     protected void disconnect() {
-        removeReferee();
+        setReferee(null);
         super.disconnect();
     }
 
@@ -97,4 +97,9 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
     public boolean isSystemAlert() {
         return true;
     }
+    @Deprecated
+    public boolean hasReferee() {
+        return getReferee() != null;
+    }
+
 }

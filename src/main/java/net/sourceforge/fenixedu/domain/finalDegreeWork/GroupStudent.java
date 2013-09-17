@@ -41,10 +41,10 @@ public class GroupStudent extends GroupStudent_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeFinalDegreeDegreeWorkGroup();
-        removeFinalDegreeWorkProposalConfirmation();
-        removeRegistration();
+        setRootDomainObject(null);
+        setFinalDegreeDegreeWorkGroup(null);
+        setFinalDegreeWorkProposalConfirmation(null);
+        setRegistration(null);
         deleteDomainObject();
     }
 
@@ -54,16 +54,9 @@ public class GroupStudent extends GroupStudent_Base {
         return getRegistration();
     }
 
-    @Override
     @Deprecated
     public boolean hasStudent() {
         return hasRegistration();
-    }
-
-    @Override
-    @Deprecated
-    public void removeStudent() {
-        removeRegistration();
     }
 
     @Override
@@ -77,15 +70,30 @@ public class GroupStudent extends GroupStudent_Base {
     }
 
     public boolean hasRegistration() {
-        return super.hasStudent();
+        return super.getStudent() != null;
     }
 
     public void removeRegistration() {
-        super.removeStudent();
+        super.setStudent(null);
     }
 
     public void setRegistration(Registration registration) {
         super.setStudent(registration);
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalDegreeWorkProposalConfirmation() {
+        return getFinalDegreeWorkProposalConfirmation() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalDegreeDegreeWorkGroup() {
+        return getFinalDegreeDegreeWorkGroup() != null;
     }
 
 }

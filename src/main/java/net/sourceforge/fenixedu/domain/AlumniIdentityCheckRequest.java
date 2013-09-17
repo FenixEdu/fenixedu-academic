@@ -70,7 +70,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
 
     public static Collection<AlumniIdentityCheckRequest> readPendingRequests() {
         Collection<AlumniIdentityCheckRequest> pendingRequests = new ArrayList<AlumniIdentityCheckRequest>();
-        Set<AlumniIdentityCheckRequest> requests = RootDomainObject.readAllDomainObjects(AlumniIdentityCheckRequest.class);
+        Set<AlumniIdentityCheckRequest> requests = DomainObjectUtil.readAllDomainObjects(AlumniIdentityCheckRequest.class);
 
         AlumniIdentityCheckRequest request;
         Iterator iter = requests.iterator();
@@ -85,7 +85,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
 
     public static Object readClosedRequests() {
         Collection<AlumniIdentityCheckRequest> pendingRequests = new ArrayList<AlumniIdentityCheckRequest>();
-        Set<AlumniIdentityCheckRequest> requests = RootDomainObject.readAllDomainObjects(AlumniIdentityCheckRequest.class);
+        Set<AlumniIdentityCheckRequest> requests = DomainObjectUtil.readAllDomainObjects(AlumniIdentityCheckRequest.class);
 
         AlumniIdentityCheckRequest request;
         Iterator iter = requests.iterator();
@@ -166,6 +166,101 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
         } else {
             setDecisionDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasDecisionDateTime() {
+        return getDecisionDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSocialSecurityNumber() {
+        return getSocialSecurityNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateTime() {
+        return getCreationDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasOperator() {
+        return getOperator() != null;
+    }
+
+    @Deprecated
+    public boolean hasContactEmail() {
+        return getContactEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasParishOfBirth() {
+        return getParishOfBirth() != null;
+    }
+
+    @Deprecated
+    public boolean hasDistrictOfBirth() {
+        return getDistrictOfBirth() != null;
+    }
+
+    @Deprecated
+    public boolean hasApproved() {
+        return getApproved() != null;
+    }
+
+    @Deprecated
+    public boolean hasComment() {
+        return getComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasAlumni() {
+        return getAlumni() != null;
+    }
+
+    @Deprecated
+    public boolean hasDistrictSubdivisionOfBirth() {
+        return getDistrictSubdivisionOfBirth() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestToken() {
+        return getRequestToken() != null;
+    }
+
+    @Deprecated
+    public boolean hasFullName() {
+        return getFullName() != null;
+    }
+
+    @Deprecated
+    public boolean hasDateOfBirthYearMonthDay() {
+        return getDateOfBirthYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentIdNumber() {
+        return getDocumentIdNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestType() {
+        return getRequestType() != null;
+    }
+
+    @Deprecated
+    public boolean hasNameOfFather() {
+        return getNameOfFather() != null;
+    }
+
+    @Deprecated
+    public boolean hasNameOfMother() {
+        return getNameOfMother() != null;
     }
 
 }

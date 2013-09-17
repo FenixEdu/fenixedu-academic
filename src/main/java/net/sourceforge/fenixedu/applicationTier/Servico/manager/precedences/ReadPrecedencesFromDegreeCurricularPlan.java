@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,52 +13,47 @@ import net.sourceforge.fenixedu.dataTransferObject.precedences.InfoPrecedenceWit
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadPrecedencesFromDegreeCurricularPlan {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static Map run(String degreeCurricularPlanID) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         Map finalListOfInfoPrecedences = new HashMap();
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
-        List curricularCourses = degreeCurricularPlan.getCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-        int size = curricularCourses.size();
-
-        for (int i = 0; i < size; i++) {
-            CurricularCourse curricularCourse = (CurricularCourse) curricularCourses.get(i);
-            List precedences = curricularCourse.getPrecedences();
+        for (CurricularCourse curricularCourse : curricularCourses) {
+            Collection precedences = curricularCourse.getPrecedences();
             putInMap(finalListOfInfoPrecedences, curricularCourse, precedences);
         }
 
         return finalListOfInfoPrecedences;
     }
 
-    private static void putInMap(Map finalListOfInfoPrecedences, CurricularCourse curricularCourse, List precedences) {
+    private static void putInMap(Map finalListOfInfoPrecedences, CurricularCourse curricularCourse, Collection precedences) {
 
         if (!precedences.isEmpty()) {
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 
-            List infoPrecedences = clone(precedences);
+            List<InfoPrecedence> infoPrecedences = clone(precedences);
 
             finalListOfInfoPrecedences.put(infoCurricularCourse, infoPrecedences);
         }
     }
 
-    private static List clone(List precedences) {
+    private static List<InfoPrecedence> clone(Collection<Precedence> precedences) {
 
-        List result = new ArrayList();
+        List<InfoPrecedence> result = new ArrayList<InfoPrecedence>();
 
-        int size = precedences.size();
-
-        for (int i = 0; i < size; i++) {
-            Precedence precedence = (Precedence) precedences.get(i);
+        for (Precedence precedence : precedences) {
             InfoPrecedence infoPrecedence = InfoPrecedenceWithRestrictions.newInfoFromDomain(precedence);
             result.add(infoPrecedence);
         }

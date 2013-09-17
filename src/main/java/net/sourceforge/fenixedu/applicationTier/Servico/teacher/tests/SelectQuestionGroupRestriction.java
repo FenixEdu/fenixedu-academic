@@ -5,10 +5,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.tests.NewModelGroup;
 import net.sourceforge.fenixedu.domain.tests.NewModelRestriction;
 import net.sourceforge.fenixedu.domain.tests.NewTestModel;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class SelectQuestionGroupRestriction {
-    @Service
+    @Atomic
     public static void run(NewTestModel testModel, NewModelRestriction atomicRestriction, NewModelGroup destinationGroup,
             Integer count, Double value) throws FenixServiceException {
         testModel.selectQuestionGroupRestriction(atomicRestriction, destinationGroup, count, value);

@@ -26,9 +26,10 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.apache.struts.util.MessageResources;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -44,13 +45,13 @@ public class UnEnrollStudentInGroup {
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(String userName, String studentGroupCode) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         ServiceMonitoring.logService(UnEnrollStudentInGroup.class, userName, studentGroupCode);
 
-        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidSituationServiceException();
         }

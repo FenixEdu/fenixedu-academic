@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ResearchInterest extends ResearchInterest_Base {
@@ -19,7 +20,7 @@ public class ResearchInterest extends ResearchInterest_Base {
     }
 
     static {
-        PartyInterest.addListener(new ResearchInterestListener());
+        getRelationPartyInterest().addListener(new ResearchInterestListener());
     }
 
     public ResearchInterest() {
@@ -28,8 +29,8 @@ public class ResearchInterest extends ResearchInterest_Base {
     }
 
     public void delete() {
-        removeParty();
-        removeRootDomainObject();
+        setParty(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -106,7 +107,7 @@ public class ResearchInterest extends ResearchInterest_Base {
         }
     }
 
-    private static class ResearchInterestListener extends dml.runtime.RelationAdapter<ResearchInterest, Party> {
+    private static class ResearchInterestListener extends RelationAdapter<ResearchInterest, Party> {
 
         /*
          * This method is responsible for, after removing a ResearchInterest
@@ -142,6 +143,26 @@ public class ResearchInterest extends ResearchInterest_Base {
     @Deprecated
     public void setOrder(Integer order) {
         super.setInterestOrder(order);
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInterest() {
+        return getInterest() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasInterestOrder() {
+        return getInterestOrder() != null;
     }
 
 }

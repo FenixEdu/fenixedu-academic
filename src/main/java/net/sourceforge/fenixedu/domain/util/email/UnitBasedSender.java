@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -10,7 +8,7 @@ import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.accessControl.UnitMembersGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class UnitBasedSender extends UnitBasedSender_Base {
 
@@ -31,7 +29,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 
     @Override
     public void delete() {
-        removeUnit();
+        setUnit(null);
         super.delete();
     }
 
@@ -42,14 +40,14 @@ public class UnitBasedSender extends UnitBasedSender_Base {
     }
 
     @Override
-    public List<ReplyTo> getReplyTos() {
+    public Set<ReplyTo> getReplyTos() {
         if (!hasAnyReplyTos()) {
             addReplyTos(new CurrentUserReplyTo());
         }
         return super.getReplyTos();
     }
 
-    @Service
+    @Atomic
     private void createCurrentUserReplyTo() {
         addReplyTos(new CurrentUserReplyTo());
     }
@@ -78,7 +76,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
         return false;
     }
 
-    @Service
+    @Atomic
     private void updateRecipients() {
         final Unit unit = getUnit();
         if (unit != null) {
@@ -113,42 +111,24 @@ public class UnitBasedSender extends UnitBasedSender_Base {
     }
 
     @Override
-    public List<Recipient> getRecipients() {
-        updateRecipients();
-        return super.getRecipients();
-    }
-
-    @Override
     public Set<Recipient> getRecipientsSet() {
         updateRecipients();
         return super.getRecipientsSet();
     }
 
-    @Override
-    public int getRecipientsCount() {
-        updateRecipients();
-        return super.getRecipientsCount();
-    }
-
-    @Override
-    public Iterator<Recipient> getRecipientsIterator() {
-        updateRecipients();
-        return super.getRecipientsIterator();
-    }
-
-    @Service
+    @Atomic
     @Override
     public void addRecipients(final Recipient recipients) {
         super.addRecipients(recipients);
     }
 
-    @Service
+    @Atomic
     @Override
     public void removeRecipients(final Recipient recipients) {
         super.removeRecipients(recipients);
     }
 
-    @Service
+    @Atomic
     protected void createRecipient(final PersistentGroupMembers persistentGroupMembers) {
         addRecipients(new Recipient(null, new PersistentGroup(persistentGroupMembers)));
     }
@@ -157,8 +137,14 @@ public class UnitBasedSender extends UnitBasedSender_Base {
         addRecipients(new Recipient(null, (Group) group));
     }
 
-    @Service
+    @Atomic
     public static UnitBasedSender newInstance(Unit unit) {
         return new UnitBasedSender(unit, Sender.getNoreplyMail(), new UnitMembersGroup(unit));
     }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

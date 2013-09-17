@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ManageCreditsNotes extends FenixDispatchAction {
 
@@ -46,7 +46,7 @@ public class ManageCreditsNotes extends FenixDispatchAction {
     protected ActionForward editNote(HttpServletRequest request, DynaActionForm dynaActionForm, Teacher teacher,
             String executionPeriodId, RoleType roleType, ActionMapping mapping, String noteType) throws FenixServiceException {
 
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
         String managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote, functionsAccumulation, thesisNote;
 
         managementFunctionNote =

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +25,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -108,6 +111,7 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -121,8 +125,7 @@ import org.joda.time.YearMonthDay;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Registration extends Registration_Base {
@@ -149,7 +152,7 @@ public class Registration extends Registration_Base {
     static public final ComparatorChain COMPARATOR_BY_NUMBER_AND_ID = new ComparatorChain();
     static {
         COMPARATOR_BY_NUMBER_AND_ID.addComparator(NUMBER_COMPARATOR);
-        COMPARATOR_BY_NUMBER_AND_ID.addComparator(COMPARATOR_BY_ID);
+        COMPARATOR_BY_NUMBER_AND_ID.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     private static final List<RegistrationAgreement> RAIDES_MOBILITY = Arrays.asList(RegistrationAgreement.ALMEIDA_GARRETT,
@@ -316,31 +319,31 @@ public class Registration extends Registration_Base {
 
         checkRulesToDelete();
 
-        for (; hasAnyRegistrationStates(); getRegistrationStates().get(0).delete()) {
+        for (; hasAnyRegistrationStates(); getRegistrationStates().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyStudentCurricularPlans(); getStudentCurricularPlans().get(0).delete()) {
+        for (; hasAnyStudentCurricularPlans(); getStudentCurricularPlans().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyAssociatedAttends(); getAssociatedAttends().get(0).delete()) {
+        for (; hasAnyAssociatedAttends(); getAssociatedAttends().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete()) {
+        for (; hasAnyExternalEnrolments(); getExternalEnrolments().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyRegistrationDataByExecutionYear(); getRegistrationDataByExecutionYear().get(0).delete()) {
+        for (; hasAnyRegistrationDataByExecutionYear(); getRegistrationDataByExecutionYear().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyAcademicServiceRequests(); getAcademicServiceRequests().get(0).delete()) {
+        for (; hasAnyAcademicServiceRequests(); getAcademicServiceRequests().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyRegistrationRegimes(); getRegistrationRegimes().get(0).delete()) {
+        for (; hasAnyRegistrationRegimes(); getRegistrationRegimes().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyCurriculumLineLogs(); getCurriculumLineLogs().get(0).delete()) {
+        for (; hasAnyCurriculumLineLogs(); getCurriculumLineLogs().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyRegistrationStateLogs(); getRegistrationStateLogs().get(0).delete()) {
+        for (; hasAnyRegistrationStateLogs(); getRegistrationStateLogs().iterator().next().delete()) {
             ;
         }
 
@@ -357,13 +360,13 @@ public class Registration extends Registration_Base {
             getStudentCandidacy().delete();
         }
 
-        removeIndividualCandidacy();
-        removeSourceRegistration();
-        removeRegistrationYear();
-        removeDegree();
-        removeStudent();
-        removeRegistrationProtocol();
-        removeRootDomainObject();
+        setIndividualCandidacy(null);
+        setSourceRegistration(null);
+        setRegistrationYear(null);
+        setDegree(null);
+        setStudent(null);
+        setRegistrationProtocol(null);
+        setRootDomainObject(null);
 
         getDestinyRegistrations().clear();
         getShiftsSet().clear();
@@ -372,7 +375,7 @@ public class Registration extends Registration_Base {
     }
 
     private void checkRulesToDelete() {
-        if (getDfaRegistrationEventsCount() > 0) {
+        if (getDfaRegistrationEventsSet().size() > 0) {
             throw new DomainException("error.student.Registration.cannot.delete.because.is.associated.to.dfa.registration.event");
         }
     }
@@ -397,14 +400,14 @@ public class Registration extends Registration_Base {
 
     public List<StudentCurricularPlan> getSortedStudentCurricularPlans() {
         final ArrayList<StudentCurricularPlan> sortedStudentCurricularPlans =
-                new ArrayList<StudentCurricularPlan>(super.getStudentCurricularPlans());
+                new ArrayList<StudentCurricularPlan>(super.getStudentCurricularPlansSet());
         Collections.sort(sortedStudentCurricularPlans, StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
         return sortedStudentCurricularPlans;
     }
 
     final public List<StudentCurricularPlan> getStudentCurricularPlansExceptPast() {
         List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-        for (StudentCurricularPlan studentCurricularPlan : super.getStudentCurricularPlans()) {
+        for (StudentCurricularPlan studentCurricularPlan : super.getStudentCurricularPlansSet()) {
             if (!studentCurricularPlan.isPast()) {
                 result.add(studentCurricularPlan);
             }
@@ -532,7 +535,7 @@ public class Registration extends Registration_Base {
         ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
 
         for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
-            for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+            for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
                 if (enrolment.getEnrolmentCondition() == EnrollmentCondition.INVISIBLE) {
                     continue;
                 }
@@ -1204,7 +1207,7 @@ public class Registration extends Registration_Base {
             }
 
         } else {
-            List<Registration> registrations = getStudent().getRegistrations();
+            Collection<Registration> registrations = getStudent().getRegistrations();
             for (Registration registration : registrations) {
                 if (registration != this && !registration.isBolonha()) {
                     if (!registration.isConcluded()) {
@@ -1846,7 +1849,7 @@ public class Registration extends Registration_Base {
         }
     }
 
-    @Service
+    @Atomic
     final public void removeAttendFor(final ExecutionCourse executionCourse) {
         final Attends attend = readRegistrationAttendByExecutionCourse(executionCourse);
         if (attend != null) {
@@ -1910,7 +1913,7 @@ public class Registration extends Registration_Base {
     }
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation(final SchoolLevelType levelType) {
-        return (super.hasPrecedentDegreeInformation() && super.getPrecedentDegreeInformation().getSchoolLevel() == levelType) ? super
+        return (super.getPrecedentDegreeInformation() != null && super.getPrecedentDegreeInformation().getSchoolLevel() == levelType) ? super
                 .getPrecedentDegreeInformation() : null;
     }
 
@@ -2847,8 +2850,8 @@ public class Registration extends Registration_Base {
         getConclusionProcess().update(editor, finalAverage, average, conclusion.toLocalDate(), notes);
     }
 
-    @Checked("RegistrationPredicates.MANAGE_CONCLUSION_PROCESS")
     public void conclude(final CycleCurriculumGroup cycleCurriculumGroup) {
+        check(this, RegistrationPredicates.MANAGE_CONCLUSION_PROCESS);
         if (!isBolonha()) {
             throw new DomainException("error.Registration.cannot.apply.to.preBolonha");
         }
@@ -3332,9 +3335,8 @@ public class Registration extends Registration_Base {
         super.setStudentCandidacy(studentCandidacy);
     }
 
-    @Override
     final public void removeStudentCandidacy() {
-        super.removeStudentCandidacy();
+        super.setStudentCandidacy(null);
     }
 
     final public Boolean getPayedTuition() {
@@ -3586,8 +3588,8 @@ public class Registration extends Registration_Base {
 
     }
 
-    @Checked("RegistrationPredicates.TRANSIT_TO_BOLONHA")
     public void transitToBolonha(final Person person, final DateTime when) {
+        check(this, RegistrationPredicates.TRANSIT_TO_BOLONHA);
 
         if (!isActive()) {
             throw new DomainException("error.student.Registration.cannot.transit.non.active.registrations");
@@ -3738,7 +3740,7 @@ public class Registration extends Registration_Base {
         return false;
     }
 
-    @Service
+    @Atomic
     public StudentStatute grantSeniorStatute(ExecutionYear executionYear) {
         return StudentStatuteType.SENIOR.createStudentStatute(getStudent(), this, executionYear.getFirstExecutionPeriod(),
                 executionYear.getLastExecutionPeriod());
@@ -4003,7 +4005,7 @@ public class Registration extends Registration_Base {
                 String number = Integer.toString(registration.getNumber());
                 // String number =
                 // Integer.toString(registration.getStudent().getNumber());
-                String degreeRemoteOid = Long.toString(registration.getDegree().getOID());
+                String degreeRemoteOid = registration.getDegree().getExternalId();
                 String username = registration.getPerson().getUsername();
                 JSONObject studentInfo = new JSONObject();
                 studentInfo.put("username", username);
@@ -4105,4 +4107,435 @@ public class Registration extends Registration_Base {
     public boolean isValidForRAIDES() {
         return isActive() && isBolonha() && !getDegreeType().isEmpty() && !RAIDES_MOBILITY.contains(getRegistrationAgreement());
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry> getStudentsInquiryRegistries() {
+        return getStudentsInquiryRegistriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentsInquiryRegistries() {
+        return !getStudentsInquiryRegistriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment> getWrittenEvaluationEnrolments() {
+        return getWrittenEvaluationEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWrittenEvaluationEnrolments() {
+        return !getWrittenEvaluationEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.log.CurriculumLineLog> getCurriculumLineLogs() {
+        return getCurriculumLineLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurriculumLineLogs() {
+        return !getCurriculumLineLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Delegate> getDelegates() {
+        return getDelegatesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDelegates() {
+        return !getDelegatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent> getSecretaryEnrolmentStudents() {
+        return getSecretaryEnrolmentStudentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySecretaryEnrolmentStudents() {
+        return !getSecretaryEnrolmentStudentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent> getAssociatedGroupStudents() {
+        return getAssociatedGroupStudentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedGroupStudents() {
+        return !getAssociatedGroupStudentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog> getStudentTestsLogs() {
+        return getStudentTestsLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentTestsLogs() {
+        return !getStudentTestsLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.SeniorStatute> getSeniorStatute() {
+        return getSeniorStatuteSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySeniorStatute() {
+        return !getSeniorStatuteSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Advise> getAdvises() {
+        return getAdvisesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAdvises() {
+        return !getAdvisesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion> getStudentTestsQuestions() {
+        return getStudentTestsQuestionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentTestsQuestions() {
+        return !getStudentTestsQuestionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent> getTeacherDegreeFinalProjectStudent() {
+        return getTeacherDegreeFinalProjectStudentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherDegreeFinalProjectStudent() {
+        return !getTeacherDegreeFinalProjectStudentSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear> getRegistrationDataByExecutionYear() {
+        return getRegistrationDataByExecutionYearSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRegistrationDataByExecutionYear() {
+        return !getRegistrationDataByExecutionYearSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission> getOutboundMobilityCandidacySubmission() {
+        return getOutboundMobilityCandidacySubmissionSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOutboundMobilityCandidacySubmission() {
+        return !getOutboundMobilityCandidacySubmissionSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest> getAcademicServiceRequests() {
+        return getAcademicServiceRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAcademicServiceRequests() {
+        return !getAcademicServiceRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.StudentCurricularPlan> getStudentCurricularPlans() {
+        return getStudentCurricularPlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentCurricularPlans() {
+        return !getStudentCurricularPlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getDestinyRegistrations() {
+        return getDestinyRegistrationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDestinyRegistrations() {
+        return !getDestinyRegistrationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent> getDfaRegistrationEvents() {
+        return getDfaRegistrationEventsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDfaRegistrationEvents() {
+        return !getDfaRegistrationEventsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateLog> getRegistrationStateLogs() {
+        return getRegistrationStateLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRegistrationStateLogs() {
+        return !getRegistrationStateLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment> getExternalEnrolments() {
+        return getExternalEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExternalEnrolments() {
+        return !getExternalEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry> getAssociatedInquiriesRegistries() {
+        return getAssociatedInquiriesRegistriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedInquiriesRegistries() {
+        return !getAssociatedInquiriesRegistriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ShiftEnrolment> getShiftEnrolments() {
+        return getShiftEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyShiftEnrolments() {
+        return !getShiftEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy> getAssociatedCandidancies() {
+        return getAssociatedCandidanciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedCandidancies() {
+        return !getAssociatedCandidanciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction> getInsuranceTransactions() {
+        return getInsuranceTransactionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInsuranceTransactions() {
+        return !getInsuranceTransactionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.RegistrationRegime> getRegistrationRegimes() {
+        return getRegistrationRegimesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRegistrationRegimes() {
+        return !getRegistrationRegimesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreesInformations() {
+        return getPrecedentDegreesInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPrecedentDegreesInformations() {
+        return !getPrecedentDegreesInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState> getRegistrationStates() {
+        return getRegistrationStatesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRegistrationStates() {
+        return !getRegistrationStatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAssociatedAttends() {
+        return getAssociatedAttendsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedAttends() {
+        return !getAssociatedAttendsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Shift> getShifts() {
+        return getShiftsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyShifts() {
+        return !getShiftsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEntryPhase() {
+        return getEntryPhase() != null;
+    }
+
+    @Deprecated
+    public boolean hasArithmeticMeanClassification() {
+        return getArithmeticMeanClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovationRatioClassification() {
+        return getApprovationRatioClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestedChangeBranch() {
+        return getRequestedChangeBranch() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistrationNumber() {
+        return getRegistrationNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudiesStartDate() {
+        return getStudiesStartDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistrationProtocol() {
+        return getRegistrationProtocol() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCandidacy() {
+        return getStudentCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasMeasurementTestRoom() {
+        return getMeasurementTestRoom() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDate() {
+        return getStartDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasAgreementInformation() {
+        return getAgreementInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasHomologationDate() {
+        return getHomologationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasSourceRegistration() {
+        return getSourceRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistrationYear() {
+        return getRegistrationYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasExternalRegistrationData() {
+        return getExternalRegistrationData() != null;
+    }
+
+    @Deprecated
+    public boolean hasAssociatedGaugingTestResult() {
+        return getAssociatedGaugingTestResult() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpecializationDegreeRegistrationEvent() {
+        return getSpecializationDegreeRegistrationEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasIndividualCandidacy() {
+        return getIndividualCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestedChangeDegree() {
+        return getRequestedChangeDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasSenior() {
+        return getSenior() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionProcess() {
+        return getConclusionProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasIngression() {
+        return getIngression() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdIndividualProgramProcess() {
+        return getPhdIndividualProgramProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrecedentDegreeInformation() {
+        return getPrecedentDegreeInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasEntryGradeClassification() {
+        return getEntryGradeClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryStudentCycleAnswer() {
+        return getInquiryStudentCycleAnswer() != null;
+    }
+
 }

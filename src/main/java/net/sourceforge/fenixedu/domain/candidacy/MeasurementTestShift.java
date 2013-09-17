@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class MeasurementTestShift extends MeasurementTestShift_Base {
 
@@ -23,22 +23,23 @@ public class MeasurementTestShift extends MeasurementTestShift_Base {
     };
 
     static {
-        MeasurementTestShiftMeasurementTest.addListener(new RelationAdapter<MeasurementTestShift, MeasurementTest>() {
+        getRelationMeasurementTestShiftMeasurementTest().addListener(
+                new RelationAdapter<MeasurementTest, MeasurementTestShift>() {
 
-            @Override
-            public void beforeAdd(MeasurementTestShift toAdd, MeasurementTest test) {
+                    @Override
+                    public void beforeAdd(MeasurementTest test, MeasurementTestShift toAdd) {
 
-                if (toAdd != null && test != null) {
-                    if (test.getShiftByName(toAdd.getName()) != null) {
-                        throw new DomainException(
-                                "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift.already.contains.shift.with.same.name");
+                        if (toAdd != null && test != null) {
+                            if (test.getShiftByName(toAdd.getName()) != null) {
+                                throw new DomainException(
+                                        "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift.already.contains.shift.with.same.name");
+
+                            }
+                        }
 
                     }
-                }
 
-            }
-
-        });
+                });
     }
 
     protected MeasurementTestShift() {
@@ -103,4 +104,45 @@ public class MeasurementTestShift extends MeasurementTestShift_Base {
 
         return null;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom> getRooms() {
+        return getRoomsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRooms() {
+        return !getRoomsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeCurricularPlan> getForDegreeCurricularPlan() {
+        return getForDegreeCurricularPlanSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyForDegreeCurricularPlan() {
+        return !getForDegreeCurricularPlanSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasTest() {
+        return getTest() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDate() {
+        return getDate() != null;
+    }
+
 }

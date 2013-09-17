@@ -33,7 +33,7 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
                 if (groupQuestion.isCheckbox()) {
                     count++;
                 } else {
-                    count += groupQuestion.getInquiryQuestionsCount();
+                    count += groupQuestion.getInquiryQuestionsSet().size();
                 }
             }
         }
@@ -72,4 +72,40 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
             return null;
         }
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryBlock> getInquiryBlocks() {
+        return getInquiryBlocksSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryBlocks() {
+        return !getInquiryBlocksSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasInquiryMessage() {
+        return getInquiryMessage() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsePeriodBegin() {
+        return getResponsePeriodBegin() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsePeriodEnd() {
+        return getResponsePeriodEnd() != null;
+    }
+
 }

@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.io.FileUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -51,7 +51,8 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
 
         final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = thesis.getPublication();
         if (publication != null) {
-            final ResearchResultDocumentFile researchResultDocumentFile = publication.getResultDocumentFilesIterator().next();
+            final ResearchResultDocumentFile researchResultDocumentFile =
+                    publication.getResultDocumentFilesSet().iterator().next();
 
             final FileResultPermittedGroupType permittedGroupType = researchResultDocumentFile.getFileResultPermittedGroupType();
             final Group permittedGroup = researchResultDocumentFile.getPermittedGroup();
@@ -73,7 +74,7 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
 
     private static final CreateThesisDissertationFile serviceInstance = new CreateThesisDissertationFile();
 
-    @Service
+    @Atomic
     public static ThesisFile runCreateThesisDissertationFile(Thesis thesis, File fileToUpload, String fileName, String title,
             String subTitle, Language language) throws FenixServiceException, IOException {
         ScientificCouncilOrStudentThesisAuthorizationFilter.instance.execute(thesis);

@@ -191,7 +191,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
     }
 
     private boolean hasSpecialSeasonStatute() {
-        List<StudentStatute> statutes = getResponsiblePerson().getStudent().getStudentStatutes();
+        Collection<StudentStatute> statutes = getResponsiblePerson().getStudent().getStudentStatutes();
         for (StudentStatute statute : statutes) {
             if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(getRegistration())) {
                 continue;
@@ -241,7 +241,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
             }
         }
         if (statutesWriter.size() == 1) {
-            SeniorStatute senior = (SeniorStatute) statutesWriter.get(0);
+            SeniorStatute senior = (SeniorStatute) statutesWriter.iterator().next();
             return senior.getRegistration();
         } else {
             throw new DomainException(

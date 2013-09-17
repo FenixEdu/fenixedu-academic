@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class SetUserUID {
 
-    @Service
+    @Atomic
     public static void run(final Person person) {
         person.hasIstUsername();
     }

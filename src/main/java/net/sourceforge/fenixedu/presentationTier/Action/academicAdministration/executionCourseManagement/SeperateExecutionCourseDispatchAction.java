@@ -40,7 +40,7 @@ import org.apache.struts.util.LabelValueBean;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "academicAdministration", path = "/seperateExecutionCourse",
         input = "/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&page=0",
@@ -65,10 +65,10 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         String curricularYearId = RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
         RequestUtils.getAndSetStringToRequest(request, "executionPeriodId"); // maybe not needed (have EC id)
 
-        CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
+        CurricularYear curYear = FenixFramework.getDomainObject(curricularYearId);
         request.setAttribute("curYear", curYear.getYear().toString());
 
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(originExecutionDegreeId);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(originExecutionDegreeId);
         request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());
 
         InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseWithShiftsAndCurricularCoursesByOID.run(executionCourseId);
@@ -93,10 +93,10 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         String curricularYearId = RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
         RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
 
-        CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
+        CurricularYear curYear = FenixFramework.getDomainObject(curricularYearId);
         request.setAttribute("curYear", curYear.getYear().toString());
 
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(originExecutionDegreeId);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(originExecutionDegreeId);
         request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());
 
         InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseWithShiftsAndCurricularCoursesByOID.run(executionCourseId);
@@ -136,8 +136,8 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         }
 
         String executionPeriodId = RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
-        ExecutionSemester executionPeriod = AbstractDomainObject.fromExternalId(executionPeriodId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
+        ExecutionSemester executionPeriod = FenixFramework.getDomainObject(executionPeriodId);
 
         ExecutionCourseBean sessionBean = new ExecutionCourseBean();
         sessionBean.setSourceExecutionCourse(executionCourse);
@@ -147,8 +147,8 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         if (!chooseNotLinked) {
             String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
             String curricularYearId = RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(originExecutionDegreeId);
-            CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(originExecutionDegreeId);
+            CurricularYear curYear = FenixFramework.getDomainObject(curricularYearId);
             sessionBean.setExecutionDegree(executionDegree);
             sessionBean.setCurricularYear(curYear);
             request.setAttribute("curYear", curYear.getYear().toString());
@@ -226,8 +226,8 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         String curricularYearId = (String) dynaActionForm.get("curricularYearId");
         String[] shiftIdsToTransfer = (String[]) dynaActionForm.get("shiftIdsToTransfer");
         String[] curricularCourseIdsToTransfer = (String[]) dynaActionForm.get("curricularCourseIdsToTransfer");
-        ExecutionDegree originExecutionDegree = AbstractDomainObject.fromExternalId(originExecutionDegreeId);
-        ExecutionCourse originExecutionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionDegree originExecutionDegree = FenixFramework.getDomainObject(originExecutionDegreeId);
+        ExecutionCourse originExecutionCourse = FenixFramework.getDomainObject(executionCourseId);
         String originExecutionDegreesString = originExecutionCourse.getDegreePresentationString();
         String destinationExecutionCourseId = null;
 
@@ -308,8 +308,8 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
         String[] shiftIdsToTransfer = (String[]) dynaActionForm.get("shiftIdsToTransfer");
         String[] curricularCourseIdsToTransfer = (String[]) dynaActionForm.get("curricularCourseIdsToTransfer");
-        ExecutionDegree originExecutionDegree = AbstractDomainObject.fromExternalId(originExecutionDegreeId);
-        ExecutionCourse originExecutionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionDegree originExecutionDegree = FenixFramework.getDomainObject(originExecutionDegreeId);
+        ExecutionCourse originExecutionCourse = FenixFramework.getDomainObject(executionCourseId);
         String originExecutionDegreesString = originExecutionCourse.getDegreePresentationString();
 
         try {
@@ -387,7 +387,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     private String curricularCourseToString(String id) {
-        CurricularCourse curricularCourse = AbstractDomainObject.fromExternalId(id);
+        CurricularCourse curricularCourse = FenixFramework.getDomainObject(id);
         String name = curricularCourse.getNameI18N().getContent();
         if (StringUtils.isEmpty(name)) {
             name = curricularCourse.getName();
@@ -396,7 +396,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     private String shiftToString(String id) {
-        Shift shift = AbstractDomainObject.fromExternalId(id);
+        Shift shift = FenixFramework.getDomainObject(id);
         return shift.getPresentationName();
     }
 

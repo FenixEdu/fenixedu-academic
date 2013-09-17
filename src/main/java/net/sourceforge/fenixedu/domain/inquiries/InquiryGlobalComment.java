@@ -25,14 +25,54 @@ public class InquiryGlobalComment extends InquiryGlobalComment_Base {
     }
 
     public void delete() {
-        for (; !getInquiryResultCommentsSet().isEmpty(); getInquiryResultComments().get(0).delete()) {
+        for (; !getInquiryResultCommentsSet().isEmpty(); getInquiryResultComments().iterator().next().delete()) {
             ;
         }
-        removeExecutionCourse();
-        removeExecutionDegree();
-        removeExecutionSemester();
-        removeTeacher();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setExecutionDegree(null);
+        setExecutionSemester(null);
+        setTeacher(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment> getInquiryResultComments() {
+        return getInquiryResultCommentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryResultComments() {
+        return !getInquiryResultCommentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasCommentOnTeacher() {
+        return getCommentOnTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
+    }
+
 }

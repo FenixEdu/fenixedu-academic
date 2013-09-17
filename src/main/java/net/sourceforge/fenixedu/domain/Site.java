@@ -252,7 +252,7 @@ public abstract class Site extends Site_Base {
 
     @Override
     public Collection<Node> getOrderedChildrenNodes(Class<? extends Content> childType) {
-        List<Node> nodes = getChildren();
+        Collection<Node> nodes = getChildren();
         for (Iterator<Node> nodeIterator = nodes.iterator(); nodeIterator.hasNext();) {
             Node node = nodeIterator.next();
             if (!childType.isAssignableFrom(node.getClass())) {
@@ -290,8 +290,8 @@ public abstract class Site extends Site_Base {
     }
 
     @Override
-    public List<Node> getChildren() {
-        List<Node> nodes = new ArrayList<Node>();
+    public Set<Node> getChildren() {
+        Set<Node> nodes = new HashSet<Node>();
         MetaDomainObject template = MetaDomainObject.getMeta(this.getClass());
         if (template != null && template.isPortalAvailable()) {
             nodes.addAll(template.getAssociatedPortal().getChildren());
@@ -390,6 +390,21 @@ public abstract class Site extends Site_Base {
     }
 
     public void logSectionInsertInstitutional(Content childContent, Section section) {
+    }
+
+    @Deprecated
+    public boolean hasStyle() {
+        return getStyle() != null;
+    }
+
+    @Deprecated
+    public boolean hasAlternativeSite() {
+        return getAlternativeSite() != null;
+    }
+
+    @Deprecated
+    public boolean hasJumpPoint() {
+        return getJumpPoint() != null;
     }
 
 }

@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadExamsByDate {
 
-    @Service
+    @Atomic
     public static InfoViewExam run(Calendar examDay, Calendar examStartTime, Calendar examEndTime) {
 
         final List<Exam> filteredExams = Exam.getAllByDate(examDay, examStartTime, examEndTime);
@@ -66,7 +66,7 @@ public class ReadExamsByDate {
         final Set<String> curricularCourseIDs = new HashSet<String>();
 
         // Select an ExecutionPeriod from any ExecutionCourses
-        final ExecutionSemester executionSemester = exam.getAssociatedExecutionCourses().get(0).getExecutionPeriod();
+        final ExecutionSemester executionSemester = exam.getAssociatedExecutionCourses().iterator().next().getExecutionPeriod();
         int numberStudentes = 0;
 
         for (final DegreeModuleScope degreeModuleScope : exam.getDegreeModuleScopes()) {
@@ -94,7 +94,7 @@ public class ReadExamsByDate {
     }
 
     private static List<InfoExecutionCourse> readInfoExecutionCourses(final Exam exam) {
-        final List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>(exam.getAssociatedExecutionCoursesCount());
+        final List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>(exam.getAssociatedExecutionCourses().size());
         for (final ExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
             result.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         }

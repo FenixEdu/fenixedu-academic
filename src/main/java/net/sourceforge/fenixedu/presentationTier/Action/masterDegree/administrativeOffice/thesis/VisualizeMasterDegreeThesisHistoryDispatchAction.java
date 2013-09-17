@@ -15,7 +15,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -34,7 +34,7 @@ public class VisualizeMasterDegreeThesisHistoryDispatchAction extends FenixDispa
         new MasterDegreeThesisOperations().getStudentByNumberAndDegreeType(form, request, new ActionErrors());
 
         MasterDegreeThesisDataVersion masterDegreeThesisDataVersion =
-                AbstractDomainObject.fromExternalId(masterDegreeThesisDataVersionID);
+                FenixFramework.getDomainObject(masterDegreeThesisDataVersionID);
 
         if (!masterDegreeThesisDataVersion.getGuiders().isEmpty()) {
             request.setAttribute(PresentationConstants.GUIDERS_LIST, masterDegreeThesisDataVersion.getGuiders());

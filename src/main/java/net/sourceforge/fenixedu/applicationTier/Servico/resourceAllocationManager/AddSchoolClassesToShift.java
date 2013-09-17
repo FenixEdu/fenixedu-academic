@@ -7,23 +7,24 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AddSchoolClassesToShift {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(InfoShift infoShift, List<String> schoolClassOIDs) throws FenixServiceException {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
-        final Shift shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
+        final Shift shift = FenixFramework.getDomainObject(infoShift.getExternalId());
         if (shift == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         for (final String schoolClassOID : schoolClassOIDs) {
-            final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(schoolClassOID);
+            final SchoolClass schoolClass = FenixFramework.getDomainObject(schoolClassOID);
             if (schoolClass == null) {
                 throw new InvalidArgumentsServiceException();
             }

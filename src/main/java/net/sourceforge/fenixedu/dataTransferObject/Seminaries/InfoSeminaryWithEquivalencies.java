@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,9 +39,9 @@ public class InfoSeminaryWithEquivalencies extends InfoSeminary {
     public void copyFromDomain(Seminary seminary) {
         super.copyFromDomain(seminary);
         if (seminary != null) {
-            for (Iterator iter = seminary.getEquivalenciesIterator(); iter.hasNext();) {
+            for (Object element : seminary.getEquivalencies()) {
                 this.equivalencies = new LinkedList();
-                this.equivalencies.add(iter.next());
+                this.equivalencies.add(element);
 
             }
         }

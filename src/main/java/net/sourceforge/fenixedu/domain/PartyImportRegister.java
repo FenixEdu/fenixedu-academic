@@ -10,4 +10,9 @@ public class PartyImportRegister extends PartyImportRegister_Base {
         setRemoteExternalOid(remoteExternalOid);
     }
 
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
 }

@@ -70,7 +70,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
             final List<ExecutionInterval> executionIntervals =
                     ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
             if (executionIntervals.size() == 1) {
-                setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.get(0)));
+                setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.iterator().next()));
             } else {
                 request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
                 request.setAttribute("executionIntervals", executionIntervals);

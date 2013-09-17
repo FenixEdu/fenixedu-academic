@@ -51,4 +51,9 @@ public abstract class AcademicEvent extends AcademicEvent_Base {
         return getAdministrativeOffice().getUnit();
     }
 
+    @Deprecated
+    public boolean hasAdministrativeOffice() {
+        return getAdministrativeOffice() != null;
+    }
+
 }

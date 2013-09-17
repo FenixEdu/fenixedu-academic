@@ -12,7 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public abstract class ShowResearchResult extends FenixDispatchAction {
 
@@ -20,7 +20,7 @@ public abstract class ShowResearchResult extends FenixDispatchAction {
             HttpServletResponse response) {
 
         String resultOID = request.getParameter("resultId");
-        final DomainObject domainObject = AbstractDomainObject.fromExternalId(resultOID);
+        final DomainObject domainObject = FenixFramework.getDomainObject(resultOID);
         if (domainObject != null && domainObject instanceof ResearchResult) {
             ResearchResult result = (ResearchResult) domainObject;
             request.setAttribute("result", result);
@@ -33,7 +33,7 @@ public abstract class ShowResearchResult extends FenixDispatchAction {
             HttpServletResponse response) {
 
         String resultOID = request.getParameter("resultId");
-        final DomainObject domainObject = AbstractDomainObject.fromExternalId(resultOID);
+        final DomainObject domainObject = FenixFramework.getDomainObject(resultOID);
         if (domainObject != null && domainObject instanceof ResearchResultPublication) {
             final ResearchResultPublication result = (ResearchResultPublication) domainObject;
             request.setAttribute("result", result);

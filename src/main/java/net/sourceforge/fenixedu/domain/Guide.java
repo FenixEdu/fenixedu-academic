@@ -36,7 +36,7 @@ public class Guide extends Guide_Base {
 
     public void delete() {
         if (canBeDeleted()) {
-            removeRootDomainObject();
+            setRootDomainObject(null);
             deleteDomainObject();
         } else {
             throw new DomainException("guide.cannot.be.deleted");
@@ -212,6 +212,106 @@ public class Guide extends Guide_Base {
         } else {
             setPaymentDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.GuideSituation> getGuideSituations() {
+        return getGuideSituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGuideSituations() {
+        return !getGuideSituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide> getReimbursementGuides() {
+        return getReimbursementGuidesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReimbursementGuides() {
+        return !getReimbursementGuidesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.GuideEntry> getGuideEntries() {
+        return getGuideEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGuideEntries() {
+        return !getGuideEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPaymentDateYearMonthDay() {
+        return getPaymentDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasRemarks() {
+        return getRemarks() != null;
+    }
+
+    @Deprecated
+    public boolean hasGuideRequester() {
+        return getGuideRequester() != null;
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasPaymentType() {
+        return getPaymentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasTotalBigDecimal() {
+        return getTotalBigDecimal() != null;
+    }
+
+    @Deprecated
+    public boolean hasContributor() {
+        return getContributor() != null;
+    }
+
+    @Deprecated
+    public boolean hasContributorParty() {
+        return getContributorParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateYearMonthDay() {
+        return getCreationDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasVersion() {
+        return getVersion() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
     }
 
 }

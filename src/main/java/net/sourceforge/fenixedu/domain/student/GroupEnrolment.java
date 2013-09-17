@@ -24,9 +24,10 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -34,17 +35,17 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class GroupEnrolment {
 
-    @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(String groupingID, String shiftID, Integer groupNumber, List<String> studentUsernames,
             String studentUsername) throws FenixServiceException {
+        check(RolePredicates.STUDENT_AND_TEACHER_PREDICATE);
         return enrole(groupingID, shiftID, groupNumber, studentUsernames, studentUsername);
     }
 
     public static Boolean enrole(String groupingID, String shiftID, Integer groupNumber, List<String> studentUsernames,
             String studentUsername) throws FenixServiceException {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupingID);
+        final Grouping grouping = FenixFramework.getDomainObject(groupingID);
         if (grouping == null) {
             throw new NonExistingServiceException();
         }
@@ -59,7 +60,7 @@ public class GroupEnrolment {
         }
         Shift shift = null;
         if (shiftID != null) {
-            shift = AbstractDomainObject.fromExternalId(shiftID);
+            shift = FenixFramework.getDomainObject(shiftID);
         }
         Set<String> allStudentsUsernames = new HashSet<String>(studentUsernames);
         allStudentsUsernames.add(studentUsername);

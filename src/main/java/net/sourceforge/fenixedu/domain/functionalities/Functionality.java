@@ -708,4 +708,39 @@ public class Functionality extends Functionality_Base implements IFunctionality 
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter> getParameters() {
+        return getParametersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParameters() {
+        return !getParametersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.contents.FunctionalityCall> getFunctionalityCalls() {
+        return getFunctionalityCallsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFunctionalityCalls() {
+        return !getFunctionalityCallsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasExecutionPathValue() {
+        return getExecutionPathValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisible() {
+        return getVisible() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPath() {
+        return getExecutionPath() != null;
+    }
+
 }

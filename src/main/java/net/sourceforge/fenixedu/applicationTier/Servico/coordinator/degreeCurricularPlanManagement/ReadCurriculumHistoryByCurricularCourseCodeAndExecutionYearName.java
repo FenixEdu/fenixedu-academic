@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -21,19 +22,20 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério 17/Nov/2003
  */
 public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
 
-    @Checked("RolePredicates.COORDINATOR_PREDICATE")
-    @Service
+    @Atomic
     public static InfoCurriculum run(Integer executionDegreeCode, String curricularCourseCode, String stringExecutionYear)
             throws FenixServiceException {
+        check(RolePredicates.COORDINATOR_PREDICATE);
         InfoCurriculum infoCurriculum = null;
 
         if (curricularCourseCode == null) {
@@ -42,7 +44,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
         if (stringExecutionYear == null || stringExecutionYear.length() == 0) {
             throw new FenixServiceException("nullExecutionYearName");
         }
-        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
+        CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");
         }
@@ -56,7 +58,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
         if (curriculumExecutionYear != null) {
             List allCurricularCourseScopes = new ArrayList();
             List allExecutionCourses = new ArrayList();
-            List executionPeriods = executionYear.getExecutionPeriods();
+            Collection executionPeriods = executionYear.getExecutionPeriods();
             Iterator iterExecutionPeriods = executionPeriods.iterator();
             while (iterExecutionPeriods.hasNext()) {
                 ExecutionSemester executionSemester = (ExecutionSemester) iterExecutionPeriods.next();
@@ -73,7 +75,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
                             (List) CollectionUtils.union(disjunctionCurricularCourseScopes, intersectionCurricularCourseScopes);
                 }
                 List associatedExecutionCourses = new ArrayList();
-                List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+                Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
                 for (ExecutionCourse executionCourse : executionCourses) {
                     if (executionCourse.getExecutionPeriod().equals(executionSemester)) {
                         associatedExecutionCourses.add(executionCourse);

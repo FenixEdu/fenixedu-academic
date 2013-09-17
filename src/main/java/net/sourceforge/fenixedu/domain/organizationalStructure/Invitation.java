@@ -137,4 +137,9 @@ public class Invitation extends Invitation_Base {
         }
         return nextUserID;
     }
+    @Deprecated
+    public boolean hasResponsible() {
+        return getResponsible() != null;
+    }
+
 }

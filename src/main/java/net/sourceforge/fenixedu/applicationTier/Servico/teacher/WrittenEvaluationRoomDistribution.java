@@ -12,15 +12,15 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class WrittenEvaluationRoomDistribution {
 
     protected void run(String executionCourseID, String evaluationID, List<String> roomIDs, Boolean sendSMS,
             Boolean distributeOnlyEnroledStudents) throws FenixServiceException {
 
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(evaluationID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) FenixFramework.getDomainObject(evaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
@@ -70,7 +70,8 @@ public class WrittenEvaluationRoomDistribution {
     }
 
     private List<Registration> readEnroledStudentsInWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
-        final List<Registration> result = new ArrayList<Registration>(writtenEvaluation.getWrittenEvaluationEnrolmentsCount());
+        final List<Registration> result =
+                new ArrayList<Registration>(writtenEvaluation.getWrittenEvaluationEnrolmentsSet().size());
         for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation.getWrittenEvaluationEnrolments()) {
             result.add(writtenEvaluationEnrolment.getStudent());
         }
@@ -97,7 +98,7 @@ public class WrittenEvaluationRoomDistribution {
 
     private static final WrittenEvaluationRoomDistribution serviceInstance = new WrittenEvaluationRoomDistribution();
 
-    @Service
+    @Atomic
     public static void runWrittenEvaluationRoomDistribution(String executionCourseID, String evaluationID, List<String> roomIDs,
             Boolean sendSMS, Boolean distributeOnlyEnroledStudents) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseAndExamLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID, evaluationID);

@@ -152,4 +152,14 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     public boolean isExemptionAppliable() {
         return true;
     }
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

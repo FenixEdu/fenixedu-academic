@@ -113,7 +113,7 @@ public class A3ESDegreeProcess implements Serializable {
     public void initialize() {
         base64Hash = new String(Base64.encodeBase64((user + ":" + password).getBytes()));
         JSONArray processes = invoke(webResource().path(API_PROCESS));
-        JSONObject json = (JSONObject) processes.get(0);
+        JSONObject json = (JSONObject) processes.iterator().next();
         id = (String) json.get("id");
         String name = (String) json.get("name");
         if (acefIndex.containsKey(name)) {

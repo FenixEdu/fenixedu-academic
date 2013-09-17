@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/auditResult", module = "coordinator")
 @Forwards({ @Forward(name = "viewProcessDetails", path = "/pedagogicalCouncil/inquiries/viewProcessDetailsNoAction.jsp") })
@@ -23,7 +23,7 @@ public class ViewQucAuditProcessCoordinatorDA extends ViewQucAuditProcessDA {
     @Override
     public ActionForward viewProcessDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        DegreeCurricularPlan dcp = AbstractDomainObject.fromExternalId(request.getParameter("degreeCurricularPlanOID"));
+        DegreeCurricularPlan dcp = FenixFramework.getDomainObject(request.getParameter("degreeCurricularPlanOID"));
         request.setAttribute("degreeCurricularPlanID", dcp.getExternalId().toString());
         CoordinatedDegreeInfo.setCoordinatorContext(request);
         return super.viewProcessDetails(mapping, form, request, response);

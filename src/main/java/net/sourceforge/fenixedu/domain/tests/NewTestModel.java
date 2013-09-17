@@ -29,14 +29,14 @@ public class NewTestModel extends NewTestModel_Base {
     }
 
     public int getBagQuestionCount() {
-        return this.getBag().getChildRestrictionsCount();
+        return this.getBag().getChildRestrictionsSet().size();
     }
 
     @Override
     public void delete() {
         this.getBag().deleteAsBag();
 
-        this.removeCreator();
+        this.setCreator(null);
 
         super.delete();
     }
@@ -78,7 +78,7 @@ public class NewTestModel extends NewTestModel_Base {
 
     public void selectAtomicQuestionRestrictions(List<NewModelRestriction> modelRestrictions, NewModelGroup destinationGroup,
             Double value) {
-        int i = destinationGroup.getChildRestrictionsCount();
+        int i = destinationGroup.getChildRestrictionsSet().size();
         for (NewModelRestriction modelRestriction : modelRestrictions) {
             modelRestriction.setParentGroup(destinationGroup);
             modelRestriction.setPosition(++i);
@@ -91,7 +91,7 @@ public class NewTestModel extends NewTestModel_Base {
     public void selectQuestionGroupRestriction(NewModelRestriction modelRestriction, NewModelGroup destinationGroup,
             Integer count, Double value) {
         modelRestriction.setParentGroup(destinationGroup);
-        modelRestriction.setPosition(destinationGroup.getChildRestrictionsCount());
+        modelRestriction.setPosition(destinationGroup.getChildRestrictionsSet().size());
         modelRestriction.setCount(count);
         modelRestriction.setValue(value);
 
@@ -107,7 +107,7 @@ public class NewTestModel extends NewTestModel_Base {
         }
 
         atomicRestriction.setParentGroup(this.getBag());
-        atomicRestriction.setPosition(this.getBag().getChildRestrictionsCount() + 1);
+        atomicRestriction.setPosition(this.getBag().getChildRestrictionsSet().size() + 1);
 
         parentGroup.resortChildRestrictions();
     }
@@ -233,7 +233,7 @@ public class NewTestModel extends NewTestModel_Base {
         if (choosenQuestion instanceof NewAtomicQuestion) {
             NewAtomicQuestion questionCopy = (NewAtomicQuestion) choosenQuestion.copy(transformationMap);
             questionCopy.setSection(parentSection);
-            questionCopy.setSectionPosition(parentSection.getTestElementsCount());
+            questionCopy.setSectionPosition(parentSection.getTestElementsSet().size());
 
             questionCopy.setGrade(grade);
 
@@ -310,6 +310,26 @@ public class NewTestModel extends NewTestModel_Base {
         }
 
         return super.findModelRestriction(question);
+    }
+
+    @Deprecated
+    public boolean hasBag() {
+        return getBag() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasScale() {
+        return getScale() != null;
     }
 
 }

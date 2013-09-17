@@ -81,7 +81,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
         NewTestGroup testGroup = getDomainObject(request, "oid");
 
-        request.setAttribute("oid", testGroup.getOrderedTests().get(0).getExternalId());
+        request.setAttribute("oid", testGroup.getOrderedTests().iterator().next().getExternalId());
         request.setAttribute("executionCourse", testGroup.getExecutionCourse());
 
         return this.viewTest(mapping, form, request, response);

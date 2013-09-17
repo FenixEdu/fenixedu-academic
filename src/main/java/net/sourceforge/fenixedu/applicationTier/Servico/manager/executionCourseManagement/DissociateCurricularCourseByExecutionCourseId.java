@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourse
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -14,11 +14,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DissociateCurricularCourseByExecutionCourseId {
 
-    @Service
+    @Atomic
     public static void run(String executionCourseId, String curricularCourseId) throws FenixServiceException {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
 
-        CurricularCourse curricularCourse = AbstractDomainObject.fromExternalId(curricularCourseId);
+        CurricularCourse curricularCourse = FenixFramework.getDomainObject(curricularCourseId);
 
         curricularCourse.removeAssociatedExecutionCourses(executionCourse);
 

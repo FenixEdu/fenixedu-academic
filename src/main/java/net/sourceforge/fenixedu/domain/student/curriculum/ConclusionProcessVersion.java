@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
@@ -34,7 +35,7 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
                 final public int compare(ConclusionProcessVersion o1, ConclusionProcessVersion o2) {
                     final ComparatorChain chain = new ComparatorChain();
                     chain.addComparator(ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME);
-                    chain.addComparator(ConclusionProcessVersion.COMPARATOR_BY_ID);
+                    chain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
                     return chain.compare(o1, o2);
                 }
             };
@@ -133,11 +134,6 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
     }
 
     @Override
-    public void removeConclusionProcess() {
-        throw new DomainException("error.ConclusionProcessVersion.method.not.allowed");
-    }
-
-    @Override
     public void setRootDomainObject(RootDomainObject rootDomainObject) {
         throw new DomainException("error.ConclusionProcessVersion.method.not.allowed");
     }
@@ -205,6 +201,81 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
         } else {
             setCreationDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    @Deprecated
+    public boolean hasResponsible() {
+        return getResponsible() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastVersionConclusionProcess() {
+        return getLastVersionConclusionProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasMasterDegreeThesis() {
+        return getMasterDegreeThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCredits() {
+        return getCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateTime() {
+        return getCreationDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionDate() {
+        return getConclusionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionYear() {
+        return getConclusionYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasNotes() {
+        return getNotes() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionProcess() {
+        return getConclusionProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasDissertationEnrolment() {
+        return getDissertationEnrolment() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurriculum() {
+        return getCurriculum() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalAverage() {
+        return getFinalAverage() != null;
+    }
+
+    @Deprecated
+    public boolean hasIngressionYear() {
+        return getIngressionYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage() {
+        return getAverage() != null;
     }
 
 }

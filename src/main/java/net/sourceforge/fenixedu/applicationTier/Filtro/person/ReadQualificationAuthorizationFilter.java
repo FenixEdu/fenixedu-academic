@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadQualificationAuthorizationFilter {
 
@@ -57,7 +57,7 @@ public class ReadQualificationAuthorizationFilter {
     }
 
     private boolean isOwnQualification(IUserView userView, String objectId) {
-        final Qualification qualification = AbstractDomainObject.fromExternalId(objectId);
+        final Qualification qualification = FenixFramework.getDomainObject(objectId);
         return qualification.getPerson() == userView.getPerson();
     }
 }

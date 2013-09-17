@@ -44,7 +44,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ManageThesisDA extends AbstractManageThesisDA {
 
@@ -80,12 +80,12 @@ public class ManageThesisDA extends AbstractManageThesisDA {
         if (thesis != null) {
             return thesis;
         } else {
-            return Thesis.fromExternalId(request.getParameter("thesisID"));
+            return FenixFramework.getDomainObject(request.getParameter("thesisID"));
         }
     }
 
     private Enrolment getEnrolment(HttpServletRequest request) {
-        return Enrolment.fromExternalId(request.getParameter("enrolmentOID"));
+        return FenixFramework.getDomainObject(request.getParameter("enrolmentOID"));
     }
 
     private Student getStudent(HttpServletRequest request) {
@@ -94,7 +94,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
         if (student != null) {
             return student;
         } else {
-            return Student.fromExternalId(request.getParameter("studentID"));
+            return FenixFramework.getDomainObject(request.getParameter("studentID"));
         }
     }
 
@@ -113,7 +113,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
                 return executionYears.first();
             }
         } else {
-            return AbstractDomainObject.fromExternalId(id);
+            return FenixFramework.getDomainObject(id);
         }
     }
 

@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
 
@@ -55,7 +55,7 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
         return CareerWorkshopThemes.values().length - 1;
     }
 
-    @Service
+    @Atomic
     public void setSessionPreferences(String[] preferences) {
         final StringBuilder stringBuilder = new StringBuilder();
         for (final CareerWorkshopSessions careerWorkshopSessions : CareerWorkshopSessions.values()) {
@@ -67,7 +67,7 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
         setSessions(stringBuilder.toString());
     }
 
-    @Service
+    @Atomic
     public void setThemePreferences(String[] preferences) {
         final StringBuilder stringBuilder = new StringBuilder();
         for (final CareerWorkshopThemes careerWorkshopThemes : CareerWorkshopThemes.values()) {
@@ -151,7 +151,7 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
         return result;
     }
 
-    @Service
+    @Atomic
     public void sealApplication() {
         DateTime timestamp = new DateTime();
         setSealStamp(timestamp);
@@ -159,11 +159,46 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
     }
 
     public void delete() {
-        removeCareerWorkshopConfirmation();
-        removeCareerWorkshopApplicationEvent();
-        removeStudent();
-        removeRootDomainObject();
+        setCareerWorkshopConfirmation(null);
+        setCareerWorkshopApplicationEvent(null);
+        setStudent(null);
+        setRootDomainObject(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasSessions() {
+        return getSessions() != null;
+    }
+
+    @Deprecated
+    public boolean hasThemes() {
+        return getThemes() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCareerWorkshopApplicationEvent() {
+        return getCareerWorkshopApplicationEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasSealStamp() {
+        return getSealStamp() != null;
+    }
+
+    @Deprecated
+    public boolean hasCareerWorkshopConfirmation() {
+        return getCareerWorkshopConfirmation() != null;
     }
 
 }

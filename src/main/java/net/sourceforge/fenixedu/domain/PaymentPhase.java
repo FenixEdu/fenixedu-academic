@@ -40,8 +40,8 @@ public class PaymentPhase extends PaymentPhase_Base {
     }
 
     public void delete() {
-        removeGratuityValues();
-        removeRootDomainObject();
+        setGratuityValues(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -73,6 +73,36 @@ public class PaymentPhase extends PaymentPhase_Base {
         } else {
             setStartDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
+    }
+
+    @Deprecated
+    public boolean hasGratuityValues() {
+        return getGratuityValues() != null;
+    }
+
+    @Deprecated
+    public boolean hasValue() {
+        return getValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateYearMonthDay() {
+        return getEndDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDateYearMonthDay() {
+        return getStartDateYearMonthDay() != null;
     }
 
 }

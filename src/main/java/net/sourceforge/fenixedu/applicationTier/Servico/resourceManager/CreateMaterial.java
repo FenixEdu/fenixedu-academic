@@ -5,14 +5,15 @@ import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean;
 import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean.MaterialType;
 import net.sourceforge.fenixedu.domain.material.Extension;
 import net.sourceforge.fenixedu.domain.material.FireExtinguisher;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateMaterial {
 
-    @Checked("RolePredicates.RESOURCE_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(MaterialBean bean) {
+        check(RolePredicates.RESOURCE_MANAGER_PREDICATE);
 
         if (bean != null) {
 

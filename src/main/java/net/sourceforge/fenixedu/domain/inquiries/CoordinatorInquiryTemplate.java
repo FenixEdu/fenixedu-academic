@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -17,7 +17,7 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
     }
 
     public static CoordinatorInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {
-        final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof CoordinatorInquiryTemplate
                     && executionSemester == inquiryTemplate.getExecutionPeriod()) {
@@ -28,7 +28,7 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
     }
 
     public static CoordinatorInquiryTemplate getCurrentTemplate() {
-        final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof CoordinatorInquiryTemplate && inquiryTemplate.isOpen()) {
                 return (CoordinatorInquiryTemplate) inquiryTemplate;
@@ -42,8 +42,8 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
         for (InquiryBlock inquiryBlock : getInquiryBlocksSet()) {
             removeInquiryBlocks(inquiryBlock);
         }
-        removeExecutionPeriod();
-        removeRootDomainObject();
+        setExecutionPeriod(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -62,4 +62,10 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
         }
 
     }
+
+    @Deprecated
+    public boolean hasShared() {
+        return getShared() != null;
+    }
+
 }

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateNewRoomsReserveComment {
 
@@ -34,7 +34,7 @@ public class CreateNewRoomsReserveComment {
 
     private static final CreateNewRoomsReserveComment serviceInstance = new CreateNewRoomsReserveComment();
 
-    @Service
+    @Atomic
     public static void runCreateNewRoomsReserveComment(RoomsReserveBean bean, boolean reOpenRequest, boolean resolveRequest) {
         serviceInstance.run(bean, reOpenRequest, resolveRequest);
     }

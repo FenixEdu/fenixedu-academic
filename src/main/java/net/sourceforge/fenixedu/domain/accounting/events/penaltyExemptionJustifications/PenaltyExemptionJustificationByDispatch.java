@@ -57,4 +57,9 @@ public class PenaltyExemptionJustificationByDispatch extends PenaltyExemptionJus
         return labelFormatter;
     }
 
+    @Deprecated
+    public boolean hasPenaltyExemptionDispatchDate() {
+        return getPenaltyExemptionDispatchDate() != null;
+    }
+
 }

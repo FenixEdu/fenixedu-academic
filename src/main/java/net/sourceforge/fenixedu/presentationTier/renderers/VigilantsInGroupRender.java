@@ -176,7 +176,7 @@ public class VigilantsInGroupRender extends InputRenderer {
 
         @Override
         protected HtmlComponent getHeaderComponent(int columnIndex) {
-            List<MetaSlot> slots = this.personMetaObjects.get(0).getSlots();
+            List<MetaSlot> slots = this.personMetaObjects.iterator().next().getSlots();
             if (columnIndex < slots.size()) {
                 return new HtmlText(slots.get(columnIndex).getLabel());
             } else {
@@ -187,7 +187,7 @@ public class VigilantsInGroupRender extends InputRenderer {
 
         @Override
         protected int getNumberOfColumns() {
-            return (this.metaObjects == null || this.metaObjects.size() == 0) ? 0 : this.metaObjects.get(0).getSlots().size()
+            return (this.metaObjects == null || this.metaObjects.size() == 0) ? 0 : this.metaObjects.iterator().next().getSlots().size()
                     + groups.size();
         }
 

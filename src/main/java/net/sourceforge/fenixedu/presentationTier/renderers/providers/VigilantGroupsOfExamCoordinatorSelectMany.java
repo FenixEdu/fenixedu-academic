@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
@@ -17,7 +17,7 @@ public class VigilantGroupsOfExamCoordinatorSelectMany implements DataProvider {
         VigilantGroupBean bean = (VigilantGroupBean) source;
         ExamCoordinator coordinator = bean.getExamCoordinator();
 
-        List<VigilantGroup> vigilantGroups = coordinator.getVigilantGroups();
+        Collection<VigilantGroup> vigilantGroups = coordinator.getVigilantGroupsSet();
 
         return vigilantGroups;
 

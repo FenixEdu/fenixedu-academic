@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 import net.sourceforge.fenixedu.util.StringUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ExecutionDegreeAutoCompleteProvider implements AutoCompleteProvider<ExecutionDegree> {
 
     @Override
     public Collection<ExecutionDegree> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         final String executionYearOid = argsMap.get("executionYearOid");
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearOid);
+        final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearOid);
 
         final String searchValue = StringUtils.normalize(value);
 

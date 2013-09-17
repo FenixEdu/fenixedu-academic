@@ -21,7 +21,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
@@ -45,7 +45,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         if (registrationId == null) {
             registrationId = ((DynaActionForm) actionForm).getString("registrationId");
         }
-        return AbstractDomainObject.fromExternalId(registrationId);
+        return FenixFramework.getDomainObject(registrationId);
     }
 
     public ActionForward viewDocumentRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -67,7 +67,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("documentRequest", AbstractDomainObject.fromExternalId(request.getParameter("documentRequestId")));
+        request.setAttribute("documentRequest", FenixFramework.getDomainObject(request.getParameter("documentRequestId")));
         return mapping.findForward("viewDocumentRequest");
     }
 
@@ -98,7 +98,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
     private AcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
         final AcademicServiceRequest academicServiceRequest =
-                AbstractDomainObject.fromExternalId(request.getParameter("academicServiceRequestId"));
+                FenixFramework.getDomainObject(request.getParameter("academicServiceRequestId"));
         request.setAttribute("academicServiceRequest", academicServiceRequest);
         return academicServiceRequest;
     }

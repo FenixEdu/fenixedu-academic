@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -117,18 +116,8 @@ public class CreditNote extends CreditNote_Base {
     }
 
     @Override
-    public List<CreditNoteEntry> getCreditNoteEntries() {
-        return Collections.unmodifiableList(super.getCreditNoteEntries());
-    }
-
-    @Override
     public Set<CreditNoteEntry> getCreditNoteEntriesSet() {
         return Collections.unmodifiableSet(super.getCreditNoteEntriesSet());
-    }
-
-    @Override
-    public Iterator<CreditNoteEntry> getCreditNoteEntriesIterator() {
-        return getCreditNoteEntriesSet().iterator();
     }
 
     @Override
@@ -260,6 +249,66 @@ public class CreditNote extends CreditNote_Base {
         }
 
         return totalAmount;
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.documents.CreditNoteGeneratedDocument> getDocument() {
+        return getDocumentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDocument() {
+        return !getDocumentSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry> getCreditNoteEntries() {
+        return getCreditNoteEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCreditNoteEntries() {
+        return !getCreditNoteEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasResponsible() {
+        return getResponsible() != null;
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenUpdated() {
+        return getWhenUpdated() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasReceipt() {
+        return getReceipt() != null;
     }
 
 }

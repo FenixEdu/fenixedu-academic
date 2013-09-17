@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCandidacyRefereeAlert;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
@@ -63,7 +63,7 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
         return getPhdProgramCandidacyProcess().getIndividualProgramProcess();
     }
 
-    @Service
+    @Atomic
     public void sendEmail() {
         sendEmail(createSubject(), createBody());
     }
@@ -92,8 +92,8 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
             throw new DomainException("error.PhdCandidacyReferee.has.letter");
         }
 
-        removePhdProgramCandidacyProcess();
-        removeRootDomainObject();
+        setPhdProgramCandidacyProcess(null);
+        setRootDomainObject(null);
 
         List<PhdCandidacyRefereeAlert> alerts = new ArrayList<PhdCandidacyRefereeAlert>();
         alerts.addAll(getAlerts());
@@ -124,6 +124,36 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 
         return null;
 
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PhdCandidacyRefereeAlert> getAlerts() {
+        return getAlertsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAlerts() {
+        return !getAlertsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasLetter() {
+        return getLetter() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitution() {
+        return getInstitution() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdProgramCandidacyProcess() {
+        return getPhdProgramCandidacyProcess() != null;
     }
 
 }

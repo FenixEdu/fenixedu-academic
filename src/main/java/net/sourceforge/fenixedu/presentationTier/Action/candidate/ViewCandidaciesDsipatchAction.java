@@ -110,7 +110,7 @@ public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
 
     private Candidacy getCandidacy(List<CandidacyDocumentUploadBean> beans) {
         if (!beans.isEmpty()) {
-            return beans.get(0).getCandidacyDocument().getCandidacy();
+            return beans.iterator().next().getCandidacyDocument().getCandidacy();
         }
         return null;
     }

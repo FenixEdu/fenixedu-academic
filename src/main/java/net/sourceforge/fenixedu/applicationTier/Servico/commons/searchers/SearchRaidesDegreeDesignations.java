@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 import net.sourceforge.fenixedu.util.StringUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SearchRaidesDegreeDesignations implements AutoCompleteProvider<DegreeDesignation> {
 
@@ -86,6 +86,6 @@ public class SearchRaidesDegreeDesignations implements AutoCompleteProvider<Degr
             return null;
         }
 
-        return (Unit) AbstractDomainObject.fromExternalId(filterUnitOID);
+        return (Unit) FenixFramework.getDomainObject(filterUnitOID);
     }
 }

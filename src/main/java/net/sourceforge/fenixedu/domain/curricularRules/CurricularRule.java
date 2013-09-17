@@ -72,17 +72,17 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     public void delete() {
         removeOwnParameters();
         removeCommonParameters();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     protected void removeCommonParameters() {
-        removeDegreeModuleToApplyRule();
-        removeBegin();
-        removeEnd();
-        removeParentCompositeRule();
-        removeContextCourseGroup();
-        removeRootDomainObject();
+        setDegreeModuleToApplyRule(null);
+        setBegin(null);
+        setEnd(null);
+        setParentCompositeRule(null);
+        setContextCourseGroup(null);
+        setRootDomainObject(null);
     }
 
     @Override
@@ -198,6 +198,46 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
         default:
             throw new DomainException("error.unsupported.logic.operator");
         }
+    }
+
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasParentCompositeRule() {
+        return getParentCompositeRule() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeModuleToApplyRule() {
+        return getDegreeModuleToApplyRule() != null;
+    }
+
+    @Deprecated
+    public boolean hasNotRule() {
+        return getNotRule() != null;
+    }
+
+    @Deprecated
+    public boolean hasBegin() {
+        return getBegin() != null;
+    }
+
+    @Deprecated
+    public boolean hasContextCourseGroup() {
+        return getContextCourseGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularRuleType() {
+        return getCurricularRuleType() != null;
     }
 
 }

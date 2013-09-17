@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmation
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ManageCareerWorkshopApplicationsBean implements Serializable {
 
@@ -80,7 +80,7 @@ public class ManageCareerWorkshopApplicationsBean implements Serializable {
         return existingEvents;
     }
 
-    @Service
+    @Atomic
     public void addNewEvent() {
         new CareerWorkshopApplicationEvent(newEventStartDate, newEventEndDate, newEventInformation);
 
@@ -91,14 +91,14 @@ public class ManageCareerWorkshopApplicationsBean implements Serializable {
                 new ArrayList<CareerWorkshopApplicationEvent>(RootDomainObject.getInstance().getCareerWorkshopApplicationEvents());
     }
 
-    @Service
+    @Atomic
     public void deleteEvent(CareerWorkshopApplicationEvent careerWorkshopApplicationEvent) {
         careerWorkshopApplicationEvent.delete();
         existingEvents =
                 new ArrayList<CareerWorkshopApplicationEvent>(RootDomainObject.getInstance().getCareerWorkshopApplicationEvents());
     }
 
-    @Service
+    @Atomic
     public void addConfirmationPeriod() {
         new CareerWorkshopConfirmationEvent(affectedEvent, confirmationStartDate, confirmationEndDate);
 

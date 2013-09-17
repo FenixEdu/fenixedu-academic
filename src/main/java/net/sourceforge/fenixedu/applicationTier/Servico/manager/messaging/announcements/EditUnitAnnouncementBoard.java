@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.annou
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -32,7 +32,7 @@ public class EditUnitAnnouncementBoard extends CreateUnitAnnouncementBoard {
 
     private static final EditUnitAnnouncementBoard serviceInstance = new EditUnitAnnouncementBoard();
 
-    @Service
+    @Atomic
     public static void runEditUnitAnnouncementBoard(UnitAnnouncementBoard board, UnitAnnouncementBoardParameters parameters) throws FenixServiceException  {
         serviceInstance.run(board, parameters);
     }

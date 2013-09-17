@@ -38,8 +38,8 @@ public class ThesisFile extends ThesisFile_Base {
             thesis = getAbstractThesis();
         }
 
-        removeDissertationThesis();
-        removeAbstractThesis();
+        setDissertationThesis(null);
+        setAbstractThesis(null);
 
         super.delete();
     }
@@ -61,6 +61,31 @@ public class ThesisFile extends ThesisFile_Base {
             return true;
         }
         return false;
+    }
+
+    @Deprecated
+    public boolean hasAbstractThesis() {
+        return getAbstractThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasDissertationThesis() {
+        return getDissertationThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubTitle() {
+        return getSubTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
     }
 
 }

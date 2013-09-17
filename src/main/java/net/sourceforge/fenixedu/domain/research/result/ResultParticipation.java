@@ -9,8 +9,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ResultParticipation extends ResultParticipation_Base {
 
@@ -70,14 +71,14 @@ public class ResultParticipation extends ResultParticipation_Base {
         fillAllAttributes(result, participator, role, order);
     }
 
-    @Checked("ResultPredicates.participationWritePredicate")
     public void setEditAll(ResearchResult result, Person participator, ResultParticipationRole role, Integer order) {
+        check(this, ResultPredicates.participationWritePredicate);
         fillAllAttributes(result, participator, role, order);
         setChangedBy();
     }
 
-    @Checked("ResultPredicates.participationWritePredicate")
     public final void movePersonToDesiredOrder(OrderChange orderChange) {
+        check(this, ResultPredicates.participationWritePredicate);
         if (orderChange == null) {
             throw new DomainException("error.researcher.ResultParticipation.orderChange.null");
         }
@@ -86,8 +87,8 @@ public class ResultParticipation extends ResultParticipation_Base {
     }
 
     @Override
-    @Checked("ResultPredicates.participationWritePredicate")
     public void setRole(ResultParticipationRole role) {
+        check(this, ResultPredicates.participationWritePredicate);
         if (role == null) {
             throw new DomainException("error.researcher.ResultEventAssociation.role.null");
         }
@@ -103,7 +104,7 @@ public class ResultParticipation extends ResultParticipation_Base {
     }
 
     public boolean getIsLastParticipation() {
-        return (this.getResult().getResultParticipationsCount() == 1);
+        return (this.getResult().getResultParticipationsSet().size() == 1);
     }
 
     public boolean getCanBeRemoved() {
@@ -111,7 +112,7 @@ public class ResultParticipation extends ResultParticipation_Base {
     }
 
     public final static ResultParticipation readByOid(String oid) {
-        final ResultParticipation participation = AbstractDomainObject.fromExternalId(oid);
+        final ResultParticipation participation = FenixFramework.getDomainObject(oid);
 
         if (participation == null) {
             throw new DomainException("error.researcher.ResultParticipation.null");
@@ -139,7 +140,7 @@ public class ResultParticipation extends ResultParticipation_Base {
         if (result.hasPersonParticipationWithRole(participator, role)) {
             throw new DomainException("error.researcher.ResultParticipation.participation.exists");
         }
-        if (order == 0 && result.getResultParticipationsCount() > 1) {
+        if (order == 0 && result.getResultParticipationsSet().size() > 1) {
             throw new DomainException("error.researcher.ResultParticipation.invalid.order");
         }
     }
@@ -198,7 +199,7 @@ public class ResultParticipation extends ResultParticipation_Base {
 
     public final void delete() {
         removeAssociations();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -220,16 +221,6 @@ public class ResultParticipation extends ResultParticipation_Base {
     @Override
     public void setPerson(Person Person) {
         throw new DomainException("error.researcher.ResultParticipation.call", "setPerson");
-    }
-
-    @Override
-    public void removePerson() {
-        throw new DomainException("error.researcher.ResultParticipation.call", "removePerson");
-    }
-
-    @Override
-    public void removeResult() {
-        throw new DomainException("error.researcher.ResultParticipation.call", "removeResult");
     }
 
     /**
@@ -259,4 +250,29 @@ public class ResultParticipation extends ResultParticipation_Base {
         }
         return text.toString();
     }
+    @Deprecated
+    public boolean hasResult() {
+        return getResult() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRole() {
+        return getRole() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonOrder() {
+        return getPersonOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

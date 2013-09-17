@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.inquiries;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,7 +48,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/regentInquiry", module = "teacher")
 @Forwards({
@@ -105,7 +106,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
 
         List<Professorship> teachersWithNoResults = new ArrayList<Professorship>();
         for (Professorship teacherProfessorship : executionCourse.getProfessorships()) {
-            List<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
+            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                     List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
@@ -173,7 +174,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
         return finalState;
     }
 
-    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+    private Set<ShiftType> getShiftTypes(Collection<InquiryResult> professorshipResults) {
         Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
         for (InquiryResult inquiryResult : professorshipResults) {
             shiftTypes.add(inquiryResult.getShiftType());
@@ -184,7 +185,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
     public ActionForward showRegentInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
+        Professorship professorship = FenixFramework.getDomainObject(getFromRequest(request, "professorshipOID").toString());
         RegentInquiryTemplate regentInquiryTemplate = RegentInquiryTemplate.getCurrentTemplate();
 
         RegentInquiryBean regentInquiryBean = new RegentInquiryBean(regentInquiryTemplate, professorship);
@@ -199,7 +200,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
     public ActionForward showTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
+        Professorship professorship = FenixFramework.getDomainObject(getFromRequest(request, "professorshipOID").toString());
 
         TeacherInquiryTemplate teacherInquiryTemplate =
                 TeacherInquiryTemplate.getTemplateByExecutionPeriod(professorship.getExecutionCourse().getExecutionPeriod());
@@ -221,9 +222,9 @@ public class RegentInquiryDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionCourseOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionCourseOID").toString());
         ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionDegreeOID").toString());
 
         DelegateInquiryTemplate delegateInquiryTemplate =
                 DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());

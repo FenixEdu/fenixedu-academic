@@ -94,4 +94,9 @@ public class PartialRegistrationRegimeRequestPR extends PartialRegistrationRegim
         return new PartialRegistrationRegimeRequestPR(getExecutionYear(), getServiceAgreementTemplate(), fixedAmount);
     }
 
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base implements Comparable<OutboundMobilityCandidacy> {
 
@@ -17,19 +17,19 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         setRootDomainObject(RootDomainObject.getInstance());
         setOutboundMobilityCandidacyContest(outboundMobilityCandidacyContest);
         setOutboundMobilityCandidacySubmission(outboundMobilityCandidacySubmission);
-        setPreferenceOrder(outboundMobilityCandidacySubmission.getOutboundMobilityCandidacyCount());
+        setPreferenceOrder(outboundMobilityCandidacySubmission.getOutboundMobilityCandidacySet().size());
         setSelected(Boolean.FALSE);
     }
 
-    @Service
+    @Atomic
     public void delete() {
         final OutboundMobilityCandidacySubmission submission = getOutboundMobilityCandidacySubmission();
         if (!submission.getOutboundMobilityCandidacyPeriod().isAcceptingCandidacies()) {
             throw new DomainException("error.CandidacyPeriod.closed");
         }
-        removeOutboundMobilityCandidacySubmission();
-        removeOutboundMobilityCandidacyContest();
-        removeRootDomainObject();
+        setOutboundMobilityCandidacySubmission(null);
+        setOutboundMobilityCandidacyContest(null);
+        setRootDomainObject(null);
         deleteDomainObject();
         if (submission.hasAnyOutboundMobilityCandidacy()) {
             int i = 0;
@@ -41,7 +41,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         }
     }
 
-    @Service
+    @Atomic
     public void reorder(final int index) {
         final int currentOrder = getPreferenceOrder().intValue();
         if (index != currentOrder) {
@@ -88,12 +88,13 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         delete();
     }
 
-    @Service
+    @Atomic
     public void select() {
         final OutboundMobilityCandidacySubmission submission = getOutboundMobilityCandidacySubmission();
         if (submission.getSelectedCandidacy() != this) {
             if (submission.getSelectedCandidacy() != null) {
-                throw new DomainException("error.message.cannot.select.multiple.candidacies", submission.getRegistration().getPerson().getUsername());
+                throw new DomainException("error.message.cannot.select.multiple.candidacies", submission.getRegistration()
+                        .getPerson().getUsername());
             }
 
             final OutboundMobilityCandidacyContest contest = getOutboundMobilityCandidacyContest();
@@ -106,10 +107,40 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         }
     }
 
-    @Service
+    @Atomic
     public void unselect() {
         setSelected(Boolean.FALSE);
-        removeSubmissionFromSelectedCandidacy();
+        setSubmissionFromSelectedCandidacy(null);
+    }
+
+    @Deprecated
+    public boolean hasPreferenceOrder() {
+        return getPreferenceOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasOutboundMobilityCandidacySubmission() {
+        return getOutboundMobilityCandidacySubmission() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmissionFromSelectedCandidacy() {
+        return getSubmissionFromSelectedCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasOutboundMobilityCandidacyContest() {
+        return getOutboundMobilityCandidacyContest() != null;
+    }
+
+    @Deprecated
+    public boolean hasSelected() {
+        return getSelected() != null;
     }
 
 }

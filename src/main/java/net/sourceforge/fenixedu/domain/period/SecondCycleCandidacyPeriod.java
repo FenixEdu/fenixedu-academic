@@ -43,7 +43,7 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
     }
 
     public SecondCycleCandidacyProcess getSecondCycleCandidacyProcess() {
-        return (SecondCycleCandidacyProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
+        return (SecondCycleCandidacyProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().iterator().next() : null);
     }
 
     @Override

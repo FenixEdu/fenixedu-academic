@@ -110,4 +110,9 @@ public class ExpressionGroupAvailability extends ExpressionGroupAvailability_Bas
         }
     }
 
+    @Deprecated
+    public boolean hasExpression() {
+        return getExpression() != null;
+    }
+
 }

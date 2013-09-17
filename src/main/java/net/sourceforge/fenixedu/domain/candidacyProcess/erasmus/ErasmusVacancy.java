@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudent
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ErasmusVacancy extends ErasmusVacancy_Base {
 
@@ -49,7 +49,7 @@ public class ErasmusVacancy extends ErasmusVacancy_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static ErasmusVacancy createVacancy(final MobilityApplicationPeriod period, Degree degree, UniversityUnit unit,
             Integer numberOfVacancies) {
         return new ErasmusVacancy(period, degree, unit, numberOfVacancies);
@@ -74,12 +74,47 @@ public class ErasmusVacancy extends ErasmusVacancy_Base {
             throw new DomainException("error.erasmus.vacancy.is.associated.to.candidacies");
         }
 
-        removeUniversityUnit();
-        removeDegree();
-        removeCandidacyPeriod();
-        removeRootDomainObject();
+        setUniversityUnit(null);
+        setDegree(null);
+        setCandidacyPeriod(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData> getCandidacies() {
+        return getCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidacies() {
+        return !getCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfVacancies() {
+        return getNumberOfVacancies() != null;
+    }
+
+    @Deprecated
+    public boolean hasUniversityUnit() {
+        return getUniversityUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyPeriod() {
+        return getCandidacyPeriod() != null;
     }
 
 }

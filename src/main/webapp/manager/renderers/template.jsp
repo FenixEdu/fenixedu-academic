@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/fenix-template.tld" prefix="ft" %>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-template" prefix="ft" %>
 
 <!-- Defines a page attribute with the value of the property "name" of the shown object -->
 <ft:define id="personName" property="name"/>

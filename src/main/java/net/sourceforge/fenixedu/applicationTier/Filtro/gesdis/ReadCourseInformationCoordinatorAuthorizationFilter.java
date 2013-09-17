@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Leonor Almeida
@@ -27,7 +27,7 @@ public class ReadCourseInformationCoordinatorAuthorizationFilter extends Coordin
             new ReadCourseInformationCoordinatorAuthorizationFilter();
 
     protected ExecutionYear getSpecificExecutionYear(String execution) {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(execution);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(execution);
 
         return executionCourse.getExecutionYear();
     }

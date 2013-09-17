@@ -35,7 +35,7 @@ public class ViewEnroledExecutionCoursesAction extends FenixDispatchAction {
         final List<Registration> registrations = student.getActiveRegistrations();
 
         if (registrations.size() == 1) {
-            request.setAttribute("executionCourses", ReadEnroledExecutionCourses.run(registrations.get(0)));
+            request.setAttribute("executionCourses", ReadEnroledExecutionCourses.run(registrations.iterator().next()));
             return mapping.findForward("showEnroledExecutionCourses");
 
         } else {

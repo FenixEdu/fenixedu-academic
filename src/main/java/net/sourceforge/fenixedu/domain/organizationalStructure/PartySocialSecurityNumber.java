@@ -37,8 +37,8 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
     }
 
     public void delete() {
-        removeParty();
-        removeRootDomainObject();
+        setParty(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -53,4 +53,19 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
         }
         return null;
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSocialSecurityNumber() {
+        return getSocialSecurityNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
 }
