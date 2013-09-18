@@ -65,6 +65,12 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
         if (bean.getMobilityProgram() != null && bean.isIgnoreExternalEntries()) {
             throw new DomainException("ApprovementCertificateRequest.cannot.ignore.external.entries.within.a.mobility.program");
         }
+        if (bean.getExecutionYear() == null) {
+            throw new DomainException(
+                    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
+        } else if (!bean.getRegistration().hasAnyEnrolmentsIn(bean.getExecutionYear())) {
+            throw new DomainException("EnrolmentCertificateRequest.no.enrolments.for.registration.in.given.executionYear");
+        }
     }
 
     @Override
@@ -164,7 +170,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
         final Registration registration = getRegistration();
         ICurriculum curriculum;
         if (registration.isBolonha()) {
-            for (final CycleCurriculumGroup cycle : registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
+            for (final CycleCurriculumGroup cycle : registration.getStudentCurricularPlan(getExecutionYear())
+                    .getInternalCycleCurriculumGrops()) {
                 if (cycle.hasAnyApprovedCurriculumLines() && (useConcluded || !cycle.isConclusionProcessed())) {
                     curriculum = cycle.getCurriculum(getFilteringDate());
                     filterEntries(result, this, curriculum);
@@ -238,7 +245,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     private void reportExternalGroups(final Collection<ICurriculumEntry> result) {
         if (getIgnoreCurriculumInAdvance() != null && !getIgnoreCurriculumInAdvance()) {
-            for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan()
+            for (final ExternalCurriculumGroup group : getRegistration().getStudentCurricularPlan(getExecutionYear())
                     .getExternalCurriculumGroups()) {
                 filterEntries(result, this, group.getCurriculumInAdvance(getFilteringDate()));
             }
