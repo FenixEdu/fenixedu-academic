@@ -337,7 +337,7 @@ public class Unit extends Unit_Base {
     final public Collection<Function> getFunctions(final FunctionType functionType) {
         final Collection<Function> result = new HashSet<Function>();
 
-        for (final Function function : getFunctionsSet()) {
+        for (Function function : super.getFunctionsSet()) {
             if (function.getFunctionType() == functionType) {
                 result.add(function);
             }
