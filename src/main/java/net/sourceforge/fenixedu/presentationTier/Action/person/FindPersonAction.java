@@ -208,17 +208,15 @@ public class FindPersonAction extends FenixDispatchAction {
             if (!StringUtils.isEmpty(roleType)) {
                 bean.setRoleType(RoleType.valueOf(roleType));
             }
-            if (degreeId != null) {
+            if (!StringUtils.isEmpty(degreeId)) {
                 bean.setDegree(FenixFramework.<Degree> getDomainObject(degreeId));
             }
             if (!StringUtils.isEmpty(degreeType)) {
                 bean.setDegreeType(DegreeType.valueOf(degreeType));
             }
-            if (departmentId != null) {
+            if (!StringUtils.isEmpty(departmentId)) {
                 bean.setDepartment(FenixFramework.<Department> getDomainObject(departmentId));
             }
-            System.out.printf("%s %s %s %s %s %s\n", bean.getRoleType(), bean.getName(), bean.getViewPhoto(), bean.getDegree(),
-                    bean.getDegreeType(), bean.getDepartment());
         }
         RenderUtils.invalidateViewState();
         request.setAttribute("bean", bean);
