@@ -309,6 +309,8 @@ public class ReportsUtils extends PropertiesManager {
 
         addFont(result, "DejaVu Serif Bold", "DejaVuSerif-Bold.ttf", BaseFont.IDENTITY_H);
 
+        addFont(result, "Times New Roman", "tnr.ttf", BaseFont.CP1252);
+
         return result;
     }
 

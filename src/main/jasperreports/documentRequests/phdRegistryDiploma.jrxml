@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registryDiploma" pageWidth="595" pageHeight="842" columnWidth="475" leftMargin="60" rightMargin="60" topMargin="130" bottomMargin="150">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registryDiploma" pageWidth="595" pageHeight="842" columnWidth="455" leftMargin="60" rightMargin="60" topMargin="130" bottomMargin="150">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -25,25 +25,11 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="145" splitType="Stretch">
+		<band height="120" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-14" mode="Transparent" x="0" y="0" width="180" height="22"/>
-				<textElement textAlignment="Right">
-					<font fontName="Lucida Handwriting" size="12" pdfFontName="LucidaHandwriting.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{portugueseRepublic_1}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement key="textField-15" mode="Transparent" x="300" y="0" width="175" height="22"/>
-				<textElement textAlignment="Left">
-					<font fontName="Lucida Handwriting" size="12" pdfFontName="LucidaHandwriting.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{portugueseRepublic_2}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement key="textField-16" x="0" y="87" width="475" height="22"/>
+				<reportElement key="textField-16" x="0" y="70" width="455" height="22"/>
 				<textElement textAlignment="Center">
-					<font fontName="Lucida Handwriting" size="12" pdfFontName="LucidaHandwriting.ttf" isPdfEmbedded="true"/>
+					<font fontName="Times New Roman" size="14" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{degreeRegistrationDiploma}.toUpperCase()]]></textFieldExpression>
 			</textField>
@@ -58,65 +44,65 @@
 	<detail>
 		<band height="276" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-1" x="0" y="0" width="475" height="22"/>
-				<textElement>
-					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
+				<reportElement key="textField-1" x="0" y="0" width="455" height="22"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{firstParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-2" positionType="Float" x="0" y="22" width="475" height="60"/>
+				<reportElement key="textField-2" positionType="Float" x="0" y="22" width="455" height="60"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="Garamond Bold" pdfFontName="AdobeGaramondBold.ttf" isPdfEmbedded="true"/>
+					<font fontName="Times New Roman" size="14" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{studentName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-3" positionType="Float" x="0" y="82" width="475" height="22"/>
-				<textElement>
-					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
+				<reportElement key="textField-3" positionType="Float" x="0" y="82" width="455" height="22"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{secondParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-4" positionType="Float" x="0" y="104" width="475" height="33"/>
+				<reportElement key="textField-4" positionType="Float" x="0" y="104" width="455" height="33"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="Garamond Bold" pdfFontName="AdobeGaramondBold.ttf" isPdfEmbedded="true"/>
+					<font fontName="Times New Roman" size="14" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{institution}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-5" positionType="Float" x="0" y="139" width="475" height="22"/>
-				<textElement>
-					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
+				<reportElement key="textField-5" positionType="Float" x="0" y="139" width="455" height="22"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{thirdParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-6" positionType="Float" x="0" y="218" width="475" height="22"/>
+				<reportElement key="textField-6" positionType="Float" x="0" y="218" width="455" height="22"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="Garamond Bold" pdfFontName="AdobeGaramondBold.ttf" isPdfEmbedded="true"/>
+					<font fontName="Times New Roman" size="14" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{graduateTitle}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-7" positionType="Float" x="0" y="246" width="475" height="13"/>
-				<textElement>
-					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
+				<reportElement key="textField-7" positionType="Float" x="0" y="246" width="455" height="13"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{fifthParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-12" positionType="Float" x="0" y="194" width="475" height="19"/>
-				<textElement>
-					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
+				<reportElement key="textField-12" positionType="Float" x="0" y="194" width="455" height="19"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{fourthParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-13" positionType="Float" x="0" y="161" width="475" height="33" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="textField-13" positionType="Float" x="0" y="161" width="455" height="33" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="DejaVu Serif Bold" size="8" pdfFontName="DejaVuSerif-Bold.ttf" isPdfEmbedded="true"/>
+					<font fontName="Times New Roman" size="14" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{thesisTitle}]]></textFieldExpression>
 			</textField>
@@ -131,29 +117,29 @@
 	<lastPageFooter>
 		<band height="100" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-8" x="1" y="0" width="475" height="15"/>
+				<reportElement key="textField-8" x="1" y="0" width="455" height="20"/>
 				<textElement>
-					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
+					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{dateParagraph}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-1" x="20" y="64" width="180" height="1"/>
+				<reportElement key="line-1" x="0" y="64" width="220" height="1"/>
 			</line>
 			<line>
-				<reportElement key="line-2" x="279" y="64" width="180" height="1"/>
+				<reportElement key="line-2" x="235" y="64" width="220" height="1"/>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-9" positionType="Float" x="0" y="76" width="213" height="22"/>
+				<reportElement key="textField-9" positionType="Float" x="0" y="76" width="220" height="22"/>
 				<textElement textAlignment="Center">
-					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
+					<font fontName="Times New Roman" size="9" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{president}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-10" positionType="Float" x="261" y="76" width="213" height="21"/>
+				<reportElement key="textField-10" positionType="Float" x="235" y="76" width="220" height="22"/>
 				<textElement textAlignment="Center">
-					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
+					<font fontName="Times New Roman" size="9" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{rector}]]></textFieldExpression>
 			</textField>
