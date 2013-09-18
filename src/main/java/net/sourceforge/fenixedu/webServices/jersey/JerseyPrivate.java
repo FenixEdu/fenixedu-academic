@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import net.fortuna.ical4j.model.Calendar;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.EnrolStudentInWrittenEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
@@ -43,8 +44,9 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.util.icalendar.CalendarFactory;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
@@ -119,6 +121,9 @@ public class JerseyPrivate {
         JSONArray jsonArrayRole = new JSONArray();
 
         final Person person = getPerson();
+        if (person == null) {
+            return jsonResult.toString();
+        }
 
         if (isTeacher(person)) {
             JSONObject jsonRoleInfo = new JSONObject();
@@ -166,11 +171,9 @@ public class JerseyPrivate {
     }
 
     private Person getPerson() {
-        User user = UserView.getUser();
+        IUserView user = UserView.getUser();
         if (user != null) {
-            if (user.getPerson() != null) {
-                return user.getPerson();
-            }
+            return user.getPerson();
         }
         return null;
     }
@@ -404,7 +407,58 @@ public class JerseyPrivate {
                 jsonCurricularPlanInfo.put("curricularEnd", studentCurricularPlan.getEndDate() + "");
 
                 RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
-//getCurriculumForConclusion
+
+                ICurriculum icurriculum = registrationConclusionBean.getCurriculumForConclusion();
+
+                jsonCurricularPlanInfo.put("curricularEcts", icurriculum.getSumEctsCredits());
+                jsonCurricularPlanInfo.put("curricularAverage", icurriculum.getAverage());
+
+                jsonCurricularPlanInfo.put("curricularCalculatedAverage", icurriculum.getRoundedAverage());
+
+                jsonCurricularPlanInfo.put("curricularFinished", registrationConclusionBean.isConcluded());
+
+                JSONArray jsonCoursesInfo = new JSONArray();
+
+                if (icurriculum.getCurriculumEntries() != null) {
+                    jsonCurricularPlanInfo.put("curricularApprovedCourses", icurriculum.getCurriculumEntries().size());
+                } else {
+                    jsonCurricularPlanInfo.put("curricularApprovedCourses", "");
+
+                }
+
+                for (ICurriculumEntry iCurriculumEntry : icurriculum.getCurriculumEntries()) {
+                    JSONObject jsonCourseInfo = new JSONObject();
+
+                    jsonCourseInfo.put("courseName", mls(iCurriculumEntry.getPresentationName()));
+                    jsonCourseInfo.put("courseGrade", iCurriculumEntry.getGradeValue());
+                    jsonCourseInfo.put("courseEcts", iCurriculumEntry.getEctsCreditsForCurriculum());
+                    String executionCourseOid = StringUtils.EMPTY;
+                    /*
+                     String executionCourseSigla = iCurriculumEntry.getCode();
+                     
+                    if (!StringUtils.isBlank(executionCourseSigla)) {
+                        ExecutionCourse executionCourse =
+                                ExecutionCourse.readBySiglaAndExecutionPeriod(executionCourseSigla,
+                                        iCurriculumEntry.getExecutionPeriod());
+                        if (executionCourse != null) {
+                            executionCourseOid = executionCourse.getExternalId();
+                        }
+                    }
+                    */
+                    jsonCourseInfo.put("courseExternalId", executionCourseOid);
+                    //enrolments.getExecutionCourseFor(enrolments.getExecutionPeriod()).getExternalId());
+
+                    jsonCourseInfo.put("coursesSemester", iCurriculumEntry.getExecutionPeriod().getSemester());
+                    jsonCourseInfo.put("courseYear", iCurriculumEntry.getExecutionYear());
+                    jsonCoursesInfo.add(jsonCourseInfo);
+                }
+                jsonCurricularPlanInfo.put("curricularCourseInfo", jsonCoursesInfo);
+                jsonResult.add(jsonCurricularPlanInfo);
+
+            }
+        }
+
+        /*
                 jsonCurricularPlanInfo.put("curricularEcts", registrationConclusionBean.getEctsCredits());
                 jsonCurricularPlanInfo.put("curricularAverage", registrationConclusionBean.getAverage());
 
@@ -440,7 +494,9 @@ public class JerseyPrivate {
                 jsonResult.add(jsonCurricularPlanInfo);
             }
 
-        }
+
+
+        }*/
 
         return jsonResult;
     }
