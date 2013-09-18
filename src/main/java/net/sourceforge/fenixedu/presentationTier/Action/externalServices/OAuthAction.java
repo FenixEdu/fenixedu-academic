@@ -133,7 +133,7 @@ public class OAuthAction extends FenixDispatchAction {
     }
 
     public void userCancelation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response) throws IOException {
 
         /*
          * "In the case that the user denies the access request, an error
@@ -144,21 +144,15 @@ public class OAuthAction extends FenixDispatchAction {
          * web page containing more information about the error."
          */
 
+        String redirectUrl = request.getParameter("redirect_uri");
+        OAuthResponse r;
         try {
-            String redirectUrl = request.getParameter("redirect_uri");
-
-            OAuthResponse r =
-                    OAuthResponse.errorResponse(401).setErrorUri(redirectUrl).setError("Permission denied")
+            r =
+                    OAuthResponse.errorResponse(401).setErrorUri(redirectUrl).setError("access_denied")
                             .setErrorDescription("User didn't allow the application").buildJSONMessage();
-
-            response.setStatus(r.getResponseStatus());
-
-            response.sendError(401);
+            sendOAuthResponse(response, r);
         } catch (OAuthSystemException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong. Please contact support team.");
             e.printStackTrace();
         }
     }
@@ -199,12 +193,16 @@ public class OAuthAction extends FenixDispatchAction {
                 OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
                         .setExpiresIn(ACCESS_TOKEN_EXPIRATION).setRefreshToken(refreshToken).buildJSONMessage();
 
+        sendOAuthResponse(response, r);
+        return null;
+    }
+
+    private void sendOAuthResponse(HttpServletResponse response, OAuthResponse r) throws IOException {
         response.setStatus(r.getResponseStatus());
         PrintWriter pw = response.getWriter();
         pw.print(r.getBody());
         pw.flush();
         pw.close();
-        return null;
     }
 
     public ActionForward refreshAccessToken(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -234,11 +232,7 @@ public class OAuthAction extends FenixDispatchAction {
                 OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
                         .setExpiresIn(ACCESS_TOKEN_EXPIRATION).buildJSONMessage();
 
-        response.setStatus(r.getResponseStatus());
-        PrintWriter pw = response.getWriter();
-        pw.print(r.getBody());
-        pw.flush();
-        pw.close();
+        sendOAuthResponse(response, r);
         return null;
 
     }

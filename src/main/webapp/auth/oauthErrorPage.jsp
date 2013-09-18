@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<title>Fenix OAuth API - Erro Autorização</title>
-		<link rel="stylesheet/less" type="text/css" href=" <%= request.getContextPath() + "/CSS/authstyle.less" %>" />
+		<link rel="stylesheet/less" type="text/css" href="<%= request.getContextPath() + "/CSS/authstyle.less" %>" />
 		<script type="text/javascript" src="<%= request.getContextPath() + "/javaScript/less-1.4.1.min.js"%>"></script>
 	</head>
 	<body>
