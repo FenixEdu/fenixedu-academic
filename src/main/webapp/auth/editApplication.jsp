@@ -17,6 +17,6 @@
 </h2>
 
 <fr:edit id="edit" name="application" type="net.sourceforge.fenixedu.domain.ExternalApplication" schema="oauthapps.create.app">
-	<fr:destination name="success" path="/externalApps.do?method=manageApplications" />
-	<fr:destination name="cancel" path="/externalApps.do?method=manageApplications" />
+	<fr:destination name="success" path="/externalApps.do?method=createApplication" />
+	<fr:destination name="cancel" path="/externalApps.do?method=createApplication" />
 </fr:edit>
