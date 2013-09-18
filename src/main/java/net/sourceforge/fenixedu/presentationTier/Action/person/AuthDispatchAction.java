@@ -38,7 +38,8 @@ import com.google.common.collect.ImmutableSet;
         @Forward(name = "manageAuthorizations", path = "/auth/manageAuthorizations.jsp"),
         @Forward(name = "returnKeys", path = "/auth/returnkeys.jsp"),
         @Forward(name = "manageApplications", path = "/auth/manageApplications.jsp"),
-        @Forward(name = "viewAuthorizations", path = "/auth/viewAuthorizations.jsp")
+        @Forward(name = "viewAuthorizations", path = "/auth/viewAuthorizations.jsp"),
+        @Forward(name = "viewApplicationDetails", path = "/auth/viewApplicationDetails.jsp")
 
 })
 public class AuthDispatchAction extends FenixDispatchAction {
@@ -78,6 +79,16 @@ public class AuthDispatchAction extends FenixDispatchAction {
 
         return manageAuthorizations(mapping, actionForm, request, response);
 
+    }
+
+    public ActionForward viewApplicationDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ExternalApplication application = getDomainObject(request, "appOid");
+
+        request.setAttribute("application", application);
+
+        return mapping.findForward("viewApplicationDetails");
     }
 
     public ActionForward deleteApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
