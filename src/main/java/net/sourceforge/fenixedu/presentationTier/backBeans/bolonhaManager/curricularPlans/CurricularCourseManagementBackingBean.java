@@ -180,7 +180,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return (String) getViewState().getAttribute("departmentUnitID");
     }
 
-    public void setDepartmentUnitID(Integer departmentUnitID) {
+    public void setDepartmentUnitID(String departmentUnitID) {
         getViewState().setAttribute("departmentUnitID", departmentUnitID);
     }
 
