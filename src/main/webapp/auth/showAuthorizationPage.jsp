@@ -14,6 +14,9 @@
 		<script type="text/javascript" src="<%= request.getContextPath() + "/javaScript/less-1.4.1.min.js"%>"></script>
 	</head>
 	<body>
+	<div id="logoist">
+		<h1><a href="http://www.ist.utl.pt">Instituto Superior Técnico</a></h1>
+	</div>
 		<div class="auth-request-wrapper">
 			<div class="auth-app-details">
 				<h2><bean:message key="oauthapps.label.authorization.question"  arg0="<%= appName %>" bundle="APPLICATION_RESOURCES"></bean:message></h2>
