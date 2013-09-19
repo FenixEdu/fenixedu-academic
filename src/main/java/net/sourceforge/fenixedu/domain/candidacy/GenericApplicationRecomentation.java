@@ -13,7 +13,8 @@ import pt.ist.fenixframework.Atomic;
 
 public class GenericApplicationRecomentation extends GenericApplicationRecomentation_Base {
 
-    public GenericApplicationRecomentation(GenericApplication application, String title, String name, String institution, String email) {
+    public GenericApplicationRecomentation(GenericApplication application, String title, String name, String institution,
+            String email) {
         setRootDomainObject(RootDomainObject.getInstance());
         final String confirmationCode =
                 DigestUtils.sha512Hex(getEmail() + System.currentTimeMillis() + hashCode()
@@ -33,9 +34,12 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
                 BundleUtil.getStringFromResourceBundle("resources.CandidateResources",
                         "label.application.recomentation.email.subject", getGenericApplication().getName());
         final String body =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources",
-                        "label.application.recomentation.email.body", getTitle(), getName(), getGenericApplication().getName(), getGenericApplication()
-                                .getGenericApplicationPeriod().getTitle().getContent(), generateConfirmationLink());
+                BundleUtil
+                        .getStringFromResourceBundle("resources.CandidateResources",
+                                "label.application.recomentation.email.body", getTitle(), getName(), getGenericApplication()
+                                        .getName(),
+                                getGenericApplication().getGenericApplicationPeriod().getTitle().getContent(),
+                                generateConfirmationLink());
 
         new Message(getRootDomainObject().getSystemSender(), getEmail(), subject, body);
     }
@@ -43,6 +47,16 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
     private String generateConfirmationLink() {
         return PropertiesManager.getProperty("generic.application.email.recommendation.link") + getConfirmationCode()
                 + "&recommendationExternalId=" + getExternalId();
+    }
+
+    @Deprecated
+    public boolean hasGenericApplication() {
+        return getGenericApplication() != null;
+    }
+
+    @Deprecated
+    public boolean hasLetterOfRecomentation() {
+        return getLetterOfRecomentation() != null;
     }
 
 }

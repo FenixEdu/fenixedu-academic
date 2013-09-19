@@ -88,4 +88,14 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
                 && (userView.hasRoleType(RoleType.MANAGER) || getManagerSet().contains(userView.getPerson().getUser()));
     }
 
+    @Deprecated
+    public boolean hasAnyGenericApplication() {
+        return !getGenericApplicationSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAnyManager() {
+        return !getManagerSet().isEmpty();
+    }
+
 }

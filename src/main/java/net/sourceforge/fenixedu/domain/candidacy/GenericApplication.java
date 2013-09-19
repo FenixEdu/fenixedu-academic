@@ -47,8 +47,10 @@ public class GenericApplication extends GenericApplication_Base {
                 BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "label.application.email.subject",
                         getGenericApplicationPeriod().getTitle().getContent());
         final String body =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "label.application.email.body",
-                        getApplicationNumber(), generateConfirmationLink(), getGenericApplicationPeriod().getTitle().getContent());
+                BundleUtil
+                        .getStringFromResourceBundle("resources.CandidateResources", "label.application.email.body",
+                                getApplicationNumber(), generateConfirmationLink(), getGenericApplicationPeriod().getTitle()
+                                        .getContent());
         new Message(getRootDomainObject().getSystemSender(), getEmail(), subject, body);
     }
 
@@ -64,7 +66,7 @@ public class GenericApplication extends GenericApplication_Base {
     public boolean isAllPersonalInformationFilled() {
         return getGender() != null && getDateOfBirthYearMonthDay() != null && getDocumentIdNumber() != null
                 && !getDocumentIdNumber().isEmpty() && getIdDocumentType() != null && getNationality() != null
-                /* && getFiscalCode() != null && !getFiscalCode().isEmpty() */ && getAddress() != null && !getAddress().isEmpty()
+                /* && getFiscalCode() != null && !getFiscalCode().isEmpty() */&& getAddress() != null && !getAddress().isEmpty()
                 && getAreaCode() != null && !getAreaCode().isEmpty() && getArea() != null && !getArea().isEmpty()
                 && getTelephoneContact() != null && !getTelephoneContact().isEmpty();
     }
@@ -79,4 +81,28 @@ public class GenericApplication extends GenericApplication_Base {
         return result;
     }
 
+    @Deprecated
+    public boolean hasNationality() {
+        return getNationality() != null;
+    }
+
+    @Deprecated
+    public boolean hasGenericApplicationPeriod() {
+        return getGenericApplicationPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnyGenericApplicationComment() {
+        return !getGenericApplicationCommentSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAnyGenericApplicationRecomentation() {
+        return !getGenericApplicationRecomentationSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAnyGenericApplicationFileSet() {
+        return !getGenericApplicationFileSet().isEmpty();
+    }
 }

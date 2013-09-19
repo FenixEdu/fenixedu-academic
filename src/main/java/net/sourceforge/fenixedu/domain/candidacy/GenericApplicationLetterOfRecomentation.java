@@ -52,4 +52,9 @@ public class GenericApplicationLetterOfRecomentation extends GenericApplicationL
         new Message(getRootDomainObject().getSystemSender(), getRecomentation().getGenericApplication().getEmail(), subject, body);
     }
 
+    @Deprecated
+    public boolean hasRecomentation() {
+        return getRecomentation() != null;
+    }
+
 }
