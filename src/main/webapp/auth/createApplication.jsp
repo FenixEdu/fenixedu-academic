@@ -16,8 +16,8 @@
 	<bean:message key="oauthapps.label.create.application" bundle="APPLICATION_RESOURCES" />
 </h2>
 
-<fr:create type="net.sourceforge.fenixedu.domain.ExternalApplication" id="create" schema="oauthapps.create.app" action="/externalApps.do?method=createApplication">
+<fr:create type="net.sourceforge.fenixedu.domain.ExternalApplication" id="create" schema="oauthapps.create.app">
 	<fr:hidden slot="author" name="currentUser"/>
-	<fr:destination name="success" path="/externalApps.do?method=manageApplications" />
-	<fr:destination name="cancel" path="/externalApps.do?method=manageApplications" />
+	<fr:destination name="success" path="/externalApps.do?method=createApplication"/>
+	<fr:destination name="cancel" path="/externalApps.do?method=createApplication" />
 </fr:create>

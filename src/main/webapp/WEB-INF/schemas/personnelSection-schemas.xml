@@ -206,7 +206,9 @@
 			<property name="required" value="false"></property>
         </validator>"
 	</slot>
-	<slot name="name" key="oauthapps.label.app.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="name" key="oauthapps.label.app.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 	<slot name="description" key="oauthapps.label.app.description" layout="longText">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		</validator>
@@ -214,11 +216,14 @@
 			<property name="min" value="20"/>
 			<property name="max" value="160"/>
 		</validator>
+		<property name="columns" value="60"></property>
+		<property name="rows" value="4"></property>
 	</slot>
  	<slot name="siteUrl" key="oauthapps.label.app.site.url" >
  		<validator class="pt.ist.utl.fenix.utils.UrlValidator">
 			<property name="required" value="false"/>
 		</validator>
+		<property name="size" value="50"/>
  	</slot>
 	<slot name="scopes" layout="option-select" key="label.scopes" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AuthScopeProvider" />
@@ -228,7 +233,9 @@
 		<property name="sortBy" value="name=desc" />
 		<property name="selectAllShown" value="true" />
 	</slot>
-	<slot name="redirectUrl" key="oauthapps.label.app.redirect.url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="redirectUrl" key="oauthapps.label.app.redirect.url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 </schema>
 
 <schema name="oauthapps.confirm.app" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">

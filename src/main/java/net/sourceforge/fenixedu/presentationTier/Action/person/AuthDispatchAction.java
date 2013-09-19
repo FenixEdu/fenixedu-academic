@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
@@ -21,6 +22,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -38,7 +40,8 @@ import com.google.common.collect.ImmutableSet;
         @Forward(name = "manageAuthorizations", path = "/auth/manageAuthorizations.jsp"),
         @Forward(name = "returnKeys", path = "/auth/returnkeys.jsp"),
         @Forward(name = "manageApplications", path = "/auth/manageApplications.jsp"),
-        @Forward(name = "viewAuthorizations", path = "/auth/viewAuthorizations.jsp")
+        @Forward(name = "viewAuthorizations", path = "/auth/viewAuthorizations.jsp"),
+        @Forward(name = "viewApplicationDetails", path = "/auth/viewApplicationDetails.jsp")
 
 })
 public class AuthDispatchAction extends FenixDispatchAction {
@@ -78,6 +81,16 @@ public class AuthDispatchAction extends FenixDispatchAction {
 
         return manageAuthorizations(mapping, actionForm, request, response);
 
+    }
+
+    public ActionForward viewApplicationDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ExternalApplication application = getDomainObject(request, "appOid");
+
+        request.setAttribute("application", application);
+
+        return mapping.findForward("viewApplicationDetails");
     }
 
     public ActionForward deleteApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -129,11 +142,14 @@ public class AuthDispatchAction extends FenixDispatchAction {
 
                 }).toSet();
 
-        request.setAttribute("logo", Base64.encodeBase64String(app.getLogo()));
-        request.setAttribute("authorizations", authSessions);
-        request.setAttribute("application", app);
-
-        return mapping.findForward("viewAuthorizations");
+        if (authSessions.isEmpty()) {
+            return redirect("/externalApps.do?method=manageAuthorizations", request, true);
+        } else {
+            request.setAttribute("logo", Base64.encodeBase64String(app.getLogo()));
+            request.setAttribute("authorizations", authSessions);
+            request.setAttribute("application", app);
+            return mapping.findForward("viewAuthorizations");
+        }
     }
 
     public ActionForward revokeAuth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -150,7 +166,8 @@ public class AuthDispatchAction extends FenixDispatchAction {
 
     public ActionForward createApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        return manageApplications(mapping, actionForm, request, response);
+        RenderUtils.invalidateViewState();
+        return redirect("/externalApps.do?method=manageApplications", request, true);
     }
 
     public ActionForward prepareCreateApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

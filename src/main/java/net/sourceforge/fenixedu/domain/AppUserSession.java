@@ -32,7 +32,7 @@ public class AppUserSession extends AppUserSession_Base {
     }
 
     public boolean isAccessTokenValid() {
-        return getExpirationDate().plusMinutes(60).isAfterNow();
+        return getCreationDate().plusMinutes(60).isAfterNow();
     }
 
     public boolean matchesRefreshToken(String refreshToken) {
@@ -40,11 +40,6 @@ public class AppUserSession extends AppUserSession_Base {
             return false;
         }
         return getRefreshToken().equals(refreshToken);
-    }
-
-    public void resetCode() {
-        setCode(null);
-        setCreationDate(null);
     }
 
     public String getUsername() {
@@ -55,15 +50,15 @@ public class AppUserSession extends AppUserSession_Base {
     public void setTokens(String accessToken, String refreshToken) {
         setAccessToken(accessToken);
         setRefreshToken(refreshToken);
-        setExpirationDate(new DateTime());
-        resetCode();
+        setCode(null);
+        setCreationDate(new DateTime());
     }
 
     @Service
     public void setNewAccessToken(String accessToken) {
         setAccessToken(accessToken);
-        setExpirationDate(new DateTime());
-        resetCode();
+        setCode(null);
+        setCreationDate(new DateTime());
     }
 
     @Service

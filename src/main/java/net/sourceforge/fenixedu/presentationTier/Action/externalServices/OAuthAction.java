@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken;
+import net.sourceforge.fenixedu.util.BundleUtil;
+import nl.bitwalker.useragentutils.UserAgent;
 
 import org.apache.amber.oauth2.as.issuer.MD5Generator;
 import org.apache.amber.oauth2.as.issuer.OAuthIssuer;
@@ -22,9 +24,11 @@ import org.apache.amber.oauth2.as.request.OAuthTokenRequest;
 import org.apache.amber.oauth2.as.response.OAuthASResponse;
 import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
+import org.apache.http.HttpHeaders;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.codehaus.plexus.util.StringUtils;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -38,6 +42,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
         @Forward(name = "oauthErrorPage", path = "oauthErrorPage") })
 public class OAuthAction extends FenixDispatchAction {
 
+	
     private final static String ACCESS_TOKEN_EXPIRATION = PropertiesManager
             .getProperty("fenix.api.oauth.access.token.timeout.seconds");
 
@@ -84,6 +89,21 @@ public class OAuthAction extends FenixDispatchAction {
             throw new OAuthNotFoundException();
         }
     }
+    
+    
+    
+    private String getDeviceId(HttpServletRequest request) {
+        String deviceId = request.getParameter("device_id");
+        if (StringUtils.isBlank(deviceId)) {
+        	String userAgentHeader = request.getHeader(HttpHeaders.USER_AGENT);
+        	UserAgent userAgent = UserAgent.parseUserAgentString(userAgentHeader);
+        	String browserName = userAgent.getBrowser().getName();
+        	String osName = userAgent.getOperatingSystem().getName();
+        	deviceId = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "oauthapps.label.device.type", browserName, osName);
+        }
+        return deviceId;
+    }
+    
 
     // http://localhost:8080/ciapl/external/oauth.do?method=userConfirmation&...
     public ActionForward userConfirmation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -97,7 +117,7 @@ public class OAuthAction extends FenixDispatchAction {
 
         String clientId = request.getParameter("client_id");
         String redirectUrl = request.getParameter("redirect_uri");
-        String deviceId = request.getParameter("device_id");
+        String deviceId = getDeviceId(request);
 
         ExternalApplication clientApplication = getExternalApplication(clientId);
 
@@ -150,7 +170,7 @@ public class OAuthAction extends FenixDispatchAction {
             r =
                     OAuthResponse.errorResponse(401).setErrorUri(redirectUrl).setError("access_denied")
                             .setErrorDescription("User didn't allow the application").buildJSONMessage();
-            sendOAuthResponse(response, r);
+            response.sendRedirect(r.getLocationUri());
         } catch (OAuthSystemException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong. Please contact support team.");
             e.printStackTrace();

@@ -40,6 +40,14 @@
 	<bean:message key="oauthapps.label.no.authorizations" bundle="APPLICATION_RESOURCES" />
 </logic:empty>
 
+<bean:define id="confirm">
+	<bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.confirm.revoke.application"/> 
+</bean:define>
+
 <script type="text/javascript">
 		$("table img").width("75px").height("75px");
+		$("a[href*=revokeApplication]").click(function(e) {
+			   answer = confirm('<%= confirm %>');
+			   return answer;
+			});
 </script>
