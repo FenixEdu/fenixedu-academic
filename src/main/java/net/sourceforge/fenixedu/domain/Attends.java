@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -159,7 +160,7 @@ public class Attends extends Attends_Base {
 
     @Override
     public Set<StudentGroup> getStudentGroupsSet() {
-        Set<StudentGroup> result = new TreeSet<StudentGroup>();
+        Set<StudentGroup> result = new HashSet<StudentGroup>();
         for (StudentGroup sg : super.getStudentGroupsSet()) {
             if (sg.getValid()) {
                 result.add(sg);
