@@ -34,9 +34,10 @@ public class FileLocalContent extends FileLocalContent_Base {
     /**
      * @use {@link #createMetadata()})
      */
+    @Deprecated
     @Override
     public Set<FileLocalContentMetadata> getMetadataSet() {
-        throw new UnsupportedOperationException();
+        return super.getMetadataSet();
     }
 
     public void delete() {
@@ -48,6 +49,7 @@ public class FileLocalContent extends FileLocalContent_Base {
         deleteDomainObject();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.FileLocalContentMetadata> getMetadata() {
         return getMetadataSet();
