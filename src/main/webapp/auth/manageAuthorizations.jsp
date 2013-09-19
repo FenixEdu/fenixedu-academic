@@ -42,4 +42,8 @@
 
 <script type="text/javascript">
 		$("table img").width("75px").height("75px");
+		$("a[href*=revokeApplication]").click(function(e) {
+			   answer = confirm('Ao revogar a aplicação irá apagar todas as autorizações concedidas à mesma. Deseja continuar ?');
+			   return answer;
+			});
 </script>

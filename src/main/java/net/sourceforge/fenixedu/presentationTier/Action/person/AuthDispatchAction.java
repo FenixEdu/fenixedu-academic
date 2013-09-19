@@ -142,11 +142,14 @@ public class AuthDispatchAction extends FenixDispatchAction {
 
                 }).toSet();
 
-        request.setAttribute("logo", Base64.encodeBase64String(app.getLogo()));
-        request.setAttribute("authorizations", authSessions);
-        request.setAttribute("application", app);
-
-        return mapping.findForward("viewAuthorizations");
+        if (authSessions.isEmpty()) {
+            return redirect("/externalApps.do?method=manageAuthorizations", request, true);
+        } else {
+            request.setAttribute("logo", Base64.encodeBase64String(app.getLogo()));
+            request.setAttribute("authorizations", authSessions);
+            request.setAttribute("application", app);
+            return mapping.findForward("viewAuthorizations");
+        }
     }
 
     public ActionForward revokeAuth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -163,13 +166,12 @@ public class AuthDispatchAction extends FenixDispatchAction {
 
     public ActionForward createApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-    	RenderUtils.invalidateViewState();
-    	return redirect("/externalApps.do?method=manageApplications", request, true);
+        RenderUtils.invalidateViewState();
+        return redirect("/externalApps.do?method=manageApplications", request, true);
     }
 
     public ActionForward prepareCreateApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-    	RenderUtils.invalidateViewState();
         request.setAttribute("currentUser", getUser());
         return mapping.findForward("createApplication");
     }

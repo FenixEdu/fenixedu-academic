@@ -45,4 +45,8 @@
 
 <script type="text/javascript">
 		$("table img").width("75px").height("75px");
+		$("a[href*=deleteApplication]").click(function(e) {
+			   answer = confirm('Deseja apagar a aplicação ?');
+			   return answer;
+			});
 </script>
