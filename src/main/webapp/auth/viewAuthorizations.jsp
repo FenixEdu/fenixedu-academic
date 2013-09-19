@@ -51,15 +51,23 @@
 		<bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.revoke.all.authorizations"/>
 	</html:link>
 </p>
-	
+
+<bean:define id="confirm_revoke">
+	<bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.confirm.revoke.authorization"/> 
+</bean:define>
+
+<bean:define id="confirm_delete">
+	<bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.confirm.delete.application"/> 
+</bean:define>
+
 <script type="text/javascript">
 		$("table img").width("75px").height("75px");
 		$("a[href*=revokeAuth]").click(function(e) {
-			   answer = confirm('Deseja mesmo revogar ?');
+			   answer = confirm('<%= confirm_revoke %>');
 			   return answer;
 			});
 		$("a[href*=revokeApplication]").click(function(e) {
-			   answer = confirm('Ao revogar a aplicação irá apagar todas as autorizações concedidas à mesma. Deseja continuar ?');
+			   answer = confirm('<%= confirm_delete %>');
 			   return answer;
 			});
 </script>

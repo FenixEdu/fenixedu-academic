@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import nl.bitwalker.useragentutils.UserAgent;
 
 import org.apache.amber.oauth2.as.issuer.MD5Generator;
@@ -98,7 +99,7 @@ public class OAuthAction extends FenixDispatchAction {
         	UserAgent userAgent = UserAgent.parseUserAgentString(userAgentHeader);
         	String browserName = userAgent.getBrowser().getName();
         	String osName = userAgent.getOperatingSystem().getName();
-        	deviceId =  String.format("%s on %s", browserName, osName);
+        	deviceId = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "oauthapps.label.device.type", browserName, osName);
         }
         return deviceId;
     }
