@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.User;
@@ -41,6 +42,7 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.photograph.PictureAvatar;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -52,6 +54,7 @@ import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -167,7 +170,26 @@ public class JerseyPrivate {
 
         jsonResult.put("address", person.getAddress());
 
+        addPhoto(jsonResult, person);
+
         return jsonResult.toJSONString();
+    }
+
+    private void addPhoto(final JSONObject jsonResult, final Person person) {
+        final JSONObject jsonPhoto = new JSONObject();
+        try {
+            final Photograph personalPhoto = person.getPersonalPhoto();
+            if (person.isPhotoAvailableToCurrentUser()) {
+                final PictureAvatar avatar = personalPhoto.getAvatar();
+                byte[] bytes = avatar.getBytes();
+                jsonPhoto.put("type", avatar.getPictureFileFormat().getMimeType());
+                jsonPhoto.put("data", Base64.encodeBase64String(bytes));
+            }
+        } catch (NullPointerException npe) {
+
+        } finally {
+            jsonResult.put("photo", jsonPhoto);
+        }
     }
 
     private Person getPerson() {
