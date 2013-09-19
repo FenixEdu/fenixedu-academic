@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.webServices.jersey;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -22,11 +22,11 @@ import javax.ws.rs.core.Response.Status;
 import net.fortuna.ical4j.model.Calendar;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.EnrolStudentInWrittenEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollStudentInWrittenEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -39,7 +39,6 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.photograph.PictureAvatar;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -47,7 +46,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.util.icalendar.CalendarFactory;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
@@ -66,6 +64,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+import com.google.common.base.Joiner;
 import com.google.common.net.HttpHeaders;
 
 @Path("/private/v1")
@@ -81,21 +80,11 @@ public class JerseyPrivate {
 
     private static final DateTimeFormatter formatDay = DateTimeFormat.forPattern("dd/MM/yyyy");
     private static final DateTimeFormatter formatHour = DateTimeFormat.forPattern("HH:mm");
+    private static final SimpleDateFormat dataFormatDay = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat dataFormatHour = new SimpleDateFormat("HH:mm");
 
-    private List<Evaluation> evaluationsWithEnrolmentPeriodOpened;
-    private List<Evaluation> evaluationsWithEnrolmentPeriodClosed;
-    protected Integer evaluationType;
-    private ExecutionSemester executionSemester;
-    private Map<Integer, String> studentRooms;
-    private List<Evaluation> notEnroledEvaluations;
-    private List<Evaluation> enroledEvaluations;
-    private List<Evaluation> evaluationsWithoutEnrolmentPeriod;
-    private Map<Integer, List<ExecutionCourse>> executionCourses;
-    private Map<Integer, Boolean> enroledEvaluationsForStudent;
-
-    protected static final Integer ALL = Integer.valueOf(0);
-    protected static final Integer EXAMS = Integer.valueOf(1);
-    protected static final Integer WRITTENTESTS = Integer.valueOf(2);
+    private static final String ENROL = "yes";
+    private static final String UNENROL = "no";
 
     private String mls(MultiLanguageString mls) {
         if (mls == null) {
@@ -120,27 +109,21 @@ public class JerseyPrivate {
         }
 
         if (isTeacher(person)) {
-            JSONObject jsonRoleInfo = new JSONObject();
-            jsonRoleInfo.put("roleName", "TEACHING");
-            jsonArrayRole.add(jsonRoleInfo);
+            //JSONObject jsonRoleInfo = new JSONObject();
+            //jsonRoleInfo.put("roleName", "TEACHING");
+            jsonArrayRole.add("TEACHING");
         }
 
         if (person.hasRole(RoleType.STUDENT)) {
-            JSONObject jsonRoleInfo = new JSONObject();
-            jsonRoleInfo.put("roleName", RoleType.STUDENT.getName());
-            jsonArrayRole.add(jsonRoleInfo);
+            jsonArrayRole.add(RoleType.STUDENT.getName());
         }
 
         if (person.hasRole(RoleType.ALUMNI)) {
-            JSONObject jsonRoleInfo = new JSONObject();
-            jsonRoleInfo.put("roleName", RoleType.ALUMNI.getName());
-            jsonArrayRole.add(jsonRoleInfo);
+            jsonArrayRole.add(RoleType.ALUMNI.getName());
         }
 
         if (person.hasRole(RoleType.TEACHER)) {
-            JSONObject jsonRoleInfo = new JSONObject();
-            jsonRoleInfo.put("roleName", RoleType.TEACHER.getName());
-            jsonArrayRole.add(jsonRoleInfo);
+            jsonArrayRole.add(RoleType.TEACHER.getName());
         }
 
         jsonResult.put("roles", jsonArrayRole);
@@ -150,6 +133,8 @@ public class JerseyPrivate {
         jsonResult.put("campus", pib.getCampus());
         jsonResult.put("mail", pib.getEmail());
         jsonResult.put("istId", person.getIstUsername());
+
+        jsonResult.put("degree", getInformation(pib.getStudentDegrees()));
 
         jsonResult.put("personalMail", getInformation(pib.getPersonalEmails()));
 
@@ -228,7 +213,7 @@ public class JerseyPrivate {
         for (Registration registration : foundStudent.getAllRegistrations()) {
             for (Enrolment enrolment : registration.getEnrolments(executionSemester)) {
                 JSONObject jsonEnrolmentInfo = new JSONObject();
-                jsonEnrolmentInfo.put("courseId", enrolment.getExecutionCourseFor(executionSemester).getExternalId());
+                jsonEnrolmentInfo.put("id", enrolment.getExecutionCourseFor(executionSemester).getExternalId());
                 jsonEnrolmentInfo.put("grade", enrolment.getGrade().getValue());
                 jsonEnrolmentInfo.put("sigla", enrolment.getExecutionCourseFor(executionSemester).getSigla());
                 jsonEnrolmentInfo.put("name", enrolment.getExecutionCourseFor(executionSemester).getName());
@@ -246,8 +231,8 @@ public class JerseyPrivate {
             teaching.put("sigla", executionCourse.getSigla());
             jsonTeaching.add(teaching);
         }
-        jsonResult.put("coursesEnrolled", jsonEnrolments);
-        jsonResult.put("coursesTeaching", jsonTeaching);
+        jsonResult.put("enrolled", jsonEnrolments);
+        jsonResult.put("teaching", jsonTeaching);
         return jsonResult.toJSONString();
     }
 
@@ -381,21 +366,9 @@ public class JerseyPrivate {
     @Produces(JSON_UTF8)
     public String personCurriculum() {
         Person person = getPerson();
-
         JSONArray jsonResult = new JSONArray();
         if (person.hasStudent()) {
             jsonResult = getStudentStatistics(person.getStudent().getRegistrations());
-
-            /*
-            if (person.getStudent().hasAlumni()) {
-                //JSONArray jsonResult = getStudentStatistics(student.getAlumni().readAlumniRegistrations(bean));
-
-            } else {
-                JSONArray jsonResult = getStudentStatistics(student.getRegistrations());
-            }
-             */
-        } else if (person.getStudent().hasAlumni()) {
-//            jsonResult = getStudentStatistics(person.getStudent().getAlumni().readAlumniRegistrations(bean)());
         }
         return jsonResult.toJSONString();
     }
@@ -411,40 +384,40 @@ public class JerseyPrivate {
         for (Registration registration : registrationsList) {
             for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
                 JSONObject jsonCurricularPlanInfo = new JSONObject();
-                jsonCurricularPlanInfo.put("curricularName", studentCurricularPlan.getName());
-                jsonCurricularPlanInfo.put("curricularExternalId", studentCurricularPlan.getDegree().getExternalId());
-                jsonCurricularPlanInfo.put("curricularDegreeType", studentCurricularPlan.getDegreeType().getName());
-                jsonCurricularPlanInfo.put("curricularCampus", studentCurricularPlan.getCurrentCampus().getName());
-                jsonCurricularPlanInfo.put("curricularPresentationName", studentCurricularPlan.getPresentationName());
-                jsonCurricularPlanInfo.put("curricularStart", studentCurricularPlan.getStartDateYearMonthDay() + "");
-                jsonCurricularPlanInfo.put("curricularEnd", studentCurricularPlan.getEndDate() + "");
+                jsonCurricularPlanInfo.put("name", studentCurricularPlan.getName());
+                jsonCurricularPlanInfo.put("id", studentCurricularPlan.getDegree().getExternalId());
+                jsonCurricularPlanInfo.put("degreeType", studentCurricularPlan.getDegreeType().getName());
+                jsonCurricularPlanInfo.put("campus", studentCurricularPlan.getCurrentCampus().getName());
+                jsonCurricularPlanInfo.put("presentationName", studentCurricularPlan.getPresentationName());
+                jsonCurricularPlanInfo.put("start", studentCurricularPlan.getStartDateYearMonthDay() + "");
+                jsonCurricularPlanInfo.put("end", studentCurricularPlan.getEndDate() + "");
 
                 RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
 
                 ICurriculum icurriculum = registrationConclusionBean.getCurriculumForConclusion();
 
-                jsonCurricularPlanInfo.put("curricularEcts", icurriculum.getSumEctsCredits());
-                jsonCurricularPlanInfo.put("curricularAverage", icurriculum.getAverage());
+                jsonCurricularPlanInfo.put("ects", icurriculum.getSumEctsCredits());
+                jsonCurricularPlanInfo.put("average", icurriculum.getAverage());
 
-                jsonCurricularPlanInfo.put("curricularCalculatedAverage", icurriculum.getRoundedAverage());
+                jsonCurricularPlanInfo.put("calculatedAverage", icurriculum.getRoundedAverage());
 
-                jsonCurricularPlanInfo.put("curricularFinished", registrationConclusionBean.isConcluded());
+                jsonCurricularPlanInfo.put("isFinished", registrationConclusionBean.isConcluded());
 
                 JSONArray jsonCoursesInfo = new JSONArray();
 
                 if (icurriculum.getCurriculumEntries() != null) {
-                    jsonCurricularPlanInfo.put("curricularApprovedCourses", icurriculum.getCurriculumEntries().size());
+                    jsonCurricularPlanInfo.put("approvedCourses", icurriculum.getCurriculumEntries().size());
                 } else {
-                    jsonCurricularPlanInfo.put("curricularApprovedCourses", "");
+                    jsonCurricularPlanInfo.put("approvedCourses", "");
 
                 }
 
                 for (ICurriculumEntry iCurriculumEntry : icurriculum.getCurriculumEntries()) {
                     JSONObject jsonCourseInfo = new JSONObject();
 
-                    jsonCourseInfo.put("courseName", mls(iCurriculumEntry.getPresentationName()));
-                    jsonCourseInfo.put("courseGrade", iCurriculumEntry.getGradeValue());
-                    jsonCourseInfo.put("courseEcts", iCurriculumEntry.getEctsCreditsForCurriculum());
+                    jsonCourseInfo.put("name", mls(iCurriculumEntry.getPresentationName()));
+                    jsonCourseInfo.put("grade", iCurriculumEntry.getGradeValue());
+                    jsonCourseInfo.put("ects", iCurriculumEntry.getEctsCreditsForCurriculum());
                     String executionCourseOid = StringUtils.EMPTY;
                     if (iCurriculumEntry instanceof Enrolment) {
                         Enrolment enrolment = (Enrolment) iCurriculumEntry;
@@ -453,71 +426,19 @@ public class JerseyPrivate {
                             executionCourseOid = executionCourse.getExternalId();
                         }
                     }
-                    /*
-                     String executionCourseSigla = iCurriculumEntry.getCode();
-                     
-                    if (!StringUtils.isBlank(executionCourseSigla)) {
-                        ExecutionCourse executionCourse =
-                                ExecutionCourse.readBySiglaAndExecutionPeriod(executionCourseSigla,
-                                        iCurriculumEntry.getExecutionPeriod());
-                        if (executionCourse != null) {
-                            executionCourseOid = executionCourse.getExternalId();
-                        }
-                    }
-                    */
-                    jsonCourseInfo.put("courseExternalId", executionCourseOid);
+
+                    jsonCourseInfo.put("id", executionCourseOid);
                     //enrolments.getExecutionCourseFor(enrolments.getExecutionPeriod()).getExternalId());
 
-                    jsonCourseInfo.put("coursesSemester", iCurriculumEntry.getExecutionPeriod().getSemester());
-                    jsonCourseInfo.put("courseYear", iCurriculumEntry.getExecutionYear().getYear());
+                    jsonCourseInfo.put("semester", iCurriculumEntry.getExecutionPeriod().getSemester());
+                    jsonCourseInfo.put("year", iCurriculumEntry.getExecutionYear().getYear());
                     jsonCoursesInfo.add(jsonCourseInfo);
                 }
-                jsonCurricularPlanInfo.put("curricularCourseInfo", jsonCoursesInfo);
+                jsonCurricularPlanInfo.put("courseInfo", jsonCoursesInfo);
                 jsonResult.add(jsonCurricularPlanInfo);
 
             }
         }
-
-        /*
-                jsonCurricularPlanInfo.put("curricularEcts", registrationConclusionBean.getEctsCredits());
-                jsonCurricularPlanInfo.put("curricularAverage", registrationConclusionBean.getAverage());
-
-                jsonCurricularPlanInfo.put("curricularCalculatedAverage", registrationConclusionBean.getCalculatedAverage());
-                jsonCurricularPlanInfo.put("curricularFinished",
-                        registrationConclusionBean.getHasAccessToRegistrationConclusionProcess());
-                jsonCurricularPlanInfo.put("curricularFinished", registrationConclusionBean.isConcluded());
-
-                JSONArray jsonCoursesInfo = new JSONArray();
-
-                if (registrationConclusionBean.getCycleCurriculumGroup() != null) {
-                    jsonCurricularPlanInfo.put("curricularApprovedCourses", registrationConclusionBean.getCycleCurriculumGroup()
-                            .getApprovedCurriculumLines().size());
-
-                    for (CurriculumLine curriculumLines : registrationConclusionBean.getCycleCurriculumGroup()
-                            .getApprovedCurriculumLines()) {
-
-                        for (Enrolment enrolments : curriculumLines.getEnrolments()) {
-                            JSONObject jsonCourseInfo = new JSONObject();
-
-                            jsonCourseInfo.put("courseName", mls(enrolments.getPresentationName()));
-                            jsonCourseInfo.put("courseGrade", enrolments.getGrade().getValue());
-                            jsonCourseInfo.put("courseEcts", enrolments.getEctsCredits());
-                            jsonCourseInfo.put("courseExternalId",
-                                    enrolments.getExecutionCourseFor(enrolments.getExecutionPeriod()).getExternalId());
-                            jsonCourseInfo.put("coursesSemester", enrolments.getExecutionPeriod().getSemester());
-                            jsonCourseInfo.put("courseYear", enrolments.getExecutionYear().getYear());
-                            jsonCoursesInfo.add(jsonCourseInfo);
-                        }
-                    }
-                }
-                jsonCurricularPlanInfo.put("curricularCourseInfo", jsonCoursesInfo);
-                jsonResult.add(jsonCurricularPlanInfo);
-            }
-
-
-
-        }*/
-
         return jsonResult;
     }
 
@@ -646,7 +567,7 @@ public class JerseyPrivate {
                 jsonNotPayed.add(notPayedInfo);
             }
         }
-        jsonResult.put("payments", jsonPayments);
+        jsonResult.put("payed", jsonPayments);
         jsonResult.put("notPayed", jsonNotPayed);
         return jsonResult.toString();
     }
@@ -657,145 +578,90 @@ public class JerseyPrivate {
     @Produces(JSON_UTF8)
     public String evaluations() {
         JSONObject jsonResult = new JSONObject();
-        JSONArray evaluationPeriodClose = new JSONArray();
-        JSONArray evaluationPeriodOpen = new JSONArray();
 
         Person person = getPerson();
-        processEvaluations(person.getStudent());
 
-        for (Evaluation evaluation : evaluationsWithEnrolmentPeriodClosed) {
-            JSONObject jsonEvaluationInfo = new JSONObject();
-            jsonEvaluationInfo.put("evaluationName", evaluation.getPresentationName());
-            jsonEvaluationInfo.put("evaluationType", evaluation.getEvaluationType().toString());
-            jsonEvaluationInfo.put("evaluationType", evaluation.getExternalId());
-            for (ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
-                System.out.println("-" + executionCourse.getName());
-            }
-            evaluationPeriodClose.add(jsonEvaluationInfo);
-        }
-        for (Evaluation evaluation : evaluationsWithEnrolmentPeriodOpened) {
-            JSONObject jsonEvaluationInfo = new JSONObject();
-            jsonEvaluationInfo.put("evaluationName", evaluation.getPresentationName());
-            jsonEvaluationInfo.put("evaluationType", evaluation.getEvaluationType().toString());
-            jsonEvaluationInfo.put("evaluationType", evaluation.getExternalId());
-            for (ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
-                System.out.println("-" + executionCourse.getName());
-            }
-            evaluationPeriodOpen.add(jsonEvaluationInfo);
-        }
+        ProcessEvaluation processEvaluation = new ProcessEvaluation();
+        processEvaluation.processEvaluations(person.getStudent());
+        jsonResult.put("periodClose",
+                processEvaluation(processEvaluation, processEvaluation.getEvaluationsWithEnrolmentPeriodClosed()));
+        jsonResult.put("periodOpen",
+                processEvaluation(processEvaluation, processEvaluation.getEvaluationsWithEnrolmentPeriodOpened()));
 
-        jsonResult.put("evaluationPeriodClose", evaluationPeriodClose);
-        jsonResult.put("evaluationPeriodOpen", evaluationPeriodOpen);
         return jsonResult.toString();
+    }
+
+    private JSONArray processEvaluation(ProcessEvaluation processEvaluation, List<Evaluation> listEvaluation) {
+        JSONArray evaluationList = new JSONArray();
+
+        for (Evaluation eval : listEvaluation) {
+            WrittenEvaluation evaluation = (WrittenEvaluation) eval;
+            JSONObject jsonEvaluationInfo = new JSONObject();
+            jsonEvaluationInfo.put("name", evaluation.getPresentationName());
+            jsonEvaluationInfo.put("type", evaluation.getEvaluationType().toString());
+            jsonEvaluationInfo.put("id", evaluation.getExternalId());
+
+            jsonEvaluationInfo.put("isEnrolmentPeriod", evaluation.isInEnrolmentPeriod());
+
+            jsonEvaluationInfo.put("day", dataFormatDay.format(evaluation.getDay().getTime()));
+            jsonEvaluationInfo.put("hour", dataFormatHour.format(evaluation.getDay().getTime()));
+
+            jsonEvaluationInfo.put("startHour", dataFormatHour.format(evaluation.getBeginning().getTime()));
+            jsonEvaluationInfo.put("endHour", dataFormatHour.format(evaluation.getEnd().getTime()));
+
+            jsonEvaluationInfo.put("rooms", evaluation.getAssociatedRoomsAsString());
+
+            jsonEvaluationInfo.put("enrollmentBeginDay", dataFormatDay.format(evaluation.getEnrollmentBeginDay().getTime()));
+            jsonEvaluationInfo.put("enrollmentEndDay", dataFormatDay.format(evaluation.getEnrollmentEndDay().getTime()));
+
+            jsonEvaluationInfo.put("isEnrolled", processEvaluation.isEnrolmentIn(evaluation));
+
+            Set<String> courses = new HashSet<String>();
+
+            for (ExecutionCourse course : evaluation.getAssociatedExecutionCourses()) {
+                courses.add(course.getName());
+            }
+
+            jsonEvaluationInfo.put("course", Joiner.on(",").join(courses));
+            evaluationList.add(jsonEvaluationInfo);
+
+        }
+        return evaluationList;
+    }
+
+    public static String strJoin(String[] aArr, String sSep) {
+        StringBuilder sbStr = new StringBuilder();
+        for (int i = 0, il = aArr.length; i < il; i++) {
+            if (i > 0)
+                sbStr.append(sSep);
+            sbStr.append(aArr[i]);
+        }
+        return sbStr.toString();
     }
 
     //@Scope(REGISTRATIONS_SCOPE)
     @PUT
     @Produces(JSON_UTF8)
     @Path("person/evaluations/{oid}")
-    public String evaluations(@PathParam("oid") String oid) {
+    public String evaluations(@PathParam("oid") String oid, @QueryParam("format") String enrol) {
         JSONObject jsonResult = new JSONObject();
+
         try {
             WrittenEvaluation eval = getDomainObject(oid);
-            EnrolStudentInWrittenEvaluation.runEnrolStudentInWrittenEvaluation(getPerson().getUsername(), eval.getExternalId());
+            if (!StringUtils.isBlank(enrol)) {
+                if (enrol.equalsIgnoreCase(ENROL))
+                    EnrolStudentInWrittenEvaluation.runEnrolStudentInWrittenEvaluation(getPerson().getUsername(),
+                            eval.getExternalId());
+                else if (enrol.equalsIgnoreCase(UNENROL)) {
+                    UnEnrollStudentInWrittenEvaluation.runUnEnrollStudentInWrittenEvaluation(getPerson().getUsername(),
+                            eval.getExternalId());
+                }
+            }
             return evaluations();
+
         } catch (Exception e) {
             throw newApplicationError(Status.BAD_REQUEST, "problem found", "problem found");
         }
-    }
-
-    /*
-    public Integer getEvaluationType() {
-        if (this.evaluationType == null) {
-            this.evaluationType = ALL;
-        }
-        return this.evaluationType;
-    }
-     */
-/*
-    public String getEvaluationTypeString() {
-        final Integer type = getEvaluationType();
-        if (type != null && type.equals(EXAMS)) {
-            return "net.sourceforge.fenixedu.domain.Exam";
-        } else if (type != null && type.equals(WRITTENTESTS)) {
-            return "net.sourceforge.fenixedu.domain.WrittenTest";
-        }
-        return "";
-    }
- */
-    public Map<Integer, String> getStudentRooms() {
-        if (this.studentRooms == null) {
-            this.studentRooms = new HashMap<Integer, String>();
-        }
-        return this.studentRooms;
-    }
-
-    public List<Evaluation> getEvaluationsWithoutEnrolmentPeriod() {
-        if (this.evaluationsWithoutEnrolmentPeriod == null) {
-            this.evaluationsWithoutEnrolmentPeriod = new ArrayList();
-        }
-        return this.evaluationsWithoutEnrolmentPeriod;
-    }
-
-    public Map<Integer, Boolean> getEnroledEvaluationsForStudent() {
-        if (this.enroledEvaluationsForStudent == null) {
-            this.enroledEvaluationsForStudent = new HashMap<Integer, Boolean>();
-        }
-        return this.enroledEvaluationsForStudent;
-    }
-
-    public Map<Integer, List<ExecutionCourse>> getExecutionCourses() {
-        if (this.executionCourses == null) {
-            this.executionCourses = new HashMap<Integer, List<ExecutionCourse>>();
-        }
-        return this.executionCourses;
-    }
-
-    private void processEvaluations(Student student) {
-        this.evaluationsWithEnrolmentPeriodClosed = new ArrayList();
-        this.evaluationsWithEnrolmentPeriodOpened = new ArrayList();
-
-        //final String evaluationType = getEvaluationTypeString();
-        for (final Registration registration : student.getRegistrations()) {
-
-            if (!registration.hasStateType(getExecutionSemester("", ""), RegistrationStateType.REGISTERED)) {
-                continue;
-            }
-
-            for (final WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(getExecutionSemester("", ""))) {
-
-                if (writtenEvaluation instanceof Exam) {
-                    final Exam exam = (Exam) writtenEvaluation;
-                    if (!exam.isExamsMapPublished()) {
-                        continue;
-                    }
-                }
-
-                try {
-                    if (writtenEvaluation.isInEnrolmentPeriod()) {
-                        this.evaluationsWithEnrolmentPeriodOpened.add(writtenEvaluation);
-                    } else {
-                        this.evaluationsWithEnrolmentPeriodClosed.add(writtenEvaluation);
-                        final AllocatableSpace room = registration.getRoomFor(writtenEvaluation);
-                        getStudentRooms().put(writtenEvaluation.getIdInternal(), room != null ? room.getNome() : "-");
-                    }
-                } catch (final DomainException e) {
-                    getEvaluationsWithoutEnrolmentPeriod().add(writtenEvaluation);
-                    final AllocatableSpace room = registration.getRoomFor(writtenEvaluation);
-                    getStudentRooms().put(writtenEvaluation.getIdInternal(), room != null ? room.getNome() : "-");
-                } finally {
-                    getEnroledEvaluationsForStudent().put(writtenEvaluation.getIdInternal(),
-                            Boolean.valueOf(registration.isEnroledIn(writtenEvaluation)));
-                    getExecutionCourses().put(writtenEvaluation.getIdInternal(),
-                            writtenEvaluation.getAttendingExecutionCoursesFor(registration));
-                }
-
-            }
-        }
-
-        Collections.sort(this.evaluationsWithEnrolmentPeriodClosed, new BeanComparator("dayDate"));
-        Collections.sort(this.evaluationsWithEnrolmentPeriodOpened, new BeanComparator("dayDate"));
-        Collections.sort(getEvaluationsWithoutEnrolmentPeriod(), new BeanComparator("dayDate"));
     }
 
     public boolean isTeacher(Person person) {
