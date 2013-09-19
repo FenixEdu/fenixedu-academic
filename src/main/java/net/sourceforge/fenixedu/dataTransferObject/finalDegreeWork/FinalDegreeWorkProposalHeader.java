@@ -78,6 +78,10 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
         throw new Error("Method should not be called!");
     }
 
+    public String getProposalOID() {
+        return getProposal().getExternalId();
+    }
+
     /**
      * @return Returns the status.
      */
