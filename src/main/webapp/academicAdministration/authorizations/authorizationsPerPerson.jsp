@@ -45,7 +45,7 @@
 				<logic:iterate id="group" name="managementBean" property="groups">
 				<bean:define id="newObject" name="group" property="newObject" type="java.lang.Boolean"/>
 				
-				<bean:define id="id" name="group" property="id" type="java.lang.Long" />
+				<bean:define id="id" name="group" property="id" type="java.lang.String" />
 				
 				<div class="edit-authorizations">
 				<fr:form action="/authorizations.do">
