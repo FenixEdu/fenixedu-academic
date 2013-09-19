@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.io.FileInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,18 +50,25 @@ public class ExternalApplication extends ExternalApplication_Base {
         }
     }
 
-    public FileInputStream getLogoStream() {
+    public InputStream getLogoStream() {
         return null;
     }
 
-    public void setLogoStream(FileInputStream stream) {
+    public void setLogoStream(InputStream stream) {
         try {
             if (stream != null) {
-                setLogo(IOUtils.toByteArray(stream));
+                byte[] byteArray = IOUtils.toByteArray(stream);
+                if (byteArray.length > 0) {
+                    setLogo(byteArray);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setLogoStream(ByteArrayInputStream stream) {
+        setLogoStream((InputStream) stream);
     }
 
     @Service
