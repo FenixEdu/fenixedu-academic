@@ -433,6 +433,13 @@ public class JerseyPrivate {
                     jsonCourseInfo.put("courseGrade", iCurriculumEntry.getGradeValue());
                     jsonCourseInfo.put("courseEcts", iCurriculumEntry.getEctsCreditsForCurriculum());
                     String executionCourseOid = StringUtils.EMPTY;
+                    if (iCurriculumEntry instanceof Enrolment) {
+                        Enrolment enrolment = (Enrolment) iCurriculumEntry;
+                        ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
+                        if (executionCourse != null) {
+                            executionCourseOid = executionCourse.getExternalId();
+                        }
+                    }
                     /*
                      String executionCourseSigla = iCurriculumEntry.getCode();
                      
@@ -449,7 +456,7 @@ public class JerseyPrivate {
                     //enrolments.getExecutionCourseFor(enrolments.getExecutionPeriod()).getExternalId());
 
                     jsonCourseInfo.put("coursesSemester", iCurriculumEntry.getExecutionPeriod().getSemester());
-                    jsonCourseInfo.put("courseYear", iCurriculumEntry.getExecutionYear());
+                    jsonCourseInfo.put("courseYear", iCurriculumEntry.getExecutionYear().getYear());
                     jsonCoursesInfo.add(jsonCourseInfo);
                 }
                 jsonCurricularPlanInfo.put("curricularCourseInfo", jsonCoursesInfo);
