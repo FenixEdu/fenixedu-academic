@@ -137,6 +137,13 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
             return mapping.getInputForward();
         }
 
+        if (title == null || title.length() == 0) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("finalWorkInformationForm.title", new ActionError("finalWorkInformationForm.title"));
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
+        }
+
         Integer orientatorCreditsPercentage = Integer.valueOf(responsibleCreditsPercentage);
         Integer coorientatorCreditsPercentage = Integer.valueOf(coResponsibleCreditsPercentage);
         if (orientatorCreditsPercentage.intValue() < 0 || coorientatorCreditsPercentage.intValue() < 0

@@ -138,11 +138,11 @@
 						<td class="listClasses" rowspan="2">
 						</td>
 						<td class="listClasses" rowspan="2">
-				        	<html:link target="_blank" page="<%= "/finalWorkManagement.do?method=print&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId().toString() %>">
+				        	<html:link target="_blank" page="<%= "/finalWorkManagement.do?method=print&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId() %>">
 								<bean:message bundle="APPLICATION_RESOURCES" key="print"/>
 					        </html:link>
 					        <br />
-				        	<html:link target="_self" page="<%= "/finalWorkManagement.do?method=prepareToTransposeFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getProposalOID().toString() %>">
+				        	<html:link target="_self" page="<%= "/finalWorkManagement.do?method=prepareToTransposeFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId() %>">
 								<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.transpose"/>
 					        </html:link>
 						</td>
