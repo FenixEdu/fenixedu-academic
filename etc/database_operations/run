@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Adding relation between SantanderEntry and SantanderPhotoEntry." updateSantanderEntry.sql 

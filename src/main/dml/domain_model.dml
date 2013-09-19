@@ -17886,6 +17886,11 @@ relation PersonSantanderEntry {
 	}
 }
 
+relation SantanderPhotoEntrySantanderEntry {
+	cardGeneration.SantanderEntry playsRole santanderEntry;
+	cardGeneration.SantanderPhotoEntry playsRole santanderPhotoEntry;
+}
+
 relation PersonSantanderPIN {
 	Person playsRole person;
 	cardGeneration.SantanderPIN playsRole santanderPIN;
