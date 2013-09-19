@@ -12,10 +12,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.AuthScope;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken.FenixOAuthTokenException;
 import net.sourceforge.fenixedu.webServices.jersey.FenixJerseyPackageResourceConfig;
@@ -30,9 +33,19 @@ import pt.ist.fenixWebFramework.security.UserView;
 public class JerseyOAuth2 implements Filter {
 
     final static String ACCESS_TOKEN = "access_token";
+    
+    private static boolean allowIstIds = false;
 
     @Override
     public void destroy() {
+    }
+    
+    public static synchronized void toggleAllowIstIds() {
+        allowIstIds = !allowIstIds;
+    }
+    
+    public static synchronized boolean allowIstIds() {
+        return allowIstIds;
     }
 
     @Override
@@ -54,13 +67,43 @@ public class JerseyOAuth2 implements Filter {
         }
     }
 
+    private boolean checkAccessControl(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+         if (allowIstIds() && currentUserIsManager()) {
+            String istId = request.getParameter("_istid_");
+            if (!StringUtils.isBlank(istId)){
+                User user = User.readUserByUserUId(istId);
+                if (user != null) {
+                    authenticateUser(request, user);
+                    return true;
+                }else {
+                    throw new ServletException("user.not.found");
+                }
+            }
+        }
+        return checkAccessToken(request, response);
+    }
+
+    private boolean currentUserIsManager() {
+        IUserView userview = UserView.getUser();
+        if (userview == null) {
+            return false;
+        }
+        Person person = userview.getPerson();
+        if (person == null) {
+            return false;
+        }
+        
+        return person.hasRole(RoleType.MANAGER);
+    }
+
     @Override
     public void init(FilterConfig arg0) throws ServletException {
     }
 
-    private Boolean checkAccessControl(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
+    private Boolean checkAccessToken(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
             ServletException {
-
+        
+        
         String accessToken = request.getHeader(ACCESS_TOKEN);
 
         if (StringUtils.isBlank(accessToken)) {
@@ -89,8 +132,7 @@ public class JerseyOAuth2 implements Filter {
 
             User foundUser = appUserSession.getUser();
 
-            Authenticate as = new Authenticate();
-            UserView.setUser(as.mock(foundUser.getPerson(), request.getRequestURL().toString()));
+            authenticateUser(request, foundUser);
 
             return true;
 
@@ -99,6 +141,10 @@ public class JerseyOAuth2 implements Filter {
         }
 
         return false;
+    }
+
+    private void authenticateUser(final HttpServletRequest request, User foundUser) {
+        UserView.setUser(Authenticate.mockUser(foundUser.getPerson(), request.getRequestURL().toString()));
     }
 
     private boolean validScope(final HttpServletResponse response, AppUserSession appUserSession, final String uri)

@@ -20,6 +20,16 @@
 <div class="infoop2" style="width:500px;">
 	Nesta secção estão listadas as suas aplicações registadas no sistema Fénix.
 </div>
+<login:present name="allowIstIds">
+    <html:link page="/externalApps.do?method=allowIstIds">
+		<logic:equal name="allowIstIds" value="true">
+	 		allow.ist.id is <b>ON<b>!
+		</logic:equal>
+		<logic:equal name="allowIstIds" value="false">
+	 		allow.ist.id is off!
+		</logic:equal>
+	</html:link>
+</login:present>
 
 <logic:notEmpty name="appsOwned">
 		<fr:view name="appsOwned" schema="oauthapps.view.apps">

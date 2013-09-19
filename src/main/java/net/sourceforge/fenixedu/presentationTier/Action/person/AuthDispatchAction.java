@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,8 +14,10 @@ import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyOAuth2;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
@@ -49,6 +52,25 @@ public class AuthDispatchAction extends FenixDispatchAction {
     private User getUser() {
         IUserView user = UserView.getUser();
         return user.getPerson().getUser();
+    }
+    
+    
+    private void addAllowIstIds(HttpServletRequest request) {
+        if (getUser().getPerson().hasRole(RoleType.MANAGER)) {
+            request.setAttribute("allowIstIds", JerseyOAuth2.allowIstIds());
+        }
+    }
+    
+    /** This will list the applications which you grant access */
+    public ActionForward allowIstIds(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        User user = getUser();
+        if (user.getPerson().hasRole(RoleType.MANAGER)) {
+            JerseyOAuth2.toggleAllowIstIds();
+            return redirect("/externalApps.do?method=manageApplications", request, true);
+        } else {
+            throw new ServletException("no.permissions");
+        }
     }
 
     /** This will list the applications which you grant access */
@@ -119,7 +141,7 @@ public class AuthDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         request.setAttribute("appsOwned", getUser().getOwnedAppSet());
-
+        addAllowIstIds(request);
         return mapping.findForward("manageApplications");
     }
 
