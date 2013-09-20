@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,14 +27,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class Event extends Event_Base {
@@ -579,7 +580,7 @@ public abstract class Event extends Event_Base {
     }
 
     public List<AccountingEventPaymentCode> calculatePaymentCodes() {
-        return !hasAnyPaymentCodes() ? createPaymentCodes() : updatePaymentCodes();
+        return getAllPaymentCodes() != null ? createPaymentCodes() : updatePaymentCodes();
     }
 
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
@@ -1060,6 +1061,7 @@ public abstract class Event extends Event_Base {
         return (Person) getParty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEventTicket> getConsumedTicket() {
         return getConsumedTicketSet();
@@ -1070,6 +1072,7 @@ public abstract class Event extends Event_Base {
         return !getConsumedTicketSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Discount> getDiscounts() {
         return getDiscountsSet();
@@ -1080,6 +1083,7 @@ public abstract class Event extends Event_Base {
         return !getDiscountsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Exemption> getExemptions() {
         return getExemptionsSet();
@@ -1090,6 +1094,7 @@ public abstract class Event extends Event_Base {
         return !getExemptionsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.AccountingTransaction> getAccountingTransactions() {
         return getAccountingTransactionsSet();
@@ -1098,16 +1103,6 @@ public abstract class Event extends Event_Base {
     @Deprecated
     public boolean hasAnyAccountingTransactions() {
         return !getAccountingTransactionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode> getPaymentCodes() {
-        return getPaymentCodesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPaymentCodes() {
-        return !getPaymentCodesSet().isEmpty();
     }
 
     @Deprecated

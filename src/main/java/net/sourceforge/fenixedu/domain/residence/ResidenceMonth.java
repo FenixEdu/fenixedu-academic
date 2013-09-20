@@ -59,7 +59,7 @@ public class ResidenceMonth extends ResidenceMonth_Base {
         Set<ResidenceEvent> eventsWithCodes = new HashSet<ResidenceEvent>();
 
         for (ResidenceEvent event : getEvents()) {
-            if (event.getPaymentCodesSet().size() > 0 && !event.isCancelled()) {
+            if (event.getAllPaymentCodes().size() > 0 && !event.isCancelled()) {
                 eventsWithCodes.add(event);
             }
         }
@@ -70,7 +70,7 @@ public class ResidenceMonth extends ResidenceMonth_Base {
         Set<ResidenceEvent> eventsWithoutCodes = new HashSet<ResidenceEvent>();
 
         for (ResidenceEvent event : getEvents()) {
-            if (event.getPaymentCodesSet().size() == 0 && !event.isCancelled()) {
+            if (event.getAllPaymentCodes().size() == 0 && !event.isCancelled()) {
                 eventsWithoutCodes.add(event);
             }
         }
@@ -81,6 +81,7 @@ public class ResidenceMonth extends ResidenceMonth_Base {
         return getYear().isFor(year);
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ResidenceEvent> getEvents() {
         return getEventsSet();

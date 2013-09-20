@@ -25,7 +25,7 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
             @Override
             public void beforeAdd(AccountingEventPaymentCode accountingEventPaymentCode, Event event) {
                 if (event instanceof InsuranceEvent) {
-                    if (event.hasAnyPaymentCodes()) {
+                    if (event.getAllPaymentCodes() != null) {
                         throw new DomainException(
                                 "error.accounting.paymentCodes.AccountingEventPaymentCode.InsuranceEvent.already.has.payment.code.associated");
                     }
@@ -136,6 +136,7 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
     public boolean isAccountingEventPaymentCode() {
         return true;
     }
+
     @Deprecated
     public boolean hasAccountingEvent() {
         return getAccountingEvent() != null;
