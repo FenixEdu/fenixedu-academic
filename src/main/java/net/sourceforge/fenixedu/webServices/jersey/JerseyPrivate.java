@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -41,7 +43,6 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.photograph.PictureAvatar;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
@@ -49,8 +50,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.util.icalendar.CalendarFactory;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
+import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.format.DateTimeFormat;
@@ -576,22 +577,24 @@ public class JerseyPrivate {
     @GET
     @Path("person/evaluations")
     @Produces(JSON_UTF8)
-    public String evaluations() {
+    public String evaluations(@Context HttpServletResponse response, @Context HttpServletRequest request,
+            @Context ServletContext context) {
         JSONObject jsonResult = new JSONObject();
 
         Person person = getPerson();
 
-        ProcessEvaluation processEvaluation = new ProcessEvaluation();
-        processEvaluation.processEvaluations(person.getStudent());
-        jsonResult.put("periodClose",
-                processEvaluation(processEvaluation, processEvaluation.getEvaluationsWithEnrolmentPeriodClosed()));
-        jsonResult.put("periodOpen",
-                processEvaluation(processEvaluation, processEvaluation.getEvaluationsWithEnrolmentPeriodOpened()));
+        new JerseyFacesContext(context, request, response);
+        DisplayEvaluationsForStudentToEnrol manageEvaluationsForStudents = new DisplayEvaluationsForStudentToEnrol();
+
+        jsonResult.put("enrolled",
+                processEvaluation(manageEvaluationsForStudents, manageEvaluationsForStudents.getEnroledEvaluations()));
+        jsonResult.put("notEnrolled",
+                processEvaluation(manageEvaluationsForStudents, manageEvaluationsForStudents.getNotEnroledEvaluations()));
 
         return jsonResult.toString();
     }
 
-    private JSONArray processEvaluation(ProcessEvaluation processEvaluation, List<Evaluation> listEvaluation) {
+    private JSONArray processEvaluation(DisplayEvaluationsForStudentToEnrol processEvaluation, List<Evaluation> listEvaluation) {
         JSONArray evaluationList = new JSONArray();
 
         for (Evaluation eval : listEvaluation) {
@@ -614,7 +617,7 @@ public class JerseyPrivate {
             jsonEvaluationInfo.put("enrollmentBeginDay", dataFormatDay.format(evaluation.getEnrollmentBeginDay().getTime()));
             jsonEvaluationInfo.put("enrollmentEndDay", dataFormatDay.format(evaluation.getEnrollmentEndDay().getTime()));
 
-            jsonEvaluationInfo.put("isEnrolled", processEvaluation.isEnrolmentIn(evaluation));
+            //jsonEvaluationInfo.put("isEnrolled", processEvaluation.isEnrolmentIn(evaluation));
 
             Set<String> courses = new HashSet<String>();
 
@@ -643,7 +646,8 @@ public class JerseyPrivate {
     @PUT
     @Produces(JSON_UTF8)
     @Path("person/evaluations/{oid}")
-    public String evaluations(@PathParam("oid") String oid, @QueryParam("format") String enrol) {
+    public String evaluations(@PathParam("oid") String oid, @QueryParam("format") String enrol,
+            @Context HttpServletResponse response, @Context HttpServletRequest request, @Context ServletContext context) {
         JSONObject jsonResult = new JSONObject();
 
         try {
@@ -657,7 +661,7 @@ public class JerseyPrivate {
                             eval.getExternalId());
                 }
             }
-            return evaluations();
+            return evaluations(response, request, context);
 
         } catch (Exception e) {
             throw newApplicationError(Status.BAD_REQUEST, "problem found", "problem found");
