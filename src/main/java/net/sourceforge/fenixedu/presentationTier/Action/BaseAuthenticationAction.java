@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PendingRequest;
@@ -29,6 +30,7 @@ import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction;
@@ -74,6 +76,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
                 return handleSessionRestoreAndGetForward(request, form, userView, httpSession);
             } else if (hasMissingTeacherService(userView)) {
                 return handleSessionCreationAndForwardToTeachingService(request, userView, httpSession);
+            } else if (hasPendingTeachingReductionService(userView)) {
+                return handleSessionCreationAndForwardToPendingTeachingReductionService(request, userView, httpSession);
             } else if (hasMissingRAIDESInformation(userView)) {
                 return handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(request, userView, httpSession);
             } else if (isAlumniAndHasInquiriesToResponde(userView)) {
@@ -129,6 +133,25 @@ public abstract class BaseAuthenticationAction extends FenixAction {
                         userView.getPerson().getTeacher().getTeacherServiceByExecutionPeriod(executionSemester);
                 return (teacherService == null || teacherService.getTeacherServiceLock() == null)
                         && executionSemester.isInValidCreditsPeriod(RoleType.DEPARTMENT_MEMBER);
+            }
+        }
+        return false;
+    }
+
+    private boolean hasPendingTeachingReductionService(IUserView userView) {
+        if (userView.getPerson() != null && userView.getPerson().getTeacher() != null
+                && userView.getPerson().hasRole(RoleType.DEPARTMENT_MEMBER)) {
+            Department department = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
+            if (department != null && department.isCurrentUserCurrentDepartmentPresident()) {
+                ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+                if (executionSemester != null
+                        && executionSemester.isInValidCreditsPeriod(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
+                    for (ReductionService reductionService : department.getPendingReductionServices()) {
+                        if (reductionService.getTeacherService().getExecutionPeriod().equals(executionSemester)) {
+                            return true;
+                        }
+                    }
+                }
             }
         }
         return false;
@@ -279,6 +302,33 @@ public abstract class BaseAuthenticationAction extends FenixAction {
                         + "&executionYearOid="
                         + executionYearOid
                         + "&"
+                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+                        + "=/departamento/departamento&_request_checksum_="
+                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+                                .calculateChecksum(calculatedUrl),
+                true);
+    }
+
+    private ActionForward handleSessionCreationAndForwardToPendingTeachingReductionService(HttpServletRequest request,
+            IUserView userView, HttpSession session) {
+        createNewSession(request, session, userView);
+        final List<Content> contents = new ArrayList<Content>();
+        RootDomainObject.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "departamento/departamento");
+        final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
+        request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
+
+        String teacherOid = userView.getPerson().getTeacher().getExternalId();
+        String executionYearOid = ExecutionYear.readCurrentExecutionYear().getExternalId();
+
+        HtmlLink link = new HtmlLink();
+        link.setModule("/departmentMember");
+        link.setUrl("/creditsReductions.do?method=showReductionServices&"
+                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+                + "=/departamento/departamento");
+        link.setEscapeAmpersand(false);
+        String calculatedUrl = link.calculateUrl();
+        return new ActionForward(
+                "/departmentMember/creditsReductions.do?method=showReductionServices&"
                         + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
                         + "=/departamento/departamento&_request_checksum_="
                         + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter

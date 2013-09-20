@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.ApprovedTeacherEvaluationProcessMark;
@@ -53,6 +54,11 @@ public class ReductionService extends ReductionService_Base {
                     maxCreditsFromEvaluationAndAge.toString());
         }
         super.setCreditsReduction(creditsReduction);
+        Department lastWorkingDepartment =
+                getTeacherService().getTeacher().getLastWorkingDepartment(
+                        getTeacherService().getExecutionPeriod().getBeginDateYearMonthDay(),
+                        getTeacherService().getExecutionPeriod().getEndDateYearMonthDay());
+        setPendingApprovalFromDepartment(lastWorkingDepartment);
         log("label.teacher.schedule.reductionService.edit", getCreditsReduction());
     }
 
@@ -61,6 +67,7 @@ public class ReductionService extends ReductionService_Base {
         checkCredits(creditsReductionAttributed);
         super.setCreditsReductionAttributed(creditsReductionAttributed);
         setAttributionDate(new DateTime());
+        setPendingApprovalFromDepartment(null);
         log("label.teacher.schedule.reductionService.approve", getCreditsReductionAttributed());
     }
 
@@ -94,8 +101,9 @@ public class ReductionService extends ReductionService_Base {
         FacultyEvaluationProcessYear lastFacultyEvaluationProcessYear = null;
         for (final FacultyEvaluationProcessYear facultyEvaluationProcessYear : RootDomainObject.getInstance()
                 .getFacultyEvaluationProcessYearSet()) {
-            if (lastFacultyEvaluationProcessYear == null
-                    || facultyEvaluationProcessYear.getYear().compareTo(lastFacultyEvaluationProcessYear.getYear()) > 0) {
+            if (facultyEvaluationProcessYear.getApprovedTeacherEvaluationProcessMarkCount() != 0
+                    && (lastFacultyEvaluationProcessYear == null || facultyEvaluationProcessYear.getYear().compareTo(
+                            lastFacultyEvaluationProcessYear.getYear()) > 0)) {
                 lastFacultyEvaluationProcessYear = facultyEvaluationProcessYear;
             }
         }

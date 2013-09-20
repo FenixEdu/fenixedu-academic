@@ -20788,6 +20788,13 @@ relation PhotographSantanderPhotoEntry {
 	}
 }
 
+relation DepartmentReductionService {
+	Department playsRole pendingApprovalFromDepartment;
+	teacher.ReductionService playsRole pendingReductionServices {
+    	multiplicity *;
+	}
+}
+
 /**
  * Former Remote Plugin
  */
@@ -20816,3 +20823,4 @@ relation RemoteSystemDomainRoot {
     RemoteSystem playsRole remoteSystem;
     .pt.ist.fenixframework.DomainRoot playsRole domainRoot;
 }
+
