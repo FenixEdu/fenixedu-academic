@@ -33,6 +33,7 @@
 						<button class="btn btn-authorize"><bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.authorization.yes"/></button>
 					</fr:form>
 					<fr:form action="/oauth.do?method=userCancelation">
+						<input name="redirect_uri" value="<%= request.getParameter("redirect_uri") %>" type="hidden">
 						<button class="btn btn-default"><bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.authorization.no"/></button>
 					</fr:form>
 				</div>

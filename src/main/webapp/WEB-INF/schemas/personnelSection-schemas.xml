@@ -164,15 +164,14 @@
 	<slot name="siteUrl" key="oauthapps.label.app.site.url" />
 </schema>
 
-<schema name="oauthapps.view.app.details" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
-	<slot name="this" key="oauthapps.label.app.logo" layout="view-as-image">
+
+<schema name="oauthapps.view.app.basic.details" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
+<slot name="this" key="oauthapps.label.app.logo" layout="view-as-image">
 			<property name="useParent" value="false"/>
 			<property name="moduleRelative" value="true"/>
 			<property name="contextRelative" value="false"/>
 			<property name="imageFormat" value="/externalApps.do?method=appLogo&amp;appOid=${externalId}"/>
 	</slot>
-	<slot name="externalId" key="oauthapps.label.app.client.id" />
-	<slot name="secret" key="oauthapps.label.app.client.secret" />
 	<slot name="name" key="oauthapps.label.app.name" />
 	<slot name="description" layout="longText" key="oauthapps.label.app.description"/>
 	<slot name="scopes" layout="flowLayout">
@@ -181,11 +180,19 @@
 		<property name="htmlSeparator" value=", "></property>
 	</slot>
 	<slot name="siteUrl" key="oauthapps.label.app.site.url" />
+	
+</schema>
+
+<schema name="oauthapps.view.app.extended.details" extends="oauthapps.view.app.basic.details" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
+	<slot name="externalId" key="oauthapps.label.app.client.id" />
+	<slot name="secret" key="oauthapps.label.app.client.secret" />
 	<slot name="redirectUrl" key="oauthapps.label.app.redirect.url" />
 </schema>
 
 <schema name="oauthapps.view.authorizations" type="net.sourceforge.fenixedu.domain.AppUserSession" bundle="APPLICATION_RESOURCES">
-	<slot name="creationDate" key="oauthapps.label.app.creation.date" />
+	<slot name="creationDate" key="oauthapps.label.app.creation.date" >
+		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}:${secondOfMinute,02d}"/>
+	</slot>
 	<slot name="deviceId" key="oauthapps.label.app.device.id" />
 	<slot name="accessToken" key="oauthapps.label.access.token" />
 </schema>

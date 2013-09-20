@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu._development.OAuthProperties;
+
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
@@ -18,10 +20,15 @@ public class AppUserSession extends AppUserSession_Base {
     }
 
     public boolean matchesCode(String code) {
-        if (StringUtils.isBlank(getCode()) || StringUtils.isBlank(code)) {
+        if (StringUtils.isBlank(code) || StringUtils.isBlank(getCode())) {
             return false;
         }
-        return getCode().equals(code) && getCreationDate().plusMinutes(1).isAfterNow();
+        return code.equals(getCode());
+    }
+
+    public boolean isCodeValid() {
+        return !StringUtils.isBlank(getCode())
+                && getCreationDate().plusSeconds(OAuthProperties.getCodeExpirationSeconds()).isAfterNow();
     }
 
     public boolean matchesAccessToken(String accessToken) {
@@ -32,7 +39,11 @@ public class AppUserSession extends AppUserSession_Base {
     }
 
     public boolean isAccessTokenValid() {
-        return getCreationDate().plusMinutes(60).isAfterNow();
+        return getCreationDate().plusSeconds(OAuthProperties.getAccessTokenExpirationSeconds()).isAfterNow();
+    }
+
+    public boolean isRefreshTokenValid() {
+        return !StringUtils.isBlank(getRefreshToken());
     }
 
     public boolean matchesRefreshToken(String refreshToken) {

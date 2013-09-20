@@ -16,7 +16,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -103,14 +102,6 @@ public class JerseyPrivate {
             return StringUtils.EMPTY;
         }
         return mls.getContent();
-    }
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("hello")
-    @FenixAPIScope(PERSONAL_SCOPE)
-    public String hellofenix() {
-        return "Hello! Private V1";
     }
 
     @GET

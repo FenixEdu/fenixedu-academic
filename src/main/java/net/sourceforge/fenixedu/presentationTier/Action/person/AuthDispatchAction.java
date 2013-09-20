@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyOAuth2;
 
 import org.apache.commons.codec.binary.Base64;
@@ -53,14 +52,13 @@ public class AuthDispatchAction extends FenixDispatchAction {
         IUserView user = UserView.getUser();
         return user.getPerson().getUser();
     }
-    
-    
+
     private void addAllowIstIds(HttpServletRequest request) {
         if (getUser().getPerson().hasRole(RoleType.MANAGER)) {
             request.setAttribute("allowIstIds", JerseyOAuth2.allowIstIds());
         }
     }
-    
+
     /** This will list the applications which you grant access */
     public ActionForward allowIstIds(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -154,11 +152,15 @@ public class AuthDispatchAction extends FenixDispatchAction {
 
         final ExternalApplication app = getDomainObject(request, "appOid");
 
-        Set<AppUserSession> authSessions =
+//        final Set<AppUserSession> appUserSessionSet = new HashSet<AppUserSession>(p.getUser().getAppUserSessionSet());
+        final Set<AppUserSession> authSessions =
                 FluentIterable.from(p.getUser().getAppUserSessionSet()).filter(new Predicate<AppUserSession>() {
 
                     @Override
                     public boolean apply(AppUserSession appUserSession) {
+//                        if (!appUserSession.isCodeValid()) {
+//                            appUserSession.delete();
+//                        }
                         return appUserSession.getApplication().equals(app);
                     }
 

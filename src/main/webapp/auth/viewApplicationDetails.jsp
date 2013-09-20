@@ -23,7 +23,7 @@
 
 
 <logic:notEmpty name="application">
-		<fr:view name="application" schema="oauthapps.view.app.details">
+		<fr:view name="application" schema="oauthapps.view.app.extended.details">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thcenter thcenter"/>
 			</fr:layout>

@@ -83,4 +83,13 @@ public class ExternalApplication extends ExternalApplication_Base {
         deleteDomainObject();
     }
 
+    public boolean hasUserPermission(User user) {
+        for (AppUserSession session : getAppUserSession()) {
+            if (session.getUser().equals(user)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

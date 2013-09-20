@@ -21,7 +21,7 @@
 
 <h2></h2>
 
-<fr:view name="application" layout="tabular" schema="oauthapps.view.app.details" type="net.sourceforge.fenixedu.domain.ExternalApplication">
+<fr:view name="application" layout="tabular" schema="oauthapps.view.app.basic.details" type="net.sourceforge.fenixedu.domain.ExternalApplication">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight thright"/>
 	</fr:layout>

@@ -20785,6 +20785,7 @@ class AuthScope  {
         String name (REQUIRED);
         String endpoints (REQUIRED);
 }
+
     
 class AppUserSession {
 	DateTime creationDate;
