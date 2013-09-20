@@ -20,11 +20,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "identificationCardManager", path = "/manageSantander", scope = "session", parameter = "method")
@@ -92,6 +92,32 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
             response.flushBuffer();
         } catch (Exception e) {
             addErrorMessage(request, "errors", "error.generatingTUIFailed " + e.getMessage());
+            santanderBean = new ManageSantanderCardGenerationBean(executionYear);
+            refreshBeanState(santanderBean);
+            request.setAttribute("santanderBean", santanderBean);
+            return mapping.findForward("entryPoint");
+        }
+
+        return null;
+    }
+
+    public ActionForward downloadDDXR(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) throws Exception {
+        SantanderBatch santanderBatch = FenixFramework.getDomainObject(request.getParameter("santanderBatchEid"));
+        ExecutionYear executionYear = FenixFramework.getDomainObject(request.getParameter("executionYearEid"));
+        ManageSantanderCardGenerationBean santanderBean;
+
+        try {
+            response.setContentType("application/zip");
+            response.setHeader("Content-disposition",
+                    "attachment; filename=SantanderTecnico_DDXR&Photos_" + (new DateTime()).toString("yyyyMMddHHmm") + ".zip");
+            final ServletOutputStream writer = response.getOutputStream();
+            final byte[] zipFile = santanderBatch.getPhotosAndDDXR();
+            writer.write(zipFile);
+            writer.flush();
+            response.flushBuffer();
+        } catch (Exception e) {
+            addErrorMessage(request, "errors", "error.generatingDDXR&PhotosFailed " + e.getMessage());
             santanderBean = new ManageSantanderCardGenerationBean(executionYear);
             refreshBeanState(santanderBean);
             request.setAttribute("santanderBean", santanderBean);

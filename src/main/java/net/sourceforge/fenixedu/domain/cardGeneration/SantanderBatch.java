@@ -290,6 +290,18 @@ public class SantanderBatch extends SantanderBatch_Base {
                 batch2k.clear();
             }
         }
+        if (batch2k.size() > 0) {
+            batchCnt++;
+            zipFile.putNextEntry(new ZipEntry(today.toString("yyyy-MM-dd") + "_E" + makeZeroPaddedNumber(batchCnt, 4) + ".xml"));
+            zipFile.write(generateDDXR(batch2k, batchCnt, today));
+            zipFile.closeEntry();
+
+            zipFile.putNextEntry(new ZipEntry(today.toString("yyyy-MM-dd") + "_E" + makeZeroPaddedNumber(batchCnt, 4) + ".zip"));
+            zipFile.write(generatePhotoZip(batch2k, batchCnt, today));
+            zipFile.closeEntry();
+
+            batch2k.clear();
+        }
         zipFile.close();
         return file.toByteArray();
     }

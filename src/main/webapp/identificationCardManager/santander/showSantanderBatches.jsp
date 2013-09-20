@@ -95,6 +95,18 @@ a {border-bottom: none !important;}
 					   				<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.santanderBatch.download"/>
 					   			</button>
 				   		<%	} %>
+				   		<%	if (santanderBatch.getSent() != null) { %>
+				   				<bean:define id="urlDDXR" type="java.lang.String">/manageSantander.do?method=downloadDDXR&amp;executionYearEid=<bean:write name="santanderBean" property="executionYear.externalId"/>&amp;santanderBatchEid=<bean:write name="batch" property="externalId"/></bean:define>
+								<html:link page="<%= urlDDXR %>">
+									<button type="button">
+										<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.santanderBatch.ddxr"/>
+									</button>
+								</html:link>
+				   		<%	} else { %>
+				   				<button type="button" disabled="disabled" >
+					   				<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.santanderBatch.ddxr"/>
+					   			</button>
+				   		<%	} %>
 				   		<%	if (santanderBatch.getGenerated() != null && santanderBatch.getSent() == null && santanderBatch.getSantanderProblemsCount() == 0) { %>
 								<bean:define id="urlSend" type="java.lang.String">/manageSantander.do?method=sendBatch&amp;executionYearEid=<bean:write name="santanderBean" property="executionYear.externalId"/>&amp;santanderBatchEid=<bean:write name="batch" property="externalId"/></bean:define>
 								<html:link page="<%= urlSend %>">
