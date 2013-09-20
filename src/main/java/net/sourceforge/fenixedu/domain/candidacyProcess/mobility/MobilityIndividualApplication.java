@@ -234,10 +234,9 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         setRegistration(registration);
 
         createRaidesInformation(registration);
-        ExecutionYear candidacyExecutionYear = ExecutionYear.readByDateTime(getCandidacyProcess().getWhenCreated());
-        PersonalIngressionData pid = getStudent().getPersonalIngressionDataByExecutionYear(candidacyExecutionYear);
+        PersonalIngressionData pid = getStudent().getPersonalIngressionDataByExecutionYear(registration.getStartExecutionYear());
         pid.setCountryOfResidence(getPersonalDetails().getCountryOfResidence());
-        PrecedentDegreeInformation pdi = registration.getPrecedentDegreeInformation(candidacyExecutionYear);
+        PrecedentDegreeInformation pdi = registration.getPrecedentDegreeInformation(registration.getStartExecutionYear());
         pdi.setSchoolLevel(getMobilityStudentData().getSchoolLevel());
         pdi.setOtherSchoolLevel(getMobilityStudentData().getOtherSchoolLevel());
 
@@ -312,6 +311,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         return selectedOpening.getMobilityAgreement().getMobilityProgram();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile> getApprovedLearningAgreements() {
         return getApprovedLearningAgreementsSet();
@@ -322,6 +322,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         return !getApprovedLearningAgreementsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getCurricularCourses() {
         return getCurricularCoursesSet();
