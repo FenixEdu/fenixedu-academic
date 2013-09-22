@@ -83,15 +83,7 @@ public class OAuthAction extends FenixDispatchAction {
     }
 
     private ExternalApplication getExternalApplication(String clientId) throws OAuthNotFoundException {
-        try {
-            Long.parseLong(clientId);
-            ExternalApplication externalApp = AbstractDomainObject.fromExternalId(clientId);
-            // dirty check due to fenix-framework limitations
-            externalApp.getName();
-            return externalApp;
-        } catch (Exception nfe) {
-            throw new OAuthNotFoundException();
-        }
+       return OAuthUtils.getDomainObject(clientId, ExternalApplication.class);
     }
 
     private String getDeviceId(HttpServletRequest request) {

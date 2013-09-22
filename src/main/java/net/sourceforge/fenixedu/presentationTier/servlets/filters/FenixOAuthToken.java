@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
 import net.sourceforge.fenixedu.domain.AppUserSession;
+import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
@@ -55,15 +56,6 @@ public class FenixOAuthToken {
             throw new FenixOAuthTokenException();
         }
 
-        try {
-            // Dirty check to see if appUserSession still exists due fenix-framework limitations.
-            // When using fromExternalId fenix-framework creates a shallow objects with that id.
-            // On following requests to object's methods it will throw a VersionNotAvailableException if the object was deleted.
-            appUserSession.getApplication();
-        } catch (VersionNotAvailableException vnae) {
-            throw new FenixOAuthTokenException();
-        }
-
         return new FenixOAuthToken(appUserSession, accessToken);
     }
 
@@ -72,16 +64,8 @@ public class FenixOAuthToken {
         return Base64.encodeBase64String(token.getBytes());
     }
 
-    private static AppUserSession appUserSession(String appUserSession) {
-        try {
-            DomainObject domainObject = AbstractDomainObject.fromExternalId(appUserSession);
-            if (domainObject == null || !(domainObject instanceof AppUserSession)) {
-                return null;
-            }
-            return (AppUserSession) domainObject;
-        } catch (NumberFormatException nfe) {
-            return null;
-        }
+    private static AppUserSession appUserSession(String appUserSessionId) {
+        return OAuthUtils.getDomainObject(appUserSessionId, AppUserSession.class);
     }
 
     public AppUserSession getAppUserSession() {
