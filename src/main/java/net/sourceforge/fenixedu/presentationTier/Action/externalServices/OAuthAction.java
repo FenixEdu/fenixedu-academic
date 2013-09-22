@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.OAuthProperties;
+import net.sourceforge.fenixedu.domain.AppUserAuthorization;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken;
@@ -65,7 +67,7 @@ public class OAuthAction extends FenixDispatchAction {
                 ExternalApplication clientApplication = getExternalApplication(clientId);
                 if (clientApplication.matchesUrl(redirectUrl)) {
 
-                    if (!clientApplication.hasUserPermission(person.getUser())) {
+                    if (!clientApplication.hasAppUserAuthorization(person.getUser())) {
                         request.setAttribute("application", clientApplication);
                         return mapping.findForward("showAuthorizationPage");
                     } else {
@@ -145,12 +147,16 @@ public class OAuthAction extends FenixDispatchAction {
 
     @Service
     private String createAppUserSession(ExternalApplication application, HttpServletRequest request, HttpServletResponse response) {
+        User user = getLoggedPerson(request).getUser();
         String code = generateCode(response);
+        AppUserAuthorization appUserAuthorization = application.getAppUserAuthorization(user);
+        if (appUserAuthorization == null) {
+            appUserAuthorization = new AppUserAuthorization(user, application);
+        }
         AppUserSession appUserSession = new AppUserSession();
-        appUserSession.setApplication(application);
         appUserSession.setCode(code);
-        appUserSession.setUser(getLoggedPerson(request).getUser());
         appUserSession.setDeviceId(getDeviceId(request));
+        appUserSession.setAppUserAuthorization(appUserAuthorization);
         return code;
     }
 

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.AppUserAuthorization;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
@@ -78,10 +79,10 @@ public class AuthDispatchAction extends FenixDispatchAction {
         User user = getUser();
 
         ImmutableSet<ExternalApplication> authApps =
-                FluentIterable.from(user.getAppUserSessionSet()).transform(new Function<AppUserSession, ExternalApplication>() {
+                FluentIterable.from(user.getAppUserAuthorizationSet()).transform(new Function<AppUserAuthorization, ExternalApplication>() {
 
                     @Override
-                    public ExternalApplication apply(AppUserSession appUserSession) {
+                    public ExternalApplication apply(AppUserAuthorization appUserSession) {
                         return appUserSession.getApplication();
                     }
                 }).toSet();
@@ -126,12 +127,9 @@ public class AuthDispatchAction extends FenixDispatchAction {
 
     @Service
     private void revokeAllAuthorizations(User user, ExternalApplication application) {
-        Set<AppUserSession> sessions = new HashSet<AppUserSession>(user.getAppUserSessionSet());
-
-        for (AppUserSession session : sessions) {
-            if (session.getApplication().equals(application)) {
-                session.delete();
-            }
+        AppUserAuthorization appUserAuthorization = application.getAppUserAuthorization(user);
+        if (appUserAuthorization != null) {
+            appUserAuthorization.delete();
         }
     }
 
@@ -151,22 +149,15 @@ public class AuthDispatchAction extends FenixDispatchAction {
         Person p = getUser().getPerson();
 
         final ExternalApplication app = getDomainObject(request, "appOid");
-
-//        final Set<AppUserSession> appUserSessionSet = new HashSet<AppUserSession>(p.getUser().getAppUserSessionSet());
-        final Set<AppUserSession> authSessions =
-                FluentIterable.from(p.getUser().getAppUserSessionSet()).filter(new Predicate<AppUserSession>() {
-
-                    @Override
-                    public boolean apply(AppUserSession appUserSession) {
-//                        if (!appUserSession.isCodeValid()) {
-//                            appUserSession.delete();
-//                        }
-                        return appUserSession.getApplication().equals(app);
-                    }
-
-                }).toSet();
-
-        if (authSessions.isEmpty()) {
+        AppUserAuthorization appUserAuthorization = app.getAppUserAuthorization(getUser());
+        
+        Set<AppUserSession> authSessions = null;
+        
+        if (appUserAuthorization != null) {
+            authSessions = appUserAuthorization.getSessionSet();
+        }
+        
+        if (authSessions == null) {
             return redirect("/externalApps.do?method=manageAuthorizations", request, true);
         } else {
             request.setAttribute("logo", Base64.encodeBase64String(app.getLogo()));
@@ -180,7 +171,7 @@ public class AuthDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         AppUserSession appUserSession = getDomainObject(request, "authorizationOid");
-        String appExternalId = appUserSession.getApplication().getExternalId();
+        String appExternalId = appUserSession.getAppUserAuthorization().getApplication().getExternalId();
 
         appUserSession.delete();
 

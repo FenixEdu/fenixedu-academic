@@ -20794,7 +20794,11 @@ class AppUserSession {
 	String refreshToken;
 	DateTime expirationDate;
 	String deviceId;
-}    
+}
+
+
+class AppUserAuthorization {
+}
      
 relation RootDomainObjectApps {
     RootDomainObject playsRole rootDomainObject;  
@@ -20828,8 +20832,8 @@ relation PermissionsScope {
 	}
 }
 
-relation AppUserSessionApplication {
-	AppUserSession playsRole appUserSession {
+relation AppUserAuthorization {
+	AppUserAuthorization playsRole appUserAuthorization {
 		multiplicity *;
 	}
 	ExternalApplication playsRole application {
@@ -20837,11 +20841,21 @@ relation AppUserSessionApplication {
 	}
 }
 
-relation UserAppUserSession {
-	AppUserSession playsRole appUserSession {
+relation UserAppAuthorization {
+	AppUserAuthorization playsRole appUserAuthorization {
 		multiplicity *;
 	}
 	User playsRole user {
 		multiplicity 1;
 	}
-} 
+}
+
+relation AppUserAuthorizationSession {
+	AppUserAuthorization playsRole appUserAuthorization {
+		multiplicity 1..1;
+	}
+	AppUserSession playsRole session {
+		multiplicity *;
+	}
+}
+

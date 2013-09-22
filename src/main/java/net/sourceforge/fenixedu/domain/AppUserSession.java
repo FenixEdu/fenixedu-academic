@@ -54,7 +54,7 @@ public class AppUserSession extends AppUserSession_Base {
     }
 
     public String getUsername() {
-        return getUser().getPerson().getUsername();
+        return getAppUserAuthorization().getUser().getPerson().getUsername();
     }
 
     @Service
@@ -74,8 +74,7 @@ public class AppUserSession extends AppUserSession_Base {
 
     @Service
     public void delete() {
-        setUser(null);
-        setApplication(null);
+        setAppUserAuthorization(null);
         deleteDomainObject();
     }
 

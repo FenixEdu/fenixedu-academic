@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +13,9 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.services.Service;
+
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 
 public class ExternalApplication extends ExternalApplication_Base {
 
@@ -35,11 +39,11 @@ public class ExternalApplication extends ExternalApplication_Base {
     }
 
     public AppUserSession getAppUserSession(String code) {
-        for (AppUserSession appUserSession : getAppUserSessionSet()) {
-            if (appUserSession.matchesCode(code)) {
-                return appUserSession;
+            for (AppUserSession appUserSession : getAppUserSessionSet()) {
+                if (appUserSession.matchesCode(code)) {
+                    return appUserSession;
+                }
             }
-        }
         return null;
     }
 
@@ -48,6 +52,17 @@ public class ExternalApplication extends ExternalApplication_Base {
         for (AppUserSession appUserSession : sessions) {
             appUserSession.invalidate();
         }
+    }
+
+    private Set<AppUserSession> getAppUserSessionSet() {
+        return FluentIterable.from(getAppUserAuthorizationSet()).transformAndConcat(new Function<AppUserAuthorization, Iterable<AppUserSession>>() {
+
+            @Override
+            public Iterable<AppUserSession> apply(AppUserAuthorization auth) {
+                return auth.getSessionSet();
+            }
+            
+        }).toSet();
     }
 
     public InputStream getLogoStream() {
@@ -76,20 +91,25 @@ public class ExternalApplication extends ExternalApplication_Base {
         setRootDomainObject(null);
         setAuthor(null);
         getScopes().clear();
-        Set<AppUserSession> sessions = new HashSet<AppUserSession>(getAppUserSessionSet());
-        for (AppUserSession session : sessions) {
-            session.delete();
+        Set<AppUserAuthorization> auths = new HashSet<AppUserAuthorization>(getAppUserAuthorizationSet());
+        for (AppUserAuthorization authorization : auths) {
+            authorization.delete();
         }
         deleteDomainObject();
     }
 
-    public boolean hasUserPermission(User user) {
-        for (AppUserSession session : getAppUserSession()) {
-            if (session.getUser().equals(user)) {
-                return true;
+    public AppUserAuthorization getAppUserAuthorization(User user) {
+        for (AppUserAuthorization authorization : getAppUserAuthorization()) {
+            if (authorization.getUser().equals(user)) {
+                return authorization;
             }
         }
-        return false;
+        return null;
+    }
+
+
+    public boolean hasAppUserAuthorization(User user) {
+        return getAppUserAuthorization(user) != null;
     }
 
 }
