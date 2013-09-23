@@ -133,30 +133,32 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     }
 
     private void distributeTutorshipIntentions(List<DegreeCandidateDTO> degreeCandidateDTOs) {
-        HashMap<ExecutionDegree, Integer> studentsPerExecution = new HashMap<ExecutionDegree, Integer>();
-        for (final DegreeCandidateDTO degreeCandidateDTO : degreeCandidateDTOs) {
-            final ExecutionDegree executionDegree =
-                    degreeCandidateDTO.getExecutionDegree(getExecutionYear(), getDgesStudentImportationForCampus());
-            Integer numberOfStudents = studentsPerExecution.get(executionDegree);
-            if (numberOfStudents != null) {
-                numberOfStudents++;
-            } else {
-                numberOfStudents = 1;
+        if (getEntryPhase().equals(EntryPhase.FIRST_PHASE)) {
+            HashMap<ExecutionDegree, Integer> studentsPerExecution = new HashMap<ExecutionDegree, Integer>();
+            for (final DegreeCandidateDTO degreeCandidateDTO : degreeCandidateDTOs) {
+                final ExecutionDegree executionDegree =
+                        degreeCandidateDTO.getExecutionDegree(getExecutionYear(), getDgesStudentImportationForCampus());
+                Integer numberOfStudents = studentsPerExecution.get(executionDegree);
+                if (numberOfStudents != null) {
+                    numberOfStudents++;
+                } else {
+                    numberOfStudents = 1;
+                }
+                studentsPerExecution.put(executionDegree, numberOfStudents);
             }
-            studentsPerExecution.put(executionDegree, numberOfStudents);
-        }
 
-        for (ExecutionDegree executionDegree : studentsPerExecution.keySet()) {
-            int numberOfStudents = studentsPerExecution.get(executionDegree);
-            int numberOfTutors = executionDegree.getTutorshipIntentions().size();
-            if (numberOfTutors > 0) {
-                int exceedingStudents = numberOfStudents % numberOfTutors;
-                int studentPerTutor = numberOfStudents / numberOfTutors;
-                for (TutorshipIntention tutorshipIntention : executionDegree.getTutorshipIntentions()) {
-                    tutorshipIntention.setMaxStudentsToTutor(studentPerTutor);
-                    if (exceedingStudents > 0) {
-                        tutorshipIntention.setMaxStudentsToTutor(tutorshipIntention.getMaxStudentsToTutor() + 1);
-                        exceedingStudents--;
+            for (ExecutionDegree executionDegree : studentsPerExecution.keySet()) {
+                int numberOfStudents = studentsPerExecution.get(executionDegree);
+                int numberOfTutors = executionDegree.getTutorshipIntentions().size();
+                if (numberOfTutors > 0) {
+                    int exceedingStudents = numberOfStudents % numberOfTutors;
+                    int studentPerTutor = numberOfStudents / numberOfTutors;
+                    for (TutorshipIntention tutorshipIntention : executionDegree.getTutorshipIntentions()) {
+                        tutorshipIntention.setMaxStudentsToTutor(studentPerTutor);
+                        if (exceedingStudents > 0) {
+                            tutorshipIntention.setMaxStudentsToTutor(tutorshipIntention.getMaxStudentsToTutor() + 1);
+                            exceedingStudents--;
+                        }
                     }
                 }
             }
@@ -474,6 +476,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
                 student);
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getStudentCandidacy() {
         return getStudentCandidacySet();
