@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,11 +38,11 @@ public class ExternalApplication extends ExternalApplication_Base {
     }
 
     public AppUserSession getAppUserSession(String code) {
-            for (AppUserSession appUserSession : getAppUserSessionSet()) {
-                if (appUserSession.matchesCode(code)) {
-                    return appUserSession;
-                }
+        for (AppUserSession appUserSession : getAppUserSessionSet()) {
+            if (appUserSession.matchesCode(code)) {
+                return appUserSession;
             }
+        }
         return null;
     }
 
@@ -55,14 +54,15 @@ public class ExternalApplication extends ExternalApplication_Base {
     }
 
     private Set<AppUserSession> getAppUserSessionSet() {
-        return FluentIterable.from(getAppUserAuthorizationSet()).transformAndConcat(new Function<AppUserAuthorization, Iterable<AppUserSession>>() {
+        return FluentIterable.from(getAppUserAuthorizationSet())
+                .transformAndConcat(new Function<AppUserAuthorization, Iterable<AppUserSession>>() {
 
-            @Override
-            public Iterable<AppUserSession> apply(AppUserAuthorization auth) {
-                return auth.getSessionSet();
-            }
-            
-        }).toSet();
+                    @Override
+                    public Iterable<AppUserSession> apply(AppUserAuthorization auth) {
+                        return auth.getSessionSet();
+                    }
+
+                }).toSet();
     }
 
     public InputStream getLogoStream() {
@@ -106,7 +106,6 @@ public class ExternalApplication extends ExternalApplication_Base {
         }
         return null;
     }
-
 
     public boolean hasAppUserAuthorization(User user) {
         return getAppUserAuthorization(user) != null;

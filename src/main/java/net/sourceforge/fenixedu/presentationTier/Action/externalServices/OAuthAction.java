@@ -1,7 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
+import static net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils.getOAuthProblemResponse;
+import static net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils.getOAuthResponse;
+import static net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils.sendOAuthResponse;
+import static org.apache.amber.oauth2.common.error.OAuthError.TokenResponse.INVALID_GRANT;
+import static org.apache.commons.httpclient.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.commons.httpclient.HttpStatus.SC_UNAUTHORIZED;
+
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +33,6 @@ import org.apache.amber.oauth2.common.error.OAuthError;
 import org.apache.amber.oauth2.common.exception.OAuthProblemException;
 import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
-import org.apache.commons.httpclient.HttpStatus;
 import org.apache.http.HttpHeaders;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -38,7 +43,6 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "external", path = "/oauth", scope = "request", parameter = "method")
 @Forwards({ @Forward(name = "showAuthorizationPage", path = "showAuthorizationPage"),
@@ -47,46 +51,7 @@ public class OAuthAction extends FenixDispatchAction {
 
     private final static OAuthIssuer OAUTH_ISSUER = new OAuthIssuerImpl(new MD5Generator());
 
-    private static class OAuthNotFoundException extends Exception {
-
-    }
-
-    // http://localhost:8080/ciapl/external/oauth.do?method=getUserPermission&client_id=123123&redirect_uri=http://www.google.com
-    public ActionForward getUserPermission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        Person person = getLoggedPerson(request);
-        if (person == null) {
-            RequestUtils.sendLoginRedirect(request, response);
-            return null;
-        } else {
-            String clientId = request.getParameter("client_id");
-            String redirectUrl = request.getParameter("redirect_uri");
-
-            try {
-                ExternalApplication clientApplication = getExternalApplication(clientId);
-                if (clientApplication.matchesUrl(redirectUrl)) {
-
-                    if (!clientApplication.hasAppUserAuthorization(person.getUser())) {
-                        request.setAttribute("application", clientApplication);
-                        return mapping.findForward("showAuthorizationPage");
-                    } else {
-                        return redirectWithCode(request, response, clientApplication);
-                    }
-                }
-                throw new OAuthNotFoundException();
-            } catch (OAuthNotFoundException onfe) {
-                return mapping.findForward("oauthErrorPage");
-            }
-        }
-
-    }
-
-    private ExternalApplication getExternalApplication(String clientId) throws OAuthNotFoundException {
-       return OAuthUtils.getDomainObject(clientId, ExternalApplication.class);
-    }
-
-    private String getDeviceId(HttpServletRequest request) {
+    private static String getDeviceId(HttpServletRequest request) {
         String deviceId = request.getParameter("device_id");
         if (StringUtils.isBlank(deviceId)) {
             UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
@@ -99,9 +64,47 @@ public class OAuthAction extends FenixDispatchAction {
         return deviceId;
     }
 
+    private static ExternalApplication getExternalApplication(String clientId) {
+        return OAuthUtils.getDomainObject(clientId, ExternalApplication.class);
+    }
+
+    /** ACTIONS **/
+    // http://localhost:8080/ciapl/external/oauth.do?method=getUserPermission&client_id=123123&redirect_uri=http://www.google.com
+
+    public ActionForward getUserPermission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        Person person = getLoggedPerson(request);
+        if (person == null) {
+            RequestUtils.sendLoginRedirect(request, response);
+            return null;
+        } else {
+            String clientId = request.getParameter("client_id");
+            String redirectUrl = request.getParameter("redirect_uri");
+
+            ExternalApplication clientApplication = getExternalApplication(clientId);
+            if (clientApplication == null) {
+                return mapping.findForward("oauthErrorPage");
+            }
+
+            if (clientApplication.matchesUrl(redirectUrl)) {
+
+                if (!clientApplication.hasAppUserAuthorization(person.getUser())) {
+                    request.setAttribute("application", clientApplication);
+                    return mapping.findForward("showAuthorizationPage");
+                } else {
+                    return redirectWithCode(request, response, clientApplication);
+                }
+            }
+
+            return mapping.findForward("oauthErrorPage");
+        }
+
+    }
+
     // http://localhost:8080/ciapl/external/oauth.do?method=userConfirmation&...
     public ActionForward userConfirmation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws OAuthNotFoundException {
+            HttpServletResponse response) {
 
         Person person = getLoggedPerson(request);
         if (person == null) {
@@ -123,8 +126,7 @@ public class OAuthAction extends FenixDispatchAction {
     private ActionForward redirectWithCode(HttpServletRequest request, HttpServletResponse response,
             ExternalApplication clientApplication) {
         try {
-            final String code = createAppUserSession(clientApplication, request, response);
-
+            final String code = createAppUserSession(clientApplication, getLoggedPerson(request).getUser(), request, response);
             OAuthResponse resp =
                     OAuthASResponse.authorizationResponse(request, HttpServletResponse.SC_FOUND)
                             .location(clientApplication.getRedirectUrl()).setCode(code).buildQueryMessage();
@@ -138,8 +140,8 @@ public class OAuthAction extends FenixDispatchAction {
     }
 
     @Service
-    private String createAppUserSession(ExternalApplication application, HttpServletRequest request, HttpServletResponse response) {
-        User user = getLoggedPerson(request).getUser();
+    private static String createAppUserSession(ExternalApplication application, User user, HttpServletRequest request,
+            HttpServletResponse response) {
         String code = generateCode(response);
         AppUserAuthorization appUserAuthorization = application.getAppUserAuthorization(user);
         if (appUserAuthorization == null) {
@@ -152,7 +154,7 @@ public class OAuthAction extends FenixDispatchAction {
         return code;
     }
 
-    private String generateCode(HttpServletResponse response) {
+    private static String generateCode(HttpServletResponse response) {
         try {
             return OAUTH_ISSUER.authorizationCode();
         } catch (OAuthSystemException e) {
@@ -161,7 +163,7 @@ public class OAuthAction extends FenixDispatchAction {
         }
     }
 
-    public void userCancelation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward userCancelation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
         /*
@@ -174,7 +176,7 @@ public class OAuthAction extends FenixDispatchAction {
          */
 
         String redirectUrl = request.getParameter("redirect_uri");
-        redirectToError(response, HttpStatus.SC_UNAUTHORIZED, redirectUrl, "access_denied", "User didn't allow the application");
+        return redirectToError(response, SC_UNAUTHORIZED, redirectUrl, "access_denied", "User didn't allow the application");
     }
 
     private ActionForward redirectToError(HttpServletResponse response, int status, String redirectUrl, String errorMessage,
@@ -190,7 +192,7 @@ public class OAuthAction extends FenixDispatchAction {
         return null;
     }
 
-    private ActionForward serverError(HttpServletResponse response, Exception e) {
+    private static ActionForward serverError(HttpServletResponse response, Exception e) {
         try {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong. Please contact support team.");
         } catch (IOException e1) {
@@ -204,68 +206,15 @@ public class OAuthAction extends FenixDispatchAction {
         return new FenixOAuthToken(appUserSession, random).format();
     }
 
-    // http://localhost:8080/ciapl/external/oauth.do?method=getTokens&...
-    public ActionForward getTokens(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        OAuthTokenRequest oauthRequest = new OAuthTokenRequest(request);
-
-        String clientId = oauthRequest.getClientId();
-        String clientSecret = oauthRequest.getClientSecret();
-        String redirectUrl = oauthRequest.getRedirectURI();
-        String authzCode = oauthRequest.getCode();
-
-        ExternalApplication externalApplication = getExternalApplication(clientId);
-
-        if (!externalApplication.matches(redirectUrl, clientSecret)) {
-            OAuthProblemException ex =
-                    OAuthProblemException
-                            .error(OAuthError.TokenResponse.INVALID_GRANT, "Credentials or redirect_uri don't match");
-            OAuthResponse r = OAuthASResponse.errorResponse(HttpStatus.SC_BAD_REQUEST).error(ex).buildJSONMessage();
-            return sendOAuthResponse(response, r);
-        }
-
-        AppUserSession appUserSession = externalApplication.getAppUserSession(authzCode);
-
-        if (appUserSession == null) {
-            OAuthProblemException ex = OAuthProblemException.error(OAuthError.TokenResponse.INVALID_GRANT, "Code invalid");
-            OAuthResponse r = OAuthASResponse.errorResponse(HttpStatus.SC_BAD_REQUEST).error(ex).buildJSONMessage();
-            return sendOAuthResponse(response, r);
-
-        }
-
-        OAuthResponse r;
-
-        if (appUserSession.isCodeValid()) {
-            String accessToken = generateToken(appUserSession, OAUTH_ISSUER.accessToken());
-            String refreshToken = generateToken(appUserSession, OAUTH_ISSUER.refreshToken());
-            appUserSession.setTokens(accessToken, refreshToken);
-
-            r =
-                    OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
-                            .setExpiresIn(OAuthProperties.getAccessTokenExpirationSeconds().toString())
-                            .setRefreshToken(refreshToken).buildJSONMessage();
-        } else {
-            OAuthProblemException ex = OAuthProblemException.error(OAuthError.TokenResponse.INVALID_GRANT, "Code expired");
-            r = OAuthASResponse.errorResponse(HttpStatus.SC_BAD_REQUEST).error(ex).buildJSONMessage();
-        }
-
-        return sendOAuthResponse(response, r);
-    }
-
-    private ActionForward sendOAuthResponse(HttpServletResponse response, OAuthResponse r) throws IOException {
-        response.setStatus(r.getResponseStatus());
-        PrintWriter pw = response.getWriter();
-        pw.print(r.getBody());
-        pw.flush();
-        pw.close();
-        return null;
-    }
-
     public ActionForward refreshAccessToken(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        OAuthTokenRequest oauthRequest = new OAuthTokenRequest(request);
+        OAuthTokenRequest oauthRequest = null;
+        try {
+            oauthRequest = new OAuthTokenRequest(request);
+        } catch (OAuthProblemException e) {
+            return sendOAuthResponse(response, getOAuthResponse(SC_BAD_REQUEST, e));
+        }
 
         String clientId = oauthRequest.getClientId();
         String clientSecret = oauthRequest.getClientSecret();
@@ -288,8 +237,60 @@ public class OAuthAction extends FenixDispatchAction {
                 OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
                         .setExpiresIn(OAuthProperties.getAccessTokenExpirationSeconds().toString()).buildJSONMessage();
 
-        sendOAuthResponse(response, r);
-        return null;
+        return sendOAuthResponse(response, r);
+    }
 
+    // http://localhost:8080/ciapl/external/oauth.do?method=getTokens&...
+    public ActionForward getTokens(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        OAuthTokenRequest oauthRequest = null;
+
+        try {
+            oauthRequest = new OAuthTokenRequest(request);
+        } catch (OAuthProblemException e) {
+            return sendOAuthResponse(response, getOAuthResponse(SC_BAD_REQUEST, e));
+        }
+
+        String clientId = oauthRequest.getClientId();
+        String clientSecret = oauthRequest.getClientSecret();
+        String redirectUrl = oauthRequest.getRedirectURI();
+        String authzCode = oauthRequest.getCode();
+
+        ExternalApplication externalApplication = getExternalApplication(clientId);
+
+        if (externalApplication == null) {
+            return sendOAuthResponse(response, getOAuthProblemResponse(SC_BAD_REQUEST, INVALID_GRANT, "Client ID not recognized"));
+        }
+
+        if (!externalApplication.matches(redirectUrl, clientSecret)) {
+            return sendOAuthResponse(response,
+                    getOAuthProblemResponse(SC_BAD_REQUEST, INVALID_GRANT, "Credentials or redirect_uri don't match"));
+        }
+
+        AppUserSession appUserSession = externalApplication.getAppUserSession(authzCode);
+
+        if (appUserSession == null) {
+            return sendOAuthResponse(response, getOAuthProblemResponse(SC_BAD_REQUEST, INVALID_GRANT, "Code Invalid"));
+
+        }
+
+        OAuthResponse r;
+
+        if (appUserSession.isCodeValid()) {
+            String accessToken = generateToken(appUserSession, OAUTH_ISSUER.accessToken());
+            String refreshToken = generateToken(appUserSession, OAUTH_ISSUER.refreshToken());
+            appUserSession.setTokens(accessToken, refreshToken);
+
+            r =
+                    OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
+                            .setExpiresIn(OAuthProperties.getAccessTokenExpirationSeconds().toString())
+                            .setRefreshToken(refreshToken).buildJSONMessage();
+        } else {
+
+            r = getOAuthProblemResponse(SC_BAD_REQUEST, OAuthError.TokenResponse.INVALID_GRANT, "Code expired");
+        }
+
+        return sendOAuthResponse(response, r);
     }
 }

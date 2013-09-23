@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.InputStream;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -9,7 +8,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.AppUserAuthorization;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.ExternalApplication;
@@ -26,14 +24,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 
@@ -47,11 +43,10 @@ import com.google.common.collect.ImmutableSet;
         @Forward(name = "viewApplicationDetails", path = "/auth/viewApplicationDetails.jsp")
 
 })
-public class AuthDispatchAction extends FenixDispatchAction {
+public class ExternalAppsDA extends FenixDispatchAction {
 
     private User getUser() {
-        IUserView user = UserView.getUser();
-        return user.getPerson().getUser();
+        return getLoggedPerson(null).getUser();
     }
 
     private void addAllowIstIds(HttpServletRequest request) {
@@ -63,8 +58,8 @@ public class AuthDispatchAction extends FenixDispatchAction {
     /** This will list the applications which you grant access */
     public ActionForward allowIstIds(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        User user = getUser();
-        if (user.getPerson().hasRole(RoleType.MANAGER)) {
+        Person person = getLoggedPerson(request);
+        if (person.hasRole(RoleType.MANAGER)) {
             JerseyOAuth2.toggleAllowIstIds();
             return redirect("/externalApps.do?method=manageApplications", request, true);
         } else {
@@ -79,13 +74,14 @@ public class AuthDispatchAction extends FenixDispatchAction {
         User user = getUser();
 
         ImmutableSet<ExternalApplication> authApps =
-                FluentIterable.from(user.getAppUserAuthorizationSet()).transform(new Function<AppUserAuthorization, ExternalApplication>() {
+                FluentIterable.from(user.getAppUserAuthorizationSet())
+                        .transform(new Function<AppUserAuthorization, ExternalApplication>() {
 
-                    @Override
-                    public ExternalApplication apply(AppUserAuthorization appUserSession) {
-                        return appUserSession.getApplication();
-                    }
-                }).toSet();
+                            @Override
+                            public ExternalApplication apply(AppUserAuthorization appUserSession) {
+                                return appUserSession.getApplication();
+                            }
+                        }).toSet();
 
         request.setAttribute("authApps", authApps);
 
@@ -150,13 +146,13 @@ public class AuthDispatchAction extends FenixDispatchAction {
 
         final ExternalApplication app = getDomainObject(request, "appOid");
         AppUserAuthorization appUserAuthorization = app.getAppUserAuthorization(getUser());
-        
+
         Set<AppUserSession> authSessions = null;
-        
+
         if (appUserAuthorization != null) {
             authSessions = appUserAuthorization.getSessionSet();
         }
-        
+
         if (authSessions == null) {
             return redirect("/externalApps.do?method=manageAuthorizations", request, true);
         } else {
@@ -217,3 +213,4 @@ public class AuthDispatchAction extends FenixDispatchAction {
     }
 
 }
+ 
