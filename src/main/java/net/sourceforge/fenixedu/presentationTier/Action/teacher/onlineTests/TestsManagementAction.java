@@ -596,7 +596,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(objectCode);
         final List<Registration> studentList = new ArrayList<Registration>();
         for (final Attends attends : executionCourse.getAttends()) {
-            if (!studentList.contains(attends.getRegistration())) {
+            if (!studentList.contains(attends.getRegistration()) && attends.getRegistration().isActive()) {
                 studentList.add(attends.getRegistration());
             }
         }
@@ -788,7 +788,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCode);
         final Set<Registration> students = distributedTest.findStudents();
         for (Attends attend : attendList) {
-            if (!students.contains(attend.getRegistration())) {
+            if (!students.contains(attend.getRegistration()) && attend.getRegistration().isActive()) {
                 studentList.add(attend.getRegistration());
             }
         }
