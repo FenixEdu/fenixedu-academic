@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
-import java.text.Collator;
 import java.util.Comparator;
 import java.util.Random;
 
@@ -19,9 +18,18 @@ public class GenericApplication extends GenericApplication_Base {
     public static final Comparator<GenericApplication> COMPARATOR_BY_APPLICATION_NUMBER = new Comparator<GenericApplication>() {
         @Override
         public int compare(final GenericApplication o1, final GenericApplication o2) {
-            final int n = Collator.getInstance().compare(o1.getApplicationNumber(), o2.getApplicationNumber());
+            final int n = compareAppNumber(o1.getApplicationNumber(), o2.getApplicationNumber());
             return n == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : n;
         }
+
+        private int compareAppNumber(final String an1, final String an2) {
+            int i1 = an1.lastIndexOf('/');
+            int i2 = an2.lastIndexOf('/');
+
+            final int c = an1.substring(0, i1).compareTo(an2.substring(0, i2));
+            return c == 0 ? Integer.valueOf(an1.substring(i1 + 1)).compareTo(Integer.valueOf(an2.substring(i2 + 1))) : c;
+        }
+
     };
 
     public GenericApplication(final GenericApplicationPeriod period, final String email) {
