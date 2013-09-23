@@ -6,6 +6,8 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,18 +20,19 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-
-import org.apache.log4j.Logger;
-
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear {
 
-    private static final Logger logger = Logger.getLogger(ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear.class);
 
     private static String logExternalId(DomainObject obj) {
         return obj == null ? "null" : obj.getExternalId();

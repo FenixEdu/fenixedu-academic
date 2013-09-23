@@ -7,10 +7,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.Equival
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 
-import org.apache.log4j.Logger;
-
 public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
-    private static final Logger logger = Logger.getLogger(EquivalencePlanRequest.class);
 
     private static final String COURSE_LABEL = "Nome da disciplina do currículo de Bolonha";
     private static final String COURSE_ECTS = "ECTS";
@@ -115,6 +112,7 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
     public boolean hasPersonalInfo() {
         return false;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRequest> getEquivalencePlanRevisionRequests() {
         return getEquivalencePlanRevisionRequestsSet();

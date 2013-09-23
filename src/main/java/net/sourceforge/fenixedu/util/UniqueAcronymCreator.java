@@ -12,18 +12,19 @@ import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.DomainObject;
 
 public class UniqueAcronymCreator<T extends DomainObject> {
 
-    private String slotName;
-    private String acronymSlot;
-    private Set<T> objects;
+    private static final Logger logger = LoggerFactory.getLogger(UniqueAcronymCreator.class);
+
+    private final String slotName;
+    private final String acronymSlot;
+    private final Set<T> objects;
     private static boolean toLowerCase;
-    private final static Logger logger = Logger.getLogger(UniqueAcronymCreator.class);
 
     public UniqueAcronymCreator(String slotName, String acronymSlot, Set<T> objects, boolean toLowerCase) throws Exception {
         this.slotName = slotName;
@@ -31,10 +32,9 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         this.objects = new TreeSet<T>(new BeanComparator(this.slotName));
         this.objects.addAll(objects);
         this.toLowerCase = toLowerCase;
-        this.logger.setLevel(Level.OFF);
     }
 
-    private Map<String, T> existingAcronyms = new HashMap<String, T>();
+    private final Map<String, T> existingAcronyms = new HashMap<String, T>();
 
     private void initialize() throws Exception {
         existingAcronyms.clear();
@@ -55,7 +55,7 @@ public class UniqueAcronymCreator<T extends DomainObject> {
 
     private T object;
     private static String[] splitsName;
-    private Set<T> colisions = new HashSet<T>();
+    private final Set<T> colisions = new HashSet<T>();
 
     public GenericPair<String, Set<T>> create(T object) throws Exception {
         initialize();

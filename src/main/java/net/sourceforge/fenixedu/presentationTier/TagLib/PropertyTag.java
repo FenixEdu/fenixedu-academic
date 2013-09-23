@@ -5,10 +5,12 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PropertyTag extends TagSupport {
-    private static final Logger logger = Logger.getLogger(PropertyTag.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(PropertyTag.class);
 
     private String name = null;
 

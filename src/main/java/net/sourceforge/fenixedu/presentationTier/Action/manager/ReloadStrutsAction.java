@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 
-import org.apache.log4j.Logger;
 import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -17,6 +16,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.tiles.TilesUtilImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -31,7 +32,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "manager", path = "/reloadStruts", scope = "session")
 @Forwards(value = { @Forward(name = "firstPage", path = "/index") })
 public class ReloadStrutsAction extends Action {
-    private static final Logger logger = Logger.getLogger(ReloadStrutsAction.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(ReloadStrutsAction.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

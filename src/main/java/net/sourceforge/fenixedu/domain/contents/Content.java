@@ -23,8 +23,9 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -40,7 +41,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  */
 public abstract class Content extends Content_Base {
 
-    private static final Logger logger = Logger.getLogger(Content.class);
+    private static final Logger logger = LoggerFactory.getLogger(Content.class);
 
     public Content() {
         super();

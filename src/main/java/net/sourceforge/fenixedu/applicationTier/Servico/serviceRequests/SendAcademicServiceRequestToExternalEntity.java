@@ -39,13 +39,14 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.CharEncoding;
-import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.Atomic;
@@ -58,7 +59,8 @@ import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
 public class SendAcademicServiceRequestToExternalEntity {
-    private static final Logger logger = Logger.getLogger(SendAcademicServiceRequestToExternalEntity.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(SendAcademicServiceRequestToExternalEntity.class);
 
     private static final String COURSE_LABEL = "Nome da disciplina do currículo de Bolonha";
     private static final String COURSE_ECTS = "ECTS";

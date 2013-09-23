@@ -14,11 +14,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
-import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.ExceptionConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.security.UserView;
 
@@ -28,7 +29,7 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class FenixContainerExceptionHandler extends FenixExceptionHandler {
 
-    private static final Logger logger = Logger.getLogger(FenixContainerExceptionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(FenixContainerExceptionHandler.class);
 
     @Override
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
@@ -37,7 +38,7 @@ public class FenixContainerExceptionHandler extends FenixExceptionHandler {
         ex.printStackTrace();
         if (LogLevel.ERROR) {
             if (!(ex instanceof FenixServiceException) && !(ex instanceof FenixActionException)) {
-                logger.error(ex);
+                logger.error(ex.getMessage(), ex);
             }
         }
 

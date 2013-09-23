@@ -106,7 +106,8 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryGroup;
 import net.sourceforge.fenixedu.domain.research.AuthorGroup;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.Pair;
 
@@ -117,7 +118,7 @@ import pt.utl.ist.fenix.tools.util.Pair;
  */
 public class GroupBuilderRegistry {
 
-    private static final Logger logger = Logger.getLogger(GroupBuilderRegistry.class);
+    private static final Logger logger = LoggerFactory.getLogger(GroupBuilderRegistry.class);
 
     private static final GroupBuilderRegistry instance = new GroupBuilderRegistry();
 

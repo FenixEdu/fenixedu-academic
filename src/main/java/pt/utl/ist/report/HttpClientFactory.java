@@ -8,7 +8,8 @@ import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.protocol.DefaultProtocolSocketFactory;
 import org.apache.commons.httpclient.protocol.Protocol;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Luis Cruz
@@ -16,9 +17,7 @@ import org.apache.log4j.Logger;
  * 
  */
 public class HttpClientFactory {
-
-	private final static Logger logger = Logger
-			.getLogger(HttpClientFactory.class);
+    private static final Logger logger = LoggerFactory.getLogger(HttpClientFactory.class);
 
 	private final static int CONNECTION_TIMEOUT = 30000000;
 

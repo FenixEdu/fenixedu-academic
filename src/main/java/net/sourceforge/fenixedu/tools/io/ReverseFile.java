@@ -11,7 +11,8 @@ import java.io.IOException;
 import net.sourceforge.fenixedu._development.LogLevel;
 
 import org.apache.jcs.access.exception.InvalidArgumentException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
@@ -21,13 +22,13 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
  */
 public class ReverseFile {
 
-    private static final Logger logger = Logger.getLogger(ReverseFile.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReverseFile.class);
 
     public static void main(String[] args) {
         try {
             if (args == null || args.length < 1 || args.length > 2) {
                 if (LogLevel.FATAL) {
-                    logger.fatal("Invalid arguments.");
+                    logger.error("Invalid arguments.");
                 }
                 throw new InvalidArgumentException("Usage: <filename> [<output filename>]");
             }
@@ -39,7 +40,7 @@ public class ReverseFile {
             }
         } catch (Exception ex) {
             if (LogLevel.FATAL) {
-                logger.fatal("Encountered fatal exception: " + ex.getMessage(), ex);
+                logger.error("Encountered fatal exception: " + ex.getMessage(), ex);
             }
         }
 

@@ -4,13 +4,14 @@ import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 
 public class CheckIsAliveService {
 
-    private static final Logger logger = Logger.getLogger(CheckIsAliveService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CheckIsAliveService.class);
 
     private static boolean CHECK_DB = false;
 
@@ -35,7 +36,7 @@ public class CheckIsAliveService {
         } catch (Throwable t) {
             t.printStackTrace();
             if (LogLevel.FATAL) {
-                logger.fatal("Got unexepected exception in check alive service. ", t);
+                logger.error("Got unexepected exception in check alive service. ", t);
             }
             throw new RuntimeException(t);
         }
@@ -47,7 +48,7 @@ public class CheckIsAliveService {
 
         if (executionYear == null || executionYear.getExternalId() == null) {
             if (LogLevel.FATAL) {
-                logger.fatal("Got a null result checking fenix database.");
+                logger.error("Got a null result checking fenix database.");
             }
             throw new RuntimeException("Problems accesing fenix database! Got a null result.");
         }

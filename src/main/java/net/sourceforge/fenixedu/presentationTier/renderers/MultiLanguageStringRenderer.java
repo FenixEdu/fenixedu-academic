@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import org.apache.log4j.Logger;
-
 import pt.ist.fenixWebFramework.renderers.StringRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -25,8 +23,6 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  * @author cgmp
  */
 public class MultiLanguageStringRenderer extends StringRenderer {
-
-    private static final Logger logger = Logger.getLogger(MultiLanguageStringRenderer.class);
 
     private String language;
     private boolean forceShowLanguage;

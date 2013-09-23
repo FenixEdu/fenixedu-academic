@@ -10,15 +10,16 @@ import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEven
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base {
 
-    private static final Logger logger = Logger.getLogger(AccountingEventPaymentCode.class);
+    private static final Logger logger = LoggerFactory.getLogger(AccountingEventPaymentCode.class);
 
     static {
         getRelationPaymentCodeAccountingEvent().addListener(new RelationAdapter<AccountingEventPaymentCode, Event>() {

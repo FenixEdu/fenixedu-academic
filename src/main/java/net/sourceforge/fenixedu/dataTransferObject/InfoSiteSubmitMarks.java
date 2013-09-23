@@ -4,7 +4,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Tânia Pousão
@@ -12,7 +13,9 @@ import org.apache.log4j.Logger;
  * 
  */
 public class InfoSiteSubmitMarks extends DataTranferObject implements ISiteComponent {
-    private static final Logger logger = Logger.getLogger(InfoSiteSubmitMarks.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(InfoSiteSubmitMarks.class);
+
     private InfoEvaluation infoEvaluation;
 
     private Integer submited;

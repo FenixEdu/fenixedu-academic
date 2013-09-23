@@ -33,8 +33,9 @@ import net.sourceforge.fenixedu.util.kerberos.Script;
 
 import org.apache.commons.lang.CharEncoding;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixframework.Atomic;
@@ -52,7 +53,7 @@ public class Authenticate implements Serializable {
 
     private static final String URL_ENCODING = CharEncoding.UTF_8;
 
-    protected static final Logger logger = Logger.getLogger(Authenticate.class);
+    private static final Logger logger = LoggerFactory.getLogger(Authenticate.class);
 
     protected static final Map allowedRolesByHostname = new HashMap();
 

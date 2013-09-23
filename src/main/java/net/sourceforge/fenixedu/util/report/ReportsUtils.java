@@ -41,7 +41,8 @@ import net.sourceforge.fenixedu.util.JasperPrintProcessor;
 import net.sourceforge.fenixedu.util.PrinterManager;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.PropertiesManager;
 
@@ -55,7 +56,7 @@ import com.lowagie.text.pdf.PdfStamper;
 
 public class ReportsUtils extends PropertiesManager {
 
-    static final protected Logger logger = Logger.getLogger(ReportsUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReportsUtils.class);
 
     static final private Map<String, JasperReport> reportsMap = new ConcurrentHashMap<String, JasperReport>();
 

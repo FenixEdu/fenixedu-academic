@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
-import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -36,6 +35,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -45,7 +46,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
-    private static final Logger logger = Logger.getLogger(ManageShiftDA.class);
+    private static final Logger logger = LoggerFactory.getLogger(ManageShiftsDA.class);
 
     public ActionForward listShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
