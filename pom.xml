@@ -813,7 +813,9 @@
 							</execution>
 						</executions>
 						<configuration>
-							<!--insert configuration here -->
+							<licence> <!-- Free open source license for the pro version of MireDot, valid for one year (expires 2014-09-23) -->
+                                UHJvamVjdHxwdC5pc3R8ZmVuaXgjTUN3Q0ZIWGIrVlJsQ2hIWUJLUDJONWkyNG1CekpObHlBaFJDTnZ2K0hqZlcraVhoVFhwRG1BVWlubG9DVlE9PQ==
+							</licence>
 						</configuration>
 					</plugin>
 				</plugins>
