@@ -74,6 +74,10 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
             if (bean.getIstId() != null) {
                 bean.getPeople().add(bean.getIstId());
             }
+            if (bean.getPeople().isEmpty()) {
+                addActionMessage(request, "accessGroupManagement.empty");
+                return mapping.findForward("createPersistedGroup");
+            }
             CreatePersistentGroup.runCreatePersistentGroup(bean.getUnit(), bean.getName(), bean.getPeople(), bean.getType());
         }
 
