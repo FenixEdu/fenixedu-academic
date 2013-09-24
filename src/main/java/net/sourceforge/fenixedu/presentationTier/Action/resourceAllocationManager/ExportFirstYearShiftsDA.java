@@ -122,7 +122,7 @@ public class ExportFirstYearShiftsDA extends FenixContextDispatchAction {
             final ExecutionCourse executionCourse, final SchoolClass schoolClass, final Shift shift, final EntryPhase phase) {
         final Row row = spreadsheet.addRow();
 
-        row.setCell(degreeCurricularPlan.getPresentationName());
+        row.setCell(degreeCurricularPlan.getName());
         row.setCell(schoolClass.getNome());
         row.setCell(executionCourse.getNome());
         row.setCell(shift.getNome());
