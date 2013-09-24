@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationRecommendationBean"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation"%>
 <%@page import="org.apache.struts.action.ActionMessages"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile"%>
@@ -12,7 +13,10 @@
 
 <html:xhtml/>
 
-<% final GenericApplication genericApplication = (GenericApplication) request.getAttribute("application"); %>
+<%
+	final GenericApplication genericApplication = (GenericApplication) request.getAttribute("application");
+	final GenericApplicationRecommendationBean recommendationBean = (GenericApplicationRecommendationBean) request.getAttribute("recommendationBean");
+%>
 
 <bean:define id="unsavedChangesMessage" type="java.lang.String"><bean:message bundle="CANDIDATE_RESOURCES" key="label.application.unsaved.changes"/></bean:define>
 
@@ -79,6 +83,24 @@
    		if (!validateInputField("areaCode")) { allIsOk = false; };
    		if (!validateInputField("area")) { allIsOk = false; };
    		if (!validateInputField("telephoneContact")) { allIsOk = false; };
+   		return allIsOk;
+	}
+
+   	function validateRecommendationInputField(field) {
+   		var fieldName = "<%= GenericApplicationRecommendationBean.class.getName() + ":" + recommendationBean.hashCode() %>" + ":" + field;
+   		var className = '#emptyRecommendationAllFields';
+   		var fieldValue = $('input[name$="' + fieldName + '"]').val();
+   		if (!fieldValue) { $(className).show(); return false; } else { $(className).hide(); return true; }
+   	}
+
+   	
+
+   	function validateRecommendationInput() {
+   		var allIsOk = true;
+   		if (!validateRecommendationInputField("title")) { allIsOk = false; };
+   		if (!validateRecommendationInputField("name")) { allIsOk = false; };
+   		if (!validateRecommendationInputField("email")) { allIsOk = false; };
+   		if (!validateRecommendationInputField("institution")) { allIsOk = false; };
    		return allIsOk;
 	}
 
@@ -688,7 +710,10 @@
 				<fr:property name="classes" value="tstyle2 thcenter mtop15"/>
 			</fr:layout>
 		</fr:edit>
-		<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
+		<div id="emptyRecommendationAllFields" class="error" style="display: none; margin-bottom: 15px;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.all.fields.are.required"/></div>
+		<html:submit onclick="return validateRecommendationInput();">
+			<bean:message key="button.submit" bundle="APPLICATION_RESOURCES" />
+		</html:submit>
 	</fr:form>
 <% } %>
 </logic:present>
