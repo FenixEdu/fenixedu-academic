@@ -11,6 +11,12 @@
 
 <h2><bean:message key="label.newPersistentGroup" bundle="RESEARCHER_RESOURCES"/></h2>
 
+<logic:messagesPresent message="true">
+  <html:messages id="messages" message="true">
+   <p><span class="error0"><bean:write name="messages" /></span></p>
+  </html:messages>
+</logic:messagesPresent>
+   
 <fr:edit id="createGroup" name="bean" schema="create.persistent.group" action="<%= "/" + actionName + ".do?method=createPersistedGroup&unitId=" + unitID %>">
 	<fr:layout>
 		<fr:property name="classes" value="tstyle5 thlight thright"/>

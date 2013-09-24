@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -35,7 +34,7 @@ public class PersistentGroupMembersBean implements Serializable {
         init(group, group.getUnit());
 
         setName(group.getName());
-        setPeople(group.getPersons());
+        this.people.addAll(group.getPersonsSet());
     }
 
     public PersistentGroupMembersBean(Unit unit, PersistentGroupMembersType type) {
@@ -67,7 +66,7 @@ public class PersistentGroupMembersBean implements Serializable {
         return this.people;
     }
 
-    public void setPeople(Collection<Person> people) {
+    public void setPeople(List<Person> people) {
         this.people.clear();
         this.people.addAll(people);
     }
