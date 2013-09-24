@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.webServices.jersey;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -13,8 +16,10 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
@@ -28,6 +33,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import com.google.common.base.Strings;
 
 @Path("/services")
 public class JerseyServices {
@@ -135,14 +142,39 @@ public class JerseyServices {
     public String readResearchers() {
         JSONArray researchers = new JSONArray();
         for (final User user : RootDomainObject.getInstance().getUsersSet()) {
-            if (!StringUtils.isEmpty(user.getUserUId()) && user.hasPerson() && user.getPerson().hasAnyResultParticipations()) {
+            Person person = user.getPerson();
+            if (!StringUtils.isEmpty(user.getUserUId()) && person != null
+                    && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
                 JSONObject json = new JSONObject();
                 json.put("istId", user.getUserUId());
+                Set<Unit> units = new HashSet<>();
+                if (person.getEmployee() != null) {
+                    Unit unit = person.getEmployee().getCurrentWorkingPlace();
+                    if (unit != null) {
+                        units.add(unit);
+                    }
+                    if (person.getResearcher() != null && person.getResearcher().isActiveContractedResearcher()) {
+                        Collection<? extends Accountability> accountabilities =
+                                person.getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
+                        for (final Accountability accountability : accountabilities) {
+                            if (accountability.isActive()) {
+                                unit = (Unit) accountability.getParentParty();
+                                if (unit != null) {
+                                    units.add(unit);
+                                }
+                            }
+                        }
+                    }
+                }
                 JSONArray array = new JSONArray();
-                for (ResearchUnit unit : user.getPerson().getWorkingResearchUnits()) {
+                for (Unit unit : units) {
                     JSONObject element = new JSONObject();
-                    element.put("acronym", unit.getAcronym());
-                    element.put("name", unit.getName());
+                    if (!Strings.isNullOrEmpty(unit.getAcronym())) {
+                        element.put("acronym", unit.getAcronym());
+                    }
+                    if (!Strings.isNullOrEmpty(unit.getName())) {
+                        element.put("name", unit.getName());
+                    }
                     array.add(element);
                 }
                 json.put("department", array);
@@ -212,6 +244,7 @@ public class JerseyServices {
             PhdIndividualProgramProcess phdProcess = phdProcessNumber.getProcess();
             if (phdProcess.isConcluded()) {
                 JSONObject phdInfo = new JSONObject();
+                phdInfo.put("id", phdProcess.getExternalId());
                 phdInfo.put("author", phdProcess.getPerson().getUsername());
                 phdInfo.put("title", phdProcess.getThesisTitle());
 
