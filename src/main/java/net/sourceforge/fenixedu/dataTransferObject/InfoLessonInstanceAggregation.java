@@ -178,7 +178,7 @@ public class InfoLessonInstanceAggregation extends InfoShowOccupation {
         key.append('_');
         key.append(lesson.getEndHourMinuteSecond().toString("HH:mm"));
         key.append('_');
-        key.append(lesson.getSala() == null ? " " : lesson.getSala().getExternalId());
+        key.append(lesson.getSala() == null ? "" : lesson.getSala().getExternalId());
         return key.toString();
     }
 
