@@ -61,6 +61,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     protected final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
     protected final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
     protected final String NO_SELECTION_STRING = "no_selection";
+    protected final Integer NO_SELECTION_INTEGER = Integer.valueOf(-1);
 
     private String competenceCourseID = null;
     private String courseGroupID = null;
@@ -218,7 +219,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getCurricularYears() {
         final int years = getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
         final List<SelectItem> result = new ArrayList<SelectItem>(years);
-        result.add(new SelectItem(this.NO_SELECTION_STRING, bolonhaBundle.getString("choose")));
+        result.add(new SelectItem(this.NO_SELECTION_INTEGER, bolonhaBundle.getString("choose")));
         for (int i = 1; i <= years; i++) {
             result.add(new SelectItem(Integer.valueOf(i), String.valueOf(i)
                     + bolonhaBundle.getString("label.context.period.sign")));
@@ -229,7 +230,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getCurricularSemesters() {
         final List<SelectItem> result = new ArrayList<SelectItem>(2);
 
-        result.add(new SelectItem(this.NO_SELECTION_STRING, bolonhaBundle.getString("choose")));
+        result.add(new SelectItem(this.NO_SELECTION_INTEGER, bolonhaBundle.getString("choose")));
         result.add(new SelectItem(Integer.valueOf(1), String.valueOf(1) + bolonhaBundle.getString("label.context.period.sign")));
         result.add(new SelectItem(Integer.valueOf(2), String.valueOf(2) + bolonhaBundle.getString("label.context.period.sign")));
         return result;
@@ -245,14 +246,14 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public DepartmentUnit getDepartmentUnit() {
-        if (getDepartmentUnitID() != null && getDepartmentUnitID() != null) {
+        if (getDepartmentUnitID() != null && !getDepartmentUnitID().equals(NO_SELECTION_STRING)) {
             return (DepartmentUnit) FenixFramework.getDomainObject(getDepartmentUnitID());
         }
         return null;
     }
 
     public CompetenceCourse getCompetenceCourse() {
-        if (competenceCourse == null && getCompetenceCourseID() != null && !getCompetenceCourseID().equals(0)) {
+        if (competenceCourse == null && getCompetenceCourseID() != null && !getCompetenceCourseID().equals(NO_SELECTION_STRING)) {
             competenceCourse = FenixFramework.getDomainObject(getCompetenceCourseID());
         }
         return competenceCourse;
@@ -581,10 +582,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     protected void checkCurricularSemesterAndYear() throws FenixActionException {
-        if (getCurricularSemesterID() == null || getCurricularSemesterID().equals(this.NO_SELECTION_STRING)) {
+        if (getCurricularSemesterID() == null || getCurricularSemesterID().equals(this.NO_SELECTION_INTEGER)) {
             throw new FenixActionException("error.mustChooseACurricularSemester");
         }
-        if (getCurricularYearID() == null || getCurricularYearID().equals(this.NO_SELECTION_STRING)) {
+        if (getCurricularYearID() == null || getCurricularYearID().equals(this.NO_SELECTION_INTEGER)) {
             throw new FenixActionException("error.mustChooseACurricularYear");
         }
     }
