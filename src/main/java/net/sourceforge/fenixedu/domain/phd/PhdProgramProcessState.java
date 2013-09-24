@@ -137,7 +137,9 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
         Student student = getProcess().getStudent();
         setProcess(null);
         super.delete();
-        student.updateStudentRole();
+        if (student != null) {
+            student.updateStudentRole();
+        }
     }
 
     @Override
@@ -220,6 +222,7 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 
         return new PhdProgramProcessState(process, type, person, remarks, stateDate);
     }
+
     @Deprecated
     public boolean hasType() {
         return getType() != null;
