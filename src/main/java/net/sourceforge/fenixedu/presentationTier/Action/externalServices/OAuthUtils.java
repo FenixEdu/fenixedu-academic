@@ -46,7 +46,7 @@ public class OAuthUtils {
                     }
                     getterName = String.format("get%sSet", capitalize(roleSlots.get(0).getName()));
                 } else {
-                    getterName = String.format("%sSet", capitalize(slotsList.get(0).getName()));
+                    getterName = String.format("get%s", capitalize(slotsList.get(0).getName()));
                 }
             }
             final Method method = clazz.getMethod(getterName, (Class[]) null);

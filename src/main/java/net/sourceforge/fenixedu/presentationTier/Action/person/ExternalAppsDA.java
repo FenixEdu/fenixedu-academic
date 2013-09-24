@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyOAuth2;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyOAuth2Filter;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
@@ -51,7 +51,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
 
     private void addAllowIstIds(HttpServletRequest request) {
         if (getUser().getPerson().hasRole(RoleType.MANAGER)) {
-            request.setAttribute("allowIstIds", JerseyOAuth2.allowIstIds());
+            request.setAttribute("allowIstIds", JerseyOAuth2Filter.allowIstIds());
         }
     }
 
@@ -60,7 +60,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         Person person = getLoggedPerson(request);
         if (person.hasRole(RoleType.MANAGER)) {
-            JerseyOAuth2.toggleAllowIstIds();
+            JerseyOAuth2Filter.toggleAllowIstIds();
             return redirect("/externalApps.do?method=manageApplications", request, true);
         } else {
             throw new ServletException("no.permissions");

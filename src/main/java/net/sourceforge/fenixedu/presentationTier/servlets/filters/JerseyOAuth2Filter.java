@@ -30,20 +30,20 @@ import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.security.UserView;
 
-public class JerseyOAuth2 implements Filter {
+public class JerseyOAuth2Filter implements Filter {
 
     final static String ACCESS_TOKEN = "access_token";
-    
+
     private static boolean allowIstIds = false;
 
     @Override
     public void destroy() {
     }
-    
+
     public static synchronized void toggleAllowIstIds() {
         allowIstIds = !allowIstIds;
     }
-    
+
     public static synchronized boolean allowIstIds() {
         return allowIstIds;
     }
@@ -67,15 +67,16 @@ public class JerseyOAuth2 implements Filter {
         }
     }
 
-    private boolean checkAccessControl(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         if (allowIstIds() && currentUserIsManager()) {
+    private boolean checkAccessControl(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+            IOException {
+        if (allowIstIds() && currentUserIsManager()) {
             String istId = request.getParameter("_istid_");
-            if (!StringUtils.isBlank(istId)){
+            if (!StringUtils.isBlank(istId)) {
                 User user = User.readUserByUserUId(istId);
                 if (user != null) {
                     authenticateUser(request, user);
                     return true;
-                }else {
+                } else {
                     throw new ServletException("user.not.found");
                 }
             }
@@ -92,7 +93,7 @@ public class JerseyOAuth2 implements Filter {
         if (person == null) {
             return false;
         }
-        
+
         return person.hasRole(RoleType.MANAGER);
     }
 
@@ -102,8 +103,7 @@ public class JerseyOAuth2 implements Filter {
 
     private Boolean checkAccessToken(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
             ServletException {
-        
-        
+
         String accessToken = request.getHeader(ACCESS_TOKEN);
 
         if (StringUtils.isBlank(accessToken)) {
@@ -130,7 +130,7 @@ public class JerseyOAuth2 implements Filter {
                 return false;
             }
 
-            User foundUser = appUserSession.getUser();
+            User foundUser = appUserSession.getAppUserAuthorization().getUser();
 
             authenticateUser(request, foundUser);
 
@@ -151,7 +151,7 @@ public class JerseyOAuth2 implements Filter {
             throws IOException, ServletException {
         AuthScope scope = FenixJerseyPackageResourceConfig.getScope(uri);
         if (scope != null) {
-            if (!appUserSession.getApplication().getScopes().contains(scope)) {
+            if (!appUserSession.getAppUserAuthorization().getApplication().getScopes().contains(scope)) {
                 return false;
             }
         }
