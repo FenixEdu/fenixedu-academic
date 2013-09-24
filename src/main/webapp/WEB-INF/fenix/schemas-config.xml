@@ -712,7 +712,7 @@
 		<slot name="name" key="label.groupName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="size" value="40"/>
 		</slot>
-		<slot name="people" layout="option-select" key="label.members" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<slot name="people" layout="option-select" key="label.members">
 				<property name="classes" value="nobullet noindent"/>
 				<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForUnitGroups"/>
 				<property name="saveOptions" value="true"/>
