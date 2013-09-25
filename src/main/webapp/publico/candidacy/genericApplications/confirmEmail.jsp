@@ -86,14 +86,14 @@
    		return allIsOk;
 	}
 
+<% if (recommendationBean != null) { %>
+
    	function validateRecommendationInputField(field) {
    		var fieldName = "<%= GenericApplicationRecommendationBean.class.getName() + ":" + recommendationBean.hashCode() %>" + ":" + field;
    		var className = '#emptyRecommendationAllFields';
    		var fieldValue = $('input[name$="' + fieldName + '"]').val();
    		if (!fieldValue) { $(className).show(); return false; } else { $(className).hide(); return true; }
    	}
-
-   	
 
    	function validateRecommendationInput() {
    		var allIsOk = true;
@@ -103,8 +103,9 @@
    		if (!validateRecommendationInputField("institution")) { allIsOk = false; };
    		return allIsOk;
 	}
+<% } %>
 
-   	function addChangeListnerToInputField(type, field) {
+	function addChangeListnerToInputField(type, field) {
    		var fieldName = "<%= GenericApplication.class.getName() + ":" + genericApplication.getExternalId() %>" + ":" + field;
    		$(type + '[name$="' + fieldName + '"]').change(function() {
    			fieldChanged = true;
