@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "update file permission" updateFilePermission.sql
