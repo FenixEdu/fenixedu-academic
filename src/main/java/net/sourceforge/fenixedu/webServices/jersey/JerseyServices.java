@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.webServices.jersey;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.ws.rs.GET;
@@ -13,12 +15,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -141,33 +144,40 @@ public class JerseyServices {
     @Produces(MediaType.APPLICATION_JSON)
     public String readResearchers() {
         JSONArray researchers = new JSONArray();
+
+        final Map<User, Set<Unit>> researchUnitMap = new HashMap<User, Set<Unit>>();
         for (final User user : RootDomainObject.getInstance().getUsersSet()) {
             Person person = user.getPerson();
             if (!StringUtils.isEmpty(user.getUserUId()) && person != null
                     && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
+                researchUnitMap.put(user, new HashSet<Unit>());
+            }
+        }
+        for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+            if (party instanceof ResearchUnit) {
+                final ResearchUnit unit = (ResearchUnit) party;
+                for (final Teacher teacher : unit.getAllTeachers()) {
+                    add(researchUnitMap, teacher.getPerson().getUser(), unit);
+                }
+                for (final Person person : unit.getResearchers()) {
+                    add(researchUnitMap, person.getUser(), unit);
+                }
+                for (final Employee employee : unit.getAllWorkingEmployees()) {
+                    add(researchUnitMap, employee.getPerson().getUser(), unit);
+                }
+            }
+        }
+
+        for (final Entry<User, Set<Unit>> entry : researchUnitMap.entrySet()) {
+            final User user = entry.getKey();
+            final Person person = user.getPerson();
+            if (!StringUtils.isEmpty(user.getUserUId()) && person != null
+                    && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
                 JSONObject json = new JSONObject();
                 json.put("istId", user.getUserUId());
-                Set<Unit> units = new HashSet<>();
-                if (person.getEmployee() != null) {
-                    Unit unit = person.getEmployee().getCurrentWorkingPlace();
-                    if (unit != null) {
-                        units.add(unit);
-                    }
-                    if (person.getResearcher() != null && person.getResearcher().isActiveContractedResearcher()) {
-                        Collection<? extends Accountability> accountabilities =
-                                person.getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
-                        for (final Accountability accountability : accountabilities) {
-                            if (accountability.isActive()) {
-                                unit = (Unit) accountability.getParentParty();
-                                if (unit != null) {
-                                    units.add(unit);
-                                }
-                            }
-                        }
-                    }
-                }
+
                 JSONArray array = new JSONArray();
-                for (Unit unit : units) {
+                for (Unit unit : entry.getValue()) {
                     JSONObject element = new JSONObject();
                     if (!Strings.isNullOrEmpty(unit.getAcronym())) {
                         element.put("acronym", unit.getAcronym());
@@ -177,11 +187,19 @@ public class JerseyServices {
                     }
                     array.add(element);
                 }
+
                 json.put("department", array);
                 researchers.add(json);
             }
         }
         return researchers.toJSONString();
+    }
+
+    private void add(final Map<User, Set<Unit>> researchUnitMap, final User user, final ResearchUnit unit) {
+        if (!researchUnitMap.containsKey(user)) {
+            researchUnitMap.put(user, new HashSet<Unit>());
+        }
+        researchUnitMap.get(user).add(unit);
     }
 
     @GET
