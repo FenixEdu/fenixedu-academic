@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.text.Collator;
 import java.util.Collection;
 import java.util.Comparator;
@@ -17,7 +19,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.ContextPredicates;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 

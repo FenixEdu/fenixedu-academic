@@ -5,6 +5,8 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
@@ -20,11 +22,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.apache.struts.util.MessageResources;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

@@ -23,8 +23,8 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**

@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.webServices.jersey.FenixJerseyPackageResourceConfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,21 +94,25 @@ public class FenixInitializer implements ServletContextListener {
         } catch (Exception ex) {
             logger.info("Check is alive is not working. Caught excpetion.");
             ex.printStackTrace();
-        }
-
+		}
         loadLogins();
         loadPersonNames();
         loadUnitNames();
         loadRoles();
         startContactValidationServices();
         initScheduler();
-
+		setupFenixAPIJerseyScopes();
         logger.info("Fenix initialized successfully");
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
 
+    }
+
+    @Atomic
+    private void setupFenixAPIJerseyScopes() {
+        FenixJerseyPackageResourceConfig.registerAuthScopes();
     }
 
     private void startContactValidationServices() {

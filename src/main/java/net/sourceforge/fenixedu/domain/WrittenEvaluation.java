@@ -1014,6 +1014,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseScope> getAssociatedCurricularCourseScope() {
         return getAssociatedCurricularCourseScopeSet();
@@ -1024,6 +1025,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return !getAssociatedCurricularCourseScopeSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getAssociatedContexts() {
         return getAssociatedContextsSet();
@@ -1034,6 +1036,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return !getAssociatedContextsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.Vigilancy> getVigilancies() {
         return getVigilanciesSet();
@@ -1044,6 +1047,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return !getVigilanciesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation> getWrittenEvaluationSpaceOccupations() {
         return getWrittenEvaluationSpaceOccupationsSet();
@@ -1054,6 +1058,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return !getWrittenEvaluationSpaceOccupationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment> getWrittenEvaluationEnrolments() {
         return getWrittenEvaluationEnrolmentsSet();

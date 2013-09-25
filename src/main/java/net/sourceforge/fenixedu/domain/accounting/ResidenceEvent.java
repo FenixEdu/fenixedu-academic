@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -13,13 +15,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
+import net.sourceforge.fenixedu.predicates.EventsPredicates;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.EventsPredicates;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ResidenceEvent extends ResidenceEvent_Base {

@@ -3,7 +3,6 @@ target/
 jetty/
 deploy/
 configuration.properties
-fenix-framework.properties
 output/
 .classpath
 build.properties.fenixIST
@@ -12,4 +11,5 @@ build.properties.slave
 configuration.properties.fenix
 configuration.properties.localhost
 /target
-.actionAnnotationLog
+src/main/resources/fonts/*arial
+src/main/resources/fonts/*Arial

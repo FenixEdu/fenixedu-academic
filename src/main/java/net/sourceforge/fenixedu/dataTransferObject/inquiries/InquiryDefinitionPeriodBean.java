@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +12,12 @@ import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

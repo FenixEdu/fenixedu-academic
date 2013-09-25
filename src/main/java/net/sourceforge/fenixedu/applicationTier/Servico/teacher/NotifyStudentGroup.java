@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,9 +14,8 @@ import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
-import net.sourceforge.fenixedu.util.BundleUtil;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 
 public class NotifyStudentGroup {

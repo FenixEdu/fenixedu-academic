@@ -1,16 +1,16 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.predicates.TSDProcessPhasePredicates;
 
 import org.apache.commons.beanutils.BeanComparator;
-
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.TSDProcessPhasePredicates;
 
 public class TSDProcessPhase extends TSDProcessPhase_Base {
 

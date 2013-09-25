@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
-import net.sourceforge.fenixedu.util.Month;
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.ResultPredicates;
+import net.sourceforge.fenixedu.util.Month;
 import bibtex.dom.BibtexEntry;
 
 /**
