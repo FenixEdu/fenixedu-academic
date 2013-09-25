@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
+import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
+import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
+
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -13,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
-import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
 
 @WebFilter(urlPatterns = "/jersey/*")
 public class JerseyAuthFilter implements Filter {
@@ -38,11 +39,15 @@ public class JerseyAuthFilter implements Filter {
 
     public void doFilter(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
             throws IOException, ServletException {
-        if (checkAccessControl(request)) {
+        if (isOauth2(request) || checkAccessControl(request)) {
             filterChain.doFilter(request, response);
         } else {
             throw new ServletException("Not Authorized");
         }
+    }
+
+    private boolean isOauth2(HttpServletRequest request) {
+        return request.getRequestURI().contains("/jersey/private/");
     }
 
     @Override
