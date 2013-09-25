@@ -258,12 +258,13 @@ public class JerseyServices {
     public static String readPhdThesis() {
         JSONArray infos = new JSONArray();
 
-        for (PhdIndividualProgramProcessNumber phdProcessNumber : RootDomainObject.getInstance().getPhdIndividualProcessNumbers()) {
+        for (PhdIndividualProgramProcessNumber phdProcessNumber : RootDomainObject.getInstance()
+                .getPhdIndividualProcessNumbersSet()) {
             PhdIndividualProgramProcess phdProcess = phdProcessNumber.getProcess();
             if (phdProcess.isConcluded()) {
                 JSONObject phdInfo = new JSONObject();
                 phdInfo.put("id", phdProcess.getExternalId());
-                phdInfo.put("author", phdProcess.getPerson().getUsername());
+                phdInfo.put("author", phdProcess.getPerson().getIstUsername());
                 phdInfo.put("title", phdProcess.getThesisTitle());
 
                 JSONArray schools = new JSONArray();
@@ -294,10 +295,11 @@ public class JerseyServices {
 
         }
 
-        for (Thesis t : RootDomainObject.getInstance().getTheses()) {
+        for (Thesis t : RootDomainObject.getInstance().getThesesSet()) {
             if (t.isEvaluated()) {
                 JSONObject mscInfo = new JSONObject();
-                mscInfo.put("author", t.getStudent().getPerson().getUsername());
+                mscInfo.put("id", t.getExternalId());
+                mscInfo.put("author", t.getStudent().getPerson().getIstUsername());
                 String title = t.getFinalFullTitle().getContent(Language.en);
                 if (title == null) {
                     title = t.getFinalFullTitle().getContent(Language.pt);
