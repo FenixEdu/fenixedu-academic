@@ -1,8 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0" metadata-complete="true">
-	<distributable />
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+      version="3.0">
+	<distributable/>
 	<locale-encoding-mapping-list>
 		<locale-encoding-mapping>
 			<locale>pt</locale>
@@ -14,17 +15,19 @@
 		</locale-encoding-mapping>
 	</locale-encoding-mapping-list>
 
-	<context-param>
+   	<context-param>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
 		<param-value>client</param-value>
 	</context-param>
+	
+	<!-- Filter -->
 	<filter>
-		<filter-name>RequestIgnorer</filter-name>
-		<filter-class>pt.ist.fenixWebFramework.servlets.filters.RequestIgnorerFilter</filter-class>
+	    <filter-name>RequestIgnorer</filter-name>
+	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.RequestIgnorerFilter</filter-class>
 	</filter>
 	<filter>
-		<filter-name>MultipartFilter</filter-name>
-		<filter-class>org.apache.myfaces.component.html.util.MultipartFilter</filter-class>
+	    <filter-name>MultipartFilter</filter-name>
+	    <filter-class>org.apache.myfaces.component.html.util.MultipartFilter</filter-class>
 		<init-param>
 			<param-name>uploadMaxFileSize</param-name>
 			<param-value>10m</param-value>
@@ -35,133 +38,125 @@
 		</init-param>
 	</filter>
 	<filter>
-		<filter-name>JerseyAuthFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyAuthFilter</filter-class>
-	</filter>
-	<filter>
 		<filter-name>CharsetEncoding</filter-name>
 		<filter-class>pt.ist.fenixWebFramework.servlets.filters.CharsetEncodingFilter</filter-class>
 	</filter>
 	<filter>
-		<filter-name>CloseTxFilter</filter-name>
-		<filter-class>pt.ist.fenixWebFramework.servlets.filters.CloseTransactionFilter</filter-class>
+	    <filter-name>CloseTxFilter</filter-name>
+	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.CloseTransactionFilter</filter-class>
+	</filter>
+   	<filter>
+	    <filter-name>CasAuthenticationFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.authentication.cas.CasAuthenticationFilter</filter-class>
 	</filter>
 	<filter>
-		<filter-name>CasAuthenticationFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.authentication.cas.CasAuthenticationFilter</filter-class>
+	    <filter-name>SetUserViewFilter</filter-name>
+	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter</filter-class>
 	</filter>
 	<filter>
-		<filter-name>SetUserViewFilter</filter-name>
-		<filter-class>pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter</filter-class>
+	    <filter-name>indexFilter</filter-name>
+	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter</filter-class>
 	</filter>
 	<filter>
-		<filter-name>JerseyOAuth2Filter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyOAuth2Filter</filter-class>
+	    <filter-name>ManagerFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ManagerFilter</filter-class>
+	</filter>
+    <filter>
+        <filter-name>PathAccessControlFilter</filter-name>
+        <filter-class>pt.ist.fenixWebFramework.servlets.filters.PathAccessControlFilter</filter-class>
+        <init-param>
+            <param-name>use-request-path</param-name>
+            <param-value>true</param-value> 
+        </init-param>
+    </filter>
+	<filter>
+		 <filter-name>ProfilingFilter</filter-name>
+		 <filter-class>pt.ist.fenixWebFramework.servlets.filters.ProfilingFilter</filter-class>
 	</filter>
 	<filter>
-		<filter-name>indexFilter</filter-name>
-		<filter-class>pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter</filter-class>
+	    <filter-name>I18NFilter</filter-name>
+	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.I18NFilter</filter-class>
 	</filter>
 	<filter>
-		<filter-name>ManagerFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ManagerFilter</filter-class>
+	    <filter-name>LoginPageFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.LoginPageFilter</filter-class>
 	</filter>
-	<filter>
-		<filter-name>PathAccessControlFilter</filter-name>
-		<filter-class>pt.ist.fenixWebFramework.servlets.filters.PathAccessControlFilter</filter-class>
+    <filter>
+        <filter-name>GeneralForwardFilter</filter-name>
+        <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.GeneralForwardFilter</filter-class>
+        <init-param>
+            <param-name>notFoundURI</param-name>
+            <param-value>/publico/notFound.do</param-value>
+        </init-param>
+        <init-param>
+            <param-name>siteListURI</param-name>
+            <param-value>/publico/showExecutionCourseSites.do?method=listSites&amp;degreeID=%s</param-value>
+        </init-param>
+        <init-param>
+            <param-name>executionCourseSiteURI</param-name>
+            <param-value>/publico/executionCourse.do?method=%s&amp;executionCourseID=%s</param-value>
+        </init-param>
+        <init-param>            
+            <param-name>scheduleListURI</param-name>
+            <param-value>/publico/showClasses.do?method=listClasses&amp;degreeID=%s</param-value>
+        </init-param>
+        <init-param>            
+            <param-name>classScheduleURI</param-name>
+            <param-value>/publico/viewClassTimeTableNew.do?classId=%s&amp;className=%s&amp;degreeCurricularPlanID=%s&amp;nameDegreeCurricularPlan=%s&amp;degreeID=%s&amp;degreeInitials=%s</param-value>
+        </init-param>
+        <init-param>      
+            <param-name>examListURI</param-name>
+            <param-value>/publico/chooseExamsMapContextDANew.do?method=choose&amp;degreeID=%s</param-value>
+        </init-param>
+        <init-param>
+            <param-name>degreeURI</param-name>
+            <param-value>/publico/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=%s&amp;degreeID=%s</param-value>
+        </init-param>
 		<init-param>
-			<param-name>use-request-path</param-name>
-			<param-value>true</param-value>
-		</init-param>
-	</filter>
-	<filter>
-		<filter-name>ProfilingFilter</filter-name>
-		<filter-class>pt.ist.fenixWebFramework.servlets.filters.ProfilingFilter</filter-class>
-	</filter>
-	<filter>
-		<filter-name>I18NFilter</filter-name>
-		<filter-class>pt.ist.fenixWebFramework.servlets.filters.I18NFilter</filter-class>
-	</filter>
-	<filter>
-		<filter-name>LoginPageFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.LoginPageFilter</filter-class>
-	</filter>
-	<filter>
-		<filter-name>GeneralForwardFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.GeneralForwardFilter</filter-class>
-		<init-param>
-			<param-name>notFoundURI</param-name>
-			<param-value>/publico/notFound.do</param-value>
-		</init-param>
-		<init-param>
-			<param-name>siteListURI</param-name>
-			<param-value>/publico/showExecutionCourseSites.do?method=listSites&amp;degreeID=%s</param-value>
-		</init-param>
-		<init-param>
-			<param-name>executionCourseSiteURI</param-name>
-			<param-value>/publico/executionCourse.do?method=%s&amp;executionCourseID=%s</param-value>
-		</init-param>
-		<init-param>
-			<param-name>scheduleListURI</param-name>
-			<param-value>/publico/showClasses.do?method=listClasses&amp;degreeID=%s</param-value>
-		</init-param>
-		<init-param>
-			<param-name>classScheduleURI</param-name>
-			<param-value>/publico/viewClassTimeTableNew.do?classId=%s&amp;className=%s&amp;degreeCurricularPlanID=%s&amp;nameDegreeCurricularPlan=%s&amp;degreeID=%s&amp;degreeInitials=%s</param-value>
-		</init-param>
-		<init-param>
-			<param-name>examListURI</param-name>
-			<param-value>/publico/chooseExamsMapContextDANew.do?method=choose&amp;degreeID=%s</param-value>
-		</init-param>
-		<init-param>
-			<param-name>degreeURI</param-name>
-			<param-value>/publico/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=%s&amp;degreeID=%s</param-value>
-		</init-param>
-		<init-param>
-			<param-name>degreeSiteURI</param-name>
-			<param-value>/publico/showDegreeSiteContent.do?method=%s&amp;degreeID=%s</param-value>
-		</init-param>
-	</filter>
+            <param-name>degreeSiteURI</param-name>
+            <param-value>/publico/showDegreeSiteContent.do?method=%s&amp;degreeID=%s</param-value>
+        </init-param>
+    </filter>
 	<filter>
 		<filter-name>CASFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.CASFilter</filter-class>
-	</filter>
+    </filter>
 	<filter>
 		<filter-name>BlankResponseFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.BlankResponseFilter</filter-class>
-	</filter>
-	<filter>
-		<description>
+    </filter>
+    <filter>
+        <description>
             This filter is used to check a requested path against the model of functionalities. 
             The request proceeds normally if the path is not mapped in the model or if the targeted 
             functionality does not have an availability policy defined.
         </description>
-		<filter-name>FunctionalityAccessFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.CheckAvailabilityFilter</filter-class>
+        <filter-name>FunctionalityAccessFilter</filter-name>
+        <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.CheckAvailabilityFilter</filter-class>
+    </filter>
+   	<filter>
+	    <filter-name>ContextFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ContextFilter</filter-class>
+	</filter>
+   	<filter>
+	    <filter-name>RequestChecksumFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestChecksumFilter</filter-class>
+	</filter>
+   	<filter>
+	    <filter-name>RequestRewriteFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestRewriteFilter</filter-class>
+	</filter>
+   	<filter>
+	    <filter-name>ContentFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentFilter</filter-class>
 	</filter>
 	<filter>
-		<filter-name>ContextFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ContextFilter</filter-class>
+	    <filter-name>MissingCandidacyInformationFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.MissingCandidacyInformationFilter</filter-class>
 	</filter>
-	<filter>
-		<filter-name>RequestChecksumFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestChecksumFilter</filter-class>
-	</filter>
-	<filter>
-		<filter-name>RequestRewriteFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestRewriteFilter</filter-class>
-	</filter>
-	<filter>
-		<filter-name>ContentFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentFilter</filter-class>
-	</filter>
-	<filter>
-		<filter-name>MissingCandidacyInformationFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.MissingCandidacyInformationFilter</filter-class>
-	</filter>
-	<filter>
-		<filter-name>UncaughtExceptionFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.UncaughtExceptionFilter</filter-class>
+   	<filter>
+	    <filter-name>UncaughtExceptionFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.UncaughtExceptionFilter</filter-class>
 	</filter>
 	<filter>
 		<filter-name>ProcessCandidacyPrintAllDocumentsFilter</filter-name>
@@ -174,52 +169,52 @@
 	<filter>
 		<filter-name>StaticCacheFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.StaticCacheFilter</filter-class>
+	</filter>	
+	<filter>
+		<filter-name>XSSProtectionFilter</filter-name>
+		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.XSSProtectionFilter</filter-class>
+		<description>
+				 This is used to prevent browsers to interpret a post request with iframes as a XSS attack.
+ 				 The problem occurs when someone inserts html content with source code in a form.
+ 				 Since this is wanted behaviour, the header X-XSS-Protection must be set to 0.
+ 		</description>
 	</filter>
 	<!-- Filter Mapping -->
 	<filter-mapping>
-		<filter-name>JerseyAuthFilter</filter-name>
-		<url-pattern>/jersey/services/*</url-pattern>
+ 		 <filter-name>RequestIgnorer</filter-name>
+ 		 <url-pattern>/favicon.ico</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>RequestIgnorer</filter-name>
-		<url-pattern>/favicon.ico</url-pattern>
+ 		 <filter-name>LoginPageFilter</filter-name>
+ 		 <url-pattern>/login</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
-		<filter-name>LoginPageFilter</filter-name>
-		<url-pattern>/login</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>PathAccessControlFilter</filter-name>
-		<url-pattern>/*</url-pattern><!-- generate mappings only for paths that 
-			have restrictions configured -->
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>StaticCacheFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+    <filter-mapping>
+        <filter-name>PathAccessControlFilter</filter-name>
+        <url-pattern>/*</url-pattern><!-- generate mappings only for paths that have restrictions configured -->
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>StaticCacheFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+    </filter-mapping>
 	<filter-mapping>
 		<filter-name>MultipartFilter</filter-name>
 		<url-pattern>*.faces</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>CharsetEncoding</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+        <filter-name>CharsetEncoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 	<filter-mapping>
 		<filter-name>CloseTxFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>CasAuthenticationFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+        <filter-name>CasAuthenticationFilter</filter-name>
+        	<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>SetUserViewFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>JerseyOAuth2Filter</filter-name>
-		<url-pattern>/jersey/private/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>UncaughtExceptionFilter</filter-name>
@@ -238,51 +233,51 @@
 		<url-pattern>/domainbrowser/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>indexFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+	    <filter-name>indexFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>ProfilingFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+ 		 <filter-name>ProfilingFilter</filter-name>
+ 		 <url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
-		<filter-name>CASFilter</filter-name>
-		<url-pattern>/loginCAS.do</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>CASFilter</filter-name>
-		<url-pattern>/loginPage.jsp</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>CASFilter</filter-name>
-		<url-pattern>/login.do</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>BlankResponseFilter</filter-name>
-		<url-pattern>/blank</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>ContextFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+   	<filter-mapping>
+	    <filter-name>CASFilter</filter-name>
+	    <url-pattern>/loginCAS.do</url-pattern>
+    </filter-mapping>
+   	<filter-mapping>
+	    <filter-name>CASFilter</filter-name>
+	    <url-pattern>/loginPage.jsp</url-pattern>
+    </filter-mapping>
+   	<filter-mapping>
+	    <filter-name>CASFilter</filter-name>
+	    <url-pattern>/login.do</url-pattern>
+    </filter-mapping>
+   	<filter-mapping>
+	    <filter-name>BlankResponseFilter</filter-name>
+	    <url-pattern>/blank</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ContextFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 	<filter-mapping>
 		<filter-name>RequestRewriteFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>GeneralForwardFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping>    
+    <filter-mapping>
+        <filter-name>GeneralForwardFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 	<filter-mapping>
 		<filter-name>RequestChecksumFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
-		<filter-name>FunctionalityAccessFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-	</filter-mapping>
+    <filter-mapping>
+        <filter-name>FunctionalityAccessFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
 	<filter-mapping>
 		<filter-name>ContentFilter</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -303,31 +298,18 @@
 		<filter-name>AnnualTeachingCreditsDocumentFilter</filter-name>
 		<url-pattern>/departmentAdmOffice/annualTeachingCreditsDocument.do</url-pattern>
 	</filter-mapping>
-	<!-- Listeners -->
-	<listener>
-		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
-	</listener>
-	<servlet>
-		<servlet-name>StartupServlet</servlet-name>
-		<servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.startup.StartupServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
-		<servlet-name>FacesServlet</servlet-name>
-		<servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.jsf.FenixFacesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
-		<servlet-name>action</servlet-name>
-		<servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.ActionServletWrapper</servlet-class>
-		<load-on-startup>2</load-on-startup>
-	</servlet>
-	<servlet>
-		<servlet-name>DomainBrowser</servlet-name>
-		<servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.DomainBrowserServlet</servlet-class>
-		<load-on-startup>2</load-on-startup>
-	</servlet>
-	<servlet>
+	<filter-mapping>
+		<filter-name>XSSProtectionFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
+	<!-- Servlet -->
+     <servlet>
+        <servlet-name>action</servlet-name>
+        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.ActionServletWrapper</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet>
 		<display-name>DWR Servlet</display-name>
 		<servlet-name>dwr-invoker</servlet-name>
 		<servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
@@ -336,191 +318,93 @@
 			<param-value>true</param-value>
 		</init-param>
 	</servlet>
-	<servlet>
-		<servlet-name>AutoCompleteServlet</servlet-name>
-		<servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.ajax.AutoCompleteServlet</servlet-class>
-		<load-on-startup>2</load-on-startup>
-	</servlet>
-	<servlet>
-		<servlet-name>DeployNotifierServlet</servlet-name>
-		<servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.ajax.DeployNotifierServlet</servlet-class>
-		<load-on-startup>2</load-on-startup>
-	</servlet>
-	<servlet>
-		<servlet-name>MathMlServlet</servlet-name>
-		<servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.MathMlServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>FileDownloadServlet</servlet-name>
-		<servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.FileDownloadServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<display-name>XFire Servlet</display-name>
-		<servlet-name>XFireServlet</servlet-name>
-		<servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>FenixGWTServlet</servlet-name>
-		<servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.gwt.FenixGWTServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>Jersey Web Application</servlet-name>
-		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-<!-- 		<init-param> -->
-<!-- 			<param-name>com.sun.jersey.config.property.packages</param-name> -->
-<!-- 			<param-value>net.sourceforge.fenixedu.webServices.jersey</param-value> -->
-<!-- 		</init-param> -->
-		<init-param>
+    <servlet>
+        <servlet-name>MathMlServlet</servlet-name>
+        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.MathMlServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <display-name>XFire Servlet</display-name>
+        <servlet-name>XFireServlet</servlet-name>
+        <servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
+    </servlet>
+    <servlet>
+       <servlet-name>Jersey Web Application</servlet-name>
+       <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+       <init-param>
 			<param-name>com.sun.jersey.config.property.resourceConfigClass</param-name>			
 			<param-value>net.sourceforge.fenixedu.webServices.jersey.FenixJerseyPackageResourceConfig</param-value>
 		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>net.sourceforge.fenixedu.webServices.jersey</param-value>
-		</init-param>
-		<init-param>
-         <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
-         <param-value>net.sourceforge.fenixedu.webServices.jersey.FenixJerseyAuthScopeRequestFilter</param-value>
-     </init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-
-	<!-- Servlet Mapping -->
-	<servlet-mapping>
-		<servlet-name>Jersey Web Application</servlet-name>
-		<url-pattern>/jersey/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>XFireServlet</servlet-name>
-		<url-pattern>/servlet/XFireServlet/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>XFireServlet</servlet-name>
-		<url-pattern>/services/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
+       <init-param>
+      		<param-name>com.sun.jersey.config.property.packages</param-name>
+      		<param-value>net.sourceforge.fenixedu.webServices.jersey</param-value>
+    	</init-param>
+     </servlet>
+    
+    <!-- Servlet Mapping -->
+    <servlet-mapping>
+       <servlet-name>Jersey Web Application</servlet-name>
+       <url-pattern>/jersey/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>XFireServlet</servlet-name>
+        <url-pattern>/servlet/XFireServlet/*</url-pattern>
+    </servlet-mapping>    
+    <servlet-mapping>
+        <servlet-name>XFireServlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
+   	<servlet-mapping>
 		<servlet-name>MathMlServlet</servlet-name>
 		<url-pattern>/mathml/MathMlServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>FileDownloadServlet</servlet-name>
-		<url-pattern>/downloadFile/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>AutoCompleteServlet</servlet-name>
-		<url-pattern>/ajax/AutoCompleteServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DeployNotifierServlet</servlet-name>
-		<url-pattern>/ajax/DeployNotifierServlet</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>dwr-invoker</servlet-name>
 		<url-pattern>/dwr/*</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>FacesServlet</servlet-name>
-		<url-pattern>*.faces</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>action</servlet-name>
-		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DomainBrowser</servlet-name>
-		<url-pattern>/domainbrowser/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>FenixGWTServlet</servlet-name>
-		<url-pattern>*.gwt</url-pattern>
-	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
 
 	<session-config>
-		<session-timeout>120</session-timeout>
+			<session-timeout>120</session-timeout>
 	</session-config>
-
+	
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+    	<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-
+	
 	<error-page>
-		<exception-type>net.sourceforge.fenixedu.accessControl.IllegalDataAccessException</exception-type>
-		<location>/exception/notAuthorizedForward.jsp</location>
+	    <exception-type>net.sourceforge.fenixedu.accessControl.IllegalDataAccessException</exception-type>
+	    <location>/exception/notAuthorizedForward.jsp</location>
 	</error-page>
 	<error-page>
-		<exception-type>java.lang.Exception</exception-type>
-		<location>/showErrorPage.do</location>
+	    <exception-type>java.lang.Exception</exception-type>
+	    <location>/showErrorPage.do</location>
 	</error-page>
-	<jsp-config>
-		<taglib>
-			<taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
-			<taglib-location>/WEB-INF/struts-html.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri>
-			<taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri>
-			<taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/app.tld</taglib-uri>
-			<taglib-location>/WEB-INF/app.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/c.tld</taglib-uri>
-			<taglib-location>/WEB-INF/c.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/html_basic.tld</taglib-uri>
-			<taglib-location>/WEB-INF/html_basic.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/jsf_core.tld</taglib-uri>
-			<taglib-location>/WEB-INF/jsf_core.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/jsf_tiles.tld</taglib-uri>
-			<taglib-location>/WEB-INF/jsf_tiles.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/taglibs-datetime.tld</taglib-uri>
-			<taglib-location>/WEB-INF/taglibs-datetime.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/taglibs-string.tld</taglib-uri>
-			<taglib-location>/WEB-INF/taglibs-string.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/fenix-renderers.tld</taglib-uri>
-			<taglib-location>/WEB-INF/fenix-renderers.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/rssutils.tld</taglib-uri>
-			<taglib-location>/WEB-INF/rssutils.tld</taglib-location>
-		</taglib>
+	
+    <jsp-config>
 		<jsp-property-group>
-			<description>All JSPs</description>
-			<url-pattern>*.jsp</url-pattern>
-			<el-ignored>true</el-ignored>
-			<!--<page-encoding>UTF-8</page-encoding> -->
-			<page-encoding>UTF-8</page-encoding>
-		</jsp-property-group>
-	</jsp-config>
-
+	      <description>All JSPs</description>
+	      <url-pattern>*.jsp</url-pattern>
+	      <el-ignored>true</el-ignored>
+	      <!--<page-encoding>UTF-8</page-encoding>-->
+	      <page-encoding>UTF-8</page-encoding>
+	    </jsp-property-group>
+    </jsp-config>
+    
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>KerberosPasswordCheck</web-resource-name>
-			<description />
-			<url-pattern>/checkKerberosPassword.do</url-pattern>
-			<http-method>POST</http-method>
-			<http-method>GET</http-method>
-		</web-resource-collection>
-		<user-data-constraint>
-			<description>SSL</description>
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
-		</user-data-constraint>
+	          <web-resource-name>KerberosPasswordCheck</web-resource-name>
+	          <description />
+	          <url-pattern>/checkKerberosPassword.do</url-pattern>
+	          <http-method>POST</http-method>
+	          <http-method>GET</http-method>
+	     </web-resource-collection>
+	     <user-data-constraint>
+	          <description>SSL</description>
+	          <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+	     </user-data-constraint>
 	</security-constraint>
 
 </web-app>
