@@ -1,14 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.SortedSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.joda.time.YearMonthDay;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class DeleteLessonInstance {
@@ -24,7 +25,9 @@ public class DeleteLessonInstance {
     @Atomic
     public static void run(final SortedSet<NextPossibleSummaryLessonsAndDatesBean> set) {
         final NextPossibleSummaryLessonsAndDatesBean last = set.last();
-        last.getLesson().refreshPeriodAndInstancesInSummaryCreation(last.getDate().plusDays(1));
+        final Lesson lesson = last.getLesson();
+        final YearMonthDay date = last.getDate();
+        lesson.refreshPeriodAndInstancesInSummaryCreation(lesson.isBiWeeklyOffset() ? date.plusDays(8) : date.plusDays(1));
         for (final NextPossibleSummaryLessonsAndDatesBean n : set) {
             run(n.getLesson(), n.getDate());
         }
