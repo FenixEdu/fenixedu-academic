@@ -18,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -51,6 +52,9 @@ import net.sourceforge.fenixedu.domain.util.icalendar.CalendarFactory;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
 import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPerson;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPerson.FenixPhoto;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPerson.FenixRole;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
@@ -68,6 +72,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import com.google.common.base.Joiner;
 import com.google.common.net.HttpHeaders;
 
+@SuppressWarnings("unchecked")
 @Path("/private/v1")
 public class JerseyPrivate {
 
@@ -94,79 +99,61 @@ public class JerseyPrivate {
         return mls.getContent();
     }
 
+    /**
+     * @title Personal information
+     * @summary It will return name, istid, campus, email, photo and contacts
+     * @returns only public contacts and photo are available
+     */
     @GET
-    @Produces(JSON_UTF8)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("person")
     @FenixAPIScope(PERSONAL_SCOPE)
-    public String person() {
-
-        JSONObject jsonResult = new JSONObject();
-
-        JSONArray jsonArrayRole = new JSONArray();
+    public FenixPerson person() {
 
         final Person person = getPerson();
-        if (person == null) {
-            return jsonResult.toString();
-        }
-
-        if (isTeacher(person)) {
-            //JSONObject jsonRoleInfo = new JSONObject();
-            //jsonRoleInfo.put("roleName", "TEACHING");
-            jsonArrayRole.add("TEACHING");
+        PersonInformationBean pib = new PersonInformationBean(person, true);
+        
+        final Set<FenixRole> roles = new HashSet<FenixRole>();
+        
+        if (isTeacher(person) || person.hasRole(RoleType.TEACHER)) {
+            roles.add(new FenixPerson.TeacherFenixRole(pib.getTeacherDepartment()));
         }
 
         if (person.hasRole(RoleType.STUDENT)) {
-            jsonArrayRole.add(RoleType.STUDENT.getName());
+            roles.add(new FenixPerson.StudentFenixRole(pib.getStudentDegrees()));
+            
         }
 
         if (person.hasRole(RoleType.ALUMNI)) {
-            jsonArrayRole.add(RoleType.ALUMNI.getName());
+            roles.add(new FenixPerson.AlumniFenixRole());
         }
-
-        if (person.hasRole(RoleType.TEACHER)) {
-            jsonArrayRole.add(RoleType.TEACHER.getName());
-        }
-
-        jsonResult.put("roles", jsonArrayRole);
-
-        PersonInformationBean pib = new PersonInformationBean(person);
-        jsonResult.put("name", pib.getName());
-        jsonResult.put("campus", pib.getCampus());
-        jsonResult.put("mail", pib.getEmail());
-        jsonResult.put("istId", person.getIstUsername());
-
-        jsonResult.put("degree", getInformation(pib.getStudentDegrees()));
-
-        jsonResult.put("personalMail", getInformation(pib.getPersonalEmails()));
-
-        jsonResult.put("workMail", getInformation(pib.getWorkEmails()));
-
-        jsonResult.put("webAddress", getInformation(pib.getPersonalWebAdresses()));
-
-        jsonResult.put("workWebAddress", getInformation(pib.getWorkWebAdresses()));
-
-        jsonResult.put("address", person.getAddress());
-
-        addPhoto(jsonResult, person);
-
-        return jsonResult.toJSONString();
+        
+        final String name = pib.getName();
+        final String istid = person.getIstUsername();
+        final String campus = pib.getCampus();
+        final String email = pib.getEmail();
+        final List<String> personalEmails = pib.getPersonalEmails();
+        final List<String> workEmails = pib.getWorkEmails();
+        List<String> personalWebAdresses = pib.getPersonalWebAdresses();
+        List<String> workWebAdresses = pib.getWorkWebAdresses();
+        final FenixPhoto photo = getPhoto(person);
+        
+        return new FenixPerson(campus, roles, photo, name, istid, email, personalEmails, workEmails, personalWebAdresses, workWebAdresses);
     }
 
-    private void addPhoto(final JSONObject jsonResult, final Person person) {
-        final JSONObject jsonPhoto = new JSONObject();
+    private FenixPhoto getPhoto(final Person person) {
+        FenixPhoto photo = null;
         try {
             final Photograph personalPhoto = person.getPersonalPhoto();
             if (person.isPhotoAvailableToCurrentUser()) {
                 final PictureAvatar avatar = personalPhoto.getAvatar();
-                byte[] bytes = avatar.getBytes();
-                jsonPhoto.put("type", avatar.getPictureFileFormat().getMimeType());
-                jsonPhoto.put("data", Base64.encodeBase64String(bytes));
+                String type = avatar.getPictureFileFormat().getMimeType();
+                String data = Base64.encodeBase64String(avatar.getBytes());
+                photo = new FenixPhoto(type, data);
             }
         } catch (NullPointerException npe) {
-
-        } finally {
-            jsonResult.put("photo", jsonPhoto);
         }
+        return photo;
     }
 
     private Person getPerson() {
@@ -175,17 +162,6 @@ public class JerseyPrivate {
             return user.getPerson();
         }
         return null;
-    }
-
-    private JSONArray getInformation(List<String> list) {
-        JSONArray jsonArray = new JSONArray();
-        for (String string : list) {
-            JSONObject jsonInfo = new JSONObject();
-            jsonInfo.put("info", string);
-            jsonArray.add(jsonInfo);
-        }
-        return jsonArray;
-
     }
 
     @FenixAPIScope(CURRICULAR_SCOPE)
@@ -674,8 +650,15 @@ public class JerseyPrivate {
             return false;
         }
 
-        if (person.getProfessorshipsSet().size() != 0) {
-            return true;
+        Set<Professorship> professorshipsSet = person.getProfessorshipsSet();
+        if (!professorshipsSet.isEmpty()) {
+            for (Professorship professorship : professorshipsSet){
+               ExecutionCourse executionCourse = professorship.getExecutionCourse();
+               ExecutionSemester readActualExecutionSemester = ExecutionSemester.readActualExecutionSemester();
+               if(readActualExecutionSemester.equals(executionCourse.getExecutionPeriod())) {
+                   return true;
+               }
+            }
         }
 
         return false;

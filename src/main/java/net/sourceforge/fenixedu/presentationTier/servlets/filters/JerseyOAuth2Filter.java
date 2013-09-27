@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -15,6 +13,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.OAuthProperties;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.domain.AppUserSession;
@@ -31,12 +30,14 @@ import org.apache.amber.oauth2.common.message.OAuthResponse;
 import org.apache.amber.oauth2.common.message.OAuthResponse.OAuthErrorResponseBuilder;
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 @WebFilter(urlPatterns = "/jersey/private/*")
 public class JerseyOAuth2Filter implements Filter {
 
     final static String ACCESS_TOKEN = "access_token";
 
-    private static boolean allowIstIds = false;
+    private static boolean allowIstIds = OAuthProperties.getFenixApiAllowIstIds();
 
     @Override
     public void destroy() {
