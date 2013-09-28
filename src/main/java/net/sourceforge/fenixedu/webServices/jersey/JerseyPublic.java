@@ -6,7 +6,6 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -68,6 +67,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Floor;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixAbout;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourse;
@@ -87,20 +87,10 @@ import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace.Room.RoomEvent.WrittenEvaluationEvent;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.JSONObject;
 
 @Path("/public/v1")
 public class JerseyPublic {
-
-    private final static String MediaTypeJsonUtf8 = "application/json; charset=utf-8";
-
-    private static final SimpleDateFormat dataFormatDay = new SimpleDateFormat("dd/MM/yyyy");
-    private static final SimpleDateFormat dataFormatHour = new SimpleDateFormat("HH:mm");
-
-    private static final DateTimeFormatter formatDay = DateTimeFormat.forPattern("dd/MM/yyyy");
-    private static final DateTimeFormatter formatHour = DateTimeFormat.forPattern("HH:mm");
 
     /**
      * IST generic information
@@ -109,7 +99,7 @@ public class JerseyPublic {
      * @return news and events rss
      */
     @GET
-    @Produces(MediaTypeJsonUtf8)
+    @Produces(JerseyPrivate.JSON_UTF8)
     @Path("about")
     public FenixAbout about() {
         return FenixAbout.getInstance();
@@ -151,7 +141,7 @@ public class JerseyPublic {
      * @param year ("yyyy/yyyy")
      */
     @GET
-    @Produces(MediaTypeJsonUtf8)
+    @Produces(JerseyPrivate.JSON_UTF8)
     @Path("degrees")
     public List<FenixDegree> degrees(@QueryParam("year") String year) {
 
@@ -227,9 +217,9 @@ public class JerseyPublic {
      * @param year ("yyyy/yyyy")
      */
     @GET
-    @Produces(MediaTypeJsonUtf8)
-    @Path("degrees/{oid}")
-    public FenixDegree degreesByOid(@PathParam("oid") String oid, @PathParam("year") String year) {
+    @Produces(JerseyPrivate.JSON_UTF8)
+    @Path("degrees/{id}")
+    public FenixDegree degreesByOid(@PathParam("id") String oid, @PathParam("year") String year) {
         Degree degree = getDomainObject(oid);
         ExecutionYear executionYear = getExecutionYear(year);
 
@@ -248,9 +238,9 @@ public class JerseyPublic {
      * @param year ("yyyy/yyyy")
      */
     @GET
-    @Produces(MediaTypeJsonUtf8)
-    @Path("degrees/{oid}/courses")
-    public List<FenixExecutionCourse> coursesByODegreesId(@PathParam("oid") String oid, @QueryParam("year") String year) {
+    @Produces(JerseyPrivate.JSON_UTF8)
+    @Path("degrees/{id}/courses")
+    public List<FenixExecutionCourse> coursesByODegreesId(@PathParam("id") String oid, @QueryParam("year") String year) {
 
         Degree degree = getDomainObject(oid);
 
@@ -319,9 +309,9 @@ public class JerseyPublic {
      * @return
      */
     @GET
-    @Produces(MediaTypeJsonUtf8)
-    @Path("courses/{oid}/")
-    public FenixCourse coursesByOid(@PathParam("oid") String oid) {
+    @Produces(JerseyPrivate.JSON_UTF8)
+    @Path("courses/{id}/")
+    public FenixCourse coursesByOid(@PathParam("id") String oid) {
         ExecutionCourse executionCourse = getDomainObject(oid);
 
         String acronym = executionCourse.getSigla();
@@ -398,9 +388,9 @@ public class JerseyPublic {
      * @param oid course id
      */
     @GET
-    @Produces(MediaTypeJsonUtf8)
-    @Path("courses/{oid}/groups")
-    public FenixCourseGroup groupsCoursesByOid(@PathParam("oid") String oid) {
+    @Produces(JerseyPrivate.JSON_UTF8)
+    @Path("courses/{id}/groups")
+    public FenixCourseGroup groupsCoursesByOid(@PathParam("id") String oid) {
 
         ExecutionCourse executionCourse = getDomainObject(oid);
 
@@ -446,9 +436,9 @@ public class JerseyPublic {
      * @return
      */
     @GET
-    @Produces(MediaTypeJsonUtf8)
-    @Path("courses/{oid}/students")
-    public FenixCourseStudents studentsCoursesByOid(@PathParam("oid") String oid) {
+    @Produces(JerseyPrivate.JSON_UTF8)
+    @Path("courses/{id}/students")
+    public FenixCourseStudents studentsCoursesByOid(@PathParam("id") String oid) {
 
         ExecutionCourse executionCourse = getDomainObject(oid);
 
@@ -490,9 +480,9 @@ public class JerseyPublic {
      * @return
      */
     @GET
-    @Produces(MediaTypeJsonUtf8)
-    @Path("courses/{oid}/evaluations")
-    public List<FenixCourseEvaluation> evaluationCoursesByOid(@PathParam("oid") String oid) {
+    @Produces(JerseyPrivate.JSON_UTF8)
+    @Path("courses/{id}/evaluations")
+    public List<FenixCourseEvaluation> evaluationCoursesByOid(@PathParam("id") String oid) {
 
         ExecutionCourse executionCourse = getDomainObject(oid);
 
@@ -529,12 +519,12 @@ public class JerseyPublic {
         String endDay = null;
         String endTime = null;
         if (projectEvaluation.getProjectBeginDateTime() != null) {
-            beginningDay = formatDay.print(projectEvaluation.getProjectBeginDateTime());
-            beginningTime = formatHour.print(projectEvaluation.getProjectBeginDateTime());
+            beginningDay = JerseyPrivate.formatDay.print(projectEvaluation.getProjectBeginDateTime());
+            beginningTime = JerseyPrivate.formatHour.print(projectEvaluation.getProjectBeginDateTime());
         }
         if (projectEvaluation.getProjectEndDateTime() != null) {
-            endDay = formatDay.print(projectEvaluation.getProjectEndDateTime());
-            endTime = formatHour.print(projectEvaluation.getProjectEndDateTime());
+            endDay = JerseyPrivate.formatDay.print(projectEvaluation.getProjectEndDateTime());
+            endTime = JerseyPrivate.formatHour.print(projectEvaluation.getProjectEndDateTime());
 
         }
         return new FenixCourseEvaluation.Project(name, beginningDay, beginningTime, endDay, endTime);
@@ -545,10 +535,10 @@ public class JerseyPublic {
         String name = writtenEvaluation.getPresentationName();
         EvaluationType type = writtenEvaluation.getEvaluationType();
 
-        String day = dataFormatDay.format(writtenEvaluation.getDay().getTime());
+        String day = JerseyPrivate.dataFormatDay.format(writtenEvaluation.getDay().getTime());
 
-        String beginningTime = dataFormatHour.format(writtenEvaluation.getBeginning().getTime());
-        String endTime = dataFormatHour.format(writtenEvaluation.getEnd().getTime());
+        String beginningTime = JerseyPrivate.dataFormatHour.format(writtenEvaluation.getBeginning().getTime());
+        String endTime = JerseyPrivate.dataFormatHour.format(writtenEvaluation.getEnd().getTime());
 
         List<FenixCourseEvaluation.WrittenEvaluation.Room> rooms = new ArrayList<>();
 
@@ -568,16 +558,16 @@ public class JerseyPublic {
         String enrollmentEndTime = null;
 
         if (writtenEvaluation.getEnrollmentBeginDay() != null) {
-            enrollmentBeginDay = dataFormatHour.format(writtenEvaluation.getEnrollmentBeginDay().getTime());
+            enrollmentBeginDay = JerseyPrivate.dataFormatHour.format(writtenEvaluation.getEnrollmentBeginDay().getTime());
         }
         if (writtenEvaluation.getEnrollmentBeginTime() != null) {
-            enrollmentBeginTime = dataFormatHour.format(writtenEvaluation.getEnrollmentBeginTime().getTime());
+            enrollmentBeginTime = JerseyPrivate.dataFormatHour.format(writtenEvaluation.getEnrollmentBeginTime().getTime());
         }
         if (writtenEvaluation.getEnrollmentEndDay() != null) {
-            enrollmentEndDay = dataFormatDay.format(writtenEvaluation.getEnrollmentEndDay().getTime());
+            enrollmentEndDay = JerseyPrivate.dataFormatDay.format(writtenEvaluation.getEnrollmentEndDay().getTime());
         }
         if (writtenEvaluation.getEnrollmentEndTime() != null) {
-            enrollmentEndTime = dataFormatHour.format(writtenEvaluation.getEnrollmentEndTime().getTime());
+            enrollmentEndTime = JerseyPrivate.dataFormatHour.format(writtenEvaluation.getEnrollmentEndTime().getTime());
         }
 
         return new FenixCourseEvaluation.WrittenEvaluation(name, type, day, beginningTime, endTime, isEnrolmentPeriod,
@@ -592,9 +582,9 @@ public class JerseyPublic {
      * @return
      */
     @GET
-    @Produces(MediaTypeJsonUtf8)
-    @Path("courses/{oid}/schedule")
-    public FenixSchedule scheduleCoursesByOid(@PathParam("oid") String oid) {
+    @Produces(JerseyPrivate.JSON_UTF8)
+    @Path("courses/{id}/schedule")
+    public FenixSchedule scheduleCoursesByOid(@PathParam("id") String oid) {
 
         ExecutionCourse executionCourse = getDomainObject(oid);
 
@@ -608,10 +598,10 @@ public class JerseyPublic {
             String start = null;
             String end = null;
             if (occupationPeriod.getStartDate() != null) {
-                start = dataFormatDay.format(occupationPeriod.getStartDate().getTime());
+                start = JerseyPrivate.dataFormatDay.format(occupationPeriod.getStartDate().getTime());
             }
             if (occupationPeriod.getEndDate() != null) {
-                end = dataFormatDay.format(occupationPeriod.getEndDate().getTime());
+                end = JerseyPrivate.dataFormatDay.format(occupationPeriod.getEndDate().getTime());
             }
 
             periods.add(new FenixSchedule.Period(start, end));
@@ -622,8 +612,8 @@ public class JerseyPublic {
         for (Lesson lesson : executionCourse.getLessons()) {
             String weekDay = lesson.getWeekDay().getName();
             String lessonType = lesson.getShift().getShiftTypesCodePrettyPrint();
-            String start = dataFormatHour.format(lesson.getInicio().getTime());
-            String end = dataFormatHour.format(lesson.getFim().getTime());
+            String start = JerseyPrivate.dataFormatHour.format(lesson.getInicio().getTime());
+            String end = JerseyPrivate.dataFormatHour.format(lesson.getFim().getTime());
 
             FenixSchedule.Lesson.Room room = null;
 
@@ -647,7 +637,7 @@ public class JerseyPublic {
      * @return
      */
     @GET
-    @Produces(MediaTypeJsonUtf8)
+    @Produces(JerseyPrivate.JSON_UTF8)
     @Path("spaces")
     public List<FenixSpace> spaces() {
 
@@ -660,18 +650,18 @@ public class JerseyPublic {
     }
 
     /**
-     * 
      * Space information regarding space type (Campus, Building, Floor or Room)
      * 
-     * @summary Space by id
+     * @param oid
+     * @param day
      * @return
      */
     @GET
-    @Produces(MediaTypeJsonUtf8)
-    @Path("spaces/{oid}")
-    public FenixSpace spacesByOid(@PathParam("oid") String oid, @QueryParam("day") String day) {
+    @Produces(JerseyPrivate.JSON_UTF8)
+    @Path("spaces/{id}")
+    public FenixSpace spacesByOid(@PathParam("id") String oid, @QueryParam("day") String day) {
 
-        Resource resource = Resource.fromExternalId(oid);
+        Resource resource = OAuthUtils.getDomainObject(oid, Resource.class);
 
         if (resource.isCampus()) {
             return getFenixCampus((Campus) resource);
@@ -681,7 +671,7 @@ public class JerseyPublic {
         } else if (resource.isFloor()) {
             return getFenixFloor((Floor) resource);
         } else if (resource.isRoom()) {
-            return getFenixRoom((Room) resource, Calendar.getInstance());
+            return getFenixRoom((Room) resource, getRoomDay(day));
         }
 
         return null;
@@ -763,8 +753,8 @@ public class JerseyPublic {
                     String name = infoExecutionCourse.getNome();
                     String id = infoExecutionCourse.getExecutionCourse().getExternalId();
 
-                    String start = dataFormatHour.format(lesson.getInicio().getTime());
-                    String end = dataFormatHour.format(lesson.getFim().getTime());
+                    String start = JerseyPrivate.dataFormatHour.format(lesson.getInicio().getTime());
+                    String end = JerseyPrivate.dataFormatHour.format(lesson.getFim().getTime());
                     String weekday = lesson.getDiaSemana().getDiaSemanaString();
 
                     String info = lesson.getInfoShift().getShiftTypesCodePrettyPrint();
@@ -804,8 +794,8 @@ public class JerseyPublic {
                     } else if (infoWrittenEvaluation instanceof InfoWrittenTest) {
                         InfoWrittenTest infoWrittenTest = (InfoWrittenTest) infoWrittenEvaluation;
                         String description = infoWrittenTest.getDescription();
-                        start = dataFormatHour.format(infoWrittenTest.getInicio().getTime());
-                        end = dataFormatHour.format(infoWrittenTest.getFim().getTime());
+                        start = JerseyPrivate.dataFormatHour.format(infoWrittenTest.getInicio().getTime());
+                        end = JerseyPrivate.dataFormatHour.format(infoWrittenTest.getFim().getTime());
                         weekday = infoWrittenTest.getDiaSemana().getDiaSemanaString();
 
                         roomEvent =
@@ -818,8 +808,8 @@ public class JerseyPublic {
                     InfoGenericEvent infoGenericEvent = (InfoGenericEvent) showOccupation;
                     String description = infoGenericEvent.getDescription();
                     String title = infoGenericEvent.getTitle();
-                    String start = dataFormatHour.format(infoGenericEvent.getInicio().getTime());
-                    String end = dataFormatHour.format(infoGenericEvent.getFim().getTime());
+                    String start = JerseyPrivate.dataFormatHour.format(infoGenericEvent.getInicio().getTime());
+                    String end = JerseyPrivate.dataFormatHour.format(infoGenericEvent.getFim().getTime());
                     String weekday = infoGenericEvent.getDiaSemana().getDiaSemanaString();
 
                     roomEvent = new FenixSpace.Room.RoomEvent.GenericEvent(start, end, weekday, description, title);
@@ -871,33 +861,12 @@ public class JerseyPublic {
         Date date = null;
         try {
             if (!StringUtils.isBlank(day)) {
-                date = dataFormatDay.parse(day);
+                date = JerseyPrivate.dataFormatDay.parse(day);
                 rightNow.setTime(date);
             }
         } catch (ParseException e1) {
         }
         return rightNow;
-    }
-
-    private ExecutionSemester getExecutionSemester(String sem, String year) {
-        ExecutionSemester executionSemester;
-
-        boolean isBlank = StringUtils.isBlank(sem) || StringUtils.isBlank(year);
-        if (!isBlank) {
-            int semester;
-            try {
-                semester = Integer.parseInt(sem);
-            } catch (NumberFormatException e) {
-                semester = 0;
-            }
-            executionSemester = ExecutionSemester.readBySemesterAndExecutionYear(semester, year);
-            if (executionSemester == null) {
-                executionSemester = ExecutionSemester.readActualExecutionSemester();
-            }
-        } else {
-            executionSemester = ExecutionSemester.readActualExecutionSemester();
-        }
-        return executionSemester;
     }
 
     private ExecutionYear getExecutionYear(String year) {

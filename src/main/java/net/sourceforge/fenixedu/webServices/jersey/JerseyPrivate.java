@@ -97,12 +97,12 @@ public class JerseyPrivate {
     public final static String REGISTRATIONS_SCOPE = "registrations";
     public final static String CURRICULAR_SCOPE = "curricular";
 
-    private final static String JSON_UTF8 = "application/json; charset=utf-8";
+    public final static String JSON_UTF8 = "application/json; charset=utf-8";
 
-    private static final DateTimeFormatter formatDay = DateTimeFormat.forPattern("dd/MM/yyyy");
-    private static final DateTimeFormatter formatHour = DateTimeFormat.forPattern("HH:mm");
-    private static final SimpleDateFormat dataFormatDay = new SimpleDateFormat("dd/MM/yyyy");
-    private static final SimpleDateFormat dataFormatHour = new SimpleDateFormat("HH:mm");
+    public static final DateTimeFormatter formatDay = DateTimeFormat.forPattern("dd/MM/yyyy");
+    public static final DateTimeFormatter formatHour = DateTimeFormat.forPattern("HH:mm");
+    public static final SimpleDateFormat dataFormatDay = new SimpleDateFormat("dd/MM/yyyy");
+    public static final SimpleDateFormat dataFormatHour = new SimpleDateFormat("HH:mm");
 
     private static final String ENROL = "yes";
     private static final String UNENROL = "no";
@@ -142,6 +142,7 @@ public class JerseyPrivate {
      * 
      * @summary Personal Information
      * @return only public contacts and photo are available
+     * @servicetag PERSONAL_SCOPE
      */
     @GET
     @Produces(JSON_UTF8)
@@ -188,6 +189,7 @@ public class JerseyPrivate {
      * @param sem selected semester ("1" | "2")
      * @param year selected year ("yyyy/yyyy")
      * @return enrolled courses and teaching courses
+     * @servicetag CURRICULAR_SCOPE
      */
     @FenixAPIScope(CURRICULAR_SCOPE)
     @GET
@@ -284,6 +286,7 @@ public class JerseyPrivate {
      * @summary Evaluations calendar
      * @param format ("calendar" or "json")
      * @return If format is "calendar", returns iCal format. If not returns the following json.
+     * @servicetag SCHEDULE_SCOPE
      */
     @FenixAPIScope(SCHEDULE_SCOPE)
     @GET
@@ -334,6 +337,7 @@ public class JerseyPrivate {
      * @summary Classes calendar
      * @param format ("calendar" or "json")
      * @return If format is "calendar", returns iCal format. If not returns the following json.
+     * @servicetag SCHEDULE_SCOPE
      */
     @FenixAPIScope(SCHEDULE_SCOPE)
     @GET
@@ -357,6 +361,7 @@ public class JerseyPrivate {
      * Complete curriculum (for students)
      * 
      * @summary Curriculum
+     * @servicetag CURRICULAR_SCOPE
      */
     @FenixAPIScope(CURRICULAR_SCOPE)
     @GET
@@ -434,77 +439,6 @@ public class JerseyPrivate {
         return curriculums;
     }
 
-    /*
-
-      private JSONArray getStudentStatistics(List<Registration> registrations) {
-
-        JSONArray jsonCurricularPlan = new JSONArray();
-        JSONArray jsonExecutionSemester = new JSONArray();
-
-        for (Registration registration : registrations) {
-
-            for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
-                JSONObject jsonCurricularPlanInfo = new JSONObject();
-                jsonCurricularPlanInfo.put("curricularName", studentCurricularPlan.getName());
-                jsonCurricularPlanInfo.put("curricularStart", studentCurricularPlan.getStartDateYearMonthDay() + "");
-                jsonCurricularPlanInfo.put("curricularEnd", studentCurricularPlan.getEndDate() + "");
-
-                jsonCurricularPlanInfo.put("curricularPresentationName", studentCurricularPlan.getPresentationName());
-                jsonCurricularPlanInfo.put("curricularApprovedCourses",
-                        studentCurricularPlan.getNumberOfApprovedCurricularCourses());
-
-                //studentCurricularPlan.getFinalAverage(cycleType);
-                jsonCurricularPlanInfo.put("curricularDegreeType", studentCurricularPlan.getDegreeType().getName());
-                jsonCurricularPlanInfo.put("curricularCampus", studentCurricularPlan.getCurrentCampus().getName());
-                jsonCurricularPlanInfo.put("curricularApprovedEcts", studentCurricularPlan.getApprovedEctsCredits());
-
-                for (ExecutionSemester executionSemester : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
-
-                    jsonExecutionSemester.add(getRegistrationInfo(executionSemester, studentCurricularPlan));
-                }
-                jsonCurricularPlanInfo.put("curricularExecutionSemester", jsonExecutionSemester);
-                jsonCurricularPlan.add(jsonCurricularPlanInfo);
-            }
-
-        }
-
-        return jsonCurricularPlan;
-    }
-
-    public JSONObject getRegistrationInfo(ExecutionSemester executionSemester, StudentCurricularPlan studentCurricularPlan) {
-        JSONObject jsonexecutionPeriodStatisticsBean = new JSONObject();
-        JSONArray jsonexecutionCourseStatisticsBean = new JSONArray();
-
-        ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = new ExecutionPeriodStatisticsBean(executionSemester);
-        executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
-                .getEnrolmentsByExecutionPeriod(executionSemester));
-
-        jsonexecutionPeriodStatisticsBean.put("approvedCourses", executionPeriodStatisticsBean.getApprovedEnrolmentsNumber());
-        jsonexecutionPeriodStatisticsBean.put("approvedRation", executionPeriodStatisticsBean.getApprovedRatio());
-        jsonexecutionPeriodStatisticsBean.put("aritmeticAverage", executionPeriodStatisticsBean.getAritmeticAverage());
-        jsonexecutionPeriodStatisticsBean.put("totalEnrolment", executionPeriodStatisticsBean.getTotalEnrolmentsNumber());
-        jsonexecutionPeriodStatisticsBean.put("year", executionPeriodStatisticsBean.getExecutionPeriod().getYear());
-        jsonexecutionPeriodStatisticsBean.put("sem", executionPeriodStatisticsBean.getExecutionPeriod().getSemester());
-
-        for (Enrolment enrolment : executionPeriodStatisticsBean.getEnrolmentsWithinExecutionPeriod()) {
-            JSONObject jsonCourseInfo = new JSONObject();
-            jsonCourseInfo.put("courseName", mls(enrolment.getPresentationName()));
-            jsonCourseInfo.put("courseGrade", enrolment.getGrade().getValue());
-            jsonCourseInfo.put("courseEnrolments", enrolment.getNumberOfTotalEnrolmentsInThisCourse());
-            jsonCourseInfo.put("couseCredits", enrolment.getEctsCredits());;
-            ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionPeriodStatisticsBean.getExecutionPeriod());
-
-            if (executionCourse != null) {
-                String externalID = executionCourse.getExternalId();
-                jsonCourseInfo.put("courseId", externalID);
-            }
-            jsonexecutionCourseStatisticsBean.add(jsonCourseInfo);
-        }
-        jsonexecutionPeriodStatisticsBean.put("courseInfo", jsonexecutionCourseStatisticsBean);
-        return jsonexecutionPeriodStatisticsBean;
-    }
-     */
-
     private List<Event> calculateNotPayedEvents(final Person person) {
 
         final List<Event> result = new ArrayList<Event>();
@@ -520,6 +454,7 @@ public class JerseyPrivate {
      * 
      * @summary Gratuity payments
      * @return
+     * @servicetag PERSONAL_SCOPE
      */
     @FenixAPIScope(PERSONAL_SCOPE)
     @GET
@@ -568,6 +503,7 @@ public class JerseyPrivate {
      * 
      * @summary Evaluations
      * @return enrolled and not enrolled student's evaluations
+     * @servicetag ENROLMENTS_SCOPE
      */
     @FenixAPIScope(ENROLMENTS_SCOPE)
     @GET
@@ -634,12 +570,13 @@ public class JerseyPrivate {
      * @param oid evaluations id
      * @param enrol ( "yes" or "no")
      * @return all evaluations
+     * @servicetag ENROLMENTS_SCOPE
      */
     @FenixAPIScope(ENROLMENTS_SCOPE)
     @PUT
     @Produces(JSON_UTF8)
-    @Path("person/evaluations/{oid}")
-    public FenixEvaluations evaluations(@PathParam("oid") String oid, @QueryParam("format") String enrol,
+    @Path("person/evaluations/{id}")
+    public FenixEvaluations evaluations(@PathParam("id") String oid, @QueryParam("format") String enrol,
             @Context HttpServletResponse response, @Context HttpServletRequest request, @Context ServletContext context) {
 //        JSONObject jsonResult = new JSONObject();
 
