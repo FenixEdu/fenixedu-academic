@@ -1,11 +1,18 @@
 package net.sourceforge.fenixedu.webServices.jersey;
 
+import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.FenixFramework;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,7 +22,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -29,6 +35,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -61,16 +68,28 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Floor;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.util.EvaluationType;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixAbout;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourse;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourse.FenixCompetence;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourse.FenixCompetence.BiblioRef;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourseEvaluation;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourseGroup;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourseGroup.Grouping.Group;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourseGroup.Grouping.Group.Student;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourseStudents;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree.FenixDegreeInfo;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree.FenixTeacher;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixExecutionCourse;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSchedule;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace.Room.RoomEvent.WrittenEvaluationEvent;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Path("/public/v1")
 public class JerseyPublic {
@@ -83,182 +102,156 @@ public class JerseyPublic {
     private static final DateTimeFormatter formatDay = DateTimeFormat.forPattern("dd/MM/yyyy");
     private static final DateTimeFormatter formatHour = DateTimeFormat.forPattern("HH:mm");
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("hello")
-    public String hellofenix() {
-        return "Hello! Public V1";
-    }
-
+    /**
+     * IST generic information
+     * 
+     * @summary IST information
+     * @return news and events rss
+     */
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("about")
-    public String about() {
-        JSONObject jsonAbout = new JSONObject();
-        jsonAbout.put("newsRss", PropertiesManager.getProperty("fenix.api.news.rss.url"));
-        jsonAbout.put("eventsRss", PropertiesManager.getProperty("fenix.api.events.rss.url"));
-        return jsonAbout.toJSONString();
+    public FenixAbout about() {
+        return FenixAbout.getInstance();
     }
 
+    /***
+     * DEGREES
+     * 
+     */
+
+    private List<String> getTeacherPublicMail(Teacher teacher) {
+        final List<String> emails = new ArrayList<>();
+        if (teacher != null) {
+            for (EmailAddress emailAddress : teacher.getPerson().getEmailAddresses()) {
+                if (emailAddress.getVisibleToPublic()) {
+                    emails.add(emailAddress.getPresentationValue());
+                }
+            }
+        }
+        return emails;
+    }
+
+    private List<String> getTeacherPublicWebAddress(Teacher teacher) {
+        final List<String> urls = new ArrayList<>();
+        if (teacher != null) {
+            for (WebAddress webAddress : teacher.getPerson().getWebAddresses()) {
+                if (webAddress.getVisibleToPublic()) {
+                    urls.add(webAddress.getUrl());
+                }
+            }
+        }
+        return urls;
+    }
+
+    /**
+     * All public degrees
+     * 
+     * @summary All degrees
+     * @param year ("yyyy/yyyy")
+     */
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("degrees")
-    public String degrees(@QueryParam("year") String year) {
-        JSONArray infos = new JSONArray();
+    public List<FenixDegree> degrees(@QueryParam("year") String year) {
 
         ExecutionYear executionYear = getExecutionYear(year);
+
+        List<FenixDegree> fenixDegrees = new ArrayList<>();
+
         for (Degree degree : Degree.readBolonhaDegrees()) {
             if (degree.isBolonhaMasterOrDegree()) {
-
-                JSONArray teachersArray = new JSONArray();
-                JSONObject degreeSecondaryInfo = new JSONObject();
-                JSONObject degreeCampus = new JSONObject();
-
-                JSONObject degreeMainInfo = new JSONObject();
-
-                degreeMainInfo.put("id", degree.getExternalId());
-                degreeMainInfo.put("name", degree.getPresentationName());
-                degreeMainInfo.put("type", degree.getDegreeTypeName());
-                degreeMainInfo.put("sigla", degree.getSigla());
-                degreeMainInfo.put("typeName", degree.getDegreeType().getFilteredName());
-
-                for (Campus campus : degree.getCampus(executionYear)) {
-                    degreeCampus.put("campus", campus.getName());
-                }
-                degreeMainInfo.put("degreeCampus", degreeCampus);
-
-                DegreeInfo degreeInfo = degree.getDegreeInfoFor(executionYear);
-
-                if (degreeInfo != null) {
-
-                    degreeSecondaryInfo.put("name", mls(degreeInfo.getName()));
-                    degreeSecondaryInfo.put("description", mls(degreeInfo.getDescription()));
-                    degreeSecondaryInfo.put("objectives", mls(degreeInfo.getObjectives()));
-                    degreeSecondaryInfo.put("designFor", mls(degreeInfo.getDesignedFor()));
-                    degreeSecondaryInfo.put("requisites", mls(degreeInfo.getDegreeInfoCandidacy().getAccessRequisites()));
-                    degreeSecondaryInfo.put("profissionalExits", mls(degreeInfo.getProfessionalExits()));
-                    degreeSecondaryInfo.put("history", mls(degreeInfo.getHistory()));
-                    degreeSecondaryInfo.put("operationRegime", mls(degreeInfo.getOperationalRegime()));
-                    degreeSecondaryInfo.put("gratuity", mls(degreeInfo.getGratuity()));
-                    degreeSecondaryInfo.put("links", mls(degreeInfo.getLinks()));
-                }
-                degreeMainInfo.put("degreeInfo", degreeSecondaryInfo);
-
-                Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYear);
-
-                if (responsibleCoordinatorsTeachers.isEmpty()) {
-                    responsibleCoordinatorsTeachers = degree.getCurrentResponsibleCoordinatorsTeachers();
-                }
-
-                for (Teacher teacher : responsibleCoordinatorsTeachers) {
-                    JSONObject teacherInfo = new JSONObject();
-                    teacherInfo.put("name", teacher.getPerson().getName());
-                    teacherInfo.put("istId", teacher.getPerson().getIstUsername());
-                    teacherInfo.put("mail", getTeacherPublicMail(teacher));
-                    teacherInfo.put("url", getTeacherPublicWebAddress(teacher));
-                    teachersArray.add(teacherInfo);
-                }
-                degreeMainInfo.put("teachers", teachersArray);
-                infos.add(degreeMainInfo);
+                fenixDegrees.add(getFenixDegree(executionYear, degree));
             }
         }
-        return infos.toJSONString();
+        return fenixDegrees;
     }
 
-    private String mls(MultiLanguageString mls) {
-        if (mls == null) {
-            return StringUtils.EMPTY;
+    public FenixDegree getFenixDegree(ExecutionYear executionYear, Degree degree) {
+        List<String> degreeCampus = new ArrayList<>();
+
+        String id = degree.getExternalId();
+        String name = degree.getPresentationName();
+        String type = degree.getDegreeTypeName();
+        String sigla = degree.getSigla();
+        String typeName = degree.getDegreeType().getFilteredName();
+
+        for (Campus campus : degree.getCampus(executionYear)) {
+            degreeCampus.add(campus.getName());
         }
-        return mls.getContent();
+
+        DegreeInfo degreeInfo = degree.getDegreeInfoFor(executionYear);
+        FenixDegreeInfo fenixDegreeInfo = null;
+        if (degreeInfo != null) {
+
+            String description = mls(degreeInfo.getDescription());
+            String objectives = mls(degreeInfo.getObjectives());
+            String designFor = mls(degreeInfo.getDesignedFor());
+            String requisites = mls(degreeInfo.getDegreeInfoCandidacy().getAccessRequisites());
+            String profissionalExits = mls(degreeInfo.getProfessionalExits());
+            String history = mls(degreeInfo.getHistory());
+            String operationRegime = mls(degreeInfo.getOperationalRegime());
+            String gratuity = mls(degreeInfo.getGratuity());
+            String links = mls(degreeInfo.getLinks());
+            fenixDegreeInfo =
+                    new FenixDegreeInfo(typeName, description, objectives, designFor, requisites, profissionalExits, history,
+                            operationRegime, gratuity, links);
+        }
+
+        final List<FenixTeacher> teachers = new ArrayList<>();
+        Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYear);
+
+        if (responsibleCoordinatorsTeachers.isEmpty()) {
+            responsibleCoordinatorsTeachers = degree.getCurrentResponsibleCoordinatorsTeachers();
+        }
+
+        for (Teacher teacher : responsibleCoordinatorsTeachers) {
+            String teacherName = teacher.getPerson().getName();
+            String istId = teacher.getPerson().getIstUsername();
+            List<String> mails = getTeacherPublicMail(teacher);
+            List<String> urls = getTeacherPublicWebAddress(teacher);
+            teachers.add(new FenixTeacher(teacherName, istId, mails, urls));
+        }
+
+        FenixDegree fenixDegree =
+                new FenixDegree(executionYear.getName(), id, name, type, sigla, typeName, degreeCampus, fenixDegreeInfo, teachers);
+        return fenixDegree;
     }
 
+    /**
+     * 
+     * Retrieves information about degree with id
+     * 
+     * @summary Degree information
+     * @param oid degree id
+     * @param year ("yyyy/yyyy")
+     */
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("degrees/{oid}")
-    public String degreesByOid(@PathParam("oid") String oid, @QueryParam("year") String year) {
-        JSONObject jsonResult = new JSONObject();
-        JSONArray teachersArray = new JSONArray();
+    public FenixDegree degreesByOid(@PathParam("oid") String oid, @PathParam("year") String year) {
         Degree degree = getDomainObject(oid);
         ExecutionYear executionYear = getExecutionYear(year);
 
         if (degree.isBolonhaMasterOrDegree()) {
-            JSONObject degreeMainInfo = new JSONObject();
-
-            degreeMainInfo.put("id", degree.getExternalId());
-            degreeMainInfo.put("name", degree.getPresentationName());
-            degreeMainInfo.put("type", degree.getDegreeTypeName());
-            degreeMainInfo.put("sigla", degree.getSigla());
-
-            DegreeInfo degreeInfo = degree.getDegreeInfoFor(executionYear);
-
-            if (degreeInfo != null) {
-                JSONObject degreeSecondaryInfo = new JSONObject();
-
-                degreeSecondaryInfo.put("name", mls(degreeInfo.getName()));
-                degreeSecondaryInfo.put("description", mls(degreeInfo.getDescription()));
-                degreeSecondaryInfo.put("objectives", mls(degreeInfo.getObjectives()));
-                degreeSecondaryInfo.put("designFor", mls(degreeInfo.getDesignedFor()));
-                degreeSecondaryInfo.put("requisites", mls(degreeInfo.getDegreeInfoCandidacy().getAccessRequisites()));
-                degreeSecondaryInfo.put("profissionalExits", mls(degreeInfo.getProfessionalExits()));
-                degreeSecondaryInfo.put("history", mls(degreeInfo.getHistory()));
-                degreeSecondaryInfo.put("operationRegime", mls(degreeInfo.getOperationalRegime()));
-                degreeSecondaryInfo.put("gratuity", mls(degreeInfo.getGratuity()));
-                degreeSecondaryInfo.put("links", mls(degreeInfo.getLinks()));
-                degreeMainInfo.put("secundary", degreeSecondaryInfo);
-            }
-            jsonResult.put("degreeInfo", degreeMainInfo);
-
-            Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYear);
-            if (responsibleCoordinatorsTeachers.isEmpty()) {
-                responsibleCoordinatorsTeachers = degree.getCurrentResponsibleCoordinatorsTeachers();
-            }
-
-            for (Teacher teacher : responsibleCoordinatorsTeachers) {
-                JSONObject teacherInfo = new JSONObject();
-                teacherInfo.put("name", teacher.getPerson().getName());
-                teacherInfo.put("istId", teacher.getPerson().getIstUsername());
-                teacherInfo.put("mail", getTeacherPublicMail(teacher));
-                teacherInfo.put("url", getTeacherPublicWebAddress(teacher));
-                teachersArray.add(teacherInfo);
-            }
-            jsonResult.put("teachers", teachersArray);
+            return getFenixDegree(executionYear, degree);
         }
-        return jsonResult.toJSONString();
+
+        return new FenixDegree();
     }
 
-    private JSONArray getTeacherPublicMail(Teacher teacher) {
-        JSONArray mailArray = new JSONArray();
-        if (teacher != null) {
-            for (EmailAddress emailAddress : teacher.getPerson().getEmailAddresses()) {
-                if (emailAddress.getVisibleToPublic()) {
-                    JSONObject mailObj = new JSONObject();
-                    mailObj.put("mail", emailAddress.getPresentationValue());
-                    mailArray.add(mailObj);
-                }
-            }
-        }
-        return mailArray;
-    }
-
-    private JSONArray getTeacherPublicWebAddress(Teacher teacher) {
-        JSONArray urlArray = new JSONArray();
-        if (teacher != null) {
-            for (WebAddress webAddress : teacher.getPerson().getWebAddresses()) {
-                if (webAddress.getVisibleToPublic()) {
-                    JSONObject urlObj = new JSONObject();
-                    urlObj.put("url", webAddress.getUrl());
-                    urlArray.add(urlObj);
-                }
-            }
-        }
-        return urlArray;
-    }
-
+    /**
+     * Courses for degree with id
+     * 
+     * @summary Courses for specific degree
+     * @param oid degree id
+     * @param year ("yyyy/yyyy")
+     */
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("degrees/{oid}/courses")
-    public String coursesByODegreesId(@PathParam("oid") String oid, @QueryParam("year") String year) {
-        JSONArray jsonResult = new JSONArray();
+    public List<FenixExecutionCourse> coursesByODegreesId(@PathParam("oid") String oid, @QueryParam("year") String year) {
+
         Degree degree = getDomainObject(oid);
 
         ExecutionYear executionYear = getExecutionYear(year);
@@ -272,20 +265,22 @@ public class JerseyPublic {
             }
         }
 
+        List<FenixExecutionCourse> fenixExecutionCourses = new ArrayList<>();
+
         if (degree.isBolonhaMasterOrDegree()) {
             for (ExecutionCourseView executionCourseView : executionCourses) {
                 ExecutionCourse ec = executionCourseView.getExecutionCourse();
-                JSONObject degreeInfo = new JSONObject();
-                degreeInfo.put("acronym", ec.getSigla());
-                degreeInfo.put("credits", getCredits(ec, degree));
-                degreeInfo.put("mame", ec.getName());
-                degreeInfo.put("id", ec.getExternalId());
-                degreeInfo.put("year", ec.getExecutionYear().getName());
-                degreeInfo.put("semester", ec.getExecutionPeriod().getName());
-                jsonResult.add(degreeInfo);
+                String sigla = ec.getSigla();
+                String credits = getCredits(ec, degree);
+                String name = ec.getName();
+                String id = ec.getExternalId();
+                String ecYear = ec.getExecutionYear().getName();
+                String sem = ec.getExecutionPeriod().getName();
+
+                fenixExecutionCourses.add(new FenixExecutionCourse(sigla, credits, name, id, ecYear, sem));
             }
         }
-        return jsonResult.toJSONString();
+        return fenixExecutionCourses;
     }
 
     private String getCredits(ExecutionCourse ec, Degree degree) {
@@ -316,535 +311,519 @@ public class JerseyPublic {
         return serverLink;
     }
 
+    /**
+     * Detailed information about course
+     * 
+     * @summary Course information by id
+     * @param oid course id
+     * @return
+     */
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("courses/{oid}/")
-    public String coursesByOid(@PathParam("oid") String oid) {
-        JSONObject jsonResult = new JSONObject();
+    public FenixCourse coursesByOid(@PathParam("oid") String oid) {
         ExecutionCourse executionCourse = getDomainObject(oid);
-        jsonResult.put("acronym", executionCourse.getSigla());
-        jsonResult.put("name", executionCourse.getName());
-        jsonResult.put("evaluation", executionCourse.getEvaluationMethodText());
-        jsonResult.put("year", executionCourse.getExecutionYear().getName());
-        jsonResult.put("semester", executionCourse.getExecutionPeriod().getName());
+
+        String acronym = executionCourse.getSigla();
+        String name = executionCourse.getName();
+        String evaluation = executionCourse.getEvaluationMethodText();
+        String year = executionCourse.getExecutionYear().getName();
+        Integer semester = executionCourse.getExecutionPeriod().getSemester();
 
         Map<CompetenceCourse, Set<CurricularCourse>> curricularCourses =
                 executionCourse.getCurricularCoursesIndexedByCompetenceCourse();
 
-        JSONArray jsonMoreInfo = new JSONArray();
+        List<FenixCourse.FenixCompetence> moreInfo = new ArrayList<>();
+
         for (Map.Entry<CompetenceCourse, Set<CurricularCourse>> entry : curricularCourses.entrySet()) {
-            JSONObject jsonCompetence = new JSONObject();
 
-            jsonCompetence.put("program", entry.getKey().getProgram());
-
-            JSONArray jsonBiblio = new JSONArray();
+            List<FenixCourse.FenixCompetence.BiblioRef> biblios = new ArrayList<>();
             for (BibliographicReference bibliographicReference : entry.getKey().getBibliographicReferences()
                     .getBibliographicReferencesSortedByOrder()) {
-                JSONObject jsonBiblioInfo = new JSONObject();
-                jsonBiblioInfo.put("author", bibliographicReference.getAuthors());
-                jsonBiblioInfo.put("reference", bibliographicReference.getReference());
-                jsonBiblioInfo.put("title", bibliographicReference.getTitle());
-                jsonBiblioInfo.put("year", bibliographicReference.getYear());
-                jsonBiblioInfo.put("type", bibliographicReference.getType().getName());
-                jsonBiblioInfo.put("url", bibliographicReference.getUrl());
-                jsonBiblio.add(jsonBiblioInfo);
+
+                String author = bibliographicReference.getAuthors();
+                String reference = bibliographicReference.getReference();
+                String title = bibliographicReference.getTitle();
+                String bibYear = bibliographicReference.getYear();
+                String type = bibliographicReference.getType().getName();
+                String url = bibliographicReference.getUrl();
+
+                biblios.add(new BiblioRef(author, reference, title, bibYear, type, url));
             }
 
-            jsonCompetence.put("bibliographicReferences", jsonBiblio);
-
-            JSONArray jsonDegreesArray = new JSONArray();
+            List<FenixCourse.FenixCompetence.Degree> degrees = new ArrayList<>();
             for (CurricularCourse curricularCourse : entry.getValue()) {
-                JSONObject jsonDegreesInfo = new JSONObject();
-                jsonDegreesInfo.put("id", curricularCourse.getDegree().getExternalId());
-                jsonDegreesInfo.put("name", curricularCourse.getDegree().getPresentationName());
-                jsonDegreesInfo.put("acronym", curricularCourse.getAcronym());
-                jsonDegreesArray.add(jsonDegreesInfo);
+                String id = curricularCourse.getDegree().getExternalId();
+                String dName = curricularCourse.getDegree().getPresentationName();
+                String dacronym = curricularCourse.getAcronym();
+
+                degrees.add(new FenixCourse.FenixCompetence.Degree(id, dName, dacronym));
             }
-            jsonCompetence.put("degrees", jsonDegreesArray);
 
-            jsonMoreInfo.add(jsonCompetence);
+            String program = entry.getKey().getProgram();
+
+            moreInfo.add(new FenixCompetence(program, biblios, degrees));
 
         }
 
-        jsonResult.put("moreInfo", jsonMoreInfo);
-        jsonResult.put("numberOfStudents", executionCourse.getAttendsCount());
+        int numberOfStudents = executionCourse.getAttendsCount();
 
-        JSONArray teachersArray = new JSONArray();
+        List<FenixTeacher> teachers = new ArrayList<>();
         for (Professorship professorship : executionCourse.getProfessorships()) {
-            JSONObject teacherInfo = new JSONObject();
-            teacherInfo.put("name", professorship.getPerson().getName());
-            teacherInfo.put("istId", professorship.getPerson().getIstUsername());
-            teacherInfo.put("mail", getTeacherPublicMail(professorship.getTeacher()));
-            teacherInfo.put("url", getTeacherPublicWebAddress(professorship.getTeacher()));
-            teachersArray.add(teacherInfo);
+
+            String tname = professorship.getPerson().getName();
+            String istid = professorship.getPerson().getIstUsername();
+            List<String> mail = getTeacherPublicMail(professorship.getTeacher());
+            List<String> url = getTeacherPublicWebAddress(professorship.getTeacher());
+
+            teachers.add(new FenixTeacher(tname, istid, mail, url));
         }
-        jsonResult.put("teachers", teachersArray);
 
         //TODO change getIdInternal to ExternalID
-        jsonResult.put(
-                "announcementLink",
+        String annoucementLink =
                 getServerLink().concat("/external/announcementsRSS.do?announcementBoardId=").concat(
-                        executionCourse.getBoard().getIdInternal().toString()));
+                        executionCourse.getBoard().getIdInternal().toString());
 
-        jsonResult.put("summaryLink",
-                getServerLink().concat("/publico/summariesRSS.do?id=").concat(executionCourse.getIdInternal().toString()));
-        return jsonResult.toJSONString();
+        String summaryLink =
+                getServerLink().concat("/publico/summariesRSS.do?id=").concat(executionCourse.getIdInternal().toString());
+
+        return new FenixCourse(acronym, name, evaluation, year, semester, numberOfStudents, annoucementLink, summaryLink,
+                moreInfo, teachers);
     }
 
+    /**
+     * Retrieve groups for course given by oid
+     * 
+     * @summary Course groups by course oid
+     * @param oid course id
+     */
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("courses/{oid}/groups")
-    public String groupsCoursesByOid(@PathParam("oid") String oid) {
-        JSONObject jsonResult = new JSONObject();
+    public FenixCourseGroup groupsCoursesByOid(@PathParam("oid") String oid) {
 
         ExecutionCourse executionCourse = getDomainObject(oid);
 
-        jsonResult.put("name", executionCourse.getName());
-        jsonResult.put("year", executionCourse.getExecutionYear().getName());
-        jsonResult.put("semester", executionCourse.getExecutionPeriod().getName());;
+        String name = executionCourse.getName();
+        String year = executionCourse.getExecutionYear().getName();
+        Integer semester = executionCourse.getExecutionPeriod().getSemester();
 
-        JSONArray jsonGroupInfo = new JSONArray();
+        List<FenixCourseGroup.Grouping> groupings = new ArrayList<>();
 
         for (Grouping grouping : executionCourse.getGroupings()) {
-            JSONObject jsonGroupType = new JSONObject();
 
-            jsonGroupType.put("name", grouping.getName());
+            String groupingName = grouping.getName();
+            String groupingDescription = grouping.getProjectDescription();
 
-            jsonGroupType.put("description", grouping.getProjectDescription());
-
-            JSONArray jsonGroupNumber = new JSONArray();
+            List<Group> groups = new ArrayList<>();
 
             for (StudentGroup studentGroup : grouping.getStudentGroupsOrderedByGroupNumber()) {
-                JSONObject jsonGroupNumberInfo = new JSONObject();
-                jsonGroupNumberInfo.put("number", studentGroup.getGroupNumber());
-                JSONArray jsonGroupStudents = new JSONArray();
+                Integer groupNumber = studentGroup.getGroupNumber();
 
+                List<Student> students = new ArrayList<>();
                 for (Attends attends : studentGroup.getAttends()) {
-                    JSONObject jsonStudent = new JSONObject();
-                    jsonStudent.put("istId", attends.getRegistration().getNumber());
-                    jsonStudent.put("same", attends.getRegistration().getPerson().getName());
-                    jsonGroupStudents.add(jsonStudent);
+                    String istId = attends.getRegistration().getPerson().getUsername();
+                    String studentName = attends.getRegistration().getPerson().getName();
+                    students.add(new Student(istId, studentName));
                 }
-                jsonGroupNumberInfo.put("students", jsonGroupStudents);
-                jsonGroupNumber.add(jsonGroupNumberInfo);
-            }
-            jsonGroupType.put("groupNumberInfo", jsonGroupNumber);
 
-            jsonGroupInfo.add(jsonGroupType);
+                groups.add(new Group(groupNumber, students));
+            }
+
+            groupings.add(new FenixCourseGroup.Grouping(groupingName, groupingDescription, groups));
+
         }
 
-        jsonResult.put("groupingInfo", jsonGroupInfo);
-        return jsonResult.toJSONString();
+        return new FenixCourseGroup(name, year, semester, groupings);
+
     }
 
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("courses/{oid}/students")
-    public String studentsCoursesByOid(@PathParam("oid") String oid) {
+    public FenixCourseStudents studentsCoursesByOid(@PathParam("oid") String oid) {
 
-        JSONObject jsonResult = new JSONObject();
         ExecutionCourse executionCourse = getDomainObject(oid);
 
-        jsonResult.put("enrolmentNumber", executionCourse.getTotalEnrolmentStudentNumber());
-        jsonResult.put("name", executionCourse.getName());
-        jsonResult.put("semester", executionCourse.getExecutionYear().getName());
-        jsonResult.put("year", executionCourse.getExecutionPeriod().getName());
+        Integer enrolmentNumber = executionCourse.getTotalEnrolmentStudentNumber();
+        String name = executionCourse.getName();
+        Integer semester = executionCourse.getExecutionPeriod().getSemester();
+        String year = executionCourse.getExecutionPeriod().getName();
 
-        JSONArray jsonStudents = new JSONArray();
+        List<FenixCourseStudents.FenixCourseStudent> students = new ArrayList<>();
         for (final Attends attends : executionCourse.getAttendsSet()) {
-            JSONObject jsonStudentInfo = new JSONObject();
-            jsonStudentInfo.put("number", attends.getRegistration().getNumber());
-            jsonStudentInfo.put("name", attends.getRegistration().getName());
-            jsonStudentInfo.put("degree", attends.getRegistration().getDegreeCurricularPlanName());
-            jsonStudentInfo.put("degreeId", attends.getRegistration().getDegree().getExternalId());
+            Integer number = attends.getRegistration().getNumber();
+            String sName = attends.getRegistration().getName();
+            String sDegree = attends.getRegistration().getDegreeCurricularPlanName();
+            String sDegreeId = attends.getRegistration().getDegree().getExternalId();
 
-            JSONArray jsonEvaluation = new JSONArray();
-
+            List<FenixCourseStudents.FenixCourseStudent.Evaluation> evaluations = new ArrayList<>();
             for (final Mark mark : attends.getAssociatedMarksSet()) {
-                JSONObject jsonEvaluationInfo = new JSONObject();
                 if (mark.getEvaluation().getPublishmentMessage() != null) {
-                    jsonEvaluationInfo.put("evaluation", mark.getEvaluation().getPresentationName());
-                    jsonEvaluationInfo.put("mark", mark.getPublishedMark());
-                    jsonEvaluation.add(jsonEvaluationInfo);
+                    String evalName = mark.getEvaluation().getPresentationName();
+                    String evalMark = mark.getPublishedMark();
+
+                    evaluations.add(new FenixCourseStudents.FenixCourseStudent.Evaluation(evalName, evalMark));
                 }
             }
-            jsonStudentInfo.put("evaluation", jsonEvaluation);
-            jsonStudents.add(jsonStudentInfo);
+
+            students.add(new FenixCourseStudents.FenixCourseStudent(number, sName, sDegree, sDegreeId, evaluations));
+
         }
-        jsonResult.put("students", jsonStudents);
-        return jsonResult.toJSONString();
+        return new FenixCourseStudents(enrolmentNumber, name, semester, year, students);
     }
 
+    /**
+     * 
+     * Returns evaluations for course by id
+     * (Test, Exams, Project, AdHoc, OnlineTest)
+     * 
+     * @summary Course evaluations
+     * @param oid
+     * @return
+     */
     @GET
     @Produces(MediaTypeJsonUtf8)
-    @Path("courses/{oid}/evaluation")
-    public String evaluationCoursesByOid(@PathParam("oid") String oid) {
+    @Path("courses/{oid}/evaluations")
+    public List<FenixCourseEvaluation> evaluationCoursesByOid(@PathParam("oid") String oid) {
 
         ExecutionCourse executionCourse = getDomainObject(oid);
-        JSONArray jsonEvaluation = new JSONArray();
+
+        final List<FenixCourseEvaluation> evals = new ArrayList<>();
 
         for (Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
             if (evaluation instanceof WrittenEvaluation) {
-                jsonEvaluation.add(getWrittenEvaluationJSON((WrittenEvaluation) evaluation));
+                evals.add(getWrittenEvaluationJSON((WrittenEvaluation) evaluation));
             } else if (evaluation instanceof Project) {
-                jsonEvaluation.add(getProjectEvaluationJSON((Project) evaluation));
+                evals.add(getProjectEvaluationJSON((Project) evaluation));
             } else if (evaluation instanceof OnlineTest) {
-                jsonEvaluation.add(getOnlineTestJSON((OnlineTest) evaluation));
+                evals.add(getOnlineTestJSON((OnlineTest) evaluation));
             } else if (evaluation instanceof AdHocEvaluation) {
-                jsonEvaluation.add(getAdhocEvaluationJSON((AdHocEvaluation) evaluation));
+                evals.add(getAdhocEvaluationJSON((AdHocEvaluation) evaluation));
             }
         }
-        return jsonEvaluation.toJSONString();
+        return evals;
     }
 
-    private JSONObject getAdhocEvaluationJSON(AdHocEvaluation adHocEvaluation) {
-        JSONObject jsonEvaluationInfo = new JSONObject();
-
-        jsonEvaluationInfo.put("name", adHocEvaluation.getPresentationName());
-        jsonEvaluationInfo.put("type", adHocEvaluation.getEvaluationType().toString());
-        jsonEvaluationInfo.put("description", adHocEvaluation.getDescription());
-
-        return jsonEvaluationInfo;
+    private FenixCourseEvaluation.AdHocEvaluation getAdhocEvaluationJSON(AdHocEvaluation adHocEvaluation) {
+        return new FenixCourseEvaluation.AdHocEvaluation(adHocEvaluation.getPresentationName(), adHocEvaluation.getDescription());
     }
 
-    private JSONObject getOnlineTestJSON(OnlineTest onlineTest) {
-        JSONObject jsonEvaluationInfo = new JSONObject();
-
-        jsonEvaluationInfo.put("name", onlineTest.getPresentationName());
-        jsonEvaluationInfo.put("type", onlineTest.getEvaluationType().toString());
-
-        return jsonEvaluationInfo;
+    private FenixCourseEvaluation.OnlineTest getOnlineTestJSON(OnlineTest onlineTest) {
+        return new FenixCourseEvaluation.OnlineTest(onlineTest.getPresentationName());
     }
 
-    private JSONObject getProjectEvaluationJSON(Project projectEvaluation) {
-        JSONObject jsonEvaluationInfo = new JSONObject();
+    private FenixCourseEvaluation.Project getProjectEvaluationJSON(Project projectEvaluation) {
 
-        jsonEvaluationInfo.put("name", projectEvaluation.getPresentationName());
-        jsonEvaluationInfo.put("type", projectEvaluation.getEvaluationType().toString());
+        String name = projectEvaluation.getPresentationName();
 
+        String beginningDay = null;
+        String beginningTime = null;
+        String endDay = null;
+        String endTime = null;
         if (projectEvaluation.getProjectBeginDateTime() != null) {
-            jsonEvaluationInfo.put("beginningDay", formatDay.print(projectEvaluation.getProjectBeginDateTime()));
-            jsonEvaluationInfo.put("beginningTime", formatHour.print(projectEvaluation.getProjectBeginDateTime()));
-
+            beginningDay = formatDay.print(projectEvaluation.getProjectBeginDateTime());
+            beginningTime = formatHour.print(projectEvaluation.getProjectBeginDateTime());
         }
         if (projectEvaluation.getProjectEndDateTime() != null) {
-            jsonEvaluationInfo.put("endDay", formatDay.print(projectEvaluation.getProjectEndDateTime()));
-            jsonEvaluationInfo.put("endTime", formatHour.print(projectEvaluation.getProjectEndDateTime()));
+            endDay = formatDay.print(projectEvaluation.getProjectEndDateTime());
+            endTime = formatHour.print(projectEvaluation.getProjectEndDateTime());
 
         }
-        return jsonEvaluationInfo;
+        return new FenixCourseEvaluation.Project(name, beginningDay, beginningTime, endDay, endTime);
     }
 
-    private JSONObject getWrittenEvaluationJSON(WrittenEvaluation writtenEvaluation) {
-        JSONObject jsonEvaluationInfo = new JSONObject();
+    private FenixCourseEvaluation.WrittenEvaluation getWrittenEvaluationJSON(WrittenEvaluation writtenEvaluation) {
 
-        jsonEvaluationInfo.put("name", writtenEvaluation.getPresentationName());
-        jsonEvaluationInfo.put("type", writtenEvaluation.getEvaluationType().toString());
+        String name = writtenEvaluation.getPresentationName();
+        EvaluationType type = writtenEvaluation.getEvaluationType();
 
-        jsonEvaluationInfo.put("day", dataFormatDay.format(writtenEvaluation.getDay().getTime()));
+        String day = dataFormatDay.format(writtenEvaluation.getDay().getTime());
 
-        jsonEvaluationInfo.put("beginningTime", dataFormatHour.format(writtenEvaluation.getBeginning().getTime()));
-        jsonEvaluationInfo.put("endTime", dataFormatHour.format(writtenEvaluation.getEnd().getTime()));
+        String beginningTime = dataFormatHour.format(writtenEvaluation.getBeginning().getTime());
+        String endTime = dataFormatHour.format(writtenEvaluation.getEnd().getTime());
 
-        JSONArray jsonRoomArray = new JSONArray();
+        List<FenixCourseEvaluation.WrittenEvaluation.Room> rooms = new ArrayList<>();
+
         for (AllocatableSpace allocationSpace : writtenEvaluation.getAssociatedRooms()) {
-            JSONObject jsonRoomInfo = new JSONObject();
-            jsonRoomInfo.put("id", allocationSpace.getExternalId());
-            jsonRoomInfo.put("name", allocationSpace.getSpaceInformation().getPresentationName());
-            jsonRoomInfo.put("description", allocationSpace.getCompleteIdentification());
-            jsonRoomArray.add(jsonRoomInfo);
-        }
-        jsonEvaluationInfo.put("rooms", jsonRoomArray);
 
-        jsonEvaluationInfo.put("isEnrolmentPeriod", writtenEvaluation.getIsInEnrolmentPeriod());
+            String roomId = allocationSpace.getExternalId();
+            String roomName = allocationSpace.getSpaceInformation().getPresentationName();
+            String roomDescription = allocationSpace.getCompleteIdentification();
+            rooms.add(new FenixCourseEvaluation.WrittenEvaluation.Room(roomId, roomName, roomDescription));
+        }
+
+        boolean isEnrolmentPeriod = writtenEvaluation.getIsInEnrolmentPeriod();
+
+        String enrollmentBeginDay = null;
+        String enrollmentBeginTime = null;
+        String enrollmentEndDay = null;
+        String enrollmentEndTime = null;
 
         if (writtenEvaluation.getEnrollmentBeginDay() != null) {
-            jsonEvaluationInfo.put("enrollmentBeginDay",
-                    dataFormatDay.format(writtenEvaluation.getEnrollmentBeginDay().getTime()));
+            enrollmentBeginDay = dataFormatHour.format(writtenEvaluation.getEnrollmentBeginDay().getTime());
         }
         if (writtenEvaluation.getEnrollmentBeginTime() != null) {
-            jsonEvaluationInfo.put("enrollmentBeginTime",
-                    dataFormatHour.format(writtenEvaluation.getEnrollmentBeginTime().getTime()));
+            enrollmentBeginTime = dataFormatHour.format(writtenEvaluation.getEnrollmentBeginTime().getTime());
         }
         if (writtenEvaluation.getEnrollmentEndDay() != null) {
-            jsonEvaluationInfo.put("enrollmentEndDay", dataFormatDay.format(writtenEvaluation.getEnrollmentEndDay().getTime()));
+            enrollmentEndDay = dataFormatDay.format(writtenEvaluation.getEnrollmentEndDay().getTime());
         }
         if (writtenEvaluation.getEnrollmentEndTime() != null) {
-            jsonEvaluationInfo
-                    .put("enrollmentEndTime", dataFormatHour.format(writtenEvaluation.getEnrollmentEndTime().getTime()));
+            enrollmentEndTime = dataFormatHour.format(writtenEvaluation.getEnrollmentEndTime().getTime());
         }
-        return jsonEvaluationInfo;
+
+        return new FenixCourseEvaluation.WrittenEvaluation(name, type, day, beginningTime, endTime, isEnrolmentPeriod,
+                enrollmentBeginDay, enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
     }
 
+    /**
+     * All lessons and lesson period of course by id
+     * 
+     * @summary Lesson schedule of course by id
+     * @param oid
+     * @return
+     */
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("courses/{oid}/schedule")
-    public String scheduleCoursesByOid(@PathParam("oid") String oid) {
+    public FenixSchedule scheduleCoursesByOid(@PathParam("oid") String oid) {
 
         ExecutionCourse executionCourse = getDomainObject(oid);
 
-        JSONObject jsonResult = new JSONObject();
-        JSONArray jsonSchedule = new JSONArray();
-        JSONArray jsonPeriod = new JSONArray();
+        String name = executionCourse.getName();
+        String year = executionCourse.getExecutionYear().getName();
+        Integer semester = executionCourse.getExecutionPeriod().getSemester();
 
-        jsonResult.put("name", executionCourse.getName());
-        jsonResult.put("year", executionCourse.getExecutionYear().getName());
-        jsonResult.put("semester", executionCourse.getExecutionPeriod().getName());
+        List<FenixSchedule.Period> periods = new ArrayList<>();
 
         for (OccupationPeriod occupationPeriod : executionCourse.getLessonPeriods()) {
-            JSONObject jsonPeriodInfo = new JSONObject();
+            String start = null;
+            String end = null;
             if (occupationPeriod.getStartDate() != null) {
-                jsonPeriodInfo.put("start", dataFormatDay.format(occupationPeriod.getStartDate().getTime()));
+                start = dataFormatDay.format(occupationPeriod.getStartDate().getTime());
             }
             if (occupationPeriod.getEndDate() != null) {
-                jsonPeriodInfo.put("end", dataFormatDay.format(occupationPeriod.getEndDate().getTime()));
+                end = dataFormatDay.format(occupationPeriod.getEndDate().getTime());
             }
-            jsonPeriod.add(jsonPeriodInfo);
+
+            periods.add(new FenixSchedule.Period(start, end));
         }
 
+        List<FenixSchedule.Lesson> lessons = new ArrayList<>();
+
         for (Lesson lesson : executionCourse.getLessons()) {
-            JSONObject jsonScheduleInfo = new JSONObject();
-            jsonScheduleInfo.put("weekday", lesson.getWeekDay().getName());
-            jsonScheduleInfo.put("lessonType", lesson.getShift().getShiftTypesCodePrettyPrint());
-            jsonScheduleInfo.put("start", dataFormatHour.format(lesson.getInicio().getTime()));
-            jsonScheduleInfo.put("end", dataFormatHour.format(lesson.getFim().getTime()));
+            String weekDay = lesson.getWeekDay().getName();
+            String lessonType = lesson.getShift().getShiftTypesCodePrettyPrint();
+            String start = dataFormatHour.format(lesson.getInicio().getTime());
+            String end = dataFormatHour.format(lesson.getFim().getTime());
+
+            FenixSchedule.Lesson.Room room = null;
 
             if (lesson.hasSala()) {
                 AllocatableSpace sala = lesson.getSala();
-                jsonScheduleInfo.put("roomId", sala.getExternalId());
-                jsonScheduleInfo.put("roomName", sala.getSpaceInformation().getPresentationName());
-                jsonScheduleInfo.put("roomDescription", sala.getCompleteIdentification());
-            }
-            jsonSchedule.add(jsonScheduleInfo);
-        }
+                String roomId = sala.getExternalId();
+                String roomName = sala.getSpaceInformation().getPresentationName();
+                String roomDescription = sala.getCompleteIdentification();
+                room = new FenixSchedule.Lesson.Room(roomId, roomName, roomDescription);
 
-        jsonResult.put("schedule", jsonSchedule);
-        jsonResult.put("period", jsonPeriod);
-        return jsonResult.toJSONString();
+            }
+            lessons.add(new FenixSchedule.Lesson(weekDay, lessonType, start, end, room));
+        }
+        return new FenixSchedule(name, year, semester, periods, lessons);
     }
 
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("spaces")
-    public String spaces() {
-        JSONArray jsonResult = new JSONArray();
+    public List<FenixSpace> spaces() {
+
+        List<FenixSpace> campi = new ArrayList<>();
+
         for (Campus campus : Space.getAllCampus()) {
-            JSONObject jsonBuildingInfo = new JSONObject();
-            jsonBuildingInfo.put("id", campus.getExternalId());
-            jsonBuildingInfo.put("name", campus.getName());
-            jsonResult.add(jsonBuildingInfo);
+            campi.add(new FenixSpace(campus.getExternalId(), campus.getName()));
         }
-        return jsonResult.toJSONString();
+        return campi;
     }
 
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("spaces/{oid}")
-    public String spacesByOid(@PathParam("oid") String oid, @QueryParam("day") String day) {
-        JSONObject jsonResult = new JSONObject();
+    public FenixSpace spacesByOid(@PathParam("oid") String oid, @QueryParam("day") String day) {
 
         Resource resource = Resource.fromExternalId(oid);
 
         if (resource.isCampus()) {
-            Campus campus = (Campus) resource;
-            jsonResult.put("name", campus.getName());
-            jsonResult.put("id", campus.getExternalId());
-            jsonResult.put("type", "campus");
-            jsonResult.put("moreInfo", getCampusInfo(campus));
+            return getFenixCampus((Campus) resource);
 
         } else if (resource.isBuilding()) {
-            Building building = (Building) resource;
-            jsonResult.put("name", building.getNameWithCampus());
-            jsonResult.put("campus", building.getSpaceCampus().getName());
-            jsonResult.put("campusId", building.getSpaceCampus().getExternalId());
-
-            jsonResult.put("id", building.getExternalId());
-            jsonResult.put("type", "building");
-            jsonResult.put("moreInfo", getBuildingInfo(building));
-
+            return getFenixBuilding((Building) resource);
         } else if (resource.isFloor()) {
-            Floor floor = (Floor) resource;
-            jsonResult.put("id", floor.getExternalId());
-            jsonResult.put("building", floor.getSpaceBuilding().getSpaceInformation().getPresentationName());
-            jsonResult.put("buildingId", floor.getSpaceBuilding().getExternalId());
-            jsonResult.put("campus", floor.getSpaceCampus().getSpaceInformation().getPresentationName());
-            jsonResult.put("campusId", floor.getSpaceCampus().getExternalId());
-            jsonResult.put("floor", floor.getSpaceFloor().getSpaceInformation().getPresentationName());
-            jsonResult.put("moreInfo", getFloorInfo(floor));
+            return getFenixFloor((Floor) resource);
         } else if (resource.isRoom()) {
-            Room room = (Room) resource;
-            jsonResult.put("id", room.getExternalId());
-            jsonResult.put("name", room.getSpaceInformation().getPresentationName());
-            jsonResult.put("description", room.getSpaceInformation().getDescription());
-            jsonResult.put("building", room.getSpaceBuilding().getSpaceInformation().getPresentationName());
-            jsonResult.put("buildingId", room.getSpaceBuilding().getExternalId());
-            jsonResult.put("campus", room.getSpaceCampus().getSpaceInformation().getPresentationName());
-            jsonResult.put("campusId", room.getSpaceCampus().getExternalId());
-            jsonResult.put("floor", room.getSpaceFloor().getSpaceInformation().getPresentationName());
-            jsonResult.put("floorId", room.getSpaceFloor().getExternalId());
-
-            jsonResult.put("normalCapacity", room.getNormalCapacity());
-            jsonResult.put("examCapacity", room.getExamCapacity());
-            jsonResult.put("moreInfo", getRoomInfo(room, getRoomDay(day)));
+            return getFenixRoom((Room) resource, Calendar.getInstance());
         }
-        return jsonResult.toJSONString();
+
+        return null;
     }
 
-    private JSONArray getCampusInfo(Campus campu) {
-        JSONArray jsonResul = new JSONArray();
+    private FenixSpace.Campus getFenixCampus(Campus campus) {
+
+        List<FenixSpace.Building> fenixBuildings = new ArrayList<>();
+
         for (Building building : Space.getAllActiveBuildings()) {
-            JSONObject jsonBuildingInfo = new JSONObject();
-            jsonBuildingInfo.put("id", building.getExternalId());
-            jsonBuildingInfo.put("name", building.getNameWithCampus());
-            jsonResul.add(jsonBuildingInfo);
+
+            fenixBuildings.add(getSimpleBuilding(building));
         }
-        return jsonResul;
+
+        return new FenixSpace.Campus(campus.getExternalId(), campus.getName(), fenixBuildings);
 
     }
 
-    private JSONObject getBuildingInfo(Building building) {
-        JSONObject jsonResult = new JSONObject();
-        JSONArray jsonResultFloor = new JSONArray();
-        JSONArray jsonResultRooms = new JSONArray();
+    public net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace.Building getSimpleBuilding(Building building) {
+        return new FenixSpace.Building(building.getExternalId(), building.getNameWithCampus());
+    }
 
+    private FenixSpace.Building getFenixBuilding(Building building) {
+
+        List<FenixSpace.Floor> fenixFloors = new ArrayList<>();
         for (Space space : building.getContainedSpaces()) {
-            JSONObject jsonBuildingInfo = new JSONObject();
-            jsonBuildingInfo.put("floorId", space.getExternalId());
-            jsonBuildingInfo.put("floorName", space.getSpaceInformation().getPresentationName());
-
-            for (Space rooms : space.getContainedSpaces()) {
-                JSONObject jsonRoomInfo = new JSONObject();
-                jsonRoomInfo.put("roomId", rooms.getExternalId());
-                jsonRoomInfo.put("roomName", rooms.getSpaceInformation().getPresentationName());
-                jsonResultRooms.add(jsonRoomInfo);
-            }
-            jsonResultFloor.add(jsonBuildingInfo);
+            fenixFloors.add(getSimpleFloor(space));
         }
-        jsonResult.put("floors", jsonResultFloor);
-        jsonResult.put("rooms", jsonResultRooms);
 
-        return jsonResult;
+        Campus campus = building.getSpaceCampus();
+        FenixSpace.Campus fenixCampus = getSimpleCampus(campus);
+        return new FenixSpace.Building(building.getExternalId(), building.getNameWithCampus(), fenixCampus, fenixFloors);
     }
 
-    private JSONObject getFloorInfo(Floor floor) {
-        JSONObject jsonResult = new JSONObject();
-        JSONArray jsonResultRooms = new JSONArray();
+    public FenixSpace.Floor getSimpleFloor(Space space) {
+        return new FenixSpace.Floor(space.getExternalId(), space.getSpaceInformation().getPresentationName());
+    }
+
+    public FenixSpace.Campus getSimpleCampus(Campus campus) {
+        return new FenixSpace.Campus(campus.getExternalId(), campus.getName());
+    }
+
+    private FenixSpace.Floor getFenixFloor(Floor floor) {
+        List<FenixSpace.Room> fenixRooms = new ArrayList<>();
 
         for (Space space : floor.getContainedSpaces()) {
-            JSONObject jsonBuildingInfo = new JSONObject();
-            jsonBuildingInfo.put("id", space.getExternalId());
-            jsonBuildingInfo.put("name", space.getSpaceInformation().getPresentationName());
-            jsonResultRooms.add(jsonBuildingInfo);
+            fenixRooms.add(getSimpleRoom(space));
         }
-        jsonResult.put("rooms", jsonResultRooms);
 
-        return jsonResult;
+        Building building = floor.getSpaceBuilding();
+        FenixSpace.Building fenixBuilding = getSimpleBuilding(building);
+        FenixSpace.Floor fenixFloor =
+                new FenixSpace.Floor(floor.getExternalId(), floor.getSpaceInformation().getPresentationName(), fenixBuilding,
+                        fenixRooms);
+        return fenixFloor;
     }
 
-    private JSONObject getRoomInfo(Room room, Calendar rightNow) {
-        JSONObject jsonResult = new JSONObject();
-        JSONArray jsonSchedule = new JSONArray();
+    public FenixSpace.Room getSimpleRoom(Space space) {
+        return new FenixSpace.Room(space.getExternalId(), space.getSpaceInformation().getPresentationName());
+    }
+
+    private FenixSpace.Room getFenixRoom(Room room, Calendar rightNow) {
 
         InfoSiteRoomTimeTable bodyComponent = new InfoSiteRoomTimeTable();
         RoomSiteComponentBuilder builder = new RoomSiteComponentBuilder();
+        List<FenixSpace.Room.RoomEvent> roomEvents = new ArrayList<FenixSpace.Room.RoomEvent>();
 
-        jsonResult.put("day", dataFormatDay.format(rightNow.getTime()));
         try {
             builder.getComponent(bodyComponent, rightNow, room, null);
             for (Object occupation : bodyComponent.getInfoShowOccupation()) {
                 InfoShowOccupation showOccupation = (InfoShowOccupation) occupation;
 
-                JSONObject jsonOccupationInfo = new JSONObject();
+                FenixSpace.Room.RoomEvent roomEvent = null;
 
-                if (showOccupation instanceof InfoLesson) {
-                    InfoLesson lesson = (InfoLesson) showOccupation;
+                if (showOccupation instanceof InfoLesson || showOccupation instanceof InfoLessonInstance) {
+                    InfoShowOccupation lesson = showOccupation;
                     InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-                    jsonOccupationInfo.put("sigla", infoExecutionCourse.getSigla());
-                    jsonOccupationInfo.put("name", infoExecutionCourse.getNome());
-                    jsonOccupationInfo.put("id", infoExecutionCourse.getExecutionCourse().getExternalId());
+                    String sigla = infoExecutionCourse.getSigla();
+                    String name = infoExecutionCourse.getNome();
+                    String id = infoExecutionCourse.getExecutionCourse().getExternalId();
 
-                    jsonOccupationInfo.put("start", dataFormatHour.format(lesson.getInicio().getTime()));
-                    jsonOccupationInfo.put("end", dataFormatHour.format(lesson.getFim().getTime()));
-                    jsonOccupationInfo.put("weekday", lesson.getDiaSemana().getDiaSemanaString());
+                    String start = dataFormatHour.format(lesson.getInicio().getTime());
+                    String end = dataFormatHour.format(lesson.getFim().getTime());
+                    String weekday = lesson.getDiaSemana().getDiaSemanaString();
 
-                    jsonOccupationInfo.put("info", lesson.getInfoShift().getShiftTypesCodePrettyPrint());
-                    jsonOccupationInfo.put("type", "lesson");
+                    String info = lesson.getInfoShift().getShiftTypesCodePrettyPrint();
 
-                } else if (showOccupation instanceof InfoLessonInstance) {
-                    InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
-                    InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-                    jsonOccupationInfo.put("sigla", infoExecutionCourse.getSigla());
-                    jsonOccupationInfo.put("name", infoExecutionCourse.getNome());
-                    jsonOccupationInfo.put("id", infoExecutionCourse.getExecutionCourse().getExternalId());
+                    WrittenEvaluationEvent.ExecutionCourse course = new WrittenEvaluationEvent.ExecutionCourse(sigla, name, id);
 
-                    jsonOccupationInfo.put("start", dataFormatHour.format(lesson.getInicio().getTime()));
-                    jsonOccupationInfo.put("end", dataFormatHour.format(lesson.getFim().getTime()));
-                    jsonOccupationInfo.put("weekday", lesson.getDiaSemana().getDiaSemanaString());
+                    roomEvent = new FenixSpace.Room.RoomEvent.LessonEvent(start, end, weekday, info, course);
 
-                    jsonOccupationInfo.put("info", lesson.getInfoShift().getShiftTypesCodePrettyPrint());
-                    jsonOccupationInfo.put("type", "lesson");
+                } else if (showOccupation instanceof InfoWrittenEvaluation) {
+                    InfoWrittenEvaluation infoWrittenEvaluation = (InfoWrittenEvaluation) showOccupation;
 
-                } else if (showOccupation instanceof InfoExam) {
-                    InfoExam infoExam = (InfoExam) showOccupation;
-                    JSONArray jsonSiglaArr = new JSONArray();
-                    for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
-                        InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
-                        JSONObject jsonSigla = new JSONObject();
-                        jsonSigla.put("sigla", infoEC.getSigla());
-                        jsonSigla.put("name", infoEC.getNome());
-                        jsonSigla.put("id", infoEC.getExecutionCourse().getExternalId());
-                        jsonSiglaArr.add(jsonSigla);
+                    List<WrittenEvaluationEvent.ExecutionCourse> courses = new ArrayList<>();
+
+                    for (int iterEC = 0; iterEC < infoWrittenEvaluation.getAssociatedExecutionCourse().size(); iterEC++) {
+                        InfoExecutionCourse infoEC = infoWrittenEvaluation.getAssociatedExecutionCourse().get(iterEC);
+                        String sigla = infoEC.getSigla();
+                        String name = infoEC.getNome();
+                        String id = infoEC.getExecutionCourse().getExternalId();
+                        courses.add(new WrittenEvaluationEvent.ExecutionCourse(sigla, name, id));
                     }
-                    jsonOccupationInfo.put("courseList", jsonSiglaArr);
-                    jsonOccupationInfo.put("season", infoExam.getSeason().getSeason());
 
-                    jsonOccupationInfo.put("start", infoExam.getBeginningHour());
-                    jsonOccupationInfo.put("end", infoExam.getEndHour());
-                    jsonOccupationInfo.put("weekday", infoExam.getDiaSemana().getDiaSemanaString());
+                    String start = null;
+                    String end = null;
+                    String weekday = null;
 
-                    jsonOccupationInfo.put("type", "exam");
+                    if (infoWrittenEvaluation instanceof InfoExam) {
+                        InfoExam infoExam = (InfoExam) infoWrittenEvaluation;
+                        start = infoExam.getBeginningHour();
+                        end = infoExam.getEndHour();
+                        weekday = infoWrittenEvaluation.getDiaSemana().getDiaSemanaString();
+                        Integer season = infoExam.getSeason().getSeason();
 
-                } else if (showOccupation instanceof InfoWrittenTest) {
-                    InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
-                    JSONArray jsonSiglaArr = new JSONArray();
-                    for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
-                        InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
-                        JSONObject jsonSigla = new JSONObject();
-                        jsonSigla.put("sigla", infoEC.getSigla());
-                        jsonSigla.put("name", infoEC.getNome());
-                        jsonSigla.put("id", infoEC.getExecutionCourse().getExternalId());
-                        jsonSiglaArr.add(jsonSigla);
+                        roomEvent =
+                                new FenixSpace.Room.RoomEvent.WrittenEvaluationEvent.ExamEvent(start, end, weekday, courses,
+                                        season);
+
+                    } else if (infoWrittenEvaluation instanceof InfoWrittenTest) {
+                        InfoWrittenTest infoWrittenTest = (InfoWrittenTest) infoWrittenEvaluation;
+                        String description = infoWrittenTest.getDescription();
+                        start = dataFormatHour.format(infoWrittenTest.getInicio().getTime());
+                        end = dataFormatHour.format(infoWrittenTest.getFim().getTime());
+                        weekday = infoWrittenTest.getDiaSemana().getDiaSemanaString();
+
+                        roomEvent =
+                                new FenixSpace.Room.RoomEvent.WrittenEvaluationEvent.TestEvent(start, end, weekday, courses,
+                                        description);
                     }
-                    jsonOccupationInfo.put("courseList", jsonSiglaArr);
-                    jsonOccupationInfo.put("description", infoWrittenTest.getDescription());
-
-                    jsonOccupationInfo.put("start", dataFormatHour.format(infoWrittenTest.getInicio().getTime()));
-                    jsonOccupationInfo.put("end", dataFormatHour.format(infoWrittenTest.getFim().getTime()));
-                    jsonOccupationInfo.put("weekday", infoWrittenTest.getDiaSemana().getDiaSemanaString());
-
-                    jsonOccupationInfo.put("type", "test");
 
                 } else if (showOccupation instanceof InfoGenericEvent) {
 
                     InfoGenericEvent infoGenericEvent = (InfoGenericEvent) showOccupation;
-                    jsonOccupationInfo.put("description", infoGenericEvent.getDescription());
-                    jsonOccupationInfo.put("title", infoGenericEvent.getTitle());
+                    String description = infoGenericEvent.getDescription();
+                    String title = infoGenericEvent.getTitle();
+                    String start = dataFormatHour.format(infoGenericEvent.getInicio().getTime());
+                    String end = dataFormatHour.format(infoGenericEvent.getFim().getTime());
+                    String weekday = infoGenericEvent.getDiaSemana().getDiaSemanaString();
 
-                    jsonOccupationInfo.put("start", dataFormatHour.format(infoGenericEvent.getInicio().getTime()));
-                    jsonOccupationInfo.put("end", dataFormatHour.format(infoGenericEvent.getFim().getTime()));
-                    jsonOccupationInfo.put("weekday", infoGenericEvent.getDiaSemana().getDiaSemanaString());
-
-                    jsonOccupationInfo.put("type", "event");
-
+                    roomEvent = new FenixSpace.Room.RoomEvent.GenericEvent(start, end, weekday, description, title);
                 }
-                jsonSchedule.add(jsonOccupationInfo);
+
+                if (roomEvent != null) {
+                    roomEvents.add(roomEvent);
+                }
+
             }
+
+            String id = room.getExternalId();
+            String name = room.getSpaceInformation().getPresentationName();
+            String description = room.getSpaceInformation().getDescription();
+            Integer normalCapacity = room.getNormalCapacity();
+            Integer examCapacity = room.getExamCapacity();
+
+            return new FenixSpace.Room(id, name, getSimpleFloor(room.getSpaceFloor()), description, normalCapacity, examCapacity,
+                    roomEvents);
+
         } catch (Exception e) {
             e.printStackTrace();
             throw newApplicationError(Status.INTERNAL_SERVER_ERROR, "berserk!", "something went wrong");
         }
-        jsonResult.put("schedule", jsonSchedule);
-        return jsonResult;
     }
 
     @SuppressWarnings("unchecked")
@@ -914,5 +893,12 @@ public class JerseyPublic {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         }
         return executionYear;
+    }
+
+    private String mls(MultiLanguageString mls) {
+        if (mls == null) {
+            return StringUtils.EMPTY;
+        }
+        return mls.getContent();
     }
 }

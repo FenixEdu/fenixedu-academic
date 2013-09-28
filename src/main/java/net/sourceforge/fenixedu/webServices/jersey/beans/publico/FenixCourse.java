@@ -1,0 +1,260 @@
+package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
+
+import java.util.List;
+
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree.FenixTeacher;
+
+public class FenixCourse {
+
+    public static class FenixCompetence {
+
+        public static class BiblioRef {
+            String author;
+            String reference;
+            String title;
+            String year;
+            String type;
+            String url;
+
+            public BiblioRef(String author, String reference, String title, String year, String type, String url) {
+                super();
+                this.author = author;
+                this.reference = reference;
+                this.title = title;
+                this.year = year;
+                this.type = type;
+                this.url = url;
+            }
+
+            public String getAuthor() {
+                return author;
+            }
+
+            public void setAuthor(String author) {
+                this.author = author;
+            }
+
+            public String getReference() {
+                return reference;
+            }
+
+            public void setReference(String reference) {
+                this.reference = reference;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getYear() {
+                return year;
+            }
+
+            public void setYear(String year) {
+                this.year = year;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+        }
+
+        public static class Degree {
+            String id;
+            String name;
+            String acronym;
+
+            public Degree(String id, String name, String acronym) {
+                super();
+                this.id = id;
+                this.name = name;
+                this.acronym = acronym;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getAcronym() {
+                return acronym;
+            }
+
+            public void setAcronym(String acronym) {
+                this.acronym = acronym;
+            }
+
+        }
+
+        String program;
+        List<BiblioRef> bibliographicReferences;
+        List<Degree> degrees;
+
+        public FenixCompetence(String program, List<BiblioRef> bibliographicReferences, List<Degree> degrees) {
+            super();
+            this.program = program;
+            this.bibliographicReferences = bibliographicReferences;
+            this.degrees = degrees;
+        }
+
+        public String getProgram() {
+            return program;
+        }
+
+        public void setProgram(String program) {
+            this.program = program;
+        }
+
+        public List<BiblioRef> getBibliographicReferences() {
+            return bibliographicReferences;
+        }
+
+        public void setBibliographicReferences(List<BiblioRef> bibliographicReferences) {
+            this.bibliographicReferences = bibliographicReferences;
+        }
+
+        public List<Degree> getDegrees() {
+            return degrees;
+        }
+
+        public void setDegrees(List<Degree> degrees) {
+            this.degrees = degrees;
+        }
+
+    }
+
+    String acronym;
+    String name;
+    String evaluation;
+    String year;
+    Integer semester;
+    Integer numberOfStudents;
+    String announcementLink;
+    String summaryLink;
+    List<FenixCompetence> moreInfo;
+    List<FenixTeacher> teachers;
+
+    public FenixCourse(String acronym, String name, String evaluation, String year, Integer semester, Integer numberOfStudents,
+            String announcementLink, String summaryLink, List<FenixCompetence> moreInfo, List<FenixTeacher> teachers) {
+        super();
+        this.acronym = acronym;
+        this.name = name;
+        this.evaluation = evaluation;
+        this.year = year;
+        this.semester = semester;
+        this.numberOfStudents = numberOfStudents;
+        this.announcementLink = announcementLink;
+        this.summaryLink = summaryLink;
+        this.moreInfo = moreInfo;
+        this.teachers = teachers;
+    }
+
+    public String getAcronym() {
+        return acronym;
+    }
+
+    public void setAcronym(String acronym) {
+        this.acronym = acronym;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(String evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public Integer getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Integer semester) {
+        this.semester = semester;
+    }
+
+    public Integer getNumberOfStudents() {
+        return numberOfStudents;
+    }
+
+    public void setNumberOfStudents(Integer numberOfStudents) {
+        this.numberOfStudents = numberOfStudents;
+    }
+
+    public String getAnnouncementLink() {
+        return announcementLink;
+    }
+
+    public void setAnnouncementLink(String announcementLink) {
+        this.announcementLink = announcementLink;
+    }
+
+    public String getSummaryLink() {
+        return summaryLink;
+    }
+
+    public void setSummaryLink(String summaryLink) {
+        this.summaryLink = summaryLink;
+    }
+
+    public List<FenixCompetence> getMoreInfo() {
+        return moreInfo;
+    }
+
+    public void setMoreInfo(List<FenixCompetence> moreInfo) {
+        this.moreInfo = moreInfo;
+    }
+
+    public List<FenixTeacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(List<FenixTeacher> teachers) {
+        this.teachers = teachers;
+    }
+
+}

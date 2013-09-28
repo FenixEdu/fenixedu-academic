@@ -1,5 +1,13 @@
 package net.sourceforge.fenixedu.webServices.jersey;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
+import pt.ist.fenixframework.DomainObject;
+
+import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,7 +26,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -42,6 +49,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.photograph.PictureAvatar;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -51,26 +59,33 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.util.icalendar.CalendarFactory;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
+import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar.FenixCalendarEvent;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCurriculum;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCurriculum.FenixCourseInfo;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixEvaluations;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixEvaluations.FenixEvaluation;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPayment;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPayment.NotPayedEvent;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPayment.PaymentEvent;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPerson;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPerson.FenixPhoto;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPerson.FenixRole;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPersonCourses;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPersonCourses.FenixCourse;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPersonCourses.FenixEnrolment;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Joiner;
 import com.google.common.net.HttpHeaders;
+import com.qmino.miredot.annotations.ReturnType;
 
 @SuppressWarnings("unchecked")
 @Path("/private/v1")
@@ -99,48 +114,6 @@ public class JerseyPrivate {
         return mls.getContent();
     }
 
-    /**
-     * @title Personal information
-     * @summary It will return name, istid, campus, email, photo and contacts
-     * @returns only public contacts and photo are available
-     */
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("person")
-    @FenixAPIScope(PERSONAL_SCOPE)
-    public FenixPerson person() {
-
-        final Person person = getPerson();
-        PersonInformationBean pib = new PersonInformationBean(person, true);
-        
-        final Set<FenixRole> roles = new HashSet<FenixRole>();
-        
-        if (isTeacher(person) || person.hasRole(RoleType.TEACHER)) {
-            roles.add(new FenixPerson.TeacherFenixRole(pib.getTeacherDepartment()));
-        }
-
-        if (person.hasRole(RoleType.STUDENT)) {
-            roles.add(new FenixPerson.StudentFenixRole(pib.getStudentDegrees()));
-            
-        }
-
-        if (person.hasRole(RoleType.ALUMNI)) {
-            roles.add(new FenixPerson.AlumniFenixRole());
-        }
-        
-        final String name = pib.getName();
-        final String istid = person.getIstUsername();
-        final String campus = pib.getCampus();
-        final String email = pib.getEmail();
-        final List<String> personalEmails = pib.getPersonalEmails();
-        final List<String> workEmails = pib.getWorkEmails();
-        List<String> personalWebAdresses = pib.getPersonalWebAdresses();
-        List<String> workWebAdresses = pib.getWorkWebAdresses();
-        final FenixPhoto photo = getPhoto(person);
-        
-        return new FenixPerson(campus, roles, photo, name, istid, email, personalEmails, workEmails, personalWebAdresses, workWebAdresses);
-    }
-
     private FenixPhoto getPhoto(final Person person) {
         FenixPhoto photo = null;
         try {
@@ -164,58 +137,158 @@ public class JerseyPrivate {
         return null;
     }
 
+    /**
+     * It will return name, istid, campus, email, photo and contacts
+     * 
+     * @summary Personal Information
+     * @return only public contacts and photo are available
+     */
+    @GET
+    @Produces(JSON_UTF8)
+    @Path("person")
+    @FenixAPIScope(PERSONAL_SCOPE)
+    public FenixPerson person() {
+
+        final Person person = getPerson();
+        PersonInformationBean pib = new PersonInformationBean(person, true);
+
+        final Set<FenixRole> roles = new HashSet<FenixRole>();
+
+        if (isTeacher(person) || person.hasRole(RoleType.TEACHER)) {
+            roles.add(new FenixPerson.TeacherFenixRole(pib.getTeacherDepartment()));
+        }
+
+        if (person.hasRole(RoleType.STUDENT)) {
+            roles.add(new FenixPerson.StudentFenixRole(pib.getStudentDegrees()));
+
+        }
+
+        if (person.hasRole(RoleType.ALUMNI)) {
+            roles.add(new FenixPerson.AlumniFenixRole());
+        }
+
+        final String name = pib.getName();
+        final String istid = person.getIstUsername();
+        final String campus = pib.getCampus();
+        final String email = pib.getEmail();
+        final List<String> personalEmails = pib.getPersonalEmails();
+        final List<String> workEmails = pib.getWorkEmails();
+        List<String> personalWebAdresses = pib.getPersonalWebAdresses();
+        List<String> workWebAdresses = pib.getWorkWebAdresses();
+        final FenixPhoto photo = getPhoto(person);
+
+        return new FenixPerson(campus, roles, photo, name, istid, email, personalEmails, workEmails, personalWebAdresses,
+                workWebAdresses);
+    }
+
+    /**
+     * Person courses (enrolled if student and teaching if teacher)
+     * 
+     * @summary Person courses
+     * @param sem selected semester ("1" | "2")
+     * @param year selected year ("yyyy/yyyy")
+     * @return enrolled courses and teaching courses
+     */
     @FenixAPIScope(CURRICULAR_SCOPE)
     @GET
     @Produces(JSON_UTF8)
     @Path("person/courses/")
-    public String personCourses(@QueryParam("sem") String sem, @QueryParam("year") String year) {
+    public FenixPersonCourses personCourses(@QueryParam("sem") String sem, @QueryParam("year") String year) {
 
         final Person person = getPerson();
-        JSONObject jsonResult = new JSONObject();
-
-        if (person == null) {
-            return jsonResult.toJSONString();
-        }
 
 //        PersonInformationBean pib = new PersonInformationBean(person);
         ExecutionSemester executionSemester = getExecutionSemester(sem, year);
-        jsonResult.put("year", executionSemester.getYear());
-        jsonResult.put("semester", executionSemester.getSemester());
 
-        JSONArray jsonEnrolments = new JSONArray();
-        JSONArray jsonTeaching = new JSONArray();
+        String executionYear = executionSemester.getYear();
+        Integer semester = executionSemester.getSemester();
+
+        List<FenixEnrolment> enrolments = new ArrayList<FenixEnrolment>();
 
         final Student foundStudent = person.getStudent();
 
         for (Registration registration : foundStudent.getAllRegistrations()) {
             for (Enrolment enrolment : registration.getEnrolments(executionSemester)) {
-                JSONObject jsonEnrolmentInfo = new JSONObject();
-                jsonEnrolmentInfo.put("id", enrolment.getExecutionCourseFor(executionSemester).getExternalId());
-                jsonEnrolmentInfo.put("grade", enrolment.getGrade().getValue());
-                jsonEnrolmentInfo.put("sigla", enrolment.getExecutionCourseFor(executionSemester).getSigla());
-                jsonEnrolmentInfo.put("name", enrolment.getExecutionCourseFor(executionSemester).getName());
-                jsonEnrolments.add(jsonEnrolmentInfo);
+                String id = enrolment.getExecutionCourseFor(executionSemester).getExternalId();
+                String grade = enrolment.getGrade().getValue();
+                String sigla = enrolment.getExecutionCourseFor(executionSemester).getSigla();
+                String name = enrolment.getExecutionCourseFor(executionSemester).getName();
+                enrolments.add(new FenixEnrolment(id, sigla, name, grade));
             }
         }
 
+        List<FenixCourse> teachingCourses = new ArrayList<FenixCourse>();
+
         for (final Professorship professorship : person.getProfessorships(executionSemester)) {
-            JSONObject teaching = new JSONObject();
             final ExecutionCourse executionCourse = professorship.getExecutionCourse();
 //            final ExecutionSemester executionCourseSemester = executionCourse.getExecutionPeriod();
+            if (executionCourse.getExecutionPeriod().equals(executionSemester)) {
+                String id = executionCourse.getExternalId();
+                String name = executionCourse.getName();
+                String sigla = executionCourse.getSigla();
+                teachingCourses.add(new FenixCourse(id, sigla, name));
 
-            teaching.put("id", executionCourse.getExternalId());
-            teaching.put("name", executionCourse.getName());
-            teaching.put("sigla", executionCourse.getSigla());
-            jsonTeaching.add(teaching);
+            }
         }
-        jsonResult.put("enrolled", jsonEnrolments);
-        jsonResult.put("teaching", jsonTeaching);
-        return jsonResult.toJSONString();
+        return new FenixPersonCourses(executionYear, semester, enrolments, teachingCourses);
     }
 
+    /* CALENDARS */
+
+    private FenixCalendar getFenixCalendar(String year, List<EventBean> eventBeans) {
+
+        List<FenixCalendarEvent> events = new ArrayList<FenixCalendarEvent>();
+        for (EventBean eventBean : eventBeans) {
+
+            String startDay = formatDay.print(eventBean.getBegin());
+            String endDay = formatDay.print(eventBean.getEnd());
+            String startTime = formatHour.print(eventBean.getBegin());
+            String endTime = formatHour.print(eventBean.getEnd());
+            String location = eventBean.getLocation();
+            String title = eventBean.getTitle();
+            String url = eventBean.getUrl();
+            String note = eventBean.getNote();
+            boolean allDay = eventBean.isAllDay();
+
+            events.add(new FenixCalendarEvent(startDay, endDay, startTime, endTime, location, title, url, note, allDay));
+        }
+        return new FenixCalendar(year, events);
+    }
+
+    private String evaluationCalendarICal(Person person, String serverScheme, String serverName, int serverPort) {
+        ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
+
+        List<EventBean> listEventBean = calendarSyncPoint.getExams(person.getUser(), serverScheme, serverName, serverPort);
+        listEventBean.addAll(calendarSyncPoint.getTeachingExams(person.getUser(), serverScheme, serverName, serverPort));
+
+        Calendar createCalendar = CalendarFactory.createCalendar(listEventBean);
+
+        return createCalendar.toString();
+    }
+
+    private FenixCalendar evaluationCalendarJson(Person person) {
+        final User user = person.getUser();
+
+        String year = ExecutionYear.readCurrentExecutionYear().getName();
+
+        ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
+        List<EventBean> listEventBean = calendarSyncPoint.getExams(user, "", "", 0);
+        listEventBean.addAll(calendarSyncPoint.getTeachingExams(user, "", "", 0));
+
+        return getFenixCalendar(year, listEventBean);
+    }
+
+    /**
+     * calendar of all written evaluations (tests and exams). Available for students and teachers.
+     * 
+     * @summary Evaluations calendar
+     * @param format ("calendar" or "json")
+     * @return If format is "calendar", returns iCal format. If not returns the following json.
+     */
     @FenixAPIScope(SCHEDULE_SCOPE)
     @GET
     @Path("person/calendar/evaluations")
+    @ReturnType("net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar")
     public Response calendarEvaluation(@QueryParam("format") String format, @Context HttpServletRequest httpRequest) {
         final Person person = getPerson();
 
@@ -232,53 +305,40 @@ public class JerseyPrivate {
         }
     }
 
-    private String evaluationCalendarICal(Person person, String serverScheme, String serverName, int serverPort) {
+    private String classesCalendarICal(Person person, String serverScheme, String serverName, int serverPort) {
         ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
 
-        List<EventBean> listEventBean = calendarSyncPoint.getExams(person.getUser(), serverScheme, serverName, serverPort);
-        listEventBean.addAll(calendarSyncPoint.getTeachingExams(person.getUser(), serverScheme, serverName, serverPort));
+        List<EventBean> listEventBean = calendarSyncPoint.getClasses(person.getUser(), serverScheme, serverName, serverPort);
+        listEventBean.addAll(calendarSyncPoint.getTeachingClasses(person.getUser(), serverScheme, serverName, serverPort));
 
         Calendar createCalendar = CalendarFactory.createCalendar(listEventBean);
 
         return createCalendar.toString();
     }
 
-    private String evaluationCalendarJson(Person person) {
-        JSONObject jsonResult = new JSONObject();
+    private FenixCalendar classesCalendarJson(Person person) {
+
         final User user = person.getUser();
-        if (user == null) {
-            return jsonResult.toJSONString();
-        }
-
-        JSONArray jsonEvaluation = new JSONArray();
-
-        jsonResult.put("year", ExecutionYear.readCurrentExecutionYear().getName());
+        String year = ExecutionYear.readCurrentExecutionYear().getName();
 
         ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
-        List<EventBean> listEventBean = calendarSyncPoint.getExams(user, "", "", 0);
-        listEventBean.addAll(calendarSyncPoint.getTeachingExams(user, "", "", 0));
+        List<EventBean> listEventBean = calendarSyncPoint.getClasses(user, "", "", 0);
+        listEventBean.addAll(calendarSyncPoint.getTeachingClasses(user, "", "", 0));
 
-        for (EventBean eventBean : listEventBean) {
-
-            JSONObject jsonEvaluationInfo = new JSONObject();
-            jsonEvaluationInfo.put("startDay", formatDay.print(eventBean.getBegin()));
-            jsonEvaluationInfo.put("endDay", formatDay.print(eventBean.getEnd()));
-            jsonEvaluationInfo.put("startTime", formatHour.print(eventBean.getBegin()));
-            jsonEvaluationInfo.put("endTime", formatHour.print(eventBean.getEnd()));
-            jsonEvaluationInfo.put("location", eventBean.getLocation());
-            jsonEvaluationInfo.put("title ", eventBean.getTitle());
-            jsonEvaluationInfo.put("url", eventBean.getUrl());
-            jsonEvaluationInfo.put("note", eventBean.getNote());
-            jsonEvaluationInfo.put("isAllDay", eventBean.isAllDay());
-            jsonEvaluation.add(jsonEvaluationInfo);
-        }
-        jsonResult.put("evaluation", jsonEvaluation);
-        return jsonResult.toJSONString();
+        return getFenixCalendar(year, listEventBean);
     }
 
+    /**
+     * calendar of all lessons of students and teachers
+     * 
+     * @summary Classes calendar
+     * @param format ("calendar" or "json")
+     * @return If format is "calendar", returns iCal format. If not returns the following json.
+     */
     @FenixAPIScope(SCHEDULE_SCOPE)
     @GET
     @Path("person/calendar/classes")
+    @ReturnType("net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar")
     public Response calendarClasses(@QueryParam("format") String format, @Context HttpServletRequest httpRequest) {
         Person person = getPerson();
         if ("calendar".equals(format)) {
@@ -293,108 +353,63 @@ public class JerseyPrivate {
         }
     }
 
-    private String classesCalendarICal(Person person, String serverScheme, String serverName, int serverPort) {
-        ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
-
-        List<EventBean> listEventBean = calendarSyncPoint.getClasses(person.getUser(), serverScheme, serverName, serverPort);
-        listEventBean.addAll(calendarSyncPoint.getTeachingClasses(person.getUser(), serverScheme, serverName, serverPort));
-
-        Calendar createCalendar = CalendarFactory.createCalendar(listEventBean);
-
-        return createCalendar.toString();
-    }
-
-    private String classesCalendarJson(Person person) {
-
-        JSONObject jsonResult = new JSONObject();
-        final User user = person.getUser();
-        if (user == null) {
-            return jsonResult.toJSONString();
-        }
-
-        JSONArray jsonEvaluation = new JSONArray();
-
-        jsonResult.put("year", ExecutionYear.readCurrentExecutionYear().getName());
-        ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
-        List<EventBean> listEventBean = calendarSyncPoint.getClasses(user, "", "", 0);
-        listEventBean.addAll(calendarSyncPoint.getTeachingClasses(user, "", "", 0));
-
-        for (EventBean eventBean : listEventBean) {
-            JSONObject jsonEvaluationInfo = new JSONObject();
-            jsonEvaluationInfo.put("startDay", formatDay.print(eventBean.getBegin()));
-            jsonEvaluationInfo.put("endDay", formatDay.print(eventBean.getEnd()));
-            jsonEvaluationInfo.put("startTime", formatHour.print(eventBean.getBegin()));
-            jsonEvaluationInfo.put("endTime", formatHour.print(eventBean.getEnd()));
-
-            jsonEvaluationInfo.put("location", eventBean.getLocation());
-            jsonEvaluationInfo.put("title ", eventBean.getTitle());
-            jsonEvaluationInfo.put("url", eventBean.getUrl());
-            jsonEvaluationInfo.put("note", eventBean.getNote());
-            jsonEvaluationInfo.put("isAllDay", eventBean.isAllDay());
-            jsonEvaluation.add(jsonEvaluationInfo);
-        }
-        jsonResult.put("classes", jsonEvaluation);
-        return jsonResult.toJSONString();
-    }
-
+    /**
+     * Complete curriculum (for students)
+     * 
+     * @summary Curriculum
+     */
     @FenixAPIScope(CURRICULAR_SCOPE)
     @GET
     @Path("person/curriculum")
     @Produces(JSON_UTF8)
-    public String personCurriculum() {
+    public List<FenixCurriculum> personCurriculum() {
         Person person = getPerson();
-        JSONArray jsonResult = new JSONArray();
+        List<FenixCurriculum> curriculum = new ArrayList<>();
+
         if (person.getStudent() != null) {
-            jsonResult = getStudentStatistics(person.getStudent().getRegistrationsSet());
+            curriculum = getStudentStatistics(person.getStudent().getRegistrationsSet());
         }
-        return jsonResult.toJSONString();
+        return curriculum;
     }
 
-    private JSONArray getStudentStatistics(Set<Registration> registrationsList) {
+    private List<FenixCurriculum> getStudentStatistics(Set<Registration> registrationsList) {
 
-        JSONArray jsonResult = new JSONArray();
-
-        if (registrationsList == null) {
-            return jsonResult;
-        }
+        final List<FenixCurriculum> curriculums = new ArrayList<FenixCurriculum>();
 
         for (Registration registration : registrationsList) {
             for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-                JSONObject jsonCurricularPlanInfo = new JSONObject();
-                jsonCurricularPlanInfo.put("name", studentCurricularPlan.getName());
-                jsonCurricularPlanInfo.put("id", studentCurricularPlan.getDegree().getExternalId());
-                jsonCurricularPlanInfo.put("degreeType", studentCurricularPlan.getDegreeType().getName());
-                jsonCurricularPlanInfo.put("campus", studentCurricularPlan.getCurrentCampus().getName());
-                jsonCurricularPlanInfo.put("presentationName", studentCurricularPlan.getPresentationName());
-                jsonCurricularPlanInfo.put("start", studentCurricularPlan.getStartDateYearMonthDay() + "");
-                jsonCurricularPlanInfo.put("end", studentCurricularPlan.getEndDate() + "");
+                String name = studentCurricularPlan.getName();
+                String id = studentCurricularPlan.getDegree().getExternalId();
+                DegreeType degreeType = studentCurricularPlan.getDegreeType();
+                String campus = studentCurricularPlan.getCurrentCampus().getName();
+                String presentationName = studentCurricularPlan.getPresentationName();
+                String start = studentCurricularPlan.getStartDateYearMonthDay().toString(formatDay);
+                String end = studentCurricularPlan.getEndDate().toString(formatDay);
 
                 RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
 
                 ICurriculum icurriculum = registrationConclusionBean.getCurriculumForConclusion();
 
-                jsonCurricularPlanInfo.put("ects", icurriculum.getSumEctsCredits());
-                jsonCurricularPlanInfo.put("average", icurriculum.getAverage());
+                BigDecimal ects = icurriculum.getSumEctsCredits();
+                BigDecimal average = icurriculum.getAverage();
 
-                jsonCurricularPlanInfo.put("calculatedAverage", icurriculum.getRoundedAverage());
+                Integer calculatedAverage = icurriculum.getRoundedAverage();
 
-                jsonCurricularPlanInfo.put("isFinished", registrationConclusionBean.isConcluded());
+                boolean isFinished = registrationConclusionBean.isConcluded();
 
-                JSONArray jsonCoursesInfo = new JSONArray();
-
+                String approvedCourses = StringUtils.EMPTY;
                 if (icurriculum.getCurriculumEntries() != null) {
-                    jsonCurricularPlanInfo.put("approvedCourses", icurriculum.getCurriculumEntries().size());
-                } else {
-                    jsonCurricularPlanInfo.put("approvedCourses", "");
-
+                    approvedCourses = Integer.toString(icurriculum.getCurriculumEntries().size());
                 }
 
-                for (ICurriculumEntry iCurriculumEntry : icurriculum.getCurriculumEntries()) {
-                    JSONObject jsonCourseInfo = new JSONObject();
+                final List<FenixCourseInfo> courseInfos = new ArrayList<>();
 
-                    jsonCourseInfo.put("name", mls(iCurriculumEntry.getPresentationName()));
-                    jsonCourseInfo.put("grade", iCurriculumEntry.getGradeValue());
-                    jsonCourseInfo.put("ects", iCurriculumEntry.getEctsCreditsForCurriculum());
+                for (ICurriculumEntry iCurriculumEntry : icurriculum.getCurriculumEntries()) {
+
+                    String entryName = mls(iCurriculumEntry.getPresentationName());
+                    String entryGradeValue = iCurriculumEntry.getGradeValue();
+                    BigDecimal entryEcts = iCurriculumEntry.getEctsCreditsForCurriculum();
+
                     String executionCourseOid = StringUtils.EMPTY;
                     if (iCurriculumEntry instanceof Enrolment) {
                         Enrolment enrolment = (Enrolment) iCurriculumEntry;
@@ -404,19 +419,19 @@ public class JerseyPrivate {
                         }
                     }
 
-                    jsonCourseInfo.put("id", executionCourseOid);
                     //enrolments.getExecutionCourseFor(enrolments.getExecutionPeriod()).getExternalId());
 
-                    jsonCourseInfo.put("semester", iCurriculumEntry.getExecutionPeriod().getSemester());
-                    jsonCourseInfo.put("year", iCurriculumEntry.getExecutionYear().getYear());
-                    jsonCoursesInfo.add(jsonCourseInfo);
-                }
-                jsonCurricularPlanInfo.put("courseInfo", jsonCoursesInfo);
-                jsonResult.add(jsonCurricularPlanInfo);
+                    Integer semester = iCurriculumEntry.getExecutionPeriod().getSemester();
+                    String year = iCurriculumEntry.getExecutionYear().getYear();
+                    courseInfos
+                            .add(new FenixCourseInfo(entryName, entryGradeValue, entryEcts, executionCourseOid, semester, year));
 
+                }
+                curriculums.add(new FenixCurriculum(id, name, degreeType, campus, presentationName, start, end, ects, average,
+                        calculatedAverage, isFinished, approvedCourses, courseInfos));
             }
         }
-        return jsonResult;
+        return curriculums;
     }
 
     /*
@@ -500,16 +515,17 @@ public class JerseyPrivate {
         return result;
     }
 
+    /**
+     * Information about gratuity payments (payed and not payed)
+     * 
+     * @summary Gratuity payments
+     * @return
+     */
     @FenixAPIScope(PERSONAL_SCOPE)
     @GET
     @Path("person/payments")
     @Produces(JSON_UTF8)
-    public String personPayments() {
-
-        JSONObject jsonResult = new JSONObject();
-
-        JSONArray jsonPayments = new JSONArray();
-        JSONArray jsonNotPayed = new JSONArray();
+    public FenixPayment personPayments() {
 
         Properties props = new Properties();
         props.setProperty("application", "resources.ApplicationResources");
@@ -517,118 +533,118 @@ public class JerseyPrivate {
         props.setProperty("default", "resources.ApplicationResources");
         DefaultResourceBundleProvider provider = new DefaultResourceBundleProvider(props);
         Person person = getPerson();
+
+        List<PaymentEvent> payed = new ArrayList<>();
+
         for (Entry entry : person.getPayments()) {
-            JSONObject paymentInfo = new JSONObject();
-
-            paymentInfo.put("amount", entry.getOriginalAmount().getAmountAsString());
-            paymentInfo.put("name", entry.getPaymentMode().getName());
-            paymentInfo.put("description", entry.getDescription().toString(provider));
-            paymentInfo.put("date", formatDay.print(entry.getWhenRegistered()));
-            jsonPayments.add(paymentInfo);
-
+            String amount = entry.getOriginalAmount().getAmountAsString();
+            String name = entry.getPaymentMode().getName();
+            String description = entry.getDescription().toString(provider);
+            String date = formatDay.print(entry.getWhenRegistered());
+            payed.add(new PaymentEvent(amount, name, description, date));
         }
 
         List<Event> notPayedEvents = calculateNotPayedEvents(person);
+        List<NotPayedEvent> notPayed = new ArrayList<>();
 
         for (Event event : notPayedEvents) {
 
             for (AccountingEventPaymentCode accountingEventPaymentCode : event.getNonProcessedPaymentCodes()) {
-                JSONObject notPayedInfo = new JSONObject();
-
-                notPayedInfo.put("description", accountingEventPaymentCode.getDescription());
-                notPayedInfo.put("startDate", formatDay.print(accountingEventPaymentCode.getStartDate()));
-                notPayedInfo.put("endDate", formatDay.print(accountingEventPaymentCode.getEndDate()));
-                notPayedInfo.put("entity", accountingEventPaymentCode.getEntityCode());
-                notPayedInfo.put("reference", accountingEventPaymentCode.getFormattedCode());
-                notPayedInfo.put("amount", accountingEventPaymentCode.getMaxAmount().getAmountAsString());
-                jsonNotPayed.add(notPayedInfo);
+                String description = accountingEventPaymentCode.getDescription();
+                String startDate = formatDay.print(accountingEventPaymentCode.getStartDate());
+                String endDate = formatDay.print(accountingEventPaymentCode.getEndDate());
+                String entity = accountingEventPaymentCode.getEntityCode();
+                String reference = accountingEventPaymentCode.getFormattedCode();
+                String amount = accountingEventPaymentCode.getMaxAmount().getAmountAsString();
+                notPayed.add(new NotPayedEvent(description, startDate, endDate, entity, reference, amount));
             }
         }
-        jsonResult.put("payed", jsonPayments);
-        jsonResult.put("notPayed", jsonNotPayed);
-        return jsonResult.toString();
+
+        return new FenixPayment(payed, notPayed);
     }
 
+    /**
+     * Written evaluations for students
+     * 
+     * @summary Evaluations
+     * @return enrolled and not enrolled student's evaluations
+     */
     @FenixAPIScope(ENROLMENTS_SCOPE)
     @GET
     @Path("person/evaluations")
     @Produces(JSON_UTF8)
-    public String evaluations(@Context HttpServletResponse response, @Context HttpServletRequest request,
+    public FenixEvaluations evaluations(@Context HttpServletResponse response, @Context HttpServletRequest request,
             @Context ServletContext context) {
-        JSONObject jsonResult = new JSONObject();
 
 //        Person person = getPerson();
 
         new JerseyFacesContext(context, request, response);
         DisplayEvaluationsForStudentToEnrol manageEvaluationsForStudents = new DisplayEvaluationsForStudentToEnrol();
 
-        jsonResult.put("enrolled",
-                processEvaluation(manageEvaluationsForStudents, manageEvaluationsForStudents.getEnroledEvaluations()));
-        jsonResult.put("notEnrolled",
-                processEvaluation(manageEvaluationsForStudents, manageEvaluationsForStudents.getNotEnroledEvaluations()));
+        List<FenixEvaluation> enrolled =
+                processEvaluation(manageEvaluationsForStudents, manageEvaluationsForStudents.getEnroledEvaluations());
+        List<FenixEvaluation> notEnrolled =
+                processEvaluation(manageEvaluationsForStudents, manageEvaluationsForStudents.getNotEnroledEvaluations());
 
-        return jsonResult.toString();
+        return new FenixEvaluations(enrolled, notEnrolled);
     }
 
-    private JSONArray processEvaluation(DisplayEvaluationsForStudentToEnrol processEvaluation, List<Evaluation> listEvaluation) {
-        JSONArray evaluationList = new JSONArray();
+    private List<FenixEvaluation> processEvaluation(DisplayEvaluationsForStudentToEnrol processEvaluation,
+            List<Evaluation> listEvaluation) {
+
+        List<FenixEvaluation> evaluations = new ArrayList<>();
 
         for (Evaluation eval : listEvaluation) {
             WrittenEvaluation evaluation = (WrittenEvaluation) eval;
-            JSONObject jsonEvaluationInfo = new JSONObject();
-            jsonEvaluationInfo.put("name", evaluation.getPresentationName());
-            jsonEvaluationInfo.put("type", evaluation.getEvaluationType().toString());
-            jsonEvaluationInfo.put("id", evaluation.getExternalId());
 
-            jsonEvaluationInfo.put("isEnrolmentPeriod", evaluation.isInEnrolmentPeriod());
+            String name = evaluation.getPresentationName();
+            String type = evaluation.getEvaluationType().toString();
+            String id = evaluation.getExternalId();
 
-            jsonEvaluationInfo.put("day", dataFormatDay.format(evaluation.getDay().getTime()));
-            jsonEvaluationInfo.put("hour", dataFormatHour.format(evaluation.getDay().getTime()));
+            boolean inEnrolmentPeriod = evaluation.isInEnrolmentPeriod();
+            String day = dataFormatDay.format(evaluation.getDay().getTime());
+            String hour = dataFormatHour.format(evaluation.getDay().getTime());
 
-            jsonEvaluationInfo.put("startHour", dataFormatHour.format(evaluation.getBeginning().getTime()));
-            jsonEvaluationInfo.put("endHour", dataFormatHour.format(evaluation.getEnd().getTime()));
+            String startHour = dataFormatHour.format(evaluation.getBeginning().getTime());
+            String endHour = dataFormatHour.format(evaluation.getEnd().getTime());
 
-            jsonEvaluationInfo.put("rooms", evaluation.getAssociatedRoomsAsString());
+            String rooms = evaluation.getAssociatedRoomsAsString();
 
-            jsonEvaluationInfo.put("enrollmentBeginDay", dataFormatDay.format(evaluation.getEnrollmentBeginDay().getTime()));
-            jsonEvaluationInfo.put("enrollmentEndDay", dataFormatDay.format(evaluation.getEnrollmentEndDay().getTime()));
-
-            //jsonEvaluationInfo.put("isEnrolled", processEvaluation.isEnrolmentIn(evaluation));
+            String enrollmentBeginDay = dataFormatDay.format(evaluation.getEnrollmentBeginDay().getTime());
+            String enrollmentEndDay = dataFormatDay.format(evaluation.getEnrollmentEndDay().getTime());
+            boolean isEnrolled = processEvaluation.getEnroledEvaluations().contains(evaluation);
 
             Set<String> courses = new HashSet<String>();
-
             for (ExecutionCourse course : evaluation.getAssociatedExecutionCoursesSet()) {
                 courses.add(course.getName());
             }
 
-            jsonEvaluationInfo.put("course", Joiner.on(",").join(courses));
-            evaluationList.add(jsonEvaluationInfo);
+            String course = Joiner.on(",").join(courses);
 
+            evaluations.add(new FenixEvaluation(name, type, id, inEnrolmentPeriod, day, hour, startHour, endHour, rooms,
+                    enrollmentBeginDay, enrollmentEndDay, isEnrolled, course));
         }
-        return evaluationList;
+        return evaluations;
     }
 
-    public static String strJoin(String[] aArr, String sSep) {
-        StringBuilder sbStr = new StringBuilder();
-        for (int i = 0, il = aArr.length; i < il; i++) {
-            if (i > 0) {
-                sbStr.append(sSep);
-            }
-            sbStr.append(aArr[i]);
-        }
-        return sbStr.toString();
-    }
-
-    //@Scope(REGISTRATIONS_SCOPE)
+    /**
+     * Enrols in evaluation represented by oid if enrol is "yes". unenrols evaluation if enrol is "no".
+     * 
+     * @summary evaluation enrollment
+     * @param oid evaluations id
+     * @param enrol ( "yes" or "no")
+     * @return all evaluations
+     */
+    @FenixAPIScope(ENROLMENTS_SCOPE)
     @PUT
     @Produces(JSON_UTF8)
     @Path("person/evaluations/{oid}")
-    public String evaluations(@PathParam("oid") String oid, @QueryParam("format") String enrol,
+    public FenixEvaluations evaluations(@PathParam("oid") String oid, @QueryParam("format") String enrol,
             @Context HttpServletResponse response, @Context HttpServletRequest request, @Context ServletContext context) {
 //        JSONObject jsonResult = new JSONObject();
 
         try {
-            WrittenEvaluation eval = getDomainObject(oid);
+            WrittenEvaluation eval = getDomainObject(oid, WrittenEvaluation.class);
             if (!StringUtils.isBlank(enrol)) {
                 if (enrol.equalsIgnoreCase(ENROL)) {
                     EnrolStudentInWrittenEvaluation.runEnrolStudentInWrittenEvaluation(getPerson().getUsername(),
@@ -652,12 +668,12 @@ public class JerseyPrivate {
 
         Set<Professorship> professorshipsSet = person.getProfessorshipsSet();
         if (!professorshipsSet.isEmpty()) {
-            for (Professorship professorship : professorshipsSet){
-               ExecutionCourse executionCourse = professorship.getExecutionCourse();
-               ExecutionSemester readActualExecutionSemester = ExecutionSemester.readActualExecutionSemester();
-               if(readActualExecutionSemester.equals(executionCourse.getExecutionPeriod())) {
-                   return true;
-               }
+            for (Professorship professorship : professorshipsSet) {
+                ExecutionCourse executionCourse = professorship.getExecutionCourse();
+                ExecutionSemester readActualExecutionSemester = ExecutionSemester.readActualExecutionSemester();
+                if (readActualExecutionSemester.equals(executionCourse.getExecutionPeriod())) {
+                    return true;
+                }
             }
         }
 
@@ -685,34 +701,13 @@ public class JerseyPrivate {
         return executionSemester;
     }
 
-//    private ExecutionYear getExecutionYear(String year) {
-//        //year String "2012/2013"
-//
-//        ExecutionYear executionYear;
-//
-//        boolean isBlank = StringUtils.isBlank(year);
-//        if (!isBlank) {
-//            executionYear = ExecutionYear.readExecutionYearByName(year);
-//            if (executionYear == null) {
-//                executionYear = ExecutionYear.readCurrentExecutionYear();
-//            }
-//        } else {
-//            executionYear = ExecutionYear.readCurrentExecutionYear();
-//        }
-//        return executionYear;
-//    }
-
     @SuppressWarnings("unchecked")
-    private <T extends DomainObject> T getDomainObject(String externalId) {
-        try {
-            T domainObject = (T) FenixFramework.getDomainObject(externalId);
-            if (domainObject == null) {
-                throw newApplicationError(Status.NOT_FOUND, "id not found", "id not found");
-            }
-            return domainObject;
-        } catch (NumberFormatException nfe) {
-            throw newApplicationError(Status.BAD_REQUEST, "invalid id", "invalid id");
+    private <T extends DomainObject> T getDomainObject(String externalId, Class<T> clazz) {
+        T domainObject = OAuthUtils.getDomainObject(externalId, clazz);
+        if (domainObject == null) {
+            throw newApplicationError(Status.NOT_FOUND, "id not found", "id not found");
         }
+        return domainObject;
     }
 
     private WebApplicationException newApplicationError(Status status, String error, String description) {
