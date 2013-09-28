@@ -47,7 +47,7 @@ public class JerseyAuthFilter implements Filter {
     }
 
     private boolean isOauth2(HttpServletRequest request) {
-        return request.getRequestURI().contains("/jersey/private/");
+        return request.getRequestURI().contains("/jersey/private/") || request.getRequestURI().contains("/jersey/public/");
     }
 
     @Override

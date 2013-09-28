@@ -167,7 +167,7 @@ public class JerseyPublic {
         return fenixDegrees;
     }
 
-    public FenixDegree getFenixDegree(ExecutionYear executionYear, Degree degree) {
+    private FenixDegree getFenixDegree(ExecutionYear executionYear, Degree degree) {
         List<String> degreeCampus = new ArrayList<>();
 
         String id = degree.getExternalId();
@@ -438,6 +438,13 @@ public class JerseyPublic {
 
     }
 
+    /**
+     * All students for course by id
+     * 
+     * @summary Course students
+     * @param oid course id
+     * @return
+     */
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("courses/{oid}/students")
@@ -633,6 +640,12 @@ public class JerseyPublic {
         return new FenixSchedule(name, year, semester, periods, lessons);
     }
 
+    /**
+     * Campus spaces
+     * 
+     * @summary All campus
+     * @return
+     */
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("spaces")
@@ -641,11 +654,18 @@ public class JerseyPublic {
         List<FenixSpace> campi = new ArrayList<>();
 
         for (Campus campus : Space.getAllCampus()) {
-            campi.add(new FenixSpace(campus.getExternalId(), campus.getName()));
+            campi.add(getSimpleCampus(campus));
         }
         return campi;
     }
 
+    /**
+     * 
+     * Space information regarding space type (Campus, Building, Floor or Room)
+     * 
+     * @summary Space by id
+     * @return
+     */
     @GET
     @Produces(MediaTypeJsonUtf8)
     @Path("spaces/{oid}")
@@ -669,7 +689,7 @@ public class JerseyPublic {
 
     private FenixSpace.Campus getFenixCampus(Campus campus) {
 
-        List<FenixSpace.Building> fenixBuildings = new ArrayList<>();
+        List<FenixSpace> fenixBuildings = new ArrayList<>();
 
         for (Building building : Space.getAllActiveBuildings()) {
 
@@ -680,13 +700,13 @@ public class JerseyPublic {
 
     }
 
-    public net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace.Building getSimpleBuilding(Building building) {
+    public FenixSpace.Building getSimpleBuilding(Building building) {
         return new FenixSpace.Building(building.getExternalId(), building.getNameWithCampus());
     }
 
     private FenixSpace.Building getFenixBuilding(Building building) {
 
-        List<FenixSpace.Floor> fenixFloors = new ArrayList<>();
+        List<FenixSpace> fenixFloors = new ArrayList<>();
         for (Space space : building.getContainedSpaces()) {
             fenixFloors.add(getSimpleFloor(space));
         }

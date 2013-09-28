@@ -8,10 +8,11 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src/main/jasperreports"/>
 	<classpathentry including="**/*.java" kind="src" path="src/main/resources"/>
-	<classpathentry kind="src" path="src/main/dml"/>
-	<classpathentry kind="src" path="target/generated-sources/dml-maven-plugin">
+	<classpathentry including="**/*.java" kind="src" path="src/main/dml"/>
+	<classpathentry kind="src" output="target/classes" path="target/generated-sources/dml-maven-plugin">
 		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry including="**/*.java" kind="src" path="src/main/webapp"/>

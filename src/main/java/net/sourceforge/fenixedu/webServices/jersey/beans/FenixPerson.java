@@ -3,9 +3,8 @@ package net.sourceforge.fenixedu.webServices.jersey.beans;
 import java.util.List;
 import java.util.Set;
 
-import org.codehaus.jackson.annotate.JsonSubTypes;
-import org.codehaus.jackson.annotate.JsonTypeInfo;
-
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 public class FenixPerson {
 
@@ -40,13 +39,11 @@ public class FenixPerson {
     public enum FenixRoleType {
         TEACHER, ALUMNI, STUDENT;
     }
-    
+
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-    @JsonSubTypes({
-        @JsonSubTypes.Type(value = TeacherFenixRole.class, name = "TEACHER"),
-        @JsonSubTypes.Type(value = StudentFenixRole.class, name = "ALUMNI"),
-        @JsonSubTypes.Type(value = AlumniFenixRole.class, name ="STUDENT")
-    })
+    @JsonSubTypes({ @JsonSubTypes.Type(value = TeacherFenixRole.class, name = "TEACHER"),
+            @JsonSubTypes.Type(value = StudentFenixRole.class, name = "ALUMNI"),
+            @JsonSubTypes.Type(value = AlumniFenixRole.class, name = "STUDENT") })
     public static abstract class FenixRole {
         FenixRoleType type;
 
