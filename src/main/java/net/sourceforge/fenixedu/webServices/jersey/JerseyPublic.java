@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.webServices.jersey;
 
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.FenixFramework;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -220,7 +219,7 @@ public class JerseyPublic {
     @Produces(JerseyPrivate.JSON_UTF8)
     @Path("degrees/{id}")
     public FenixDegree degreesByOid(@PathParam("id") String oid, @PathParam("year") String year) {
-        Degree degree = getDomainObject(oid);
+        Degree degree = getDomainObject(oid, Degree.class);
         ExecutionYear executionYear = getExecutionYear(year);
 
         if (degree.isBolonhaMasterOrDegree()) {
@@ -242,7 +241,7 @@ public class JerseyPublic {
     @Path("degrees/{id}/courses")
     public List<FenixExecutionCourse> coursesByODegreesId(@PathParam("id") String oid, @QueryParam("year") String year) {
 
-        Degree degree = getDomainObject(oid);
+        Degree degree = getDomainObject(oid, Degree.class);
 
         ExecutionYear executionYear = getExecutionYear(year);
 
@@ -312,7 +311,7 @@ public class JerseyPublic {
     @Produces(JerseyPrivate.JSON_UTF8)
     @Path("courses/{id}/")
     public FenixCourse coursesByOid(@PathParam("id") String oid) {
-        ExecutionCourse executionCourse = getDomainObject(oid);
+        ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
 
         String acronym = executionCourse.getSigla();
         String name = executionCourse.getName();
@@ -392,7 +391,7 @@ public class JerseyPublic {
     @Path("courses/{id}/groups")
     public FenixCourseGroup groupsCoursesByOid(@PathParam("id") String oid) {
 
-        ExecutionCourse executionCourse = getDomainObject(oid);
+        ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
 
         String name = executionCourse.getName();
         String year = executionCourse.getExecutionYear().getName();
@@ -440,7 +439,7 @@ public class JerseyPublic {
     @Path("courses/{id}/students")
     public FenixCourseStudents studentsCoursesByOid(@PathParam("id") String oid) {
 
-        ExecutionCourse executionCourse = getDomainObject(oid);
+        ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
 
         Integer enrolmentNumber = executionCourse.getTotalEnrolmentStudentNumber();
         String name = executionCourse.getName();
@@ -484,7 +483,7 @@ public class JerseyPublic {
     @Path("courses/{id}/evaluations")
     public List<FenixCourseEvaluation> evaluationCoursesByOid(@PathParam("id") String oid) {
 
-        ExecutionCourse executionCourse = getDomainObject(oid);
+        ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
 
         final List<FenixCourseEvaluation> evals = new ArrayList<>();
 
@@ -586,7 +585,7 @@ public class JerseyPublic {
     @Path("courses/{id}/schedule")
     public FenixSchedule scheduleCoursesByOid(@PathParam("id") String oid) {
 
-        ExecutionCourse executionCourse = getDomainObject(oid);
+        ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
 
         String name = executionCourse.getName();
         String year = executionCourse.getExecutionYear().getName();
@@ -661,11 +660,10 @@ public class JerseyPublic {
     @Path("spaces/{id}")
     public FenixSpace spacesByOid(@PathParam("id") String oid, @QueryParam("day") String day) {
 
-        Resource resource = OAuthUtils.getDomainObject(oid, Resource.class);
+        Resource resource = getDomainObject(oid, Resource.class);
 
         if (resource.isCampus()) {
             return getFenixCampus((Campus) resource);
-
         } else if (resource.isBuilding()) {
             return getFenixBuilding((Building) resource);
         } else if (resource.isFloor()) {
@@ -681,9 +679,8 @@ public class JerseyPublic {
 
         List<FenixSpace> fenixBuildings = new ArrayList<>();
 
-        for (Building building : Space.getAllActiveBuildings()) {
-
-            fenixBuildings.add(getSimpleBuilding(building));
+        for (Space building : campus.getActiveContainedSpacesByType(Building.class)) {
+            fenixBuildings.add(getSimpleBuilding((Building) building));
         }
 
         return new FenixSpace.Campus(campus.getExternalId(), campus.getName(), fenixBuildings);
@@ -697,8 +694,8 @@ public class JerseyPublic {
     private FenixSpace.Building getFenixBuilding(Building building) {
 
         List<FenixSpace> fenixFloors = new ArrayList<>();
-        for (Space space : building.getContainedSpaces()) {
-            fenixFloors.add(getSimpleFloor(space));
+        for (Space space : building.getActiveContainedSpacesByType(Floor.class)) {
+            fenixFloors.add(getSimpleFloor((Floor) space));
         }
 
         Campus campus = building.getSpaceCampus();
@@ -706,8 +703,8 @@ public class JerseyPublic {
         return new FenixSpace.Building(building.getExternalId(), building.getNameWithCampus(), fenixCampus, fenixFloors);
     }
 
-    public FenixSpace.Floor getSimpleFloor(Space space) {
-        return new FenixSpace.Floor(space.getExternalId(), space.getSpaceInformation().getPresentationName());
+    public FenixSpace.Floor getSimpleFloor(Floor floor) {
+        return new FenixSpace.Floor(floor.getExternalId(), floor.getSpaceInformation().getPresentationName());
     }
 
     public FenixSpace.Campus getSimpleCampus(Campus campus) {
@@ -717,8 +714,8 @@ public class JerseyPublic {
     private FenixSpace.Floor getFenixFloor(Floor floor) {
         List<FenixSpace.Room> fenixRooms = new ArrayList<>();
 
-        for (Space space : floor.getContainedSpaces()) {
-            fenixRooms.add(getSimpleRoom(space));
+        for (Space space : floor.getActiveContainedSpacesByType(Room.class)) {
+            fenixRooms.add(getSimpleRoom((Room) space));
         }
 
         Building building = floor.getSpaceBuilding();
@@ -729,8 +726,8 @@ public class JerseyPublic {
         return fenixFloor;
     }
 
-    public FenixSpace.Room getSimpleRoom(Space space) {
-        return new FenixSpace.Room(space.getExternalId(), space.getSpaceInformation().getPresentationName());
+    public FenixSpace.Room getSimpleRoom(Room room) {
+        return new FenixSpace.Room(room.getExternalId(), room.getSpaceInformation().getPresentationName());
     }
 
     private FenixSpace.Room getFenixRoom(Room room, Calendar rightNow) {
@@ -837,9 +834,9 @@ public class JerseyPublic {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends DomainObject> T getDomainObject(String externalId) {
+    private <T extends DomainObject> T getDomainObject(String externalId, Class<T> clazz) {
         try {
-            T domainObject = (T) FenixFramework.getDomainObject(externalId);
+            T domainObject = OAuthUtils.getDomainObject(externalId, clazz);
             if (domainObject == null) {
                 throw newApplicationError(Status.NOT_FOUND, "id not found", "id not found");
             }

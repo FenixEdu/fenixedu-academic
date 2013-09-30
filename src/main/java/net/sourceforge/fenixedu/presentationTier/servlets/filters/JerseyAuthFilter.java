@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 
-@WebFilter(urlPatterns = "/jersey/*")
+@WebFilter(urlPatterns = "/jersey/services/*")
 public class JerseyAuthFilter implements Filter {
 
     final static String systemUsername = PropertiesManager.getProperty("jersey.username");
@@ -39,15 +39,11 @@ public class JerseyAuthFilter implements Filter {
 
     public void doFilter(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
             throws IOException, ServletException {
-        if (isOauth2(request) || checkAccessControl(request)) {
+        if (checkAccessControl(request)) {
             filterChain.doFilter(request, response);
         } else {
             throw new ServletException("Not Authorized");
         }
-    }
-
-    private boolean isOauth2(HttpServletRequest request) {
-        return request.getRequestURI().contains("/jersey/private/") || request.getRequestURI().contains("/jersey/public/");
     }
 
     @Override

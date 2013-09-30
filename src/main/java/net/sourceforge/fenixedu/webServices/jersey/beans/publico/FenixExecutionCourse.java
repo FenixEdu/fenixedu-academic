@@ -2,16 +2,16 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
 public class FenixExecutionCourse {
 
-    String sigla;
+    String acronym;
     String credits;
     String name;
     String id;
     String ecYear;
     String sem;
 
-    public FenixExecutionCourse(String sigla, String credits, String name, String id, String ecYear, String sem) {
+    public FenixExecutionCourse(String acronym, String credits, String name, String id, String ecYear, String sem) {
         super();
-        this.sigla = sigla;
+        this.acronym = acronym;
         this.credits = credits;
         this.name = name;
         this.id = id;
@@ -20,11 +20,11 @@ public class FenixExecutionCourse {
     }
 
     public String getSigla() {
-        return sigla;
+        return acronym;
     }
 
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
+    public void setSigla(String acronym) {
+        this.acronym = acronym;
     }
 
     public String getCredits() {

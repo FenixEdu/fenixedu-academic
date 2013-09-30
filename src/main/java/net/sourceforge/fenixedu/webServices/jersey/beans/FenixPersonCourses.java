@@ -6,13 +6,13 @@ public class FenixPersonCourses {
 
     public static class FenixCourse {
         String id;
-        String sigla;
+        String acronym;
         String name;
 
-        public FenixCourse(String id, String sigla, String name) {
+        public FenixCourse(String id, String acronym, String name) {
             super();
             this.id = id;
-            this.sigla = sigla;
+            this.acronym = acronym;
             this.name = name;
         }
 
@@ -25,11 +25,11 @@ public class FenixPersonCourses {
         }
 
         public String getSigla() {
-            return sigla;
+            return acronym;
         }
 
-        public void setSigla(String sigla) {
-            this.sigla = sigla;
+        public void setSigla(String acronym) {
+            this.acronym = acronym;
         }
 
         public String getName() {
@@ -45,8 +45,8 @@ public class FenixPersonCourses {
     public static class FenixEnrolment extends FenixCourse {
         String grade;
 
-        public FenixEnrolment(String id, String sigla, String name, String grade) {
-            super(id, sigla, name);
+        public FenixEnrolment(String id, String acronym, String name, String grade) {
+            super(id, acronym, name);
             setGrade(grade);
         }
 

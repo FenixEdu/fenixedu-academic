@@ -576,7 +576,7 @@ public class JerseyPrivate {
     @PUT
     @Produces(JSON_UTF8)
     @Path("person/evaluations/{id}")
-    public FenixEvaluations evaluations(@PathParam("id") String oid, @QueryParam("format") String enrol,
+    public FenixEvaluations evaluations(@PathParam("id") String oid, @QueryParam("enrol") String enrol,
             @Context HttpServletResponse response, @Context HttpServletRequest request, @Context ServletContext context) {
 //        JSONObject jsonResult = new JSONObject();
 

@@ -100,13 +100,13 @@ public class FenixSpace {
             public static abstract class WrittenEvaluationEvent extends RoomEvent {
 
                 public static class ExecutionCourse {
-                    public String sigla;
+                    public String acronym;
                     public String name;
                     public String id;
 
-                    public ExecutionCourse(String sigla, String name, String id) {
+                    public ExecutionCourse(String acronym, String name, String id) {
                         super();
-                        this.sigla = sigla;
+                        this.acronym = acronym;
                         this.name = name;
                         this.id = id;
                     }

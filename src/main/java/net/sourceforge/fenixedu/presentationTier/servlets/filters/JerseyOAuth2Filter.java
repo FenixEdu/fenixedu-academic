@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -29,8 +31,6 @@ import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
 import org.apache.amber.oauth2.common.message.OAuthResponse.OAuthErrorResponseBuilder;
 import org.apache.commons.lang.StringUtils;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 @WebFilter(urlPatterns = "/jersey/private/*")
 public class JerseyOAuth2Filter implements Filter {
@@ -154,7 +154,7 @@ public class JerseyOAuth2Filter implements Filter {
             throws IOException, ServletException {
         AuthScope scope = FenixJerseyPackageResourceConfig.getScope(uri);
         if (scope != null) {
-            if (!appUserSession.getAppUserAuthorization().getApplication().getScopes().contains(scope)) {
+            if (!appUserSession.getAppUserAuthorization().getApplication().getScopesSet().contains(scope)) {
                 return false;
             }
         }

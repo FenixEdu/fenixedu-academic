@@ -165,7 +165,7 @@ public class FenixDegree {
     private String id;
     private String name;
     private String type;
-    private String sigla;
+    private String acronym;
     private String typeName;
     private List<String> campus;
     private FenixDegreeInfo info;
@@ -175,14 +175,14 @@ public class FenixDegree {
 
     }
 
-    public FenixDegree(String year, String id, String name, String type, String sigla, String typeName, List<String> campus,
+    public FenixDegree(String year, String id, String name, String type, String acronym, String typeName, List<String> campus,
             FenixDegreeInfo info, List<FenixTeacher> teachers) {
         super();
         this.year = year;
         this.id = id;
         this.name = name;
         this.type = type;
-        this.sigla = sigla;
+        this.acronym = acronym;
         this.typeName = typeName;
         this.campus = campus;
         this.info = info;
@@ -222,11 +222,11 @@ public class FenixDegree {
     }
 
     public String getSigla() {
-        return sigla;
+        return acronym;
     }
 
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
+    public void setSigla(String acronym) {
+        this.acronym = acronym;
     }
 
     public String getTypeName() {
