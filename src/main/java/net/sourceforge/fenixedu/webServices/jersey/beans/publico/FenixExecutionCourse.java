@@ -19,11 +19,11 @@ public class FenixExecutionCourse {
         this.sem = sem;
     }
 
-    public String getSigla() {
+    public String getAcronym() {
         return acronym;
     }
 
-    public void setSigla(String acronym) {
+    public void setAcronym(String acronym) {
         this.acronym = acronym;
     }
 
