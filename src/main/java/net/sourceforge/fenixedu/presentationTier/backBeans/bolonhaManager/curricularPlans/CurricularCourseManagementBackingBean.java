@@ -60,7 +60,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     protected final ResourceBundle bolonhaBundle = getResourceBundle("resources/BolonhaManagerResources");
     protected final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
     protected final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
-    protected final String NO_SELECTION_STRING = "no_selection";
+    protected final String NO_SELECTION_STRING = "-1";
     protected final Integer NO_SELECTION_INTEGER = Integer.valueOf(-1);
 
     private String competenceCourseID = null;

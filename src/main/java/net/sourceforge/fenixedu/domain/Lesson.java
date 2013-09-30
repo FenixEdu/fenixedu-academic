@@ -1204,4 +1204,8 @@ public class Lesson extends Lesson_Base {
         return !getLessonInstancesSet().isEmpty();
     }
 
+    public boolean isBiWeeklyOffset() {
+        return getFrequency() == FrequencyType.BIWEEKLY;
+    }
+
 }

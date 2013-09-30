@@ -114,12 +114,13 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
     @Override
     public void removeImprovementEnrolmentEvaluations(EnrolmentEvaluation improvementEnrolmentEvaluations) {
         super.removeImprovementEnrolmentEvaluations(improvementEnrolmentEvaluations);
-
-        if (!hasAnyImprovementEnrolmentEvaluations() && !hasAnyAccountingTransactions()) {
+        if (getImprovementEnrolmentEvaluationsSet().isEmpty() && getNonAdjustingTransactions().isEmpty()) {
             this.delete();
         }
+
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getImprovementEnrolmentEvaluations() {
         return getImprovementEnrolmentEvaluationsSet();

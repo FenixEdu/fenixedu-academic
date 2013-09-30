@@ -18,7 +18,7 @@
 	<properties>
 		<maven.build.timestamp.format>yyyy/MM/dd HH:mm:ss</maven.build.timestamp.format>
 		<buildNumber>${maven.build.timestamp}</buildNumber>
-		<jasper.threads>1</jasper.threads>
+		<jasper.threads>3</jasper.threads>
 		<skipTests>true</skipTests>
 		<version.pt.ist.fenix.framework>2.2.0</version.pt.ist.fenix.framework>
 		<version.pt.ist.ff.maven.plugin>2.2.0</version.pt.ist.ff.maven.plugin>
@@ -158,7 +158,7 @@
 					</dependency>
 				</dependencies>
 				<configuration>
-					<compiler>de.enovationbtc.jasperreport.JRJavacCompiler</compiler>
+					<compiler>net.sourceforge.fenixedu.util.report.FenixJasperCompiler</compiler>
 					<outputDirectory>${project.build.outputDirectory}/reports</outputDirectory>
 					<numberOfThreads>${jasper.threads}</numberOfThreads>
 				</configuration>

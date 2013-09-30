@@ -175,9 +175,13 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
+    @Deprecated
     public Set<AccountingTransaction> getAccountingTransactionsSet() {
-        throw new DomainException(
-                "error.accounting.Event.this.method.should.not.be.used.directly.use.getNonAdjustingTransactions.method.instead");
+        //  Not really deprecated, but be advised, this method should be returning the code below, but framework says no.
+        //  Can`t throw DomainException because it is called from the Event_Base.class. Should not be called from anywhere else.
+        //        throw new DomainException(
+        //                "error.accounting.Event.this.method.should.not.be.used.directly.use.getNonAdjustingTransactions.method.instead");
+        return super.getAccountingTransactionsSet();
     }
 
     @Override
@@ -580,7 +584,7 @@ public abstract class Event extends Event_Base {
     }
 
     public List<AccountingEventPaymentCode> calculatePaymentCodes() {
-        return getAllPaymentCodes() != null ? createPaymentCodes() : updatePaymentCodes();
+        return getAllPaymentCodes().isEmpty() ? createPaymentCodes() : updatePaymentCodes();
     }
 
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
@@ -631,9 +635,13 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
+    @Deprecated
     public Set<AccountingEventPaymentCode> getPaymentCodesSet() {
-        throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.Event.paymentCodes.cannot.be.accessed.directly");
+        //  Not really deprecated, but be advised, this method should be returning the code below, but framework says no.
+        //  Can`t throw DomainException because it is called from the Event_Base.class. Should not be called from anywhere else.
+        //        throw new DomainException(
+        //                "error.net.sourceforge.fenixedu.domain.accounting.Event.paymentCodes.cannot.be.accessed.directly");
+        return super.getPaymentCodesSet();
     }
 
     @Override
@@ -1092,17 +1100,6 @@ public abstract class Event extends Event_Base {
     @Deprecated
     public boolean hasAnyExemptions() {
         return !getExemptionsSet().isEmpty();
-    }
-
-    @Override
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.AccountingTransaction> getAccountingTransactions() {
-        return getAccountingTransactionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAccountingTransactions() {
-        return !getAccountingTransactionsSet().isEmpty();
     }
 
     @Deprecated

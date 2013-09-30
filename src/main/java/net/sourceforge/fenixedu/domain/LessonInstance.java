@@ -66,7 +66,7 @@ public class LessonInstance extends LessonInstance_Base {
         setLesson(lesson);
 
         summaryAndCourseLoadManagement(summary, lesson);
-        lesson.refreshPeriodAndInstancesInSummaryCreation(day.plusDays(1));
+        lesson.refreshPeriodAndInstancesInSummaryCreation(lesson.isBiWeeklyOffset() ? day.plusDays(8) : day.plusDays(1));
         lessonInstanceSpaceOccupationManagement(room);
     }
 

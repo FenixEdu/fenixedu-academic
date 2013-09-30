@@ -484,7 +484,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setMarkSheet(null);
         setRectification(null);
         setRectified(null);
-        if (hasImprovementOfApprovedEnrolmentEvent()) {
+        if (getImprovementOfApprovedEnrolmentEvent() != null) {
             getImprovementOfApprovedEnrolmentEvent().removeImprovementEnrolmentEvaluations(this);
         }
         setExecutionPeriod(null);
