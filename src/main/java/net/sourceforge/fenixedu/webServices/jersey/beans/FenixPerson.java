@@ -42,22 +42,10 @@ public class FenixPerson {
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
     @JsonSubTypes({ @JsonSubTypes.Type(value = TeacherFenixRole.class, name = "TEACHER"),
-            @JsonSubTypes.Type(value = StudentFenixRole.class, name = "ALUMNI"),
-            @JsonSubTypes.Type(value = AlumniFenixRole.class, name = "STUDENT") })
+            @JsonSubTypes.Type(value = StudentFenixRole.class, name = "STUDENT"),
+            @JsonSubTypes.Type(value = AlumniFenixRole.class, name = "ALUMNI") })
     public static abstract class FenixRole {
-        FenixRoleType type;
 
-        public FenixRole(FenixRoleType type) {
-            this.type = type;
-        }
-
-        public FenixRoleType getType() {
-            return type;
-        }
-
-        public void setType(FenixRoleType type) {
-            this.type = type;
-        }
     }
 
     public static class TeacherFenixRole extends FenixRole {
@@ -65,7 +53,6 @@ public class FenixPerson {
         String department;
 
         public TeacherFenixRole(String department) {
-            super(FenixRoleType.TEACHER);
             this.department = department;
         }
 
@@ -84,7 +71,6 @@ public class FenixPerson {
         List<String> degrees;
 
         public StudentFenixRole(List<String> degrees) {
-            super(FenixRoleType.STUDENT);
             this.degrees = degrees;
         }
 
@@ -101,7 +87,6 @@ public class FenixPerson {
     public static class AlumniFenixRole extends FenixRole {
 
         public AlumniFenixRole() {
-            super(FenixRoleType.ALUMNI);
         }
 
     }

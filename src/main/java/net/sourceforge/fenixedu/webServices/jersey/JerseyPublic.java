@@ -568,9 +568,14 @@ public class JerseyPublic {
         if (writtenEvaluation.getEnrollmentEndTime() != null) {
             enrollmentEndTime = JerseyPrivate.dataFormatHour.format(writtenEvaluation.getEnrollmentEndTime().getTime());
         }
-
-        return new FenixCourseEvaluation.WrittenEvaluation(name, type, day, beginningTime, endTime, isEnrolmentPeriod,
-                enrollmentBeginDay, enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
+        
+        if (type.equals(EvaluationType.EXAM_TYPE)) {
+        	return new FenixCourseEvaluation.Exam(name, day, beginningTime, endTime, isEnrolmentPeriod,
+        			enrollmentBeginDay, enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
+        } else {
+        	return new FenixCourseEvaluation.Test(name, day, beginningTime, endTime, isEnrolmentPeriod,
+        			enrollmentBeginDay, enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
+        }
     }
 
     /**

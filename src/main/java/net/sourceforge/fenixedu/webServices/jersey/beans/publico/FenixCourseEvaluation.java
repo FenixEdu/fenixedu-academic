@@ -2,17 +2,23 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.EvaluationType;
-
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({ @JsonSubTypes.Type(value = FenixCourseEvaluation.Test.class, name = "TEST"),
+	@JsonSubTypes.Type(value = FenixCourseEvaluation.Exam.class, name = "EXAM"),
+	@JsonSubTypes.Type(value = FenixCourseEvaluation.OnlineTest.class, name = "ONLINE_TEST"),
+	@JsonSubTypes.Type(value = FenixCourseEvaluation.Project.class, name = "PROJECT"),
+	@JsonSubTypes.Type(value = FenixCourseEvaluation.AdHocEvaluation.class, name = "AD_HOC"),
+	})
 public abstract class FenixCourseEvaluation {
 
-    public FenixCourseEvaluation(String name, EvaluationType type) {
+    public FenixCourseEvaluation(String name) {
         super();
         this.name = name;
-        this.type = type;
     }
 
-    public static class WrittenEvaluation extends FenixCourseEvaluation {
+    public abstract static class WrittenEvaluation extends FenixCourseEvaluation {
 
         public static class Room {
             String id;
@@ -63,10 +69,10 @@ public abstract class FenixCourseEvaluation {
 
         List<Room> rooms;
 
-        public WrittenEvaluation(String name, EvaluationType type, String day, String beginningTime, String endTime,
+        public WrittenEvaluation(String name,String day, String beginningTime, String endTime,
                 Boolean isEnrolmentPeriod, String enrollmentBeginDay, String enrollmentBeginTime, String enrollmentEndDay,
                 String enrollmentEndTime, List<Room> rooms) {
-            super(name, type);
+            super(name);
             this.day = day;
             this.beginningTime = beginningTime;
             this.endTime = endTime;
@@ -152,6 +158,32 @@ public abstract class FenixCourseEvaluation {
 
     }
 
+    
+    public static class Test extends WrittenEvaluation {
+
+		public Test(String name, String day, String beginningTime,
+				String endTime, Boolean isEnrolmentPeriod,
+				String enrollmentBeginDay, String enrollmentBeginTime,
+				String enrollmentEndDay, String enrollmentEndTime,
+				List<Room> rooms) {
+			super(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentBeginDay,
+					enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
+		}
+    }
+    
+    public static class Exam extends WrittenEvaluation {
+
+		public Exam(String name, String day, String beginningTime,
+				String endTime, Boolean isEnrolmentPeriod,
+				String enrollmentBeginDay, String enrollmentBeginTime,
+				String enrollmentEndDay, String enrollmentEndTime,
+				List<Room> rooms) {
+			super(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentBeginDay,
+					enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
+		}
+    	
+    }
+    
     public static class Project extends FenixCourseEvaluation {
 
         String beginningDay;
@@ -160,7 +192,7 @@ public abstract class FenixCourseEvaluation {
         String endTime;
 
         private Project(String name) {
-            super(name, EvaluationType.PROJECT_TYPE);
+            super(name);
         }
 
         public Project(String name, String beginningDay, String beginningTime, String endDay, String endTime) {
@@ -208,7 +240,7 @@ public abstract class FenixCourseEvaluation {
     public static class OnlineTest extends FenixCourseEvaluation {
 
         public OnlineTest(String name) {
-            super(name, EvaluationType.ONLINE_TEST_TYPE);
+            super(name);
         }
 
     }
@@ -217,7 +249,7 @@ public abstract class FenixCourseEvaluation {
         String description;
 
         public AdHocEvaluation(String name, String description) {
-            super(name, EvaluationType.AD_HOC_TYPE);
+            super(name);
             this.description = description;
         }
 
@@ -232,7 +264,6 @@ public abstract class FenixCourseEvaluation {
     }
 
     String name;
-    EvaluationType type;
 
     public String getName() {
         return name;
@@ -242,12 +273,5 @@ public abstract class FenixCourseEvaluation {
         this.name = name;
     }
 
-    public EvaluationType getType() {
-        return type;
-    }
-
-    public void setType(EvaluationType type) {
-        this.type = type;
-    }
 
 }
