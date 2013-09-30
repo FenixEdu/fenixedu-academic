@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Store picture content as files." updates.sql

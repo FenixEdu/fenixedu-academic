@@ -20795,6 +20795,20 @@ relation DepartmentReductionService {
 	}
 }
 
+relation PictureFile {
+    photograph.Picture playsRole picture;
+    File playsRole file;
+/**
+	This should be the multiplicity rule, but it cannot be
+	used until all current pictures have their byte arrays
+	transfered to files.
+    {
+        multiplicity 1..1;
+    }
+*/
+}
+
+
 /**
  * Former Remote Plugin
  */
