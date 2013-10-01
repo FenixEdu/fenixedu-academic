@@ -53,6 +53,10 @@
 		
 	<h:outputText value="<p /><b>#{bundle['label.teacherService.teacher.title']}</b><p />" escape="false"/>
 	
+	<h:panelGroup rendered="#{viewTeacherService.teacherServiceDTO == null}" style="error0">
+		<h:outputText value="#{bundle['message.not-authorized']}" escape="false" />
+	</h:panelGroup>
+	<h:panelGroup rendered="#{viewTeacherService.teacherServiceDTO != null}">
 	<h:outputText value="<table class='vtsbc'>" escape="false" />
 		<h:outputText value="<tr class='acenter'>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.number']}</th>" escape="false" />
@@ -108,6 +112,7 @@
 			</fc:dataRepeater>
 		</f:verbatim>
 	<h:outputText value="</table>" escape="false" />
+	</h:panelGroup>
 
 	
 </ft:tilesView>

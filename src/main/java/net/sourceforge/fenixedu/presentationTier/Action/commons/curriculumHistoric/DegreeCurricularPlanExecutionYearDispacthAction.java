@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric.ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -65,21 +66,25 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
 
     @SuppressWarnings("unchecked")
     public ActionForward showActiveCurricularCourseScope(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         final ExecutionDegreeListBean executionDegreeBean = getRenderedObject("academicInterval");
+        try {
+            final SortedSet<DegreeModuleScope> degreeModuleScopes =
+                    ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear
+                            .runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(executionDegreeBean
+                                    .getDegreeCurricularPlan().getExternalId(), executionDegreeBean.getAcademicInterval());
 
-        final SortedSet<DegreeModuleScope> degreeModuleScopes =
-                ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear
-                        .runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(executionDegreeBean
-                                .getDegreeCurricularPlan().getExternalId(), executionDegreeBean.getAcademicInterval());
-
-        final ActionErrors errors = new ActionErrors();
-        if (degreeModuleScopes.isEmpty()) {
-            errors.add("noDegreeCurricularPlan", new ActionError("error.nonExisting.AssociatedCurricularCourses"));
-            saveErrors(request, errors);
-        } else {
-            request.setAttribute("degreeModuleScopes", degreeModuleScopes);
+            final ActionErrors errors = new ActionErrors();
+            if (degreeModuleScopes.isEmpty()) {
+                errors.add("noDegreeCurricularPlan", new ActionError("error.nonExisting.AssociatedCurricularCourses"));
+                saveErrors(request, errors);
+            } else {
+                request.setAttribute("degreeModuleScopes", degreeModuleScopes);
+            }
+        } catch (NotAuthorizedException ex1) {
+            addActionMessage(request, "message.not-authorized");
+            return mapping.findForward("chooseExecutionYear");
         }
 
         request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, executionDegreeBean.getAcademicInterval());
@@ -87,5 +92,4 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
 
         return mapping.findForward("showActiveCurricularCourses");
     }
-
 }

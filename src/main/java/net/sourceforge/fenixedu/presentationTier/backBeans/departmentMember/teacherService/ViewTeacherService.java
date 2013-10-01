@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYea
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadPreviousExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.teacherService.ReadTeacherServiceDistributionByCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.teacherService.ReadTeacherServiceDistributionByTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -147,10 +148,14 @@ public class ViewTeacherService extends FenixBackingBean {
     }
 
     public List getTeacherServiceDTO() throws FenixServiceException, ParseException {
-        if (teacherServiceDTO == null) {
-            loadDistributionServiceData();
+        try {
+            if (teacherServiceDTO == null) {
+                loadDistributionServiceData();
+            }
+            return teacherServiceDTO;
+        } catch (NotAuthorizedException ex1) {
+            return null;
         }
-        return teacherServiceDTO;
     }
 
     public void setTeacherServiceDTO(List<TeacherDistributionServiceEntryDTO> teacherServiceDTO) {
@@ -248,7 +253,8 @@ public class ViewTeacherService extends FenixBackingBean {
 
         Collections.sort(executionPeriods, new BeanComparator("beginDate"));
 
-        InfoExecutionPeriod previousExecutionPeriod = ReadPreviousExecutionPeriod.run(executionPeriods.iterator().next().getExternalId());
+        InfoExecutionPeriod previousExecutionPeriod =
+                ReadPreviousExecutionPeriod.run(executionPeriods.iterator().next().getExternalId());
 
         if (previousExecutionPeriod != null) {
             previousExecutionYear = previousExecutionPeriod.getInfoExecutionYear();
