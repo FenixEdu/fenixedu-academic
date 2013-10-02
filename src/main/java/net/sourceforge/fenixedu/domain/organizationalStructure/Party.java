@@ -244,7 +244,8 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
                 if (accountability.getEndDate() == null) {
                     result.add(accountability.getParentParty());
                 }
-                if (accountability.getEndDate() != null && accountability.getEndDate().toDateTimeAtMidnight().isAfter(dateTime)) {
+                if (accountability.getEndDate() != null
+                        && accountability.getEndDate().plusDays(1).toDateTimeAtMidnight().minusMillis(1).isAfter(dateTime)) {
                     result.add(accountability.getParentParty());
                 }
             }
@@ -1664,6 +1665,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public void logRefuseContact(PartyContact contact) {
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.contacts.PartyContact> getPartyContacts() {
         return getPartyContactsSet();
@@ -1674,6 +1676,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getPartyContactsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.resource.VehicleAllocation> getVehicleAllocations() {
         return getVehicleAllocationsSet();
@@ -1684,6 +1687,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getVehicleAllocationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.documents.GeneratedDocument> getAddressedDocument() {
         return getAddressedDocumentSet();
@@ -1694,6 +1698,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getAddressedDocumentSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.project.ProjectParticipation> getProjectParticipations() {
         return getProjectParticipationsSet();
@@ -1704,6 +1709,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getProjectParticipationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Accountability> getChilds() {
         return getChildsSet();
@@ -1714,6 +1720,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getChildsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.resource.ResourceResponsibility> getResourceResponsibility() {
         return getResourceResponsibilitySet();
@@ -1724,6 +1731,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getResourceResponsibilitySet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Account> getAccounts() {
         return getAccountsSet();
@@ -1734,6 +1742,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getAccountsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard> getBoards() {
         return getBoardsSet();
@@ -1744,6 +1753,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getBoardsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Event> getEvents() {
         return getEventsSet();
@@ -1754,6 +1764,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getEventsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup> getPersistentAccessGroup() {
         return getPersistentAccessGroupSet();
@@ -1764,6 +1775,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getPersistentAccessGroupSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.Participation> getParticipations() {
         return getParticipationsSet();
@@ -1774,6 +1786,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getParticipationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityExternalScholarshipExemption> getPhdGratuityExternalScholarshipExemption() {
         return getPhdGratuityExternalScholarshipExemptionSet();
@@ -1784,6 +1797,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getPhdGratuityExternalScholarshipExemptionSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Invitation> getInvitationAccountabilities() {
         return getInvitationAccountabilitiesSet();
@@ -1794,6 +1808,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getInvitationAccountabilitiesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewPermissionUnit> getPermissionUnits() {
         return getPermissionUnitsSet();
@@ -1804,6 +1819,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getPermissionUnitsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.ResearchInterest> getResearchInterests() {
         return getResearchInterestsSet();
@@ -1814,6 +1830,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getResearchInterestsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.Prize> getPrizes() {
         return getPrizesSet();
@@ -1824,6 +1841,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getPrizesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Accountability> getParents() {
         return getParentsSet();
@@ -1834,6 +1852,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getParentsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Guide> getPayedGuides() {
         return getPayedGuidesSet();
@@ -1844,6 +1863,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getPayedGuidesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Receipt> getPayedReceipts() {
         return getPayedReceiptsSet();
@@ -1854,6 +1874,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return !getPayedReceiptsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.parking.ParkingPartyHistory> getParkingPartyHistories() {
         return getParkingPartyHistoriesSet();
