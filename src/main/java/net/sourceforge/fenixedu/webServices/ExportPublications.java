@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
@@ -503,30 +502,5 @@ public class ExportPublications {
         if (builder.length() > 0) {
             marshaller.insertPages(marshaller.insertField(item, Fieldtype.PAGES), builder.toString(), null);
         }
-    }
-
-    public byte[] fetchFile(String storageId) {
-        File file = File.readByExternalStorageIdentification(storageId);
-        if (file != null) {
-            return file.getContents();
-        }
-        return null;
-    }
-
-    public String getFilename(String storageId) {
-        File file = File.readByExternalStorageIdentification(storageId);
-        if (file != null) {
-            return file.getFilename();
-        }
-        return null;
-    }
-
-    public String getFilePermissions(String storageId) {
-        File file = File.readByExternalStorageIdentification(storageId);
-        if (file != null) {
-            ResearchResultDocumentFile result = (ResearchResultDocumentFile) file;
-            return result.getFileResultPermittedGroupType().name();
-        }
-        return null;
     }
 }

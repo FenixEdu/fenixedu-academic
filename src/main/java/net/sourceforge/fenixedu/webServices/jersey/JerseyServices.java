@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -12,23 +13,31 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.webServices.ExportPublications;
 
 import org.apache.commons.lang.StringUtils;
@@ -38,6 +47,7 @@ import org.json.simple.JSONObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.google.common.base.Strings;
+import com.google.gson.JsonObject;
 
 @Path("/services")
 public class JerseyServices {
@@ -210,6 +220,37 @@ public class JerseyServices {
     }
 
     @GET
+    @Path("publication")
+    public Response publicationFile(@QueryParam("storageId") String storageId) {
+        File file = File.readByExternalStorageIdentification(storageId);
+        if (file != null) {
+            return Response.ok().entity(file.getStream()).build();
+        }
+        throw new WebApplicationException(Status.NO_CONTENT);
+    }
+
+    @GET
+    @Path("publication/info")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String publicationInfo(@QueryParam("storageId") String storageId) {
+        File file = File.readByExternalStorageIdentification(storageId);
+        if (file != null) {
+            JsonObject info = new JsonObject();
+            info.addProperty("filename", file.getFilename());
+            info.addProperty("mimeType", file.getMimeType());
+            if (file instanceof ResearchResultDocumentFile) {
+                info.addProperty("group", ((ResearchResultDocumentFile) file).getFileResultPermittedGroupType().name());
+            } else if (file instanceof ThesisFile) {
+                info.addProperty("group", ((ThesisFile) file).getDissertationThesis().getVisibility().name());
+            } else if (file instanceof PhdProgramProcessDocument) {
+                info.addProperty("group", "INSTITUTION");
+            }
+            return info.toString();
+        }
+        throw new WebApplicationException(Status.NO_CONTENT);
+    }
+
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("readActiveStudentInfoForJobBank")
     public static String readActiveStudentInfoForJobBank(@QueryParam("username") final String username) {
@@ -258,6 +299,8 @@ public class JerseyServices {
     public static String readPhdThesis() {
         JSONArray infos = new JSONArray();
 
+        Unit home = RootDomainObject.getInstance().getInstitutionUnit();
+
         for (PhdIndividualProgramProcessNumber phdProcessNumber : RootDomainObject.getInstance()
                 .getPhdIndividualProcessNumbersSet()) {
             PhdIndividualProgramProcess phdProcess = phdProcessNumber.getProcess();
@@ -266,33 +309,20 @@ public class JerseyServices {
                 phdInfo.put("id", phdProcess.getExternalId());
                 phdInfo.put("author", phdProcess.getPerson().getIstUsername());
                 phdInfo.put("title", phdProcess.getThesisTitle());
-
-                JSONArray schools = new JSONArray();
-                switch (phdProcess.getCollaborationType()) {
-                case NONE:
-                case WITH_SUPERVISION:
-                case ERASMUS_MUNDUS:
-                case OTHER:
-                    schools.add("Instituto Superior Técnico");
-                    break;
-                default:
-                    schools.add("Instituto Superior Técnico");
-                    schools.add(phdProcess.getCollaborationType().getLocalizedName());
+                phdInfo.put("school", home.getName());
+                List<PhysicalAddress> addresses = home.getPhysicalAddresses();
+                if (addresses != null && addresses.isEmpty()) {
+                    phdInfo.put("address", addresses.iterator().next().getAddress());
                 }
-                phdInfo.put("schools", schools);
-
                 phdInfo.put("year", phdProcess.getConclusionDate().year().getAsShortText());
-
                 phdInfo.put("month", phdProcess.getConclusionDate().monthOfYear().getAsShortText());
-
-                try {
-                    phdInfo.put("url", phdProcess.getThesisProcess().getProvisionalThesisDocument().getDownloadUrl());
-                } catch (NullPointerException e) {
+                if (phdProcess.getThesisProcess().getFinalThesisDocument() != null) {
+                    phdInfo.put("file", phdProcess.getThesisProcess().getFinalThesisDocument().getExternalStorageIdentification());
+                    phdInfo.put("url", phdProcess.getThesisProcess().getFinalThesisDocument().getDownloadUrl());
                 }
                 phdInfo.put("type", "phdthesis");
                 infos.add(phdInfo);
             }
-
         }
 
         for (Thesis t : RootDomainObject.getInstance().getThesesSet()) {
@@ -307,17 +337,19 @@ public class JerseyServices {
                 mscInfo.put("title", title);
                 mscInfo.put("year", t.getDiscussed().year().getAsShortText());
                 mscInfo.put("month", t.getDiscussed().monthOfYear().getAsShortText());
-
-                JSONArray schools = new JSONArray();
-                schools.add("Instituto Superior Técnico");
-                mscInfo.put("schools", schools);
-
+                mscInfo.put("school", home.getName());
+                List<PhysicalAddress> addresses = home.getPhysicalAddresses();
+                if (addresses != null && addresses.isEmpty()) {
+                    mscInfo.put("address", addresses.iterator().next().getAddress());
+                }
+                mscInfo.put("keywords", t.getKeywords().getContent(Language.en));
+                mscInfo.put("abstract", t.getThesisAbstract().getContent(Language.en));
+                mscInfo.put("file", t.getDissertation().getExternalStorageIdentification());
                 mscInfo.put("url", t.getDissertation().getDownloadUrl());
                 mscInfo.put("type", "mastersthesis");
                 infos.add(mscInfo);
             }
         }
         return infos.toJSONString();
-
     }
 }
