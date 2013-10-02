@@ -24,7 +24,7 @@
 		<br />
 		</td>
 	<tr>
-		<td><b><bean:write name="registration" property="degree.presentationName"/></b></td>
+		<td><b><bean:write name="registration" property="degreeNameWithDescription"/></b></td>
 	<tr>
 		<td><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.the.student"/> <b><bean:write name="registration" property="person.name"/></b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.on.registration.number"/><b><bean:write name="registration" property="number"/></b></td>
 	<tr>

@@ -8,9 +8,16 @@
 <em><bean:message key="label.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES"/></em>
 <h2><bean:message key="title.student.marksSheetConsult"/></h2>
 
-<p>
-	<span class="error0"><!-- Error messages go here --><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/></span>
-</p>
+<logic:messagesPresent message="true">
+	<p>
+		<span class="error0"><!-- Error messages go here -->
+			<html:messages id="message" message="true">
+				<bean:write name="message"/>
+			</html:messages>
+		</span>
+	<p>
+</logic:messagesPresent>
+
 
 <fr:form action="/chooseExecutionYearAndDegreeCurricularPlan.do?method=showActiveCurricularCourseScope">
 	
