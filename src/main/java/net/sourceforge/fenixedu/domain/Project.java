@@ -216,6 +216,7 @@ public class Project extends Project_Base {
 
         logRemove();
         setGrouping(null);
+        getDeparmentsSet().clear();
         super.delete();
     }
 
