@@ -11,6 +11,7 @@
 	<li class="navheader"><bean:message key="label.navheader.person"  /></li>
 	<li><html:link page="/visualizePersonalInfo.do" titleKey="link.title.visualizeInformation"  ><bean:message key="label.person.visualizeInformation"  /></html:link></li>
 	<li><html:link page="/changePasswordForward.do" titleKey="link.title.person.changePassword" ><bean:message key="label.person.changePassword"  /></html:link></li>
+	<li><html:link page="/identificationCard.do?method=prepare"><bean:message key="label.identification.card"  bundle="APPLICATION_RESOURCES"/></html:link></li>
 	<li><html:link page="/parking.do?method=prepareParking"><bean:message key="label.parking"  bundle="PARKING_RESOURCES"/></html:link></li>
 	<li><html:link page="/validateEmail.do?method=prepare"><bean:message key="label.validate.email"/></html:link></li>
 	<li><html:link page="/irsDeclaration.do?method=viewIrsDocumentInformation"><bean:message key="label.irs.information" bundle="APPLICATION_RESOURCES"/></html:link></li>
