@@ -33,7 +33,8 @@
 			+ "&userPhoto=https%3A%2F%2Ffenix.ist.utl.pt%2Fpublico%2FretrievePersonalPhoto.do%3Fmethod%3DretrievePhotographOnPublicSpace%26personId%3D" + person.getExternalId() + "%26contentContextPath_PATH%3D%2Fhomepage%2F" + username + "%2Fapresentacao";
 %>
 
-<pre style="font-family: Trebuchet MS, Arial, Helvetica, sans-serif;"><bean:message bundle="APPLICATION_RESOURCES" key="<%= instructionKey %>" arg0="<%= sibUrl %>"/></pre>
+<pre style="font-family: Trebuchet MS, Arial, Helvetica, sans-serif; text-align: justify; width: 80%; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;"
+><bean:message bundle="APPLICATION_RESOURCES" key="<%= instructionKey %>" arg0="<%= sibUrl %>"/></pre>
 
 <%--
 <bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/identificationCard.do?method=prepare&amp;personOID=<bean:write name="person" property="externalId"/></bean:define>
