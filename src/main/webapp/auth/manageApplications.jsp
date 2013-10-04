@@ -20,7 +20,7 @@
 <login:present name="allowIstIds">
     <html:link page="/externalApps.do?method=allowIstIds">
 		<logic:equal name="allowIstIds" value="true">
-	 		allow.ist.id is <b>ON<b>!
+	 		allow.ist.id is <b>ON</b>!
 		</logic:equal>
 		<logic:equal name="allowIstIds" value="false">
 	 		allow.ist.id is off!
@@ -50,7 +50,7 @@
 </logic:notEmpty>
 
 <logic:empty name="appsOwned">
-	<bean:message key="oauthapps.label.no.apps" bundle="APPLICATION_RESOURCES" />
+	<p><bean:message key="oauthapps.label.no.apps" bundle="APPLICATION_RESOURCES" /></p>
 </logic:empty>
 
 <p>
