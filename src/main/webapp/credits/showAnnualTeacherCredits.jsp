@@ -499,7 +499,7 @@ $(document).ready(function() {
 			<fr:view name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
 				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsByPeriodBean">
 					<fr:slot name="executionPeriod.name" key="label.period"/>
-					<fr:slot name="creditsReduction" key="label.requestedReductionCredits" layout="null-as-label"/>
+					<fr:slot name="requestCreditsReduction" key="label.requestedReductionCredits" layout="radio"/>
 					<fr:slot name="creditsReductionServiceAttribute" key="label.attributedReductionCredits" layout="null-as-label"/>
 				</fr:schema>
 				<fr:layout name="tabular">

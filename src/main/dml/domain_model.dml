@@ -983,6 +983,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class DepartmentCreditsPool {
 	    BigDecimal originalCreditsPool;
     	BigDecimal creditsPool;
+    	BigDecimal maximumCreditsReduction;
     }
 
     class District  {
@@ -5635,6 +5636,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         }
         
         class teacher.ReductionService extends teacher.TeacherServiceItem {
+	        Boolean requestCreditsReduction;
         	BigDecimal creditsReduction;
         	BigDecimal creditsReductionAttributed;
         	DateTime attributionDate;

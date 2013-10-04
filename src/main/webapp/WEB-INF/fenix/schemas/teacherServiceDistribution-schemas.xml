@@ -228,9 +228,11 @@
 	<slot name="approvementDate" key="label.date" layout="null-as-label"/>
 </schema>
 
-<schema name="create.reductionService" type="net.sourceforge.fenixedu.domain.teacher.ReductionService" constructor="teacherService,creditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+<schema name="create.reductionService" type="net.sourceforge.fenixedu.domain.teacher.ReductionService" constructor="teacherService,requestCreditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
 	<slot name="teacherService" hidden="true"/>
-	<slot name="creditsReduction" key="label.credits" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" required="true"/>
+	<slot name="requestCreditsReduction" key="label.requestCreditsReduction"  layout="radio" required="true">
+		<property name="classes" value="nobullet"/>
+	</slot>
 </schema>
 
 <schema name="create.reductionServiceAttributed" type="net.sourceforge.fenixedu.domain.teacher.ReductionService" constructor="creditsReductionAttributed,teacherService" bundle="TEACHER_CREDITS_SHEET_RESOURCES">

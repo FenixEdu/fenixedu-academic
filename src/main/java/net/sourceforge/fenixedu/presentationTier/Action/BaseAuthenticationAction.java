@@ -146,7 +146,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
                 ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
                 if (executionSemester != null
                         && executionSemester.isInValidCreditsPeriod(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
-                    for (ReductionService reductionService : department.getPendingReductionServices()) {
+                    for (ReductionService reductionService : department.getPendingReductionServicesSet()) {
                         if (reductionService.getTeacherService().getExecutionPeriod().equals(executionSemester)) {
                             return true;
                         }

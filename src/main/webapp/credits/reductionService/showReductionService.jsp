@@ -87,7 +87,8 @@
 			<bean:define id="reductionServiceOID" name="reductionServiceBean" property="reductionService.externalId"/>
 			<fr:edit id="reductionService" name="reductionServiceBean" property="reductionService" action="/creditsReductions.do?method=showReductionServices">
 				<fr:schema type="net.sourceforge.fenixedu.domain.teacher.ReductionService" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
-					<fr:slot name="creditsReduction" key="label.requestedReductionCredits" readOnly="true" layout="null-as-label"/>
+					<fr:slot name="requestCreditsReduction" key="label.requestedReductionCredits" readOnly="true" layout="radio"/>
+					<fr:slot name="maxCreditsFromEvaluationAndAge" key="label.maxCreditsFromEvaluationAndAgeSugested" readOnly="true" layout="null-as-label"/>
 					<fr:slot name="creditsReductionAttributed" key="label.attributedReductionCredits" required="true" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 				</fr:schema>
 				<fr:layout>

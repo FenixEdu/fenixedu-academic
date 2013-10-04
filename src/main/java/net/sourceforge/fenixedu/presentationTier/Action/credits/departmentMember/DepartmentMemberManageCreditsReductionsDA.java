@@ -39,7 +39,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsReductionsDispatchAction {
 
     public ActionForward showReductionServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         IUserView userView = UserView.getUser();
         Department department = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
@@ -47,7 +47,8 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
         if (department != null && department.isCurrentUserCurrentDepartmentPresident()) {
             for (Teacher teacher : department.getAllCurrentTeachers()) {
                 TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-                if (teacherService != null && teacherService.getReductionService() != null) {
+                if (teacherService != null && teacherService.getReductionService() != null
+                        && teacherService.getReductionService().getRequestCreditsReduction()) {
                     creditsReductions.add(teacherService.getReductionService());
                 }
             }
@@ -58,7 +59,7 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
     }
 
     public ActionForward aproveReductionService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         ReductionService reductionService =
                 FenixFramework.getDomainObject((String) getFromRequest(request, "reductionServiceOID"));
         ReductionServiceBean reductionServiceBean = null;
@@ -91,7 +92,7 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
     }
 
     public ActionForward selectTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         request.setAttribute("reductionServiceBean", new ReductionServiceBean());
         return mapping.findForward("showReductionService");
     }

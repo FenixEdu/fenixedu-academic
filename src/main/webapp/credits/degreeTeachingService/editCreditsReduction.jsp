@@ -40,22 +40,28 @@
 <bean:define id="teacherOid" name="teacherService" property="teacher.externalId"/>
 	
 <logic:present name="reductionService">
+	<br/><br/>
 	<fr:edit id="reductionService" name="reductionService" action="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>">
 		<fr:schema type="net.sourceforge.fenixedu.domain.teacher.ReductionService" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
-			<fr:slot name="creditsReduction" key="label.credits" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+			<fr:slot name="requestCreditsReduction" key="label.requestCreditsReduction"  layout="radio" required="true">
+				<fr:property name="classes" value="nobullet"/>
+			</fr:slot>
 		</fr:schema>
-		<fr:layout>
-			<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
+		<fr:layout name="flow">
+			<fr:property name="labelTerminator" value=""/>
+			<fr:property name="labelStyle" value="font-weight: bold;" />
 		</fr:layout>
 	</fr:edit>
 </logic:present>
 
 <logic:notPresent name="reductionService">
+	<br/><br/>
 	<fr:create action="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>" type="net.sourceforge.fenixedu.domain.teacher.ReductionService"
 	schema="create.reductionService">
 		<fr:hidden slot="teacherService" name="teacherService"/>
-		<fr:layout>
-			<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
+		<fr:layout name="flow">
+			<fr:property name="labelTerminator" value=""/>
+			<fr:property name="labelStyle" value="font-weight: bold;" />
 		</fr:layout>
 	</fr:create>
 </logic:notPresent>

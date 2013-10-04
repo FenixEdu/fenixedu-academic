@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Table TeacherServiceItem" alterTableTeacherServiceItem.sql
+execute "Alter Table DepartmentCreditsPool" alterTableDepartmentCreditsPool.sql

@@ -122,6 +122,11 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
         return reductionService != null ? reductionService.getCreditsReduction() : null;
     }
 
+    public Boolean getRequestCreditsReduction() {
+        ReductionService reductionService = getCreditsReductionService();
+        return reductionService != null ? reductionService.getRequestCreditsReduction() : false;
+    }
+
     public BigDecimal getCreditsReductionServiceAttribute() {
         ReductionService reductionService = getCreditsReductionService();
         return reductionService != null ? reductionService.getCreditsReductionAttributed() : null;

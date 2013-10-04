@@ -66,8 +66,9 @@ public class ReductionServiceBean implements Serializable {
         FacultyEvaluationProcessYear lastFacultyEvaluationProcessYear = null;
         for (final FacultyEvaluationProcessYear facultyEvaluationProcessYear : RootDomainObject.getInstance()
                 .getFacultyEvaluationProcessYearSet()) {
-            if (lastFacultyEvaluationProcessYear == null
-                    || facultyEvaluationProcessYear.getYear().compareTo(lastFacultyEvaluationProcessYear.getYear()) > 0) {
+            if (facultyEvaluationProcessYear.getApprovedTeacherEvaluationProcessMarkSet().size() != 0
+                    && (lastFacultyEvaluationProcessYear == null || facultyEvaluationProcessYear.getYear().compareTo(
+                            lastFacultyEvaluationProcessYear.getYear()) > 0)) {
                 lastFacultyEvaluationProcessYear = facultyEvaluationProcessYear;
             }
         }
@@ -78,7 +79,7 @@ public class ReductionServiceBean implements Serializable {
         FacultyEvaluationProcessYear lastFacultyEvaluationProcessYear = getFacultyEvaluationProcessYear();
         TeacherEvaluationProcess lastTeacherEvaluationProcess = null;
         for (TeacherEvaluationProcess teacherEvaluationProcess : getTeacher().getPerson()
-                .getTeacherEvaluationProcessFromEvaluee()) {
+                .getTeacherEvaluationProcessFromEvalueeSet()) {
             if (teacherEvaluationProcess.getFacultyEvaluationProcess().equals(
                     lastFacultyEvaluationProcessYear.getFacultyEvaluationProcess())) {
                 lastTeacherEvaluationProcess = teacherEvaluationProcess;
@@ -88,7 +89,7 @@ public class ReductionServiceBean implements Serializable {
         TeacherEvaluationMark approvedEvaluationMark = null;
         if (lastTeacherEvaluationProcess != null) {
             for (ApprovedTeacherEvaluationProcessMark approvedTeacherEvaluationProcessMark : lastTeacherEvaluationProcess
-                    .getApprovedTeacherEvaluationProcessMark()) {
+                    .getApprovedTeacherEvaluationProcessMarkSet()) {
                 if (approvedTeacherEvaluationProcessMark.getFacultyEvaluationProcessYear().equals(
                         lastFacultyEvaluationProcessYear)) {
                     approvedEvaluationMark = approvedTeacherEvaluationProcessMark.getApprovedEvaluationMark();

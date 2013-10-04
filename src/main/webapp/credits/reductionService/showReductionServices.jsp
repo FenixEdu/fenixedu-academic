@@ -35,7 +35,7 @@ Boolean canChangeCredits = executionSemester.isInValidCreditsPeriod(net.sourcefo
 				<fr:property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=${teacher.person.istUsername}" />
 			</fr:slot>
 			<fr:slot name="teacherService.teacher.person.presentationName" key="label.name"/>
-			<fr:slot name="creditsReduction" key="label.requestedReductionCredits" layout="null-as-label"/>
+			<fr:slot name="requestCreditsReduction" key="label.requestedReductionCredits" layout="radio"/>
 			<fr:slot name="creditsReductionAttributed" key="label.attributedReductionCredits" layout="null-as-label"/>
 			<fr:slot name="attributionDate" key="label.attributionDate" layout="null-as-label"/>
 		</fr:schema>
