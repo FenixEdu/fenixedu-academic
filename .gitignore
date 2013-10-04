@@ -8,6 +8,7 @@ output/
 build.properties.fenixIST
 build.properties.local
 build.properties.slave
+fenix-framework.properties
 configuration.properties.fenix
 configuration.properties.localhost
 /target
