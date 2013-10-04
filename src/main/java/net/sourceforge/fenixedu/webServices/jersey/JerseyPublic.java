@@ -657,7 +657,7 @@ public class JerseyPublic {
      * Space information regarding space type (Campus, Building, Floor or Room)
      * 
      * @param oid
-     * @param day
+     * @param day ("dd/mm/yyyy")
      * @return
      */
     @GET

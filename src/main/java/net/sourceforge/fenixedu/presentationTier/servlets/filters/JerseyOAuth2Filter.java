@@ -119,18 +119,17 @@ public class JerseyOAuth2Filter implements Filter {
             final String uri = request.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH).replace("/jersey/", "");
 
             if (!validScope(response, appUserSession, uri)) {
-                sendError(response, "invalidScope", "Application doesn't have permissions to this endpoint.");
+                return sendError(response, "invalidScope", "Application doesn't have permissions to this endpoint.");
             }
 
             if (!appUserSession.matchesAccessToken(accessToken)) {
-                sendError(response, "accessTokenInvalid", "Access Token doesn't match.");
-                return false;
+                return sendError(response, "accessTokenInvalid", "Access Token doesn't match.");
+                
             }
 
             if (!appUserSession.isAccessTokenValid()) {
-                sendError(response, "accessTokenExpired",
+                return sendError(response, "accessTokenExpired",
                         "The access has expired. Please use the refresh token endpoint to generate a new one.");
-                return false;
             }
 
             User foundUser = appUserSession.getAppUserAuthorization().getUser();
@@ -161,7 +160,8 @@ public class JerseyOAuth2Filter implements Filter {
         return true;
     }
 
-    private static void sendError(final HttpServletResponse response, String error, String errorDescription) throws IOException,
+    @SuppressWarnings("finally")
+	private static boolean sendError(final HttpServletResponse response, String error, String errorDescription) throws IOException,
             ServletException {
         OAuthResponse errorResponse;
         try {
@@ -172,6 +172,8 @@ public class JerseyOAuth2Filter implements Filter {
             pw.print(errorResponse.getBody());
         } catch (OAuthSystemException e) {
             throw new ServletException(e);
+        } finally {
+        	return false;
         }
     }
 
