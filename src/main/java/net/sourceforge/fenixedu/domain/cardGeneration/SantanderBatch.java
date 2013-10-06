@@ -360,14 +360,19 @@ public class SantanderBatch extends SantanderBatch_Base {
             ddxrBuilder.append("\t\t\t\t<TIPODOC>" + "000" + "</TIPODOC>\n");
             ddxrBuilder.append("\t\t\t\t<NUMPAG>" + "2" + "</NUMPAG>\n");
             ddxrBuilder.append("\t\t\t\t<DADOSADIC>"
-                    + "0042E"
+                    + "00042E"
                     + makeRightShiftedPaddedNumber(entry.getSantanderPhotoEntry().getSequenceNumber(), 6)
                     + "3"
                     + makeStringBlock(entry.getPerson().getIstUsername(), 10, 'x')
                     + "x"
-                    + (getCardName(entry.getPerson().getName()).length() > 21 ? getCardName(entry.getPerson().getName())
-                            .substring(0, 21) : getCardName(entry.getPerson().getName())) + "0" + makeZeroPaddedNumber(0, 21)
-                    + makeZeroPaddedNumber(0, 10) + "1" + "</DADOSADIC>\n");
+                    + makeStringBlock(getCardName(entry.getPerson().getName()).length() > 21
+                            ? getCardName(entry.getPerson().getName()).substring(0, 21)
+                            : getCardName(entry.getPerson().getName()), 21, ' ').toUpperCase()
+                    + "0"
+                    + makeZeroPaddedNumber(0, 21)
+                    + makeZeroPaddedNumber(0, 10)
+                    + "1"
+                    + "</DADOSADIC>\n");
             ddxrBuilder.append("\t\t\t</DOCDET>\n");
             ddxrBuilder.append("\t\t</DOC>\n");
         }
