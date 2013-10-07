@@ -52,6 +52,15 @@
  -->
 	</ul>
 
+	<div class="error3">
+		<p>
+            Serviço temporariamente indisponível.
+		</p>
+		<p>
+            Service temporarily unavailable.
+		</p>
+	</div>
+
 <!-- 
 	<div class="error3">
 		<p>
