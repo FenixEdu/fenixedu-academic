@@ -430,10 +430,14 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
             }
             lessonNumber += associatedLessonsCount;
         }
+        if (lessonNumber == 0) {
+            lessonNumber += 1;
+        }
         lessonNumber += getSupportLessonsSet().size();
         return lessonNumber;
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryStudentTeacherAnswer> getInquiryStudentTeacherAnswers() {
         return getInquiryStudentTeacherAnswersSet();
@@ -444,6 +448,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return !getInquiryStudentTeacherAnswersSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.NonRegularTeachingService> getNonRegularTeachingServices() {
         return getNonRegularTeachingServicesSet();
@@ -454,6 +459,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return !getNonRegularTeachingServicesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService> getDegreeProjectTutorialServices() {
         return getDegreeProjectTutorialServicesSet();
@@ -464,6 +470,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return !getDegreeProjectTutorialServicesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection> getDegreeTeachingServiceCorrections() {
         return getDegreeTeachingServiceCorrectionsSet();
@@ -474,6 +481,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return !getDegreeTeachingServiceCorrectionsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
         return getAssociatedSummariesSet();
@@ -484,6 +492,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return !getAssociatedSummariesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService> getTeacherMasterDegreeServices() {
         return getTeacherMasterDegreeServicesSet();
@@ -494,6 +503,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return !getTeacherMasterDegreeServicesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResult> getInquiryResults() {
         return getInquiryResultsSet();
@@ -504,6 +514,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return !getInquiryResultsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult> getStudentInquiriesTeachingResults() {
         return getStudentInquiriesTeachingResultsSet();
@@ -514,6 +525,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return !getStudentInquiriesTeachingResultsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ShiftProfessorship> getAssociatedShiftProfessorship() {
         return getAssociatedShiftProfessorshipSet();
@@ -524,6 +536,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return !getAssociatedShiftProfessorshipSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesTeacher> getAssociatedInquiriesTeacher() {
         return getAssociatedInquiriesTeacherSet();
@@ -534,6 +547,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return !getAssociatedInquiriesTeacherSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.SupportLesson> getSupportLessons() {
         return getSupportLessonsSet();
@@ -544,6 +558,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return !getSupportLessonsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService> getDegreeTeachingServices() {
         return getDegreeTeachingServicesSet();

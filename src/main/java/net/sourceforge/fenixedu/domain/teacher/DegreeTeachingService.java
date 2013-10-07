@@ -1,10 +1,8 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -14,8 +12,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import net.sourceforge.fenixedu.util.CalendarUtil;
-import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateTime;
@@ -98,34 +94,12 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
     }
 
     private void verifyAnyOverLapPeriod() {
-        verifyOverlapLessonPeriods();
         for (Lesson lesson : getShift().getAssociatedLessons()) {
             WeekDay lessonWeekDay = WeekDay.getWeekDay(lesson.getDiaSemana());
             Date lessonStart = lesson.getBegin();
             Date lessonEnd = lesson.getEnd();
             getTeacherService().verifyOverlappingWithInstitutionWorkingTime(lessonStart, lessonEnd, lessonWeekDay);
             getTeacherService().verifyOverlappingWithSupportLesson(lessonStart, lessonEnd, lessonWeekDay);
-        }
-    }
-
-    // TODO verify with other teachingServices
-    private void verifyOverlapLessonPeriods() {
-        List<Lesson> lessons = new ArrayList<>(getShift().getAssociatedLessons());
-        for (Lesson lesson : lessons) {
-            DiaSemana lessonWeekDay = lesson.getDiaSemana();
-            Date lessonStart = lesson.getBegin();
-            Date lessonEnd = lesson.getEnd();
-            int fromIndex = lessons.indexOf(lesson) + 1;
-            int toIndex = lessons.size();
-            for (Lesson otherLesson : lessons.subList(fromIndex, toIndex)) {
-                if (otherLesson.getDiaSemana().equals(lessonWeekDay)) {
-                    Date otherStart = otherLesson.getBegin();
-                    Date otherEnd = otherLesson.getEnd();
-                    if (CalendarUtil.intersectTimes(lessonStart, lessonEnd, otherStart, otherEnd)) {
-                        throw new DomainException("message.overlapping.lesson.period");
-                    }
-                }
-            }
         }
     }
 

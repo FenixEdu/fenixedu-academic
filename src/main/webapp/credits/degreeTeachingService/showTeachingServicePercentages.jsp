@@ -63,13 +63,14 @@
 		<tr>
 			<th rowspan="2" width="10%"><bean:message key="label.shift"/></th>
 			<th rowspan="2" width="5%"><bean:message key="label.shift.type"/></th>
-			<th colspan="4" width="40%"><bean:message key="label.lessons"/></th>
+			<th colspan="5" width="40%"><bean:message key="label.lessons"/></th>
 			<th rowspan="2"><bean:message key="label.weeklyAverage" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 			<th rowspan="2"><bean:message key="label.semesterTotal" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 			<th rowspan="2"><bean:message key="label.professorship.percentage"/></th>
 			<th><bean:message key="label.teacher.applied"/></th>			
 		</tr>
 		<tr>
+			<th><bean:message key="label.week" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 			<th><bean:message key="label.day.of.week"/></th>
 			<th><bean:message key="label.lesson.start"/></th>
 			<th><bean:message key="label.lesson.end"/></th>
@@ -89,10 +90,10 @@
 						<td><bean:write name="shift" property="shiftTypesCodePrettyPrint"/></td>
 						
 						<logic:notPresent role="SCIENTIFIC_COUNCIL">
-						<td colspan="6"> Não tem aulas </td>
+						<td colspan="9"> Não tem aulas </td>
 						</logic:notPresent>
 						<logic:present role="SCIENTIFIC_COUNCIL">
-							<td colspan="4"> Não tem aulas </td>
+							<td colspan="5"> Não tem aulas </td>
 							<td> - </td>
 							<td> - </td>
 							<td>
@@ -135,6 +136,7 @@
 							<tr>
 							<td rowspan="<%= lessonsSize %>"><bean:write name="shift" property="nome"/></td>
 							<td rowspan="<%= lessonsSize %>"><bean:write name="shift" property="shiftTypesCodePrettyPrint"/></td>
+							<td><fr:view name="lesson" property="occurrenceWeeksAsString"/></td>
 							<td>
 								<bean:write name="lesson" property="weekDay.labelShort"/>
 							</td>
@@ -156,8 +158,8 @@
 									-
 								</logic:empty>
 							</td>
-							<td><fr:view name="shift" property="courseLoadWeeklyAverage"/></td>
-							<td><bean:write name="shift" property="courseLoadTotalHours"/></td>
+							<td rowspan="<%= lessonsSize %>"><fr:view name="shift" property="courseLoadWeeklyAverage"/></td>
+							<td rowspan="<%= lessonsSize %>"><bean:write name="shift" property="courseLoadTotalHours"/></td>
 							<td rowspan="<%= lessonsSize %>">
 								<logic:greaterThan name="availablePercentage" value="0">
 									<bean:define id="propertyName">
@@ -192,6 +194,7 @@
 						
 						<logic:greaterThan name="indexLessons" value="0">
 							<tr>
+								<td><fr:view name="lesson" property="occurrenceWeeksAsString"/></td>
 								<td>
 									<bean:write name="lesson" property="weekDay.labelShort"/>
 								</td>
