@@ -111,18 +111,23 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
         return DigestUtils.shaHex(encrypted);
     }
 
-    private String getUrl(String to, Registration registration, HttpServletRequest request) throws Exception {
-        String scheme = request.getScheme();
-        String serverName = request.getServerName();
-        int serverPort = request.getServerPort();
-        String url =
-                scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort)
-                        + request.getContextPath();
-        url +=
-                "/external/iCalendarSync.do?method=" + to + "&user=" + AccessControl.getPerson().getUser().getUserUId() + ""
-                        + "&registrationID=" + registration.getExternalId() + "&payload="
-                        + calculatePayload(to, registration, AccessControl.getPerson().getUser());
-        return url;
+    public static String getUrl(String to, Registration registration, HttpServletRequest request) throws Exception {
+        try {
+            String scheme = request.getScheme();
+            String serverName = request.getServerName();
+            int serverPort = request.getServerPort();
+            String url =
+                    scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort)
+                            + request.getContextPath();
+            url +=
+                    "/external/iCalendarSync.do?method=" + to + "&user=" + AccessControl.getPerson().getUser().getUserUId() + ""
+                            + "&registrationID=" + registration.getExternalId() + "&payload="
+                            + calculatePayload(to, registration, AccessControl.getPerson().getUser());
+            return url;
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
 }
