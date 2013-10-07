@@ -19,11 +19,6 @@
 			<bean:message bundle="RESEARCHER_RESOURCES" key="label.back" />
 		</html:link>
 	</li>
-	<li>
-		<html:link page="<%="/activities/activitiesManagement.do?method=prepareDelete" + activityType + "Participations&forwardTo=Edit" + activityType +"&amp;" + parameter%>">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.delete" />
-		</html:link> 
-	</li>
 </ul>
 
 <logic:equal name="confirm" value="yes">
@@ -48,21 +43,7 @@
 </logic:messagesPresent>
 
  
-<bean:message key="link.edit" bundle="RESEARCHER_RESOURCES"/>: 
-<%-- 
-<html:link page="<%="/activities/editResearchActivity.do?method=prepareEdit" + activityType + "Data&" + parameter %>">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="label.activityData" />
-</html:link>, 
---%>
 
-<html:link page="<%="/activities/editResearchActivity.do?method=prepareEdit" + activityType + "Participants&" + parameter %>">
-	<logic:equal name="activityType" value="Cooperation">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="label.cooperation.colaborationForm" />
-	</logic:equal>
-	<logic:notEqual name="activityType" value="Cooperation">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="label.activityRoles" />
-	</logic:notEqual>
-</html:link>
 
 <%-- DATA --%>		
 <fr:view name="researchActivity" schema="<%= schema %>">
