@@ -19,6 +19,7 @@
 
 <logic:notPresent name="preferredSetting">
 	<ul class="list5 mbottom2">
+<!--
 		<li>
 			<html:link page="/resultPublications/prepareCreate.do">
 				<bean:message bundle="RESEARCHER_RESOURCES"	key="researcher.ResultPublication.insert.link"/>
@@ -29,11 +30,13 @@
 				<bean:message bundle="RESEARCHER_RESOURCES"	key="researcher.result.publication.importBibtex"/>
 			</html:link>
 		</li>
+ -->
 		<li>
 			<html:link target="_blank" page="<%="/publications/bibtexManagement.do?method=exportAllPublicationsToBibtex&amp;personOID=" + personId %>">
 					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportAllToBibTeX" />
 			</html:link>
 		</li>
+<!-- 
 		<bean:define id="firstOID" name="executionYearIntervalBean" property="firstExecutionYear.externalId"/>
 		<bean:define id="lastOID" name="executionYearIntervalBean" property="finalExecutionYear.externalId"/>
         <li>
@@ -46,7 +49,16 @@
                 <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.associate.unit.all.publications"/>
             </html:link>
         </li>
+ -->
 	</ul>
+
+<!-- 
+	<div class="error3">
+		<p>
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.moved.to.sotis" arg0="<a href='https://id.ist.utl.pt/cas/login?service=https%3A%2F%2Fbarra.ist.utl.pt%2Flogin%2F%3Fnext%3Dhttps%253A%252F%252Fsotis.ist.utl.pt%252Fsotis-ui%252F%2523researcher'>sotis</a>"/>
+		</p>
+	</div>
+ -->
 	
 	<fr:form action="/resultPublications/listPublications.do">
 	<fr:edit id="executionYearIntervalBean" name="executionYearIntervalBean" visible="false"/>

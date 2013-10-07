@@ -182,7 +182,7 @@
 
 <logic:notEmpty name="orientedThesis">
 <logic:iterate id="thesis" name="orientedThesis">
-   <li><fr:view name="thesis" property="finalTitle"/>, <fr:view name="thesis" property="student.person.name" /> (<bean:message key="label.teacher.details.orientationInformation.masterDegreeProofDate" bundle="DEPARTMENT_MEMBER_RESOURCES"/>:
+   <li><fr:view name="thesis" property="title"/>, <fr:view name="thesis" property="student.person.name" /> (<bean:message key="label.teacher.details.orientationInformation.masterDegreeProofDate" bundle="DEPARTMENT_MEMBER_RESOURCES"/>:
        <fr:view name="thesis" property="evaluation" type="org.joda.time.DateTime">
            <fr:layout name="null-as-label">
                <fr:property name="key" value="true" />
