@@ -51,7 +51,7 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
 
     @Override
     protected boolean isToFire() {
-        return !new LocalDate().isBefore(getWhenToFire());
+        return getProcess().getCandidacyProcess().getWhenRatified() != null && !new LocalDate().isBefore(getWhenToFire());
     }
 
     @Override
