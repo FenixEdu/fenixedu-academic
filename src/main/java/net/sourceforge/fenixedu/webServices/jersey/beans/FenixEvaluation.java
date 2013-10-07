@@ -7,9 +7,8 @@ public class FenixEvaluation {
 	private String name;
 	private String type;
 	private String id;
-	private Boolean isEnrolmentPeriod;
+	private Boolean isEnrollmentPeriod;
 	private String day;
-	private String hour;
 	private String startHour;
 	private String endHour;
 	private String rooms;
@@ -18,16 +17,15 @@ public class FenixEvaluation {
 	private Boolean isEnrolled;
 	private String course;
 
-	public FenixEvaluation(String name, String type, String id, Boolean isEnrolmentPeriod, String day, String hour,
+	public FenixEvaluation(String name, String type, String id, Boolean isEnrollmentPeriod, String day,
 			String startHour, String endHour, String rooms, String enrollmentBeginDay, String enrollmentEndDay,
 			Boolean isEnrolled, String course) {
 		super();
 		this.name = name;
 		this.type = type;
 		this.id = id;
-		this.isEnrolmentPeriod = isEnrolmentPeriod;
+		this.isEnrollmentPeriod = isEnrollmentPeriod;
 		this.day = day;
-		this.hour = hour;
 		this.startHour = startHour;
 		this.endHour = endHour;
 		this.rooms = rooms;
@@ -61,12 +59,12 @@ public class FenixEvaluation {
 		this.id = id;
 	}
 
-	public Boolean getIsEnrolmentPeriod() {
-		return isEnrolmentPeriod;
+	public Boolean getIsEnrollmentPeriod() {
+		return isEnrollmentPeriod;
 	}
 
-	public void setIsEnrolmentPeriod(Boolean isEnrolmentPeriod) {
-		this.isEnrolmentPeriod = isEnrolmentPeriod;
+	public void setIsEnrollmentPeriod(Boolean isEnrollmentPeriod) {
+		this.isEnrollmentPeriod = isEnrollmentPeriod;
 	}
 
 	public String getDay() {
@@ -75,14 +73,6 @@ public class FenixEvaluation {
 
 	public void setDay(String day) {
 		this.day = day;
-	}
-
-	public String getHour() {
-		return hour;
-	}
-
-	public void setHour(String hour) {
-		this.hour = hour;
 	}
 
 	public String getStartHour() {

@@ -183,7 +183,7 @@ public class JerseyPublic {
             String gratuity = mls(degreeInfo.getGratuity());
             String links = mls(degreeInfo.getLinks());
             fenixDegreeInfo =
-                    new FenixDegreeInfo(typeName, description, objectives, designFor, requisites, profissionalExits, history,
+                    new FenixDegreeInfo(description, objectives, designFor, requisites, profissionalExits, history,
                             operationRegime, gratuity, links);
         }
 

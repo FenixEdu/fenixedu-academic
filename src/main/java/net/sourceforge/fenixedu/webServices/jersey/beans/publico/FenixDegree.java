@@ -5,7 +5,6 @@ import java.util.List;
 public class FenixDegree {
 
     public static class FenixDegreeInfo {
-        private String name;
         private String description;
         private String objectives;
         private String designFor;
@@ -16,10 +15,9 @@ public class FenixDegree {
         private String gratuity;
         private String links;
 
-        public FenixDegreeInfo(String name, String description, String objectives, String designFor, String requisites,
+        public FenixDegreeInfo(String description, String objectives, String designFor, String requisites,
                 String profissionalExits, String history, String operationRegime, String gratuity, String links) {
             super();
-            this.name = name;
             this.description = description;
             this.objectives = objectives;
             this.designFor = designFor;
@@ -29,14 +27,6 @@ public class FenixDegree {
             this.operationRegime = operationRegime;
             this.gratuity = gratuity;
             this.links = links;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
         }
 
         public String getDescription() {
