@@ -25,7 +25,9 @@
 
 	<li class="navheader"><bean:message key="oauthapps.label"  /></li>
  	<li><html:link page="/externalApps.do?method=manageAuthorizations"><bean:message key="oauthapps.label.manage.authorizations"  bundle="APPLICATION_RESOURCES"/></html:link></li>
-	<li><html:link page="/externalApps.do?method=manageApplications"><bean:message key="oauthapps.label.manage.applications"  bundle="APPLICATION_RESOURCES"/></html:link></li>
+ 	<logic:present role="DEVELOPER">
+		<li><html:link page="/externalApps.do?method=manageApplications"><bean:message key="oauthapps.label.manage.applications"  bundle="APPLICATION_RESOURCES"/></html:link></li>
+	</logic:present>
 		
 
 	<!-- Vigilancy link for people who do not have ROLE TEACHER -->

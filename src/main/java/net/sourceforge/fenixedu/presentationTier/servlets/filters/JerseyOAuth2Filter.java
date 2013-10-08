@@ -25,14 +25,14 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken.FenixOAuthTokenException;
-import net.sourceforge.fenixedu.webServices.jersey.FenixJerseyPackageResourceConfig;
+import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyPackageResourceConfig;
 
 import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
 import org.apache.amber.oauth2.common.message.OAuthResponse.OAuthErrorResponseBuilder;
 import org.apache.commons.lang.StringUtils;
 
-@WebFilter(urlPatterns = "/jersey/private/*")
+@WebFilter(urlPatterns = "/api/fenix/private/*")
 public class JerseyOAuth2Filter implements Filter {
 
     final static String ACCESS_TOKEN = "access_token";
@@ -116,7 +116,7 @@ public class JerseyOAuth2Filter implements Filter {
         try {
             FenixOAuthToken fenixAccessToken = FenixOAuthToken.parse(accessToken);
             AppUserSession appUserSession = fenixAccessToken.getAppUserSession();
-            final String uri = request.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH).replace("/jersey/", "");
+            final String uri = request.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH).replace("/api/fenix", "");
 
             if (!validScope(response, appUserSession, uri)) {
                 return sendError(response, "invalidScope", "Application doesn't have permissions to this endpoint.");
@@ -124,7 +124,7 @@ public class JerseyOAuth2Filter implements Filter {
 
             if (!appUserSession.matchesAccessToken(accessToken)) {
                 return sendError(response, "accessTokenInvalid", "Access Token doesn't match.");
-                
+
             }
 
             if (!appUserSession.isAccessTokenValid()) {
@@ -139,10 +139,8 @@ public class JerseyOAuth2Filter implements Filter {
             return true;
 
         } catch (FenixOAuthTokenException foate) {
-            sendError(response, "accessTokenInvalidFormat", "Access Token not recognized.");
+            return sendError(response, "accessTokenInvalidFormat", "Access Token not recognized.");
         }
-
-        return false;
     }
 
     private void authenticateUser(final HttpServletRequest request, User foundUser) {
@@ -160,9 +158,8 @@ public class JerseyOAuth2Filter implements Filter {
         return true;
     }
 
-    @SuppressWarnings("finally")
-	private static boolean sendError(final HttpServletResponse response, String error, String errorDescription) throws IOException,
-            ServletException {
+    private static boolean sendError(final HttpServletResponse response, String error, String errorDescription)
+            throws IOException, ServletException {
         OAuthResponse errorResponse;
         try {
             errorResponse =
@@ -170,10 +167,9 @@ public class JerseyOAuth2Filter implements Filter {
             response.setStatus(errorResponse.getResponseStatus());
             PrintWriter pw = response.getWriter();
             pw.print(errorResponse.getBody());
+            return false;
         } catch (OAuthSystemException e) {
             throw new ServletException(e);
-        } finally {
-        	return false;
         }
     }
 

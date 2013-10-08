@@ -24,7 +24,7 @@
 				<p><bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.authorization.scopes"/></p>
 				<ul>
 					<logic:iterate id="scope" name="application" property="scopes">
-						<li><bean:write name="scope" property="name"/> </li>
+						<li><bean:write name="scope" property="presentationName" filter="false"/> </li>
 					</logic:iterate>
 				</ul>
 				<div class="button-group">

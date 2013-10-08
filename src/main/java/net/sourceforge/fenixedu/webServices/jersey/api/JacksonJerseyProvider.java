@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.webServices.jersey;
+package net.sourceforge.fenixedu.webServices.jersey.api;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;

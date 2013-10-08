@@ -15,6 +15,10 @@
 	<bean:message key="oauthapps.title.edit.application" bundle="APPLICATION_RESOURCES" />
 </h2>
 
+<p class="infoop2">
+<b><bean:message key="oauthapps.label.edit.application.warning" bundle="APPLICATION_RESOURCES" /></b>
+</p>
+
 <fr:edit id="edit" name="application" type="net.sourceforge.fenixedu.domain.ExternalApplication" schema="oauthapps.create.app">
 	<fr:destination name="success" path="/externalApps.do?method=createApplication" />
 	<fr:destination name="cancel" path="/externalApps.do?method=createApplication" />

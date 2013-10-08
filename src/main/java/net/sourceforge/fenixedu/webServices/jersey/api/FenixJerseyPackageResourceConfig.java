@@ -1,21 +1,27 @@
-package net.sourceforge.fenixedu.webServices.jersey;
+package net.sourceforge.fenixedu.webServices.jersey.api;
+
+import pt.ist.fenixframework.Atomic;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.Path;
 
 import net.sourceforge.fenixedu.domain.AuthScope;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixframework.Atomic;
-
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import com.sun.jersey.api.core.PackagesResourceConfig;
 
@@ -28,6 +34,7 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
     public FenixJerseyPackageResourceConfig(Map<String, Object> props) {
         super(props);
         searchForAPIFenixScope();
+        registerAuthScopes();
     }
 
     @Atomic
@@ -43,6 +50,28 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
             } else {
                 LOGGER.info("scope exists {}, change jersey endpoints {}", scopeName, Joiner.on(",").join(endpoints));
                 authScope.changeJerseyEndpoints(endpoints);
+            }
+        }
+        removeUnusedAuthScopes();
+    }
+
+    @Atomic
+    private static void removeUnusedAuthScopes() {
+        final Set<AuthScope> authScopes = RootDomainObject.getInstance().getAuthScopesSet();
+        ImmutableSet<String> authScopesNames = FluentIterable.from(authScopes).transform(new Function<AuthScope, String>() {
+
+            @Override
+            public String apply(AuthScope scope) {
+                return scope.getName();
+            }
+        }).toSet();
+
+        Collection<String> unusedScopes = CollectionUtils.subtract(authScopesNames, scopePathsMap.keySet());
+        for (String unusedScope : unusedScopes) {
+            AuthScope authScope = AuthScope.getAuthScope(unusedScope);
+            if (authScope != null) {
+                LOGGER.info("delete unused scope {}", unusedScope);
+                authScope.delete();
             }
         }
     }
@@ -65,8 +94,6 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
                         } else {
                             LOGGER.debug("No path for method {}", method.getName());
                         }
-                    } else {
-                        LOGGER.debug("No apiScope for method {}", method.getName());
                     }
                 }
             } else {

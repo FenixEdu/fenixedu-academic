@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.webServices.jersey;
+package net.sourceforge.fenixedu.webServices.jersey.api;
 
 import java.util.Iterator;
 import java.util.Locale;

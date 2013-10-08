@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.webServices.jersey;
+package net.sourceforge.fenixedu.webServices.jersey.api;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface FenixAPIScope {
-    String value();
+public @interface FenixAPIPublic {
+
 }

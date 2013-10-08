@@ -48,7 +48,7 @@ public class FenixOAuthToken {
 
         AppUserSession appUserSession = appUserSession(appUserSessionExternalId);
 
-        if (appUserSession == null) {
+        if (appUserSession == null || !appUserSession.isActive()) {
             throw new FenixOAuthTokenException();
         }
 

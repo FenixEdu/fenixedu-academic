@@ -5,10 +5,12 @@ import pt.ist.fenixframework.Atomic;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -24,9 +26,17 @@ public class ExternalApplication extends ExternalApplication_Base {
         setSecret(RandomStringUtils.randomAlphanumeric(115));
     }
 
-    public void setScopes(List<AuthScope> scopes) {
-        getScopes().clear();
-        getScopes().addAll(scopes);
+    public void setScopeList(List<AuthScope> newScopes) {
+        Set<AuthScope> oldScopes = getScopesSet();
+        if (CollectionUtils.subtract(newScopes, oldScopes).size() > 0) {
+            deleteAuthorizations();
+        }
+        oldScopes.clear();
+        oldScopes.addAll(newScopes);
+    }
+
+    public List<AuthScope> getScopeList() {
+        return new ArrayList<AuthScope>(getScopesSet());
     }
 
     public boolean matchesUrl(String redirectUrl) {
@@ -46,10 +56,9 @@ public class ExternalApplication extends ExternalApplication_Base {
         return null;
     }
 
-    public void scopeHasChanged() {
-        final Set<AppUserSession> sessions = new HashSet<AppUserSession>(getAppUserSessionSet());
-        for (AppUserSession appUserSession : sessions) {
-            appUserSession.invalidate();
+    public void deleteAuthorizations() {
+        for (AppUserAuthorization authorization : new HashSet<AppUserAuthorization>(getAppUserAuthorizationSet())) {
+            authorization.delete();
         }
     }
 
@@ -90,16 +99,13 @@ public class ExternalApplication extends ExternalApplication_Base {
     public void delete() {
         setRootDomainObject(null);
         setAuthor(null);
-        getScopes().clear();
-        Set<AppUserAuthorization> auths = new HashSet<AppUserAuthorization>(getAppUserAuthorizationSet());
-        for (AppUserAuthorization authorization : auths) {
-            authorization.delete();
-        }
+        getScopesSet().clear();
+        deleteAuthorizations();
         deleteDomainObject();
     }
 
     public AppUserAuthorization getAppUserAuthorization(User user) {
-        for (AppUserAuthorization authorization : getAppUserAuthorization()) {
+        for (AppUserAuthorization authorization : getAppUserAuthorizationSet()) {
             if (authorization.getUser().equals(user)) {
                 return authorization;
             }

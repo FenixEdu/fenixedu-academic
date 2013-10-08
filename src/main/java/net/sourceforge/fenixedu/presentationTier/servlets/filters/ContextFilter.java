@@ -64,8 +64,8 @@ public class ContextFilter implements Filter {
                 || path.endsWith(".html") || path.endsWith(".htm") || path.startsWith("/exceptionHandlingAction.do")
                 || path.startsWith("/showErrorPageRegistered.do") || path.startsWith("/services")
                 || path.contains("/loginExpired.do") || path.contains("/summariesRSS.do") || path.startsWith("/gwt")
-                || path.startsWith("/remote") || path.startsWith("/jersey") || path.startsWith("/downloadFile")
-                || (path.indexOf("/google") >= 0 && path.endsWith(".html"))
+                || path.startsWith("/remote") || path.startsWith("/jersey") || path.startsWith("/api")
+                || path.startsWith("/downloadFile") || (path.indexOf("/google") >= 0 && path.endsWith(".html"))
                 || path.startsWith("/privado");
     }
 

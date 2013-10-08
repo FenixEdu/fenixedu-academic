@@ -35,6 +35,8 @@
 			</fr:layout>
 		</fr:view>
 <%-- 		<p><a href="<%= "externalApps.do?method=displayAppUserSessions&oid=" + app.getExternalId()%>"> Ver autorizações </a> --%>
+
+<jsp:include page="/auth/scopesFooter.jsp"></jsp:include>
 </logic:notEmpty>
 <logic:empty name="authApps">
 	<bean:message key="oauthapps.label.no.authorizations" bundle="APPLICATION_RESOURCES" />

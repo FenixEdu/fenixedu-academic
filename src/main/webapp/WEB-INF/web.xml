@@ -328,22 +328,36 @@
         <servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
     </servlet>
     <servlet>
-       <servlet-name>Jersey Web Application</servlet-name>
+       <servlet-name>Jersey API Web Application</servlet-name>
        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+       <load-on-startup>1</load-on-startup>
        <init-param>
 			<param-name>com.sun.jersey.config.property.resourceConfigClass</param-name>			
-			<param-value>net.sourceforge.fenixedu.webServices.jersey.FenixJerseyPackageResourceConfig</param-value>
+			<param-value>net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyPackageResourceConfig</param-value>
 		</init-param>
        <init-param>
       		<param-name>com.sun.jersey.config.property.packages</param-name>
-      		<param-value>net.sourceforge.fenixedu.webServices.jersey</param-value>
+      		<param-value>net.sourceforge.fenixedu.webServices.jersey.api</param-value>
+    	</init-param>
+     </servlet>
+     <servlet>
+       <servlet-name>Jersey Services Web Application</servlet-name>
+       <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+       <load-on-startup>1</load-on-startup>
+       <init-param>
+      		<param-name>com.sun.jersey.config.property.packages</param-name>
+      		<param-value>net.sourceforge.fenixedu.webServices.jersey.services</param-value>
     	</init-param>
      </servlet>
     
     <!-- Servlet Mapping -->
     <servlet-mapping>
-       <servlet-name>Jersey Web Application</servlet-name>
+       <servlet-name>Jersey Services Web Application</servlet-name>
        <url-pattern>/jersey/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+       <servlet-name>Jersey API Web Application</servlet-name>
+       <url-pattern>/api/fenix/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>XFireServlet</servlet-name>

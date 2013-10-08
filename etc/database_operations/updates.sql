@@ -159,3 +159,15 @@ create table `SANTANDER_P_I_N` (`ENCRYPTED_P_I_N` text, `OID` bigint unsigned, `
 
 alter table `APP_USER_SESSION` add `OID_APP_USER_AUTHORIZATION` bigint unsigned, add index (OID_APP_USER_AUTHORIZATION);
 create table `APP_USER_AUTHORIZATION` (`OID` bigint unsigned, `OID_DOMAIN_META_OBJECT` bigint unsigned, `OID_USER` bigint unsigned, `OID_APPLICATION` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_USER), index (OID_APPLICATION)) ENGINE=InnoDB, character set utf8;
+
+
+
+-- Inserted at 2013-10-04T17:15:38.625+01:00
+
+alter table `FILE` add `OID_PICTURE` bigint unsigned;
+create table `PERMISSIONS_SCOPE` (`OID_AUTH_SCOPE` bigint unsigned, `OID_EXTERNAL_APPLICATION` bigint unsigned, primary key (OID_AUTH_SCOPE, OID_EXTERNAL_APPLICATION), index (OID_AUTH_SCOPE), index (OID_EXTERNAL_APPLICATION)) ENGINE=InnoDB, character set utf8;
+create table `AUTH_SCOPE` (`OID` bigint unsigned, `NAME` text, `OID_DOMAIN_META_OBJECT` bigint unsigned, `ENDPOINTS` text, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
+alter table `PICTURE` add `OID_FILE` bigint unsigned;
+create table `EXTERNAL_APPLICATION` (`OID` bigint unsigned, `NAME` text, `LOGO` blob, `DESCRIPTION` text, `OID_DOMAIN_META_OBJECT` bigint unsigned, `REDIRECT_URL` text, `OID_AUTHOR` bigint unsigned, `SITE_URL` text, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `SECRET` text, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_AUTHOR), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
+create table `APP_USER_SESSION` (`EXPIRATION_DATE` timestamp NULL default NULL, `REFRESH_TOKEN` text, `OID` bigint unsigned, `OID_APP_USER_AUTHORIZATION` bigint unsigned, `ACCESS_TOKEN` text, `OID_DOMAIN_META_OBJECT` bigint unsigned, `DEVICE_ID` text, `CREATION_DATE` timestamp NULL default NULL, `CODE` text, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_APP_USER_AUTHORIZATION)) ENGINE=InnoDB, character set utf8;
+create table `APP_USER_AUTHORIZATION` (`OID` bigint unsigned, `OID_DOMAIN_META_OBJECT` bigint unsigned, `OID_USER` bigint unsigned, `OID_APPLICATION` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_USER), index (OID_APPLICATION)) ENGINE=InnoDB, character set utf8;

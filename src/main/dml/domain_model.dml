@@ -20829,7 +20829,6 @@ class AppUserSession {
 	String code;
 	String accessToken;
 	String refreshToken;
-	DateTime expirationDate;
 	String deviceId;
 }
 

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.webServices.jersey;
+package net.sourceforge.fenixedu.webServices.jersey.services;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 

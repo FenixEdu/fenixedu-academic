@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 
 import net.sourceforge.fenixedu._development.OAuthProperties;
 
@@ -39,7 +40,7 @@ public class AppUserSession extends AppUserSession_Base {
     }
 
     public boolean isAccessTokenValid() {
-        return getCreationDate().plusSeconds(OAuthProperties.getAccessTokenExpirationSeconds()).isAfterNow();
+        return getCreationDate() != null && getCreationDate().plusSeconds(OAuthProperties.getAccessTokenExpirationSeconds()).isAfterNow();
     }
 
     public boolean isRefreshTokenValid() {
@@ -72,14 +73,19 @@ public class AppUserSession extends AppUserSession_Base {
         setCreationDate(new DateTime());
     }
 
-    @Atomic
+    @Atomic(mode = TxMode.WRITE)
     public void delete() {
+        setCode(null);
+        setAccessToken(null);
+        setCreationDate(null);
+        setDeviceId(null);
         setAppUserAuthorization(null);
+        setRefreshToken(null);
         deleteDomainObject();
     }
 
-    public void invalidate() {
-        // TODO notify user
-        delete();
-    }
+	public boolean isActive() {
+		return getCreationDate() != null;
+	}
+
 }

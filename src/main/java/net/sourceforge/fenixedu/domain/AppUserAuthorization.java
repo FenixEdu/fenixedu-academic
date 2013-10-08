@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+
 import java.util.HashSet;
 import java.util.Set;
-
-import pt.ist.fenixframework.Atomic;
 
 public class AppUserAuthorization extends AppUserAuthorization_Base {
 
@@ -13,12 +14,14 @@ public class AppUserAuthorization extends AppUserAuthorization_Base {
         setApplication(application);
     }
 
-    @Atomic
+    @Atomic(mode = TxMode.WRITE)
     public void delete() {
         Set<AppUserSession> sessions = new HashSet<AppUserSession>(getSessionSet());
         for (AppUserSession session : sessions) {
             session.delete();
         }
+        setUser(null);
+        setApplication(null);
         deleteDomainObject();
     }
 

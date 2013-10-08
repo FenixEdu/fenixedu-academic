@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.webServices.jersey;
+package net.sourceforge.fenixedu.webServices.jersey.api;
 
 import pt.ist.fenixframework.DomainObject;
 
@@ -100,6 +100,7 @@ public class JerseyPublic {
     @GET
     @Produces(JerseyPrivate.JSON_UTF8)
     @Path("about")
+    @FenixAPIPublic
     public FenixAbout about() {
         return FenixAbout.getInstance();
     }
@@ -142,6 +143,7 @@ public class JerseyPublic {
     @GET
     @Produces(JerseyPrivate.JSON_UTF8)
     @Path("degrees")
+    @FenixAPIPublic
     public List<FenixDegree> degrees(@QueryParam("year") String year) {
 
         ExecutionYear executionYear = getExecutionYear(year);
@@ -568,13 +570,13 @@ public class JerseyPublic {
         if (writtenEvaluation.getEnrollmentEndTime() != null) {
             enrollmentEndTime = JerseyPrivate.dataFormatHour.format(writtenEvaluation.getEnrollmentEndTime().getTime());
         }
-        
+
         if (type.equals(EvaluationType.EXAM_TYPE)) {
-        	return new FenixCourseEvaluation.Exam(name, day, beginningTime, endTime, isEnrolmentPeriod,
-        			enrollmentBeginDay, enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
+            return new FenixCourseEvaluation.Exam(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentBeginDay,
+                    enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
         } else {
-        	return new FenixCourseEvaluation.Test(name, day, beginningTime, endTime, isEnrolmentPeriod,
-        			enrollmentBeginDay, enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
+            return new FenixCourseEvaluation.Test(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentBeginDay,
+                    enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
         }
     }
 

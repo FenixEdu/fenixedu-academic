@@ -12,7 +12,7 @@
 <em><bean:message key="label.person.main.title" /></em>
 
 <logic:notEmpty name="authorizations">
-<h2>
+<h2 class="mtop15">
 	<bean:message key="oauthapps.label.app.details" bundle="APPLICATION_RESOURCES" />
 </h2>
 
@@ -25,7 +25,7 @@
 </fr:view>
 
 
-<h2>
+<h2 class="mtop25">
 	<bean:message key="oauthapps.label.manage.authorizations" bundle="APPLICATION_RESOURCES" />
 </h2>
 
@@ -68,6 +68,7 @@
 			   return answer;
 			});
 </script>
-
 </logic:notEmpty>
+
+<jsp:include page="/auth/scopesFooter.jsp"></jsp:include>
 	

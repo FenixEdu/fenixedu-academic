@@ -59,9 +59,12 @@
 	</html:link>
 </p>
 
+<jsp:include page="/auth/scopesFooter.jsp"></jsp:include>
+
 <bean:define id="confirm">
 	<bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.confirm.delete.application"/> 
 </bean:define>
+
 
 <script type="text/javascript">
 		$("table img").width("75px").height("75px");

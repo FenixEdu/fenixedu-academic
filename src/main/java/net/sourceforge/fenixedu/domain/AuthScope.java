@@ -1,7 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+
 import java.util.Arrays;
 import java.util.Collection;
+
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -48,7 +53,18 @@ public class AuthScope extends AuthScope_Base {
     private void notifyAllAppsScopeHasChanged() {
         for (ExternalApplication app : getAppSet()) {
             LOGGER.info("scopes of app {} changed", getName());
-            app.scopeHasChanged();
+            app.deleteAuthorizations();
         }
+    }
+
+    public String getPresentationName() {
+        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "oauthapps.label.app.scope." + getName());
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    public void delete() {
+        getAppSet().clear();
+        setRootDomainObject(null);
+        deleteDomainObject();
     }
 }

@@ -1,5 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.startup;
 
+import pt.ist.fenixWebFramework.FenixWebFramework;
+
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
+import pt.ist.fenixframework.plugins.scheduler.Scheduler;
+import pt.ist.fenixframework.plugins.scheduler.domain.SchedulerSystem;
+
+import pt.utl.ist.fenix.tools.util.FileUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
@@ -27,18 +37,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.webServices.jersey.FenixJerseyPackageResourceConfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
-import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
-import pt.ist.fenixframework.plugins.scheduler.Scheduler;
-import pt.ist.fenixframework.plugins.scheduler.domain.SchedulerSystem;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @WebListener
 public class FenixInitializer implements ServletContextListener {
@@ -94,25 +95,19 @@ public class FenixInitializer implements ServletContextListener {
         } catch (Exception ex) {
             logger.info("Check is alive is not working. Caught excpetion.");
             ex.printStackTrace();
-		}
+        }
         loadLogins();
         loadPersonNames();
         loadUnitNames();
         loadRoles();
         startContactValidationServices();
         initScheduler();
-		setupFenixAPIJerseyScopes();
         logger.info("Fenix initialized successfully");
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
 
-    }
-
-    @Atomic
-    private void setupFenixAPIJerseyScopes() {
-        FenixJerseyPackageResourceConfig.registerAuthScopes();
     }
 
     private void startContactValidationServices() {

@@ -44,6 +44,7 @@
 	<bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.confirm.delete.application"/> 
 </bean:define>
 
+<jsp:include page="/auth/scopesFooter.jsp"></jsp:include>
 <script type="text/javascript">
 		$("table img").width("75px").height("75px");
 		$("a[href*=deleteApplication]").click(function(e) {
