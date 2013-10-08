@@ -86,11 +86,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.photograph.PictureAvatar;
-import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.domain.space.Floor;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -1291,7 +1288,7 @@ public class FenixAPIv1 {
         List<FenixSpace> campi = new ArrayList<>();
 
         for (Campus campus : Space.getAllCampus()) {
-            campi.add(getSimpleCampus(campus));
+            campi.add(getSimpleSpace(campus));
         }
         return campi;
     }
@@ -1310,74 +1307,47 @@ public class FenixAPIv1 {
     @FenixAPIPublic
     public FenixSpace spacesByOid(@PathParam("id") String oid, @QueryParam("day") String day) {
 
-        Resource resource = getDomainObject(oid, Resource.class);
-
-        if (resource.isCampus()) {
-            return getFenixCampus((Campus) resource);
-        } else if (resource.isBuilding()) {
-            return getFenixBuilding((Building) resource);
-        } else if (resource.isFloor()) {
-            return getFenixFloor((Floor) resource);
-        } else if (resource.isRoom()) {
-            return getFenixRoom((Room) resource, getRoomDay(day));
+        Space space = getDomainObject(oid, Space.class);
+        if (space.isRoom()) {
+            return getFenixRoom((Room) space, getRoomDay(day));
         }
+        return getSpace(space);
+    }
 
+    private String getSpaceType(Space space) {
+        if (space.isCampus()) {
+            return "CAMPUS";
+        } else if (space.isBuilding()) {
+            return "BUILDING";
+        } else if (space.isFloor()) {
+            return "FLOOR";
+        } else if (space.isRoom()) {
+            return "ROOM";
+        }
         return null;
     }
 
-    private FenixSpace.Campus getFenixCampus(Campus campus) {
-
-        List<FenixSpace> fenixBuildings = new ArrayList<>();
-
-        for (Space building : campus.getActiveContainedSpacesByType(Building.class)) {
-            fenixBuildings.add(getSimpleBuilding((Building) building));
+    private FenixSpace getSimpleSpace(Space space) {
+        if (space == null) {
+            return null;
         }
-
-        return new FenixSpace.Campus(campus.getExternalId(), campus.getName(), fenixBuildings);
-
+        return new FenixSpace(space.getExternalId(), space.getSpaceInformation().getPresentationName(), getSpaceType(space));
     }
 
-    public FenixSpace.Building getSimpleBuilding(Building building) {
-        return new FenixSpace.Building(building.getExternalId(), building.getNameWithCampus());
+    public FenixSpace getSpace(Space space) {
+        String id = space.getExternalId();
+        String name = space.getSpaceInformation().getPresentationName();
+        List<FenixSpace> containedSpaces = getSimpleSpace(space.getContainedSpacesSet());
+        FenixSpace parentSpace = getSimpleSpace(space.getSuroundingSpace());
+        return new FenixSpace(id, name, getSpaceType(space), containedSpaces, parentSpace);
     }
 
-    private FenixSpace.Building getFenixBuilding(Building building) {
-
-        List<FenixSpace> fenixFloors = new ArrayList<>();
-        for (Space space : building.getActiveContainedSpacesByType(Floor.class)) {
-            fenixFloors.add(getSimpleFloor((Floor) space));
+    private List<FenixSpace> getSimpleSpace(Set<Space> containedSpacesSet) {
+        List<FenixSpace> fenixSpaces = new ArrayList<FenixSpace>();
+        for (Space space : containedSpacesSet) {
+            fenixSpaces.add(getSimpleSpace(space));
         }
-
-        Campus campus = building.getSpaceCampus();
-        FenixSpace.Campus fenixCampus = getSimpleCampus(campus);
-        return new FenixSpace.Building(building.getExternalId(), building.getNameWithCampus(), fenixCampus, fenixFloors);
-    }
-
-    public FenixSpace.Floor getSimpleFloor(Floor floor) {
-        return new FenixSpace.Floor(floor.getExternalId(), floor.getSpaceInformation().getPresentationName());
-    }
-
-    public FenixSpace.Campus getSimpleCampus(Campus campus) {
-        return new FenixSpace.Campus(campus.getExternalId(), campus.getName());
-    }
-
-    private FenixSpace.Floor getFenixFloor(Floor floor) {
-        List<FenixSpace.Room> fenixRooms = new ArrayList<>();
-
-        for (Space space : floor.getActiveContainedSpacesByType(Room.class)) {
-            fenixRooms.add(getSimpleRoom((Room) space));
-        }
-
-        Building building = floor.getSpaceBuilding();
-        FenixSpace.Building fenixBuilding = getSimpleBuilding(building);
-        FenixSpace.Floor fenixFloor =
-                new FenixSpace.Floor(floor.getExternalId(), floor.getSpaceInformation().getPresentationName(), fenixBuilding,
-                        fenixRooms);
-        return fenixFloor;
-    }
-
-    public FenixSpace.Room getSimpleRoom(Room room) {
-        return new FenixSpace.Room(room.getExternalId(), room.getSpaceInformation().getPresentationName());
+        return fenixSpaces;
     }
 
     private FenixSpace.Room getFenixRoom(Room room, java.util.Calendar rightNow) {
@@ -1474,7 +1444,7 @@ public class FenixAPIv1 {
             Integer normalCapacity = room.getNormalCapacity();
             Integer examCapacity = room.getExamCapacity();
 
-            return new FenixSpace.Room(id, name, getSimpleFloor(room.getSpaceFloor()), description, normalCapacity, examCapacity,
+            return new FenixSpace.Room(id, name, getSimpleSpace(room.getSpaceFloor()), description, normalCapacity, examCapacity,
                     roomEvents);
 
         } catch (Exception e) {

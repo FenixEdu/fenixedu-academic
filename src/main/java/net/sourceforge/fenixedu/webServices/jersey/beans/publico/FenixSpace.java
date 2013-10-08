@@ -1,76 +1,43 @@
 package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize.Typing;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-@JsonSubTypes({ @JsonSubTypes.Type(value = FenixSpace.Campus.class, name = "CAMPUS"),
-        @JsonSubTypes.Type(value = FenixSpace.Building.class, name = "BUILDING"),
-        @JsonSubTypes.Type(value = FenixSpace.Floor.class, name = "FLOOR"),
-        @JsonSubTypes.Type(value = FenixSpace.Room.class, name = "ROOM") })
 public class FenixSpace {
 
     public static class Campus extends FenixSpace {
-        @JsonSerialize(contentAs = FenixSpace.class, typing = Typing.STATIC)
-        @JsonInclude(Include.NON_EMPTY)
-        public List<FenixSpace> buildings;
-
         public Campus(String id, String name) {
-            super(id, name);
+            super(id, name, "CAMPUS");
         }
 
-        public Campus(String id, String name, List<FenixSpace> buildings) {
-            super(id, name);
-            this.buildings = buildings;
+        public Campus(String id, String name, List<FenixSpace> containedSpaces, FenixSpace parentSpace) {
+            super(id, name, "CAMPUS", containedSpaces, parentSpace);
         }
-
     }
 
     public static class Building extends FenixSpace {
-
-        @JsonSerialize(as = FenixSpace.class)
-        @JsonInclude(Include.NON_EMPTY)
-        public Campus campus;
-
-        @JsonSerialize(contentAs = FenixSpace.class, typing = Typing.STATIC)
-        @JsonInclude(Include.NON_EMPTY)
-        public List<FenixSpace> floors;
-
         public Building(String id, String name) {
-            super(id, name);
+            super(id, name, "BUILDING");
         }
 
-        public Building(String id, String name, Campus campus, List<FenixSpace> floors) {
-            super(id, name);
-            this.campus = campus;
-            this.floors = floors;
+        public Building(String id, String name, List<FenixSpace> containedSpaces, FenixSpace parentSpace) {
+            super(id, name, "BUILDING", containedSpaces, parentSpace);
         }
 
     }
 
     public static class Floor extends FenixSpace {
-        @JsonSerialize(contentAs = FenixSpace.class)
-        @JsonInclude(Include.NON_EMPTY)
-        public List<Room> rooms;
-
-        @JsonSerialize(as = FenixSpace.class)
-        @JsonInclude(Include.NON_EMPTY)
-        public Building building;
-
         public Floor(String id, String name) {
-            super(id, name);
+            super(id, name, "FLOOR");
         }
 
-        public Floor(String id, String name, Building building, List<Room> rooms) {
-            super(id, name);
-            this.building = building;
-            this.rooms = rooms;
+        public Floor(String id, String name, List<FenixSpace> containedSpaces, FenixSpace parentSpace) {
+            super(id, name, "FLOOR", containedSpaces, parentSpace);
         }
 
     }
@@ -167,26 +134,26 @@ public class FenixSpace {
 
         }
 
-        @JsonSerialize(as = FenixSpace.class)
-        public FenixSpace floor;
         public String description;
         public Integer normalCapacity;
         public Integer examCapacity;
 
-        @JsonInclude(Include.NON_EMPTY)
+        @JsonInclude(Include.NON_NULL)
         public List<RoomEvent> events;
 
         public Room(String id, String name) {
-            super(id, name);
+            super(id, name, "ROOM");
         }
 
-        public Room(String id, String name, Floor floor, String description, Integer normalCapacity, Integer examCapacity,
-                List<RoomEvent> events) {
-            super(id, name);
-            this.floor = floor;
+        public Room(String id, String name, FenixSpace parentSpace, String description, Integer normalCapacity,
+                Integer examCapacity, List<RoomEvent> events) {
+            super(id, name, "ROOM", null, parentSpace);
             this.description = description;
             this.normalCapacity = normalCapacity;
             this.examCapacity = examCapacity;
+            if (events == null || events.isEmpty()) {
+                events = new ArrayList<>();
+            }
             this.events = events;
         }
 
@@ -194,11 +161,23 @@ public class FenixSpace {
 
     public String id;
     public String name;
+    public String type;
+    @JsonInclude(Include.NON_NULL)
+    public List<FenixSpace> containedSpaces;
+    @JsonInclude(Include.NON_NULL)
+    public FenixSpace parentSpace;
 
-    public FenixSpace(String id, String name) {
-        super();
+    public FenixSpace(String id, String name, String type) {
         this.id = id;
         this.name = name;
+        this.type = type;
+        this.parentSpace = null;
+        this.containedSpaces = null;
     }
 
+    public FenixSpace(String id, String name, String type, List<FenixSpace> containedSpaces, FenixSpace parentSpace) {
+        this(id, name, type);
+        this.containedSpaces = containedSpaces;
+        this.parentSpace = parentSpace;
+    }
 }
