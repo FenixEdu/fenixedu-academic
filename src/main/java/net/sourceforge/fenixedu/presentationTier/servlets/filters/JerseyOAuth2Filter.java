@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -32,7 +30,9 @@ import org.apache.amber.oauth2.common.message.OAuthResponse;
 import org.apache.amber.oauth2.common.message.OAuthResponse.OAuthErrorResponseBuilder;
 import org.apache.commons.lang.StringUtils;
 
-@WebFilter(urlPatterns = "/api/fenix/private/*")
+import pt.ist.fenixWebFramework.security.UserView;
+
+@WebFilter(urlPatterns = "/api/fenix/*")
 public class JerseyOAuth2Filter implements Filter {
 
     final static String ACCESS_TOKEN = "access_token";
@@ -106,19 +106,24 @@ public class JerseyOAuth2Filter implements Filter {
 
     private Boolean checkAccessToken(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
             ServletException {
-
+    	
+    	final String uri = request.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH).replace("/api/fenix", "");
+    	
+    	if (FenixJerseyPackageResourceConfig.isPublicScope(uri)) {
+        	return true;
+        }
+    	
         String accessToken = request.getHeader(ACCESS_TOKEN);
 
         if (StringUtils.isBlank(accessToken)) {
             accessToken = request.getParameter(ACCESS_TOKEN);
         }
-
+        
         try {
             FenixOAuthToken fenixAccessToken = FenixOAuthToken.parse(accessToken);
             AppUserSession appUserSession = fenixAccessToken.getAppUserSession();
-            final String uri = request.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH).replace("/api/fenix", "");
 
-            if (!validScope(response, appUserSession, uri)) {
+            if (!validScope(appUserSession, uri)) {
                 return sendError(response, "invalidScope", "Application doesn't have permissions to this endpoint.");
             }
 
@@ -147,7 +152,7 @@ public class JerseyOAuth2Filter implements Filter {
         UserView.setUser(Authenticate.mockUser(foundUser.getPerson(), request.getRequestURL().toString()));
     }
 
-    private boolean validScope(final HttpServletResponse response, AppUserSession appUserSession, final String uri)
+    private boolean validScope(AppUserSession appUserSession, final String uri)
             throws IOException, ServletException {
         AuthScope scope = FenixJerseyPackageResourceConfig.getScope(uri);
         if (scope != null) {

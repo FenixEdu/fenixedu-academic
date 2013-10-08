@@ -1,9 +1,8 @@
 package net.sourceforge.fenixedu.webServices.jersey.api;
 
-import pt.ist.fenixframework.Atomic;
-
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,6 +15,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -30,6 +31,8 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(FenixJerseyPackageResourceConfig.class);
 
     public static Multimap<String, String> scopePathsMap = HashMultimap.create();
+    
+    public static Set<String> publicScopes = new HashSet<>();
 
     public FenixJerseyPackageResourceConfig(Map<String, Object> props) {
         super(props);
@@ -94,6 +97,17 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
                         } else {
                             LOGGER.debug("No path for method {}", method.getName());
                         }
+                    } else {
+                    	FenixAPIPublic publicAPIAnnotation = method.getAnnotation(FenixAPIPublic.class);
+                    	if (publicAPIAnnotation != null) {
+                    		if (methodPathAnnotation != null) {
+                    			String path = ends(pathAnnotation.value());
+                                String methodPath = ends(methodPathAnnotation.value());
+                                String absolutePath = Joiner.on("/").join(path, methodPath);
+                                publicScopes.add(absolutePath);
+                                LOGGER.info("add public endpoint {}", absolutePath);
+                    		}
+                    	}
                     }
                 }
             } else {
@@ -113,5 +127,15 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
             }
         }
         return null;
+    }
+    
+    public static boolean isPublicScope(String endpoint) {
+    	for(String publicEndpoint : publicScopes) {
+    		String e1 = publicEndpoint.replaceAll("\\{[a-z]+\\}",".+");
+    		if (endpoint.matches(e1)) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 }
