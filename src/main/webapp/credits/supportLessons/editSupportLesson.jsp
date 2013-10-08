@@ -37,6 +37,10 @@
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </logic:messagesPresent>
 
+<bean:define id="teacherId" name="teacher" property="externalId"/>
+<bean:define id="executionYearOid" name="professorship" property="executionCourse.executionPeriod.executionYear.externalId" />
+
+<p><html:link page="<%="/credits.do?method=viewAnnualTeachingCredits&amp;executionYearOid="+executionYearOid+"&teacherOid="+teacherId%>"><bean:message key="link.return"/></html:link></p>
 
 <p>
 	<strong>
@@ -101,9 +105,6 @@
 	<p>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="button.submit"/>
-		</html:submit>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='cancel';this.form.page.value='0'">
-			<bean:message key="button.cancel"/>
 		</html:submit>
 	</p>
 </html:form>
