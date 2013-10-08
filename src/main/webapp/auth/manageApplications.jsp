@@ -15,7 +15,7 @@
 </h2>
 
 <div class="infoop2" style="width:500px;">
-	Nesta secção estão listadas as suas aplicações registadas no sistema Fénix.
+	<bean:message key="oauthapps.text.manage.applications" bundle="APPLICATION_RESOURCES" />
 </div>
 <login:present name="allowIstIds">
     <html:link page="/externalApps.do?method=allowIstIds">

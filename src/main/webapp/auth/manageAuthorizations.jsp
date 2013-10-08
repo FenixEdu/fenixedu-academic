@@ -13,8 +13,8 @@
 </h2>
 
 <div class="infoop2" style="width:600px;">
-	<p>Nesta secção estão listadas as autorizações que concedeu a aplicações externas registadas no Fénix.</p>
-	<p>É possível revogar a aplicação ou cada autorização individualmente.</p>
+	<p><bean:message key="oauthapps.text.manage.applications" bundle="APPLICATION_RESOURCES" /></p>
+	<p><bean:message key="oauthapps.text.manage.authorizations" bundle="APPLICATION_RESOURCES" /></p>
 </div>
 
 
