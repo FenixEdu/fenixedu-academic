@@ -1,5 +1,12 @@
 package net.sourceforge.fenixedu.webServices.jersey.api;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
+import pt.ist.fenixframework.DomainObject;
+
+import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -129,11 +136,6 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.JSONObject;
-
-import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.DomainObject;
-import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Joiner;
 import com.google.common.net.HttpHeaders;
@@ -847,7 +849,7 @@ public class FenixAPIv1 {
     @Produces(JSON_UTF8)
     @Path("degrees/{id}")
     @FenixAPIPublic
-    public FenixDegree degreesByOid(@PathParam("id") String oid, @PathParam("year") String year) {
+    public FenixDegree degreesByOid(@PathParam("id") String oid, @QueryParam("year") String year) {
         Degree degree = getDomainObject(oid, Degree.class);
         ExecutionYear executionYear = getExecutionYear(year);
 

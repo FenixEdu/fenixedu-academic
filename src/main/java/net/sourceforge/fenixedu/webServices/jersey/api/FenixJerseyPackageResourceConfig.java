@@ -130,9 +130,13 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
     }
     
     public static boolean isPublicScope(String endpoint) {
+		endpoint = ends(endpoint);
+		LOGGER.debug("check public {}", endpoint);
     	for(String publicEndpoint : publicScopes) {
     		String e1 = publicEndpoint.replaceAll("\\{[a-z]+\\}",".+");
+			LOGGER.debug("\t {}", e1);
     		if (endpoint.matches(e1)) {
+				LOGGER.debug("\t match {}", e1);
     			return true;
     		}
     	}
