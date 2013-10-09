@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken.FenixOAuthTokenException;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import nl.bitwalker.useragentutils.UserAgent;
 
@@ -221,23 +222,34 @@ public class OAuthAction extends FenixDispatchAction {
         String refreshToken = oauthRequest.getRefreshToken();
         String redirectUrl = oauthRequest.getRedirectURI();
 
-        FenixOAuthToken fenixRefreshToken = FenixOAuthToken.parse(refreshToken);
-        AppUserSession appUserSession = fenixRefreshToken.getAppUserSession();
+        try {
+            FenixOAuthToken fenixRefreshToken = FenixOAuthToken.parse(refreshToken);
+            AppUserSession appUserSession = fenixRefreshToken.getAppUserSession();
 
-        ExternalApplication externalApplication = getExternalApplication(clientId);
-        if (!externalApplication.matches(redirectUrl, clientSecret)) {
-            return null;
+            ExternalApplication externalApplication = getExternalApplication(clientId);
+            if (!externalApplication.matches(redirectUrl, clientSecret)) {
+                return sendOAuthResponse(response,
+                        getOAuthProblemResponse(SC_UNAUTHORIZED, INVALID_GRANT, "Credentials or redirect_uri don't match"));
+            }
+
+            if (!appUserSession.matchesRefreshToken(refreshToken)) {
+                return sendOAuthResponse(response,
+                        getOAuthProblemResponse(SC_UNAUTHORIZED, "refreshTokenInvalid", "Refresh token doesn't match"));
+            }
+
+            String accessToken = generateToken(appUserSession, OAUTH_ISSUER.accessToken());
+
+            appUserSession.setNewAccessToken(accessToken);
+
+            OAuthResponse r =
+                    OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
+                            .setExpiresIn(OAuthProperties.getAccessTokenExpirationSeconds().toString()).buildJSONMessage();
+
+            return sendOAuthResponse(response, r);
+        } catch (FenixOAuthTokenException fote) {
+            return sendOAuthResponse(response,
+                    getOAuthProblemResponse(SC_UNAUTHORIZED, "refreshTokenInvalidFormat", "Refresh Token not recognized."));
         }
-
-        String accessToken = generateToken(appUserSession, OAUTH_ISSUER.accessToken());
-
-        appUserSession.setNewAccessToken(accessToken);
-
-        OAuthResponse r =
-                OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
-                        .setExpiresIn(OAuthProperties.getAccessTokenExpirationSeconds().toString()).buildJSONMessage();
-
-        return sendOAuthResponse(response, r);
     }
 
     // http://localhost:8080/ciapl/external/oauth.do?method=getTokens&...
@@ -287,7 +299,6 @@ public class OAuthAction extends FenixDispatchAction {
                             .setExpiresIn(OAuthProperties.getAccessTokenExpirationSeconds().toString())
                             .setRefreshToken(refreshToken).buildJSONMessage();
         } else {
-
             r = getOAuthProblemResponse(SC_BAD_REQUEST, OAuthError.TokenResponse.INVALID_GRANT, "Code expired");
         }
 
