@@ -99,7 +99,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     public ActionForward searchByDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final SearchStudentsByDegreeParametersBean searchBean = getOrCreateSearchParametersBean();
 
@@ -181,16 +181,16 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                 RegistrationConclusionBean conclusionBean;
                 if (registration.isBolonha()) {
                     conclusionBean = new RegistrationConclusionBean(registration, cycleType);
-                    if (conclusionBean.getCycleCurriculumGroup() == null) {
+                    if (conclusionBean.getCycleCurriculumGroup() == null || !conclusionBean.isConcluded()) {
                         continue;
                     }
                 } else {
                     conclusionBean = new RegistrationConclusionBean(registration);
+                    if (!conclusionBean.isConclusionProcessed()) {
+                        continue;
+                    }
                 }
 
-                if (!conclusionBean.isConcluded()) {
-                    continue;
-                }
                 if (conclusionBean.getConclusionYear() != executionYear) {
                     continue;
                 }
