@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -8,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;

@@ -4,16 +4,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy;
 
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.RegisterCandidacyBean;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.joda.time.YearMonthDay;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**

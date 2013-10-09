@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 

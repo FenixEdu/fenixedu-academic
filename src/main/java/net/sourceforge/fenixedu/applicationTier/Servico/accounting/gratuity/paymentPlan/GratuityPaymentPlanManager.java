@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.paymentPlan;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
@@ -17,7 +19,6 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityForStuden
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityForStudentsInSecondCurricularYearForPartialRegime;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 

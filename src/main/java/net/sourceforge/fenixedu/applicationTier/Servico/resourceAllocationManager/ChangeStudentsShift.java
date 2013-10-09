@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -16,7 +18,6 @@ import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;

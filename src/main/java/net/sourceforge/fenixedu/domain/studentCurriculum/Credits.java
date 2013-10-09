@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
@@ -21,11 +23,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.predicates.CreditsPredicates;
 
 import org.joda.time.DateTime;
-
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.CreditsPredicates;
 
 public class Credits extends Credits_Base {
 

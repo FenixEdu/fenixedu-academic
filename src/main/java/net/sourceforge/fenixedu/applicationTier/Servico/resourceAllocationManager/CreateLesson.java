@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -14,12 +16,11 @@ import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.joda.time.YearMonthDay;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

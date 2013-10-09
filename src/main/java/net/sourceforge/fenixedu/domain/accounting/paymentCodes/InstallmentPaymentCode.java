@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentCodes;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -8,12 +10,11 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.YearMonthDay;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Deprecated

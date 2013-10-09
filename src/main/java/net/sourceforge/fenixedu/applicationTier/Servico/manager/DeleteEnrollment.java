@@ -4,14 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import pt.ist.fenixframework.Atomic;
 
 /**

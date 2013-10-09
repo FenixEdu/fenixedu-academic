@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.Atomic;
 

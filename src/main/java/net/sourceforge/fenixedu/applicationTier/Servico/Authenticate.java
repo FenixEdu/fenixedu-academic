@@ -314,6 +314,10 @@ public class Authenticate implements Serializable {
     public IUserView mock(final Person person, final String requestURL) {
         return getUserView(person, requestURL);
     }
+    
+    public static IUserView mockUser(final Person person, final String requestURL) {
+        return serviceInstance.mock(person, requestURL);
+    }
 
     // Service Invokers migrated from Berserk
 

@@ -21,7 +21,6 @@ import org.joda.time.DateTime;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.core.AbstractDomainObject;
 
 public class InquiryResult extends InquiryResult_Base {
 

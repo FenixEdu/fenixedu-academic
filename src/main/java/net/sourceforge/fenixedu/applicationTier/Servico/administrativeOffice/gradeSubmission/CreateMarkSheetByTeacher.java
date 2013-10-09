@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -23,11 +25,10 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.joda.time.YearMonthDay;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateMarkSheetByTeacher {

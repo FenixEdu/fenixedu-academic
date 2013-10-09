@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -8,9 +10,8 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.BundleUtil;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.ResultPredicates;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ResultParticipation extends ResultParticipation_Base {

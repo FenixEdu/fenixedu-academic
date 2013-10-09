@@ -143,3 +143,125 @@
 <schema name="view.absence.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.Absence" bundle="CONTRACTS_RESOURCES">
 	<slot name="name" key="label.absences" layout="null-as-label"/>
 </schema>
+
+
+<!-- External Applications (OAuth) -->
+
+<schema name="oauthapps.view.apps" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
+	<slot name="this" key="oauthapps.label.app.logo" layout="view-as-image">
+			<property name="useParent" value="false"/>
+			<property name="moduleRelative" value="true"/>
+			<property name="contextRelative" value="false"/>
+			<property name="imageFormat" value="/externalApps.do?method=appLogo&amp;appOid=${externalId}"/>
+	</slot>
+	<slot name="name" key="oauthapps.label.app.name" />
+	<slot name="description" layout="longText" key="oauthapps.label.app.description"/>
+	<slot name="scopes" layout="flowLayout">
+		<property name="eachLayout" value="values"></property>
+		<property name="eachSchema" value="oauthapps.view.scope.name"></property>
+		<property name="htmlSeparator" value=", "></property>
+	</slot>
+	<slot name="siteUrl" key="oauthapps.label.app.site.url" />
+</schema>
+
+
+<schema name="oauthapps.view.app.basic.details" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
+<slot name="this" key="oauthapps.label.app.logo" layout="view-as-image">
+			<property name="useParent" value="false"/>
+			<property name="moduleRelative" value="true"/>
+			<property name="contextRelative" value="false"/>
+			<property name="imageFormat" value="/externalApps.do?method=appLogo&amp;appOid=${externalId}"/>
+	</slot>
+	<slot name="name" key="oauthapps.label.app.name" />
+	<slot name="description" layout="longText" key="oauthapps.label.app.description"/>
+	<slot name="scopes" layout="flowLayout">
+		<property name="eachLayout" value="values"></property>
+		<property name="eachSchema" value="oauthapps.view.scope.name"></property>
+		<property name="htmlSeparator" value=", "></property>
+	</slot>
+	<slot name="siteUrl" key="oauthapps.label.app.site.url" />
+	
+</schema>
+
+<schema name="oauthapps.view.app.extended.details" extends="oauthapps.view.app.basic.details" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
+	<slot name="externalId" key="oauthapps.label.app.client.id" />
+	<slot name="secret" key="oauthapps.label.app.client.secret" />
+	<slot name="redirectUrl" key="oauthapps.label.app.redirect.url" />
+</schema>
+
+<schema name="oauthapps.view.authorizations" type="net.sourceforge.fenixedu.domain.AppUserSession" bundle="APPLICATION_RESOURCES">
+	<slot name="creationDate" key="oauthapps.label.app.creation.date" >
+		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}:${secondOfMinute,02d}"/>
+	</slot>
+	<slot name="deviceId" key="oauthapps.label.app.device.id" />
+	<slot name="accessToken" key="oauthapps.label.access.token" />
+</schema>
+
+<schema name="oauthapps.view.scope.name" type="net.sourceforge.fenixedu.domain.AuthScope">
+	<slot name="name"/>
+</schema>
+
+<schema name="oauthapps.view.scope.description" type="net.sourceforge.fenixedu.domain.AuthScope">
+	<slot name="presentationName">
+		<property name="escaped" value="false"/>
+	</slot>
+</schema>
+
+<schema name="oauthapps.view.scope.complete" type="net.sourceforge.fenixedu.domain.AuthScope">
+	<slot name="this" layout="format">
+		<property name="format" value="${name} - ${presentationName}"/>
+		<property name="escaped" value="false"/>
+	</slot>
+</schema>
+
+<schema name="oauthapps.create.app" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
+	<slot name="logoStream" key="oauthapps.label.app.logo">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+            <property name="maxSize" value="3698688"/>
+			<property name="acceptedExtensions" value="gif,jpg,png" />
+			<property name="acceptedTypes" value="image/gif,image/jpg,image/png" />
+			<property name="required" value="false"></property>
+        </validator>"
+	</slot>
+	<slot name="name" key="oauthapps.label.app.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="description" key="oauthapps.label.app.description" layout="longText">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		</validator>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.StringLengthValidator">
+			<property name="min" value="20"/>
+			<property name="max" value="160"/>
+		</validator>
+		<property name="columns" value="60"></property>
+		<property name="rows" value="4"></property>
+	</slot>
+ 	<slot name="siteUrl" key="oauthapps.label.app.site.url" >
+ 		<validator class="pt.ist.utl.fenix.utils.UrlValidator">
+			<property name="required" value="false"/>
+		</validator>
+		<property name="size" value="50"/>
+ 	</slot>
+	<slot name="scopeList" layout="option-select" key="label.scopes" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AuthScopeProvider" />
+		<property name="eachSchema" value="oauthapps.view.scope.complete" />
+		<property name="eachLayout" value="values" />
+		<property name="classes" value="nobullet noindent" />
+		<property name="sortBy" value="name=desc" />
+		<property name="selectAllShown" value="true" />
+	</slot>
+	<setter signature="setScopeList(scopeList)"></setter>
+	<slot name="redirectUrl" key="oauthapps.label.app.redirect.url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+</schema>
+
+<schema name="oauthapps.confirm.app" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
+	<slot name="name" />
+	<slot name="scopes" layout="list">
+		<property name="eachLayout" value="values"></property>
+		<property name="eachSchema" value="oauthapps.view.scope.complete"></property>
+	</slot>
+	<slot name="author.userUId" />
+	<slot name="author.person.email" />
+</schema>

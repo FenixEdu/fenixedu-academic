@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.ist.fenixframework.Atomic;
 

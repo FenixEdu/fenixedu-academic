@@ -20811,6 +20811,92 @@ relation PictureFile {
 }
 
 
+class ExternalApplication  {
+        String name (REQUIRED);
+        String secret (REQUIRED);
+        String redirectUrl (REQUIRED);
+        String description (REQUIRED);
+        String siteUrl;
+        bytearray logo;
+}
+
+class AuthScope  {
+        String name (REQUIRED);
+        String endpoints (REQUIRED);
+}
+
+    
+class AppUserSession {
+	DateTime creationDate;
+	String code;
+	String accessToken;
+	String refreshToken;
+	String deviceId;
+}
+
+
+class AppUserAuthorization {
+}
+     
+relation RootDomainObjectApps {
+    RootDomainObject playsRole rootDomainObject;  
+  	ExternalApplication playsRole apps {
+  		multiplicity *;
+  	}
+}
+ 
+relation RootDomainObjectAuthScope {
+    RootDomainObject playsRole rootDomainObject;  
+  	AuthScope playsRole authScopes {
+  		multiplicity *;
+  	}
+}
+  
+relation AppAuthor {
+	User playsRole author {
+		multiplicity 1;
+	}
+	ExternalApplication playsRole ownedApp {
+		multiplicity *;
+	}
+}
+		
+relation PermissionsScope {
+	AuthScope playsRole scopes {
+		multiplicity *;
+	}
+	ExternalApplication playsRole app {
+		multiplicity *;
+	}
+}
+
+relation AppUserAuthorization {
+	AppUserAuthorization playsRole appUserAuthorization {
+		multiplicity *;
+	}
+	ExternalApplication playsRole application {
+		multiplicity 1;
+	}
+}
+
+relation UserAppAuthorization {
+	AppUserAuthorization playsRole appUserAuthorization {
+		multiplicity *;
+	}
+	User playsRole user {
+		multiplicity 1;
+	}
+}
+
+relation AppUserAuthorizationSession {
+	AppUserAuthorization playsRole appUserAuthorization {
+		multiplicity 1..1;
+	}
+	AppUserSession playsRole session {
+		multiplicity *;
+	}
+}
+
 /**
  * Former Remote Plugin
  */
@@ -20839,4 +20925,3 @@ relation RemoteSystemDomainRoot {
     RemoteSystem playsRole remoteSystem;
     .pt.ist.fenixframework.DomainRoot playsRole domainRoot;
 }
-

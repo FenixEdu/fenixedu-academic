@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -13,7 +11,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
-import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;

@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.joda.time.DateTime;
-
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class AccountingTransactionDetail extends AccountingTransactionDetail_Base {
 

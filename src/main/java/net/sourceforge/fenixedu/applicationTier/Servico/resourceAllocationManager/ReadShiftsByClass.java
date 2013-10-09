@@ -6,18 +6,19 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

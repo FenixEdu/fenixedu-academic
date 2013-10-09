@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class BranchCourseGroup extends BranchCourseGroup_Base {

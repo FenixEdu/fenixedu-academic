@@ -5,13 +5,14 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 

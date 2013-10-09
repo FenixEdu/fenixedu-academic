@@ -56,8 +56,8 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 import com.lowagie.text.DocumentException;

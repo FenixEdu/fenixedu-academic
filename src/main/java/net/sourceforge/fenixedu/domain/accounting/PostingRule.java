@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,12 +17,11 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 

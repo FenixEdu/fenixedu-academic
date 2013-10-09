@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -7,12 +9,11 @@ import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.apache.struts.util.MessageResources;
 import org.joda.time.DateTime;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class ClosePunctualRoomsOccupationRequest {

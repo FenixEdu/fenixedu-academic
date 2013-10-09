@@ -14,11 +14,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.Atomic;
 
 @Mapping(path = "/residenceRoleManagement", module = "residenceManagement")
 @Forwards({ @Forward(name = "residenceRoleManagement", path = "/residenceManagement/residenceRoleManagement.jsp",

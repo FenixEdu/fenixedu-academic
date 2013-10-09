@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices;
 
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
@@ -16,7 +17,6 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.ist.fenixframework.Atomic;
 

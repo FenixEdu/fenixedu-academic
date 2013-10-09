@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.student.registrationStates;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,13 +24,12 @@ import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.RegistrationStatePredicates;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RegistrationStatePredicates;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 

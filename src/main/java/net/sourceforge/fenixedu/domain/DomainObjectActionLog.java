@@ -14,7 +14,6 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.FenixFramework;
 
 public class DomainObjectActionLog extends DomainObjectActionLog_Base {
 

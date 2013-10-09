@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,13 +18,12 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRule;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRuleManager;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.DateTime;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class PaymentPlan extends PaymentPlan_Base {

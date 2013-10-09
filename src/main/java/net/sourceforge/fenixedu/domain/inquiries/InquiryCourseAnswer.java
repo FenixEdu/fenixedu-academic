@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.joda.time.DateTime;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {

@@ -16,6 +16,9 @@
 	<logger name="net" level="INFO">
 		<appender-ref ref="STDOUT" />
 	</logger>
-	
+
+	<logger name="net.sourceforge.fenixedu.webServices.jersey" level="DEBUG">
+		<appender-ref ref="STDOUT" />
+	</logger>
 </configuration>
 

@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 

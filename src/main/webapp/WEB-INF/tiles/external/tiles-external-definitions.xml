@@ -3,6 +3,8 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
+	<definition name="showAuthorizationPage" page="/auth/showAuthorizationPage.jsp"/>
+	<definition name="oauthErrorPage" page="/auth/oauthErrorPage.jsp"/>
 	<definition name="emailValidation" extends="definition.public.secondaryMainPageIST">
 		<put name="body" value="/publico/emailValidation.jsp"/>
 	</definition>
