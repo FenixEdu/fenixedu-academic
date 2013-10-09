@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
-import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -12,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
@@ -51,10 +49,6 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
             throw new DomainException("message.exceeded.professorship.percentage");
         }
 
-        if (percentage == 100) {
-            verifyAnyOverLapPeriod();
-        }
-
         setPercentage(percentage);
     }
 
@@ -86,20 +80,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
             if (percentage > availablePercentage) {
                 throw new DomainException("message.exceeded.professorship.percentage");
             }
-            if (percentage == 100) {
-                verifyAnyOverLapPeriod();
-            }
             setPercentage(percentage);
-        }
-    }
-
-    private void verifyAnyOverLapPeriod() {
-        for (Lesson lesson : getShift().getAssociatedLessons()) {
-            WeekDay lessonWeekDay = WeekDay.getWeekDay(lesson.getDiaSemana());
-            Date lessonStart = lesson.getBegin();
-            Date lessonEnd = lesson.getEnd();
-            getTeacherService().verifyOverlappingWithInstitutionWorkingTime(lessonStart, lessonEnd, lessonWeekDay);
-            getTeacherService().verifyOverlappingWithSupportLesson(lessonStart, lessonEnd, lessonWeekDay);
         }
     }
 

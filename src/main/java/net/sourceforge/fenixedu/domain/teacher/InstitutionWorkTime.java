@@ -88,8 +88,6 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
     }
 
     private void verifyOverlappings() {
-        getTeacherService().verifyOverlappingWithSupportLesson(getStartTime(), getEndTime(), getWeekDay());
-        getTeacherService().verifyOverlappingWithTeachingService(getStartTime(), getEndTime(), getWeekDay());
         verifyOverlappingWithOtherInstitutionWorkingTimes();
     }
 

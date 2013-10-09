@@ -3,14 +3,12 @@ package net.sourceforge.fenixedu.domain.teacher;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -18,8 +16,6 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import net.sourceforge.fenixedu.util.CalendarUtil;
-import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -188,46 +184,6 @@ public class TeacherService extends TeacherService_Base {
         return round(hours);
     }
 
-    public void verifyOverlappingWithInstitutionWorkingTime(Date startTime, Date endTime, WeekDay weekDay) {
-        for (InstitutionWorkTime teacherInstitutionWorkTime : getInstitutionWorkTimes()) {
-            if (teacherInstitutionWorkTime.getWeekDay().equals(weekDay)) {
-                Date startWorkTime = teacherInstitutionWorkTime.getStartTime();
-                Date endWorkTime = teacherInstitutionWorkTime.getEndTime();
-                if (CalendarUtil.intersectTimes(startTime, endTime, startWorkTime, endWorkTime)) {
-                    throw new DomainException("message.overlapping.institution.working.period");
-                }
-            }
-        }
-    }
-
-    public void verifyOverlappingWithSupportLesson(Date startTime, Date endTime, WeekDay weekDay) {
-        for (SupportLesson supportLesson : getSupportLessons()) {
-            if (WeekDay.getWeekDay(supportLesson.getWeekDay()).equals(weekDay)) {
-                Date supportLessonStart = supportLesson.getStartTime();
-                Date supportLessonEnd = supportLesson.getEndTime();
-                if (CalendarUtil.intersectTimes(startTime, endTime, supportLessonStart, supportLessonEnd)) {
-                    throw new DomainException("message.overlapping.support.lesson.period");
-                }
-            }
-        }
-    }
-
-    public void verifyOverlappingWithTeachingService(Date startTime, Date endTime, WeekDay weekDay) {
-        for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
-            if (degreeTeachingService.getPercentage().doubleValue() == 100) {
-                for (Lesson lesson : degreeTeachingService.getShift().getAssociatedLessons()) {
-                    if (weekDay.equals(WeekDay.getWeekDay(lesson.getDiaSemana()))) {
-                        Date lessonStartTime = lesson.getBegin();
-                        Date lessonEndTime = lesson.getEnd();
-                        if (CalendarUtil.intersectTimes(startTime, endTime, lessonStartTime, lessonEndTime)) {
-                            throw new DomainException("message.overlapping.lesson.period");
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     public List<DegreeTeachingService> getDegreeTeachingServices() {
         return (List<DegreeTeachingService>) CollectionUtils.select(getServiceItems(), new Predicate() {
             @Override
@@ -358,6 +314,7 @@ public class TeacherService extends TeacherService_Base {
                 "label.teacher.unlockTeacherCredits", getExecutionPeriod().getQualifiedName()));
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem> getServiceItems() {
         return getServiceItemsSet();
@@ -368,6 +325,7 @@ public class TeacherService extends TeacherService_Base {
         return !getServiceItemsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog> getTeacherServiceLog() {
         return getTeacherServiceLogSet();

@@ -65,15 +65,9 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
     }
 
     public void verifyOverlappings() {
-
         Teacher teacher = getProfessorship().getTeacher();
         TeacherService teacherService =
                 teacher.getTeacherServiceByExecutionPeriod(getProfessorship().getExecutionCourse().getExecutionPeriod());
-
-        teacherService
-                .verifyOverlappingWithInstitutionWorkingTime(getStartTime(), getEndTime(), WeekDay.getWeekDay(getWeekDay()));
-        teacherService.verifyOverlappingWithTeachingService(getStartTime(), getEndTime(), WeekDay.getWeekDay(getWeekDay()));
-
         verifyOverlappingWithOtherSupportLessons(teacherService);
     }
 
