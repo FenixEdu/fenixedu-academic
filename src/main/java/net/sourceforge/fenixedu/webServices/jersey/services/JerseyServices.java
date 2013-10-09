@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.webServices.jersey.services;
 
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import java.lang.reflect.InvocationTargetException;
@@ -11,10 +14,14 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -319,4 +326,22 @@ public class JerseyServices {
         return infos.toJSONString();
 
     }
+
+    @POST
+    @Path("role/developer/{istid}")
+    public static Response addDeveloperRole(@PathParam("istid") String istid) {
+        User user = User.readUserByUserUId(istid);
+        if (user != null && user.getPerson() != null) {
+            if (user.getPerson().getPersonRole(RoleType.DEVELOPER) == null) {
+                addDeveloper(user);
+            }
+        }
+        return Response.status(Status.OK).build();
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    public static void addDeveloper(User user) {
+        user.getPerson().addPersonRoleByRoleType(RoleType.DEVELOPER);
+    }
+
 }
