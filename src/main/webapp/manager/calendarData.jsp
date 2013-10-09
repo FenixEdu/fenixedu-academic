@@ -7,7 +7,7 @@
 <p><em>Administra&ccedil;&atilde;o</em></p>
 <h2>Depura&ccedil;&atilde;o de Calendarios</h2>
 <bean:define id="user" name="user"></bean:define>
-<form action="" method="post">
+<form action="/manager/calendarDebug.do?method=show" method="post">
 	<logic:present name="user">
 		<input type="text" name="user"  id="user" value="<%= user %>"/>
 	</logic:present>
