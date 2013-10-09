@@ -26,6 +26,8 @@ import org.joda.time.Interval;
 public class AnnualTeachingCreditsByPeriodBean implements Serializable {
     private ExecutionSemester executionPeriod;
     private Teacher teacher;
+    private Boolean showTeacherCreditsLockedMessage = false;
+    private Boolean showTeacherCreditsUnlockedMessage = false;
     private Boolean canLockTeacherCredits = false;
     private Boolean canUnlockTeacherCredits = false;
     private Boolean canEditTeacherCredits = false;
@@ -39,12 +41,19 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
         if (roleType != null) {
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
             boolean inValidCreditsPeriod = executionPeriod.isInValidCreditsPeriod(roleType);
-            setCanLockTeacherCredits(roleType.equals(RoleType.DEPARTMENT_MEMBER) && inValidCreditsPeriod
-                    && (teacherService == null || teacherService.getTeacherServiceLock() == null));
-            setCanUnlockTeacherCredits((!roleType.equals(RoleType.DEPARTMENT_MEMBER)) && inValidCreditsPeriod
-                    && teacherService != null && teacherService.getTeacherServiceLock() != null);
-            setCanEditTeacherCredits(inValidCreditsPeriod
-                    && (getCanLockTeacherCredits() || !roleType.equals(RoleType.DEPARTMENT_MEMBER)));
+            boolean isLocked = teacherService != null && teacherService.getTeacherServiceLock() != null;
+            if (roleType.equals(RoleType.DEPARTMENT_MEMBER)) {
+                boolean canLockAndEditTeacherCredits = inValidCreditsPeriod && !isLocked;
+                setCanLockTeacherCredits(canLockAndEditTeacherCredits);
+                setCanEditTeacherCredits(canLockAndEditTeacherCredits);
+            } else if (roleType.equals(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE) || roleType.equals(RoleType.SCIENTIFIC_COUNCIL)) {
+                boolean inValidTeacherCreditsPeriod = executionPeriod.isInValidCreditsPeriod(RoleType.DEPARTMENT_MEMBER);
+                setCanUnlockTeacherCredits(inValidCreditsPeriod && inValidTeacherCreditsPeriod && isLocked);
+                setCanEditTeacherCredits(roleType.equals(RoleType.SCIENTIFIC_COUNCIL)
+                        || (inValidCreditsPeriod && (isLocked || !inValidTeacherCreditsPeriod)));
+            }
+            setShowTeacherCreditsLockedMessage(isLocked);
+            setShowTeacherCreditsUnlockedMessage(!isLocked);
             ReductionService creditsReductionService = getCreditsReductionService();
             setCanEditTeacherCreditsReductions(roleType.equals(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE) ? false : getCanEditTeacherCredits()
                     && (creditsReductionService == null || creditsReductionService.getAttributionDate() == null));
@@ -187,6 +196,22 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
     public Set<TeacherServiceLog> getLogs() {
         final TeacherService teacherService = getTeacherService();
         return teacherService == null ? Collections.EMPTY_SET : teacherService.getSortedLogs();
+    }
+
+    public Boolean getShowTeacherCreditsLockedMessage() {
+        return showTeacherCreditsLockedMessage;
+    }
+
+    public void setShowTeacherCreditsLockedMessage(Boolean showTeacherCreditsLockedMessage) {
+        this.showTeacherCreditsLockedMessage = showTeacherCreditsLockedMessage;
+    }
+
+    public Boolean getShowTeacherCreditsUnlockedMessage() {
+        return showTeacherCreditsUnlockedMessage;
+    }
+
+    public void setShowTeacherCreditsUnlockedMessage(Boolean showTeacherCreditsUnlockedMessage) {
+        this.showTeacherCreditsUnlockedMessage = showTeacherCreditsUnlockedMessage;
     }
 
 }

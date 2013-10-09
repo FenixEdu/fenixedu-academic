@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.util.ReductionServiceBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageCreditsReductionsDispatchAction;
@@ -45,10 +46,12 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
         Department department = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
         List<ReductionService> creditsReductions = new ArrayList<ReductionService>();
         if (department != null && department.isCurrentUserCurrentDepartmentPresident()) {
+            boolean inValidTeacherCreditsPeriod = executionSemester.isInValidCreditsPeriod(RoleType.DEPARTMENT_MEMBER);
             for (Teacher teacher : department.getAllCurrentTeachers()) {
                 TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
                 if (teacherService != null && teacherService.getReductionService() != null
-                        && teacherService.getReductionService().getRequestCreditsReduction()) {
+                        && teacherService.getReductionService().getRequestCreditsReduction()
+                        && (teacherService.getTeacherServiceLock() != null || !inValidTeacherCreditsPeriod)) {
                     creditsReductions.add(teacherService.getReductionService());
                 }
             }
