@@ -1,6 +1,8 @@
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+FenixEdu
+==========
 
-- [FenixEdu](#fenixedu)
+**Table of Contents**
+
 - [Setup environment](#setup-environment)
 - [Compiling & Run Fenix](#compiling--run-fenix)
 	- [compile and exploded war (faster cycle)](#compile-and-exploded-war-faster-cycle)
@@ -17,9 +19,6 @@
 	- [Too many open files error when running jetty](#too-many-open-files-error-when-running-jetty)
 	- [When compiling, maven hangs while compiling jasper reports](#when-compiling-maven-hangs-while-compiling-jasper-reports)
 
-
-FenixEdu
-==========
 
 #Setup environment
 1. copy `src/main/resources/configuration.properties.sample` to `src/main/resources/configuration.properties`
