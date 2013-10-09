@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
+import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
+import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
+
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -13,10 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
-import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
 
-@WebFilter(urlPatterns = "/jersey/*")
+@WebFilter(urlPatterns = "/jersey/services/*")
 public class JerseyAuthFilter implements Filter {
 
     final static String systemUsername = PropertiesManager.getProperty("jersey.username");

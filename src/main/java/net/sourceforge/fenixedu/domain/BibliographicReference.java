@@ -8,8 +8,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
 
-import pt.ist.fenixframework.FenixFramework;
-
 public class BibliographicReference extends BibliographicReference_Base {
 
     public static final Comparator<BibliographicReference> COMPARATOR_BY_ORDER = new Comparator<BibliographicReference>() {

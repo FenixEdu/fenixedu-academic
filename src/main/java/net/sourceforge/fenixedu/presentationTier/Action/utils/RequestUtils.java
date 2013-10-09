@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.utils;
 
+import pt.ist.fenixframework.Atomic;
+
 import java.io.IOException;
 import java.text.Collator;
 import java.util.ArrayList;
@@ -29,8 +31,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
-
-import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -181,6 +181,7 @@ public class RequestUtils {
                 && (uri.indexOf("checkPasswordKerberos.do") == -1) && (uri.indexOf("siteMap.do") == -1)
                 && (uri.indexOf("cms/forwardEmailAction.do") == -1) && (uri.indexOf("isAlive.do") == -1)
                 && (uri.indexOf("gwt/") == -1) && (uri.indexOf("remote/") == -1) && (uri.indexOf("downloadFile/") == -1)
-                && !(uri.indexOf("google") >= 0 && uri.endsWith(".html"));
+                && !(uri.indexOf("google") >= 0 && uri.endsWith(".html")) && (uri.indexOf("/jersey") == -1)
+                && (uri.indexOf("/api") == -1);
     }
 }

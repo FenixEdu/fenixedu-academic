@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.parking;
 
-import net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod;
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
@@ -28,7 +27,7 @@ public class EditSupportLesson {
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 
         if (teacherService == null) {
-            new TeacherService(teacher, executionSemester);
+            teacherService = new TeacherService(teacher, executionSemester);
         }
 
         final StringBuilder log = new StringBuilder();

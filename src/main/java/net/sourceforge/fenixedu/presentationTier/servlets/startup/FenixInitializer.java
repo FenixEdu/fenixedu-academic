@@ -1,5 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.startup;
 
+import pt.ist.fenixWebFramework.FenixWebFramework;
+
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
+import pt.ist.fenixframework.plugins.scheduler.Scheduler;
+import pt.ist.fenixframework.plugins.scheduler.domain.SchedulerSystem;
+
+import pt.utl.ist.fenix.tools.util.FileUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
@@ -30,14 +40,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
-import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
-import pt.ist.fenixframework.plugins.scheduler.Scheduler;
-import pt.ist.fenixframework.plugins.scheduler.domain.SchedulerSystem;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @WebListener
 public class FenixInitializer implements ServletContextListener {
@@ -94,14 +96,12 @@ public class FenixInitializer implements ServletContextListener {
             logger.info("Check is alive is not working. Caught excpetion.");
             ex.printStackTrace();
         }
-
         loadLogins();
         loadPersonNames();
         loadUnitNames();
         loadRoles();
         startContactValidationServices();
         initScheduler();
-
         logger.info("Fenix initialized successfully");
     }
 

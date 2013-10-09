@@ -6,8 +6,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.FenixFramework;
-
 public class LoginPeriod extends LoginPeriod_Base {
 
     public static final Comparator<LoginPeriod> COMPARATOR_BY_BEGIN_DATE = new Comparator<LoginPeriod>() {

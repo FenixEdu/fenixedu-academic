@@ -78,6 +78,11 @@
         <appender-ref ref="BasicConsoleAppender"/>
     </logger>
     
+    <logger name="net.sourceforge.fenixedu.webServices.jersey">
+        <level value="debug"/>
+        <appender-ref ref="ConsoleAppender"/>
+    </logger>
+    
 	<root>
 		<priority value="info"/>
 		<appender-ref ref="ConsoleAppender"/>

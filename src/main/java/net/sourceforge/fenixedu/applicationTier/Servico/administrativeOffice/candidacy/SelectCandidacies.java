@@ -3,12 +3,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.SelectDFACandidacyBean;
 import net.sourceforge.fenixedu.domain.candidacy.SubstituteCandidacySituation;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 

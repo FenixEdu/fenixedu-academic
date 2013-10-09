@@ -144,6 +144,14 @@
 	     <put name="body" value="/person/parking/editParkingRequest.jsp"/>
 	</definition>
 	
+	
+	<!--  @@@@@@@@@@@@@@@@@ Auth @@@@@@@@@@@@@@@@@  -->
+	<definition name="auth-external" extends="definition.person.masterPage">
+	     <put name="body" value="/person/externalAuth/grantAuth.jsp"/>
+	</definition>
+	<!--  @@@@@@@@@@@@@@@@@ Auth @@@@@@@@@@@@@@@@@  -->
+	
+	
 	<!--  ===== VIGILANCY ====== -->
 	
 	<definition name="display-convoke-map" extends="definition.person.masterPage" >

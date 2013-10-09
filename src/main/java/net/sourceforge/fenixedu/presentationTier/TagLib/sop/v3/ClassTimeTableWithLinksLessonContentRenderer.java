@@ -5,8 +5,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
 
-import org.joda.time.LocalDate;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
@@ -16,6 +14,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.joda.time.LocalDate;
 
 /**
  * @author gedl@rnl.ist.utl.pt

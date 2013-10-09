@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -22,12 +24,10 @@ import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
-
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 
 public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaRequest, IRectorateSubmissionBatchDocumentEntry {
 

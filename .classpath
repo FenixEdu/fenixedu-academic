@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="output" path="src/main/java">
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
@@ -8,15 +8,23 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src/main/jasperreports"/>
 	<classpathentry including="**/*.java" kind="src" path="src/main/resources"/>
-	<classpathentry kind="src" path="src/main/dml"/>
-	<classpathentry kind="src" path="target/generated-sources/dml-maven-plugin">
+	<classpathentry including="**/*.java" kind="src" path="src/main/dml"/>
+	<classpathentry kind="src" output="target/classes" path="target/generated-sources/dml-maven-plugin">
 		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src/main/webapp"/>
+	<classpathentry including="**/*.java" kind="src" path="src/main/webapp"/>
 	<classpathentry kind="src" path="src/main/assembly"/>
 	<classpathentry kind="src" path="src/main/antlr"/>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="target/generated-sources/antlr"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -27,11 +35,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="target/generated-sources/antlr">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="output" path="output"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

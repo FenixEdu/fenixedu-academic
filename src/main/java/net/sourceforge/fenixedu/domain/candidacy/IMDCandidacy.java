@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintAllDocumentsOpera
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintRegistrationDeclarationOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintScheduleOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintSystemAccessDataOperation;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintUnder23TransportsDeclarationOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.RegistrationOperation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
