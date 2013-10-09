@@ -1,3 +1,23 @@
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [FenixEdu](#fenixedu)
+- [Setup environment](#setup-environment)
+- [Compiling & Run Fenix](#compiling--run-fenix)
+	- [compile and exploded war (faster cycle)](#compile-and-exploded-war-faster-cycle)
+	- [compile and assemble a war file](#compile-and-assemble-a-war-file)
+	- [create jar for fenix scripts (without access control)](#create-jar-for-fenix-scripts-without-access-control)
+	- [compile and run with jetty](#compile-and-run-with-jetty)
+			- [The port can be changed using](#the-port-can-be-changed-using)
+	- [run SQLUpdateGenerator](#run-sqlupdategenerator)
+	- [running jetty with debugger](#running-jetty-with-debugger)
+	- [fenix bootstrap and initialization with an empty database](#fenix-bootstrap-and-initialization-with-an-empty-database)
+	- [Generate Fenix API Documentation](#generate-fenix-api-documentation)
+	- [Generate Fenix DML Zip](#generate-fenix-dml-zip)
+- [Troubleshooting](#troubleshooting)
+	- [Too many open files error when running jetty](#too-many-open-files-error-when-running-jetty)
+	- [When compiling, maven hangs while compiling jasper reports](#when-compiling-maven-hangs-while-compiling-jasper-reports)
+
+
 FenixEdu
 ==========
 
