@@ -130,6 +130,7 @@ import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace.Room
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.JSONObject;
@@ -349,6 +350,7 @@ public class FenixAPIv1 {
     @Path("person/calendar/evaluations")
     @ReturnType("net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar")
     public Response calendarEvaluation(@QueryParam("format") String format, @Context HttpServletRequest httpRequest) {
+        validateFormat(format);
         final Person person = getPerson();
         final String serverName = httpRequest.getServerName();
         final int serverPort = httpRequest.getServerPort();
@@ -400,6 +402,7 @@ public class FenixAPIv1 {
     @Path("person/calendar/classes")
     @ReturnType("net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar")
     public Response calendarClasses(@QueryParam("format") String format, @Context HttpServletRequest httpRequest) {
+        validateFormat(format);
         Person person = getPerson();
         if ("calendar".equals(format)) {
             final String serverName = httpRequest.getServerName();
@@ -639,7 +642,7 @@ public class FenixAPIv1 {
     public List<FenixEvaluation> evaluations(@PathParam("id") String oid, @QueryParam("enrol") String enrol,
             @Context HttpServletResponse response, @Context HttpServletRequest request, @Context ServletContext context) {
         // JSONObject jsonResult = new JSONObject();
-
+        validateEnrol(enrol);
         try {
             WrittenEvaluation eval = getDomainObject(oid, WrittenEvaluation.class);
             if (!StringUtils.isBlank(enrol)) {
@@ -679,6 +682,9 @@ public class FenixAPIv1 {
 
     private ExecutionSemester getExecutionSemester(String sem, String year) {
         ExecutionSemester executionSemester;
+
+        validateSemester(sem);
+        validateYear(year);
 
         boolean isBlank = StringUtils.isBlank(sem) || StringUtils.isBlank(year);
         if (!isBlank) {
@@ -1454,6 +1460,7 @@ public class FenixAPIv1 {
     }
 
     private java.util.Calendar getRoomDay(String day) {
+        validateDay(day);
         java.util.Calendar rightNow = java.util.Calendar.getInstance();
         Date date = null;
         try {
@@ -1467,6 +1474,7 @@ public class FenixAPIv1 {
     }
 
     private ExecutionYear getExecutionYear(String year) {
+        validateYear(year);
         ExecutionYear executionYear;
 
         boolean isBlank = StringUtils.isBlank(year);
@@ -1479,6 +1487,74 @@ public class FenixAPIv1 {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         }
         return executionYear;
+    }
+
+    private void validateYear(String year) {
+        if (!StringUtils.isBlank(year)) {
+            String[] split = year.split("/");;
+            if (split.length != 2) {
+                throw newApplicationError(Status.BAD_REQUEST, "format_error", "year must be xxxx/yyyy");
+            }
+            try {
+                int y1 = Integer.parseInt(split[0]);
+                int y2 = Integer.parseInt(split[1]);
+                int start = ExecutionYear.readFirstExecutionYear().getBeginCivilYear();
+                int end = ExecutionYear.readFirstExecutionYear().getEndCivilYear();
+                ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
+                if (!(y1 >= start && y1 <= currentYear.getBeginCivilYear())) {
+                    throw newApplicationError(Status.BAD_REQUEST, "format_error",
+                            String.format("start year must be between %d and %d", start, currentYear.getBeginCivilYear()));
+                }
+                if (!(y2 >= end && y2 <= currentYear.getEndCivilYear())) {
+                    throw newApplicationError(Status.BAD_REQUEST, "format_error",
+                            String.format("end year must be between %d and %d", end, currentYear.getEndCivilYear()));
+                }
+                if (y2 - y1 != 1) {
+                    throw newApplicationError(Status.BAD_REQUEST, "format_error",
+                            String.format("difference between start and end year must be 1"));
+                }
+            } catch (NumberFormatException e) {
+                throw newApplicationError(Status.BAD_REQUEST, "format_error", "year must be a number");
+            }
+        }
+    }
+
+    private void validateDay(String day) {
+        if (!StringUtils.isBlank(day)) {
+            boolean invalid = false;
+            try {
+                DateTime parse = formatDay.parseDateTime(day);
+                invalid = parse == null;
+            } catch (IllegalArgumentException | UnsupportedOperationException e) {
+                invalid = true;
+            } finally {
+                if (invalid) {
+                    throw newApplicationError(Status.BAD_REQUEST, "format_error", "day must be " + dataFormatDay.toPattern());
+                }
+            }
+        }
+    }
+
+    private void validateSemester(String sem) {
+        if (!StringUtils.isBlank(sem)) {
+            if (!("1".equals(sem) || "2".equals(sem))) {
+                throw newApplicationError(Status.BAD_REQUEST, "format_error", "semester must be 1 or 2");
+            }
+        }
+    }
+
+    private void validateFormat(String format) {
+        if (!StringUtils.isBlank(format)) {
+            if (!("calendar".equals(format) || "json".equals(format))) {
+                throw newApplicationError(Status.BAD_REQUEST, "format_error", "format must be calendar or json");
+            }
+        }
+    }
+
+    private void validateEnrol(String enrol) {
+        if (StringUtils.isBlank(enrol) || !(ENROL.equals(enrol) || UNENROL.equals(enrol))) {
+            throw newApplicationError(Status.BAD_REQUEST, "format_error", "enrol must be yes or no");
+        }
     }
 
 }
