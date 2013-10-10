@@ -73,7 +73,7 @@ public abstract class Exemption extends Exemption_Base {
 
     public void delete(final boolean recalculateEventState) {
         setRootDomainObject(null);
-        setResponsible(null);
+        super.setResponsible(null);
         getExemptionJustification().delete();
         final Event event = getEvent();
         setEvent(null);
