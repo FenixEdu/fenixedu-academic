@@ -52,7 +52,6 @@ public class ExportPublications {
             Set<JournalIssue> issues = new HashSet<JournalIssue>();
             Set<ScientificJournal> journals = new HashSet<ScientificJournal>();
             Set<EventEdition> eventEditions = new HashSet<EventEdition>();
-            Set<ResearchEvent> researchEvents = new HashSet<ResearchEvent>();
 
             for (ResearchResult result : RootDomainObject.getInstance().getResultsSet()) {
                 if (result instanceof ResearchResultPublication) {
@@ -60,8 +59,7 @@ public class ExportPublications {
                     String type = publication.getClass().getSimpleName().toLowerCase();
                     type =
                             type.replace("bookpart", "inbook").replace("otherpublication", "misc")
-                                    .replace("technicalreport", "techreport").replace("conferenceedition", "proceedings")
-                                    .replace("thesis", "dissertation");
+                                    .replace("technicalreport", "techreport").replace("thesis", "dissertation");
                     try {
                         Item item =
                                 marshaller.insertItem(items, publication.getExternalId(), Itemtype.fromValue(type),
@@ -352,11 +350,20 @@ public class ExportPublications {
             }
 
             for (EventEdition edition : eventEditions) {
-                Item item = marshaller.insertItem(items, edition.getExternalId(), Itemtype.PROCEEDINGS, new DateTime());
+                Item item = marshaller.insertItem(items, edition.getExternalId(), Itemtype.CONFERENCE, new DateTime());
                 if (edition.getEvent() != null) {
-                    marshaller.insertItemRef(marshaller.insertField(item, Fieldtype.EVENT), edition.getEvent().getName(), edition
-                            .getEvent().getExternalId(), null);
-                    researchEvents.add(edition.getEvent());
+                    ResearchEvent event = edition.getEvent();
+                    if (event.getEventType() != null) {
+                        marshaller.insertText(marshaller.insertField(item, Fieldtype.TYPE), event.getEventType().getName(), null,
+                                null);
+                    }
+                    if (event.getLocationType() != null) {
+                        marshaller.insertText(marshaller.insertField(item, Fieldtype.SCOPE), event.getLocationType().name(),
+                                null, null);
+                    }
+                    if (StringUtils.isNotBlank(event.getName())) {
+                        marshaller.insertText(marshaller.insertField(item, Fieldtype.TITLE), event.getName(), null, null);
+                    }
                 }
                 if (StringUtils.isNotBlank(edition.getEdition())) {
                     marshaller.insertText(marshaller.insertField(item, Fieldtype.EDITION), edition.getEdition(), null, null);
@@ -380,27 +387,12 @@ public class ExportPublications {
                 }
                 if (StringUtils.isNotBlank(edition.getUrl())) {
                     marshaller.insertUri(marshaller.insertField(item, Fieldtype.URL), edition.getUrl(), null);
+                } else if (edition.getEvent() != null) {
+                    if (StringUtils.isNotBlank(edition.getEvent().getUrl())) {
+                        marshaller.insertUri(marshaller.insertField(item, Fieldtype.URL), edition.getEvent().getUrl(), null);
+                    }
                 }
             }
-
-            for (ResearchEvent event : researchEvents) {
-                Item item = marshaller.insertItem(items, event.getExternalId(), Itemtype.CONFERENCE, new DateTime());
-                if (event.getEventType() != null) {
-                    marshaller.insertText(marshaller.insertField(item, Fieldtype.TYPE), event.getEventType().getName(), null,
-                            null);
-                }
-                if (event.getLocationType() != null) {
-                    marshaller.insertText(marshaller.insertField(item, Fieldtype.SCOPE), event.getLocationType().name(), null,
-                            null);
-                }
-                if (StringUtils.isNotBlank(event.getName())) {
-                    marshaller.insertText(marshaller.insertField(item, Fieldtype.TITLE), event.getName(), null, null);
-                }
-                if (StringUtils.isNotBlank(event.getUrl())) {
-                    marshaller.insertUri(marshaller.insertField(item, Fieldtype.URL), event.getUrl(), null);
-                }
-            }
-            return marshaller.marshallToByteArray(items);
         } catch (ConversionException e) {
             throw new RuntimeException(e);
         }
@@ -424,7 +416,6 @@ public class ExportPublications {
             if (isbn.matches("(\\d{9}[0-9X])|(\\d{1,5}(\\-|\\s)\\d{1,7}(\\-|\\s)\\d{1,6}(\\-|\\s)[0-9X])|((978|979)(\\d{10}|((\\-|\\s)\\d{1,5}(\\-|\\s)\\d{1,7}(\\-|\\s)\\d{1,6}(\\-|\\s)[0-9])))")) {
                 marshaller.insertISBN(marshaller.insertField(item, Fieldtype.ISBN), isbn);
             } else {
-                System.err.println("Uninterpretable isbn: " + isbn);
                 marshaller.insertText(marshaller.insertField(item, Fieldtype.ISBN), isbn, null, null);
             }
         }
@@ -436,7 +427,6 @@ public class ExportPublications {
             if (issn.matches("[0-9]{4}-[0-9]{3}[0-9X]")) {
                 marshaller.insertISSN(marshaller.insertField(item, Fieldtype.ISSN), issn);
             } else {
-                System.err.println("Uninterpretable issn: " + issn);
                 marshaller.insertText(marshaller.insertField(item, Fieldtype.ISSN), issn, null, null);
             }
         }
@@ -461,7 +451,6 @@ public class ExportPublications {
         if (lang != null) {
             marshaller.insertLanguage(marshaller.insertField(item, Fieldtype.LANGUAGE), lang, null);
         } else {
-            System.err.println("Uninterpretable language: " + language);
             marshaller.insertText(marshaller.insertField(item, Fieldtype.LANGUAGE), language, null, null);
         }
     }
