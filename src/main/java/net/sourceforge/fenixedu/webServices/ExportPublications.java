@@ -393,6 +393,7 @@ public class ExportPublications {
                     }
                 }
             }
+            return marshaller.marshallToByteArray(items);
         } catch (ConversionException e) {
             throw new RuntimeException(e);
         }
