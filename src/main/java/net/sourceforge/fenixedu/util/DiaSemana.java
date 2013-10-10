@@ -6,6 +6,8 @@
 
 package net.sourceforge.fenixedu.util;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -62,19 +64,19 @@ public class DiaSemana extends FenixUtil {
         int diaSemana = this.diaSemana.intValue();
         switch (diaSemana) {
         case SEGUNDA_FEIRA:
-            return new DateTime().withDayOfWeek(1).toString("E");
+            return new DateTime().withDayOfWeek(1).dayOfWeek().getAsShortText(Language.getLocale());
         case TERCA_FEIRA:
-            return new DateTime().withDayOfWeek(2).toString("E");
+            return new DateTime().withDayOfWeek(2).dayOfWeek().getAsShortText(Language.getLocale());
         case QUARTA_FEIRA:
-            return new DateTime().withDayOfWeek(3).toString("E");
+            return new DateTime().withDayOfWeek(3).dayOfWeek().getAsShortText(Language.getLocale());
         case QUINTA_FEIRA:
-            return new DateTime().withDayOfWeek(4).toString("E");
+            return new DateTime().withDayOfWeek(4).dayOfWeek().getAsShortText(Language.getLocale());
         case SEXTA_FEIRA:
-            return new DateTime().withDayOfWeek(5).toString("E");
+            return new DateTime().withDayOfWeek(5).dayOfWeek().getAsShortText(Language.getLocale());
         case SABADO:
-            return new DateTime().withDayOfWeek(6).toString("E");
+            return new DateTime().withDayOfWeek(6).dayOfWeek().getAsShortText(Language.getLocale());
         case DOMINGO:
-            return new DateTime().withDayOfWeek(7).toString("E");
+            return new DateTime().withDayOfWeek(7).dayOfWeek().getAsShortText(Language.getLocale());
         }
         return "Error: Invalid week day";
     }
