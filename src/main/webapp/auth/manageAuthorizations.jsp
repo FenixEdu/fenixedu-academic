@@ -13,7 +13,7 @@
 </h2>
 
 <div class="infoop2" style="width:600px;">
-	<p><bean:message key="oauthapps.text.manage.applications" bundle="APPLICATION_RESOURCES" /></p>
+	<p><bean:message key="oauthapps.text.manage.authorizations.intro" bundle="APPLICATION_RESOURCES" /></p>
 	<p><bean:message key="oauthapps.text.manage.authorizations" bundle="APPLICATION_RESOURCES" /></p>
 </div>
 
