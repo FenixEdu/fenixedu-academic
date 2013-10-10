@@ -510,7 +510,11 @@ $(document).ready(function() {
 				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsByPeriodBean">
 					<fr:slot name="executionPeriod.name" key="label.period"/>
 					<fr:slot name="requestCreditsReduction" key="label.requestedReductionCredits" layout="radio"/>
-					<fr:slot name="creditsReductionServiceAttribute" key="label.attributedReductionCredits" layout="null-as-label"/>
+					<fr:slot name="creditsReductionServiceAttribute" key="label.attributedReductionCredits" layout="null-as-label">
+						<fr:property name="label" value="label.pendingValidation"/>
+						<fr:property name="key" value="true"/>
+						<fr:property name="bundle" value="TEACHER_CREDITS_SHEET_RESOURCES"/>
+					</fr:slot>
 				</fr:schema>
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>

@@ -136,9 +136,10 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
         return reductionService != null ? reductionService.getRequestCreditsReduction() : false;
     }
 
-    public BigDecimal getCreditsReductionServiceAttribute() {
+    public String getCreditsReductionServiceAttribute() {
         ReductionService reductionService = getCreditsReductionService();
-        return reductionService != null ? reductionService.getCreditsReductionAttributed() : null;
+        return reductionService != null ? reductionService.getAttributionDate() != null ? reductionService
+                .getCreditsReductionAttributed().toString() : null : "-";
     }
 
     public Teacher getTeacher() {
