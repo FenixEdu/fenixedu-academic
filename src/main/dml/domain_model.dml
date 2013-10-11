@@ -6779,6 +6779,7 @@ class candidacy.GenericApplicationRecomentation {
 	String institution;
 	String email;
 	String confirmationCode;
+	DateTime requestTime;
 }
 
 class candidacy.GenericApplicationComment {
