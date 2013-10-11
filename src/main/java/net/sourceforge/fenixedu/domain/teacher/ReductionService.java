@@ -25,6 +25,9 @@ public class ReductionService extends ReductionService_Base {
         if (teacherService == null) {
             throw new DomainException("arguments can't be null");
         }
+        if (teacherService.getReductionService() != null) {
+            throw new DomainException("error.already.requested.reduction");
+        }
         setTeacherService(teacherService);
         setCreditsReduction(creditsReduction);
         log("label.teacher.schedule.reductionService.create", getCreditsReduction());
@@ -36,6 +39,9 @@ public class ReductionService extends ReductionService_Base {
         if (teacherService == null) {
             throw new DomainException("arguments can't be null");
         }
+        if (teacherService.getReductionService() != null) {
+            throw new DomainException("error.already.requested.reduction");
+        }
         setTeacherService(teacherService);
         setRequestCreditsReduction(requestCreditsReduction);
         log("label.teacher.schedule.reductionService.create", getRequestCreditsReduction());
@@ -46,6 +52,9 @@ public class ReductionService extends ReductionService_Base {
         setRootDomainObject(RootDomainObject.getInstance());
         if (teacherService == null) {
             throw new DomainException("arguments can't be null");
+        }
+        if (teacherService.getReductionService() != null) {
+            throw new DomainException("error.already.requested.reduction");
         }
         setTeacherService(teacherService);
         setCreditsReductionAttributed(creditsReductionAttributed);
