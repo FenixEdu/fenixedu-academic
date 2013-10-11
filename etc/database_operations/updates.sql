@@ -1,0 +1,1 @@
+alter table `GENERIC_APPLICATION_RECOMENTATION` add `REQUEST_TIME` timestamp NULL default NULL;

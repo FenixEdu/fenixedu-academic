@@ -509,6 +509,9 @@
 			<bean:message bundle="CANDIDATE_RESOURCES" key="label.size.in.bytes"/>
 		</th>
 		<th>
+			<bean:message bundle="CANDIDATE_RESOURCES" key="label.submissionDate"/>
+		</th>
+		<th>
 			<bean:message bundle="CANDIDATE_RESOURCES" key="label.checksum"/>
 		</th>
 		<logic:present name="uploadBean">
@@ -530,6 +533,9 @@
 			</td>
 			<td style="text-align: right;">
 				<%= file.getSize() %>
+			</td>
+			<td style="text-align: right;">
+				<%= file.getUploadTime().toLocalDateTime().toString("yyyy-MM-dd HH:mm") %>
 			</td>
 			<td style="color: gray;">
 				<%= file.getChecksumAlgorithm() %>: <%= file.getChecksum() %>
@@ -611,6 +617,9 @@
 			<bean:message bundle="CANDIDATE_RESOURCES" key="label.email"/>
 		</th>
 		<th>
+			<bean:message bundle="CANDIDATE_RESOURCES" key="label.requestDate"/>
+		</th>
+		<th>
 			<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document"/>
 		</th>
 		<logic:present name="recommendationBean">
@@ -620,6 +629,9 @@
 		<logic:notPresent name="recommendationBean">
 			<th>
 				<bean:message bundle="CANDIDATE_RESOURCES" key="label.size.in.bytes"/>
+			</th>
+			<th>
+			<bean:message bundle="CANDIDATE_RESOURCES" key="label.submissionDate"/>
 			</th>
 			<th>
 				<bean:message bundle="CANDIDATE_RESOURCES" key="label.checksum"/>
@@ -638,6 +650,11 @@
 			</td>
 			<td>
 				<%= recomentation.getEmail() %>
+			</td>
+			<td style="text-align: right;">
+				<% if (recomentation.getRequestTime() != null) { %>
+					<%= recomentation.getRequestTime().toLocalDateTime().toString("yyyy-MM-dd HH:mm") %>
+				<% } %>
 			</td>
 			<logic:present name="recommendationBean">
 				<td>
@@ -663,9 +680,14 @@
 						</a>
 					<% } %>
 				</td>
-				<td>
+				<td style="text-align: right;">
 					<% if (recomentation.hasLetterOfRecomentation()) { %>
 						<%= recomentation.getLetterOfRecomentation().getSize() %>
+					<% } %>	
+				</td>
+				<td style="text-align: right;">
+					<% if (recomentation.hasLetterOfRecomentation()) { %>
+						<%= recomentation.getLetterOfRecomentation().getUploadTime().toLocalDateTime().toString("yyyy-MM-dd HH:mm") %>
 					<% } %>	
 				</td>
 				<td style="color: gray;">
