@@ -88,44 +88,38 @@
 					<tr>
 						<td><bean:write name="shift" property="nome"/></td>
 						<td><bean:write name="shift" property="shiftTypesCodePrettyPrint"/></td>
-						
-						<logic:notPresent role="SCIENTIFIC_COUNCIL">
-						<td colspan="9"> Não tem aulas </td>
-						</logic:notPresent>
-						<logic:present role="SCIENTIFIC_COUNCIL">
-							<td colspan="5"> Não tem aulas </td>
-							<td> - </td>
-							<td> - </td>
-							<td>
-								<logic:greaterThan name="availablePercentage" value="0">
-										<bean:define id="propertyName">
-											teacherPercentageMap(<bean:write name="shift" property="externalId"/>)
-										</bean:define>
-										<html:text alt='<%= propertyName %>' property='<%= propertyName %>' size="4" /> %
-								</logic:greaterThan>
-								<logic:equal name="availablePercentage" value="0">
-									&nbsp;
-								</logic:equal>
-							</td>
-							<td rowspan="<%= 1 %>">
-								<bean:size id="teachingServiceSize" name="shift" property="degreeTeachingServices"/>
-								<logic:equal name="teachingServiceSize" value="0">&nbsp;</logic:equal>
-								<logic:notEqual name="teachingServiceSize" value="0">
-									<logic:iterate id="teachingService"	name="shift" property="degreeTeachingServices" indexId="indexPercentage">						
-							    		<bean:write name="teachingService" property="professorship.person.name" />
-				 						<bean:define id="teachingServicePercentage" name="teachingService" property="percentage"/>
-				 						&nbsp;-&nbsp;<%= ((Math.round(((Double)teachingServicePercentage).doubleValue() * 100.0)) / 100.0) %>
-				 						<br />
-									</logic:iterate>			
-								</logic:notEqual>
-								<logic:iterate id="nonRegularTeachingService" name="shift" property="nonRegularTeachingServices">
-									<bean:write name="nonRegularTeachingService" property="professorship.person.name" />
-									<bean:define id="nonRegularTeachingServicePerscentage" name="nonRegularTeachingService" property="percentage"/>
-			 						&nbsp;-&nbsp;<%= ((Math.round(((Double)nonRegularTeachingServicePerscentage).doubleValue() * 100.0)) / 100.0) %>
+						<td colspan="5"> Não tem aulas </td>
+						<td> - </td>
+						<td> - </td>
+						<td>
+							<logic:greaterThan name="availablePercentage" value="0">
+									<bean:define id="propertyName">
+										teacherPercentageMap(<bean:write name="shift" property="externalId"/>)
+									</bean:define>
+									<html:text alt='<%= propertyName %>' property='<%= propertyName %>' size="4" /> %
+							</logic:greaterThan>
+							<logic:equal name="availablePercentage" value="0">
+								&nbsp;
+							</logic:equal>
+						</td>
+						<td rowspan="<%= 1 %>">
+							<bean:size id="teachingServiceSize" name="shift" property="degreeTeachingServices"/>
+							<logic:equal name="teachingServiceSize" value="0">&nbsp;</logic:equal>
+							<logic:notEqual name="teachingServiceSize" value="0">
+								<logic:iterate id="teachingService"	name="shift" property="degreeTeachingServices" indexId="indexPercentage">						
+						    		<bean:write name="teachingService" property="professorship.person.name" />
+			 						<bean:define id="teachingServicePercentage" name="teachingService" property="percentage"/>
+			 						&nbsp;-&nbsp;<%= ((Math.round(((Double)teachingServicePercentage).doubleValue() * 100.0)) / 100.0) %>
 			 						<br />
-								</logic:iterate>
-							</td>	
-						</logic:present>
+								</logic:iterate>			
+							</logic:notEqual>
+							<logic:iterate id="nonRegularTeachingService" name="shift" property="nonRegularTeachingServices">
+								<bean:write name="nonRegularTeachingService" property="professorship.person.name" />
+								<bean:define id="nonRegularTeachingServicePerscentage" name="nonRegularTeachingService" property="percentage"/>
+		 						&nbsp;-&nbsp;<%= ((Math.round(((Double)nonRegularTeachingServicePerscentage).doubleValue() * 100.0)) / 100.0) %>
+		 						<br />
+							</logic:iterate>
+						</td>
 					</tr>
 				</logic:equal>
 
