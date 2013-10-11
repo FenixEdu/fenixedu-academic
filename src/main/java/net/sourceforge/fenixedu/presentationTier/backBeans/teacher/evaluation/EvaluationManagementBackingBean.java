@@ -490,7 +490,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return (String) getViewState().getAttribute("roomToChangeID");
     }
 
-    public void setRoomToChangeID(Integer roomToChangeID) {
+    public void setRoomToChangeID(String roomToChangeID) {
         getViewState().setAttribute("roomToChangeID", roomToChangeID);
     }
 
