@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -25,6 +26,7 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
         setInstitution(institution);
         setTitle(title);
         setName(name);
+        setRequestTime(new DateTime());
         sendEmailForRecommendation();
     }
 
