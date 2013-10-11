@@ -679,7 +679,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         VigilantGroupBean bean =
                 (VigilantGroupBean) RenderUtils.getViewState("addExternalPersonToGroup").getMetaObject().getObject();
-        List<VigilantGroup> groups = bean.getVigilantGroups();
+        Collection<VigilantGroup> groups = bean.getVigilantGroups();
         String username = bean.getUsername();
 
         User user = User.readUserByUserUId(username);

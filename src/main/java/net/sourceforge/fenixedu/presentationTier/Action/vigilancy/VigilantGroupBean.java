@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -299,7 +300,7 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 
     public List<VigilantWrapper> getVigilantWrappersForGroupsInBean() {
         Set<VigilantWrapper> vigilantWrappers = new HashSet<VigilantWrapper>();
-        List<VigilantGroup> groups = this.getVigilantGroups();
+        Collection<VigilantGroup> groups = this.getVigilantGroups();
         for (VigilantGroup group : groups) {
             vigilantWrappers.addAll(group.getVigilantWrappers());
         }

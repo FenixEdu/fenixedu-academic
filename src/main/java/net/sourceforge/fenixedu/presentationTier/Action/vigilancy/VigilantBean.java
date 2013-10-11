@@ -177,8 +177,8 @@ public class VigilantBean implements Serializable {
         this.selectedVigilantGroup = group;
     }
 
-    public List getVigilantGroups() {
-        List groups = new ArrayList<VigilantGroup>();
+    public Collection<VigilantGroup> getVigilantGroups() {
+        Collection<VigilantGroup> groups = new ArrayList<VigilantGroup>();
         for (VigilantGroup vigilantGroup : this.vigilantGroups) {
             if (vigilantGroup != null) {
                 groups.add(vigilantGroup);

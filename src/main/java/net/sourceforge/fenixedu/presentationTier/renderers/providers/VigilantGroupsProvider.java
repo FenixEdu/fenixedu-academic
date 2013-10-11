@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class VigilantGroupsProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 
         VigilantBean bean = (VigilantBean) source;
-        List<VigilantGroup> groups = bean.getVigilantGroups();
+        List<VigilantGroup> groups = new ArrayList(bean.getVigilantGroups());
 
         Collections.sort(groups, new BeanComparator("name"));
         return groups;
