@@ -80,7 +80,7 @@ https://fenix-ashes.ist.utl.pt/fenixWiki/FenixSetup
 
 creates `target/miredot/index.html` 
 
-##Generate Fenix DML Zip
+##Generate Fenix DML Zip File
 
     mvn test -PGenerateDMLZip
 
