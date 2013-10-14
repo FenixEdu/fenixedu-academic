@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationPeriodBe
 import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationRecommendationBean;
 import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUploadBean;
 import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUserBean;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -105,13 +106,21 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
 
     public ActionForward createApplication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        justCreateApplication(mapping, form, request, response);
+        try {
+            justCreateApplication(mapping, form, request, response);
+        } catch (DomainException ex1) {
+            addActionMessage(request, ex1.getMessage());
+        }
         return listApplicationPeriods(mapping, form, request, response);
     }
 
     public ActionForward createApplicationFromPeriodPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        justCreateApplication(mapping, form, request, response);
+        try {
+            justCreateApplication(mapping, form, request, response);
+        } catch (DomainException ex1) {
+            addActionMessage(request, ex1.getMessage());
+        }
         return viewApplicationPeriod(mapping, form, request, response);
     }
 

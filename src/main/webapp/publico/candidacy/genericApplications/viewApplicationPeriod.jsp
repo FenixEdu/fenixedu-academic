@@ -196,6 +196,12 @@
 	</form>
 </logic:notPresent>
 
+<logic:messagesPresent message="true">
+     <html:messages id="messages" message="true" bundle="CANDIDATE_RESOURCES">
+      <p><span class="error0"><bean:write name="messages" filter="false" /></span></p>
+     </html:messages>
+</logic:messagesPresent>
+   
 <%
 	if (genericApplicationPeriod.isCurrentUserAllowedToMange()) {
 %>
