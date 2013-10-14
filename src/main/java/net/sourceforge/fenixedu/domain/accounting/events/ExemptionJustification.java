@@ -40,7 +40,7 @@ public abstract class ExemptionJustification extends ExemptionJustification_Base
 
     public void delete() {
         setRootDomainObject(null);
-        setExemption(null);
+        super.setExemption(null);
 
         super.deleteDomainObject();
     }
