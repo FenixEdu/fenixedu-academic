@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update TeacherServiceItem" updateTeacherServiceItem.sql IST
