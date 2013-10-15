@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixframework.Atomic;
 
+import com.lowagie.text.pdf.PdfReader;
+
 public class GenericApplicationUploadBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,9 +71,9 @@ public class GenericApplicationUploadBean implements Serializable {
         if (fileLength > MAX_FILE_SIZE) {
             throw new DomainException("error.file.to.big");
         }
-
         byte[] contents = new byte[(int) fileLength];
         stream.read(contents);
+        PdfReader pdfFile = new PdfReader(contents);
 
         return contents;
     }
@@ -86,6 +88,7 @@ public class GenericApplicationUploadBean implements Serializable {
         } catch (final IOException ex) {
             throw new Error(ex);
         }
+
         return null;
     }
 
@@ -108,5 +111,4 @@ public class GenericApplicationUploadBean implements Serializable {
         }
         return null;
     }
-
 }

@@ -26,6 +26,12 @@
 		arg1="<%= genericRecomentation.getGenericApplication().getGenericApplicationPeriod().getTitle().getContent() %>" />
 </div>
 
+<logic:messagesPresent message="true">
+     <html:messages id="messages" message="true" bundle="CANDIDATE_RESOURCES">
+      <p><span class="error0"><bean:write name="messages" filter="false" /></span></p>
+     </html:messages>
+</logic:messagesPresent>
+
 <logic:present name="recommendationSaved">
 	<br/>
 	<div id="savedMessage">
