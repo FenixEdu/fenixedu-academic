@@ -592,6 +592,12 @@
 	</fr:form>
 </logic:present>
 
+<logic:messagesPresent message="true">
+     <html:messages id="messages" message="true" bundle="CANDIDATE_RESOURCES">
+      <p><span class="error0"><bean:write name="messages" filter="false" /></span></p>
+     </html:messages>
+</logic:messagesPresent>
+
 <h3><bean:message key="label.recommendations" bundle="CANDIDATE_RESOURCES"/></h3>
 
 <div class="infoop8">

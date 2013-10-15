@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -52,13 +53,15 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
             if (candidacyPeriod instanceof GenericApplicationPeriod) {
                 result.add((GenericApplicationPeriod) candidacyPeriod);
             }
-
         }
         return result;
     }
 
     @Atomic
     public GenericApplication createApplication(final String email) {
+        if (this.getStart().isAfterNow() || this.getEnd().isBeforeNow()) {
+            throw new DomainException("message.application.submission.period.ended");
+        }
         for (final GenericApplication genericApplication : getGenericApplicationSet()) {
             if (genericApplication.getEmail().equalsIgnoreCase(email)) {
                 genericApplication.sendEmailForApplication();
