@@ -43,7 +43,7 @@ public class SearchInquiriesResultPageDTO extends ActionForm {
     }
 
     private boolean isNullOrZero(String id) {
-        return id == null;
+        return id == null || id.length() == 0;
     }
 
     public String getExecutionDegreeID() {
