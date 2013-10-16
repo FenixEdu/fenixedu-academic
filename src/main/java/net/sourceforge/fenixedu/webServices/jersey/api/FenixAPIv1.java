@@ -147,6 +147,7 @@ public class FenixAPIv1 {
     public final static String SCHEDULE_SCOPE = "schedule";
     public final static String EVALUATIONS_SCOPE = "evaluations";
     public final static String CURRICULAR_SCOPE = "curricular";
+    public final static String PAYMENTS_SCOPE = "payments";
 
     public final static String JSON_UTF8 = "application/json; charset=utf-8";
 
@@ -515,9 +516,9 @@ public class FenixAPIv1 {
      * 
      * @summary Gratuity payments
      * @return
-     * @servicetag PERSONAL_SCOPE
+     * @servicetag PAYMENTS_SCOPE
      */
-    @FenixAPIScope(PERSONAL_SCOPE)
+    @FenixAPIScope(PAYMENTS_SCOPE)
     @GET
     @Path("person/payments")
     @Produces(JSON_UTF8)
@@ -1007,13 +1008,12 @@ public class FenixAPIv1 {
             teachers.add(new FenixTeacher(tname, istid, mail, url));
         }
 
-        // TODO change getIdInternal to ExternalID
         String annoucementLink =
                 getServerLink().concat("/external/announcementsRSS.do?announcementBoardId=").concat(
-                        executionCourse.getBoard().getIdInternal().toString());
+                        executionCourse.getBoard().getExternalId().toString());
 
         String summaryLink =
-                getServerLink().concat("/publico/summariesRSS.do?id=").concat(executionCourse.getIdInternal().toString());
+                getServerLink().concat("/publico/summariesRSS.do?id=").concat(executionCourse.getExternalId().toString());
 
         return new FenixCourse(acronym, name, evaluation, year, semester, numberOfStudents, annoucementLink, summaryLink,
                 moreInfo, teachers);

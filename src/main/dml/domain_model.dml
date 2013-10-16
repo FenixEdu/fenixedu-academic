@@ -8202,6 +8202,64 @@ class mobility.outbound.OutboundMobilityCandidacy  {
 class mobility.outbound.OutboundMobilityCandidacyContestGroup  {
 }
 
+class credits.AnnualTeachingCredits  {
+	BigDecimal teachingCredits;
+	BigDecimal masterDegreeThesesCredits;
+	BigDecimal phdDegreeThesesCredits;
+	BigDecimal projectsTutorialsCredits;
+	BigDecimal managementFunctionCredits;
+	BigDecimal creditsReduction;
+	BigDecimal serviceExemptionCredits;
+	BigDecimal othersCredits;
+	BigDecimal annualTeachingLoad;
+	BigDecimal yearCredits;
+	BigDecimal finalCredits;
+	BigDecimal accumulatedCredits;
+	Boolean hasAnyLimitation;
+	DateTime creationDate;
+    DateTime lastModifiedDate;
+}
+
+class credits.AnnualCreditsState  {
+	Boolean isOrientationsCalculated;
+	Boolean isFinalCreditsCalculated;
+	Boolean isCreditsClosed;
+	LocalDate orientationsCalculationDate;
+	LocalDate finalCalculationDate;
+	LocalDate closeCreditsDate;
+    DateTime creationDate;
+    DateTime lastModifiedDate;
+    Interval sharedUnitCreditsInterval;
+    Interval unitCreditsInterval;
+}
+
+
+class ExternalApplication  {
+        String name (REQUIRED);
+        String secret (REQUIRED);
+        String redirectUrl (REQUIRED);
+        String description (REQUIRED);
+        String siteUrl;
+        bytearray logo;
+}
+
+class AuthScope  {
+        String name (REQUIRED);
+        String endpoints (REQUIRED);
+}
+
+
+class AppUserSession {
+	DateTime creationDate;
+	String code;
+	String accessToken;
+	String refreshToken;
+	String deviceId;
+}
+
+
+class AppUserAuthorization {
+}
 
 /*
  * Relations definitions
@@ -20612,24 +20670,6 @@ relation DegreeIndividualCandidacySeriesGrade {
 	}
 }
 
-class credits.AnnualTeachingCredits  {
-	BigDecimal teachingCredits;
-	BigDecimal masterDegreeThesesCredits;
-	BigDecimal phdDegreeThesesCredits;
-	BigDecimal projectsTutorialsCredits;
-	BigDecimal managementFunctionCredits;
-	BigDecimal creditsReduction;
-	BigDecimal serviceExemptionCredits;
-	BigDecimal othersCredits;
-	BigDecimal annualTeachingLoad;
-	BigDecimal yearCredits;
-	BigDecimal finalCredits;
-	BigDecimal accumulatedCredits;
-	Boolean hasAnyLimitation;
-	DateTime creationDate;
-    DateTime lastModifiedDate;
-}
-
 relation TeacherYearCreditsTeacher {
 	Teacher playsRole teacher;
 	credits.AnnualTeachingCredits playsRole annualTeachingCredits {
@@ -20642,19 +20682,6 @@ relation RootDomainObjectAnnualTeachingCredits {
 	credits.AnnualTeachingCredits playsRole annualTeachingCredits {
 		multiplicity *;
 	}
-}
-
-class credits.AnnualCreditsState  {
-	Boolean isOrientationsCalculated;
-	Boolean isFinalCreditsCalculated;
-	Boolean isCreditsClosed;
-	LocalDate orientationsCalculationDate;
-	LocalDate finalCalculationDate;
-	LocalDate closeCreditsDate;
-    DateTime creationDate;
-    DateTime lastModifiedDate;
-    Interval sharedUnitCreditsInterval;
-    Interval unitCreditsInterval;
 }
 
 relation AnnualCreditsStateAnnualTeachingCredits {
@@ -20812,33 +20839,6 @@ relation PictureFile {
 }
 
 
-class ExternalApplication  {
-        String name (REQUIRED);
-        String secret (REQUIRED);
-        String redirectUrl (REQUIRED);
-        String description (REQUIRED);
-        String siteUrl;
-        bytearray logo;
-}
-
-class AuthScope  {
-        String name (REQUIRED);
-        String endpoints (REQUIRED);
-}
-
-    
-class AppUserSession {
-	DateTime creationDate;
-	String code;
-	String accessToken;
-	String refreshToken;
-	String deviceId;
-}
-
-
-class AppUserAuthorization {
-}
-     
 relation RootDomainObjectApps {
     RootDomainObject playsRole rootDomainObject;  
   	ExternalApplication playsRole apps {
@@ -20897,6 +20897,7 @@ relation AppUserAuthorizationSession {
 		multiplicity *;
 	}
 }
+
 
 /**
  * Former Remote Plugin
