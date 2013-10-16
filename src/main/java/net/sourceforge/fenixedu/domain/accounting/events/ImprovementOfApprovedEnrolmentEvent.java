@@ -120,7 +120,6 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
 
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getImprovementEnrolmentEvaluations() {
         return getImprovementEnrolmentEvaluationsSet();

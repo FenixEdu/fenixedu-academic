@@ -128,7 +128,7 @@ public class ExportFirstYearShiftsDA extends FenixContextDispatchAction {
         row.setCell(shift.getNome());
         row.setCell(shift.getShiftTypesPrettyPrint());
 
-        int capacity = shift.getLotacao() - shift.getStudentsCount();
+        int capacity = shift.getLotacao() - shift.getStudentsSet().size();
         if (phase.equals(EntryPhase.FIRST_PHASE)) {
             row.setCell(String.valueOf(capacity < 0 ? capacity * -1 : capacity));
         } else {
@@ -136,7 +136,7 @@ public class ExportFirstYearShiftsDA extends FenixContextDispatchAction {
         }
 
         if (!phase.equals(EntryPhase.FIRST_PHASE)) {
-            row.setCell(String.valueOf(shift.getStudentsCount()));
+            row.setCell(String.valueOf(shift.getStudentsSet().size()));
         }
     }
 }

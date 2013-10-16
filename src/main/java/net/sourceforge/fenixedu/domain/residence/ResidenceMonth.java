@@ -81,7 +81,6 @@ public class ResidenceMonth extends ResidenceMonth_Base {
         return getYear().isFor(year);
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ResidenceEvent> getEvents() {
         return getEventsSet();

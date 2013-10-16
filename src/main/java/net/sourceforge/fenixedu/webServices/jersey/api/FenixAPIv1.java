@@ -993,7 +993,7 @@ public class FenixAPIv1 {
 
         }
 
-        int numberOfStudents = executionCourse.getAttendsCount();
+        int numberOfStudents = executionCourse.getAttendsSet().size();
 
         List<FenixTeacher> teachers = new ArrayList<>();
         for (Professorship professorship : executionCourse.getProfessorships()) {

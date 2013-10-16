@@ -106,7 +106,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         double points = this.getStartPoints().doubleValue();
         BigDecimal weight = this.getPointsWeight();
 
-        Collection<Vigilancy> vigilancies = getVigilancies();
+        Collection<Vigilancy> vigilancies = getVigilanciesSet();
 
         for (Vigilancy vigilancy : vigilancies) {
             points += weight.doubleValue() * vigilancy.getPoints();
@@ -173,7 +173,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         Interval interval = new Interval(begin, end);
 
         for (VigilantWrapper otherVigilant : this.getPerson().getVigilantWrappers()) {
-            for (Vigilancy vigilancy : otherVigilant.getVigilancies()) {
+            for (Vigilancy vigilancy : otherVigilant.getVigilanciesSet()) {
                 if (interval.overlaps(vigilancy.getWrittenEvaluation().getDurationInterval())) {
                     if (vigilancy.getWrittenEvaluation().getDurationInterval().overlaps(interval)) {
                         return Boolean.FALSE;
@@ -232,7 +232,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
     public List<Interval> getConvokePeriods() {
         List<Interval> convokingPeriods = new ArrayList<Interval>();
-        Collection<Vigilancy> convokes = this.getVigilancies();
+        Collection<Vigilancy> convokes = this.getVigilanciesSet();
         for (Vigilancy convoke : convokes) {
             convokingPeriods.add(new Interval(convoke.getBeginDate(), convoke.getEndDate()));
         }
@@ -256,7 +256,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public boolean hasNoEvaluationsOnDate(DateTime beginOfExam, DateTime endOfExam) {
-        Collection<Vigilancy> convokes = this.getVigilancies();
+        Collection<Vigilancy> convokes = this.getVigilanciesSet();
         Interval requestedInterval = new Interval(beginOfExam, endOfExam);
         for (Vigilancy convoke : convokes) {
             DateTime begin = convoke.getBeginDateTime();
@@ -272,8 +272,8 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
     public void delete() {
 
-        if (this.getActiveVigilanciesInList(this.getVigilancies()).size() == 0) {
-            for (; !this.getVigilancies().isEmpty(); this.getVigilancies().iterator().next().delete()) {
+        if (this.getActiveVigilanciesInList(this.getVigilanciesSet()).size() == 0) {
+            for (; !this.getVigilanciesSet().isEmpty(); this.getVigilanciesSet().iterator().next().delete()) {
                 ;
             }
             setPerson(null);
@@ -295,7 +295,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
     public List<Vigilancy> getOtherCourseVigilancies() {
         List<Vigilancy> convokes = new ArrayList<Vigilancy>();
-        for (Vigilancy vigilancy : getVigilancies()) {
+        for (Vigilancy vigilancy : getVigilanciesSet()) {
             if (vigilancy.isOtherCourseVigilancy()) {
                 convokes.add(vigilancy);
             }
@@ -305,7 +305,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
     public List<Vigilancy> getOwnCourseVigilancies() {
         List<Vigilancy> convokes = new ArrayList<Vigilancy>();
-        for (Vigilancy vigilancy : getVigilancies()) {
+        for (Vigilancy vigilancy : getVigilanciesSet()) {
             if (vigilancy.isOwnCourseVigilancy()) {
                 convokes.add(vigilancy);
             }
@@ -318,7 +318,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public List<Vigilancy> getActiveVigilancies() {
-        return getActiveVigilanciesInList(getVigilancies());
+        return getActiveVigilanciesInList(getVigilanciesSet());
     }
 
     public int getActiveVigilanciesCount() {
@@ -341,7 +341,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
     public Vigilancy getVigilancyFor(WrittenEvaluation evaluation) {
 
-        for (Vigilancy vigilancy : this.getVigilancies()) {
+        for (Vigilancy vigilancy : this.getVigilanciesSet()) {
             if (vigilancy.getWrittenEvaluation().equals(evaluation)) {
                 return vigilancy;
             }
@@ -355,7 +355,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public boolean hasBeenConvokedForEvaluation(WrittenEvaluation writtenEvaluation) {
-        Collection<Vigilancy> convokes = this.getVigilancies();
+        Collection<Vigilancy> convokes = this.getVigilanciesSet();
         for (Vigilancy convoke : convokes) {
             if (convoke.getWrittenEvaluation().equals(writtenEvaluation)) {
                 return true;

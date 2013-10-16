@@ -49,7 +49,6 @@ public class FileLocalContent extends FileLocalContent_Base {
         deleteDomainObject();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.FileLocalContentMetadata> getMetadata() {
         return getMetadataSet();

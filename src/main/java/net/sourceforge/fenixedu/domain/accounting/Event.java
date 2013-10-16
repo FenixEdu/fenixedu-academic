@@ -1069,7 +1069,6 @@ public abstract class Event extends Event_Base {
         return (Person) getParty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEventTicket> getConsumedTicket() {
         return getConsumedTicketSet();
@@ -1080,7 +1079,6 @@ public abstract class Event extends Event_Base {
         return !getConsumedTicketSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Discount> getDiscounts() {
         return getDiscountsSet();
@@ -1091,7 +1089,6 @@ public abstract class Event extends Event_Base {
         return !getDiscountsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Exemption> getExemptions() {
         return getExemptionsSet();

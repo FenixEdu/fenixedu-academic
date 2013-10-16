@@ -311,7 +311,6 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         return selectedOpening.getMobilityAgreement().getMobilityProgram();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile> getApprovedLearningAgreements() {
         return getApprovedLearningAgreementsSet();
@@ -322,7 +321,6 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         return !getApprovedLearningAgreementsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getCurricularCourses() {
         return getCurricularCoursesSet();

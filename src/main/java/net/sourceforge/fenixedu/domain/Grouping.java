@@ -92,7 +92,7 @@ public class Grouping extends Grouping_Base {
 
     public List<StudentGroup> getStudentGroupsWithoutShift() {
         final List<StudentGroup> result = new ArrayList<StudentGroup>();
-        for (final StudentGroup studentGroup : this.getStudentGroups()) {
+        for (final StudentGroup studentGroup : this.getStudentGroupsSet()) {
             if (studentGroup.getShift() == null) {
                 result.add(studentGroup);
             }
@@ -102,7 +102,7 @@ public class Grouping extends Grouping_Base {
 
     public List<StudentGroup> getStudentGroupsWithShift() {
         final List<StudentGroup> result = new ArrayList<StudentGroup>();
-        for (final StudentGroup studentGroup : this.getStudentGroups()) {
+        for (final StudentGroup studentGroup : this.getStudentGroupsSet()) {
             if (studentGroup.getShift() != null) {
                 result.add(studentGroup);
             }
@@ -161,7 +161,7 @@ public class Grouping extends Grouping_Base {
     }
 
     public StudentGroup readStudentGroupBy(Integer studentGroupNumber) {
-        for (final StudentGroup studentGroup : this.getStudentGroups()) {
+        for (final StudentGroup studentGroup : this.getStudentGroupsSet()) {
             if (studentGroup.getGroupNumber().equals(studentGroupNumber)) {
                 return studentGroup;
             }
@@ -171,7 +171,7 @@ public class Grouping extends Grouping_Base {
 
     public List<StudentGroup> readAllStudentGroupsBy(Shift shift) {
         final List<StudentGroup> result = new ArrayList<StudentGroup>();
-        for (final StudentGroup studentGroup : this.getStudentGroups()) {
+        for (final StudentGroup studentGroup : this.getStudentGroupsSet()) {
             if (studentGroup.getShift() == shift) {
                 result.add(studentGroup);
             }
@@ -314,7 +314,7 @@ public class Grouping extends Grouping_Base {
         }
 
         if (shiftType == null) {
-            unEnrollStudentGroups(this.getStudentGroups());
+            unEnrollStudentGroups(this.getStudentGroupsSet());
         }
 
         List<ExecutionCourse> ecs = getExecutionCourses();
@@ -417,7 +417,7 @@ public class Grouping extends Grouping_Base {
     private void checkForStudentsInStudentGroupsAndGrouping(List<Registration> students) {
         for (Registration registration : students) {
             Attends attend = getStudentAttend(registration);
-            for (final StudentGroup studentGroup : this.getStudentGroups()) {
+            for (final StudentGroup studentGroup : this.getStudentGroupsSet()) {
                 if (studentGroup.getAttends().contains(attend)) {
                     throw new DomainException(this.getClass().getName(), "errors.existing.studentEnrolment");
                 } else if (!this.getAttends().contains(attend)) {
@@ -490,7 +490,7 @@ public class Grouping extends Grouping_Base {
     }
 
     public StudentGroup getStudentGroupByAttends(Attends attends) {
-        for (StudentGroup studentGroup : getStudentGroups()) {
+        for (StudentGroup studentGroup : getStudentGroupsSet()) {
             if (studentGroup.getAttends().contains(attends)) {
                 return studentGroup;
             }
@@ -502,7 +502,7 @@ public class Grouping extends Grouping_Base {
     public Map<Shift, SortedSet<StudentGroup>> getStudentGroupsIndexedByShift() {
         final Map<Shift, SortedSet<StudentGroup>> map =
                 new TreeMap<Shift, SortedSet<StudentGroup>>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
-        for (final StudentGroup studentGroup : getStudentGroups()) {
+        for (final StudentGroup studentGroup : getStudentGroupsSet()) {
             if (studentGroup.hasShift()) {
                 final Shift shift = studentGroup.getShift();
                 final SortedSet<StudentGroup> studentGroups;
@@ -520,7 +520,7 @@ public class Grouping extends Grouping_Base {
 
     public SortedSet<StudentGroup> getStudentGroupsOrderedByGroupNumber() {
         final SortedSet<StudentGroup> studentGroups = new TreeSet<StudentGroup>(StudentGroup.COMPARATOR_BY_GROUP_NUMBER);
-        studentGroups.addAll(getStudentGroups());
+        studentGroups.addAll(getStudentGroupsSet());
         return studentGroups;
     }
 
@@ -586,7 +586,6 @@ public class Grouping extends Grouping_Base {
         }
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExportGrouping> getExportGroupings() {
         return getExportGroupingsSet();
@@ -597,7 +596,6 @@ public class Grouping extends Grouping_Base {
         return !getExportGroupingsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
         return getAttendsSet();
@@ -613,7 +611,6 @@ public class Grouping extends Grouping_Base {
         return !getStudentGroupsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Project> getProjects() {
         return getProjectsSet();
@@ -624,7 +621,6 @@ public class Grouping extends Grouping_Base {
         return !getProjectsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ShiftGroupingProperties> getShiftGroupingProperties() {
         return getShiftGroupingPropertiesSet();

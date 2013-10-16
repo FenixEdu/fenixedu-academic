@@ -476,7 +476,6 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
                 student);
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getStudentCandidacy() {
         return getStudentCandidacySet();

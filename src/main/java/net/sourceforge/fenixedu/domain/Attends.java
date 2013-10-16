@@ -515,7 +515,7 @@ public class Attends extends Attends_Base {
     }
 
     public StudentGroup getStudentGroupByGrouping(final Grouping grouping) {
-        for (StudentGroup studentGroup : getStudentGroups()) {
+        for (StudentGroup studentGroup : getStudentGroupsSet()) {
             if (studentGroup.getGrouping().equals(grouping)) {
                 return studentGroup;
             }
@@ -552,7 +552,6 @@ public class Attends extends Attends_Base {
         }
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService> getDegreeProjectTutorialServices() {
         return getDegreeProjectTutorialServicesSet();
@@ -563,7 +562,6 @@ public class Attends extends Attends_Base {
         return !getDegreeProjectTutorialServicesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Grouping> getGroupings() {
         return getGroupingsSet();
@@ -574,7 +572,6 @@ public class Attends extends Attends_Base {
         return !getGroupingsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Mark> getAssociatedMarks() {
         return getAssociatedMarksSet();
@@ -585,7 +582,6 @@ public class Attends extends Attends_Base {
         return !getAssociatedMarksSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmissionLog> getProjectSubmissionLogs() {
         return getProjectSubmissionLogsSet();
@@ -596,7 +592,6 @@ public class Attends extends Attends_Base {
         return !getProjectSubmissionLogsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad> getWeeklyWorkLoads() {
         return getWeeklyWorkLoadsSet();
@@ -607,7 +602,6 @@ public class Attends extends Attends_Base {
         return !getWeeklyWorkLoadsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmission> getProjectSubmissions() {
         return getProjectSubmissionsSet();

@@ -295,7 +295,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         PersonInformationLog.createLog(getPerson(), "resources.MessagingResources", keyLabel, personViewed);
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PhotographContent> getContent() {
         return getContentSet();

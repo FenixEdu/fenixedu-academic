@@ -314,7 +314,6 @@ public class TeacherService extends TeacherService_Base {
                 "label.teacher.unlockTeacherCredits", getExecutionPeriod().getQualifiedName()));
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem> getServiceItems() {
         return getServiceItemsSet();
@@ -325,7 +324,6 @@ public class TeacherService extends TeacherService_Base {
         return !getServiceItemsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog> getTeacherServiceLog() {
         return getTeacherServiceLogSet();

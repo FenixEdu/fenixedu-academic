@@ -905,7 +905,7 @@ public class Person extends Person_Base {
         final List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
         for (final VigilantWrapper vigilantWrapper : this.getVigilantWrappers()) {
             if (vigilantWrapper.getExecutionYear().equals(executionYear)) {
-                vigilancies.addAll(vigilantWrapper.getVigilancies());
+                vigilancies.addAll(vigilantWrapper.getVigilanciesSet());
             }
         }
         return vigilancies;
@@ -4703,7 +4703,6 @@ public class Person extends Person_Base {
         contact.logRefuse(this);
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResearchResult> getCreatedResults() {
         return getCreatedResultsSet();
@@ -4714,7 +4713,6 @@ public class Person extends Person_Base {
         return !getCreatedResultsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.messaging.ForumSubscription> getForumSubscriptions() {
         return getForumSubscriptionsSet();
@@ -4725,7 +4723,6 @@ public class Person extends Person_Base {
         return !getForumSubscriptionsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod> getUnavailablePeriods() {
         return getUnavailablePeriodsSet();
@@ -4736,7 +4733,6 @@ public class Person extends Person_Base {
         return !getUnavailablePeriodsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CoordinatorLog> getCoordinatorLogWho() {
         return getCoordinatorLogWhoSet();
@@ -4747,7 +4743,6 @@ public class Person extends Person_Base {
         return !getCoordinatorLogWhoSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Qualification> getUpdatedQualifications() {
         return getUpdatedQualificationsSet();
@@ -4758,7 +4753,6 @@ public class Person extends Person_Base {
         return !getUpdatedQualificationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry> getCardGenerationEntries() {
         return getCardGenerationEntriesSet();
@@ -4769,7 +4763,6 @@ public class Person extends Person_Base {
         return !getCardGenerationEntriesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.Candidacy> getCandidacies() {
         return getCandidaciesSet();
@@ -4780,7 +4773,6 @@ public class Person extends Person_Base {
         return !getCandidaciesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess> getPhdConclusionProcesses() {
         return getPhdConclusionProcessesSet();
@@ -4791,7 +4783,6 @@ public class Person extends Person_Base {
         return !getPhdConclusionProcessesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Exemption> getCreatedExemptions() {
         return getCreatedExemptionsSet();
@@ -4802,7 +4793,6 @@ public class Person extends Person_Base {
         return !getCreatedExemptionsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup> getOutboundMobilityCandidacyContestGroup() {
         return getOutboundMobilityCandidacyContestGroupSet();
@@ -4813,7 +4803,6 @@ public class Person extends Person_Base {
         return !getOutboundMobilityCandidacyContestGroupSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewAnswer> getAnswers() {
         return getAnswersSet();
@@ -4824,7 +4813,6 @@ public class Person extends Person_Base {
         return !getAnswersSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExportGrouping> getExportGroupingSenders() {
         return getExportGroupingSendersSet();
@@ -4835,7 +4823,6 @@ public class Person extends Person_Base {
         return !getExportGroupingSendersSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation> getArticleAssociations() {
         return getArticleAssociationsSet();
@@ -4846,7 +4833,6 @@ public class Person extends Person_Base {
         return !getArticleAssociationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Job> getJobs() {
         return getJobsSet();
@@ -4857,7 +4843,6 @@ public class Person extends Person_Base {
         return !getJobsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getConclusionProcessVersions() {
         return getConclusionProcessVersionsSet();
@@ -4868,7 +4853,6 @@ public class Person extends Person_Base {
         return !getConclusionProcessVersionsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExportGrouping> getExportGroupingReceivers() {
         return getExportGroupingReceiversSet();
@@ -4879,7 +4863,6 @@ public class Person extends Person_Base {
         return !getExportGroupingReceiversSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlert> getErasmusAlert() {
         return getErasmusAlertSet();
@@ -4890,7 +4873,6 @@ public class Person extends Person_Base {
         return !getErasmusAlertSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument> getUploadedPhdProcessDocuments() {
         return getUploadedPhdProcessDocumentsSet();
@@ -4901,7 +4883,6 @@ public class Person extends Person_Base {
         return !getUploadedPhdProcessDocumentsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PersonInformationLog> getPersonInformationLogs() {
         return getPersonInformationLogsSet();
@@ -4912,7 +4893,6 @@ public class Person extends Person_Base {
         return !getPersonInformationLogsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson> getCerimonyInquiryPerson() {
         return getCerimonyInquiryPersonSet();
@@ -4923,7 +4903,6 @@ public class Person extends Person_Base {
         return !getCerimonyInquiryPersonSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MarkSheet> getCreatedMarkSheets() {
         return getCreatedMarkSheetsSet();
@@ -4934,7 +4913,6 @@ public class Person extends Person_Base {
         return !getCreatedMarkSheetsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.log.PhdLogEntry> getPhdLogEntries() {
         return getPhdLogEntriesSet();
@@ -4945,7 +4923,6 @@ public class Person extends Person_Base {
         return !getPhdLogEntriesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PersonIdentificationDocumentExtraInfo> getPersonIdentificationDocumentExtraInfo() {
         return getPersonIdentificationDocumentExtraInfoSet();
@@ -4956,7 +4933,6 @@ public class Person extends Person_Base {
         return !getPersonIdentificationDocumentExtraInfoSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.support.SupportRequest> getSupportRequests() {
         return getSupportRequestsSet();
@@ -4967,7 +4943,6 @@ public class Person extends Person_Base {
         return !getSupportRequestsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment> getPunctualRoomsOccupationComments() {
         return getPunctualRoomsOccupationCommentsSet();
@@ -4978,7 +4953,6 @@ public class Person extends Person_Base {
         return !getPunctualRoomsOccupationCommentsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Qualification> getCreatedQualifications() {
         return getCreatedQualificationsSet();
@@ -4989,7 +4963,6 @@ public class Person extends Person_Base {
         return !getCreatedQualificationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Job> getCreateJobs() {
         return getCreateJobsSet();
@@ -5000,7 +4973,6 @@ public class Person extends Person_Base {
         return !getCreateJobsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.administrativeOffice.curriculumValidation.DocumentPrintRequest> getRequest() {
         return getRequestSet();
@@ -5011,7 +4983,6 @@ public class Person extends Person_Base {
         return !getRequestSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.EventConferenceArticlesAssociation> getEventConferenceArticlesAssociations() {
         return getEventConferenceArticlesAssociationsSet();
@@ -5022,7 +4993,6 @@ public class Person extends Person_Base {
         return !getEventConferenceArticlesAssociationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.RegistrationProtocol> getRegistrationProtocols() {
         return getRegistrationProtocolsSet();
@@ -5033,7 +5003,6 @@ public class Person extends Person_Base {
         return !getRegistrationProtocolsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultParticipation> getResultParticipations() {
         return getResultParticipationsSet();
@@ -5044,7 +5013,6 @@ public class Person extends Person_Base {
         return !getResultParticipationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.documents.GeneratedDocument> getProcessedDocument() {
         return getProcessedDocumentSet();
@@ -5055,7 +5023,6 @@ public class Person extends Person_Base {
         return !getProcessedDocumentSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Receipt> getReceipts() {
         return getReceiptsSet();
@@ -5066,7 +5033,6 @@ public class Person extends Person_Base {
         return !getReceiptsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderBatchRequester> getSantanderBatchRequesters() {
         return getSantanderBatchRequestersSet();
@@ -5077,7 +5043,6 @@ public class Person extends Person_Base {
         return !getSantanderBatchRequestersSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.CandidacySituation> getCandidacySituations() {
         return getCandidacySituationsSet();
@@ -5088,7 +5053,6 @@ public class Person extends Person_Base {
         return !getCandidacySituationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Photograph> getApprovedPhoto() {
         return getApprovedPhotoSet();
@@ -5099,7 +5063,6 @@ public class Person extends Person_Base {
         return !getApprovedPhotoSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion> getReceiptsVersions() {
         return getReceiptsVersionsSet();
@@ -5110,7 +5073,6 @@ public class Person extends Person_Base {
         return !getReceiptsVersionsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess> getTeacherEvaluationProcessFromEvaluee() {
         return getTeacherEvaluationProcessFromEvalueeSet();
@@ -5121,7 +5083,6 @@ public class Person extends Person_Base {
         return !getTeacherEvaluationProcessFromEvalueeSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.email.PhdEmail> getPhdEmail() {
         return getPhdEmailSet();
@@ -5132,7 +5093,6 @@ public class Person extends Person_Base {
         return !getPhdEmailSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication> getPreferredPublication() {
         return getPreferredPublicationSet();
@@ -5143,7 +5103,6 @@ public class Person extends Person_Base {
         return !getPreferredPublicationSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequests() {
         return getPunctualRoomsOccupationRequestsSet();
@@ -5154,7 +5113,6 @@ public class Person extends Person_Base {
         return !getPunctualRoomsOccupationRequestsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Professorship> getProfessorshipCreated() {
         return getProfessorshipCreatedSet();
@@ -5165,7 +5123,6 @@ public class Person extends Person_Base {
         return !getProfessorshipCreatedSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MarkSheet> getConfirmedMarkSheets() {
         return getConfirmedMarkSheetsSet();
@@ -5176,7 +5133,6 @@ public class Person extends Person_Base {
         return !getConfirmedMarkSheetsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization> getTeacherAuthorizationsRevoked() {
         return getTeacherAuthorizationsRevokedSet();
@@ -5187,7 +5143,6 @@ public class Person extends Person_Base {
         return !getTeacherAuthorizationsRevokedSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getEnrolmentEvaluations() {
         return getEnrolmentEvaluationsSet();
@@ -5198,7 +5153,6 @@ public class Person extends Person_Base {
         return !getEnrolmentEvaluationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCreditsState> getTeacherCredits() {
         return getTeacherCreditsSet();
@@ -5209,7 +5163,6 @@ public class Person extends Person_Base {
         return !getTeacherCreditsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess> getTSDProcesses() {
         return getTSDProcessesSet();
@@ -5220,7 +5173,6 @@ public class Person extends Person_Base {
         return !getTSDProcessesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentCode> getPaymentCodes() {
         return getPaymentCodesSet();
@@ -5231,7 +5183,6 @@ public class Person extends Person_Base {
         return !getPaymentCodesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.RoleOperationLog> getPersonRoleOperationLog() {
         return getPersonRoleOperationLogSet();
@@ -5242,7 +5193,6 @@ public class Person extends Person_Base {
         return !getPersonRoleOperationLogSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant> getInternalParticipants() {
         return getInternalParticipantsSet();
@@ -5253,7 +5203,6 @@ public class Person extends Person_Base {
         return !getInternalParticipantsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PersonalGroup> getPersonalGroups() {
         return getPersonalGroupsSet();
@@ -5264,7 +5213,6 @@ public class Person extends Person_Base {
         return !getPersonalGroupsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeCandidate> getMasterDegreeCandidates() {
         return getMasterDegreeCandidatesSet();
@@ -5275,7 +5223,6 @@ public class Person extends Person_Base {
         return !getMasterDegreeCandidatesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFile> getTeacherEvaluationFile() {
         return getTeacherEvaluationFileSet();
@@ -5286,7 +5233,6 @@ public class Person extends Person_Base {
         return !getTeacherEvaluationFileSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest> getApprovedCompetenceCourseInformationChangeRequests() {
         return getApprovedCompetenceCourseInformationChangeRequestsSet();
@@ -5297,7 +5243,6 @@ public class Person extends Person_Base {
         return !getApprovedCompetenceCourseInformationChangeRequestsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation> getAcademicServiceRequestSituations() {
         return getAcademicServiceRequestSituationsSet();
@@ -5308,7 +5253,6 @@ public class Person extends Person_Base {
         return !getAcademicServiceRequestSituationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.DomainOperationLog> getDomainOperationLogs() {
         return getDomainOperationLogsSet();
@@ -5319,7 +5263,6 @@ public class Person extends Person_Base {
         return !getDomainOperationLogsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup> getCreatedGroup() {
         return getCreatedGroupSet();
@@ -5330,7 +5273,6 @@ public class Person extends Person_Base {
         return !getCreatedGroupSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper> getVigilantWrappers() {
         return getVigilantWrappersSet();
@@ -5341,7 +5283,6 @@ public class Person extends Person_Base {
         return !getVigilantWrappersSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant> getThesisEvaluationParticipants() {
         return getThesisEvaluationParticipantsSet();
@@ -5352,7 +5293,6 @@ public class Person extends Person_Base {
         return !getThesisEvaluationParticipantsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.contents.Content> getCreatedContents() {
         return getCreatedContentsSet();
@@ -5363,7 +5303,6 @@ public class Person extends Person_Base {
         return !getCreatedContentsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CoordinatorLog> getCoordinatorLog() {
         return getCoordinatorLogSet();
@@ -5374,7 +5313,6 @@ public class Person extends Person_Base {
         return !getCoordinatorLogSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage> getPhdAlertMessages() {
         return getPhdAlertMessagesSet();
@@ -5385,7 +5323,6 @@ public class Person extends Person_Base {
         return !getPhdAlertMessagesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.material.PersonExtension> getExtensions() {
         return getExtensionsSet();
@@ -5396,7 +5333,6 @@ public class Person extends Person_Base {
         return !getExtensionsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.RoleOperationLog> getGivenRoleOperationLog() {
         return getGivenRoleOperationLogSet();
@@ -5407,7 +5343,6 @@ public class Person extends Person_Base {
         return !getGivenRoleOperationLogSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.CreditNote> getCreditNotes() {
         return getCreditNotesSet();
@@ -5418,7 +5353,6 @@ public class Person extends Person_Base {
         return !getCreditNotesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch> getSubmittedRectorateSubmissionBatch() {
         return getSubmittedRectorateSubmissionBatchSet();
@@ -5429,7 +5363,6 @@ public class Person extends Person_Base {
         return !getSubmittedRectorateSubmissionBatchSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState> getRegistrationStates() {
         return getRegistrationStatesSet();
@@ -5440,7 +5373,6 @@ public class Person extends Person_Base {
         return !getRegistrationStatesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ServiceAgreement> getServiceAgreements() {
         return getServiceAgreementsSet();
@@ -5451,7 +5383,6 @@ public class Person extends Person_Base {
         return !getServiceAgreementsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.transactions.Transaction> getResponsabilityTransactions() {
         return getResponsabilityTransactionsSet();
@@ -5462,7 +5393,6 @@ public class Person extends Person_Base {
         return !getResponsabilityTransactionsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.thesis.ThesisLibraryOperation> getThesisLibraryOperation() {
         return getThesisLibraryOperationSet();
@@ -5473,7 +5403,6 @@ public class Person extends Person_Base {
         return !getThesisLibraryOperationSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.DomainObjectActionLog> getDomainObjectActionLogs() {
         return getDomainObjectActionLogsSet();
@@ -5484,7 +5413,6 @@ public class Person extends Person_Base {
         return !getDomainObjectActionLogsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getPhdIndividualProgramProcesses() {
         return getPhdIndividualProgramProcessesSet();
@@ -5495,7 +5423,6 @@ public class Person extends Person_Base {
         return !getPhdIndividualProgramProcessesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit> getCollaboratorIn() {
         return getCollaboratorInSet();
@@ -5506,7 +5433,6 @@ public class Person extends Person_Base {
         return !getCollaboratorInSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers> getPersistentGroups() {
         return getPersistentGroupsSet();
@@ -5517,7 +5443,6 @@ public class Person extends Person_Base {
         return !getPersistentGroupsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ExecutedAction> getExecutedActions() {
         return getExecutedActionsSet();
@@ -5528,7 +5453,6 @@ public class Person extends Person_Base {
         return !getExecutedActionsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ScientificCommission> getScientificCommissions() {
         return getScientificCommissionsSet();
@@ -5539,7 +5463,6 @@ public class Person extends Person_Base {
         return !getScientificCommissionsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProcessState> getPhdProgramStates() {
         return getPhdProgramStatesSet();
@@ -5550,7 +5473,6 @@ public class Person extends Person_Base {
         return !getPhdProgramStatesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest> getIdentityRequests() {
         return getIdentityRequestsSet();
@@ -5561,7 +5483,6 @@ public class Person extends Person_Base {
         return !getIdentityRequestsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationRegister> getCardGenerationRegister() {
         return getCardGenerationRegisterSet();
@@ -5572,7 +5493,6 @@ public class Person extends Person_Base {
         return !getCardGenerationRegisterSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsToProcess() {
         return getPunctualRoomsOccupationRequestsToProcessSet();
@@ -5583,7 +5503,6 @@ public class Person extends Person_Base {
         return !getPunctualRoomsOccupationRequestsToProcessSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.space.Blueprint> getBlueprints() {
         return getBlueprintsSet();
@@ -5594,7 +5513,6 @@ public class Person extends Person_Base {
         return !getBlueprintsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Role> getPersonRoles() {
         return getPersonRolesSet();
@@ -5605,7 +5523,6 @@ public class Person extends Person_Base {
         return !getPersonRolesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCredits> getTeacherCreditsPerson() {
         return getTeacherCreditsPersonSet();
@@ -5616,7 +5533,6 @@ public class Person extends Person_Base {
         return !getTeacherCreditsPersonSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch> getCreatedRectorateSubmissionBatch() {
         return getCreatedRectorateSubmissionBatchSet();
@@ -5627,7 +5543,6 @@ public class Person extends Person_Base {
         return !getCreatedRectorateSubmissionBatchSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage> getPhdAlertMessagesMarkedAsReaded() {
         return getPhdAlertMessagesMarkedAsReadedSet();
@@ -5638,7 +5553,6 @@ public class Person extends Person_Base {
         return !getPhdAlertMessagesMarkedAsReadedSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Career> getAssociatedCareers() {
         return getAssociatedCareersSet();
@@ -5649,7 +5563,6 @@ public class Person extends Person_Base {
         return !getAssociatedCareersSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Coordinator> getCoordinators() {
         return getCoordinatorsSet();
@@ -5660,7 +5573,6 @@ public class Person extends Person_Base {
         return !getCoordinatorsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.InternalCoEvaluator> getInternalCoEvaluator() {
         return getInternalCoEvaluatorSet();
@@ -5671,7 +5583,6 @@ public class Person extends Person_Base {
         return !getInternalCoEvaluatorSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getEnrolmentEvaluationsConfirmations() {
         return getEnrolmentEvaluationsConfirmationsSet();
@@ -5682,7 +5593,6 @@ public class Person extends Person_Base {
         return !getEnrolmentEvaluationsConfirmationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment> getInquiryGlobalComments() {
         return getInquiryGlobalCommentsSet();
@@ -5693,7 +5603,6 @@ public class Person extends Person_Base {
         return !getInquiryGlobalCommentsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Unit> getUnitsWithUploadPermission() {
         return getUnitsWithUploadPermissionSet();
@@ -5704,7 +5613,6 @@ public class Person extends Person_Base {
         return !getUnitsWithUploadPermissionSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Guide> getGuides() {
         return getGuidesSet();
@@ -5715,7 +5623,6 @@ public class Person extends Person_Base {
         return !getGuidesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.FakeEnrollment> getFakeEnrollment() {
         return getFakeEnrollmentSet();
@@ -5726,7 +5633,6 @@ public class Person extends Person_Base {
         return !getFakeEnrollmentSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Qualification> getAssociatedQualifications() {
         return getAssociatedQualificationsSet();
@@ -5737,7 +5643,6 @@ public class Person extends Person_Base {
         return !getAssociatedQualificationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator> getExamCoordinators() {
         return getExamCoordinatorsSet();
@@ -5748,7 +5653,6 @@ public class Person extends Person_Base {
         return !getExamCoordinatorsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessages() {
         return getMessagesSet();
@@ -5759,7 +5663,6 @@ public class Person extends Person_Base {
         return !getMessagesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess> getTeacherEvaluationProcessFromEvaluator() {
         return getTeacherEvaluationProcessFromEvaluatorSet();
@@ -5770,7 +5673,6 @@ public class Person extends Person_Base {
         return !getTeacherEvaluationProcessFromEvaluatorSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Professorship> getProfessorships() {
         return getProfessorshipsSet();
@@ -5781,7 +5683,6 @@ public class Person extends Person_Base {
         return !getProfessorshipsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard> getBookmarkedBoards() {
         return getBookmarkedBoardsSet();
@@ -5792,7 +5693,6 @@ public class Person extends Person_Base {
         return !getBookmarkedBoardsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal> getAssociatedProposalsByCoorientator() {
         return getAssociatedProposalsByCoorientatorSet();
@@ -5803,7 +5703,6 @@ public class Person extends Person_Base {
         return !getAssociatedProposalsByCoorientatorSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Receipt> getReceiptsCreated() {
         return getReceiptsCreatedSet();
@@ -5814,7 +5713,6 @@ public class Person extends Person_Base {
         return !getReceiptsCreatedSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceComment> getTeacherServiceComment() {
         return getTeacherServiceCommentSet();
@@ -5825,7 +5723,6 @@ public class Person extends Person_Base {
         return !getTeacherServiceCommentSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderEntry> getSantanderEntries() {
         return getSantanderEntriesSet();
@@ -5836,7 +5733,6 @@ public class Person extends Person_Base {
         return !getSantanderEntriesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests() {
         return getCompetenceCourseInformationChangeRequestsSet();
@@ -5847,7 +5743,6 @@ public class Person extends Person_Base {
         return !getCompetenceCourseInformationChangeRequestsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch> getReceivedRectorateSubmissionBatch() {
         return getReceivedRectorateSubmissionBatchSet();
@@ -5858,7 +5753,6 @@ public class Person extends Person_Base {
         return !getReceivedRectorateSubmissionBatchSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.UnitSite> getUnitSites() {
         return getUnitSitesSet();
@@ -5869,7 +5763,6 @@ public class Person extends Person_Base {
         return !getUnitSitesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer> getInquiryCoordinatorsAnswers() {
         return getInquiryCoordinatorsAnswersSet();
@@ -5880,7 +5773,6 @@ public class Person extends Person_Base {
         return !getInquiryCoordinatorsAnswersSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails> getIndividualCandidacies() {
         return getIndividualCandidaciesSet();
@@ -5891,7 +5783,6 @@ public class Person extends Person_Base {
         return !getIndividualCandidaciesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.UnitFile> getUploadedFiles() {
         return getUploadedFilesSet();
@@ -5902,7 +5793,6 @@ public class Person extends Person_Base {
         return !getUploadedFilesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.FakeShiftEnrollment> getFakeShiftEnrollments() {
         return getFakeShiftEnrollmentsSet();
@@ -5913,7 +5803,6 @@ public class Person extends Person_Base {
         return !getFakeShiftEnrollmentsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTest> getTests() {
         return getTestsSet();
@@ -5924,7 +5813,6 @@ public class Person extends Person_Base {
         return !getTestsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization> getTeacherAuthorizationsAuthorized() {
         return getTeacherAuthorizationsAuthorizedSet();
@@ -5935,7 +5823,6 @@ public class Person extends Person_Base {
         return !getTeacherAuthorizationsAuthorizedSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderBatchSender> getSantanderBatchSenders() {
         return getSantanderBatchSendersSet();
@@ -5946,7 +5833,6 @@ public class Person extends Person_Base {
         return !getSantanderBatchSendersSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment> getInquiryResultComments() {
         return getInquiryResultCommentsSet();
@@ -5957,7 +5843,6 @@ public class Person extends Person_Base {
         return !getInquiryResultCommentsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Photograph> getRejectedPhoto() {
         return getRejectedPhotoSet();
@@ -5968,7 +5853,6 @@ public class Person extends Person_Base {
         return !getRejectedPhotoSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Department> getManageableDepartmentCredits() {
         return getManageableDepartmentCreditsSet();
@@ -5979,7 +5863,6 @@ public class Person extends Person_Base {
         return !getManageableDepartmentCreditsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem> getCardGenerationProblems() {
         return getCardGenerationProblemsSet();
@@ -5990,7 +5873,6 @@ public class Person extends Person_Base {
         return !getCardGenerationProblemsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation> getPersonSpaceOccupations() {
         return getPersonSpaceOccupationsSet();
@@ -6001,7 +5883,6 @@ public class Person extends Person_Base {
         return !getPersonSpaceOccupationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Curriculum> getAssociatedAlteredCurriculums() {
         return getAssociatedAlteredCurriculumsSet();
@@ -6012,7 +5893,6 @@ public class Person extends Person_Base {
         return !getAssociatedAlteredCurriculumsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.QueueJob> getJob() {
         return getJobSet();
@@ -6023,7 +5903,6 @@ public class Person extends Person_Base {
         return !getJobSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal> getAssociatedProposalsByOrientator() {
         return getAssociatedProposalsByOrientatorSet();
@@ -6034,7 +5913,6 @@ public class Person extends Person_Base {
         return !getAssociatedProposalsByOrientatorSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Event> getResponsibleForCancelEvent() {
         return getResponsibleForCancelEventSet();
@@ -6045,7 +5923,6 @@ public class Person extends Person_Base {
         return !getResponsibleForCancelEventSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.person.IdDocument> getIdDocuments() {
         return getIdDocumentsSet();

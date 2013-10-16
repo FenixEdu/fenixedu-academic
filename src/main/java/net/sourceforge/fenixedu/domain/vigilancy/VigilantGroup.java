@@ -207,7 +207,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         setUnit(null);
         setRootDomainObject(null);
         for (VigilantWrapper vigilant : this.getVigilantWrappers()) {
-            Collection<Vigilancy> vigilancies = vigilant.getVigilancies();
+            Collection<Vigilancy> vigilancies = vigilant.getVigilanciesSet();
             for (Vigilancy vigilancy : vigilancies) {
                 if (vigilancy.isActive()) {
                     throw new DomainException("label.vigilancy.error.cannotDeleteGroupWithVigilants");
@@ -266,7 +266,6 @@ public class VigilantGroup extends VigilantGroup_Base {
         return null;
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator> getExamCoordinators() {
         return getExamCoordinatorsSet();
@@ -277,7 +276,6 @@ public class VigilantGroup extends VigilantGroup_Base {
         return !getExamCoordinatorsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper> getVigilantWrappers() {
         return getVigilantWrappersSet();
@@ -288,7 +286,6 @@ public class VigilantGroup extends VigilantGroup_Base {
         return !getVigilantWrappersSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourse> getExecutionCourses() {
         return getExecutionCoursesSet();

@@ -28,6 +28,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewTutors", module = "pedagogicalCouncil")
 @Forwards({ @Forward(name = "viewTutors", path = "/pedagogicalCouncil/tutorship/viewTutors.jsp"),
@@ -49,7 +50,7 @@ public class ViewTutorsDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         String tutorshipIntentionID = (String) getFromRequest(request, "tutorshipIntentionID");
 
-        TutorshipIntention tutorshipIntention = TutorshipIntention.fromExternalId(tutorshipIntentionID);
+        TutorshipIntention tutorshipIntention = FenixFramework.getDomainObject(tutorshipIntentionID);
         request.setAttribute("tutorshipIntention", tutorshipIntention);
 
         return mapping.findForward("viewStudentOfTutor");
@@ -59,7 +60,7 @@ public class ViewTutorsDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         String tutorshipIntentionID = (String) getFromRequest(request, "tutorshipIntentionID");
 
-        TutorshipIntention tutorshipIntention = TutorshipIntention.fromExternalId(tutorshipIntentionID);
+        TutorshipIntention tutorshipIntention = FenixFramework.getDomainObject(tutorshipIntentionID);
         ExecutionDegree executionDegree =
                 tutorshipIntention.getDegreeCurricularPlan().getExecutionDegreeByAcademicInterval(
                         tutorshipIntention.getAcademicInterval());

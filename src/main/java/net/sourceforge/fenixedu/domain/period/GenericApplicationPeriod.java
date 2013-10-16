@@ -38,12 +38,12 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
         super();
         setTitle(title);
         setDescription(description);
-        setPeriodNumber(RootDomainObject.getInstance().getCandidacyPeriodsCount());
+        setPeriodNumber(RootDomainObject.getInstance().getCandidacyPeriodsSet().size());
         init(ExecutionYear.readCurrentExecutionYear(), start, end);
     }
 
     public String generateApplicationNumber() {
-        return "C" + new LocalDate().getYear() + "/" + getPeriodNumber() + "/" + (getGenericApplicationCount() + 1);
+        return "C" + new LocalDate().getYear() + "/" + getPeriodNumber() + "/" + (getGenericApplicationSet().size() + 1);
     }
 
     public static SortedSet<GenericApplicationPeriod> getPeriods() {
