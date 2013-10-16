@@ -85,8 +85,21 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
     protected void setHeader() {
 
+        final CycleType cycleType = getDocumentRequest().getRequestedCycle();
+        final String diplomaTypeQualifier;
+        if (cycleType == CycleType.FIRST_CYCLE) {
+            diplomaTypeQualifier = "label.diploma.type.qualifier.first.cycle";
+        } else if (cycleType == CycleType.SECOND_CYCLE) {
+            diplomaTypeQualifier = "label.diploma.type.qualifier.second.cycle";
+        } else if (cycleType == CycleType.THIRD_CYCLE) {
+            diplomaTypeQualifier = "label.diploma.type.qualifier.third.cycle";
+        } else {
+            diplomaTypeQualifier = "label.diploma.type.qualifier.unknown";
+        }
+
         addParameter("degreeRegistrationDiploma",
-                getResourceBundle().getString("label.phd.registryDiploma.degreeRegistrationDiploma"));
+                MessageFormat.format(getResourceBundle().getString("label.phd.registryDiploma.degreeRegistrationDiploma"),
+                        new Object[] { getResourceBundle().getString(diplomaTypeQualifier) }));
         addParameter("portugueseRepublic_1", getResourceBundle().getString("label.phd.registryDiploma.portugueseRepublic.part1"));
         addParameter("portugueseRepublic_2", getResourceBundle().getString("label.phd.registryDiploma.portugueseRepublic.part2"));
     }
