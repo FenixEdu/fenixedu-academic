@@ -151,14 +151,15 @@ public class JerseyOAuth2Filter implements Filter {
         UserView.setUser(Authenticate.mockUser(foundUser.getPerson(), request.getRequestURL().toString()));
     }
 
-    private boolean validScope(AppUserSession appUserSession, final String uri) throws IOException, ServletException {
+    private boolean validScope(AppUserSession appUserSession, String uri) throws IOException, ServletException {
+        uri = StringUtils.removeStart(StringUtils.removeEnd(uri, "/"), "/");
         AuthScope scope = FenixJerseyPackageResourceConfig.getScope(uri);
         if (scope != null) {
-            if (!appUserSession.getAppUserAuthorization().getApplication().getScopesSet().contains(scope)) {
-                return false;
+            if (appUserSession.getAppUserAuthorization().getApplication().getScopesSet().contains(scope)) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private static boolean sendError(final HttpServletResponse response, String error, String errorDescription)
