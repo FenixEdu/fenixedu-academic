@@ -1008,13 +1008,12 @@ public class FenixAPIv1 {
             teachers.add(new FenixTeacher(tname, istid, mail, url));
         }
 
-        // TODO change getIdInternal to ExternalID
         String annoucementLink =
                 getServerLink().concat("/external/announcementsRSS.do?announcementBoardId=").concat(
-                        executionCourse.getBoard().getIdInternal().toString());
+                        executionCourse.getBoard().getExternalId().toString());
 
         String summaryLink =
-                getServerLink().concat("/publico/summariesRSS.do?id=").concat(executionCourse.getIdInternal().toString());
+                getServerLink().concat("/publico/summariesRSS.do?id=").concat(executionCourse.getExternalId().toString());
 
         return new FenixCourse(acronym, name, evaluation, year, semester, numberOfStudents, annoucementLink, summaryLink,
                 moreInfo, teachers);
