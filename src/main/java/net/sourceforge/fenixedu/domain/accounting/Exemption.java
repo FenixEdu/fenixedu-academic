@@ -76,7 +76,7 @@ public abstract class Exemption extends Exemption_Base {
         super.setResponsible(null);
         getExemptionJustification().delete();
         final Event event = getEvent();
-        setEvent(null);
+        super.setEvent(null);
         if (recalculateEventState) {
             event.recalculateState(new DateTime());
         }
