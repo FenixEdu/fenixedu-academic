@@ -16848,7 +16848,10 @@ relation ThesisDegree {
 relation ThesisEnrolment {
     Enrolment playsRole enrolment;
     thesis.Thesis playsRole theses {
-        multiplicity 0..2;
+        // This should be 0..2, but due to a bug
+        // in the Framework's Code Generator, the
+        // multiplicity check must manually placed
+        multiplicity *;
     }
 }
 
