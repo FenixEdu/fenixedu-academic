@@ -41,7 +41,7 @@ creates `target/fenix-1.0-SNAPSHOT/`
   *    `create symlink in <tomcat>/webapps linking to target/fenix-1.0-SNAPSHOT/`
 * running with tomcat (maven)
   *    `export MAVEN_OPTS="$MAVEN_OPTS -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false"`
-  *    **`mvn tomcat7:run-war-only`**
+  *    **`mvn tomcat7:run`**
   
 ##compile and assemble a war file
     mvn clean package
