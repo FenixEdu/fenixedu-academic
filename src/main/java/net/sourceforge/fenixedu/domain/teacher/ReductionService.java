@@ -84,7 +84,9 @@ public class ReductionService extends ReductionService_Base {
     public BigDecimal getMaxCreditsFromEvaluationAndAge() {
         BigDecimal maxCreditsFromEvaluation = getTeacherEvaluationMark();
         BigDecimal maxCreditsFromAge = getTeacherMaxCreditsFromAge();
-        return maxCreditsFromEvaluation.add(maxCreditsFromAge);
+        BigDecimal maxCreditsFromEvaluationAndAge = maxCreditsFromEvaluation.add(maxCreditsFromAge);
+        BigDecimal maxCreditsReduction = getMaxCreditsReduction();
+        return maxCreditsReduction.min(maxCreditsFromEvaluationAndAge);
     }
 
     @Override
