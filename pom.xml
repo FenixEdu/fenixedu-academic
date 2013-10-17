@@ -182,9 +182,9 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
+				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>8.1.10.v20130312</version>
+				<version>9.0.6.v20130930</version>
 				<configuration>
 					<reload>manual</reload>
 					<stopKey>foo</stopKey>
@@ -197,6 +197,15 @@
 						<scanTarget>src/main/webapp</scanTarget>
 					</scanTargets>
 					<war>${project.build.directory}/${project.build.finalName}</war>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<path>/fenix</path>
+					<port>8080</port>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -859,11 +868,11 @@
 			<id>fenix-ashes-maven-repository</id>
 			<url>https://fenix-ashes.ist.utl.pt/nexus/content/groups/fenix-ashes-maven-repository</url>
 		</repository>
-        <repository>
-            <id>miredot</id>
-            <name>MireDot Releases</name>
-            <url>http://nexus.qmino.com/content/repositories/miredot</url>
-        </repository>
+		<repository>
+			<id>miredot</id>
+			<name>MireDot Releases</name>
+			<url>http://nexus.qmino.com/content/repositories/miredot</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>

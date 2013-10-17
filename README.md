@@ -35,10 +35,11 @@ able to run with jetty & tomcat
     mvn clean prepare-package war:exploded
 
 creates `target/fenix-1.0-SNAPSHOT/`
-* running with jetty
+* running with jetty (**faces don't work with jetty ATM, use tomcat**)
   *    `mvn jetty:start`
 * running with tomcat
   *    `create symlink in <tomcat>/webapps linking to target/fenix-1.0-SNAPSHOT/`
+  *    **`mvn tomcat7:run-war-only`**
 
 ##compile and assemble a war file
     mvn clean package
