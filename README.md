@@ -25,7 +25,7 @@ FenixEdu
 2. copy `src/main/resources/fenix-framework.properties.sample` to `src/main/resources/fenix-framework.properties`
 3. change above files accordingly
 4. `export JAVA_OPTS="-server -Xms256m -Xmx1024m -XX:PermSize=384m"`
-5. `export MAVEN_OPTS=$JAVA_OPTS`
+5. `export MAVEN_OPTS="$JAVA_OPTS"`
 
 #Compiling & Run Fenix
 
@@ -37,10 +37,12 @@ able to run with jetty & tomcat
 creates `target/fenix-1.0-SNAPSHOT/`
 * running with jetty (**faces don't work with jetty ATM, use tomcat**)
   *    `mvn jetty:start`
-* running with tomcat
+* running with tomcat (standalone)
   *    `create symlink in <tomcat>/webapps linking to target/fenix-1.0-SNAPSHOT/`
+* running with tomcat (maven)
+  *    `export MAVEN_OPTS="$MAVEN_OPTS -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false"`
   *    **`mvn tomcat7:run-war-only`**
-
+  
 ##compile and assemble a war file
     mvn clean package
 
