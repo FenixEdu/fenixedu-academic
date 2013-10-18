@@ -96,10 +96,6 @@ public class GenericApplicationUploadBean implements Serializable {
     public GenericApplicationLetterOfRecomentation uploadTo(final GenericApplicationRecomentation recomentation) {
         try {
             final byte[] content = readStreamContents();
-            if (recomentation.getGenericApplication().getGenericApplicationPeriod().getEnd().isAfterNow()
-                    && recomentation.getGenericApplication().getGenericApplicationPeriod().getStart().isBeforeNow()) {
-                throw new DomainException("error.outside.submission.period");
-            }
             if (content != null && content.length > 0) {
                 if (recomentation.getLetterOfRecomentation() != null) {
                     recomentation.getLetterOfRecomentation().delete();

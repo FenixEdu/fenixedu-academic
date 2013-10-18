@@ -28,14 +28,18 @@
 	<logic:equal name="site" property="defaultLogoUsed" value="false">
 		<logic:present name="site" property="logo">
 			<bean:define id="logoFile" type="net.sourceforge.fenixedu.domain.UnitSiteFile" name="site" property="logo"/>
-				<img alt="Logo" src="<%= logoFile.getDownloadUrl() %>" class="usitelogo"/>
+				<a href="<%= institutionUrl %>">
+					<img alt="Logo" src="<%= logoFile.getDownloadUrl() %>" class="usitelogo"/>
+				</a>
 		</logic:present>
 	</logic:equal>
 
 	<logic:equal name="site" property="defaultLogoUsed" value="true">
 		<logic:present name="siteDefaultLogo">
 			<bean:define id="logoUrl" name="siteDefaultLogo" type="java.lang.String"/>
-			<img alt="Logo" src="<%= logoUrl %>" class="usitelogo"/>
+				<a href="<%= institutionUrl %>">
+					<img alt="Logo" src="<%= logoUrl %>" class="usitelogo"/>
+				</a>
 		</logic:present>
 	</logic:equal>
 </div>
