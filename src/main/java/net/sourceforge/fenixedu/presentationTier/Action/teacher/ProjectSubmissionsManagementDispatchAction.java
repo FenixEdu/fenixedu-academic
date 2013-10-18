@@ -106,8 +106,8 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
 
             String idLast = "";
 
-            for (Attends a : group.getAttends()) {
-                idLast += "-" + a.getAluno().getStudent().getPerson().getUsername();
+            for (Attends attends : group.getAttends()) {
+                idLast += "-" + attends.getAluno().getStudent().getPerson().getUsername();
             }
 
             fetcher.queue(new Resource(group.getGroupNumber() + idLast + "/"
