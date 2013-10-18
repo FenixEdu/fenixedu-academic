@@ -10,15 +10,15 @@
 
 manager.filter.pattern=nothing
 
-file.download.url.local.content=http://localhost:8080/ciapl/conteudos-publicos/ficheiros?oid=
+file.download.url.local.content=http://localhost:8080/fenix/downloadFile/
 
 index.html.link.localhost=siteMap.do
 #index.html.link.<cidhcp000>=siteMap.do
 
-login.html.link.localhost=http://localhost:8080/ciapl/privado
-#login.html.link.<cidhcp000>=http://<cidhcp000>:8080/ciapl/privado
+login.html.link.localhost=http://localhost:8080/fenix/privado
+#login.html.link.<cidhcp000>=http://<cidhcp000>:8080/fenix/privado
 
-login.page=http://localhost:8080/ciapl/privado
+login.page=http://localhost:8080/fenix/privado
 institution.url=http://www.ist.utl.pt
 institution.acronym=IST
 
@@ -84,7 +84,7 @@ app.institution.AES128.secretKey = aa0bbfaf79654df4
 #   manager.url: absolute path to the web container managment interface
 #
 #
-app.context=ciapl
+app.context=fenix
 app.path=/${app.name}
 manager.username=admin
 manager.password=admin
@@ -239,7 +239,7 @@ sms.gateway.username=
 sms.gateway.password=
 sms.delivery.host=localhost
 sms.delivery.port=8080
-sms.delivery.uri=/ciapl/publico/smsController.do
+sms.delivery.uri=/fenix/publico/smsController.do
 sms.delivery.protocol=http
 sms.delivery.username=
 sms.delivery.password=
@@ -351,7 +351,7 @@ localhost.cas.enabled=false
 localhost.cas.loginUrl=https://localhost:8443/cas/login
 localhost.cas.validateUrl=https://localhost:8443/cas/serviceValidate
 localhost.cas.logoutUrl=https://localhost:8443/cas/logout
-localhost.cas.serviceUrl=https://localhost:8443/ciapl/loginCAS.do
+localhost.cas.serviceUrl=https://localhost:8443/fenix/loginCAS.do
 
 validateExpirationDate=false
 
@@ -472,9 +472,9 @@ sibs.destinationInstitutionId=11111111
 # WebServices - External Services Urls
 #----------------------------------------------------------------
 # webServices.external.urls: comma seperated values of wsdl valid urls.
-#							 Example: http://localhost:8080/ciapl/services/InstitutionalEmailManagement?wsdl
+#							 Example: http://localhost:8080/fenix/services/InstitutionalEmailManagement?wsdl
 
-webServices.external.urls=http://localhost:8080/ciapl/services/PersonManagement?wsdl
+webServices.external.urls=http://localhost:8080/fenix/services/PersonManagement?wsdl
 
 #----------------------------------------------------------------
 # Merge Units - Emails for log
