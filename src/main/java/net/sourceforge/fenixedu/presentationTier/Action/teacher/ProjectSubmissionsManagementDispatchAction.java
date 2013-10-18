@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.NotifyStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -100,7 +101,16 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
         Fetcher fetcher = new Fetcher(archive, request, response);
 
         for (ProjectSubmission submission : projectSubmissions) {
-            fetcher.queue(new Resource(submission.getStudentGroup().getGroupNumber() + "/"
+
+            StudentGroup group = submission.getStudentGroup();
+
+            String idLast = "";
+
+            for (Attends a : group.getAttends()) {
+                idLast += "-" + a.getAluno().getStudent().getPerson().getUsername();
+            }
+
+            fetcher.queue(new Resource(group.getGroupNumber() + idLast + "/"
                     + submission.getProjectSubmissionFile().getFilename(), submission.getProjectSubmissionFile().getDownloadUrl()));
         }
 
