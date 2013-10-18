@@ -379,7 +379,8 @@
                         <fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=downloadDocument&amp;documentRequestId=${externalId}&amp;"/>
                         <fr:property name="key(print)" value="print"/>
                         <fr:property name="visibleIf(print)" value="downloadPossible"/>
-    
+
+
                         <fr:property name="linkFormat(reprint)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${externalId}&amp;"/>
                         <fr:property name="key(reprint)" value="reprint"/>
                         <fr:property name="visibleIf(reprint)" value="rePrintPossible"/>
@@ -387,6 +388,7 @@
                         <fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${externalId}"/>
                         <fr:property name="key(deliver)" value="deliver"/>
                         <fr:property name="visibleIf(deliver)" value="deliveredSituationAccepted"/>
+                        
     
                         <fr:property name="linkFormat(code)" value="/academicServiceRequestsManagement.do?method=generateRegistryCode&amp;academicServiceRequestId=${externalId}"/>
                         <fr:property name="key(code)" value="label.generateRegistryCode"/>
@@ -433,8 +435,18 @@
 			</fr:layout>
 		</fr:view>
 	</logic:present>
-	
-	
+<bean:define id="deliveryWarning">
+<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="academic.service.request.delivery.confirmation"/>
+</bean:define>
+<script type="text/javascript">
+	$(function(){
+		$('a[href*="deliveredAcademicServiceRequest"]').each(function(index) {
+    		$(this).click(function() {	
+    	  		return confirm("<%= deliveryWarning %>");
+    	  	});
+    	});
+  	});
+</script>
 	<%--
 	<ul class="mtop2">
 		<li>
