@@ -101,16 +101,9 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
         Fetcher fetcher = new Fetcher(archive, request, response);
 
         for (ProjectSubmission submission : projectSubmissions) {
-
             StudentGroup group = submission.getStudentGroup();
 
-            String idLast = "";
-
-            for (Attends attends : group.getAttends()) {
-                idLast += "-" + attends.getAluno().getStudent().getPerson().getUsername();
-            }
-
-            fetcher.queue(new Resource(group.getGroupNumber() + idLast + "/"
+            fetcher.queue(new Resource(group.getGroupNumber() + getStudentsISTID(group) + "/"
                     + submission.getProjectSubmissionFile().getFilename(), submission.getProjectSubmissionFile().getDownloadUrl()));
         }
 
@@ -158,8 +151,10 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
         Fetcher fetcher = new Fetcher(archive, request, response);
 
         for (ProjectSubmission submission : subList) {
-            fetcher.queue(new Resource(submission.getProjectSubmissionFile().getFilename(), submission.getProjectSubmissionFile()
-                    .getDownloadUrl()));
+            StudentGroup group = submission.getStudentGroup();
+
+            fetcher.queue(new Resource(group.getGroupNumber() + getStudentsISTID(group) + "/"
+                    + submission.getProjectSubmissionFile().getFilename(), submission.getProjectSubmissionFile().getDownloadUrl()));
         }
 
         fetcher.process();
@@ -228,6 +223,17 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
 
     private String getExecutionCourseID(HttpServletRequest request) {
         return request.getParameter("executionCourseID");
+    }
+
+    private String getStudentsISTID(StudentGroup group) {
+        ArrayList<Attends> sortedAttends = new ArrayList(group.getAttends());
+        Collections.sort(sortedAttends, Attends.COMPARATOR_BY_STUDENT_NUMBER);
+
+        String studentsISTID = "";
+        for (Attends attends : sortedAttends) {
+            studentsISTID += "-" + attends.getAluno().getStudent().getPerson().getUsername();
+        }
+        return studentsISTID;
     }
 
 }
