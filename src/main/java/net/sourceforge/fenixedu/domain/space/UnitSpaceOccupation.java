@@ -13,13 +13,15 @@ import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.NullComparator;
 import org.joda.time.YearMonthDay;
 
 public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 
     public final static Comparator<UnitSpaceOccupation> COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT = new ComparatorChain();
     static {
-        ((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("begin"));
+        ((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("begin",
+                new NullComparator()));
         ((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("unit.name"));
         ((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
