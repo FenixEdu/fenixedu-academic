@@ -17,6 +17,11 @@
     <span class="error0"><!-- Error messages go here --><html:errors /></span>
 </p>
 
+<p class="mtop2">
+	<html:link page="/photoHistory.do?method=backToShowInformation">
+		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	</html:link>
+</p>
 
 <logic:present name="history">
 
@@ -34,35 +39,32 @@
     </logic:empty>
     
 	<logic:notEmpty name="history">
-		<logic:iterate id="photo" name="history">
-			<bean:define id="photoId" name="photo" property="externalId"/>
-        	<table class="dinline">
-        		<tr>
-		    		<td>
-						<html:img align="middle"
-							src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=" + photoId %>"
-							altKey="personPhoto" bundle="IMAGE_RESOURCES"
-							style="border: 1px solid #aaa; padding: 3px;" />
-		       		</td>
-	        	</tr>
-	        	<tr>
-		    		<td>
-			    	    <fr:view name="photo" property="state"/><br/>
-                    	<logic:notEmpty name="photo" property="stateChange">
-                    		<fr:view name="photo" property="stateChange" layout="no-time" />
-                 	   </logic:notEmpty>
-		    		</td>
-	    		</tr>
-      		</table>
-
-		</logic:iterate>
+		
+		<fr:view name="history">
+			<fr:schema type="net.sourceforge.fenixedu.domain.Photograph" bundle="APPLICATION_RESOURCES">
+				<fr:slot name="externalId" key="label.photo" layout="view-as-image">
+			    	<fr:property name="classes" value="nobullet noindent"/>
+					<fr:property name="useParent" value="true" />
+					<fr:property name="moduleRelative" value="false" />
+					<fr:property name="contextRelative" value="true" />
+			    	<fr:property name="imageFormat"
+							value="/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=${externalId}" />
+		    	</fr:slot>
+				<fr:slot name="submission" key="label.date">
+					<fr:property name="classes" value="nobullet noindent"/>   
+			    </fr:slot>
+			    <fr:slot name="state" key="label.state">
+			    	<fr:property name="classes" value="nobullet noindent"/>   
+				</fr:slot>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 tstyle9 mtop05" />
+				<fr:property name="columnClasses" value="acenter ,acenter ,acenter" />
+				<fr:property name="renderCompliantTable" value="true"/>
+			</fr:layout>
+		</fr:view>
+		
 	</logic:notEmpty>
-	
-	<p class="mtop2">
-		<html:link page="/photoHistory.do?method=backToShowInformation">
-			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</html:link>
-	</p>
 	
 </logic:present>
 
