@@ -21,7 +21,9 @@
 <logic:present name="history">
 
 	<logic:empty name="history">
-		<p><bean:message key="message.person.photoHistory.empty" /></p>
+		<div class="infoop6">
+			<bean:message key="message.person.photoHistory.empty" bundle="APPLICATION_RESOURCES"/>
+		</div>
 		<p>
 			<span class="mtop1 mbottom0">
 				<html:link page="/uploadPhoto.do?method=prepare">
@@ -30,29 +32,38 @@
 			</span>
 		</p>
     </logic:empty>
-	
-	<logic:iterate id="photo" name="history">
-		<bean:define id="photoId" name="photo" property="externalId"/>
-        <table class="dinline">
-        	<tr>
-		    	<td>
-					<html:img align="middle"
-						src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=" + photoId %>"
-						altKey="personPhoto" bundle="IMAGE_RESOURCES"
-						style="border: 1px solid #aaa; padding: 3px;" />
-		       	</td>
-	        </tr>
-	        <tr>
-		    	<td>
-			        <fr:view name="photo" property="state"/><br/>
-                    <logic:notEmpty name="photo" property="stateChange">
-                    	<fr:view name="photo" property="stateChange" layout="no-time" />
-                    </logic:notEmpty>
-		    	</td>
-	    	</tr>
-      	</table>
+    
+	<logic:notEmpty name="history">
+		<logic:iterate id="photo" name="history">
+			<bean:define id="photoId" name="photo" property="externalId"/>
+        	<table class="dinline">
+        		<tr>
+		    		<td>
+						<html:img align="middle"
+							src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=" + photoId %>"
+							altKey="personPhoto" bundle="IMAGE_RESOURCES"
+							style="border: 1px solid #aaa; padding: 3px;" />
+		       		</td>
+	        	</tr>
+	        	<tr>
+		    		<td>
+			    	    <fr:view name="photo" property="state"/><br/>
+                    	<logic:notEmpty name="photo" property="stateChange">
+                    		<fr:view name="photo" property="stateChange" layout="no-time" />
+                 	   </logic:notEmpty>
+		    		</td>
+	    		</tr>
+      		</table>
 
-	</logic:iterate>
+		</logic:iterate>
+	</logic:notEmpty>
+	
+	<p class="mtop2">
+		<html:link page="/photoHistory.do?method=backToShowInformation">
+			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</p>
+	
 </logic:present>
 
 </logic:present>

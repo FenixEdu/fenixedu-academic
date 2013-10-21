@@ -25,7 +25,8 @@ import edu.emory.mathcs.backport.java.util.Collections;
  */
 
 @Mapping(path = "/photoHistory", module = "person")
-@Forwards(@Forward(name = "userHistory", path = "/person/visualizePhotoHistory.jsp"))
+@Forwards({ @Forward(name = "userHistory", path = "/person/visualizePhotoHistory.jsp"),
+        @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp") })
 public class PhotoHistoryDA extends FenixDispatchAction {
 
     public ActionForward userHistory(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -36,6 +37,11 @@ public class PhotoHistoryDA extends FenixDispatchAction {
         Collections.reverse(photoHistory);
         request.setAttribute("history", photoHistory);
         return mapping.findForward("userHistory");
+    }
+
+    public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("visualizePersonalInformation");
     }
 
 }
