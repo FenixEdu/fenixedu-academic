@@ -19,6 +19,18 @@
 
 
 <logic:present name="history">
+
+	<logic:empty name="history">
+		<p><bean:message key="message.person.photoHistory.empty" /></p>
+		<p>
+			<span class="mtop1 mbottom0">
+				<html:link page="/uploadPhoto.do?method=prepare">
+					<bean:message key="link.person.upload.photo" bundle="APPLICATION_RESOURCES" />
+				</html:link>
+			</span>
+		</p>
+    </logic:empty>
+	
 	<logic:iterate id="photo" name="history">
 		<bean:define id="photoId" name="photo" property="externalId"/>
         <table class="dinline">
