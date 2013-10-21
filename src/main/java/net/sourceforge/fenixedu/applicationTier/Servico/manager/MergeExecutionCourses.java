@@ -476,7 +476,7 @@ public class MergeExecutionCourses {
             throws FenixServiceException {
 
         if (!executionCourseTo.hasSite()) {
-            throw new FenixServiceException("Unable to copy foruns, destination doesn't have site");
+            throw new FenixServiceException("Unable to copy forums, destination doesn't have site");
         }
 
         while (!executionCourseFrom.getForuns().isEmpty()) {
