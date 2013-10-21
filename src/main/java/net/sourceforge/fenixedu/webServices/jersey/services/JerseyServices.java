@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
@@ -33,6 +34,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+import net.sourceforge.fenixedu.domain.photograph.PictureMode;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -362,6 +364,58 @@ public class JerseyServices {
         }
         return infos.toJSONString();
 
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Path("photograph/{photoUsername}/{clientUsername}")
+    public byte[] getPhotograph(@PathParam("photoUsername") String photoUsername,
+            @PathParam("clientUsername") String clientUsername, @QueryParam("xRatio") final String xRatioParameter,
+            @QueryParam("yRatio") final String yRatioParameter, @QueryParam("width") final String widthParameter,
+            @QueryParam("height") final String heightParameter, @QueryParam("mode") final String modeParameter) {
+
+        Person photoPerson;
+        Person clientPerson = null;
+        //set users
+        try {
+            photoPerson = User.readUserByUserUId(photoUsername).getPerson();
+            if (!clientUsername.equals("NoUser")) {
+                clientPerson = User.readUserByUserUId(clientUsername).getPerson();
+            }
+        } catch (NullPointerException e) {
+            throw new WebApplicationException(Status.BAD_REQUEST);
+        }
+
+        if (photoPerson.isPhotoAvailableToPerson(clientPerson)) {
+            Photograph photo = photoPerson.getPersonalPhoto();
+            if (photo != null) {
+                int xRatio = 1, yRatio = 1, width = 100, height = 100;
+                PictureMode pictureMode = PictureMode.FIT;
+                //prepare arguments
+                if (xRatioParameter != null) {
+                    xRatio = Integer.parseInt(xRatioParameter);
+                }
+                if (yRatioParameter != null) {
+                    yRatio = Integer.parseInt(yRatioParameter);
+                }
+                if (widthParameter != null) {
+                    width = Integer.parseInt(widthParameter);
+                }
+                if (heightParameter != null) {
+                    height = Integer.parseInt(heightParameter);
+                }
+                if (modeParameter != null) {
+                    pictureMode = PictureMode.valueOf(modeParameter);
+                }
+
+                try {
+                    return photo.getCustomAvatar(xRatio, yRatio, width, height, pictureMode);
+                } catch (Exception e) {
+                    throw new WebApplicationException(Status.BAD_REQUEST);
+                }
+            }
+        }
+        throw new WebApplicationException(Status.UNAUTHORIZED);
     }
 
     @POST
