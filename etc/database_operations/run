@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creates Campus Entry for Puntual Room Reservations"  createCampusForPunctualRoomReservation.sql
+

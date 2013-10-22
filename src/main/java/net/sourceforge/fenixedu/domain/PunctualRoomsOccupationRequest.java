@@ -9,6 +9,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -32,7 +33,8 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
-    public PunctualRoomsOccupationRequest(Person requestor, MultiLanguageString subject, MultiLanguageString description) {
+    public PunctualRoomsOccupationRequest(Person requestor, MultiLanguageString subject, Campus campus,
+            MultiLanguageString description) {
 //        check(this, ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationRequests);
         super();
         checkIfRequestAlreadyExists(requestor, subject, description);
@@ -40,6 +42,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         setRequestor(requestor);
         DateTime now = new DateTime();
         setInstant(now);
+        setCampus(campus);
         addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.NEW, now));
         addComments(new PunctualRoomsOccupationComment(this, subject, description, requestor, now));
         setTeacherReadComments(1);
@@ -173,11 +176,11 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         return getInstant().toString("dd/MM/yyyy HH:mm");
     }
 
-    public static Set<PunctualRoomsOccupationRequest> getRequestsByTypeOrderByDate(RequestState state) {
+    public static Set<PunctualRoomsOccupationRequest> getRequestsByTypeOrderByDate(RequestState state, Campus campus) {
         Set<PunctualRoomsOccupationRequest> result =
                 new TreeSet<PunctualRoomsOccupationRequest>(PunctualRoomsOccupationRequest.COMPARATOR_BY_INSTANT);
         for (PunctualRoomsOccupationRequest request : RootDomainObject.getInstance().getPunctualRoomsOccupationRequestsSet()) {
-            if (request.getCurrentState().equals(state)) {
+            if (request.getCurrentState().equals(state) && (request.getCampus() == null || request.getCampus().equals(campus))) {
                 result.add(request);
             }
         }
@@ -193,12 +196,13 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         return null;
     }
 
-    public static Set<PunctualRoomsOccupationRequest> getResolvedRequestsOrderByMoreRecentComment() {
+    public static Set<PunctualRoomsOccupationRequest> getResolvedRequestsOrderByMoreRecentComment(Campus campus) {
         Set<PunctualRoomsOccupationRequest> result =
                 new TreeSet<PunctualRoomsOccupationRequest>(
                         PunctualRoomsOccupationRequest.COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT);
         for (PunctualRoomsOccupationRequest request : RootDomainObject.getInstance().getPunctualRoomsOccupationRequestsSet()) {
-            if (request.getCurrentState().equals(RequestState.RESOLVED)) {
+            if (request.getCurrentState().equals(RequestState.RESOLVED)
+                    && (request.getCampus() == null || request.getCampus().equals(campus))) {
                 result.add(request);
             }
         }
@@ -206,11 +210,12 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     }
 
     public static Set<PunctualRoomsOccupationRequest> getRequestsByTypeAndDiferentOwnerOrderByDate(RequestState state,
-            Person owner) {
+            Person owner, Campus campus) {
         Set<PunctualRoomsOccupationRequest> result =
                 new TreeSet<PunctualRoomsOccupationRequest>(PunctualRoomsOccupationRequest.COMPARATOR_BY_INSTANT);
         for (PunctualRoomsOccupationRequest request : RootDomainObject.getInstance().getPunctualRoomsOccupationRequestsSet()) {
-            if (request.getCurrentState().equals(state) && (request.getOwner() == null || !request.getOwner().equals(owner))) {
+            if (request.getCurrentState().equals(state) && (request.getOwner() == null || !request.getOwner().equals(owner))
+                    && (request.getCampus() == null || request.getCampus().equals(campus))) {
                 result.add(request);
             }
         }
@@ -304,6 +309,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         }
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant> getStateInstants() {
         return getStateInstantsSet();
@@ -314,6 +320,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         return !getStateInstantsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.GenericEvent> getGenericEvents() {
         return getGenericEventsSet();
@@ -324,6 +331,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         return !getGenericEventsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment> getComments() {
         return getCommentsSet();

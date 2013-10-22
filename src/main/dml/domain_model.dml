@@ -13538,6 +13538,13 @@ relation PunctualRoomsOccupationRequestPerson {
     }
 }
 
+relation PunctualRoomsOccupationRequestCampus {
+    space.Campus playsRole campus;
+    PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequests {
+        multiplicity *;
+    }
+}
+
 relation PunctualRoomsOccupationRequestPunctualRoomsOccupationComment {
     PunctualRoomsOccupationRequest playsRole request;
     PunctualRoomsOccupationComment playsRole comments {
