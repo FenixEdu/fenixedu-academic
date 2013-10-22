@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.webServices.jersey.api;
 
+import pt.ist.fenixframework.Atomic;
+
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashSet;
@@ -16,8 +18,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixframework.Atomic;
-
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
@@ -31,7 +31,7 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(FenixJerseyPackageResourceConfig.class);
 
     public static Multimap<String, String> scopePathsMap = HashMultimap.create();
-    
+
     public static Set<String> publicScopes = new HashSet<>();
 
     public FenixJerseyPackageResourceConfig(Map<String, Object> props) {
@@ -49,9 +49,9 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
                 authScope = new AuthScope();
                 authScope.setName(scopeName);
                 authScope.setJerseyEndpoints(endpoints);
-                LOGGER.info("add scope {} with endpoints {}", scopeName, Joiner.on(",").join(endpoints));
+                LOGGER.debug("add scope {} with endpoints {}", scopeName, Joiner.on(",").join(endpoints));
             } else {
-                LOGGER.info("scope exists {}, change jersey endpoints {}", scopeName, Joiner.on(",").join(endpoints));
+                LOGGER.debug("scope exists {}, change jersey endpoints {}", scopeName, Joiner.on(",").join(endpoints));
                 authScope.changeJerseyEndpoints(endpoints);
             }
         }
@@ -73,7 +73,7 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
         for (String unusedScope : unusedScopes) {
             AuthScope authScope = AuthScope.getAuthScope(unusedScope);
             if (authScope != null) {
-                LOGGER.info("delete unused scope {}", unusedScope);
+                LOGGER.debug("delete unused scope {}", unusedScope);
                 authScope.delete();
             }
         }
@@ -98,16 +98,16 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
                             LOGGER.debug("No path for method {}", method.getName());
                         }
                     } else {
-                    	FenixAPIPublic publicAPIAnnotation = method.getAnnotation(FenixAPIPublic.class);
-                    	if (publicAPIAnnotation != null) {
-                    		if (methodPathAnnotation != null) {
-                    			String path = ends(pathAnnotation.value());
+                        FenixAPIPublic publicAPIAnnotation = method.getAnnotation(FenixAPIPublic.class);
+                        if (publicAPIAnnotation != null) {
+                            if (methodPathAnnotation != null) {
+                                String path = ends(pathAnnotation.value());
                                 String methodPath = ends(methodPathAnnotation.value());
                                 String absolutePath = Joiner.on("/").join(path, methodPath);
                                 publicScopes.add(absolutePath);
-                                LOGGER.info("add public endpoint {}", absolutePath);
-                    		}
-                    	}
+                                LOGGER.debug("add public endpoint {}", absolutePath);
+                            }
+                        }
                     }
                 }
             } else {
@@ -122,24 +122,31 @@ public class FenixJerseyPackageResourceConfig extends PackagesResourceConfig {
 
     public static AuthScope getScope(String endpoint) {
         for (String scopeName : scopePathsMap.keySet()) {
-            if (scopePathsMap.get(scopeName).contains(endpoint)) {
-                return AuthScope.getAuthScope(scopeName);
+            for (String scopeEndpoint : scopePathsMap.get(scopeName)) {
+                if (endpointMatches(endpoint, scopeEndpoint)) {
+                    return AuthScope.getAuthScope(scopeName);
+                }
             }
         }
         return null;
     }
-    
+
     public static boolean isPublicScope(String endpoint) {
-		endpoint = ends(endpoint);
-		LOGGER.debug("check public {}", endpoint);
-    	for(String publicEndpoint : publicScopes) {
-    		String e1 = publicEndpoint.replaceAll("\\{[a-z]+\\}",".+");
-			LOGGER.debug("\t {}", e1);
-    		if (endpoint.matches(e1)) {
-				LOGGER.debug("\t match {}", e1);
-    			return true;
-    		}
-    	}
-    	return false;
+        endpoint = ends(endpoint);
+        LOGGER.debug("check public {}", endpoint);
+        for (String publicEndpoint : publicScopes) {
+            if (endpointMatches(endpoint, publicEndpoint)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean endpointMatches(String endpoint, String jerseyEndpoint) {
+        String regexpEndpoint = jerseyEndpoint.replaceAll("\\{[a-z]+\\}", ".+");
+        if (endpoint.matches(regexpEndpoint)) {
+            return true;
+        }
+        return false;
     }
 }
