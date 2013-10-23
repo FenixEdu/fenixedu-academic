@@ -54,10 +54,7 @@
 
 	<div class="error3">
 		<p>
-            Serviço temporariamente indisponível.
-		</p>
-		<p>
-            Service temporarily unavailable.
+			<bean:message bundle="RESEARCHER_RESOURCES" key="message.moved.to.sotis"/>
 		</p>
 	</div>
 
