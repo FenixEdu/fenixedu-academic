@@ -12,10 +12,15 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import org.apache.struts.action.ActionServlet;
+import org.apache.struts.config.ModuleConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.PropertiesManager;
 
 public class ActionServletWrapper extends ActionServlet {
+
+    private static final Logger logger = LoggerFactory.getLogger(ActionServletWrapper.class);
 
     private static class ServletConfigWrapper implements ServletConfig {
 
@@ -105,6 +110,12 @@ public class ActionServletWrapper extends ActionServlet {
         final ServletConfigWrapper servletConfigWrapper = new ServletConfigWrapper(config);
         super.init(servletConfigWrapper);
         this.servletConfig = config;
+    }
+
+    @Override
+    protected ModuleConfig initModuleConfig(String prefix, String paths) throws ServletException {
+        logger.info("Initializing Struts Module '{}'", prefix);
+        return super.initModuleConfig(prefix, paths);
     }
 
 }
