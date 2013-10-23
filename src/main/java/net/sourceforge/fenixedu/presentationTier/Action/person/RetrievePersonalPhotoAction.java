@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.User;
-import net.sourceforge.fenixedu.domain.photograph.PictureAvatar;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.struts.action.ActionForm;
@@ -89,10 +89,10 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 
     public static void writePhoto(final HttpServletResponse response, final Photograph personalPhoto) {
         try {
-            PictureAvatar avatar = personalPhoto.getAvatar();
-            response.setContentType(avatar.getPictureFileFormat().getMimeType());
+            response.setContentType(ContentType.PNG.getMimeType());
             final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-            dos.write(avatar.getBytes());
+            byte[] avatar = personalPhoto.getDefaultAvatar();
+            dos.write(avatar);
             dos.close();
         } catch (IOException e) {
         }

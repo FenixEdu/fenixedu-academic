@@ -39,11 +39,11 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
-import net.sourceforge.fenixedu.domain.photograph.PictureAvatar;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -188,10 +188,10 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             Photograph personalPhoto = person.getPersonalPhoto();
             if (personalPhoto != null) {
                 try {
-                    PictureAvatar avatar = personalPhoto.getAvatar();
-                    response.setContentType(avatar.getPictureFileFormat().getMimeType());
+                    byte[] avatar = personalPhoto.getDefaultAvatar();
+                    response.setContentType(ContentType.PNG.getMimeType());
                     DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-                    dos.write(avatar.getBytes());
+                    dos.write(avatar);
                     dos.close();
                 } catch (java.io.IOException e) {
                     throw new FenixActionException(e);
