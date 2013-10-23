@@ -108,9 +108,16 @@ public class ViewClassesActionNew extends FenixContextAction {
             List<InfoClass> classList = LerTurmas.run(infoExecutionDegree, infoExecutionPeriod, null);
 
             if (!classList.isEmpty()) {
-                ComparatorChain comparatorChain = new ComparatorChain();
-                comparatorChain.addComparator(new BeanComparator("anoCurricular"));
-                Collections.sort(classList, comparatorChain);
+                // First compares by nome to assure the list is in the correct order
+                ComparatorChain comparatorChainNome = new ComparatorChain();
+                comparatorChainNome.addComparator(new BeanComparator("nome"));
+                Collections.sort(classList, comparatorChainNome);
+
+                // Then compares by anoCurricular to enforce the correct curricular year order (which may not be assured by the name)
+                ComparatorChain comparatorChainAnoCurricular = new ComparatorChain();
+                comparatorChainAnoCurricular.addComparator(new BeanComparator("anoCurricular"));
+                Collections.sort(classList, comparatorChainAnoCurricular);
+
                 request.setAttribute("classList", classList);
             }
         }
