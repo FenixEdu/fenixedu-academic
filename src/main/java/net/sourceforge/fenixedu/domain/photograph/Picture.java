@@ -30,14 +30,14 @@ public abstract class Picture extends Picture_Base {
         return getPictureData().getBytes();
     }
 
-    public void setupPictureMetadata(ByteArray pictureData) {
+    public void setupPictureMetadata(byte[] pictureData) {
         BufferedImage buffer = Picture.readImage(pictureData);
         setWidth(buffer.getWidth());
         setHeight(buffer.getHeight());
     }
 
-    static public BufferedImage readImage(ByteArray imageData) {
-        ByteArrayInputStream bais = new ByteArrayInputStream(imageData.getBytes());
+    static public BufferedImage readImage(byte[] imageData) {
+        ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
         try {
             return ImageIO.read(bais);
         } catch (IOException ioe) {

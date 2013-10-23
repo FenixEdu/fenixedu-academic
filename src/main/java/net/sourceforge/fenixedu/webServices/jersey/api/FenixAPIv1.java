@@ -1,12 +1,5 @@
 package net.sourceforge.fenixedu.webServices.jersey.api;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
-import pt.ist.fenixframework.DomainObject;
-
-import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -85,7 +78,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.photograph.PictureAvatar;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Room;
@@ -99,6 +91,7 @@ import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
+import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar.FenixCalendarEvent;
@@ -134,6 +127,11 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.JSONObject;
+
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.DomainObject;
+import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Joiner;
 import com.google.common.net.HttpHeaders;
@@ -171,9 +169,9 @@ public class FenixAPIv1 {
         try {
             final Photograph personalPhoto = person.getPersonalPhoto();
             if (person.isPhotoAvailableToCurrentUser()) {
-                final PictureAvatar avatar = personalPhoto.getAvatar();
-                String type = avatar.getPictureFileFormat().getMimeType();
-                String data = Base64.encodeBase64String(avatar.getBytes());
+                final byte[] avatar = personalPhoto.getDefaultAvatar();
+                String type = ContentType.PNG.getMimeType();
+                String data = Base64.encodeBase64String(avatar);
                 photo = new FenixPhoto(type, data);
             }
         } catch (Exception npe) {

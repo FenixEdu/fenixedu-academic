@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -20,7 +21,6 @@ import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.photograph.AspectRatio;
 import net.sourceforge.fenixedu.domain.photograph.Picture;
-import net.sourceforge.fenixedu.domain.photograph.PictureAvatar;
 import net.sourceforge.fenixedu.domain.photograph.PictureMode;
 import net.sourceforge.fenixedu.domain.photograph.PictureOriginal;
 import net.sourceforge.fenixedu.domain.photograph.PictureSize;
@@ -79,7 +79,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         this();
         setPhotoType(photoType);
         new PictureOriginal(this, original, contentType);
-        PictureAvatar.createAvatars(this, original);
     }
 
     @Override
@@ -201,36 +200,14 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         super.deleteDomainObject();
     }
 
-    public PictureAvatar getAvatar(AspectRatio aspectRatio, PictureSize pictureSize, PictureMode pictureMode) {
-        for (PictureAvatar avatar : getAvatars()) {
-            if (avatar.getAspectRatio() == aspectRatio && avatar.getPictureSize() == pictureSize
-                    && avatar.getPictureMode() == pictureMode) {
-                return avatar;
-            }
-        }
-        throw new DomainException("error.photograph.avatarMissing");
-    }
-
-    public PictureAvatar getAvatar() {
-        return getAvatar(AspectRatio.ª1_by_1, PictureSize.MEDIUM, PictureMode.FIT);
-    }
-
-    public boolean hasAvatar(AspectRatio aspectRatio, PictureSize pictureSize, PictureMode pictureMode) {
-        try {
-            getAvatar(aspectRatio, pictureSize, pictureMode);
-        } catch (DomainException de) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean hasAvatar() {
-        return hasAvatar(AspectRatio.ª1_by_1, PictureSize.MEDIUM, PictureMode.FIT);
+    public byte[] getDefaultAvatar() {
+        return getCustomAvatar(AspectRatio.ª1_by_1, PictureSize.MEDIUM.getWidth(), PictureSize.MEDIUM.getHeight(),
+                PictureMode.FIT);
     }
 
     public byte[] getCustomAvatar(int xRatio, int yRatio, int width, int height, PictureMode pictureMode) {
         BufferedImage image, transformed, scaled;
-        image = Picture.readImage(getOriginal().getPictureData());
+        image = Picture.readImage(getOriginal().getPictureData().getBytes());
         switch (pictureMode) {
         case FIT:
             transformed = Picture.transformFit(image, xRatio, yRatio);
@@ -317,6 +294,8 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(getPerson());
         PersonInformationLog.createLog(getPerson(), "resources.MessagingResources", keyLabel, personViewed);
     }
+
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PhotographContent> getContent() {
         return getContentSet();
@@ -385,6 +364,17 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     @Deprecated
     public boolean hasContentType() {
         return getContentType() != null;
+    }
+
+    public byte[] exportAsJPEG(byte[] photo, Color color) {
+        BufferedImage image = Picture.readImage(photo);
+        BufferedImage jpeg = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        jpeg.createGraphics().drawImage(image, 0, 0, color, null);
+        return Picture.writeImage(jpeg, ContentType.JPG).getBytes();
+    }
+
+    public byte[] exportAsJPEG(byte[] photo) {
+        return exportAsJPEG(photo, Color.WHITE);
     }
 
 }

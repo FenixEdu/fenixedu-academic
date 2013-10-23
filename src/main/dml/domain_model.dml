@@ -1302,12 +1302,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     
     class photograph.PictureOriginal extends photograph.Picture {
     }
-    
-    class photograph.PictureAvatar extends photograph.Picture {
-    	AspectRatio aspectRatio;
-    	PictureSize pictureSize;
-    	PictureMode pictureMode;
-    }
 
     class File  {
         String checksum;
@@ -11970,13 +11964,6 @@ relation PhotographContent {
 relation PhotographOriginal {
 	Photograph playsRole photograph;
 	photograph.PictureOriginal playsRole original;
-}
-
-relation PhotographAvatars {
-	Photograph playsRole photograph;
-	photograph.PictureAvatar playsRole avatars {
-		multiplicity *;
-	}
 }
 
 relation FileTagging {

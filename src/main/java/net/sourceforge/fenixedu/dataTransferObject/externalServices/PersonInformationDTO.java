@@ -211,7 +211,7 @@ public class PersonInformationDTO {
     }
 
     private byte[] getJpegPhoto(final Photograph personalPhoto) {
-        return personalPhoto.getAvatar().exportAsJPEG();
+        return personalPhoto.exportAsJPEG(personalPhoto.getDefaultAvatar());
     }
 
     public String getName() {

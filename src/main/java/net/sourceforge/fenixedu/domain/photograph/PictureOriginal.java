@@ -16,7 +16,7 @@ public class PictureOriginal extends PictureOriginal_Base {
         setPhotograph(photograph);
         setPictureData(pictureData);
         setPictureFileFormat(pictureFileFormat);
-        setupPictureMetadata(pictureData);
+        setupPictureMetadata(pictureData.getBytes());
     }
 
     protected RootDomainObject getRootDomainObject() {
