@@ -110,7 +110,9 @@ public class ViewClassesActionNew extends FenixContextAction {
             if (!classList.isEmpty()) {
                 ComparatorChain comparatorChain = new ComparatorChain();
                 comparatorChain.addComparator(new BeanComparator("anoCurricular"));
+                comparatorChain.addComparator(new BeanComparator("nome"));
                 Collections.sort(classList, comparatorChain);
+
                 request.setAttribute("classList", classList);
             }
         }
