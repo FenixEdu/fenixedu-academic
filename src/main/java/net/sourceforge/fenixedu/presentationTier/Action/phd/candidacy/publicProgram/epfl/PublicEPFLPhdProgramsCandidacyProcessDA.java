@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -484,7 +485,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 
         final PhdParticipantBean g1 = new PhdParticipantBean(process);
         g1.setParticipantType(PhdParticipantType.EXTERNAL);
-        g1.setWorkLocation("IST");
+        g1.setWorkLocation(Unit.getInstitutionAcronym());
 
         final PhdParticipantBean g2 = new PhdParticipantBean(process);
         g2.setParticipantType(PhdParticipantType.EXTERNAL);

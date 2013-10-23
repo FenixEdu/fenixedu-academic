@@ -5,9 +5,7 @@
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<parameter name="institutionName" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["Instituto Superior Técnico"]]></defaultValueExpression>
-	</parameter>
+	<parameter name="institutionName" class="java.lang.String" isForPrompting="false" />
 	<parameter name="studentDegreeName" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="studentNumber" class="java.lang.Number" isForPrompting="false"/>
 	<parameter name="studentName" class="java.lang.String" isForPrompting="false"/>

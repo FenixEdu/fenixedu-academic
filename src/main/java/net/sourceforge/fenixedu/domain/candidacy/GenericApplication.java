@@ -55,10 +55,9 @@ public class GenericApplication extends GenericApplication_Base {
                 BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "label.application.email.subject",
                         getGenericApplicationPeriod().getTitle().getContent());
         final String body =
-                BundleUtil
-                        .getStringFromResourceBundle("resources.CandidateResources", "label.application.email.body",
-                                getApplicationNumber(), generateConfirmationLink(), getGenericApplicationPeriod().getTitle()
-                                        .getContent());
+                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "label.application.email.body",
+                        getApplicationNumber(), generateConfirmationLink(),
+                        getGenericApplicationPeriod().getTitle().getContent(), Unit.getInstitutionAcronym());
         new Message(getRootDomainObject().getSystemSender(), getEmail(), subject, body);
     }
 

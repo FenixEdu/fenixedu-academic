@@ -126,7 +126,7 @@
 				<h:outputText value="<p><label>#{bolonhaBundle['degreeType']}:</label>" escape="false"/>
 				<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDegreeType}" onchange="this.form.submit();"
 						valueChangeListener="#{CurricularRulesManagement.onChangeDegreeTypeDropDown}">
-					<f:selectItem itemLabel="IST" itemValue=""/>
+					<f:selectItem itemLabel="#{CurricularRulesManagement.schoolAcronym}" itemValue=""/>
 					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_DEGREE']}" itemValue="BOLONHA_DEGREE"/>
 					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_MASTER_DEGREE']}" itemValue="BOLONHA_MASTER_DEGREE"/>
 					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_INTEGRATED_MASTER_DEGREE']}" itemValue="BOLONHA_INTEGRATED_MASTER_DEGREE"/>

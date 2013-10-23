@@ -6,6 +6,8 @@
  */
 package net.sourceforge.fenixedu.constants.publication;
 
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
 /**
  * @author TJBF & PFON
  * 
@@ -24,7 +26,7 @@ public final class PublicationConstants {
 
     public static final int ONE_VALUE = 1;
 
-    public static final String DEFAULT_ORGANIZATION = "IST";
+    public static final String DEFAULT_ORGANIZATION = Unit.getInstitutionAcronym();
 
     public static final String INIT_AUTHOR = "A";
 

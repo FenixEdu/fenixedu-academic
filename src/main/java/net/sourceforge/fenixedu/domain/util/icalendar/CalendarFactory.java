@@ -21,9 +21,10 @@ import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Url;
 import net.fortuna.ical4j.model.property.Version;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class CalendarFactory {
-    public static String PROD_ID_COMPANY = "Instituto Superior Técnico";
+    public static String PROD_ID_COMPANY = Unit.getInstitutionName().getContent();
     public static String PROD_ID_APPLICATION = "Sistema Fenix";
     public static TimeZone TIMEZONE = TimeZoneRegistryFactory.getInstance().createRegistry().getTimeZone("Europe/Lisbon");
 

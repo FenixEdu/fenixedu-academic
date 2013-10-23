@@ -1317,6 +1317,16 @@ public class Unit extends Unit_Base {
         return result;
     }
 
+    static public String getInstitutionURL() {
+        final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+        String result = institutionUnit == null ? StringUtils.EMPTY : institutionUnit.getDefaultWebAddressUrl();
+        if (result.isEmpty()) {
+            result = BundleUtil.getStringFromResourceBundle("resources/GlobalResources", "institution.url");
+        }
+
+        return result;
+    }
+
     @Override
     public UnitSite initializeSite() {
         return (UnitSite) super.initializeSite();
@@ -1707,6 +1717,7 @@ public class Unit extends Unit_Base {
         return getAdministrativeOffice() != null;
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.util.email.UnitBasedSender> getUnitBasedSender() {
         return getUnitBasedSenderSet();
@@ -1717,6 +1728,7 @@ public class Unit extends Unit_Base {
         return !getUnitBasedSenderSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator> getExamCoordinators() {
         return getExamCoordinatorsSet();
@@ -1727,6 +1739,7 @@ public class Unit extends Unit_Base {
         return !getExamCoordinatorsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.Cooperation> getCooperation() {
         return getCooperationSet();
@@ -1737,6 +1750,7 @@ public class Unit extends Unit_Base {
         return !getCooperationSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Formation> getAssociatedBaseFormations() {
         return getAssociatedBaseFormationsSet();
@@ -1747,6 +1761,7 @@ public class Unit extends Unit_Base {
         return !getAssociatedBaseFormationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsCycleGraduationGradeConversionTable> getEctsGraduationGradeConversionTables() {
         return getEctsGraduationGradeConversionTablesSet();
@@ -1757,6 +1772,7 @@ public class Unit extends Unit_Base {
         return !getEctsGraduationGradeConversionTablesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.UnitFileTag> getUnitFileTags() {
         return getUnitFileTagsSet();
@@ -1767,6 +1783,7 @@ public class Unit extends Unit_Base {
         return !getUnitFileTagsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getDestinationPrecedentDegreeInformations() {
         return getDestinationPrecedentDegreeInformationsSet();
@@ -1777,6 +1794,7 @@ public class Unit extends Unit_Base {
         return !getDestinationPrecedentDegreeInformationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Receipt> getOwnedReceipts() {
         return getOwnedReceiptsSet();
@@ -1787,6 +1805,7 @@ public class Unit extends Unit_Base {
         return !getOwnedReceiptsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup> getVigilantGroups() {
         return getVigilantGroupsSet();
@@ -1797,6 +1816,7 @@ public class Unit extends Unit_Base {
         return !getVigilantGroupsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation> getDestinationExternalPrecedentDegreeInformations() {
         return getDestinationExternalPrecedentDegreeInformationsSet();
@@ -1807,6 +1827,7 @@ public class Unit extends Unit_Base {
         return !getDestinationExternalPrecedentDegreeInformationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsInstitutionConversionTable> getEctsInstitutionConversionTables() {
         return getEctsInstitutionConversionTablesSet();
@@ -1817,6 +1838,7 @@ public class Unit extends Unit_Base {
         return !getEctsInstitutionConversionTablesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers> getPersistentGroups() {
         return getPersistentGroupsSet();
@@ -1827,6 +1849,7 @@ public class Unit extends Unit_Base {
         return !getPersistentGroupsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getTransitionPrecedentDegreeInformations() {
         return getTransitionPrecedentDegreeInformationsSet();
@@ -1837,6 +1860,7 @@ public class Unit extends Unit_Base {
         return !getTransitionPrecedentDegreeInformationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.UnitFile> getFiles() {
         return getFilesSet();
@@ -1847,6 +1871,7 @@ public class Unit extends Unit_Base {
         return !getFilesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation> getUnitSpaceOccupations() {
         return getUnitSpaceOccupationsSet();
@@ -1857,6 +1882,7 @@ public class Unit extends Unit_Base {
         return !getUnitSpaceOccupationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsInstitutionByCurricularYearConversionTable> getEctsCourseConversionTables() {
         return getEctsCourseConversionTablesSet();
@@ -1867,6 +1893,7 @@ public class Unit extends Unit_Base {
         return !getEctsCourseConversionTablesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.NonAffiliatedTeacher> getAssociatedNonAffiliatedTeachers() {
         return getAssociatedNonAffiliatedTeachersSet();
@@ -1877,6 +1904,7 @@ public class Unit extends Unit_Base {
         return !getAssociatedNonAffiliatedTeachersSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.util.FunctionalityPrinters> getFunctionalityPrinters() {
         return getFunctionalityPrintersSet();
@@ -1887,6 +1915,7 @@ public class Unit extends Unit_Base {
         return !getFunctionalityPrintersSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.raides.DegreeDesignation> getDegreeDesignation() {
         return getDegreeDesignationSet();
@@ -1897,6 +1926,7 @@ public class Unit extends Unit_Base {
         return !getDegreeDesignationSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreeInformations() {
         return getPrecedentDegreeInformationsSet();
@@ -1907,6 +1937,7 @@ public class Unit extends Unit_Base {
         return !getPrecedentDegreeInformationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Formation> getAssociatedFormations() {
         return getAssociatedFormationsSet();
@@ -1917,6 +1948,7 @@ public class Unit extends Unit_Base {
         return !getAssociatedFormationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest> getExternalProgramCertificateRequests() {
         return getExternalProgramCertificateRequestsSet();
@@ -1927,6 +1959,7 @@ public class Unit extends Unit_Base {
         return !getExternalProgramCertificateRequestsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExternalCurricularCourse> getExternalCurricularCourses() {
         return getExternalCurricularCoursesSet();
@@ -1937,6 +1970,7 @@ public class Unit extends Unit_Base {
         return !getExternalCurricularCoursesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.ExternalRegistrationData> getExternalRegistrationDatas() {
         return getExternalRegistrationDatasSet();
@@ -1947,6 +1981,7 @@ public class Unit extends Unit_Base {
         return !getExternalRegistrationDatasSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy> getCandidacies() {
         return getCandidaciesSet();
@@ -1957,6 +1992,7 @@ public class Unit extends Unit_Base {
         return !getCandidaciesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation> getCandidacyPrecedentDegreeInformations() {
         return getCandidacyPrecedentDegreeInformationsSet();
@@ -1967,6 +2003,7 @@ public class Unit extends Unit_Base {
         return !getCandidacyPrecedentDegreeInformationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent> getAffiliationEvent() {
         return getAffiliationEventSet();
@@ -1977,6 +2014,7 @@ public class Unit extends Unit_Base {
         return !getAffiliationEventSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest> getExternalCourseLoadRequests() {
         return getExternalCourseLoadRequestsSet();
@@ -1987,6 +2025,7 @@ public class Unit extends Unit_Base {
         return !getExternalCourseLoadRequestsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.MicroPaymentEvent> getMicroPaymentEvent() {
         return getMicroPaymentEventSet();
@@ -1997,6 +2036,7 @@ public class Unit extends Unit_Base {
         return !getMicroPaymentEventSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Person> getAllowedPeopleToUploadFiles() {
         return getAllowedPeopleToUploadFilesSet();
@@ -2007,6 +2047,7 @@ public class Unit extends Unit_Base {
         return !getAllowedPeopleToUploadFilesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.PersonalIngressionData> getPersonalIngressionsData() {
         return getPersonalIngressionsDataSet();
@@ -2017,6 +2058,7 @@ public class Unit extends Unit_Base {
         return !getPersonalIngressionsDataSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getStudentCandidacies() {
         return getStudentCandidaciesSet();
@@ -2027,6 +2069,7 @@ public class Unit extends Unit_Base {
         return !getStudentCandidaciesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Function> getFunctions() {
         return getFunctionsSet();
@@ -2037,6 +2080,7 @@ public class Unit extends Unit_Base {
         return !getFunctionsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent> getOpenAffiliationEvent() {
         return getOpenAffiliationEventSet();
@@ -2047,6 +2091,7 @@ public class Unit extends Unit_Base {
         return !getOpenAffiliationEventSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation> getResultUnitAssociations() {
         return getResultUnitAssociationsSet();
