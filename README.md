@@ -1,4 +1,4 @@
-FenixEdu
+FenixEdu [![Build Status](https://travis-ci.org/FenixEdu/fenix.png?branch=develop)](https://travis-ci.org/FenixEdu/fenix)
 ==========
 
 **Table of Contents**
