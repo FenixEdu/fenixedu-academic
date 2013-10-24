@@ -110,7 +110,7 @@ public abstract class Picture extends Picture_Base {
             finale = Scalr.crop(source, padding, 0, destW, destH);
         } else {
             destW = source.getWidth();
-            destH = (int) Math.round((destW * xRatio * 1.0) / (yRatio * 1.0));
+            destH = (int) Math.round((destW * yRatio * 1.0) / (xRatio * 1.0));
             //scaled = Scalr.resize(source, Method.QUALITY, Mode.FIT_TO_HEIGHT, destW, destH);
 
             int padding = (int) Math.round((source.getHeight() - destH) / 2.0);
