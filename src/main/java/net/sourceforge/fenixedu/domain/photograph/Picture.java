@@ -45,14 +45,18 @@ public abstract class Picture extends Picture_Base {
         }
     }
 
-    static public ByteArray writeImage(BufferedImage image, ContentType fileFormat) {
+    static public byte[] writeImageAsBytes(BufferedImage image, ContentType fileFormat) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
             ImageIO.write(image, fileFormat.getFileExtention(), out);
-            return new ByteArray(out.toByteArray());
+            return out.toByteArray();
         } catch (IOException ioe) {
             throw new DomainException("error.photograph.imageio.failedWritingImageToByteArray", ioe);
         }
+    }
+
+    static public ByteArray writeImage(BufferedImage image, ContentType fileFormat) {
+        return new ByteArray(writeImageAsBytes(image, fileFormat));
     }
 
     /**
