@@ -31,20 +31,13 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRe
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
-import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
 import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
-import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
-import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication.PreferredComparator;
 import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
-import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
@@ -85,8 +78,10 @@ public class TeacherCurricularInformation implements Serializable {
             }));
 
     protected List<LecturedCurricularUnit> lecturedUCs = new ArrayList<LecturedCurricularUnit>();
+    protected List<String> teacherPublications = new ArrayList<String>();
 
-    public TeacherCurricularInformation(Teacher teacher, Degree degree, List<ExecutionSemester> executionSemester) {
+    public TeacherCurricularInformation(Teacher teacher, Degree degree, List<ExecutionSemester> executionSemester,
+            List<String> list) {
         super();
         this.teacher = teacher;
         this.degree = degree;
@@ -98,6 +93,9 @@ public class TeacherCurricularInformation implements Serializable {
                             QualificationType.AGGREGATION))) {
                 this.qualificationBeans.add(new QualificationBean(qualification));
             }
+        }
+        if (list != null) {
+            this.teacherPublications = list;
         }
         setlecturedUCs();
     }
@@ -211,25 +209,11 @@ public class TeacherCurricularInformation implements Serializable {
     }
 
     public List<String> getTop5ResultParticipation() {
-        SortedSet<ResearchResultPublication> results =
-                new TreeSet<ResearchResultPublication>(new PreferredComparator(getTeacher().getPerson()));
-        for (ResultParticipation participation : getTeacher().getPerson().getResultParticipationsSet()) {
-            ResearchResult result = participation.getResult();
-            if (participation.getRole().equals(ResultParticipationRole.Author) && result instanceof ResearchResultPublication) {
-                if (!(result instanceof Manual || result instanceof TechnicalReport || result instanceof OtherPublication || result instanceof Unstructured)) {
-                    results.add((ResearchResultPublication) result);
-                }
-            }
-        }
-        List<String> top5 = new ArrayList<String>();
-        int count = 5;
-        for (ResearchResultPublication publication : results) {
-            if (count-- == 0) {
-                break;
-            }
-            top5.add(getResearchDescription(publication, false));
-        }
-        return top5;
+        return addUntil5Elements(teacherPublications);
+    }
+
+    public List<String> getTop5ProfessionalDevelomentActivities() {
+        return addUntil5Elements(new ArrayList<String>());
     }
 
     public List<String> getTop5ProfessionalCareer() {
@@ -246,7 +230,14 @@ public class TeacherCurricularInformation implements Serializable {
                     + (professionalCareer.getEndYear() != null ? " - " + professionalCareer.getEndYear() : "") + " "
                     + professionalCareer.getFunction() + " (" + professionalCareer.getEntity() + ")");
         }
-        return result;
+        return addUntil5Elements(result);
+    }
+
+    private List<String> addUntil5Elements(List<String> top5) {
+        for (int i = top5.size(); i < 5; i++) {
+            top5.add(StringUtils.EMPTY);
+        }
+        return top5;
     }
 
     public String getResearchDescription(ResearchResultPublication publication, boolean shortestPossible) {

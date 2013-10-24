@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.TeacherCurricularInformation;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.TeacherCurricularInformation.LecturedCurricularUnit;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.TeacherCurricularInformation.QualificationBean;
+import net.sourceforge.fenixedu.dataTransferObject.externalServices.TeacherPublicationsInformation;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CourseLoad;
@@ -55,7 +56,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class A3ESDegreeProcess implements Serializable {
-    private static final String BASE_URL = "http://www.a3es.pt/si/iportal.php";
+    // private static final String BASE_URL = "http://www.a3es.pt/si/iportal.php";
+    private static final String BASE_URL = "http://formacao.a3es.pt/iportal.php";
 
     private static final String API_PROCESS = "api_process";
 
@@ -70,25 +72,26 @@ public class A3ESDegreeProcess implements Serializable {
     static {
         // This being hard-coded prevents future executions without our
         // interference, this should be persisted and managed by UI.
-
-        acefIndex.put("ACEF/1213/06697", "LEE");
-        acefIndex.put("ACEF/1213/06707", "LEIC-A");
-        acefIndex.put("ACEF/1213/06712", "LEIC-T");
-        acefIndex.put("ACEF/1213/12622", "LERC");
-        acefIndex.put("ACEF/1213/06752", "MEE");
-        acefIndex.put("ACEF/1213/06762", "MEIC-A");
-        acefIndex.put("ACEF/1213/06767", "MEIC-T");
-        acefIndex.put("ACEF/1213/06772", "MERC");
-        acefIndex.put("ACEF/1213/06797", "MUOT");
-        acefIndex.put("ACEF/1213/06832", "MEEC");
-        acefIndex.put("ACEF/1213/06852", "MA");
-        acefIndex.put("ACEF/1213/06862", "DArq");
-        acefIndex.put("ACEF/1213/06872", "DEEC");
-        acefIndex.put("ACEF/1213/06882", "DEIC");
-        acefIndex.put("ACEF/1213/06917", "DMte");
-        acefIndex.put("ACEF/1213/06927", "DEASegInf");
-        acefIndex.put("ACEF/1213/06967", "DEAEngCmp");
-        acefIndex.put("ACEF/1213/06987", "DET");
+//
+//        acefIndex.put("ACEF/1213/06697", "LEE");
+//        acefIndex.put("ACEF/1213/06707", "LEIC-A");
+//        acefIndex.put("ACEF/1213/06712", "LEIC-T");
+//        acefIndex.put("ACEF/1213/12622", "LERC");
+//        acefIndex.put("ACEF/1213/06752", "MEE");
+//        acefIndex.put("ACEF/1213/06762", "MEIC-A");
+//        acefIndex.put("ACEF/1213/06767", "MEIC-T");
+//        acefIndex.put("ACEF/1213/06772", "MERC");
+//        acefIndex.put("ACEF/1213/06797", "MUOT");
+//        acefIndex.put("ACEF/1213/06832", "MEEC");
+//        acefIndex.put("ACEF/1213/06852", "MA");
+//        acefIndex.put("ACEF/1213/06862", "DArq");
+//        acefIndex.put("ACEF/1213/06872", "DEEC");
+//        acefIndex.put("ACEF/1213/06882", "DEIC");
+//        acefIndex.put("ACEF/1213/06917", "DMte");
+//        acefIndex.put("ACEF/1213/06927", "DEASegInf");
+//        acefIndex.put("ACEF/1213/06967", "DEAEngCmp");
+//        acefIndex.put("ACEF/1213/06987", "DET");
+        acefIndex.put("ACEF/1314/06812", "MEAER");
     }
 
     protected String user;
@@ -431,10 +434,15 @@ public class A3ESDegreeProcess implements Serializable {
     protected List<TeacherCurricularInformation> getTeacherCurricularInformation() {
         List<ExecutionSemester> executionSemesters = getSelectedExecutionSemesters();
         Set<Teacher> teachers = getTeachers(executionSemesters);
+
+        Map<Teacher, List<String>> teacherPublicationsInformationsMap =
+                TeacherPublicationsInformation.getTeacherPublicationsInformations(teachers);
+
         List<TeacherCurricularInformation> teacherCurricularInformationList = new ArrayList<TeacherCurricularInformation>();
         for (Teacher teacher : teachers) {
             TeacherCurricularInformation teacherCurricularInformation =
-                    new TeacherCurricularInformation(teacher, degree, executionSemesters);
+                    new TeacherCurricularInformation(teacher, degree, executionSemesters,
+                            teacherPublicationsInformationsMap.get(teacher));
             teacherCurricularInformationList.add(teacherCurricularInformation);
         }
         return teacherCurricularInformationList;
@@ -589,6 +597,17 @@ public class A3ESDegreeProcess implements Serializable {
                     file.put("form-investigation", researchArray);
                 }
 
+                List<String> developmentActivities = info.getTop5ProfessionalDevelomentActivities();
+                if (!developmentActivities.isEmpty()) {
+                    JSONArray researchArray = new JSONArray();
+                    for (String developmentActivity : developmentActivities) {
+                        JSONObject activity = new JSONObject();
+                        activity.put("highlevelactivities", cut("actividade", developmentActivity, output, 100));
+                        researchArray.add(activity);
+                    }
+                    file.put("form-highlevelactivities", researchArray);
+                }
+
                 List<String> career = info.getTop5ProfessionalCareer();
                 if (!career.isEmpty()) {
                     JSONArray professionalArray = new JSONArray();
@@ -605,6 +624,7 @@ public class A3ESDegreeProcess implements Serializable {
                 if (lecturedUCs.size() > 10) {
                     output.append(" UC leccionadas cortadas " + (lecturedUCs.size() - 10) + " entradas.");
                 }
+
                 for (LecturedCurricularUnit lecturedCurricularUnit : lecturedUCs.subList(0, Math.min(10, lecturedUCs.size()))) {
                     JSONObject lecture = new JSONObject();
                     lecture.put("curricularUnit", cut("unidade curricular", lecturedCurricularUnit.getName(), output, 100));
@@ -613,6 +633,15 @@ public class A3ESDegreeProcess implements Serializable {
                     lecture.put("hoursPerWeek", lecturedCurricularUnit.getHours());
                     insideLectures.add(lecture);
                 }
+                for (int lecturedCurricularUnitIndex = Math.min(10, lecturedUCs.size()); lecturedCurricularUnitIndex < 10; lecturedCurricularUnitIndex++) {
+                    JSONObject lecture = new JSONObject();
+                    lecture.put("curricularUnit", StringUtils.EMPTY);
+                    lecture.put("studyCycle", StringUtils.EMPTY);
+                    lecture.put("type", StringUtils.EMPTY);
+                    lecture.put("hoursPerWeek", StringUtils.EMPTY);
+                    insideLectures.add(lecture);
+                }
+
                 file.put("form-unit", insideLectures);
             }
             toplevel.put("q-cf-cfile", file);

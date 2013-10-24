@@ -84,6 +84,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
         }
     }
 
+    @Deprecated
     public double getHours() {
         double totalHours = 0;
         final ExecutionCourse executionCourse = getProfessorship().getExecutionCourse();
@@ -135,7 +136,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
                 }
             }
         }
-        return minutesAfter20AndSaturday / DateTimeConstants.MINUTES_PER_HOUR;
+        return (double) minutesAfter20AndSaturday / DateTimeConstants.MINUTES_PER_HOUR;
     }
 
     public double calculateCredits() {
