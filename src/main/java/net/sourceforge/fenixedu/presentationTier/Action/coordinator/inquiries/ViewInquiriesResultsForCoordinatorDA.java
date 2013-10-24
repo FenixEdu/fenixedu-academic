@@ -145,7 +145,10 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
                 ExecutionDegree currentExecutionDegree =
                         resultPageDTO.getDegreeCurricularPlan().getExecutionDegreeByAcademicInterval(
                                 currentExecutionSemester.getAcademicInterval());
-                currentCoordinator = currentExecutionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
+                // check if the course has been opened this semester 
+                if (currentExecutionDegree != null) {
+                    currentCoordinator = currentExecutionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
+                }
             }
 
             // check if the chosen executionSemester has the same executionYear
