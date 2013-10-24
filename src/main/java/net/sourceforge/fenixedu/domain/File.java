@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 import javax.activation.MimetypesFileTypeMap;
 
@@ -56,7 +57,9 @@ public abstract class File extends File_Base {
     }
 
     private void checkInvalidCharacters(String displayName) {
-        if (displayName.contains("+") || displayName.contains(">")) {
+        // use "[^?+>]+" instead for "string does not contain (match) invalid characters" 
+        // if the accepted character list is changed, don't forget to change the message for all modules
+        if (!Pattern.matches("[a-zA-Z0-9_\\-.()*']+", displayName)) {
             throw new DomainException("errors.file.displayName.invalid.characters");
         }
     }

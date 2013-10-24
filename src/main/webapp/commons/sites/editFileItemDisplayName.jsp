@@ -9,8 +9,7 @@
 <bean:define id="actionName" name="siteActionName" />
 <bean:define id="contextParam" name="siteContextParam" />
 <bean:define id="contextParamValue" name="siteContextParamValue" />
-<bean:define id="context"
-	value="<%= contextParam + "=" + contextParamValue %>" />
+<bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>" />
 <bean:define id="sectionID" name="section" property="externalId" />
 
 
@@ -30,6 +29,22 @@
 	<bean:define id="url" value="<%= url +  "#item-" + itemID %>"/>
 </logic:present>
 
+
+<logic:messagesPresent message="true">
+	<html:messages id="messages" message="true">
+		<p>
+			<span class="error0"><bean:write name="messages" /></span>
+		</p>
+	</html:messages>
+</logic:messagesPresent>
+
+<p class="mvert1">
+    <span class="error0">
+        <html:errors property="section" bundle="SITE_RESOURCES"/>
+    </span>
+</p>
+
+
 <div class="dinline forminline">
 	<fr:form
 		action="<%=  url %>">
@@ -39,8 +54,7 @@
 				<td><fr:view name="fileItem" property="filename"/></td>	
 			</tr>
 			<tr>
-				<th><bean:message key="label.displayName"
-					bundle="SITE_RESOURCES" />:</th>
+				<th><bean:message key="label.displayName" bundle="SITE_RESOURCES" />:</th>
 				<td><fr:edit name="fileItem" slot="displayName" >
 							<fr:layout>
 		                		<fr:property name="size" value="40"/>
