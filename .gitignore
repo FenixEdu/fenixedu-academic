@@ -14,5 +14,5 @@ configuration.properties.localhost
 /target
 src/main/resources/fonts/*arial
 src/main/resources/fonts/*Arial
-
+bin
 .actionAnnotationLog
