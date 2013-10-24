@@ -1,18 +1,11 @@
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
 import java.io.Serializable;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import net.sourceforge.fenixedu.domain.Teacher;
 
@@ -33,27 +26,6 @@ public class TeacherPublicationsInformation implements Serializable {
 
     public static Map<Teacher, List<String>> getTeacherPublicationsInformations(Set<Teacher> teachers) {
         Map<Teacher, List<String>> teacherPublicationsInformationMap = new HashMap<Teacher, List<String>>();
-        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-            @Override
-            public X509Certificate[] getAcceptedIssuers() {
-                return null;
-            }
-
-            @Override
-            public void checkClientTrusted(X509Certificate[] certs, String authType) {
-            }
-
-            @Override
-            public void checkServerTrusted(X509Certificate[] certs, String authType) {
-            }
-        } };
-        try {
-            SSLContext sc = SSLContext.getInstance("TLS");
-            sc.init(null, trustAllCerts, new SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        } catch (Exception e) {
-            ;
-        }
 
         Client client = Client.create();
         WebResource resource = client.resource(BASE_URL);
