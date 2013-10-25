@@ -1191,7 +1191,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     
     class  PersonInformationLog extends DomainOperationLog {
     }
-    	
+        
     class CourseLoad  {
         ShiftType type;
         BigDecimal totalQuantity;
@@ -5226,6 +5226,9 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class student.RegistrationRegime  {
         DateTime whenCreated;
         RegistrationRegimeType regimeType;
+    }
+    
+    class  student.RegistrationStateLog extends DomainOperationLog {
     }
 
     class student.ResidenceCandidacies  {
@@ -13751,6 +13754,13 @@ relation RegistrationStateResponsiblePerson {
 
 relation RegistrationStateLogRegistration {
     student.registrationStates.RegistrationStateLog playsRole registrationStateLogs {
+        multiplicity *;
+    }
+    student.Registration playsRole registration;
+}
+
+relation RegistrationStateLog {
+    student.RegistrationStateLog playsRole registrationStateLog {
         multiplicity *;
     }
     student.Registration playsRole registration;

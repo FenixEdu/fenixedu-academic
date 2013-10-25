@@ -223,6 +223,16 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     public void deleteWithoutCheckRules() {
         final Registration registration = getRegistration();
         try {
+            String responsablePersonName;
+            if (getResponsiblePerson() != null) {
+                responsablePersonName = getResponsiblePerson().getPresentationName();
+            } else {
+                responsablePersonName = "-";
+            }
+
+            net.sourceforge.fenixedu.domain.student.RegistrationStateLog.createRegistrationStateLog(getRegistration(),
+                    "resources.MessagingResources", "log.registration.registrationstate.removed",
+                    getStateType().getDescription(), getRemarks());
             setRegistration(null);
             setResponsiblePerson(null);
             setRootDomainObject(null);
@@ -322,10 +332,11 @@ public abstract class RegistrationState extends RegistrationState_Base implement
             if (nextState != null && !createdState.getValidNextStates().contains(nextState.getStateType().name())) {
                 throw new DomainException("error.cannot.add.registrationState.incoherentState");
             }
-
+            net.sourceforge.fenixedu.domain.student.RegistrationStateLog.createRegistrationStateLog(getRegistration(),
+                    "resources.MessagingResources", "log.registration.registrationstate.added", getStateType().getDescription(),
+                    getRemarks());
             return createdState;
         }
-
     }
 
     public boolean isActive() {
