@@ -5,7 +5,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/collection-pager" prefix="cp" %>
 <html:xhtml/>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<h2><bean:message key="label.title.RegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 <h2><bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/></h2>
 
 <logic:empty name="logsList">
@@ -15,7 +15,7 @@
 </logic:empty>
 
 <p class="mtop2">
-	<html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="student" paramProperty="externalId">
+	<html:link page="/manageRegistrationState.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="externalId">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>
@@ -63,12 +63,12 @@
 		</style>
 
  	 <fr:view name="logsList">
-		<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="APPLICATION_RESOURCES">
-			<fr:slot name="person" layout="view-as-image">
+		<fr:schema type="net.sourceforge.fenixedu.domain.student.RegistrationStateLog" bundle="APPLICATION_RESOURCES">
+<fr:slot name="person" layout="view-as-image">
 						<fr:property name="photoCellClasses" value="personalcard_photo"/>
 				   		<fr:property name="imageFormat" value="<%=request.getContextPath()+ "/person/retrievePersonalPhoto.do?method=retrieveByUUID&uuid=${istUsername}"%>"/>
 	    	</fr:slot>
-			<fr:slot name="istUsername" key="label.istid" >
+		<fr:slot name="istUsername" key="label.istid" >
 		    	<fr:property name="classes" value="nobullet noindent"/>  
 	    	</fr:slot>
 	    	<fr:slot name="personName" key="label.name">
