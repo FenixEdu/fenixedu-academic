@@ -842,10 +842,10 @@
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
 	</slot>
-	<slot name="grade" layout="grade-input" key="label.studentDismissal.grade" >
-		<property name="maxLength" value="5" />
+	<slot name="grade" layout="grade-input" key="label.studentDismissal.grade" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.GradeValidator">
+		<property name="size" value="4" />
+		<property name="maxLength" value="2" />
 		<property name="required" value="true" />
-		<property name="size" value="5" />
 	</slot>	
 </schema>
 
@@ -855,10 +855,10 @@
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
 	</slot>
-	<slot name="grade" layout="grade-input" key="label.studentDismissal.grade" >
-		<property name="maxLength" value="5" />
+	<slot name="grade" layout="grade-input" key="label.studentDismissal.grade" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.GradeValidator">
+		<property name="size" value="4" />
+		<property name="maxLength" value="2" />
 		<property name="required" value="true" />
-		<property name="size" value="5" />
 	</slot>	
 </schema>
 
