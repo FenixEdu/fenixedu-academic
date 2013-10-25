@@ -609,12 +609,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation(ExecutionYear executionYear) {
+        PrecedentDegreeInformation result = null;
         for (PrecedentDegreeInformation precedentDegreeInfo : getPrecedentDegreeInformations()) {
-            if (precedentDegreeInfo.getPersonalIngressionData().getExecutionYear().equals(executionYear)) {
-                return precedentDegreeInfo;
+            if (precedentDegreeInfo.getPersonalIngressionData().getExecutionYear().equals(executionYear)
+                    && (result == null || (result.getLastModifiedDate().isBefore(precedentDegreeInfo.getLastModifiedDate())))) {
+                result = precedentDegreeInfo;
             }
         }
-        return null;
+        return result;
     }
 
     public PersonalInformationBean getPersonalInformationBean(ExecutionYear executionYear) {
