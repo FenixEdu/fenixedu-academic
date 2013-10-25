@@ -32,6 +32,9 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
+import org.imgscalr.Scalr;
+import org.imgscalr.Scalr.Method;
+import org.imgscalr.Scalr.Mode;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -201,8 +204,21 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     }
 
     public byte[] getDefaultAvatar() {
-        return getCustomAvatar(AspectRatio.ª1_by_1, PictureSize.MEDIUM.getWidth(), PictureSize.MEDIUM.getHeight(),
-                PictureMode.FIT);
+        final PictureOriginal original = getOriginal();
+        final BufferedImage image = original.getPictureFileFormat() == ContentType.JPG ?
+                Picture.readImage(original.getPictureData().getBytes()) : read(original);
+
+        final BufferedImage adjustedImage = Picture.transformFit(image, 1, 1);
+        final BufferedImage avatar = Scalr.resize(adjustedImage, Method.QUALITY, Mode.FIT_EXACT, 100, 100);
+                //Picture.fitTo(adjustedImage, 200, 200);
+        return Picture.writeImage(avatar, ContentType.PNG).getBytes();
+    }
+
+    private BufferedImage read(PictureOriginal original) {
+        BufferedImage image = Picture.readImage(original.getPictureData().getBytes());
+        BufferedImage result = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        result.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
+        return result;
     }
 
     public byte[] getCustomAvatar(int xRatio, int yRatio, int width, int height, PictureMode pictureMode) {
