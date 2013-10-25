@@ -309,7 +309,6 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         }
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant> getStateInstants() {
         return getStateInstantsSet();
@@ -320,7 +319,6 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         return !getStateInstantsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.GenericEvent> getGenericEvents() {
         return getGenericEventsSet();
@@ -331,7 +329,6 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         return !getGenericEventsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment> getComments() {
         return getCommentsSet();
