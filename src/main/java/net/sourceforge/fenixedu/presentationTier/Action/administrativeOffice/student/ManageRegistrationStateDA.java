@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationStateLog;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateDeleter;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -29,7 +32,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({
         @Forward(name = "showRegistrationStates", path = "/academicAdminOffice/student/registration/manageRegistrationState.jsp"),
         @Forward(name = "deleteActualInfoConfirm",
-                path = "/academicAdminOffice/student/registration/deleteRegistrationActualInfo.jsp") })
+                path = "/academicAdminOffice/student/registration/deleteRegistrationActualInfo.jsp"),
+        @Forward(name = "viewRegistrationStateLogChanges",
+                path = "/academicAdminOffice/student/registration/viewRegistrationLogChanges.jsp"), })
 public class ManageRegistrationStateDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -78,5 +83,15 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
         final Registration registration = getDomainObject(request, "registrationId");
         request.setAttribute("registration", registration);
         return registration;
+    }
+
+    public ActionForward viewRegistrationStateLog(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        final Registration registration = getDomainObject(request, "registrationId");
+
+        Collection<RegistrationStateLog> logsList = registration.getRegistrationStateLogSet();
+        request.setAttribute("registration", registration);
+        request.setAttribute("logsList", logsList);
+        return mapping.findForward("viewRegistrationStateLogChanges");
     }
 }

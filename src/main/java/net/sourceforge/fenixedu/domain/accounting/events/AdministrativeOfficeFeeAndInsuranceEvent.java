@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -165,15 +164,13 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
             return null;
         }
 
-        Registration registration =
-                getPerson().getStudent().getActiveRegistrationsIn(getExecutionYear().getFirstExecutionPeriod()).iterator().next();
         StudentCandidacy studentCandidacy = getActiveDgesCandidacy(getPerson());
 
         if (studentCandidacy == null) {
             return null;
         }
 
-        for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodes()) {
+        for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodesSet()) {
             if (!paymentCode.isNew()) {
                 continue;
             }
