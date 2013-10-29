@@ -14,13 +14,12 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -89,10 +88,9 @@ public class ListCourseResponsibles extends FenixDispatchAction {
             for (ExecutionCourse execCourse : execSemester.getAssociatedExecutionCourses()) {
                 for (Professorship professorship : execCourse.getProfessorships()) {
                     if (professorship.isResponsibleFor()) {
-                        Person person = professorship.getPerson();
-                        Employee employee = person.getEmployee();
+                        Teacher teacher = professorship.getTeacher();
                         Department dept =
-                                employee.getLastDepartmentWorkingPlace(executionYear.getBeginDateYearMonthDay(),
+                                teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(),
                                         executionYear.getEndDateYearMonthDay());
                         CurricularCourse curricCourse = null;
                         CompetenceCourse compCourse = null;
@@ -108,8 +106,9 @@ public class ListCourseResponsibles extends FenixDispatchAction {
 
                                     if (compCourse != null && execDegree != null) {
                                         SearchCourseResponsiblesParametersBean bean =
-                                                new SearchCourseResponsiblesParametersBean(curricCourse, compCourse, person,
-                                                        execSemester, execDegree.getCampus(), execDegree.getDegree());
+                                                new SearchCourseResponsiblesParametersBean(curricCourse, compCourse,
+                                                        professorship.getPerson(), execSemester, execDegree.getCampus(),
+                                                        execDegree.getDegree());
                                         result.add(bean);
                                     }
                                 }
