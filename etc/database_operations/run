@@ -43,6 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Removing all the info related with depracated role types" RemoveProjectManagementRoles.sql 
 execute "Add RegistrationStateLog Entity" addRegistrationStateLog.sql
 execute "Removing all the info related with depracated role types" RemoveProjectManagementRoles.sql 
