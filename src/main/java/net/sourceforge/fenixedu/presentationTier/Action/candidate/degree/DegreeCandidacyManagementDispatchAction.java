@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintAllDocumentsOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
@@ -218,7 +219,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
             request.setAttribute(
                     "aditionalInformation",
                     getResources(request).getMessage("label.candidacy.username.changed.message",
-                            userView.getPerson().getIstUsername()));
+                            userView.getPerson().getIstUsername(), Unit.getInstitutionAcronym()));
         } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_GRATUITY_PAYMENT_CODES) {
             request.setAttribute("registration", getCandidacy(request).getRegistration());
             request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());

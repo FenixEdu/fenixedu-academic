@@ -22,10 +22,10 @@
 	<logic:present name="showReportError">
 		<bean:define id="documentIdNumber" name="alumniBean" property="documentIdNumber"/>
 		<bean:define id="email" name="alumniBean" property="email"/>
+		<bean:define id="errorMessage" name="errorMessage"/>
 		<bean:define id="studentNumber" name="alumniBean" property="studentNumber"/>
-		<html:link  action="<%= "alumni.do?method=prepareSendEmailReportingError&amp;documentIdNumber=" + documentIdNumber + 
-								"&amp;email=" + email + "&amp;studentNumber=" + studentNumber %>"
-					paramId="errorMessage" paramName="errorMessageKey">
+		<html:link action="<%= "alumni.do?method=prepareSendEmailReportingError&amp;documentIdNumber=" + documentIdNumber + 
+								"&amp;email=" + email + "&amp;studentNumber=" + studentNumber + "&amp;errorMessage=" + errorMessage %>">
 			<bean:message key="label.public.report.error" bundle="ALUMNI_RESOURCES"/>
 		</html:link>
 	</logic:present>

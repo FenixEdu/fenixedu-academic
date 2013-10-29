@@ -52,7 +52,7 @@
 
 			<logic:notEqual name="parkingParty" property="acceptedRegulation" value="false">
 				
-				<div class="infoop2 mtop15"> <%-- message.acceptedRegulation --%>
+				<div class="infoop2 mtop15">
 					<div style="padding-bottom: 0.25em;"><bean:write name="parkingParty" property="parkingAcceptedRegulationMessage" filter="false"/></div>
 					<p>
 						<strong>

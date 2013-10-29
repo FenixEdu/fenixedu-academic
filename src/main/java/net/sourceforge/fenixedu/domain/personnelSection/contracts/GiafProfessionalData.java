@@ -129,7 +129,6 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
                 getContractSituationDate())));
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption> getPersonProfessionalExemptions() {
         return getPersonProfessionalExemptionsSet();
@@ -140,7 +139,6 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
         return !getPersonProfessionalExemptionsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRelation> getPersonProfessionalRelations() {
         return getPersonProfessionalRelationsSet();
@@ -151,7 +149,6 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
         return !getPersonProfessionalRelationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation> getPersonContractSituations() {
         return getPersonContractSituationsSet();
@@ -162,7 +159,6 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
         return !getPersonContractSituationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalContract> getPersonProfessionalContracts() {
         return getPersonProfessionalContractsSet();
@@ -173,7 +169,6 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
         return !getPersonProfessionalContractsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRegime> getPersonProfessionalRegimes() {
         return getPersonProfessionalRegimesSet();
@@ -184,7 +179,6 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
         return !getPersonProfessionalRegimesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalCategory> getPersonProfessionalCategories() {
         return getPersonProfessionalCategoriesSet();
@@ -195,7 +189,6 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
         return !getPersonProfessionalCategoriesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonFunctionsAccumulation> getPersonFunctionsAccumulations() {
         return getPersonFunctionsAccumulationsSet();

@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
@@ -123,13 +124,15 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
             Person personByIstId = Person.readPersonByIstUsername(bean.getInstitutionId());
 
             if (personByIstId == null) {
-                addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id.noIstIdPerson");
+                addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id.noIstIdPerson",
+                        Unit.getInstitutionAcronym());
                 return fillPersonalDataInvalid(mapping, form, request, response);
             }
 
             if (person != null && person != personByIstId) {
                 addErrorMessage(request,
-                        "error.phd.public.candidacy.fill.personal.information.and.institution.id.different.istId");
+                        "error.phd.public.candidacy.fill.personal.information.and.institution.id.different.istId",
+                        Unit.getInstitutionAcronym());
                 return fillPersonalDataInvalid(mapping, form, request, response);
             }
         }
@@ -147,7 +150,8 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
                     personBean.setPerson(person);
                 } else {
                     addErrorMessage(request,
-                            "error.phd.public.candidacy.fill.personal.information.and.institution.id.different.istIds");
+                            "error.phd.public.candidacy.fill.personal.information.and.institution.id.different.istIds",
+                            Unit.getInstitutionAcronym());
                     return fillPersonalDataInvalid(mapping, form, request, response);
                 }
             } else {

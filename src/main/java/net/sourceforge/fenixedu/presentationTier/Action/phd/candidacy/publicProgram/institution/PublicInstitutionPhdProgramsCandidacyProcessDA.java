@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicPro
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.PublicPhdIndividualProgramProcess;
@@ -206,8 +208,13 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
     private void sendSubmissionEmailForCandidacy(final PublicCandidacyHashCode hashCode, final HttpServletRequest request) {
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-        final String subject = bundle.getString("message.phd.institution.application.email.subject.send.link.to.submission");
-        final String body = bundle.getString("message.phd.institution.email.body.send.link.to.submission");
+        final String subject =
+                MessageFormat.format(
+                        bundle.getString("message.phd.institution.application.email.subject.send.link.to.submission"),
+                        Unit.getInstitutionAcronym());
+        final String body =
+                MessageFormat.format(bundle.getString("message.phd.institution.email.body.send.link.to.submission"),
+                        Unit.getInstitutionAcronym());
         hashCode.sendEmail(
                 subject,
                 String.format(body,
@@ -250,8 +257,11 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
     private void sendRecoveryEmailForCandidate(PhdProgramPublicCandidacyHashCode candidacyHashCode, HttpServletRequest request) {
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-        final String subject = bundle.getString("message.phd.email.subject.recovery.access");
-        final String body = bundle.getString("message.phd.institution.email.body.recovery.access");
+        final String subject =
+                MessageFormat.format(bundle.getString("message.phd.email.subject.recovery.access"), Unit.getInstitutionAcronym());
+        final String body =
+                MessageFormat.format(bundle.getString("message.phd.institution.email.body.recovery.access"),
+                        Unit.getInstitutionAcronym());
         candidacyHashCode.sendEmail(subject, String.format(body,
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(Language.getLocale()),
                 candidacyHashCode.getValue()));
@@ -370,8 +380,12 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         // candidacy limit end date
 
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-        final String subject = bundle.getString("message.phd.institution.email.subject.application.submited");
-        final String body = bundle.getString("message.phd.institution.email.body.application.submited");
+        final String subject =
+                MessageFormat.format(bundle.getString("message.phd.institution.email.subject.application.submited"),
+                        Unit.getInstitutionAcronym());
+        final String body =
+                MessageFormat.format(bundle.getString("message.phd.institution.email.body.application.submited"),
+                        Unit.getInstitutionAcronym());
         hashCode.sendEmail(subject, String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(),
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(Language.getLocale()), hashCode.getValue()));
     }

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.epfl;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -292,7 +293,8 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 
     private void sendRecoveryEmailForCandidate(PhdProgramPublicCandidacyHashCode candidacyHashCode, HttpServletRequest request) {
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-        final String subject = bundle.getString("message.phd.email.subject.recovery.access");
+        final String subject =
+                MessageFormat.format(bundle.getString("message.phd.email.subject.recovery.access"), Unit.getInstitutionAcronym());
         final String body = bundle.getString("message.phd.epfl.email.body.recovery.access");
         candidacyHashCode.sendEmail(
                 subject,

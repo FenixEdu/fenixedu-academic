@@ -1,9 +1,11 @@
+<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
+
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
@@ -28,7 +30,7 @@
 
 <bean:define id="doctoralProgramme" name="refereeLetterHash" property="phdProgramCandidacyProcess.individualProgramProcess.phdProgram.name.content" type="String"/>
 
-<bean:message key="message.phd.institution.public.candidacy.fill.referee.letter" bundle="PHD_RESOURCES" arg0="<%= doctoralProgramme %>"/>
+<bean:message key="message.phd.institution.public.candidacy.fill.referee.letter" bundle="PHD_RESOURCES" arg0="<%= doctoralProgramme %>" arg1="<%= Unit.getInstitutionAcronym() %>"/>
 
 <bean:define id="hash" name="refereeLetterHash" property="value" />
 <div class="fs_form">	
