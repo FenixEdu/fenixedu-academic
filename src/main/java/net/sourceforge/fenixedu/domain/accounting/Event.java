@@ -301,6 +301,20 @@ public abstract class Event extends Event_Base {
         return getPayedAmount(null);
     }
 
+    public Money getPayedAmountFor(EntryType entryType) {
+        if (isCancelled()) {
+            throw new DomainException("error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
+        }
+
+        Money payedAmount = Money.ZERO;
+        for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+            if (transaction.getToAccountEntry().getEntryType().equals(entryType)) {
+                payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+            }
+        }
+        return payedAmount;
+    }
+
     public Money getPayedAmount(final DateTime until) {
         if (isCancelled()) {
             throw new DomainException("error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
