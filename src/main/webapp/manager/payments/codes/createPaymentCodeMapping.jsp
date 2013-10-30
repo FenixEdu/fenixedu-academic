@@ -15,11 +15,11 @@
 </logic:messagesPresent>
 
 <fr:edit id="paymentCodeMappingBean" name="paymentCodeMappingBean" schema="PaymentCodeMappingBean.create"
-		action="/paymentsManagement.do?method=createPaymentCodeMapping">
+		action="/paymentCodesAttribution.do?method=createPaymentCodeMapping">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2" />
 		<fr:property name="columnClasses" value=",,tdclear tderror1" />
 	</fr:layout>
-	<fr:destination name="cancel" path="/paymentsManagement.do?method=prepareViewPaymentCodeMappings" />
-	<fr:destination name="invalid" path="/paymentsManagement.do?method=createPaymentCodeMappingInvalid" />
+	<fr:destination name="cancel" path="/paymentCodesAttribution.do?method=prepareViewPaymentCodeMappings" />
+	<fr:destination name="invalid" path="/paymentCodesAttribution.do?method=createPaymentCodeMappingInvalid" />
 </fr:edit>
