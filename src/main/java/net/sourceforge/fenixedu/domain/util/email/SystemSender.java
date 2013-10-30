@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.util.email;
 
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class SystemSender extends SystemSender_Base {
 
@@ -10,9 +12,17 @@ public class SystemSender extends SystemSender_Base {
         super();
         setMembers(new RoleGroup(Role.getRoleByRoleType(RoleType.MANAGER)));
         setFromAddress(Sender.getNoreplyMail());
-        setFromName("Sistema Fénix");
         setSystemRootDomainObject(getRootDomainObject());
     }
+
+    @Override
+    public String getFromName() {
+        String fenixSystem =
+                BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.email.sender.system");
+        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.email.sender.template",
+                Unit.getInstitutionAcronym(), fenixSystem);
+    }
+
     @Deprecated
     public boolean hasSystemRootDomainObject() {
         return getSystemRootDomainObject() != null;

@@ -8,30 +8,48 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 
 public class PersonFunctionSender extends PersonFunctionSender_Base {
 
     public PersonFunctionSender(PersonFunction personFunction) {
         super();
-        String fromName;
-        if (!personFunction.getFunction().isOfFunctionType(FunctionType.DELEGATE_OF_YEAR)) {
-            fromName = String.format("%s", personFunction.getFunction().getTypeName());
-        } else {
-            Integer delegateYear = personFunction.getCurricularYear().getYear();
-            fromName = String.format("Delegado do %sº ano", delegateYear);
-        }
+
         Person person = personFunction.getPerson();
-        setFromName(fromName);
         setPersonFunction(personFunction);
         setFromAddress(Sender.getNoreplyMail());
         addReplyTos(new CurrentUserReplyTo());
         setMembers(new PersonGroup(person));
         getRecipients().addAll(Recipient.newInstance(getPossibleReceivers(person)));
+    }
+
+    @Override
+    public String getFromName() {
+        Function function = getPersonFunction().getFunction();
+
+        if (function.isOfFunctionType(FunctionType.DELEGATE_OF_YEAR)) {
+
+            String delegateYear = String.format("%s", getPersonFunction().getCurricularYear().getYear());
+            String delegateFromName =
+                    BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.delegateOfYear",
+                            delegateYear);
+            String courseAcronym = getPersonFunction().getDelegate().getDegree().getSigla();
+
+            return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template.courseFunction",
+                    Unit.getInstitutionAcronym(), courseAcronym, delegateFromName);
+
+        } else {
+            String functionTypeName = String.format("%s", function.getTypeName());
+            return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template",
+                    Unit.getInstitutionAcronym(), functionTypeName);
+        }
     }
 
     public static List<Group> getPossibleReceivers(Person person) {
@@ -76,6 +94,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
         PersonFunctionSender sender = personFunction.getSender();
         return sender == null ? new PersonFunctionSender(personFunction) : sender;
     }
+
     @Deprecated
     public boolean hasPersonFunction() {
         return getPersonFunction() != null;
