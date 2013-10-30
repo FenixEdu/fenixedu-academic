@@ -60,7 +60,7 @@ public abstract class File extends File_Base {
         // use "[^?+>]+" instead for "string does not contain (match) invalid characters" 
         // if the accepted character list is changed, don't forget to change the message for all modules
         if (!Pattern.matches("[a-zA-Z0-9_\\-.()*']+", displayName)) {
-            throw new DomainException("errors.file.displayName.invalid.characters");
+            throw new DomainException("errors.file.displayName.invalid.characters", "[a-zA-Z0-9_\\-.()*']+");
         }
     }
 

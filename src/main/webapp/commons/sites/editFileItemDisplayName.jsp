@@ -31,18 +31,12 @@
 
 
 <logic:messagesPresent message="true">
-	<html:messages id="messages" message="true">
+	<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
 		<p>
 			<span class="error0"><bean:write name="messages" /></span>
 		</p>
 	</html:messages>
 </logic:messagesPresent>
-
-<p class="mvert1">
-    <span class="error0">
-        <html:errors property="section" bundle="SITE_RESOURCES"/>
-    </span>
-</p>
 
 
 <div class="dinline forminline">
