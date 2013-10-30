@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 
@@ -34,7 +35,6 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
     public ExecutionCourseSender(ExecutionCourse executionCourse) {
         super();
         setCourse(executionCourse);
-        setFromName(getFromName(executionCourse));
         setFromAddress(Sender.getNoreplyMail());
         addReplyTos(new ExecutionCourseReplyTo());
         addReplyTos(new CurrentUserReplyTo());
@@ -57,10 +57,13 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
         addRecipients(new Recipient(labelECResponsibleTeachers, new ExecutionCourseResponsibleTeachersGroup(executionCourse)));
     }
 
-    private String getFromName(ExecutionCourse executionCourse) {
-        return String.format("%s %s %s", executionCourse.getNome(),
-                executionCourse.getDegreePresentationString().replaceAll(", ", " "), executionCourse.getExecutionPeriod()
-                        .getQualifiedName().replace('/', ' '));
+    @Override
+    public String getFromName() {
+        String degreeName = getCourse().getDegreePresentationString().replaceAll(", ", " ");
+        String courseName = getCourse().getNome();
+        String period = getCourse().getExecutionPeriod().getQualifiedName().replace('/', ' ');
+        return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template.discipline",
+                Unit.getInstitutionAcronym(), degreeName, courseName, period);
     }
 
     @Atomic

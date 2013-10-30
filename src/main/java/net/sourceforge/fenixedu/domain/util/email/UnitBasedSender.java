@@ -2,12 +2,15 @@ package net.sourceforge.fenixedu.domain.util.email;
 
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.accessControl.UnitMembersGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 
 public class UnitBasedSender extends UnitBasedSender_Base {
@@ -34,9 +37,15 @@ public class UnitBasedSender extends UnitBasedSender_Base {
     }
 
     @Override
+    public String getFromName(final Person person) {
+        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.email.sender.template",
+                Unit.getInstitutionAcronym(), getUnit().getName());
+    }
+
+    @Override
     public String getFromName() {
-        final Unit unit = getUnit();
-        return unit.getName();
+        final Person person = AccessControl.getPerson();
+        return getFromName(person);
     }
 
     @Override

@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 
 public class CoordinatorSender extends CoordinatorSender_Base {
@@ -40,7 +42,10 @@ public class CoordinatorSender extends CoordinatorSender_Base {
 
     @Override
     public String getFromName() {
-        return getMembers().getName();
+        String coordinator = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "coordinator");
+        return BundleUtil
+                .getStringFromResourceBundle("resources.ApplicationResources", "message.email.sender.template.courseFunction",
+                        Unit.getInstitutionAcronym(), getDegree().getSigla(), coordinator);
     }
 
     @Atomic
@@ -48,6 +53,7 @@ public class CoordinatorSender extends CoordinatorSender_Base {
         CoordinatorSender sender = degree.getSender();
         return sender == null ? new CoordinatorSender(degree) : sender;
     }
+
     @Deprecated
     public boolean hasDegree() {
         return getDegree() != null;
