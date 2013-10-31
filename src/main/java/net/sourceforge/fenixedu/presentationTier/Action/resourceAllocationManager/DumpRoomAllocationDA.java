@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
@@ -35,6 +36,7 @@ import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
@@ -333,6 +335,81 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-disposition", "attachment; filename=scheduleMap" + executionYear.replace('/', '_') + "_"
                 + executionSemester.getSemester() + ".xls");
+
+        final ServletOutputStream writer = response.getOutputStream();
+        spreadsheet.exportToXLSSheet(writer);
+        writer.flush();
+        response.flushBuffer();
+        return null;
+    }
+
+    public ActionForward downloadShiftAttendence(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        final ExecutionSemester executionSemester = getDomainObject(request, "executionPeriodId");
+        final Integer semester = executionSemester.getSemester();
+        final String executionYear = executionSemester.getExecutionYear().getYear();
+
+        final Spreadsheet spreadsheet = new Spreadsheet("ShiftAttendenceMap");
+        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift"));
+        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.executionCourse"));
+        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.executionDegree"));
+        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.schedule"));
+        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.lesson.room"));
+        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+                "label.number.students.enrolled"));
+
+        for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
+            final StringBuilder executionDegreeBuilder = new StringBuilder();
+            for (final ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
+                if (executionDegreeBuilder.length() > 0) {
+                    executionDegreeBuilder.append("\n");
+                }
+                executionDegreeBuilder.append(executionDegree.getDegree().getSigla());
+            }
+            final StringBuilder emailBuilder = new StringBuilder();
+            for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
+                if (emailBuilder.length() > 0) {
+                    emailBuilder.append("\n");
+                }
+                emailBuilder.append(professorship.getPerson().getEmailForSendingEmails());
+            }
+
+            for (final CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
+                for (final Shift shift : courseLoad.getShiftsSet()) {
+                    final Row row = spreadsheet.addRow();
+                    final StringBuilder roomBuilder = new StringBuilder();
+                    final StringBuilder scheduleBuilder = new StringBuilder();
+                    if (!shift.getAssociatedLessonsSet().isEmpty()) {
+                        for (Iterator<Lesson> iterator = shift.getAssociatedLessonsSet().iterator(); iterator.hasNext();) {
+                            Lesson lesson = iterator.next();
+                            scheduleBuilder.append(WeekDay.getWeekDay(lesson.getDiaSemana()).getLabelShort());
+                            scheduleBuilder.append(" ");
+                            scheduleBuilder.append(lesson.getBeginHourMinuteSecond().toString("HH:mm"));
+                            scheduleBuilder.append(" - ");
+                            scheduleBuilder.append(lesson.getEndHourMinuteSecond().toString("HH:mm"));
+                            if (lesson.hasSala()) {
+                                roomBuilder.append(lesson.getSala().getIdentification());
+                            }
+                            if (iterator.hasNext()) {
+                                scheduleBuilder.append(" ; ");
+                                roomBuilder.append(" ; ");
+                            }
+                        }
+                    }
+
+                    row.setCell(shift.getNome());
+                    row.setCell(executionCourse.getName());
+                    row.setCell(executionDegreeBuilder.toString());
+                    row.setCell(scheduleBuilder.toString().replace(';', '\n'));
+                    row.setCell(roomBuilder.toString().replace(';', '\n'));
+                    row.setCell(shift.getStudentsSet().size());
+                }
+            }
+        }
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename=shiftAttendenceMap" + executionYear.replace('/', '_')
+                + "_" + executionSemester.getSemester() + ".xls");
 
         final ServletOutputStream writer = response.getOutputStream();
         spreadsheet.exportToXLSSheet(writer);
