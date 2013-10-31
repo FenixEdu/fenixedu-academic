@@ -17,9 +17,8 @@ public class SystemSender extends SystemSender_Base {
 
     @Override
     public String getFromName() {
-        String fenixSystem =
-                BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.email.sender.system");
-        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.email.sender.template",
+        String fenixSystem = BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.system");
+        return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template",
                 Unit.getInstitutionAcronym(), fenixSystem);
     }
 

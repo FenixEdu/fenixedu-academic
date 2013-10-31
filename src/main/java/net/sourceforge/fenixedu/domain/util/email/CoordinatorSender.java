@@ -25,7 +25,6 @@ public class CoordinatorSender extends CoordinatorSender_Base {
         setFromAddress(Sender.getNoreplyMail());
         addReplyTos(new CurrentUserReplyTo());
         setMembers(new DegreeAllCoordinatorsGroup(degree));
-        setFromName(getMembers().getName());
         Group current = new CurrentDegreeCoordinatorsGroup(degree);
         Group teachers = new DegreeTeachersGroup(degree);
         Group students = new DegreeStudentsGroup(degree);
@@ -42,10 +41,9 @@ public class CoordinatorSender extends CoordinatorSender_Base {
 
     @Override
     public String getFromName() {
-        String coordinator = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "coordinator");
-        return BundleUtil
-                .getStringFromResourceBundle("resources.ApplicationResources", "message.email.sender.template.courseFunction",
-                        Unit.getInstitutionAcronym(), getDegree().getSigla(), coordinator);
+        String coordinator = BundleUtil.getMessageFromModuleOrApplication("Application", "coordinator");
+        return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template.courseFunction",
+                Unit.getInstitutionAcronym(), getDegree().getSigla(), coordinator);
     }
 
     @Atomic

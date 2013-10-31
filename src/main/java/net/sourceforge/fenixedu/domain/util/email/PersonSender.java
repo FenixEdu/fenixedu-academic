@@ -22,7 +22,7 @@ public class PersonSender extends PersonSender_Base {
 
     @Override
     public String getFromName() {
-        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.email.sender.template",
+        return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template",
                 Unit.getInstitutionAcronym(), getPerson().getName());
     }
 

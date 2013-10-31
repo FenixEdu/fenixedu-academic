@@ -61,7 +61,7 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
     public String getFromName() {
         String degreeName = getCourse().getDegreePresentationString().replaceAll(", ", " ");
         String courseName = getCourse().getNome();
-        String period = getCourse().getExecutionPeriod().getQualifiedName().replace('/', ' ');
+        String period = getCourse().getExecutionPeriod().getQualifiedName().replace('/', '-');
         return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template.discipline",
                 Unit.getInstitutionAcronym(), degreeName, courseName, period);
     }
