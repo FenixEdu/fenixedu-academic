@@ -36,19 +36,17 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
 
         if (function.isOfFunctionType(FunctionType.DELEGATE_OF_YEAR)) {
 
-            String delegateYear = String.format("%s", getPersonFunction().getCurricularYear().getYear());
             String delegateFromName =
                     BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.delegateOfYear",
-                            delegateYear);
+                            getPersonFunction().getCurricularYear().getYear().toString());
             String courseAcronym = getPersonFunction().getDelegate().getDegree().getSigla();
 
             return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template.courseFunction",
                     Unit.getInstitutionAcronym(), courseAcronym, delegateFromName);
 
         } else {
-            String functionTypeName = String.format("%s", function.getTypeName());
             return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template",
-                    Unit.getInstitutionAcronym(), functionTypeName);
+                    Unit.getInstitutionAcronym(), function.getTypeName().toString());
         }
     }
 
