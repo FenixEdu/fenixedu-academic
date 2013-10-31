@@ -45,3 +45,4 @@ function executeWithTempFile() {
 
 execute "Add RegistrationStateLog Entity" addRegistrationStateLog.sql
 
+execute "Updates Sender Enteties so that they take the form <InstitutionAcronym>(<Function>)" sendersUniformization.sql
