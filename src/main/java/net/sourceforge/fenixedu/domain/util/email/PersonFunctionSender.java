@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 
 public class PersonFunctionSender extends PersonFunctionSender_Base {
@@ -28,25 +27,31 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
         addReplyTos(new CurrentUserReplyTo());
         setMembers(new PersonGroup(person));
         getRecipients().addAll(Recipient.newInstance(getPossibleReceivers(person)));
+        setFromName(createFromName());
     }
 
-    @Override
-    public String getFromName() {
+    public String createFromName() {
+
+        if (getPersonFunction() == null || getPersonFunction().getFunction() == null) {
+            return getFromName();
+        }
+
+        String institutionAcronym = Unit.getInstitutionAcronym();
         Function function = getPersonFunction().getFunction();
 
-        if (function.isOfFunctionType(FunctionType.DELEGATE_OF_YEAR)) {
-
-            String delegateFromName =
-                    BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.delegateOfYear",
-                            getPersonFunction().getCurricularYear().getYear().toString());
-            String courseAcronym = getPersonFunction().getDelegate().getDegree().getSigla();
-
-            return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template.courseFunction",
-                    Unit.getInstitutionAcronym(), courseAcronym, delegateFromName);
-
+        if (function.isOfAnyFunctionType(FunctionType.getAllDegreeDelegateFunctionTypes())) {
+            String courseAcronym = function.getUnit().getDegree().getSigla();
+            String functionTypeName;
+            if (function.isOfFunctionType(FunctionType.DELEGATE_OF_YEAR)) {
+                String year = getPersonFunction().getCurricularYear().getYear().toString();
+                functionTypeName = String.format("Delegado do %sº ano", year);
+            } else {
+                functionTypeName = function.getTypeName().toString();
+            }
+            return String.format("%s (%s: %s)", institutionAcronym, courseAcronym, functionTypeName);
         } else {
-            return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template",
-                    Unit.getInstitutionAcronym(), function.getTypeName().toString());
+            String functionTypeName = function.getTypeName().toString();
+            return String.format("%s (%s)", institutionAcronym, functionTypeName);
         }
     }
 
