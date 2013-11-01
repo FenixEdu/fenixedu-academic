@@ -32,6 +32,9 @@ public class AlumniDegreeGroup extends DegreeGroup {
 
     @Override
     public boolean isMember(Person person) {
+        if (person == null) {
+            return false;
+        }
         final Student student = person.getStudent();
         if (student != null) {
             final List<Registration> registrations = student.getRegistrationsFor(getDegree());
