@@ -55,15 +55,20 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
         addRecipients(new Recipient(labelECTeachers, new ExecutionCourseTeachersGroup(executionCourse)));
         addRecipients(new Recipient(labelECStudents, new ExecutionCourseStudentsGroup(executionCourse)));
         addRecipients(new Recipient(labelECResponsibleTeachers, new ExecutionCourseResponsibleTeachersGroup(executionCourse)));
+        setFromName(createFromName());
     }
 
-    @Override
-    public String getFromName() {
-        String degreeName = getCourse().getDegreePresentationString().replaceAll(", ", " ");
-        String courseName = getCourse().getNome();
-        String period = getCourse().getExecutionPeriod().getQualifiedName().replace('/', '-');
-        return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template.discipline",
-                Unit.getInstitutionAcronym(), degreeName, courseName, period);
+    public String createFromName() {
+        if (getCourse() != null && getCourse().getExecutionPeriod() != null
+                && getCourse().getExecutionPeriod().getQualifiedName() != null) {
+            String degreeName = getCourse().getDegreePresentationString();
+            String courseName = getCourse().getNome();
+            String period = getCourse().getExecutionPeriod().getQualifiedName().replace('/', '-');
+            return String.format("%s (%s: %s, %s)", Unit.getInstitutionAcronym(), degreeName, courseName, period);
+        } else {
+            return getFromName();
+        }
+
     }
 
     @Atomic

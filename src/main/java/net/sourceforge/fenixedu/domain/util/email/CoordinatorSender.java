@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 
 public class CoordinatorSender extends CoordinatorSender_Base {
@@ -37,13 +36,11 @@ public class CoordinatorSender extends CoordinatorSender_Base {
         addRecipients(createRecipient(students));
         addRecipients(createRecipient(new AllTeachersGroup()));
         addRecipients(createRecipient(new AllStudentsGroup()));
+        setFromName(createFromName());
     }
 
-    @Override
-    public String getFromName() {
-        String coordinator = BundleUtil.getMessageFromModuleOrApplication("Application", "coordinator");
-        return BundleUtil.getMessageFromModuleOrApplication("Application", "message.email.sender.template.courseFunction",
-                Unit.getInstitutionAcronym(), getDegree().getSigla(), coordinator);
+    public String createFromName() {
+        return String.format("%s (%s: %s)", Unit.getInstitutionAcronym(), getDegree().getSigla(), "Coordenação");
     }
 
     @Atomic
