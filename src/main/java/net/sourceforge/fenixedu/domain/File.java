@@ -90,14 +90,14 @@ public abstract class File extends File_Base {
     }
 
     public InputStream getStream() {
-        if (hasLocalContent()) {
+        if (getLocalContent() != null) {
             return new ByteArrayInputStream(getLocalContent().getContent().getBytes());
         }
         return FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(getExternalStorageIdentification());
     }
 
     public byte[] getContents() {
-        if (hasLocalContent()) {
+        if (getLocalContent() != null) {
             return getLocalContent().getContent().getBytes();
         }
         InputStream inputStream = null;
@@ -125,7 +125,7 @@ public abstract class File extends File_Base {
      *         associated file from the external file storage
      */
     public String getDownloadUrl() {
-        if (hasLocalContent()) {
+        if (getLocalContent() != null) {
             return ACTION_PATH + getExternalId();
         }
 
@@ -139,7 +139,7 @@ public abstract class File extends File_Base {
     }
 
     protected void disconnect() {
-        if (hasLocalContent()) {
+        if (getLocalContent() != null) {
             getLocalContent().delete();
         } else {
             createDeleteFileRequest();
@@ -193,7 +193,7 @@ public abstract class File extends File_Base {
     @Override
     public void setPermittedGroup(Group permittedGroup) {
         super.setPermittedGroup(permittedGroup);
-        if (!hasLocalContent()) {
+        if (getLocalContent() == null) {
             final boolean isPublic = permittedGroup == null || permittedGroup instanceof EveryoneGroup;
             FileManagerFactory.getFactoryInstance().getContentFileManager()
                     .changeFilePermissions(getExternalStorageIdentification(), !isPublic);
