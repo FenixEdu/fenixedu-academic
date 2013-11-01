@@ -29,6 +29,9 @@ public class CerimonyInquiryGroup extends DomainBackedGroup<CerimonyInquiry> {
 
     @Override
     public boolean isMember(final Person person) {
+        if (person == null) {
+            return false;
+        }
         for (final CerimonyInquiryPerson cerimonyInquiryPerson : person.getCerimonyInquiryPersonSet()) {
             if (cerimonyInquiryPerson.getCerimonyInquiry() == getObject()) {
                 return true;
