@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.sc
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,6 +28,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventW
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegimeType;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -1056,10 +1058,12 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     private String getDefaultInstitutionName() {
-        return ResourceBundle
-                .getBundle("resources.AcademicAdminOffice", Locale.getDefault())
-                .getString(
-                        "label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionName");
+        return MessageFormat
+                .format(ResourceBundle
+                        .getBundle("resources.AcademicAdminOffice", Locale.getDefault())
+                        .getString(
+                                "label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionName"),
+                        Unit.getInstitutionName());
     }
 
     private String getDefaultInstitutionCode() {
