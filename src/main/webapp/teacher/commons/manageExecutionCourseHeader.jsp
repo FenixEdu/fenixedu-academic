@@ -1,8 +1,11 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<html:xhtml/>
+
+
+
 
 <logic:present name="executionCourse">
 
@@ -22,6 +25,7 @@
 		</logic:iterate>
 		)
     </em>
+    <jsp:include page="/i18n.jsp"/>
 
 <%--
 	<hr style='color:#ccc'/>
