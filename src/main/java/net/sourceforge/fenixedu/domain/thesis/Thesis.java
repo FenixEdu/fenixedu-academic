@@ -1292,11 +1292,6 @@ public class Thesis extends Thesis_Base {
             hasInternal = true;
         }
 
-        // if (!hasInternal && (orientator != null || coorientator != null)) {
-        // conditions.add(new
-        // ThesisCondition("thesis.condition.orientation.notInternal"));
-        // }
-
         return conditions;
     }
 
