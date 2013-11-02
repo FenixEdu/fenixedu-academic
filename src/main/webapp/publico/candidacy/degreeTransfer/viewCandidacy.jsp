@@ -110,7 +110,7 @@
 			</logic:iterate>
 		</ul>
 
-		<p><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></p>
+		<p><bean:message key="message.ist.conditions.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></p>
 	</div>
 </div>
 </logic:equal>
@@ -310,7 +310,7 @@
 	}
 %>
 
-<h2 style="margin-top: 1em;"><bean:message key="title.master.degree.change.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
+<h2 style="margin-top: 1em;"><bean:message key="title.master.degree.change.course.choice" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></h2>
 
 <p><fr:view name="individualCandidacyProcessBean"
 			schema="PublicCandidacyProcessBean.degree.change.selectedDegree.view">
@@ -353,6 +353,6 @@
 </table>
 </logic:notEmpty>
 
-<div class="mtop15"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
+<div class="mtop15"><bean:message key="message.nape.contacts" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></div>
 
 

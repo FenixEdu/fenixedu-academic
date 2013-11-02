@@ -31,7 +31,7 @@
 				<li><fr:view name="missingDocumentFileType"/></li>
 			</logic:iterate>
 		</ul>
-		<p><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></p>
+		<p><bean:message key="message.ist.conditions.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></p>
 	</div>
 </div>
 </logic:equal>
@@ -165,7 +165,7 @@
 </p>
 
 
-<h3 style="margin-top: 1em;"><bean:message key="title.over23.bachelor.first.cycle.choice" bundle="CANDIDATE_RESOURCES"/></h3>
+<h3 style="margin-top: 1em;"><bean:message key="title.over23.bachelor.first.cycle.choice" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></h3>
 <ol class="mtop05">
 	<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegrees" indexId="index">
 		<li>				

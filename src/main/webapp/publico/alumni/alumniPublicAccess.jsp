@@ -38,7 +38,7 @@
 		<fieldset style="display: block;">
 			<h3>Identificação <%-- <bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /> --%></h3>
 			<p>
-				<bean:message key="label.alumni.registration.process" bundle="ALUMNI_RESOURCES" />				
+				<bean:message key="label.alumni.registration.process" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES" />				
 			</p>
 		
 			<fr:edit id="alumniBean" name="alumniBean" visible="false" />
@@ -110,7 +110,7 @@
 			</label>
 
 			<div id="policyPrivacy" class="switchInline mtop1">
-				<bean:message key="label.privacy.policy.text" bundle="ALUMNI_RESOURCES" />
+				<bean:message key="label.privacy.policy.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES" />
 			</div>
 						
 			<logic:present name="privacyPolicyPublicAccessMessage">

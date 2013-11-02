@@ -147,7 +147,7 @@
 		<li><b>Transcript of records</b></li>
 	</ul>
 			
-	<p class="mbottom05"><em><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></em></p>
+	<p class="mbottom05"><em><bean:message key="message.ist.conditions.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></em></p>
 </logic:equal>
 
 <% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByMobilityCoordinator()) { %>

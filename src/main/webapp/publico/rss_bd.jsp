@@ -8,7 +8,7 @@
 <logic:present name="siteView"> 
 	<br/>
 	<h2><bean:message key="label.rss"/></h2>
-	<p><bean:message key="message.rss.1"/></p>
+	<p><bean:message key="message.rss.1" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></p>
 
 	
 	<h2><bean:message key="message.rss.2"/></h2>

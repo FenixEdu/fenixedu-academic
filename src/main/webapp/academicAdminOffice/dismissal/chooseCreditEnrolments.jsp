@@ -55,7 +55,7 @@
 	</logic:empty>
 	
 	
-	<p class="mtop15"><strong><bean:message key="label.studentDismissal.internalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES" arg0="<%= Unit.getInstitutionAcronym() %>"/></strong></p>
+	<p class="mtop15"><strong><bean:message key="label.studentDismissal.internalEnrolments" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 	
 	<logic:notEmpty name="dismissalBean" property="enrolments">
 		<fr:edit id="internalEnrolments" name="dismissalBean" property="enrolments" schema="student.Dismissal.choose.internal.enrolments">
@@ -68,7 +68,7 @@
 	
 	<logic:empty name="dismissalBean" property="enrolments">
 		<p>
-			<em><bean:message key="label.studentDismissal.internalEnrolments.empty" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+			<em><bean:message key="label.studentDismissal.internalEnrolments.empty" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 		</p>
 	</logic:empty>
 	

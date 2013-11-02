@@ -28,7 +28,7 @@
 		</tr>
 		<tr>
 			<th class="listClasses-header">
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
 			</th>
 			<th class="listClasses-header">
 				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.name"/>
@@ -56,7 +56,7 @@
 			</tr>
 			<tr>
 				<th class="listClasses-header">
-					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
 				</th>
 				<th class="listClasses-header">
 					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.name"/>

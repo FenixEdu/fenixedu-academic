@@ -36,7 +36,7 @@
 <logic:notEmpty name="tutorsBean" property="tutors">		
 	<fr:view name="tutorsBean" property="tutors">
 		<fr:schema type="net.sourceforge.fenixedu.domain.TutorshipIntention" bundle="APPLICATION_RESOURCES">
-			<fr:slot name="teacher.person.istUsername" key="label.istUsername"/>
+			<fr:slot name="teacher.person.istUsername" key="label.istUsername" />
 			<fr:slot name="teacher.person.name" key="label.name"/>
 		</fr:schema>
 		<fr:layout name="tabular">

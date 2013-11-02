@@ -13,7 +13,7 @@
 
 
 	<div class="infoop2 mtop1">
-		<bean:message key="message.validate.email"/>
+		<bean:message key="message.validate.email" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
 	</div>
 			
 

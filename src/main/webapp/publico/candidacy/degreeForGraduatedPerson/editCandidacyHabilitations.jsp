@@ -229,7 +229,7 @@
 			}
 		%>
 		
-		<h2 style="margin-top: 1em;"><bean:message key="title.master.degree.change.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
+		<h2 style="margin-top: 1em;"><bean:message key="title.master.degree.change.course.choice" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></h2>
 		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.selectedDegree"
 			name="individualCandidacyProcessBean"

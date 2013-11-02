@@ -45,7 +45,7 @@
 					</div>
 				</logic:equal>
 				
-				<bean:message key="message.gratuity.payments.reminder.text" bundle="APPLICATION_RESOURCES" />
+				<bean:message key="message.gratuity.payments.reminder.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="APPLICATION_RESOURCES" />
 			</div>
 			<br />
 			

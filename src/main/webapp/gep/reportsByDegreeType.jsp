@@ -567,7 +567,7 @@
 	</tr>
 	<%-- tr>
 		<td style="width: 350px;">
-			<bean:message key="label.report.teachersList.from.aplica" bundle="GEP_RESOURCES"/>
+			<bean:message key="label.report.teachersList.from.aplica" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="GEP_RESOURCES"/>
 		</td>
 		<td>
 			<bean:define id="urlTeachersCsv" type="java.lang.String"><bean:write name="urlTeachersFromAplica" filter="false"/>&amp;format=csv&amp;type=17</bean:define>
@@ -588,7 +588,7 @@
 	</tr--%>
 	<tr>
 		<td style="width: 350px;">
-			<bean:message key="label.report.teachersList.from.giaf" bundle="GEP_RESOURCES"/>
+			<bean:message key="label.report.teachersList.from.giaf" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="GEP_RESOURCES"/>
 		</td>
 		<td>
 			<bean:define id="urlTeachersCsv" type="java.lang.String"><bean:write name="urlTeachersFromGiaf" filter="false"/>&amp;format=csv&amp;type=17</bean:define>
@@ -609,7 +609,7 @@
 	</tr>
 	<tr>
 		<td style="width: 350px;">
-			<bean:message key="label.report.teacherCredits" bundle="GEP_RESOURCES"/>
+			<bean:message key="label.report.teacherCredits" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="GEP_RESOURCES"/>
 		</td>
 		<td>
 			<bean:define id="urlTeachersCsv" type="java.lang.String"><bean:write name="urlTeacherCreditsReportFile" filter="false"/>&amp;format=csv&amp;type=23</bean:define>

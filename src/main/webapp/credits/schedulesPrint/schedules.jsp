@@ -368,7 +368,7 @@
 <br style="clear: both;"/>
 
 
-<h3 class="mbottom05"><bean:message key="label.institution.working.time"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<h3 class="mbottom05"><bean:message key="label.institution.working.time" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <logic:present name="institutionWorkTimeList">
 	<table class="tb01" style="width: 99%;">		
 		<tr>

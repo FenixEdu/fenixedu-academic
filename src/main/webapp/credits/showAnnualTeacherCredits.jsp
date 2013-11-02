@@ -246,7 +246,7 @@ $(document).ready(function() {
 	</div>
 </div>
 <div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
-<b><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.optional" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<b><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.optional" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
 	<span>-</span>
 </logic:equal></h3>

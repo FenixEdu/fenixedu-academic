@@ -184,7 +184,7 @@
 		</div>	
 
 		
-		<h2 style="margin-top: 1em;"><bean:message key="title.over23.bachelor.first.cycle.choice" bundle="CANDIDATE_RESOURCES"/></h2>
+		<h2 style="margin-top: 1em;"><bean:message key="title.over23.bachelor.first.cycle.choice" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></h2>
 		
 		<fr:edit 	id='PublicCandidacyProcessBean.degrees'
 					name="individualCandidacyProcessBean"

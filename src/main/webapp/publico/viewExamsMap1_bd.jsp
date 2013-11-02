@@ -20,7 +20,7 @@
 <h1>	<logic:notEmpty name="degree" property="phdProgram">		<bean:write name="degree" property="phdProgram.presentationName"/>	</logic:notEmpty>	<logic:empty name="degree" property="phdProgram">		<bean:write name="degree" property="presentationName"/>	</logic:empty></h1>
 
 <logic:notPresent name="infoDegreeCurricularPlan" >
-	<p><em><bean:message bundle="DEFAULT" key="error.impossibleExecutionDegreeList"/></em></p>
+	<p><em><bean:message bundle="DEFAULT" key="error.impossibleExecutionDegreeList" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></em></p>
 </logic:notPresent>
 
 <logic:present name="infoDegreeCurricularPlan" >
@@ -51,7 +51,7 @@
 	</h2>
 
 	<logic:notPresent name="lista" scope="request">
-		<p><em><bean:message bundle="DEFAULT" key="error.curricularPlanHasNoExecutionDegreesInNotClosedYears"/></em></p>
+		<p><em><bean:message bundle="DEFAULT" key="error.curricularPlanHasNoExecutionDegreesInNotClosedYears" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></em></p>
 	</logic:notPresent>
 	<logic:present name="lista" scope="request">
 		<bean:define id="listaNew" name="lista" />
@@ -81,7 +81,7 @@
 		</html:form>
 
 		<logic:notPresent name="<%=PresentationConstants.INFO_EXAMS_MAP%>">
-			<p><em><bean:message bundle="DEFAULT" key="error.curricularPlanHasNoExecutionDegreesInGivenPeriod"/></em></p>
+			<p><em><bean:message bundle="DEFAULT" key="error.curricularPlanHasNoExecutionDegreesInGivenPeriod" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></em></p>
 		</logic:notPresent>
 		<logic:present name="<%=PresentationConstants.INFO_EXAMS_MAP%>">
 			<div>

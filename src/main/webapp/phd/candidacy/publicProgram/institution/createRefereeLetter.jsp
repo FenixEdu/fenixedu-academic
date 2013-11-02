@@ -90,7 +90,7 @@
 		</fieldset>
 		
 		<p class="mvert15">
-			<bean:message key="message.phd.institution.public.candidacy.fill.referee.submit.only.once" bundle="PHD_RESOURCES" />
+			<bean:message key="message.phd.institution.public.candidacy.fill.referee.submit.only.once" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PHD_RESOURCES" />
 		</p>
 		
 		<html:submit ><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>

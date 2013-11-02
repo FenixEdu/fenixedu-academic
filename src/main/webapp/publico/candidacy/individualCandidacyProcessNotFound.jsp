@@ -27,7 +27,7 @@
 </p>
 
 <p>&nbsp;</p>
-<p id="contacts"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></p>
+<p id="contacts"><bean:message key="message.nape.contacts" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></p>
 
 <p><a href='<%= fullPath + "?method=beginCandidacyProcessIntro" %>'><bean:write name="application.name"/>
 	<bean:message key="label.back" bundle="CANDIDATE_RESOURCES"/> 

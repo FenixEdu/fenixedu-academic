@@ -10,7 +10,7 @@
 
 <div class="infoop mtop2 mbottom1">
 	<p class="mvert025"><b><bean:message key="label.teacher.name"/>:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert025"><b><bean:message key="label.teacher.id"/>:</b> <bean:write name="teacher" property="teacherId"/></p>
+	<p class="mvert025"><b><bean:message key="label.teacher.id" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>:</b> <bean:write name="teacher" property="teacherId"/></p>
 	<p class="mvert025"><b><bean:message key="label.execution-period"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
 </div>
 <bean:define id="teacherId" name="teacher" property="externalId"/>

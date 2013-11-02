@@ -56,7 +56,7 @@
 
 		<logic:equal name="individualCandidacyProcessBean" property="choosePersonBean.employee" value="true">
 		
-		<em><bean:message key="message.chosen.person.is.employee" bundle="CANDIDATE_RESOURCES"/></em> 
+		<em><bean:message key="message.chosen.person.is.employee" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></em> 
 		
 		<fr:view name="individualCandidacyProcessBean" property="personBean"
 			schema="CandidacyProcess.personalDataBean">
