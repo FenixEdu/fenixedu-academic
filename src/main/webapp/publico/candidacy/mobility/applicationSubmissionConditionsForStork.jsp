@@ -35,7 +35,7 @@
 <bean:message key="erasmus.application.submission.condition.text" bundle="CANDIDATE_RESOURCES" />
 
 <div class="mtop15" id="contacts">
-	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
+	<bean:message key="erasmus.contacts.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES" />
 </div>
 
 <fr:form action='<%= mappingPath + ".do?method=prepareCandidacyCreationForStork" %>'>

@@ -21,7 +21,7 @@ hideButtons();
 
 <div class="infoop2 mtop2">
 	<strong>
-		<bean:message  key="label.fill.missing.candidacy.information.message" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>" bundle="STUDENT_RESOURCES"/>
+		<bean:message  key="label.fill.missing.candidacy.information.message" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="STUDENT_RESOURCES"/>
 	</strong>	
 </div>
 

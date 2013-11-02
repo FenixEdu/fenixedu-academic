@@ -16,7 +16,7 @@
 
 </p>
 <div class="infoop2">
-	<bean:message bundle="HTMLALT_RESOURCES" key="label.teacher.auth" />
+	<bean:message bundle="HTMLALT_RESOURCES" key="label.teacher.auth" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" />
 </div>
 <logic:messagesPresent>
 	<html:errors/>

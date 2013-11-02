@@ -9,8 +9,8 @@
 <html:html xhtml="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="<bean:message key="meta.keywords" bundle="GLOBAL_RESOURCES"/>" />
-<meta name="description" content="<bean:message key="meta.description" bundle="GLOBAL_RESOURCES"/>" />
+<meta name="keywords" content="<bean:message key="meta.keywords" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="GLOBAL_RESOURCES"/>" />
+<meta name="description" content="<bean:message key="meta.description" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="GLOBAL_RESOURCES"/>" />
 <logic:present name="dont-cache-pages-in-search-engines">
 	<logic:equal name="dont-cache-pages-in-search-engines" value="true">
 		<meta name="ROBOTS" content="NOINDEX, NOFOLLOW"/>

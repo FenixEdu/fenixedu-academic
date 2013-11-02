@@ -85,7 +85,7 @@
 		<logic:empty name="individualCandidacyProcessBean" property="precedentDegreeType">
 			<p><bean:message key="message.candidacy.last.registration" bundle="CANDIDATE_RESOURCES"/></p>
 			<ul>
-				<li><html:radio onclick="this.form.method.value='fillInternalPrecedentInformation'; this.form.skipValidation.value='true'; this.form.submit();" name="individualCandidacyProcessBean" property="precedentDegreeType" value="<%=  PrecedentDegreeType.INSTITUTION_DEGREE.getName() %>" ><bean:message key="label.last.registration.in.ist" bundle="CANDIDATE_RESOURCES"/></html:radio></li>
+				<li><html:radio onclick="this.form.method.value='fillInternalPrecedentInformation'; this.form.skipValidation.value='true'; this.form.submit();" name="individualCandidacyProcessBean" property="precedentDegreeType" value="<%=  PrecedentDegreeType.INSTITUTION_DEGREE.getName() %>" ><bean:message key="label.last.registration.in.ist" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES"/></html:radio></li>
 				<li><html:radio onclick="this.form.method.value='fillExternalPrecedentInformation'; this.form.skipValidation.value='true'; this.form.submit();" name="individualCandidacyProcessBean" property="precedentDegreeType" value="<%=  PrecedentDegreeType.EXTERNAL_DEGREE.getName() %>" ><bean:message key="label.last.registration.external.institution" bundle="CANDIDATE_RESOURCES"/></html:radio></li>
 			</ul>
 		</logic:empty>

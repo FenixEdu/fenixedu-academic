@@ -33,5 +33,5 @@
 The authentication failed. Please follow the instructions on national citizen card authentication page. If the problem persists please contact us.
 
 <div class="mtop15" id="contacts">
-	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
+	<bean:message key="erasmus.contacts.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES" />
 </div>

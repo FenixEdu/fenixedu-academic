@@ -13,7 +13,7 @@
 					<tr>
 						<td width="50" height="100"><img
 							src="<%= request.getContextPath() %>/images/LogoIST.gif"
-							alt="<bean:message key="istlogo" bundle="IMAGE_RESOURCES" />"
+							alt="<bean:message key="istlogo" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="IMAGE_RESOURCES" />"
 							width="50" height="104" border="0" /></td>
 						<td>&nbsp;</td>
 						<td>

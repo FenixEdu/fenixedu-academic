@@ -122,7 +122,7 @@
 			<table>
 				<tr>
 					<td colspan="2">
-						<bean:message key="message.erasmus.ist.former.student.employee.username.required" bundle="CANDIDATE_RESOURCES"/>
+						<bean:message key="message.erasmus.ist.former.student.employee.username.required" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES"/>
 					</td>
 				</tr>
 				<tr>

@@ -69,5 +69,5 @@
 <p>Please note that the learning agreement must be signed and stamped by your school before you uploaded it.</p>
 
 <div class="h_box" id="contacts">
-	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
+	<bean:message key="erasmus.contacts.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES" />
 </div>
