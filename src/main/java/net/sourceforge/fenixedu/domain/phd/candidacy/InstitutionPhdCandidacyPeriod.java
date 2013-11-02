@@ -145,7 +145,7 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("en", "EN")),
                 referee.getValue(), referee.getPhdProgramCandidacyProcess().getPhdProgram().getName().getContent(Language.pt),
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("pt", "PT")),
-                referee.getValue()), Unit.getInstitutionName());
+                referee.getValue()), Unit.getInstitutionName().getContent());
     }
 
     public String getRefereeSubmissionFormLinkPt(final PhdCandidacyReferee referee) {

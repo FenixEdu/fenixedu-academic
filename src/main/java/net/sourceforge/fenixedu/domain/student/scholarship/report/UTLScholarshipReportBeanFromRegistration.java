@@ -62,7 +62,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
     @Override
     public String getInstitutionName() {
         return MessageFormat.format(ACADEMIC_OFFICE_RESOURCE_BUNDLE.getString("label.utl.scholarship.report.institution.name"),
-                Unit.getInstitutionName());
+                Unit.getInstitutionName().getContent());
     }
 
     @Override

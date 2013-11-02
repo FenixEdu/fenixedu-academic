@@ -41,7 +41,7 @@
 <tiles:insert attribute="keywords" ignore="true" />
 
 <title>
-	<tiles:insert name="title" ignore="true" />x
+	<tiles:insert name="title" ignore="true" />
 	<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
 </title> <%-- TITLE --%>
 

@@ -1063,7 +1063,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
                         .getBundle("resources.AcademicAdminOffice", Locale.getDefault())
                         .getString(
                                 "label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionName"),
-                        Unit.getInstitutionName());
+                        Unit.getInstitutionName().getContent());
     }
 
     private String getDefaultInstitutionCode() {
