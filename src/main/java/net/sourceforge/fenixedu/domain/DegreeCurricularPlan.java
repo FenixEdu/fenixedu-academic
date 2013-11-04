@@ -123,7 +123,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
             };
 
-    public DegreeCurricularPlan() {
+    DegreeCurricularPlan() {
         super();
         super.setRootDomainObject(RootDomainObject.getInstance());
         super.setApplyPreviousYearsEnrolmentRule(Boolean.TRUE);
