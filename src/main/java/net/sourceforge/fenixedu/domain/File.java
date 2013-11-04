@@ -58,8 +58,8 @@ public abstract class File extends File_Base {
 
     private void checkInvalidCharacters(String displayName) {
         // if the accepted character list is changed, consider changing the 'Content.java' list as well
-        String validChars = "_\\-.()*'";
-        if (!Pattern.matches("[a-zA-Z0-9" + validChars + "]+", displayName)) {
+        String validChars = "_\\- .()*'";
+        if (!Pattern.matches("[\\p{IsLatin}0-9" + validChars + "]+", displayName)) {
             throw new DomainException("errors.file.displayName.invalid.characters", validChars.replace("\\", ""));
         }
     }
