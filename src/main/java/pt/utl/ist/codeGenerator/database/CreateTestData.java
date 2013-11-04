@@ -499,16 +499,11 @@ public class CreateTestData {
         }
 
         private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree) {
-            final DegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-            degreeCurricularPlan.setDegree(degree);
-            degreeCurricularPlan.setName(degree.getSigla());
-            degreeCurricularPlan.setCurricularStage(CurricularStage.APPROVED);
-            degreeCurricularPlan.setDescription("Bla bla bla. Desc. do plano curricular do curso. Bla bla bla");
-            degreeCurricularPlan.setDescriptionEn("Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.");
-            degreeCurricularPlan.setState(DegreeCurricularPlanState.ACTIVE);
-            if (degree.getDegreeType().isBolonhaType()) {
-                RootCourseGroup.createRoot(degreeCurricularPlan, degree.getSigla(), degree.getSigla());
-            }
+            String descriptionPt = "Bla bla bla. Desc. do plano curricular do curso. Bla bla bla";
+            String descriptionEn = "Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.";
+            final DegreeCurricularPlan degreeCurricularPlan =
+                    new DegreeCurricularPlan(degree, degree.getSigla(), CurricularStage.APPROVED, descriptionPt, descriptionEn,
+                            DegreeCurricularPlanState.ACTIVE);
             return degreeCurricularPlan;
         }
 

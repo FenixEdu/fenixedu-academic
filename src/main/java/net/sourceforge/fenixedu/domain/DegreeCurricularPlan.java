@@ -123,7 +123,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
             };
 
-    public DegreeCurricularPlan() {
+    protected DegreeCurricularPlan() {
         super();
         super.setRootDomainObject(RootDomainObject.getInstance());
         super.setApplyPreviousYearsEnrolmentRule(Boolean.TRUE);
@@ -196,6 +196,20 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         createDefaultCurricularRules();
         new DegreeCurricularPlanServiceAgreementTemplate(this);
 
+    }
+
+    public DegreeCurricularPlan(Degree degree, String name, CurricularStage curricularStage, String descriptionPt,
+            String descriptionEn, DegreeCurricularPlanState state) {
+        this();
+        setDegree(degree);
+        setName(name);
+        setCurricularStage(curricularStage);
+        setDescription(descriptionPt);
+        setDescriptionEn(descriptionEn);
+        setState(state);
+        if (degree.getDegreeType().isBolonhaType()) {
+            RootCourseGroup.createRoot(this, name, name);
+        }
     }
 
     private void createDefaultCourseGroups() {
