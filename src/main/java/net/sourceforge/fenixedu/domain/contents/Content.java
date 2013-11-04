@@ -435,20 +435,19 @@ public abstract class Content extends Content_Base {
 
     @Override
     public void setName(final MultiLanguageString name) {
-        if (!isNameValid(name)) {
-            throw new DomainException("label.error.content.invalid.name");
-        }
+        checkInvalidCharacters(name);
         super.setName(name);
         setNormalizedName(normalize(name));
     }
 
-    private boolean isNameValid(MultiLanguageString name) {
+    private void checkInvalidCharacters(MultiLanguageString name) {
+        String validChars = "_\\-.()*'";
         for (String content : name.getAllContents()) {
-            if (!Pattern.matches("[^?/+<>\"]+", content)) { // use "[a-zA-Z0-9_\\-.()*']+" instead for "only accepted characters" 
-                return false;
+            // if the accepted character list is changed, consider changing the 'File.java' list as well
+            if (!Pattern.matches("[a-zA-Z0-9" + validChars + "]+", content)) {
+                throw new DomainException("label.error.content.invalid.name", validChars.replace("\\", ""));
             }
         }
-        return true;
     }
 
     @Override

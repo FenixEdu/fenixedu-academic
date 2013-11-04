@@ -57,10 +57,10 @@ public abstract class File extends File_Base {
     }
 
     private void checkInvalidCharacters(String displayName) {
-        // use "[^?+>]+" instead for "string does not contain (match) invalid characters" 
-        // if the accepted character list is changed, don't forget to change the message for all modules
-        if (!Pattern.matches("[a-zA-Z0-9_\\-.()*']+", displayName)) {
-            throw new DomainException("errors.file.displayName.invalid.characters", "[a-zA-Z0-9_\\-.()*']+");
+        // if the accepted character list is changed, consider changing the 'Content.java' list as well
+        String validChars = "_\\-.()*'";
+        if (!Pattern.matches("[a-zA-Z0-9" + validChars + "]+", displayName)) {
+            throw new DomainException("errors.file.displayName.invalid.characters", validChars.replace("\\", ""));
         }
     }
 
