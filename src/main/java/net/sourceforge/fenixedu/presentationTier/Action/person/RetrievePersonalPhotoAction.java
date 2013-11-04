@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.ContentType;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -25,6 +24,8 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import com.google.common.io.ByteStreams;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -95,6 +96,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
             dos.write(avatar);
             dos.close();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -105,13 +107,13 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     public static void writeUnavailablePhoto(HttpServletResponse response, ActionServlet actionServlet) {
         try {
             response.setContentType("image/gif");
-            final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-            final String path =
-                    actionServlet.getServletContext().getRealPath(
-                            "/images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif");
-            dos.write(FileUtils.readFileToByteArray(new File(path)));
-            dos.close();
+            InputStream stream =
+                    RetrievePersonalPhotoAction.class.getClassLoader().getResourceAsStream(
+                            "images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif");
+            ByteStreams.copy(stream, response.getOutputStream());
+            stream.close();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

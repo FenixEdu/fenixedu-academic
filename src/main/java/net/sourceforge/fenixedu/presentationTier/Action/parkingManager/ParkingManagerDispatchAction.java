@@ -343,7 +343,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         }
 
         Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat("/images/Logo_IST_color.tiff"));
+        parameters.put("imageUrl", "images/Logo_IST_color.tiff");
 
         Person person = (Person) parkingParty.getParty();
         parameters.put("number", getMostSignificantNumberString(person, parkingGroup));

@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.parkingManager;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -369,8 +368,10 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 
     public ActionForward export(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        String path = getServlet().getServletContext().getRealPath("/").replace('\\', '/');
-        InputStream inputStream = new FileInputStream(path + "/templates/Cartoes_XML.mdb");
+
+        InputStream inputStream =
+                ExportParkingDataToAccessDatabaseDA.class.getClassLoader().getResourceAsStream("templates/Cartoes_XML.mdb");
+
         if (inputStream != null) {
             File temp = FileUtils.copyToTemporaryFile(inputStream);
             Database db = Database.open(temp, Boolean.FALSE, Boolean.TRUE);
@@ -391,6 +392,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
             writer.close();
 
             response.flushBuffer();
+            inputStream.close();
         }
         return null;
     }

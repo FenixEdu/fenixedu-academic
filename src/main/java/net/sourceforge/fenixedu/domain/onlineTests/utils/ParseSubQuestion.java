@@ -74,7 +74,7 @@ public class ParseSubQuestion extends DefaultHandler {
         return question;
     }
 
-    // para o preview - sÃ³ tem 1 item
+    // for the preview, only has 1 item
     public SubQuestion parseSubQuestion(String fileString, String path) throws ParseQuestionException {
         try {
             parseFile(fileString, path);
