@@ -63,7 +63,7 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
  * <li>editItem</li>
  * <li>section: view a section</li>
  * <li>uploadFile: page that allows you to upload a simple file</li>
- * <li>sectionsManagement: inicial page that shows all top level sections</li>
+ * <li>sectionsManagement: initial page that shows all top level sections</li>
  * <li>createSection</li>
  * <li>editSection</li>
  * <li>editFile</li>
