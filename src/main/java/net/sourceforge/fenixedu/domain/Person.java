@@ -121,6 +121,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -2897,10 +2898,11 @@ public class Person extends Person_Base {
         return result;
     }
 
-    public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsToProcessOrderByDate() {
+    public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsToProcessOrderByDate(Campus campus) {
         final List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();
         for (final PunctualRoomsOccupationRequest request : getPunctualRoomsOccupationRequestsToProcess()) {
-            if (!request.getCurrentState().equals(RequestState.RESOLVED)) {
+            if (!request.getCurrentState().equals(RequestState.RESOLVED)
+                    && (request.getCampus() == null || request.getCampus().equals(campus))) {
                 result.add(request);
             }
         }

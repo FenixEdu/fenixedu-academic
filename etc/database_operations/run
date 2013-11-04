@@ -44,4 +44,5 @@ function executeWithTempFile() {
 }
 
 execute "Add RegistrationStateLog Entity" addRegistrationStateLog.sql
+execute "Creates Campus Entry for Puntual Room Reservations"  createCampusForPunctualRoomReservation.sql
 
