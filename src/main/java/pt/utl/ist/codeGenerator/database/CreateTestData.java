@@ -469,8 +469,8 @@ public class CreateTestData {
                         final Degree degree = createDegree(degreeType, (degreeType.ordinal() * 10) + i);
                         createDegreeInfo(degree);
                         associateToDepartment(degree);
-                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree);
-                        createExecutionDegrees(degreeCurricularPlan, getCampus());
+//                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree);
+//                        createExecutionDegrees(degreeCurricularPlan, getCampus());
 
                         final DegreeSite degreeSite = degree.getSite();
 
@@ -498,19 +498,19 @@ public class CreateTestData {
                     degreeType.getGradeScale());
         }
 
-        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree) {
-            final DegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-            degreeCurricularPlan.setDegree(degree);
-            degreeCurricularPlan.setName(degree.getSigla());
-            degreeCurricularPlan.setCurricularStage(CurricularStage.APPROVED);
-            degreeCurricularPlan.setDescription("Bla bla bla. Desc. do plano curricular do curso. Bla bla bla");
-            degreeCurricularPlan.setDescriptionEn("Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.");
-            degreeCurricularPlan.setState(DegreeCurricularPlanState.ACTIVE);
-            if (degree.getDegreeType().isBolonhaType()) {
-                RootCourseGroup.createRoot(degreeCurricularPlan, degree.getSigla(), degree.getSigla());
-            }
-            return degreeCurricularPlan;
-        }
+//        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree) {
+//            final DegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
+//            degreeCurricularPlan.setDegree(degree);
+//            degreeCurricularPlan.setName(degree.getSigla());
+//            degreeCurricularPlan.setCurricularStage(CurricularStage.APPROVED);
+//            degreeCurricularPlan.setDescription("Bla bla bla. Desc. do plano curricular do curso. Bla bla bla");
+//            degreeCurricularPlan.setDescriptionEn("Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.");
+//            degreeCurricularPlan.setState(DegreeCurricularPlanState.ACTIVE);
+//            if (degree.getDegreeType().isBolonhaType()) {
+//                RootCourseGroup.createRoot(degreeCurricularPlan, degree.getSigla(), degree.getSigla());
+//            }
+//            return degreeCurricularPlan;
+//        }
 
         private void createExecutionDegrees(final DegreeCurricularPlan degreeCurricularPlan, final Campus campus) {
             for (final ExecutionYear executionYear : getRootDomainObject().getExecutionYearsSet()) {
