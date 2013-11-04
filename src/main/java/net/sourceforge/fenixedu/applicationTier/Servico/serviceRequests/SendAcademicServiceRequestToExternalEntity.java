@@ -77,9 +77,9 @@ public class SendAcademicServiceRequestToExternalEntity {
             final String justification) {
         academicServiceRequest.sendToExternalEntity(sendDate, justification);
 
-        if (academicServiceRequest instanceof EquivalencePlanRequest) {
-            sendRequestDataToExternal(academicServiceRequest);
-        }
+//        if (academicServiceRequest instanceof EquivalencePlanRequest) {
+//            sendRequestDataToExternal(academicServiceRequest);
+//        }
     }
 
     private static void sendRequestDataToExternal(final AcademicServiceRequest academicServiceRequest) {
