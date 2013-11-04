@@ -39,4 +39,9 @@
 			<bean:message key="link.download.schedule.list"/>
 		</html:link>
 	</li>
+		<li>
+		<html:link action="/dumpRoomAllocation.do?method=downloadShiftAttendence" paramId="executionPeriodId" paramName="dumpContextBean" paramProperty="executionPeriod.externalId">
+			<bean:message key="link.download.shiftAttendence.list"/>
+		</html:link>
+	</li>
 </ul>
