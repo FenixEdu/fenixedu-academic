@@ -165,11 +165,11 @@
 							<fr:slot name="person.emailForSendingEmails" layout="null-as-label" key="label.card.person.email" />
 
 							<logic:notEmpty name="attendance" property="giafProfessionalDataSet">
-								<logic:iterate id="giafProfessionalData" name="attendance" property="giafProfessionalDataSet" indexId="i">
-									<bean:define id="labelId" name="giafProfessionalData" property="professionalCategory.categoryType"/>
-									<fr:slot name="<%="giafProfessionalDatas["+ i+"]"%>" key="<%=labelId.toString() %>" bundle="ENUMERATION_RESOURCES">
+								<logic:iterate id="giafProfessionalDataSet" name="attendance" property="giafProfessionalDataSet" indexId="i">
+									<bean:define id="labelId" name="giafProfessionalDataSet" property="professionalCategory.categoryType"/>
+									<fr:slot name="<%="giafProfessionalDataSet["+ i+"]"%>" key="<%=labelId.toString() %>" bundle="ENUMERATION_RESOURCES">
 										<fr:property name="format" value="${contractSituation.name}" />
-										<logic:notEmpty name="giafProfessionalData" property="personProfessionalData.person.workingPlaceUnitForAnyRoleType">
+										<logic:notEmpty name="giafProfessionalDataSet" property="personProfessionalData.person.workingPlaceUnitForAnyRoleType">
 											<fr:property name="format" value="${contractSituation.name} <br/> ${personProfessionalData.person.workingPlaceUnitForAnyRoleType.presentationName}" />
 											<fr:property name="escaped" value="false" />
 										</logic:notEmpty>
@@ -181,17 +181,6 @@
 							</logic:present>
 							<logic:present name="attendance" property="researcherUnit">
 								<fr:slot name="researcherUnit.presentationName" key="label.person.researcher" />
-							</logic:present>
-							<logic:present name="attendance" property="grantOwnerUnit">
-								<fr:slot name="grantOwnerUnit" layout="conditionalFormats" key="label.person.grantOwner">
-									<fr:property name="format(noDate)" value="${grantOwnerUnit.presentationName}" />
-									<fr:property name="useFormatIfNot(noDate)" value="hasGrantOwnerEnd" />
-									<fr:property name="useParent(date)" value="true" />
-
-									<fr:property name="format(date)" value="${grantOwnerUnit.presentationName} - Fim: ${grantOwnerEnd}" />
-									<fr:property name="useFormatIf(date)" value="hasGrantOwnerEnd" />
-									<fr:property name="useParent(date)" value="true" />
-								</fr:slot>
 							</logic:present>
 							<logic:present name="attendance" property="employeeUnit">
 								<fr:slot name="employeeUnit.presentationName" key="label.person.employee" />

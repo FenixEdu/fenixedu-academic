@@ -214,6 +214,15 @@ public class Function extends Function_Base {
         return getFunctionType().equals(functionType);
     }
 
+    public boolean isOfAnyFunctionType(Collection<FunctionType> functionTypes) {
+        for (FunctionType functionType : functionTypes) {
+            if (isOfFunctionType(functionType)) {
+                return getFunctionType().equals(functionType);
+            }
+        }
+        return false;
+    }
+
     @Deprecated
     public java.util.Date getBeginDate() {
         org.joda.time.YearMonthDay ymd = getBeginDateYearMonthDay();
