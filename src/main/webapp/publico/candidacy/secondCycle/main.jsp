@@ -11,7 +11,7 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<a href="http://www.ist.utl.pt"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="title.application.name.secondCycle" bundle="CANDIDATE_RESOURCES"/>
 </div>
@@ -38,21 +38,21 @@
 
 <h2 id="desc">Descrição</h2>
 
-<p>Podem candidatar-se a um Mestrado de 2º ciclo do IST, ou a um 2º ciclo de um Mestrado Integrado do IST, os estudantes que estejam nas seguintes condições:</p>
+<p>Podem candidatar-se a um Mestrado de 2º ciclo do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />, ou a um 2º ciclo de um Mestrado Integrado do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />, os estudantes que estejam nas seguintes condições:</p>
 
 <ul>
-	<li>tenham terminado no IST uma Licenciatura de 1º ciclo, ou o 1º ciclo de um Mestrado Integrado, sem <a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">coerência científica</a> com o curso de 2º ciclo a que se candidatam;</li>
+	<li>tenham terminado no <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> uma Licenciatura de 1º ciclo, ou o 1º ciclo de um Mestrado Integrado, sem <a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">coerência científica</a> com o curso de 2º ciclo a que se candidatam;</li>
 	<li>sejam titulares de uma formação de 1º ciclo na área de Ciências e Tecnologia (exceptua-se o caso do 2º ciclo em Arquitectura que pressupõe uma formação de 1º ciclo em Arquitectura);</li>
 	<li>sejam detentores de um currículo escolar, científico ou profissional, que ateste a sua capacidade para realização do Mestrado a que se candidatam.</li>
 </ul>
 
 <p>Os candidatos que se encontrem a terminar uma Licenciatura de 1º ciclo, ou o 1º ciclo de um Mestrado Integrado, poderão submeter a sua candidatura nos prazos estipulados para o efeito, ficando esta condicionada ao término do referido ciclo até ao dia 30 de Setembro de 2009.</p>
 
-<p><a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">Tabela de Coerência Científica entre cursos do IST</a></p>
+<p><a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">Tabela de Coerência Científica entre cursos do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a></p>
 
 <h2 id="vag">Vagas 2º ciclo</h2>
 
-	<table class="tab_lay" width="70%" cellspacing="0" summary="Informações sobre os mestrados (2º ciclo), no âmbito de Bolonha, disponíveis no IST">
+	<table class="tab_lay" width="70%" cellspacing="0" summary="Informações sobre os mestrados (2º ciclo), no âmbito de Bolonha, disponíveis no <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />">
 	<tr>	
 		<th>Curso</th>
 
@@ -231,7 +231,7 @@
 
 <h2 id="critsel">Critérios de Selecção</h2>
 
-<p>Os candidatos a um Mestrado de 2º ciclo do IST, ou a um 2º ciclo de um Mestrado Integrado do IST, serão seriados pela coordenação do curso a que se candidatam tendo em conta os seguintes critérios:</p>
+<p>Os candidatos a um Mestrado de 2º ciclo do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />, ou a um 2º ciclo de um Mestrado Integrado do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />, serão seriados pela coordenação do curso a que se candidatam tendo em conta os seguintes critérios:</p>
 <ol>
 	<li>Afinidade entre o curso que possuem e o curso a que se candidatam;</li>
 	<li>Natureza do grau que possuem;</li>
@@ -269,15 +269,15 @@
 
 <h2 id="faq">FAQ</h2>
 
-<h3>Q1: Sou finalista do 1º ciclo de um curso de Licenciatura (ou Mestrado Integrado) no IST. Terei que fazer alguma coisa para prosseguir os estudos no 2º ciclo do mesmo curso?</h3>
+<h3>Q1: Sou finalista do 1º ciclo de um curso de Licenciatura (ou Mestrado Integrado) no <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />. Terei que fazer alguma coisa para prosseguir os estudos no 2º ciclo do mesmo curso?</h3>
 <p>A1: Não, nestes casos a transição para o 2º ciclo é automática.</p>
 
-<h3>Q2: Sou finalista do 1º ciclo de um curso de Licenciatura (ou Mestrado Integrado) no IST. Em que condições a mudança para outro 2º ciclo diferente é automática?</h3>
-<p>A2: É sempre possível mudar de curso e prosseguir estudos noutra área após completar o 1º ciclo desde que esteja garantida a coerência científica entre os dois cursos do IST. Esta coerência verifica-se sempre que as competências de formação do 1º ciclo respeitem as necessidades de formação para ingresso no 2º ciclo. A <a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">Tabela de Coerência Científica entre cursos do IST</a> mostra-te em que situações a mudança para um 2º ciclo diferente é automática.</p>
+<h3>Q2: Sou finalista do 1º ciclo de um curso de Licenciatura (ou Mestrado Integrado) no <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />. Em que condições a mudança para outro 2º ciclo diferente é automática?</h3>
+<p>A2: É sempre possível mudar de curso e prosseguir estudos noutra área após completar o 1º ciclo desde que esteja garantida a coerência científica entre os dois cursos do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />. Esta coerência verifica-se sempre que as competências de formação do 1º ciclo respeitem as necessidades de formação para ingresso no 2º ciclo. A <a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">Tabela de Coerência Científica entre cursos do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> mostra-te em que situações a mudança para um 2º ciclo diferente é automática.</p>
 
-<h3>Q3: Sou finalista do 1º ciclo de um curso de Licenciatura (ou Mestrado Integrado) no IST. O que devo fazer se pretender prosseguir os estudos num 2º ciclo do IST sem coerência científica com o curso de 1º ciclo?</h3>
-<p>A3: Deves submeter um processo de candidatura ao 2º ciclo de acordo com os prazos e regulamento em vigor, sendo o processo analisado juntamente com as candidaturas de alunos externos que pretendem ingressar num curso de 2º ciclo do IST.</p>
+<h3>Q3: Sou finalista do 1º ciclo de um curso de Licenciatura (ou Mestrado Integrado) no <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />. O que devo fazer se pretender prosseguir os estudos num 2º ciclo do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> sem coerência científica com o curso de 1º ciclo?</h3>
+<p>A3: Deves submeter um processo de candidatura ao 2º ciclo de acordo com os prazos e regulamento em vigor, sendo o processo analisado juntamente com as candidaturas de alunos externos que pretendem ingressar num curso de 2º ciclo do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />.</p>
 
-<h3>Q4: Sou titular de uma licenciatura pré-bolonha do IST. Posso candidatar-me a um mestrado de 2º ciclo, na mesma área de formação?</h3>
+<h3>Q4: Sou titular de uma licenciatura pré-bolonha do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />. Posso candidatar-me a um mestrado de 2º ciclo, na mesma área de formação?</h3>
 <p>A4: Sim. </p>
 

@@ -1127,7 +1127,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         sb.append(reportAppenderAuxString("Phone", personBean.getPhone()));
         sb.append(reportAppenderAuxString("Email", personBean.getEmail()));
         sb.append(reportAppenderAuxString("Email Confirmation", personBean.getEmailConfirmation()));
-        sb.append(reportAppenderAuxString("IST Number", mobilityBean.getPersonNumber()));
+        sb.append(reportAppenderAuxString("Student Number", mobilityBean.getPersonNumber()));
 
         MobilityStudentDataBean mobilityStudentDataBean = mobilityBean.getMobilityStudentDataBean();
         sb.append("\nMobility Data Entered:\n");

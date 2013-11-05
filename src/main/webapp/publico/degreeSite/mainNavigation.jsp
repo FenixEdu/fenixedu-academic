@@ -18,5 +18,5 @@
 		</ul>
 	</li>
 	<li><a href="/html/id/">I &amp; D</a></li>
-	<li><a href="/html/viverist/">Viver no IST</a></li>
+	<li><a href="/html/viverist/">Viver no <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a></li>
 </ul>

@@ -99,10 +99,10 @@
 
 <div class="col_right_photo"><img src="http://www.ist.utl.pt/img/perfil/candidato_photo.jpg" alt="[Photo] Enroll at the Admissions Office" width="150" height="100" /></div>
 <h1>Prospective student</h1>
-<p class="greytxt">This page is aimed at providing complete application information for students interested in attending IST courses.</p>
-<h2>With the IST, come into the best European higher education</h2>
+<p class="greytxt">This page is aimed at providing complete application information for students interested in attending <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym() %> courses.</p>
+<h2>With the <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym() %>, come into the best European higher education</h2>
 
-<p>The Instituto Superior Técnico (IST), a recognized school for excellence in Engineering, Science and Technology, implemented the Bologna Process reform in the 2006/2007 academic year.</p>
+<p>The <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent() %> (<%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym() %>), a recognized school for excellence in Engineering, Science and Technology, implemented the Bologna Process reform in the 2006/2007 academic year.</p>
 <p>This reform aims at:</p>
 <ul>
 	<li>Increasing students´ mobility at national and international level;</li>
@@ -128,17 +128,17 @@
 	<div style="clear: both;"></div>
 </div>
 
-<p>Under the scope of the 1<sup>st</sup> and 2<sup>nd</sup> cycle courses, the IST, as a great European school in the area of Engineering, Science and Technology, offers a wide range of post-graduate courses, either vocational or more oriented to Research, Development and Innovation.</p>
-<p>Additionally, the IST is strongly investing in international cooperation programmes with the best schools in Europe, namely under the scope of its association to the CLUSTER network.  But IST international programmes also include collaboration with prestigious American universities such as the MIT, CMU or UTAustin.</p>
+<p>Under the scope of the 1<sup>st</sup> and 2<sup>nd</sup> cycle courses, the <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />, as a great European school in the area of Engineering, Science and Technology, offers a wide range of post-graduate courses, either vocational or more oriented to Research, Development and Innovation.</p>
+<p>Additionally, the <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> is strongly investing in international cooperation programmes with the best schools in Europe, namely under the scope of its association to the CLUSTER network.  But <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> international programmes also include collaboration with prestigious American universities such as the MIT, CMU or UTAustin.</p>
 
 <h2>Contacts</h2>
 <h3><a href="http://nape.ist.utl.pt/">Student Support Unit (NAPE)</a></h3>
-<p><strong>IST - Alameda </strong><br />
+<p><strong><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> - Alameda </strong><br />
 
 	Phone: 218 417 251 / 218 419 155 <br />
 	Fax: 218 419 344
 </p>
-<p><strong>IST - Taguspark</strong><br />
+<p><strong><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> - Taguspark</strong><br />
    Phone: 214 233 545</p>
 <p><a href="mailto:nape@ist.utl.pt">nape@ist.utl.pt</a></p> 
 

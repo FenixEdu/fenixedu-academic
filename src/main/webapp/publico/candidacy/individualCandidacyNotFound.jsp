@@ -15,7 +15,7 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<a href="#">IST</a> &gt;
+	<a href="#"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> &gt;
 	<a href="#"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<a href="#"><bean:message key="title.application" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<a href='<%= fullPath + "?method=candidacyIntro" %>'><bean:message key="title.degrees" bundle="CANDIDATE_RESOURCES"/></a> &gt;

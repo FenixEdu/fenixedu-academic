@@ -887,7 +887,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     public String getInstitutionName() {
-        return "Universidade Técnica de Lisboa - Instituto Superior Técnico";
+        return "Universidade Técnica de Lisboa - " + Unit.getInstitutionName().getContent();
     }
 
     public String getCandidacyNumber() {

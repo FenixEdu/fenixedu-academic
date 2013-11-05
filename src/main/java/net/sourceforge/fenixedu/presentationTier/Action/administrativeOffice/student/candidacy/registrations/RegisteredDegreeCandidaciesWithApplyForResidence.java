@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -68,7 +69,7 @@ public class RegisteredDegreeCandidaciesWithApplyForResidence {
         spreadsheet.setHeader("Localidade");
         spreadsheet.setHeader("Concelho");
         spreadsheet.setHeader("Distrito");
-        spreadsheet.setHeader("Email IST");
+        spreadsheet.setHeader("Email " + Unit.getInstitutionAcronym());
         spreadsheet.setHeader("Email pessoal");
         spreadsheet.setHeader("Telefone");
         spreadsheet.setHeader("Telemovel");

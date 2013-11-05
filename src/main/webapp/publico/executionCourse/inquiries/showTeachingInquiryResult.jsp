@@ -140,7 +140,7 @@ padding-right: 8px;
 	<tr class="top">
 		<th></th>
 		<th class="aright">Responsáveis pela gestão académica <a href="#" class="helpleft">[?] <span>Representatividade - nº de respostas válidas superior a 5 e a 10% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
-		<th class="aright">Comunidade académica IST <a href="#" class="helpleft">[?] <span>Representatividade - nº de respostas válidas superior a 5 e a 50% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
+		<th class="aright">Comunidade académica <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> <a href="#" class="helpleft">[?] <span>Representatividade - nº de respostas válidas superior a 5 e a 50% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
 	</tr>
 	<tr>
 		<th>Representatividade para divulgação</th>

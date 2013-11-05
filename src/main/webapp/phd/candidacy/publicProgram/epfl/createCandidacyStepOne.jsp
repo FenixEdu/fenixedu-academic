@@ -7,7 +7,7 @@
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<a href="http://www.ist.utl.pt"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> &gt;
 	<a href="http://www.ist.utl.pt/en/about-IST/global-cooperation/IST-EPFL/">IST-EPFL</a> &gt;
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
@@ -146,7 +146,7 @@
 		</fieldset>
 		</div>
 		
-		<p>Note: all the information required for the application process will be shared by both <a href="http://www.ist.utl.pt/">IST</a> and <a href="http://www.epfl.ch/">EPFL</a>.</p>
+		<p>Note: all the information required for the application process will be shared by both <a href="http://www.ist.utl.pt/"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> and <a href="http://www.epfl.ch/">EPFL</a>.</p>
 		
 		<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit></p>
 	</fr:form>

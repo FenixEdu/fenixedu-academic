@@ -57,7 +57,7 @@
 				</logic:notEmpty>
 			</logic:present>
 			<logic:notPresent name="banner">
-				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://www.bolonha.ist.eu"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= request.getContextPath() %>/images/site/bolonha.gif" alt="Com o IST, entra no melhor ensino superior europeu - www.bolonha.ist.eu" width="420" height="150"/></a>
+				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://www.bolonha.ist.eu"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= request.getContextPath() %>/images/site/bolonha.gif" alt="Com o <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />, entra no melhor ensino superior europeu - www.bolonha.ist.eu" width="420" height="150"/></a>
 			</logic:notPresent>
 		</logic:equal>
 	</div>

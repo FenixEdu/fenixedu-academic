@@ -19,7 +19,7 @@
 
 <div class="breadcumbs">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at IST</a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
@@ -37,7 +37,7 @@
 <p class="mvert05">After you fill and submit your application form, you are required to upload the following documents:</p>
 <p class="mvert05">
 	<ul>
-		<li><b>Photo</b> (passport-like) - The photo will be used to generate IST student card. Please upload a passport-like photo.</li>
+		<li><b>Photo</b> (passport-like) - The photo will be used to generate <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> student card. Please upload a passport-like photo.</li>
 		<li><b>Passport or identity card</b> (image scan)</li>
 		<li><b>Curriculum vitae</b></li>
 		<li><b>Transcript of records</b></li>

@@ -119,7 +119,7 @@
 			<td><fr:edit name="createSummaryBean" slot="problemsR9" /></td>
 			<td>Avaliação (ex.: metodologia, datas de exames; etc.)</td>
 			<td><fr:edit name="createSummaryBean" slot="problemsR10" /></td>
-			<td>Adaptação ao IST</td>
+			<td>Adaptação ao <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -164,7 +164,7 @@
 		</tr>
 		<tr>
 			<td><fr:edit name="createSummaryBean" slot="gainsR9" /></td>
-			<td>Melhor adaptação ao IST</td>
+			<td>Melhor adaptação ao <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></td>
 			<td><fr:edit name="createSummaryBean" slot="gainsR10" /></td>
 			<td>Apoio na tomada de decisões/Resolução de problemas</td>
 			<td></td>

@@ -52,7 +52,7 @@
 	<div class="h_box_alt" style="margin-top: 3em;">
 		<ul class="material">
 			<li style="padding-left: 35px;">
-				Participe activamente na melhoria contínua do IST. O seu contributo é fundamental.
+				Participe activamente na melhoria contínua do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />. O seu contributo é fundamental.
 			</li>
 		</ul>
 	</div>

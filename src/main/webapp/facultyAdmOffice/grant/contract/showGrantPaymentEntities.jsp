@@ -8,15 +8,15 @@
 <link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/print.css" rel="stylesheet" media="print" type="text/css" />
 
-
-<title>Lista de Entidades Pagadoras do IST</title>
-
-<body bgcolor="yellow">
-
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+
+<title>Lista de Entidades Pagadoras do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></title>
+
+<body bgcolor="yellow">
+
 
 
 <%-- Presenting errors --%>

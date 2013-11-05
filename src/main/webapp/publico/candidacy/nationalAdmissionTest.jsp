@@ -8,7 +8,7 @@
 <html:xhtml/>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<a href="http://www.ist.utl.pt"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>">Licenciaturas</a> &gt;
 	Concurso Nacional de Acesso
@@ -23,7 +23,7 @@
    </ul>
 </div>
 <h1>Candidato: Licenciatura (1º Ciclo)</h1>
-<p>Os estudantes que pretendam candidatar-se ao IST com vista a obter uma formação superior deverão optar por um dos seguintes percursos, consoante a área de estudos pretendida:</p>
+<p>Os estudantes que pretendam candidatar-se ao <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> com vista a obter uma formação superior deverão optar por um dos seguintes percursos, consoante a área de estudos pretendida:</p>
 <ul>
 	<li>inscrição em mestrado integrado (ciclo integrado), com a duração de 5 anos e atribuição do grau de licenciado ao fim dos primeiros 3 anos;</li>
 
@@ -34,7 +34,7 @@
 <p>A formação completa do Engenheiro e Arquitecto, que capacita para a concepção, a inovação e o desenvolvimento de projectos complexos, só é alcançada ao fim de 5 anos, com a aquisição de competências científicas e tecnológicas avançadas inerentes ao grau de mestre. A Ordem dos Engenheiros e a Ordem dos Arquitectos definiram como condição necessária para admissão nas mesmas a titularidade de uma formação superior de 5 anos.</p>
 <h2 id="con">Ingresso pelo Concurso Nacional de Acesso</h2>
 <h3>Ano Lectivo 2008/2009</h3>
-<p>Após a conclusão do ensino secundário, os estudantes que pretendam obter uma formação superior no IST deverão candidatar-se, através do Concurso Nacional de Acesso, ao ingresso num curso de 1º ciclo ou num curso de ciclo integrado, consoante a área de estudos pretendida. As candidaturas são formuladas junto dos Serviços de Acesso do Ministério da Ciência, Tecnologia e Ensino Superior, tendo em conta as condições de acesso definidas para cada curso.</p>
+<p>Após a conclusão do ensino secundário, os estudantes que pretendam obter uma formação superior no <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> deverão candidatar-se, através do Concurso Nacional de Acesso, ao ingresso num curso de 1º ciclo ou num curso de ciclo integrado, consoante a área de estudos pretendida. As candidaturas são formuladas junto dos Serviços de Acesso do Ministério da Ciência, Tecnologia e Ensino Superior, tendo em conta as condições de acesso definidas para cada curso.</p>
 <h3 class="spaced">Cursos do 1º Ciclo</h3>
 
 	<table class="tab_lay" width="99%" cellspacing="0" summary="Informação para o ingresso nos cursos do 1º Ciclo (ano lectivo 2007-2008)">
@@ -213,7 +213,7 @@
 		</tr>
 </table>
 <h3>Classifica&ccedil;&otilde;es M&iacute;nimas de Acesso</h3>
-<p>As condi&ccedil;&otilde;es exigidas para a candidatura aos Cursos ministrados no IST s&atilde;o as seguintes (expressas numa escala de 0 a 200 pontos):</p>
+<p>As condi&ccedil;&otilde;es exigidas para a candidatura aos Cursos ministrados no <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> s&atilde;o as seguintes (expressas numa escala de 0 a 200 pontos):</p>
 <ul>
 	<li>Classifica&ccedil;&atilde;o m&iacute;nima de 100 em cada uma das provas de ingresso (exames nacionais do ensino secund&aacute;rio), exceptuando o curso de Licenciatura em Matem&aacute;tica Aplicada e Computa&ccedil;&atilde;o em que a classifica&ccedil;&atilde;o m&iacute;nima exigida &eacute; de 120, e;</li>
 
@@ -227,8 +227,8 @@
 <ul> 
 	<li><a href="http://nape.ist.utl.pt/acesso/notas.php">Vagas e notas m&iacute;nimas de seria&ccedil;&atilde;o dos &uacute;ltimos 5 anos lectivos</a></li> 
 	<li><a href="http://www.ist.utl.pt/html/campus/tagus/sat/">Servi&ccedil;os Administrativos do IST-Taguspark (SAT)</a></li> 
-	<li><a href="http://guiatecnico.aeist.pt/">Guia do T&eacute;cnico </a> &nbsp;(Publica&ccedil;&atilde;o da responsabilidade da <a href="http://ae.ist.utl.pt/">Associa&ccedil;&atilde;o de Estudantes do IST</a>) </li> 
-	<li><a href="http://guialisboa.aeist.pt/">Guia de Lisboa</a>&nbsp;(Publica&ccedil;&atilde;o da responsabilidade da <a href="http://ae.ist.utl.pt/">Associa&ccedil;&atilde;o de Estudantes do IST</a>) </li> 
+	<li><a href="http://guiatecnico.aeist.pt/">Guia do T&eacute;cnico </a> &nbsp;(Publica&ccedil;&atilde;o da responsabilidade da <a href="http://ae.ist.utl.pt/">Associa&ccedil;&atilde;o de Estudantes do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a>) </li> 
+	<li><a href="http://guialisboa.aeist.pt/">Guia de Lisboa</a>&nbsp;(Publica&ccedil;&atilde;o da responsabilidade da <a href="http://ae.ist.utl.pt/">Associa&ccedil;&atilde;o de Estudantes do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a>) </li> 
 
 </ul>	
 </div>

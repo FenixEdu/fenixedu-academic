@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -11,6 +12,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEm
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -115,11 +117,12 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
 
         ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
         String subject =
-                bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
-                        + INFORM_APPLICATION_SUCCESS_SUBJECT);
+                MessageFormat.format(bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
+                        + INFORM_APPLICATION_SUCCESS_SUBJECT), Unit.getInstitutionAcronym(), Unit.getInstitutionName()
+                        .getContent());
         String body =
-                bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
-                        + INFORM_APPLICATION_SUCCESS_BODY);
+                MessageFormat.format(bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
+                        + INFORM_APPLICATION_SUCCESS_BODY), Unit.getInstitutionAcronym(), Unit.getInstitutionName().getContent());
         String link = getDefaultPublicLink();
 
         body =

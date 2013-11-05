@@ -28,7 +28,7 @@
 
 <div class="breadcumbs">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NCMI</a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at IST</a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.mobility" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
@@ -46,7 +46,7 @@
 	<p><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></p>
 	
 	<ul class="mbottom15">
-		<li><b>Passport photo</b> - The photo will be used to generate IST student card.</li>
+		<li><b>Passport photo</b> - The photo will be used to generate <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> student card.</li>
 		<li><b>Passport or identity card</b></li>
 		<li><b>Learning agreement</b> - The learning agreement will be available in your application process page after the form submission. You're required to download, sign, stamp and reupload the document.</li>
 		<li><b>Curriculum vitae</b></li>

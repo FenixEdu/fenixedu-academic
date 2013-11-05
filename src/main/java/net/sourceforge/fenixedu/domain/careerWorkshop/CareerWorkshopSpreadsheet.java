@@ -2,13 +2,14 @@ package net.sourceforge.fenixedu.domain.careerWorkshop;
 
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CareerWorkshopSpreadsheet extends CareerWorkshopSpreadsheet_Base {
 
-    private static final String ROOT_DIR_DESCRIPTION = "IST Career Workshops";
+    private static final String ROOT_DIR_DESCRIPTION = Unit.getInstitutionAcronym() + " Career Workshops";
 
     private static final String ROOT_DIR = "CareerWorkshops";
 

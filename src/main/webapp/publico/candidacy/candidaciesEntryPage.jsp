@@ -8,14 +8,14 @@
 <html:xhtml/>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<a href="http://www.ist.utl.pt"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="title.degrees" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
 <h1>Licenciaturas</h1>
 
-<p>O ingresso nas licenciaturas do IST poderá ser efectuado através dos seguintes mecanismos de acesso:</p>
+<p>O ingresso nas licenciaturas do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> poderá ser efectuado através dos seguintes mecanismos de acesso:</p>
 
 <ul>
 	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/lic/concurso_nacional_acesso" %>">Concurso Nacional de Acesso</a></li>

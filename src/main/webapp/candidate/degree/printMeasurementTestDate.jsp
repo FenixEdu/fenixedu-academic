@@ -44,7 +44,7 @@ margin-left: 0px;
 		</p>
 		
 		<p>
-		O IST em associação com a Sociedade Portuguesa de Matemática promove 
+		O <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> em associação com a Sociedade Portuguesa de Matemática promove 
 		este ano lectivo uma prova de aferição para todos os alunos ingressados no
 		1º ano. Esta prova é obrigatória e terá influência na classificação da 
 		cadeira de Cálculo Diferencial e Integral I ou Matemática I.

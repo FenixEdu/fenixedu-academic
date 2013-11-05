@@ -15,7 +15,7 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<a href="http://www.ist.utl.pt"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="title.application.name.degreeChange" bundle="CANDIDATE_RESOURCES"/>
 </div>
@@ -38,7 +38,7 @@
 <p>Destina-se aos estudantes do 1º ciclo que pretendam inscrever-se num 1ºciclo de
 um curso de Licenciatura ou de Mestrado Integrado diferente daquele em que
 praticaram a última inscrição, tendo havido ou não interrupção de inscrição no ensino
-superior. A última inscrição pode ter ocorrido num curso do IST, ou em num curso de
+superior. A última inscrição pode ter ocorrido num curso do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />, ou em num curso de
 qualquer outra escola nacional ou estrangeira.</p>
 
 

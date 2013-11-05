@@ -135,7 +135,7 @@ public class ParkingParty extends ParkingParty_Base {
         }
 
         return MessageFormat.format(bundle.getString("message.acceptedRegulation"),
-                new Object[] { name, number, Unit.getInstitutionAcronym() });
+                new Object[] { name, number, Unit.getInstitutionAcronym(), Unit.getInstitutionName().getContent() });
     }
 
     public boolean isStudent() {

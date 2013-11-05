@@ -103,7 +103,7 @@
 			<td><fr:view name="tutorshipSummary" property="problemsR9" layout="boolean-icon" /></td>
 			<td>Avaliação (ex.: metodologia, datas de exames; etc.)</td>
 			<td><fr:view name="tutorshipSummary" property="problemsR10" layout="boolean-icon" /></td>
-			<td>Adaptação ao IST</td>
+			<td>Adaptação ao <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -148,7 +148,7 @@
 		</tr>
 		<tr>
 			<td><fr:view name="tutorshipSummary" property="gainsR9" layout="boolean-icon" /></td>
-			<td>Melhor adaptação ao IST</td>
+			<td>Melhor adaptação ao <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></td>
 			<td><fr:view name="tutorshipSummary" property="gainsR10" layout="boolean-icon" /></td>
 			<td>Apoio na tomada de decisões/Resolução de problemas</td>
 			<td></td>
