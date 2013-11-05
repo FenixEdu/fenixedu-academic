@@ -66,7 +66,7 @@ public abstract class File extends File_Base {
                 FileManagerFactory
                         .getFactoryInstance()
                         .getFileManager()
-                        .saveFile(getLocalContent().getPath(), getFilename(), isPrivate(), getLocalContent().createMetadata(),
+                        .saveFile(getLocalContent().getPath(), getFilename(), true, getLocalContent().createMetadata(),
                                 new ByteArrayInputStream(getLocalContent().getContent().getBytes()));
         setMimeType(fileDescriptor.getMimeType());
         setChecksum(fileDescriptor.getChecksum());
@@ -77,9 +77,6 @@ public abstract class File extends File_Base {
     }
 
     public boolean isPrivate() {
-        if (getPermittedGroup() == null) {
-            return false;
-        }
         if (getPermittedGroup() instanceof EveryoneGroup) {
             return false;
         }
@@ -189,11 +186,10 @@ public abstract class File extends File_Base {
 
     @Override
     public void setPermittedGroup(Group permittedGroup) {
-        super.setPermittedGroup(permittedGroup);
+        super.setPermittedGroup(permittedGroup == null ? new EveryoneGroup() : permittedGroup);
         if (!hasLocalContent()) {
-            final boolean isPublic = permittedGroup == null || permittedGroup instanceof EveryoneGroup;
             FileManagerFactory.getFactoryInstance().getContentFileManager()
-                    .changeFilePermissions(getExternalStorageIdentification(), !isPublic);
+                    .changeFilePermissions(getExternalStorageIdentification(), false);
         }
     }
 
