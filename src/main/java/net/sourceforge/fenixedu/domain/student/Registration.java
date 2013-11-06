@@ -2773,7 +2773,7 @@ public class Registration extends Registration_Base {
     }
 
     private boolean isEmptyDegree() {
-        return getLastDegreeCurricularPlan().isEmpty();
+        return (getLastStudentCurricularPlan() != null ? getLastStudentCurricularPlan().isEmpty() : true);
     }
 
     final public CycleType getLastConcludedCycleType() {
