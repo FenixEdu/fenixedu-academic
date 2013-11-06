@@ -24,7 +24,6 @@ import net.fortuna.ical4j.model.property.Version;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class CalendarFactory {
-    public static String PROD_ID_COMPANY = Unit.getInstitutionName().getContent();
     public static String PROD_ID_APPLICATION = "Sistema Fenix";
     public static TimeZone TIMEZONE = TimeZoneRegistryFactory.getInstance().createRegistry().getTimeZone("Europe/Lisbon");
 
@@ -87,8 +86,9 @@ public class CalendarFactory {
 
     public static Calendar createCalendar(List<EventBean> events) {
 
+        final String prodIdCompany = Unit.getInstitutionName().getContent();
         Calendar calendar = new Calendar();
-        calendar.getProperties().add(new ProdId("-//" + PROD_ID_COMPANY + "//" + PROD_ID_APPLICATION + "//PT"));
+        calendar.getProperties().add(new ProdId("-//" + prodIdCompany + "//" + PROD_ID_APPLICATION + "//PT"));
         calendar.getProperties().add(Version.VERSION_2_0);
         calendar.getProperties().add(CalScale.GREGORIAN);
 

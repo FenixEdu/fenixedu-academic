@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.careerWorkshop;
 
+import java.text.MessageFormat;
+
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -9,7 +11,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CareerWorkshopSpreadsheet extends CareerWorkshopSpreadsheet_Base {
 
-    private static final String ROOT_DIR_DESCRIPTION = Unit.getInstitutionAcronym() + " Career Workshops";
+    private static final String ROOT_DIR_DESCRIPTION = "{0} Career Workshops";
 
     private static final String ROOT_DIR = "CareerWorkshops";
 
@@ -25,7 +27,8 @@ public class CareerWorkshopSpreadsheet extends CareerWorkshopSpreadsheet_Base {
 
     private VirtualPath getVirtualPath() {
         final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
+        String rootDirDescription = MessageFormat.format(ROOT_DIR_DESCRIPTION, Unit.getInstitutionAcronym());
+        filePath.addNode(new VirtualPathNode(ROOT_DIR, rootDirDescription));
         filePath.addNode(new VirtualPathNode(SHEETS_DIR, SHEETS_DIR_DESCRIPTION));
         return filePath;
     }
