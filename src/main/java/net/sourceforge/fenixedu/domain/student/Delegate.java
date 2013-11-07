@@ -30,7 +30,7 @@ public class Delegate extends Delegate_Base {
         return false;
     }
 
-    public Degree getDegree() {
+    protected Degree getDegree() {
         return ((DegreeUnit) getDelegateFunction().getFunction().getUnit()).getDegree();
     }
 
