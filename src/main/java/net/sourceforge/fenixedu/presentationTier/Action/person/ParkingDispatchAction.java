@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +23,6 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
-import org.apache.commons.httpclient.HttpException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -39,7 +37,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
-import pt.utl.ist.fenix.tools.util.FileUtils;
+
+import com.google.common.io.ByteStreams;
 
 @Mapping(module = "person", path = "/parking", input = "/parking.do?method=prepareEditParking&page=0", attribute = "parkingForm",
         formBean = "parkingForm", scope = "request", validate = false, parameter = "method")
@@ -369,18 +368,13 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             response.reset();
             response.setContentType("application/pdf");
             response.setHeader("Content-disposition", "attachment; filename=" + fileName);
-            DataOutputStream dataOut = new DataOutputStream(response.getOutputStream());
-            String filePath = getServlet().getServletContext().getRealPath("/").concat("/person/parking/").concat(fileName);
-            dataOut.write(getParkingRegulationDocument(filePath));
+            InputStream stream = ParkingDispatchAction.class.getClassLoader().getResourceAsStream("person/parking/" + fileName);
+            ByteStreams.copy(stream, response.getOutputStream());
             response.flushBuffer();
         } catch (java.io.IOException e) {
             throw new FenixActionException(e);
         }
         return null;
-    }
-
-    private static byte[] getParkingRegulationDocument(String documentPath) throws HttpException, IOException {
-        return FileUtils.readFileInBytes(documentPath);
     }
 
     private boolean checkRequestFields(ParkingRequestFactory parkingRequestFactory, HttpServletRequest request,
