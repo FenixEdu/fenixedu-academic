@@ -56,6 +56,7 @@ import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
@@ -416,6 +417,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public boolean isConclusionProcessed() {
         if (!isBolonhaDegree()) {
             return getRegistration().hasConclusionProcess();
+        }
+
+        if (isEmptyDegree()) {
+            return getRegistration().getLastActiveState().getStateType().equals(RegistrationStateType.CONCLUDED);
         }
 
         for (final CycleCurriculumGroup cycleCurriculumGroup : getInternalCycleCurriculumGrops()) {
