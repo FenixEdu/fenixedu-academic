@@ -217,8 +217,9 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
+            request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
             request.setAttribute("postingRuleEditor", getRenderedObject());
-            return mapping.findForward("editDegreeCurricularPlanPostingRule");
+            return mapping.findForward("editDFAGratuityPR");
         }
     }
 
@@ -853,7 +854,8 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     public ActionForward prepareEditFCTScolarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         ExternalScholarshipPhdGratuityContribuitionPR postingRule =
-                (ExternalScholarshipPhdGratuityContribuitionPR) FenixFramework.getDomainObject(request.getParameter("postingRule"));
+                (ExternalScholarshipPhdGratuityContribuitionPR) FenixFramework.getDomainObject(request
+                        .getParameter("postingRule"));
         FctScolarshipPostingRuleBean bean = new FctScolarshipPostingRuleBean();
 
         bean.setStartDate(postingRule.getStartDate());
@@ -880,7 +882,8 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     public ActionForward deleteFCTScolarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         ExternalScholarshipPhdGratuityContribuitionPR postingRule =
-                (ExternalScholarshipPhdGratuityContribuitionPR) FenixFramework.getDomainObject(request.getParameter("postingRule"));
+                (ExternalScholarshipPhdGratuityContribuitionPR) FenixFramework.getDomainObject(request
+                        .getParameter("postingRule"));
         postingRule.delete();
 
         return showFCTScolarshipPostingRules(mapping, form, request, response);
