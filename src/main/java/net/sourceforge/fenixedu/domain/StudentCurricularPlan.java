@@ -418,6 +418,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             return getRegistration().hasConclusionProcess();
         }
 
+        if (getInternalCycleCurriculumGrops().isEmpty()) {
+            return false;
+        }
         for (final CycleCurriculumGroup cycleCurriculumGroup : getInternalCycleCurriculumGrops()) {
             if (!cycleCurriculumGroup.isConclusionProcessed()) {
                 return false;
