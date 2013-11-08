@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 
@@ -34,7 +35,6 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
     public ExecutionCourseSender(ExecutionCourse executionCourse) {
         super();
         setCourse(executionCourse);
-        setFromName(getFromName(executionCourse));
         setFromAddress(Sender.getNoreplyMail());
         addReplyTos(new ExecutionCourseReplyTo());
         addReplyTos(new CurrentUserReplyTo());
@@ -55,12 +55,20 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
         addRecipients(new Recipient(labelECTeachers, new ExecutionCourseTeachersGroup(executionCourse)));
         addRecipients(new Recipient(labelECStudents, new ExecutionCourseStudentsGroup(executionCourse)));
         addRecipients(new Recipient(labelECResponsibleTeachers, new ExecutionCourseResponsibleTeachersGroup(executionCourse)));
+        setFromName(createFromName());
     }
 
-    private String getFromName(ExecutionCourse executionCourse) {
-        return String.format("%s %s %s", executionCourse.getNome(),
-                executionCourse.getDegreePresentationString().replaceAll(", ", " "), executionCourse.getExecutionPeriod()
-                        .getQualifiedName().replace('/', ' '));
+    public String createFromName() {
+        if (getCourse() != null && getCourse().getExecutionPeriod() != null
+                && getCourse().getExecutionPeriod().getQualifiedName() != null) {
+            String degreeName = getCourse().getDegreePresentationString();
+            String courseName = getCourse().getNome();
+            String period = getCourse().getExecutionPeriod().getQualifiedName().replace('/', '-');
+            return String.format("%s (%s: %s, %s)", Unit.getInstitutionAcronym(), degreeName, courseName, period);
+        } else {
+            return getFromName();
+        }
+
     }
 
     @Atomic
