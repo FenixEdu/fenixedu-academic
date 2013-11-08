@@ -139,14 +139,13 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
             for (Registration registration : activeRegistrations) {
                 delegateFunction = registration.getDegree().getMostSignificantDelegateFunctionForStudent(student, executionYear);
                 if (delegateFunction != null && delegateFunction.isActive()) {
-                    break;
+                    return delegateFunction;
                 }
-                delegateFunction = null;
             }
         } else {
-            delegateFunction = person.getActiveGGAEDelegatePersonFunction();
+            return person.getActiveGGAEDelegatePersonFunction();
         }
-        return delegateFunction;
+        return null; // no active function was found
     }
 
     public ActionForward prepareSendToStudentsFromSelectedCurricularCourses(ActionMapping mapping, ActionForm actionForm,
