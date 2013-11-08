@@ -20,7 +20,7 @@
 <logic:notPresent name="bundleT">
 	<tiles:getAsString name="title" ignore="true" />
 </logic:notPresent>
-<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 </title> <%-- TITLE --%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

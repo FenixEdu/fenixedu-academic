@@ -12,7 +12,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
-<title>Lista de Professores do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></title>
+<title>Lista de Professores do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></title>
 
 <body bgcolor="white">
 

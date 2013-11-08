@@ -32,7 +32,7 @@
 
 <title>
 	<tiles:insert name="title" ignore="true" />
-	<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+	<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 </title> <%-- TITLE --%>
 
 <!-- Link -->

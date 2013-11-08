@@ -24,7 +24,7 @@
 				</td>
 				<td class="infoop">
 					<strong>Nota: ï¿? normal a existï¿?ncia de dois planos curriculares para o mesmo curso.</strong><br/>
-					O plano curricular com a data mais antiga (ano da sua entrada no <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />), contem o seu currï¿?culo tal e qual como o pode visionar no ponto habitual acedido atravï¿?s da pï¿?gina do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />.<br/>
+					O plano curricular com a data mais antiga (ano da sua entrada no <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>), contem o seu currï¿?culo tal e qual como o pode visionar no ponto habitual acedido atravï¿?s da pï¿?gina do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>.<br/>
 					O plano curricular com a data mais recente (este ano lectivo), contem o seu currï¿?culo como se o tivesse iniciado este ano, ou seja, apenas com as disciplinas em que se encontra inscrito a partir deste ano lectivo.<br/>
 					A razï¿?o desta separaï¿?ï¿?o ï¿? dar a hipï¿?tese de verificar a correcï¿?ï¿?o do seu currï¿?culo passado para, mais tarde (e depois de ter a certeza de que estï¿? tudo em ordem), juntar toda a informação num sï¿? plano curricular.
 				</td>

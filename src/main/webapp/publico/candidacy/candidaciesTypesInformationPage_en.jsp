@@ -128,17 +128,17 @@
 	<div style="clear: both;"></div>
 </div>
 
-<p>Under the scope of the 1<sup>st</sup> and 2<sup>nd</sup> cycle courses, the <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />, as a great European school in the area of Engineering, Science and Technology, offers a wide range of post-graduate courses, either vocational or more oriented to Research, Development and Innovation.</p>
-<p>Additionally, the <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> is strongly investing in international cooperation programmes with the best schools in Europe, namely under the scope of its association to the CLUSTER network.  But <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> international programmes also include collaboration with prestigious American universities such as the MIT, CMU or UTAustin.</p>
+<p>Under the scope of the 1<sup>st</sup> and 2<sup>nd</sup> cycle courses, the <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>, as a great European school in the area of Engineering, Science and Technology, offers a wide range of post-graduate courses, either vocational or more oriented to Research, Development and Innovation.</p>
+<p>Additionally, the <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> is strongly investing in international cooperation programmes with the best schools in Europe, namely under the scope of its association to the CLUSTER network.  But <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> international programmes also include collaboration with prestigious American universities such as the MIT, CMU or UTAustin.</p>
 
 <h2>Contacts</h2>
 <h3><a href="http://nape.ist.utl.pt/">Student Support Unit (NAPE)</a></h3>
-<p><strong><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> - Alameda </strong><br />
+<p><strong><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> - Alameda </strong><br />
 
 	Phone: 218 417 251 / 218 419 155 <br />
 	Fax: 218 419 344
 </p>
-<p><strong><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> - Taguspark</strong><br />
+<p><strong><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> - Taguspark</strong><br />
    Phone: 214 233 545</p>
 <p><a href="mailto:nape@ist.utl.pt">nape@ist.utl.pt</a></p> 
 

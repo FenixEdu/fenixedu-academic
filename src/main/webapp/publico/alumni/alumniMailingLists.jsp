@@ -20,7 +20,7 @@
 	</html:messages>
 
 <p class="greytxt">
-	Ao subscrever as listas abaixo especificadas, estreita o laço comunicacional com a comunidade <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />: pode trocar mensagens com os restantes membros da lista; receber informação útil e beneficiar do serviço de alertas (agenda de realizações organizadas no <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> e outras notícias de interesse).
+	Ao subscrever as listas abaixo especificadas, estreita o laço comunicacional com a comunidade <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>: pode trocar mensagens com os restantes membros da lista; receber informação útil e beneficiar do serviço de alertas (agenda de realizações organizadas no <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> e outras notícias de interesse).
 </p>
 
 <p class="greytxt">

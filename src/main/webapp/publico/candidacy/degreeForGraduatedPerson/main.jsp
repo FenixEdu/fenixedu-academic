@@ -20,7 +20,7 @@
 
 
 <div class="breadcumbs">
-	<a href="#"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> &gt;
+	<a href="#"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<a href="#">Candidato</a> &gt;
 	<a href="#">Candidaturas</a> &gt;
 	<a href='<%= fullPath + "?method=candidacyIntro" %>'>Licenciaturas</a> &gt;

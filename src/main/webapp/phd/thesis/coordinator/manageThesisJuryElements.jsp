@@ -57,7 +57,7 @@
 <br/>
 <br/>
 
-<strong>Presidente:</strong> Presidente do Conselho Científico do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />
+<strong>Presidente:</strong> Presidente do Conselho Científico do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>
 
 <br/>
 <strong><bean:message  key="label.phd.thesis.elements" bundle="PHD_RESOURCES"/>:</strong>

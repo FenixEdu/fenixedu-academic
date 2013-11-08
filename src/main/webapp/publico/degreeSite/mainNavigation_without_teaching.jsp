@@ -8,7 +8,7 @@
         	<li><a href="<%= url %>/html/estrutura/">Estrutura</a></li>
         	<li><a href="<%= url %>/html/ensino/">Ensino</a></li>
         	<li><a href="<%= url %>/html/id/">I &amp; D</a></li>
-        	<li><a href="<%= url %>/html/viverist/">Viver no <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a></li>
+        	<li><a href="<%= url %>/html/viverist/">Viver no <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a></li>
         </ul>
 </div>
 

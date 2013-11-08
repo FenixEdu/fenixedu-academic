@@ -45,7 +45,7 @@
 
 <div class="breadcumbs">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.mobility" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
@@ -65,7 +65,7 @@
 				The Erasmus web application allowed you to authenticate using your National citizen identification. 
 				By using such method you would be able to access all the information of your course (schedules, classes, etc.) 
 				before arriving to <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent() %> (in fact you would be receiving an email just now to inform on how to proceed), 
-				however you choose not to use it. <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> would like to know the reason for that choice, please choose one of the available reasons:
+				however you choose not to use it. <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> would like to know the reason for that choice, please choose one of the available reasons:
 				</strong>
 			</p>
 			
@@ -140,7 +140,7 @@
 	<p class="mtop05"><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></p>
 	
 	<ul>
-		<li><b>Passport photo</b> - The photo will be used to generate <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> student card.</li>
+		<li><b>Passport photo</b> - The photo will be used to generate <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> student card.</li>
 		<li><b>Passport or identity card</b></li>
 		<li><b>Learning agreement</b> - You're required to download, sign, stamp and reupload the document.</li>
 		<li><b>Curriculum vitae</b></li>

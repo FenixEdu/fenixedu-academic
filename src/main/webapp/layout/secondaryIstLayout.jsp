@@ -17,7 +17,7 @@
 			<bean:message name="titleK" bundle="<%= bundleT.toString() %>" /> -
 		</logic:present>
 	</logic:present>
-	<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+	<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 </title> <%-- TITLE --%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

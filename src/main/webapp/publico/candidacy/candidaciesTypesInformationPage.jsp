@@ -127,15 +127,15 @@
 	<div style="clear: both;"></div>
 </div>
 
-<p>Na sequ&ecirc;ncia destas forma&ccedil;&otilde;es de 1&ordm; e 2&ordm; ciclo, o <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />, como grande escola europeia na &aacute;rea da Engenharia, Ci&ecirc;ncia e Tecnologia, oferece um amplo leque de forma&ccedil;&otilde;es p&oacute;s-graduadas de &iacute;ndole profissionalizante ou mais vocacionadas para a Investiga&ccedil;&atilde;o, o Desenvolvimento e a Inova&ccedil;&atilde;o. Neste &acirc;mbito o <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> est&aacute; fortemente envolvido em programas de coopera&ccedil;&atilde;o com as melhores escolas europeias no &acirc;mbito da rede CLUSTER e tamb&eacute;m com universidades americanas de refer&ecirc;ncia como sejam o MIT, a CMU ou a UTAustin.</p>
+<p>Na sequ&ecirc;ncia destas forma&ccedil;&otilde;es de 1&ordm; e 2&ordm; ciclo, o <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>, como grande escola europeia na &aacute;rea da Engenharia, Ci&ecirc;ncia e Tecnologia, oferece um amplo leque de forma&ccedil;&otilde;es p&oacute;s-graduadas de &iacute;ndole profissionalizante ou mais vocacionadas para a Investiga&ccedil;&atilde;o, o Desenvolvimento e a Inova&ccedil;&atilde;o. Neste &acirc;mbito o <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> est&aacute; fortemente envolvido em programas de coopera&ccedil;&atilde;o com as melhores escolas europeias no &acirc;mbito da rede CLUSTER e tamb&eacute;m com universidades americanas de refer&ecirc;ncia como sejam o MIT, a CMU ou a UTAustin.</p>
 
 <h2>Contacto</h2>
 <h3><a href="http://nape.ist.utl.pt/nape/index.php">Núcleo de Apoio ao Estudante (NAPE)</a></h3>
-<p><strong><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> - Alameda </strong><br />
+<p><strong><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> - Alameda </strong><br />
 	Tlf: 218 417 251 / 218 419 155 <br />
 	Fax: 218 419 344
 </p>
-<p><strong><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> - Taguspark</strong><br />
+<p><strong><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> - Taguspark</strong><br />
    Tlf: 214 233 545</p>
 
 <p><a href="mailto:nape@ist.utl.pt">nape@ist.utl.pt</a></p> 

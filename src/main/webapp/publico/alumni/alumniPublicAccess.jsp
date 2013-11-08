@@ -140,7 +140,7 @@
 			</li>
 			<li>
 				<h4>Como alterar a IST-ID?</h4>
-				<p>Não é possível alterar a IST-ID, uma vez que é um número de identificação gerado uma única vez, utilizado para o acesso aos serviços informáticos do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" />, correspondendo na maior parte dos casos ao número de Aluno/Docente (ex: Nºde Aluno 55000 corresponde ao IST-ID ist155000).</p>
+				<p>Não é possível alterar a IST-ID, uma vez que é um número de identificação gerado uma única vez, utilizado para o acesso aos serviços informáticos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>, correspondendo na maior parte dos casos ao número de Aluno/Docente (ex: Nºde Aluno 55000 corresponde ao IST-ID ist155000).</p>
 			</li>
 			<li>
 				<h4>Tive mais do que um número de aluno. Qual o número que deverei facultar?</h4>

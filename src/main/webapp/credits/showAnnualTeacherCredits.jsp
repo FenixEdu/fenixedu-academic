@@ -59,7 +59,7 @@ $(document).ready(function() {
 
 <div class="infoop2">
 	<ul>
-		<li><a href="https://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/regulamento-de-prestacao-de-servico-dos-docentes-do-ist">Regulamento de Prestação de Serviço dos Docentes do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a></li>
+		<li><a href="https://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/regulamento-de-prestacao-de-servico-dos-docentes-do-ist">Regulamento de Prestação de Serviço dos Docentes do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a></li>
 		<li><a href="http://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/glossario-do-rsd-(versao-19-9-2012)">Glossário do RSD (versão 19-9-2012)</a></li>
 	</ul>
 </div>

@@ -24,7 +24,7 @@
 <logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer">
 	<bean:write name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer.unit.partyName"/> - 
 </logic:present>
-<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 </title>
 
 <!-- Link -->

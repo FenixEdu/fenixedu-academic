@@ -18,5 +18,5 @@
 		</ul>
 	</li>
 	<li><a href="/html/id/">I &amp; D</a></li>
-	<li><a href="/html/viverist/">Viver no <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a></li>
+	<li><a href="/html/viverist/">Viver no <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a></li>
 </ul>

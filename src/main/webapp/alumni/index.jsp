@@ -159,7 +159,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 <h3> <bean:message key="label.alumni.specialDiscounts" bundle="ALUMNI_RESOURCES"/></h3>
 <ul>
 
-	<li><bean:message key="label.alumni.specialDiscounts.publications" bundle="ALUMNI_RESOURCES"/><a target="_blank" href="http://www.istpress.ist.utl.pt/"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> Press</a>;</li>
+	<li><bean:message key="label.alumni.specialDiscounts.publications" bundle="ALUMNI_RESOURCES"/><a target="_blank" href="http://www.istpress.ist.utl.pt/"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> Press</a>;</li>
 	<li><bean:message key="label.alumni.specialDiscounts.spaces" bundle="ALUMNI_RESOURCES"/> <a target="_blank" href="http://centrocongressos.ist.utl.pt/"><bean:message key="label.alumni.specialDiscounts.spaces.congress" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES"/></a>.</li>
 </ul>
 <!--
@@ -173,7 +173,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	<li><a target="_blank" href="http://www.istpress.ist.utl.pt/">Oportunidades de publicação de livros</a></li>
 	<li><a href="mailto:empreendedorismo@ist.utl.pt">Empreendedorismo</a></li>
 	<li><a target="_blank" href="http://aep.ist.utl.pt/observatorio-de-empregabilidade/">Empregabilidade</a></li>
-	<li><a target="_blank" href="http://aep.ist.utl.pt/">Estudos, Projectos e Estatísticas do <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a></li>
+	<li><a target="_blank" href="http://aep.ist.utl.pt/">Estudos, Projectos e Estatísticas do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a></li>
 	<li><a target="_blank" href="http://smap.ist.utl.pt/">Apoio Médico e Psicológico</a></li>
 	<li><a target="_blank" href="http://nape.ist.utl.pt">Cultura e Desporto</a></li>
 </ul>

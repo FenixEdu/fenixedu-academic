@@ -8,7 +8,7 @@
 <html:xhtml/>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> &gt;
+	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>">Bachelor Programmes</a> &gt;
 	National Admission Test
@@ -20,14 +20,14 @@
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#con">General Admission Procedure</a></li>
    </ul>
 </div>
-<h1>Prospective Students: BSc degree in <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></h1>
-<p>Students applying to a 1st cycle (BSc degree) in <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> should enroll into one of the following programs:</p>
+<h1>Prospective Students: BSc degree in <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></h1>
+<p>Students applying to a 1st cycle (BSc degree) in <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> should enroll into one of the following programs:</p>
 <ul>
 	<li>Integrated Master Program (integrated cycle): 5 years course leading to a MSc degree that awards the BSc degree upon completion of the first three years;</li>
 
 	<li>Undergraduate Program (two-cycles): 3 years course leading to a BSc degree which can be followed by a two-years Master Program towards a MSc degree.</li>
 </ul>
-<p>Eight Engineering programs and the Architecture program in <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> are organized as Integrated Master Programs aiming at a MSc degree. The remainder Engineering programs and Applied Mathematics follow a two-cycles model (BSc+MSc).</p>
+<p>Eight Engineering programs and the Architecture program in <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> are organized as Integrated Master Programs aiming at a MSc degree. The remainder Engineering programs and Applied Mathematics follow a two-cycles model (BSc+MSc).</p>
 <p>Upon completion of the first 3 academic years corresponding to the 1<sup>st</sup> cycle (180 ECTS) students are awarded with the BSc degree in Engineering or Architecture. The BSc programs provide students with training in basic sciences, such as Mathematics, Physics, Chemistry and Programming, in addition to cross-cutting skills, such as oral and written communication, management, leadership, teamwork and entrepreneurship skills, encouraging employability in some areas of the work market.</p>
 <p>After 5 years of studies the graduates in Engineering or Architecture are able to conceive, innovate and develop complex projects with the acquisition of advanced scientific and technological skills inherent to the MSc degree. To be admitted in the Professional Engineering Society (Ordem dos Engenheiros) or the Professional Architecture Society (Ordem dos Arquitectos) students must have a MSc degree.</p>
 
@@ -212,7 +212,7 @@
 		</tr>
 </table>	
 <h3>Minimum Admission Grades</h3>
-<p>The requirements to apply for the <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /> Courses are the following (on a scale of 0 to 200 points):</p>
+<p>The requirements to apply for the <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> Courses are the following (on a scale of 0 to 200 points):</p>
 <ul>
 	<li>Minimum classification of 100 points in each of the admission exams (secondary education exams carried out nationwide), except for the Degree in Applied Mathematics and Computation in which the minimum grade rate required is 120 points, and;</li>
 	<li>Minimum classification of 120 points on the application grade, except for the Degree in Applied Mathematics and Computation in which the minimum classification required is 140 points. The application grade (AG) is calculated on the basis of a weight of 50% for the classification of the Secondary Education (SE) and a weight of 50% for the classification of admission exams (AE) - Calculation Formula of the Application Grade: AG = SE X 50% + AE X 50% (in other words, the arithmetical average of the final classification of the Secondary Education and the classification of the admission exams).</li>
