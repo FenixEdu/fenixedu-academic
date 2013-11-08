@@ -171,7 +171,7 @@ public class InstallmentBean implements Serializable {
         this.ectsForAmount = ectsForAmount;
     }
 
-    public List<ExecutionSemester> getExecutionSemesters() {
+    public Collection<ExecutionSemester> getExecutionSemesters() {
         final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
         for (final ExecutionSemester each : this.executionSemesters) {
             result.add(each);
