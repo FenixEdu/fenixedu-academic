@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationType;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
@@ -40,6 +41,8 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection;
+import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
@@ -374,27 +377,60 @@ public class TeacherCurricularInformation implements Serializable {
     protected void getLecturedCurricularUnitForProfessorship(Professorship professorship, ExecutionSemester executionSemester) {
         Map<String, Float> hoursByTypeMap = new HashMap<String, Float>();
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        final StringBuilder shiftTypeDescription = new StringBuilder();
         if (teacherService != null) {
             List<DegreeTeachingService> degreeTeachingServices =
                     teacherService.getDegreeTeachingServiceByProfessorship(professorship);
             for (DegreeTeachingService degreeTeachingService : degreeTeachingServices) {
                 for (CourseLoad courseLoad : degreeTeachingService.getShift().getCourseLoads()) {
-                    Float duration = hoursByTypeMap.get(courseLoad.getType().getSiglaTipoAula());
+                    final ShiftType type = courseLoad.getType();
+                    appendShiftType(shiftTypeDescription, type);
+                    Float duration = hoursByTypeMap.get(StringUtils.EMPTY);
                     Float weeklyHours =
                             courseLoad.getTotalQuantity().floatValue()
                                     * (degreeTeachingService.getPercentage().floatValue() / 100);
-                    hoursByTypeMap.put(courseLoad.getType().getSiglaTipoAula(), duration == null ? weeklyHours : duration
-                            + weeklyHours);
+                    hoursByTypeMap.put(StringUtils.EMPTY, duration == null ? weeklyHours : duration + weeklyHours);
                 }
             }
+
+            for (OtherService otherService : teacherService.getOtherServices()) {
+                if (otherService instanceof DegreeTeachingServiceCorrection) {
+                    DegreeTeachingServiceCorrection degreeTeachingServiceCorrection =
+                            (DegreeTeachingServiceCorrection) otherService;
+                    if (degreeTeachingServiceCorrection.getProfessorship().equals(professorship)
+                            && (!degreeTeachingServiceCorrection.getProfessorship().getExecutionCourse().isDissertation())
+                            && (!degreeTeachingServiceCorrection.getProfessorship().getExecutionCourse()
+                                    .getProjectTutorialCourse())) {
+                        Float duration = hoursByTypeMap.get(StringUtils.EMPTY);
+                        Float weeklyHours = degreeTeachingServiceCorrection.getCorrection().floatValue();
+                        hoursByTypeMap.put(StringUtils.EMPTY, duration == null ? weeklyHours : duration + weeklyHours);
+                    }
+                }
+            }
+
         }
         String name = professorship.getExecutionCourse().getName();
         if (hoursByTypeMap.isEmpty()) {
             addLecturedCurricularUnit(professorship.getExecutionCourse().getDegreePresentationString(), name, "O", (float) 0);
         } else {
             for (String shiftType : hoursByTypeMap.keySet()) {
-                addLecturedCurricularUnit(professorship.getExecutionCourse().getDegreePresentationString(), name, shiftType,
-                        hoursByTypeMap.get(shiftType));
+                addLecturedCurricularUnit(professorship.getExecutionCourse().getDegreePresentationString(), name, /*shiftType*/
+                        shiftTypeDescription.toString(), hoursByTypeMap.get(StringUtils.EMPTY));
+            }
+        }
+    }
+
+    private void appendShiftType(final StringBuilder builder, final ShiftType type) {
+        if (type != null) {
+            final String t = convertShiftType(type);
+            if (t != null && !t.isEmpty()) {
+                String string = builder.toString();
+                if (!string.equals(t) && !string.startsWith(t+',') && !string.endsWith("," + t)) {
+                    if (!string.isEmpty()) {
+                        builder.append(',');
+                    }
+                    builder.append(t);
+                }
             }
         }
     }
@@ -458,6 +494,19 @@ public class TeacherCurricularInformation implements Serializable {
 
     }
 
+    private static String convertShiftType(final ShiftType shiftType) {
+        if (shiftType == null) {
+            return "0";
+        }
+        if (shiftType == ShiftType.LABORATORIAL) {
+            return "PL";
+        }
+        if (shiftType == ShiftType.PROBLEMS) {
+            return "TP";
+        }
+        return shiftType.getSiglaTipoAula();
+    }
+
     public class LecturedCurricularUnit implements Comparable<LecturedCurricularUnit> {
         protected Set<String> degrees = new HashSet<String>();
         protected String name;
@@ -489,12 +538,16 @@ public class TeacherCurricularInformation implements Serializable {
             if (shiftType == null) {
                 return null;
             } else if (shiftType.equals("T") || shiftType.equals("TP") || shiftType.equals("TC") || shiftType.equals("S")
-                    || shiftType.equals("E") || shiftType.equals("OT")) {
+                    || shiftType.equals("E") || shiftType.equals("OT") || shiftType.equals("PL")) {
                 return shiftType;
             } else if (shiftType.equals("L")) {
                 return "PL";
             } else if (shiftType.equals("PB")) {
                 return "TP";
+            } else if (shiftType.equals(StringUtils.EMPTY)) {
+                return StringUtils.EMPTY;
+            } else if (shiftType.indexOf(',')>0) {
+                return shiftType;
             }
             return "O";
         }

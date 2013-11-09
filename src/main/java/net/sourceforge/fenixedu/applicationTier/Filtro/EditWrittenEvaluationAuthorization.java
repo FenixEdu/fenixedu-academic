@@ -19,7 +19,7 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
             final WrittenEvaluation writtenEvaluation = readWrittenEvaluation(writtenEvaluationId);
 
             if (writtenEvaluation.getWrittenEvaluationSpaceOccupations().size() > 0) {
-                throw new NotAuthorizedException("written.evaluation.has.alocated.rooms");
+                throw new NotAuthorizedException("written.evaluation.has.allocated.rooms");
             }
         }
     }

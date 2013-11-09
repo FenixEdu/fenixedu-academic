@@ -55,6 +55,7 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -1764,6 +1765,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public String getModuleTypeName() {
         ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
         return enumerationResources.getString(this.getClass().getName());
+    }
+
+    @ConsistencyPredicate
+    public boolean checkThesisMultiplicity() {
+        return this.getThesesSet().size() <= 2;
     }
 
     @Deprecated

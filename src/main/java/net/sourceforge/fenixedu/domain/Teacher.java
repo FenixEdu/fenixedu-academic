@@ -1400,7 +1400,6 @@ public class Teacher extends Teacher_Base {
         return result;
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipIntention> getTutorshipIntention() {
         return getTutorshipIntentionSet();
@@ -1411,7 +1410,6 @@ public class Teacher extends Teacher_Base {
         return !getTutorshipIntentionSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TeacherAuthorization> getAuthorization() {
         return getAuthorizationSet();
@@ -1422,7 +1420,6 @@ public class Teacher extends Teacher_Base {
         return !getAuthorizationSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherService> getTeacherServices() {
         return getTeacherServicesSet();
@@ -1433,7 +1430,6 @@ public class Teacher extends Teacher_Base {
         return !getTeacherServicesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Orientation> getAssociatedOrientations() {
         return getAssociatedOrientationsSet();
@@ -1444,7 +1440,6 @@ public class Teacher extends Teacher_Base {
         return !getAssociatedOrientationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent> getDegreeFinalProjectStudents() {
         return getDegreeFinalProjectStudentsSet();
@@ -1455,7 +1450,6 @@ public class Teacher extends Teacher_Base {
         return !getDegreeFinalProjectStudentsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestGroup> getTestGroups() {
         return getTestGroupsSet();
@@ -1466,7 +1460,6 @@ public class Teacher extends Teacher_Base {
         return !getTestGroupsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime> getInstitutionWorkTimePeriods() {
         return getInstitutionWorkTimePeriodsSet();
@@ -1477,7 +1470,6 @@ public class Teacher extends Teacher_Base {
         return !getInstitutionWorkTimePeriodsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeCandidate> getMasterDegreeCandidates() {
         return getMasterDegreeCandidatesSet();
@@ -1488,7 +1480,6 @@ public class Teacher extends Teacher_Base {
         return !getMasterDegreeCandidatesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine> getManagementPositions() {
         return getManagementPositionsSet();
@@ -1499,7 +1490,6 @@ public class Teacher extends Teacher_Base {
         return !getManagementPositionsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MarkSheet> getMarkSheets() {
         return getMarkSheetsSet();
@@ -1510,7 +1500,6 @@ public class Teacher extends Teacher_Base {
         return !getMarkSheetsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits> getAnnualTeachingCredits() {
         return getAnnualTeachingCreditsSet();
@@ -1521,7 +1510,6 @@ public class Teacher extends Teacher_Base {
         return !getAnnualTeachingCreditsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.PublicationsNumber> getAssociatedPublicationsNumbers() {
         return getAssociatedPublicationsNumbersSet();
@@ -1532,7 +1520,6 @@ public class Teacher extends Teacher_Base {
         return !getAssociatedPublicationsNumbersSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
         return getAssociatedSummariesSet();
@@ -1543,7 +1530,6 @@ public class Teacher extends Teacher_Base {
         return !getAssociatedSummariesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Career> getAssociatedCareers() {
         return getAssociatedCareersSet();
@@ -1554,7 +1540,6 @@ public class Teacher extends Teacher_Base {
         return !getAssociatedCareersSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation> getTeacherPersonalExpectations() {
         return getTeacherPersonalExpectationsSet();
@@ -1565,7 +1550,6 @@ public class Teacher extends Teacher_Base {
         return !getTeacherPersonalExpectationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.ExternalActivity> getAssociatedExternalActivities() {
         return getAssociatedExternalActivitiesSet();
@@ -1576,7 +1560,6 @@ public class Teacher extends Teacher_Base {
         return !getAssociatedExternalActivitiesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit> getExecutionCourseAudits() {
         return getExecutionCourseAuditsSet();
@@ -1587,7 +1570,6 @@ public class Teacher extends Teacher_Base {
         return !getExecutionCourseAuditsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisGuider() {
         return getMasterDegreeThesisGuiderSet();
@@ -1598,7 +1580,6 @@ public class Teacher extends Teacher_Base {
         return !getMasterDegreeThesisGuiderSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Advise> getAdvises() {
         return getAdvisesSet();
@@ -1609,7 +1590,6 @@ public class Teacher extends Teacher_Base {
         return !getAdvisesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisAssistentGuider() {
         return getMasterDegreeThesisAssistentGuiderSet();
@@ -1620,7 +1600,6 @@ public class Teacher extends Teacher_Base {
         return !getMasterDegreeThesisAssistentGuiderSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCredits> getTeacherCredits() {
         return getTeacherCreditsSet();
@@ -1631,7 +1610,6 @@ public class Teacher extends Teacher_Base {
         return !getTeacherCreditsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeProofVersion> getMasterDegreeProofsJury() {
         return getMasterDegreeProofsJurySet();
@@ -1642,7 +1620,6 @@ public class Teacher extends Teacher_Base {
         return !getMasterDegreeProofsJurySet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Tutorship> getTutorships() {
         return getTutorshipsSet();
@@ -1653,7 +1630,6 @@ public class Teacher extends Teacher_Base {
         return !getTutorshipsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestModel> getTestModels() {
         return getTestModelsSet();
@@ -1664,7 +1640,6 @@ public class Teacher extends Teacher_Base {
         return !getTestModelsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.OldPublication> getAssociatedOldPublications() {
         return getAssociatedOldPublicationsSet();
@@ -1675,7 +1650,6 @@ public class Teacher extends Teacher_Base {
         return !getAssociatedOldPublicationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup> getAppraiserExpectationEvaluationGroups() {
         return getAppraiserExpectationEvaluationGroupsSet();
@@ -1686,7 +1660,6 @@ public class Teacher extends Teacher_Base {
         return !getAppraiserExpectationEvaluationGroupsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher> getTSDRealTeachers() {
         return getTSDRealTeachersSet();
@@ -1697,7 +1670,6 @@ public class Teacher extends Teacher_Base {
         return !getTSDRealTeachersSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultTeacher> getTeacherResults() {
         return getTeacherResultsSet();
@@ -1708,7 +1680,6 @@ public class Teacher extends Teacher_Base {
         return !getTeacherResultsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.ThesisSubject> getThesisSubjects() {
         return getThesisSubjectsSet();
@@ -1719,7 +1690,6 @@ public class Teacher extends Teacher_Base {
         return !getThesisSubjectsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes> getAssociatedOldInquiriesTeachersRes() {
         return getAssociatedOldInquiriesTeachersResSet();
@@ -1730,7 +1700,6 @@ public class Teacher extends Teacher_Base {
         return !getAssociatedOldInquiriesTeachersResSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipSummary> getTutorshipSummaries() {
         return getTutorshipSummariesSet();
@@ -1741,7 +1710,6 @@ public class Teacher extends Teacher_Base {
         return !getTutorshipSummariesSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator> getMobilityCoordinations() {
         return getMobilityCoordinationsSet();
@@ -1752,7 +1720,6 @@ public class Teacher extends Teacher_Base {
         return !getMobilityCoordinationsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup> getEvaluatedExpectationEvaluationGroups() {
         return getEvaluatedExpectationEvaluationGroupsSet();
@@ -1763,7 +1730,6 @@ public class Teacher extends Teacher_Base {
         return !getEvaluatedExpectationEvaluationGroupsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine> getOtherTypeCreditLines() {
         return getOtherTypeCreditLinesSet();

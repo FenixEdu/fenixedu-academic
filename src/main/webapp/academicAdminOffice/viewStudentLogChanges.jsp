@@ -64,10 +64,10 @@
 
  	 <fr:view name="logsList">
 		<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="APPLICATION_RESOURCES">
-			<fr:slot name="person" layout="null-as-label">
-				<fr:property name="subSchema" value="person.photo" />
-				<fr:property name="subLayout" value="values"/>
-			</fr:slot>
+			<fr:slot name="person" layout="view-as-image">
+						<fr:property name="photoCellClasses" value="personalcard_photo"/>
+				   		<fr:property name="imageFormat" value="<%=request.getContextPath()+ "/person/retrievePersonalPhoto.do?method=retrieveByUUID&uuid=${istUsername}"%>"/>
+	    	</fr:slot>
 			<fr:slot name="istUsername" key="label.istid" >
 		    	<fr:property name="classes" value="nobullet noindent"/>  
 	    	</fr:slot>

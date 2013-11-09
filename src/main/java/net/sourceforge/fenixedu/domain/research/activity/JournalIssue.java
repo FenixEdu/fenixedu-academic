@@ -152,7 +152,6 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
         }
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation> getArticleAssociations() {
         return getArticleAssociationsSet();

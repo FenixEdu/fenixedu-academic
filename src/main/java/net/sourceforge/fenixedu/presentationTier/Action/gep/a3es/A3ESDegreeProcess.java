@@ -37,6 +37,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection;
+import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 
@@ -72,26 +74,40 @@ public class A3ESDegreeProcess implements Serializable {
     static {
         // This being hard-coded prevents future executions without our
         // interference, this should be persisted and managed by UI.
-//
-//        acefIndex.put("ACEF/1213/06697", "LEE");
-//        acefIndex.put("ACEF/1213/06707", "LEIC-A");
-//        acefIndex.put("ACEF/1213/06712", "LEIC-T");
-//        acefIndex.put("ACEF/1213/12622", "LERC");
-//        acefIndex.put("ACEF/1213/06752", "MEE");
-//        acefIndex.put("ACEF/1213/06762", "MEIC-A");
-//        acefIndex.put("ACEF/1213/06767", "MEIC-T");
-//        acefIndex.put("ACEF/1213/06772", "MERC");
-//        acefIndex.put("ACEF/1213/06797", "MUOT");
-//        acefIndex.put("ACEF/1213/06832", "MEEC");
-//        acefIndex.put("ACEF/1213/06852", "MA");
-//        acefIndex.put("ACEF/1213/06862", "DArq");
-//        acefIndex.put("ACEF/1213/06872", "DEEC");
-//        acefIndex.put("ACEF/1213/06882", "DEIC");
-//        acefIndex.put("ACEF/1213/06917", "DMte");
-//        acefIndex.put("ACEF/1213/06927", "DEASegInf");
-//        acefIndex.put("ACEF/1213/06967", "DEAEngCmp");
-//        acefIndex.put("ACEF/1213/06987", "DET");
-        acefIndex.put("ACEF/1314/06812", "MEAER");
+
+        acefIndex.put("ACEF/1314/06702", "LEGI");
+        acefIndex.put("ACEF/1314/06722", "LEAN");
+        acefIndex.put("ACEF/1314/06727", "LEMat");
+        acefIndex.put("ACEF/1314/06737", "LMAC");
+        acefIndex.put("ACEF/1314/06742", "MEAN");
+        acefIndex.put("ACEF/1314/06747", "MBiotec");
+        acefIndex.put("ACEF/1314/06757", "MEGI");
+        acefIndex.put("ACEF/1314/06777", "MMA");
+        acefIndex.put("ACEF/1314/06787", "MEMat");
+        acefIndex.put("ACEF/1314/06792", "MBioNano");
+        acefIndex.put("ACEF/1314/06807", "MQ");
+        acefIndex.put("ACEF/1314/13727", "MEFarm");
+        acefIndex.put("ACEF/1314/06812", "MEAer");
+        acefIndex.put("ACEF/1314/06817", "MEAmbi");
+        acefIndex.put("ACEF/1314/06822", "MEBiol");
+        acefIndex.put("ACEF/1314/06842", "MEQ");
+        acefIndex.put("ACEF/1314/06847", "MEBiom");
+        acefIndex.put("ACEF/1314/06857", "MEMec");
+        acefIndex.put("ACEF/1314/06867", "DBiotec");
+        acefIndex.put("ACEF/1314/06877", "DEGest");
+        acefIndex.put("ACEF/1314/06892", "DEN");
+        acefIndex.put("ACEF/1314/06902", "DEAEPP");
+        acefIndex.put("ACEF/1314/06952", "DEMec");
+        acefIndex.put("ACEF/1314/06957", "DEPE");
+        acefIndex.put("ACEF/1314/06982", "DEAer");
+        acefIndex.put("ACEF/1314/06947", "DEAmb");
+        acefIndex.put("ACEF/1314/06887", "DEMat");
+        acefIndex.put("ACEF/1314/06897", "DEQuim");
+        acefIndex.put("ACEF/1314/06912", "DMat");
+        acefIndex.put("ACEF/1314/06922", "DQuim");
+        acefIndex.put("ACEF/1314/06932", "DEBiom");
+
+//        acefIndex.put("ACEF/1314/06812", "MEAER");
     }
 
     protected String user;
@@ -280,8 +296,7 @@ public class A3ESDegreeProcess implements Serializable {
                 StringBuilder output = new StringBuilder();
 
                 json.put("q-6.2.1.1", competence.getName(executionSemester));
-
-                json.put("q-6.2.1.2", getTeachersAndTeachingHours(course, true));
+                json.put("q-6.2.1.2", cut("Docente responsavel", getTeachersAndTeachingHours(course, true), output, 100));
 
                 JSONObject q6213 = new JSONObject();
                 String teachersAndTeachingHours = getTeachersAndTeachingHours(course, false);
@@ -373,7 +388,9 @@ public class A3ESDegreeProcess implements Serializable {
         int counter = 1000;
         List<String> responsibles = new ArrayList<String>();
         for (Teacher teacher : responsiblesMap.keySet()) {
-            String responsible = teacher.getPerson().getName() + " (" + responsiblesMap.get(teacher) + ")";
+            String responsible =
+                    (responsibleTeacher ? teacher.getPerson().getFirstAndLastName() : teacher.getPerson().getName()) + " ("
+                            + responsiblesMap.get(teacher) + ")";
             counter -= JSONObject.escape(responsible + ", ").getBytes().length;
             responsibles.add(responsible);
         }
@@ -398,7 +415,9 @@ public class A3ESDegreeProcess implements Serializable {
                 }
             }
             for (Teacher teacher : teachers) {
-                String responsible = teacher.getPerson().getName() + " (0.0)";
+                String responsible =
+                        (responsibleTeacher ? teacher.getPerson().getFirstAndLastName() : teacher.getPerson().getName())
+                                + " (0.0)";
                 if (counter - JSONObject.escape(responsible).getBytes().length < 0) {
                     break;
                 }
@@ -424,6 +443,19 @@ public class A3ESDegreeProcess implements Serializable {
                         result =
                                 result + courseLoad.getTotalQuantity().doubleValue()
                                         * (degreeTeachingService.getPercentage().doubleValue() / 100);
+                    }
+                }
+            }
+            for (OtherService otherService : teacherService.getOtherServices()) {
+                if (otherService instanceof DegreeTeachingServiceCorrection) {
+                    DegreeTeachingServiceCorrection degreeTeachingServiceCorrection =
+                            (DegreeTeachingServiceCorrection) otherService;
+                    if (degreeTeachingServiceCorrection.getProfessorship().getExecutionCourse()
+                            .equals(professorhip.getExecutionCourse())
+                            && (!degreeTeachingServiceCorrection.getProfessorship().getExecutionCourse().isDissertation())
+                            && (!degreeTeachingServiceCorrection.getProfessorship().getExecutionCourse()
+                                    .getProjectTutorialCourse())) {
+                        result = result + degreeTeachingServiceCorrection.getCorrection().doubleValue();
                     }
                 }
             }

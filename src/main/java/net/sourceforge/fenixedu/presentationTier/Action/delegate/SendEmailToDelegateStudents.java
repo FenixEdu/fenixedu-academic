@@ -53,7 +53,6 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
     @SuppressWarnings("unchecked")
     protected List<Group> getPossibleReceivers(HttpServletRequest request, ExecutionYear executionYear) {
         List<Group> groups = new ArrayList<Group>();
-
         final Person person = getLoggedPerson(request);
         PersonFunction delegateFunction = getDelegateFunction(executionYear, person);
         if (delegateFunction != null) {
@@ -139,14 +138,14 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
             Collections.sort(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
             for (Registration registration : activeRegistrations) {
                 delegateFunction = registration.getDegree().getMostSignificantDelegateFunctionForStudent(student, executionYear);
-                if (delegateFunction != null) {
-                    break;
+                if (delegateFunction != null && delegateFunction.isActive()) {
+                    return delegateFunction;
                 }
             }
         } else {
-            delegateFunction = person.getActiveGGAEDelegatePersonFunction();
+            return person.getActiveGGAEDelegatePersonFunction();
         }
-        return delegateFunction;
+        return null; // no active function was found
     }
 
     public ActionForward prepareSendToStudentsFromSelectedCurricularCourses(ActionMapping mapping, ActionForm actionForm,

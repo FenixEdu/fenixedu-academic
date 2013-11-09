@@ -413,7 +413,7 @@ public class VigilantTableRender extends OutputRenderer {
             List<Vigilancy> vigilancies;
             if (showNotActiveConvokes) {
                 if (showOwnVigilancies) {
-                    vigilancies = new ArrayList<Vigilancy>(vigilant.getVigilancies());
+                    vigilancies = new ArrayList<Vigilancy>(vigilant.getVigilanciesSet());
                 } else {
                     vigilancies = vigilant.getOtherCourseVigilancies();
                 }
@@ -449,7 +449,7 @@ public class VigilantTableRender extends OutputRenderer {
         private MetaObject getConvokeMetaObject(MetaObject vigilantMetaObject) {
 
             if (convokeMetaObjectCache == null) {
-                Collection<Vigilancy> convokes = ((VigilantWrapper) getVigilantWithConvokes().getObject()).getVigilancies();
+                Collection<Vigilancy> convokes = ((VigilantWrapper) getVigilantWithConvokes().getObject()).getVigilanciesSet();
                 Vigilancy oneConvoke = convokes.iterator().next();
 
                 convokeMetaObjectCache = MetaObjectFactory.createObject(oneConvoke, this.convokeSchema);

@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 import javax.activation.MimetypesFileTypeMap;
 
@@ -56,8 +57,10 @@ public abstract class File extends File_Base {
     }
 
     private void checkInvalidCharacters(String displayName) {
-        if (displayName.contains("+") || displayName.contains(">")) {
-            throw new DomainException("errors.file.displayName.invalid.characters");
+        // if the accepted character list is changed, consider changing the 'Content.java' list as well
+        String validChars = "_\\- .()*'";
+        if (!Pattern.matches("[\\p{IsLatin}0-9" + validChars + "]+", displayName)) {
+            throw new DomainException("errors.file.displayName.invalid.characters", validChars.replace("\\", ""));
         }
     }
 
@@ -87,14 +90,14 @@ public abstract class File extends File_Base {
     }
 
     public InputStream getStream() {
-        if (hasLocalContent()) {
+        if (getLocalContent() != null) {
             return new ByteArrayInputStream(getLocalContent().getContent().getBytes());
         }
         return FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(getExternalStorageIdentification());
     }
 
     public byte[] getContents() {
-        if (hasLocalContent()) {
+        if (getLocalContent() != null) {
             return getLocalContent().getContent().getBytes();
         }
         InputStream inputStream = null;
@@ -122,7 +125,7 @@ public abstract class File extends File_Base {
      *         associated file from the external file storage
      */
     public String getDownloadUrl() {
-        if (hasLocalContent()) {
+        if (getLocalContent() != null) {
             return ACTION_PATH + getExternalId();
         }
 
@@ -136,7 +139,7 @@ public abstract class File extends File_Base {
     }
 
     protected void disconnect() {
-        if (hasLocalContent()) {
+        if (getLocalContent() != null) {
             getLocalContent().delete();
         } else {
             createDeleteFileRequest();
@@ -190,7 +193,7 @@ public abstract class File extends File_Base {
     @Override
     public void setPermittedGroup(Group permittedGroup) {
         super.setPermittedGroup(permittedGroup);
-        if (!hasLocalContent()) {
+        if (getLocalContent() == null) {
             final boolean isPublic = permittedGroup == null || permittedGroup instanceof EveryoneGroup;
             FileManagerFactory.getFactoryInstance().getContentFileManager()
                     .changeFilePermissions(getExternalStorageIdentification(), !isPublic);

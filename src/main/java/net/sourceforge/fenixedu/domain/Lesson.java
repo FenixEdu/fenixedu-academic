@@ -191,7 +191,7 @@ public class Lesson extends Lesson_Base {
         }
 
         while (hasAnyLessonInstances()) {
-            getLessonInstances().iterator().next().delete();
+            getLessonInstancesSet().iterator().next().delete();
         }
 
         super.setShift(null);
@@ -390,7 +390,7 @@ public class Lesson extends Lesson_Base {
         result.put(Boolean.FALSE, new ArrayList<LessonInstance>());
 
         if (day != null) {
-            Collection<LessonInstance> lessonInstances = getLessonInstances();
+            Collection<LessonInstance> lessonInstances = getLessonInstancesSet();
             for (LessonInstance lessonInstance : lessonInstances) {
                 if (lessonInstance.hasSummary() && !lessonInstance.getDay().isBefore(day)) {
                     List<LessonInstance> list = result.get(Boolean.TRUE);
@@ -555,7 +555,7 @@ public class Lesson extends Lesson_Base {
 
     public List<Summary> getAssociatedSummaries() {
         List<Summary> result = new ArrayList<Summary>();
-        Collection<LessonInstance> lessonInstances = getLessonInstances();
+        Collection<LessonInstance> lessonInstances = getLessonInstancesSet();
         for (LessonInstance lessonInstance : lessonInstances) {
             if (lessonInstance.hasSummary()) {
                 result.add(lessonInstance.getSummary());
@@ -740,7 +740,7 @@ public class Lesson extends Lesson_Base {
 
     public SortedSet<YearMonthDay> getAllLessonInstanceDates() {
         SortedSet<YearMonthDay> dates = new TreeSet<YearMonthDay>();
-        for (LessonInstance instance : getLessonInstances()) {
+        for (LessonInstance instance : getLessonInstancesSet()) {
             dates.add(instance.getDay());
         }
         return dates;
@@ -749,7 +749,7 @@ public class Lesson extends Lesson_Base {
     public List<LessonInstance> getAllLessonInstancesUntil(LocalDate day) {
         List<LessonInstance> result = new ArrayList<LessonInstance>();
         if (day != null) {
-            for (LessonInstance instance : getLessonInstances()) {
+            for (LessonInstance instance : getLessonInstancesSet()) {
                 if (!instance.getDay().isAfter(day)) {
                     result.add(instance);
                 }
@@ -761,7 +761,7 @@ public class Lesson extends Lesson_Base {
     public SortedSet<YearMonthDay> getAllLessonInstanceDatesUntil(YearMonthDay day) {
         SortedSet<YearMonthDay> result = new TreeSet<YearMonthDay>();
         if (day != null) {
-            for (LessonInstance instance : getLessonInstances()) {
+            for (LessonInstance instance : getLessonInstancesSet()) {
                 YearMonthDay instanceDay = instance.getDay();
                 if (!instanceDay.isAfter(day)) {
                     result.add(instanceDay);
@@ -814,13 +814,13 @@ public class Lesson extends Lesson_Base {
 
     public LessonInstance getLastLessonInstance() {
         SortedSet<LessonInstance> result = new TreeSet<LessonInstance>(LessonInstance.COMPARATOR_BY_BEGIN_DATE_TIME);
-        result.addAll(getLessonInstances());
+        result.addAll(getLessonInstancesSet());
         return !result.isEmpty() ? result.last() : null;
     }
 
     public LessonInstance getFirstLessonInstance() {
         SortedSet<LessonInstance> result = new TreeSet<LessonInstance>(LessonInstance.COMPARATOR_BY_BEGIN_DATE_TIME);
-        result.addAll(getLessonInstances());
+        result.addAll(getLessonInstancesSet());
         return !result.isEmpty() ? result.first() : null;
     }
 
@@ -840,7 +840,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public LessonInstance getLessonInstanceFor(YearMonthDay date) {
-        Collection<LessonInstance> lessonInstances = getLessonInstances();
+        Collection<LessonInstance> lessonInstances = getLessonInstancesSet();
         for (LessonInstance lessonInstance : lessonInstances) {
             if (lessonInstance.getDay().isEqual(date)) {
                 return lessonInstance;
@@ -1115,7 +1115,7 @@ public class Lesson extends Lesson_Base {
 
     public Set<Interval> getAllLessonIntervals() {
         Set<Interval> intervals = new HashSet<Interval>();
-        for (LessonInstance instance : getLessonInstances()) {
+        for (LessonInstance instance : getLessonInstancesSet()) {
             intervals.add(new Interval(instance.getBeginDateTime(), instance.getEndDateTime()));
         }
         if (!wasFinished()) {
@@ -1148,11 +1148,11 @@ public class Lesson extends Lesson_Base {
         for (int i = 0; i < weeksA.length; i++) {
             if (i == 0) {
                 builder.append(weeksA[i]);
-            } else if (i == weeksA.length - 1 || ((int) weeksA[i]) + 1 != ((int) weeksA[i + 1])) {
-                final String seperator = ((int) weeksA[i - 1]) + 1 == ((int) weeksA[i]) ? " - " : ", ";
+            } else if (i == weeksA.length - 1 || (weeksA[i]) + 1 != (weeksA[i + 1])) {
+                final String seperator = (weeksA[i - 1]) + 1 == (weeksA[i]) ? " - " : ", ";
                 builder.append(seperator);
                 builder.append(weeksA[i]);
-            } else if (((int) weeksA[i - 1]) + 1 != (int) weeksA[i]) {
+            } else if ((weeksA[i - 1]) + 1 != weeksA[i]) {
                 builder.append(", ");
                 builder.append(weeksA[i]);
             }

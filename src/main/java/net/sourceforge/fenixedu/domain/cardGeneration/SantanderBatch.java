@@ -167,7 +167,6 @@ public class SantanderBatch extends SantanderBatch_Base {
         return String.format(format, number);
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderProblem> getSantanderProblems() {
         return getSantanderProblemsSet();
@@ -178,7 +177,6 @@ public class SantanderBatch extends SantanderBatch_Base {
         return !getSantanderProblemsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderEntry> getSantanderEntries() {
         return getSantanderEntriesSet();
@@ -279,7 +277,7 @@ public class SantanderBatch extends SantanderBatch_Base {
                 if (++entryCnt % 2000 == 0) {
                     batchCnt++;
                     zipFile.putNextEntry(new ZipEntry(today.toString("yyyy-MM-dd") + "_E" + makeZeroPaddedNumber(batchCnt, 4)
-                        + ".xml"));
+                            + ".xml"));
                     zipFile.write(generateDDXR(batch2k, batchCnt, today));
                     zipFile.closeEntry();
 
@@ -367,14 +365,10 @@ public class SantanderBatch extends SantanderBatch_Base {
                     + "3"
                     + makeStringBlock(entry.getPerson().getIstUsername(), 10, 'x')
                     + "x"
-                    + makeStringBlock(getCardName(entry.getPerson().getName()).length() > 21
-                            ? getCardName(entry.getPerson().getName()).substring(0, 21)
-                            : getCardName(entry.getPerson().getName()), 21, ' ').toUpperCase()
-                    + "0"
-                    + makeZeroPaddedNumber(0, 21)
-                    + makeZeroPaddedNumber(0, 10)
-                    + "1"
-                    + "</DADOSADIC>\n");
+                    + makeStringBlock(
+                            getCardName(entry.getPerson().getName()).length() > 21 ? getCardName(entry.getPerson().getName())
+                                    .substring(0, 21) : getCardName(entry.getPerson().getName()), 21, ' ').toUpperCase() + "0"
+                    + makeZeroPaddedNumber(0, 21) + makeZeroPaddedNumber(0, 10) + "1" + "</DADOSADIC>\n");
             ddxrBuilder.append("\t\t\t</DOCDET>\n");
             ddxrBuilder.append("\t\t</DOC>\n");
         }

@@ -301,6 +301,20 @@ public abstract class Event extends Event_Base {
         return getPayedAmount(null);
     }
 
+    public Money getPayedAmountFor(EntryType entryType) {
+        if (isCancelled()) {
+            throw new DomainException("error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
+        }
+
+        Money payedAmount = Money.ZERO;
+        for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+            if (transaction.getToAccountEntry().getEntryType().equals(entryType)) {
+                payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+            }
+        }
+        return payedAmount;
+    }
+
     public Money getPayedAmount(final DateTime until) {
         if (isCancelled()) {
             throw new DomainException("error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
@@ -1069,7 +1083,6 @@ public abstract class Event extends Event_Base {
         return (Person) getParty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEventTicket> getConsumedTicket() {
         return getConsumedTicketSet();
@@ -1080,7 +1093,6 @@ public abstract class Event extends Event_Base {
         return !getConsumedTicketSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Discount> getDiscounts() {
         return getDiscountsSet();
@@ -1091,7 +1103,6 @@ public abstract class Event extends Event_Base {
         return !getDiscountsSet().isEmpty();
     }
 
-    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Exemption> getExemptions() {
         return getExemptionsSet();

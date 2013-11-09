@@ -1,10 +1,9 @@
-install: 
-    - "cp src/main/resources/configuration.properties.sample src/main/resources/configuration.properties"
-
 language: java
 
-script: "mvn clean package -B -e -Dsurefire.useFile=false -Djasper.threads=1"
+script: "mvn clean install -B -e -Dsurefire.useFile=false -Djasper.threads=1"
 
 jdk:
     - oraclejdk7
 
+notifications:
+  irc: "chat.freenode.net#fenixedu"

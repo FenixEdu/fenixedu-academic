@@ -57,6 +57,7 @@
 </fr:view>
 </logic:notPresent>
 
+
 <bean:define id="deleteLink">
 	/manageRegistrationState.do?method=deleteState&amp;registrationId=${registration.externalId}&amp;registrationStateId=${externalId}
 </bean:define>	
@@ -64,6 +65,7 @@
 <bean:define id="deleteConfirm">
 	return confirm('<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="message.confirm.delete.registrationState"/>')
 </bean:define>
+
 
 <logic:notEmpty name="registration" property="registrationStates" >
 	<h3 class="mtop2 mbottom05"><bean:message key="label.registration.historic" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
@@ -82,6 +84,17 @@
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
+
+<p class="mvert05">
+	<academic:allowed operation="EDIT_STUDENT_PERSONAL_DATA">
+		<span class="pleft05">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+			<html:link page="/manageRegistrationState.do?method=viewRegistrationStateLog" paramId="registrationId" paramName="registration" paramProperty="externalId">
+				<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
+			</html:link>
+		</span>
+	</academic:allowed>
+</p>
 
 <h3 class="mtop2 mbottom1"><bean:message key="label.registration.manageState" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <span class="warning0"><bean:message key="add.state.warning" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>

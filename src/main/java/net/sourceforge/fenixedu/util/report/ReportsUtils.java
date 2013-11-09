@@ -317,8 +317,8 @@ public class ReportsUtils extends PropertiesManager {
 
     static private void addFont(final Map<FontKey, PdfFont> result, final String fontName, final String pdfFontName,
             final String baseFont) {
-        final URL url = ReportsUtils.class.getResource("/fonts/" + pdfFontName);
-        result.put(new FontKey(fontName, false, false), new PdfFont(url.getFile(), baseFont, true));
+        final URL url = ReportsUtils.class.getClassLoader().getResource("fonts/" + pdfFontName);
+        result.put(new FontKey(fontName, false, false), new PdfFont(url.toExternalForm(), baseFont, true));
     }
 
 }

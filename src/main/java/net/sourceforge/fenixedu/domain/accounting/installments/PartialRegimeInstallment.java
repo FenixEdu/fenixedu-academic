@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.domain.accounting.installments;
 
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,9 +21,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
 
@@ -180,7 +181,7 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
 
     @Override
     public void edit(InstallmentBean bean) {
-        List<ExecutionSemester> executionSemesters = bean.getExecutionSemesters();
+        List<ExecutionSemester> executionSemesters = new ArrayList<>(bean.getExecutionSemesters());
         BigDecimal ectsForAmount = bean.getEctsForAmount();
 
         checkParameters(ectsForAmount, executionSemesters);
@@ -192,6 +193,7 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
         super.setEctsForAmount(ectsForAmount);
         super.edit(bean);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionSemester> getExecutionSemesters() {
         return getExecutionSemestersSet();

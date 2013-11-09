@@ -1154,7 +1154,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             if (enrolment instanceof OptionalEnrolment) {
                 final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) enrolment;
                 return optionalEnrolment.getOptionalCurricularCourse().getName() + " (" + code
-                        + optionalEnrolment.getCurricularCourse().getName() + ")";
+                        + optionalEnrolment.getCurricularCourse().getName(optionalEnrolment.getExecutionPeriod()) + ")";
             } else {
                 return code + enrolment.getName().getContent();
             }

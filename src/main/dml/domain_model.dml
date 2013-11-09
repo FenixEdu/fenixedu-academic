@@ -1191,7 +1191,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     
     class  PersonInformationLog extends DomainOperationLog {
     }
-    	
+        
     class CourseLoad  {
         ShiftType type;
         BigDecimal totalQuantity;
@@ -5226,6 +5226,9 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class student.RegistrationRegime  {
         DateTime whenCreated;
         RegistrationRegimeType regimeType;
+    }
+    
+    class  student.RegistrationStateLog extends DomainOperationLog {
     }
 
     class student.ResidenceCandidacies  {
@@ -13525,6 +13528,13 @@ relation PunctualRoomsOccupationRequestPerson {
     }
 }
 
+relation PunctualRoomsOccupationRequestCampus {
+    space.Campus playsRole campus;
+    PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequests {
+        multiplicity *;
+    }
+}
+
 relation PunctualRoomsOccupationRequestPunctualRoomsOccupationComment {
     PunctualRoomsOccupationRequest playsRole request;
     PunctualRoomsOccupationComment playsRole comments {
@@ -13751,6 +13761,13 @@ relation RegistrationStateResponsiblePerson {
 
 relation RegistrationStateLogRegistration {
     student.registrationStates.RegistrationStateLog playsRole registrationStateLogs {
+        multiplicity *;
+    }
+    student.Registration playsRole registration;
+}
+
+relation RegistrationStateLog {
+    student.RegistrationStateLog playsRole registrationStateLog {
         multiplicity *;
     }
     student.Registration playsRole registration;
@@ -16848,7 +16865,10 @@ relation ThesisDegree {
 relation ThesisEnrolment {
     Enrolment playsRole enrolment;
     thesis.Thesis playsRole theses {
-        multiplicity 0..2;
+        // This should be 0..2, but due to a bug
+        // in the Framework's Code Generator, the
+        // multiplicity check must manually placed
+        multiplicity *;
     }
 }
 

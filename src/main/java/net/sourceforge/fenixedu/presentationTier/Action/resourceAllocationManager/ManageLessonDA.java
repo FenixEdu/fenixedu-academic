@@ -80,7 +80,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
                 new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(
                         NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE_AND_HOUR);
 
-        for (final LessonInstance instance : infoLesson.getLesson().getLessonInstances()) {
+        for (final LessonInstance instance : infoLesson.getLesson().getLessonInstancesSet()) {
             final NextPossibleSummaryLessonsAndDatesBean bean =
                     new NextPossibleSummaryLessonsAndDatesBean(lesson, instance.getDay());
             bean.setRoom(instance.getRoom());

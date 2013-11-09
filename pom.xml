@@ -6,48 +6,34 @@
 	<parent>
 		<groupId>pt.ist</groupId>
 		<artifactId>fenix-framework-project</artifactId>
-		<version>1.0.0</version>
+		<version>1.1.0</version>
 	</parent>
 
 	<artifactId>fenix</artifactId>
-	<packaging>war</packaging>
-	<version>1.0.1</version>
-	<name>Fenix Webapp</name>
+	<packaging>jar</packaging>
+	<version>1.1.0</version>
+	<name>Fenix</name>
 	<url>http://fenix-ashes.ist.utl.pt</url>
 
 	<properties>
-		<maven.build.timestamp.format>yyyy/MM/dd HH:mm:ss</maven.build.timestamp.format>
-		<buildNumber>${maven.build.timestamp}</buildNumber>
 		<jasper.threads>3</jasper.threads>
 		<skipTests>true</skipTests>
-		<version.pt.ist.fenix.framework>2.2.0</version.pt.ist.fenix.framework>
-		<version.pt.ist.ff.maven.plugin>2.2.0</version.pt.ist.ff.maven.plugin>
-
-		<fenix.framework.codeGeneratorClassName>pt.ist.fenixframework.backend.jvstmojb.codeGenerator.FenixCodeGeneratorOneBoxPerObject</fenix.framework.codeGeneratorClassName>
-		<fenix.framework.backend>jvstm-ojb</fenix.framework.backend>
 	</properties>
 
 	<build>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
-				<filtering>false</filtering>
-				<excludes>
-					<exclude>build.version</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-				<includes>
-					<include>build.version</include>
-				</includes>
 			</resource>
 			<resource>
 				<directory>src/main/webapp/images</directory>
 				<targetPath>${project.build.outputDirectory}/images</targetPath>
 				<filtering>false</filtering>
 			</resource>
+               <resource>
+                <directory>src/main/webapp</directory>
+                <targetPath>META-INF/resources</targetPath>
+            </resource>
 		</resources>
 		<plugins>
 			<plugin>
@@ -56,9 +42,6 @@
 				<version>2.5</version>
 				<configuration>
 					<filesets>
-						<fileset>
-							<directory>deploy</directory>
-						</fileset>
 						<fileset>
 							<directory>.</directory>
 							<includes>
@@ -87,10 +70,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
 					<fork>true</fork>
 					<annotationProcessors>
 						<annotationProcessor>pt.ist.fenixWebFramework.struts.annotations.ActionAnnotationProcessor</annotationProcessor>
@@ -98,11 +78,6 @@
 					<maxmem>2048</maxmem>
 					<meminitial>1536</meminitial>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>pt.ist</groupId>
-				<artifactId>fenix-maven-plugin</artifactId>
-				<version>1.0.0</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -162,65 +137,6 @@
 					<outputDirectory>${project.build.outputDirectory}/reports</outputDirectory>
 					<numberOfThreads>${jasper.threads}</numberOfThreads>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>properties-maven-plugin</artifactId>
-				<version>1.0-alpha-2</version>
-				<executions>
-					<execution>
-						<phase>initialize</phase>
-						<goals>
-							<goal>read-project-properties</goal>
-						</goals>
-						<configuration>
-							<files>
-								<file>src/main/resources/configuration.properties</file>
-							</files>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.0.6.v20130930</version>
-				<configuration>
-					<reload>manual</reload>
-					<stopKey>foo</stopKey>
-					<stopPort>9999</stopPort>
-					<encoding>UTF-8</encoding>
-					<webApp>
-						<contextPath>/fenix</contextPath>
-					</webApp>
-					<scanTargets>
-						<scanTarget>src/main/webapp</scanTarget>
-					</scanTargets>
-					<war>${project.build.directory}/${project.build.finalName}</war>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.1</version>
-				<configuration>
-					<path>/fenix</path>
-					<port>8080</port>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>pt.ist</groupId>
-				<artifactId>ff-maven-plugin</artifactId>
-				<configuration>
-					<codeGeneratorClassName>${fenix.framework.codeGeneratorClassName}</codeGeneratorClassName>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>pt.ist</groupId>
-						<artifactId>fenix-framework-backend-${fenix.framework.backend}-code-generator</artifactId>
-						<version>${version.pt.ist.fenix.framework}</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
@@ -480,12 +396,6 @@
 			<version>0.20.5</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>pt.ist</groupId>
 			<artifactId>scheduler-plugin</artifactId>
 			<version>0.1.0</version>
@@ -514,16 +424,6 @@
 			<groupId>com.iver.cit</groupId>
 			<artifactId>fmap</artifactId>
 			<version>0.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.5</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.0.13</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
@@ -602,11 +502,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>pt.ist</groupId>
-			<artifactId>fenix-framework-backend-${fenix.framework.backend}-runtime</artifactId>
-			<version>${version.pt.ist.fenix.framework}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
 			<version>2.2.3</version>
@@ -637,179 +532,6 @@
 								<goals>
 									<goal>compile</goal>
 								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>jar</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>pt.ist</groupId>
-						<artifactId>fenix-maven-plugin</artifactId>
-						<version>1.0.0</version>
-						<executions>
-							<execution>
-								<id>fenix-process-classes</id>
-								<phase>process-classes</phase>
-								<goals>
-									<goal>post-compile</goal>
-								</goals>
-								<configuration>
-									<injectors>
-										<param>pt.ist.fenixWebFramework.services.ServiceAnnotationInjector</param>
-									</injectors>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-resources-plugin</artifactId>
-						<version>2.6</version>
-						<configuration>
-							<encoding>UTF-8</encoding>
-						</configuration>
-						<executions>
-							<execution>
-								<id>copy-images</id>
-								<phase>validate</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${basedir}/target/classes/images</outputDirectory>
-									<resources>
-										<resource>
-											<directory>src/main/webapp/images</directory>
-											<filtering>false</filtering>
-										</resource>
-									</resources>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-jar-plugin</artifactId>
-						<version>2.4</version>
-						<executions>
-							<execution>
-								<id>make-a-jar</id>
-								<phase>process-classes</phase>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<outputDirectory>${basedir}/deploy</outputDirectory>
-							<includes>
-								<include>net/sourceforge/fenixedu/_development/**/*.class</include>
-								<include>net/sourceforge/fenixedu/injectionCode/**/*.class</include>
-								<include>net/sourceforge/fenixedu/constants/**/*.class</include>
-								<include>net/sourceforge/fenixedu/commons/**/*.class</include>
-								<include>net/sourceforge/fenixedu/dataTransferObject/**/*.class</include>
-								<include>net/sourceforge/fenixedu/domain/**/*.class</include>
-								<include>net/sourceforge/fenixedu/fileSuport/**/*.class</include>
-								<include>net/sourceforge/fenixedu/middleware/**/*.class</include>
-								<include>net/sourceforge/fenixedu/integrationTier/**/*.class</include>
-								<include>net/sourceforge/fenixedu/applicationTier/**/*.class</include>
-								<include>net/sourceforge/fenixedu/persistenceTier/**/*.class</include>
-								<include>net/sourceforge/fenixedu/persistenceTierFiltroPessoa/**/*.class</include>
-								<include>net/sourceforge/fenixedu/persistenceTierJDBC/**/*.class</include>
-								<include>net/sourceforge/fenixedu/persistenceTierOracle/**/*.class</include>
-								<include>net/sourceforge/fenixedu/presentationTier/renderers/htmlEditor/*.class</include>
-								<include>net/sourceforge/fenixedu/presentationTier/docs/*.class</include>
-								<include>net/sourceforge/fenixedu/presentationTier/docs/**/*.class</include>
-								<include>net/sourceforge/fenixedu/util/**/*.class</include>
-								<include>net/sourceforge/fenixedu/utilInsc/**/*.class</include>
-								<include>net/sourceforge/fenixedu/utilTests/**/*.class</include>
-								<include>net/sourceforge/fenixedu/tools/**/*.class</include>
-								<include>net/sourceforge/fenixedu/framework/**/*.class</include>
-								<include>relations/*.class</include>
-								<include>org/**/*.class</include>
-								<include>pt/**/*.class</include>
-								<include>reports/**/*.*</include>
-								<include>**/*.properties</include>
-								<include>images/**/*.*</include>
-							</includes>
-							<excludes>
-								<exclude>THIS_EXCLUDE_IS_JUST_HERE_BECAUSE_SCRIPTS_NEED_BASE_CLASSES</exclude>
-							</excludes>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-dependency-plugin</artifactId>
-						<version>2.7</version>
-						<executions>
-							<execution>
-								<id>copy-dependencies</id>
-								<phase>compile</phase>
-								<goals>
-									<goal>copy-dependencies</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>jwa</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-compiler-plugin</artifactId>
-						<configuration>
-							<proc>none</proc>
-							<source>1.6</source>
-							<target>1.6</target>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-assembly-plugin</artifactId>
-						<version>2.3</version>
-						<configuration>
-							<descriptors>
-								<descriptor>src/main/assembly/jar-without-acl.xml</descriptor>
-							</descriptors>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>process-classes</phase>
-								<goals>
-									<goal>single</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>SQLUpdateGenerator</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>exec-maven-plugin</artifactId>
-						<version>1.2.1</version>
-						<executions>
-							<execution>
-								<phase>test</phase>
-								<goals>
-									<goal>java</goal>
-								</goals>
-								<configuration>
-									<mainClass>net.sourceforge.fenixedu._development.SQLUpdateGeneratorMain</mainClass>
-								</configuration>
 							</execution>
 						</executions>
 					</plugin>
@@ -876,10 +598,6 @@
 	</repositories>
 
 	<pluginRepositories>
-		<pluginRepository>
-			<id>fenix-ashes-maven-repository</id>
-			<url>https://fenix-ashes.ist.utl.pt/nexus/content/groups/fenix-ashes-maven-repository</url>
-		</pluginRepository>
 		<pluginRepository>
 			<id>miredot</id>
 			<name>MireDot Releases</name>

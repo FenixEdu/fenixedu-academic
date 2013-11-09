@@ -141,6 +141,15 @@
 				</td>						
 			</tr>	
 			<tr>
+				<th><bean:message key="label.find.spaces.campus" bundle="APPLICATION_RESOURCES"/></th>
+				<logic:notEmpty name="punctualRequest" property="campus">
+					<td><fr:view name="punctualRequest" property="campus.spaceInformation.presentationName"/></td>
+				</logic:notEmpty>
+				<logic:empty name="punctualRequest" property="campus">
+					<td>-</td>
+				</logic:empty>
+			</tr>
+			<tr>
 				<th><bean:message key="label.rooms.reserve.description" bundle="SOP_RESOURCES"/></th>
 				<td><fr:view name="punctualRequest" property="description"/></td>
 			</tr>													

@@ -76,7 +76,7 @@ public class ConvokeByPoints extends Strategy {
     }
 
     private boolean vigilantIsAlreadyConvokedForThisExam(VigilantWrapper vigilant, WrittenEvaluation writtenEvaluation) {
-        Collection<Vigilancy> convokes = vigilant.getVigilancies();
+        Collection<Vigilancy> convokes = vigilant.getVigilanciesSet();
         for (Vigilancy convoke : convokes) {
             if (convoke.getWrittenEvaluation().equals(writtenEvaluation) && convoke.isActive()) {
                 return true;

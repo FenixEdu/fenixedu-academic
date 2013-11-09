@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class RoomsReserveBean implements Serializable {
@@ -15,6 +16,8 @@ public class RoomsReserveBean implements Serializable {
     private Person personReference;
 
     private PunctualRoomsOccupationRequest requestReference;
+
+    private Campus campus;
 
     public RoomsReserveBean(Person requestor) {
         setRequestor(requestor);
@@ -55,5 +58,13 @@ public class RoomsReserveBean implements Serializable {
 
     public void setSubject(MultiLanguageString subject) {
         this.subject = subject;
+    }
+
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public void setCampus(Campus campus) {
+        this.campus = campus;
     }
 }

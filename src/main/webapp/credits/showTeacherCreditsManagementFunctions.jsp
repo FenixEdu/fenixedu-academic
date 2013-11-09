@@ -30,7 +30,7 @@
 	</tr></table>
 
 	<br/><br/>
-	<span class="error">Para efeitos da avaliação de docentes consulte a tabela disponível na página do <a href="http://fenix.ist.utl.pt/ccad" target="_blank">CCAD</a></span>
+	<span class="error"><bean:message key="message.consultCCAD" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span>
 	<br/>
 	<logic:notEmpty name="personFunctions">
 		<table class="tstyle2 thlight thleft mtop05 mbottom05">

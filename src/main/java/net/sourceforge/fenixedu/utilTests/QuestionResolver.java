@@ -12,18 +12,14 @@ import org.xml.sax.InputSource;
  * 
  */
 public class QuestionResolver implements EntityResolver {
-    private String path;
-
-    private String xmlDocumentDtd = "WEB-INF/ims/qtiasiv1p2.dtd";
 
     public QuestionResolver(String dtdPath) {
-        this.path = dtdPath;
+        // Path is ignored, DTD file is loaded from the JAR
     }
 
     @Override
     public InputSource resolveEntity(String publicId, String systemId) {
-        return new InputSource("file:///" + path.concat(xmlDocumentDtd));
-
+        return new InputSource(getClass().getClassLoader().getResourceAsStream("ims/qtiasiv1p2.dtd"));
     }
 
 }
