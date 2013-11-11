@@ -58,8 +58,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class A3ESDegreeProcess implements Serializable {
-    // private static final String BASE_URL = "http://www.a3es.pt/si/iportal.php";
-    private static final String BASE_URL = "http://formacao.a3es.pt/iportal.php";
+    private static final String BASE_URL = "http://www.a3es.pt/si/iportal.php";
+    //private static final String BASE_URL = "http://formacao.a3es.pt/iportal.php";
 
     private static final String API_PROCESS = "api_process";
 

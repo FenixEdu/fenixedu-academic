@@ -48,10 +48,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     private static final String RESOURCE_BUNDLE_NAME = "resources.PersonalInformationResources";
 
-    private static final String REJECTION_MAIL_SENDER = Sender.getNoreplyMail();
-
-    private static final String REJECTION_MAIL_SENDER_KEY = "photo.email.sender.rejection";
-
     private static final String REJECTION_MAIL_SUBJECT_KEY = "photo.email.subject.rejection";
 
     private static final String REJECTION_MAIL_BODY_KEY = "photo.email.body.rejection";
