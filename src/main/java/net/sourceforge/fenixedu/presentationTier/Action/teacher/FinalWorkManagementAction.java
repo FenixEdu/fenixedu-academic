@@ -439,6 +439,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
             } else if (alteredField.equals("coorientator")) {
                 finalWorkForm.set("coorientatorOID", "");
                 finalWorkForm.set("coResponsableTeacherName", "");
+                finalWorkForm.set("coResponsibleCreditsPercentage", "0");
+                finalWorkForm.set("responsibleCreditsPercentage", "100");
             }
 
             return prepareFinalWorkInformation(mapping, form, request, response);
