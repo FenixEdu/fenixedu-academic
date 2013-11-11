@@ -71,6 +71,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -114,8 +115,6 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         // finalWorkForm.get("minimumNumberOfGroupElements");
         // String maximumNumberOfGroupElements = (String)
         // finalWorkForm.get("maximumNumberOfGroupElements");
-        String minimumNumberOfGroupElements = "1";
-        String maximumNumberOfGroupElements = "1";
         // String degreeType = (String) finalWorkForm.get("degreeType");
         String degreeType = null;
         String observations = (String) finalWorkForm.get("observations");
@@ -127,9 +126,11 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         String degree = (String) finalWorkForm.get("degree");
         String[] branchList = (String[]) finalWorkForm.get("branchList");
 
-        Integer min = Integer.valueOf(minimumNumberOfGroupElements);
-        Integer max = Integer.valueOf(maximumNumberOfGroupElements);
-        if (min.intValue() > max.intValue() || min.intValue() <= 0) {
+        Integer minimumNumberOfGroupElements = 1;
+        Integer maximumNumberOfGroupElements = 1;
+
+        if (minimumNumberOfGroupElements.intValue() > maximumNumberOfGroupElements.intValue()
+                || minimumNumberOfGroupElements.intValue() <= 0) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalWorkInformationForm.numberGroupElements.invalidInterval", new ActionError(
                     "finalWorkInformationForm.numberGroupElements.invalidInterval"));
@@ -143,9 +144,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
             saveErrors(request, actionErrors);
             return mapping.getInputForward();
         }
-
-        Integer orientatorCreditsPercentage = Integer.valueOf(responsibleCreditsPercentage);
-        Integer coorientatorCreditsPercentage = Integer.valueOf(coResponsibleCreditsPercentage);
+        Integer orientatorCreditsPercentage = NumberUtils.toInt(responsibleCreditsPercentage);
+        Integer coorientatorCreditsPercentage = NumberUtils.toInt(coResponsibleCreditsPercentage);
         if (orientatorCreditsPercentage.intValue() < 0 || coorientatorCreditsPercentage.intValue() < 0
                 || orientatorCreditsPercentage.intValue() + coorientatorCreditsPercentage.intValue() != 100) {
             ActionErrors actionErrors = new ActionErrors();
@@ -160,16 +160,16 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
             infoFinalWorkProposal.setExternalId(externalId);
         }
         infoFinalWorkProposal.setTitle(title);
-        infoFinalWorkProposal.setOrientatorsCreditsPercentage(Integer.valueOf(responsibleCreditsPercentage));
-        infoFinalWorkProposal.setCoorientatorsCreditsPercentage(Integer.valueOf(coResponsibleCreditsPercentage));
+        infoFinalWorkProposal.setOrientatorsCreditsPercentage(orientatorCreditsPercentage);
+        infoFinalWorkProposal.setCoorientatorsCreditsPercentage(coorientatorCreditsPercentage);
         infoFinalWorkProposal.setFraming(framing);
         infoFinalWorkProposal.setObjectives(objectives);
         infoFinalWorkProposal.setDescription(description);
         infoFinalWorkProposal.setRequirements(requirements);
         infoFinalWorkProposal.setDeliverable(deliverable);
         infoFinalWorkProposal.setUrl(url);
-        infoFinalWorkProposal.setMinimumNumberOfGroupElements(Integer.valueOf(minimumNumberOfGroupElements));
-        infoFinalWorkProposal.setMaximumNumberOfGroupElements(Integer.valueOf(maximumNumberOfGroupElements));
+        infoFinalWorkProposal.setMinimumNumberOfGroupElements(minimumNumberOfGroupElements);
+        infoFinalWorkProposal.setMaximumNumberOfGroupElements(maximumNumberOfGroupElements);
         infoFinalWorkProposal.setObservations(observations);
         infoFinalWorkProposal.setLocation(location);
         DegreeType tipoCurso = degreeType != null && degreeType.length() > 0 ? DegreeType.valueOf(degreeType) : null;
