@@ -163,8 +163,8 @@ public class TeacherCurricularInformation implements Serializable {
             } else if (lastCategory.getName().getContent().equalsIgnoreCase("Professor Catedrático Convidado")) {
                 return "Professor Catedrático convidado";
             }
+            System.out.println("Invalid category: " + lastCategory.getName().getContent());
         }
-        System.out.println("Invalid category: " + lastCategory.getName().getContent());
         return lastCategory == null ? null : lastCategory.getName().getContent();
     }
 
