@@ -17,6 +17,14 @@
     <span class="error0"><!-- Error messages go here --><html:errors /></span>
 </p>
 
+
+		
+<span class="mtop5 mbottom5">		
+	<html:link action="/partyContacts.do?method=viewStudentLog">
+		<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
+	</html:link>
+</span>
+		
 <script type="text/javascript" src="<%=request.getContextPath()%>/CSS/scripts/checkall.js"></script>
 
     <!-- Photo -->
@@ -57,12 +65,6 @@
 		<span class="pleft05">
 			<html:link page="/photoHistory.do?method=userHistory">
 				<bean:message key="link.person.photo.history" bundle="APPLICATION_RESOURCES" />
-			</html:link>
-		</span>
-		
-		<span class="pleft05">		
-			<html:link action="/partyContacts.do?method=viewStudentLog">
-				<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</span>
 	</p>
