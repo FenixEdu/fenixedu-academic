@@ -143,4 +143,10 @@ public class UploadPhotoDA extends FenixDispatchAction {
         }
         return mapping.findForward("visualizePersonalInformation");
     }
+
+    public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("visualizePersonalInformation");
+    }
+
 }
