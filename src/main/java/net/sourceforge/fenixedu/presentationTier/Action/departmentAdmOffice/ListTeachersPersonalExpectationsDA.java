@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYear
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -294,7 +295,7 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
         headers.add("Foco Principal(Orientações)");
 
         headers.add("Órgãos do Departamento");
-        headers.add("Órgãos do IST");
+        headers.add("Órgãos do " + Unit.getInstitutionAcronym());
         headers.add("Órgãos da Universidade Técnica");
         headers.add("Foco Principal (Serviço à Universidade)");
 

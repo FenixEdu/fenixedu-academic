@@ -25,7 +25,7 @@
 		</html:link>
 	</li>
 	<li><html:link module="/manager" page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=prepare&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId")%>" paramId="executionCourseName" paramName="executionCourseName">
-			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.professorShip.notAffiliated.to.ist"/>
+			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.professorShip.notAffiliated.to.ist" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
 		</html:link>
 	</li>
 </ul>

@@ -6,7 +6,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 
-<h1><bean:message key="label.loginRequest" bundle="SITE_RESOURCES"/></h1>
+<h1><bean:message key="label.loginRequest" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="SITE_RESOURCES"/></h1>
 
 	<logic:messagesPresent message="true">
 		<p>

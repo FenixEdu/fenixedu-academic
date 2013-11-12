@@ -26,7 +26,7 @@
 		<bean:message key="<%=searchPublicationLabelKey%>" bundle="RESEARCHER_RESOURCES" />
 	</html:link> | 
 	<html:link	page="<%= searchContextPath + searchAction + searchArguments + searchMethod %>">
-		<bean:message key="label.search.publications.ist" bundle="RESEARCHER_RESOURCES" />
+		<bean:message key="label.search.publications.ist" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="RESEARCHER_RESOURCES" />
 	</html:link>
 </p>
 

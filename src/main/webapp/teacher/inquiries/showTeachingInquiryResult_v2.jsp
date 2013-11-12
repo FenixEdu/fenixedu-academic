@@ -13,7 +13,7 @@
 		<bean:message key="public.QUC.teacherResults" bundle="TITLES_RESOURCES" /> -
 		<bean:write name="inquiryResult" property="professorship.executionCourse.nome"/> -
 		<bean:write name="inquiryResult" property="executionDegree.degree.presentationName"/> -
-		<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+		<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/layout.css"  media="screen"  />
@@ -149,7 +149,7 @@ padding-right: 8px;
 	<tr class="top">
 		<th></th>
 		<th class="aright">Responsáveis pela gestão académica <a href="#" class="helpleft">[?] <span>Representatividade - nº de respostas válidas superior a 5 e a 10% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
-		<th class="aright">Comunidade académica IST <a href="#" class="helpleft">[?] <span>Representatividade - nº de respostas válidas superior a 5 e a 50% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
+		<th class="aright">Comunidade académica <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> <a href="#" class="helpleft">[?] <span>Representatividade - nº de respostas válidas superior a 5 e a 50% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
 	</tr>
 	<tr>
 		<th>Representatividade para divulgação</th>

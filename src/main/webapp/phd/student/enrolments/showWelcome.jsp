@@ -62,7 +62,7 @@ Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Ac
 
 <p class="mtop05">
 <strong>6. Estudantes em regime de tempo parcial</strong><br/>
-Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cujo somatório de ECTS ultrapasse 50% do número máximo de ECTS a que é permitida a inscrição a um aluno do IST em regime de tempo integral.
+Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cujo somatório de ECTS ultrapasse 50% do número máximo de ECTS a que é permitida a inscrição a um aluno do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> em regime de tempo integral.
 </p>
 
 <p class="mtop05">

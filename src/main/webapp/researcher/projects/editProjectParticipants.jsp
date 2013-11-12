@@ -45,7 +45,7 @@
 	<p class="mtop2">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.addNewParticipant"/>:
 		<html:link page="<%="/projects/editProject.do?method=prepareEditParticipantsWithSimpleBean&external=false&projectId="+projectId%>">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.internal" />
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.internal" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" />
 		</html:link>		
 		, 						
 		<html:link page="<%="/projects/editProject.do?method=prepareEditParticipantsWithSimpleBean&external=true&projectId="+projectId%>">

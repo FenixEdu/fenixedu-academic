@@ -4117,7 +4117,7 @@ public class Person extends Person_Base {
                             result.append(':');
                             result.append(costCenterCode);
                             result.append(':');
-                            result.append("IST");
+                            result.append(Unit.getInstitutionAcronym());
                         }
                     }
                 }

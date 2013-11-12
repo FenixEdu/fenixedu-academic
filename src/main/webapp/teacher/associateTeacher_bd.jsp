@@ -7,7 +7,7 @@
 <h2><bean:message key="title.associateTeacher" /></h2>		
 
 <div class="infoop2">
-<bean:message key="label.teacher.auth" bundle="HTMLALT_RESOURCES"/>
+<bean:message key="label.teacher.auth" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="HTMLALT_RESOURCES"/>
 </div>
 	
 <html:form action="/teacherManagerDA">

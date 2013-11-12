@@ -66,7 +66,7 @@
 	</h2>
 
 	<logic:notPresent name="lista" scope="request">
-		<p><em><bean:message bundle="DEFAULT" key="error.curricularPlanHasNoExecutionDegreesInNotClosedYears"/></em></p>
+		<p><em><bean:message bundle="DEFAULT" key="error.curricularPlanHasNoExecutionDegreesInNotClosedYears" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></em></p>
 	</logic:notPresent>
 	<logic:present name="lista" scope="request">
 		<bean:define id="listaNew" name="lista" />

@@ -52,7 +52,7 @@
 		</logic:equal>
 	</logic:present>
 </logic:notPresent>
-<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 </title>
 <%-- TITLE --%>
 

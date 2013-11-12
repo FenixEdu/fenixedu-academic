@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -168,7 +169,7 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
 
         spreadsheet.setHeader("Aluno deslocado");
         spreadsheet.setHeader("Localidade");
-        spreadsheet.setHeader("Email IST");
+        spreadsheet.setHeader("Email " + Unit.getInstitutionAcronym());
         spreadsheet.setHeader("Email pessoal");
         spreadsheet.setHeader("Telefone");
         spreadsheet.setHeader("Telemovel");

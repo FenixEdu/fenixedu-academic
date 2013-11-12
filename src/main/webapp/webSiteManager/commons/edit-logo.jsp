@@ -18,7 +18,7 @@
 
 <div class="infoop2 mbottom15">
     <p class="mvert0">
-        <bean:message key="label.site.institutionallogo.message" bundle="WEBSITEMANAGER_RESOURCES"/>
+        <bean:message key="label.site.institutionallogo.message" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="WEBSITEMANAGER_RESOURCES"/>
     </p>
 </div>
 
@@ -48,7 +48,7 @@
 
 <div class="infoop2 mbottom15">
     <p class="mvert0">
-        <bean:message key="label.site.logo.message" bundle="WEBSITEMANAGER_RESOURCES"/>
+        <bean:message key="label.site.logo.message" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="WEBSITEMANAGER_RESOURCES"/>
     </p>
 </div>
 

@@ -27,7 +27,7 @@
 			<div id="txt">
 				<h1><bean:message key="message.inquiries.firstTimeCycle.title" bundle="INQUIRIES_RESOURCES"/></h1>
 				<div class="mtop1">
-					<p><bean:message key="message.inquiries.firstTimeCycle.body" bundle="INQUIRIES_RESOURCES"/></p>
+					<p><bean:message key="message.inquiries.firstTimeCycle.body" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="INQUIRIES_RESOURCES"/></p>
 					<p><span style="background-color: #fbf8cc; color: #805500;" ><bean:message key="message.inquiries.firstTimeCycle.warningDate" arg0="<%= limitDate.toString() %>" bundle="INQUIRIES_RESOURCES"/></span></p>
 				</div>
 			</div>

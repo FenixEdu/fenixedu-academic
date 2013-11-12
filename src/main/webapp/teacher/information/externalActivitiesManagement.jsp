@@ -11,7 +11,7 @@
 <logic:present name="siteView"> 
 <bean:define id="infoSiteExternalActivities" name="siteView" property="component"/>
 
-<h3><bean:message key="message.externalActivities" /></h3>
+<h3><bean:message key="message.externalActivities" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></h3>
 
 <p class="infoop">
 	<span class="emphasis-box">1</span>

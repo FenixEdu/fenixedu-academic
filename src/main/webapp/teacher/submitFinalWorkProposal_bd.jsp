@@ -42,7 +42,7 @@
 	<b><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.responsable"/>:</b>
 	<table width="100%">
 		<tr>
-			<th width="16%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number"/>:</th>
+			<th width="16%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>:</th>
 			<td width="10%">
 				<logic:present name="orientator">					<%						String orientatorPersonId = "";						orientatorPersonId = ((Person) pageContext.findAttribute("orientator")).getIstUsername().toString();					%>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" size="6"
@@ -75,7 +75,7 @@
 	<logic:equal name="showCoordinator" value="true">	<b><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.coResponsable"/>:</b>
 	<table width="100%">
 		<tr>
-			<th width="16%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number"/>:</th>
+			<th width="16%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>:</th>
 			<td width="10%">
 				<logic:present name="coorientator">					<%						String coorientatorPersonId = "";						coorientatorPersonId = ((Person) pageContext.findAttribute("coorientator")).getIstUsername().toString();					%>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherId" property="coResponsableTeacherId" size="6"

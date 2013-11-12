@@ -50,7 +50,7 @@
 	<li><html:link page="/studentInquiry.do?method=showCoursesToAnswer" titleKey="link.title.inquiry.students.courses"><bean:message key="link.inquiries" bundle="INQUIRIES_RESOURCES"/></html:link></li>
 	<li><html:link page="/yearDelegateManagement.do?method=prepare" titleKey="link.title.yearDelegateElections"><bean:message key="link.student.yearDelegateElections"/></html:link></li>
 	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.student.eligibleForCareerWorkshopApplication" value="true">
-		<li><html:link page="/careerWorkshopApplication.do?method=prepare" titleKey="link.title.careerWorkshop"><bean:message key="link.student.careerWorkshop"/></html:link></li>
+		<li><html:link page="/careerWorkshopApplication.do?method=prepare" titleKey="link.title.careerWorkshop"><bean:message key="link.student.careerWorkshop" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></html:link></li>
 	</logic:equal>
 	<li><html:link page="/studentCycleInquiry.do?method=prepare" titleKey="link.title.inquiry.students.firstTimeCycle"><bean:message key="link.inquiries.firstTimeCycle" bundle="INQUIRIES_RESOURCES"/></html:link></li>	
 	<li><html:link page="/erasmusOutboundManagement.do?method=prepare" titleKey="link.title.student.mobility.outbound"><bean:message key="link.title.student.mobility.outbound"/></html:link></li>

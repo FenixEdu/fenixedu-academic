@@ -33,7 +33,7 @@
 	</logic:iterate>
 </table>	
 
-<h3><bean:message key="title.inquiries.nonAffiliatedTeachers" bundle="INQUIRIES_RESOURCES" /></h3>
+<h3><bean:message key="title.inquiries.nonAffiliatedTeachers" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="INQUIRIES_RESOURCES" /></h3>
 <html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
@@ -62,7 +62,7 @@
 	</logic:iterate>	
 </table>	
 </p>
-<h3><bean:message key="title.inquiries.insertNonAffiliatedTeacher" bundle="INQUIRIES_RESOURCES" /></h3>
+<h3><bean:message key="title.inquiries.insertNonAffiliatedTeacher" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="INQUIRIES_RESOURCES" /></h3>
 <table>	
 	<html:form action="/teachingStaff"  >
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createNewNonAffiliatedTeacher" />

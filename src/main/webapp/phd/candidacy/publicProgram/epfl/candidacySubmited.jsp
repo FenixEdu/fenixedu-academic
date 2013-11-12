@@ -7,7 +7,7 @@
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<a href="http://www.ist.utl.pt/en/about-IST/global-cooperation/IST-EPFL/">IST-EPFL</a> &gt;
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
@@ -18,4 +18,4 @@
 
 <%-- Add information about candidacy period --%>
 
-<p><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></p>
+<p><bean:message key="message.ist.conditions.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></p>

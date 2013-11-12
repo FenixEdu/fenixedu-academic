@@ -155,7 +155,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
             if ("error.no.concluded.registrations".equals(e.getKey()) || "error.no.registrations".equals(e.getKey())
                     || "error.person.no.student".equals(e.getKey())) {
                 request.setAttribute("showReportError", "true");
-                request.setAttribute("errorMessageKey", e.getKey());
+                request.setAttribute("errorMessage", getResources(request).getMessage(e.getKey(), e.getArgs()));
             }
             addActionMessage(request, e.getKey(), e.getArgs());
             request.setAttribute("showForm", "true");

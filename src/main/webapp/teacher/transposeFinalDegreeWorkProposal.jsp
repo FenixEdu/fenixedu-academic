@@ -43,7 +43,7 @@
 			
 			<tr>
 				<td class="listClasses-header" colspan="1">
-					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
 				</td>
 				<td class="listClasses-header" colspan="2">
 					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.name"/>

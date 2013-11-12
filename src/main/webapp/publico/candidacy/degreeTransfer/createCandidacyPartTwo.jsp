@@ -16,7 +16,7 @@
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<% 
 		Locale locale = Language.getLocale();
 		if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
@@ -85,7 +85,7 @@
 		<logic:empty name="individualCandidacyProcessBean" property="precedentDegreeType">
 			<p><bean:message key="message.candidacy.last.registration" bundle="CANDIDATE_RESOURCES"/></p>
 			<ul>
-				<li><html:radio onclick="this.form.method.value='fillInternalPrecedentInformation'; this.form.skipValidation.value='true'; this.form.submit();" name="individualCandidacyProcessBean" property="precedentDegreeType" value="<%=  PrecedentDegreeType.INSTITUTION_DEGREE.getName() %>" ><bean:message key="label.last.registration.in.ist" bundle="CANDIDATE_RESOURCES"/></html:radio></li>
+				<li><html:radio onclick="this.form.method.value='fillInternalPrecedentInformation'; this.form.skipValidation.value='true'; this.form.submit();" name="individualCandidacyProcessBean" property="precedentDegreeType" value="<%=  PrecedentDegreeType.INSTITUTION_DEGREE.getName() %>" ><bean:message key="label.last.registration.in.ist" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES"/></html:radio></li>
 				<li><html:radio onclick="this.form.method.value='fillExternalPrecedentInformation'; this.form.skipValidation.value='true'; this.form.submit();" name="individualCandidacyProcessBean" property="precedentDegreeType" value="<%=  PrecedentDegreeType.EXTERNAL_DEGREE.getName() %>" ><bean:message key="label.last.registration.external.institution" bundle="CANDIDATE_RESOURCES"/></html:radio></li>
 			</ul>
 		</logic:empty>
@@ -227,7 +227,7 @@
 				}		
 			%>
 	
-			<h2 style="margin-top: 1em;"><bean:message key="title.master.degree.change.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
+			<h2 style="margin-top: 1em;"><bean:message key="title.master.degree.change.course.choice" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></h2>
 				<div class="flowerror mtop1">
 				<fr:edit id="individualCandidacyProcessBean.selectedDegree"
 					name="individualCandidacyProcessBean"
@@ -267,9 +267,9 @@
 				<bean:message key="label.degree.change.honor.declaration" bundle="CANDIDATE_RESOURCES"/> <span class="red">*</span>
 			</p>
 	
-			<p><em><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></em></p>
+			<p><em><bean:message key="message.ist.conditions.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></em></p>
 	
-			<div class="mtop15"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
+			<div class="mtop15"><bean:message key="message.nape.contacts" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></div>
 	
 			<p class="mtop2">
 				<html:submit onclick="document.getElementById('skipValidationId').value='false'; document.getElementById('methodId').value='submitCandidacy'; this.form.submit();"><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application" bundle="CANDIDATE_RESOURCES"/></html:submit>

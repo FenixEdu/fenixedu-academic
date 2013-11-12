@@ -15,7 +15,7 @@
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<% 
 		Locale locale = Language.getLocale();
 		if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
@@ -77,7 +77,7 @@
 			if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
 		%>
 		
-		<p class="mbottom05"><bean:message key="label.ist.number.if.former.ist.student" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<p class="mbottom05"><bean:message key="label.ist.number.if.former.ist.student" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/>:</p>
 		<div class="flowerror_public_hide">
 			<fr:edit id="individualCandidacyProcessBean.formerStudentIstNumber"
 				name="individualCandidacyProcessBean"
@@ -234,7 +234,7 @@
 			}		
 		%>
 
-		<h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
+		<h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></h2>
 				
 				
 		<div class="flowerror mtop1">
@@ -290,9 +290,9 @@
 			<bean:message key="label.second.cycle.honor.declaration" bundle="CANDIDATE_RESOURCES"/> <span class="red">*</span>
 		</p>
 
-		<p><em><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></em></p>
+		<p><em><bean:message key="message.ist.conditions.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></em></p>
 
-		<div class="mtop15"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
+		<div class="mtop15"><bean:message key="message.nape.contacts" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></div>
 
 		<p class="mtop2">
 			<html:submit onclick="document.getElementById('skipValidationId').value='false'; document.getElementById('methodId').value='submitCandidacy'; this.form.submit();"><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application" bundle="CANDIDATE_RESOURCES"/></html:submit>

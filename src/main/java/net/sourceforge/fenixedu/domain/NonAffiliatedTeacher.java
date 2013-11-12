@@ -68,7 +68,8 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
     public void delete() {
 
         if (hasAnyAssociatedInquiriesTeachers()) {
-            throw new DomainException("error.NonAffiliatedTeacher.hasAnyAssociatedInquiriesTeachers");
+            throw new DomainException("error.NonAffiliatedTeacher.hasAnyAssociatedInquiriesTeachers",
+                    Unit.getInstitutionAcronym());
         }
 
         setRootDomainObject(null);
@@ -77,6 +78,7 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
 
         super.deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourse> getExecutionCourses() {
         return getExecutionCoursesSet();

@@ -7,7 +7,7 @@
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<a href="http://www.ist.utl.pt/en/about-IST/global-cooperation/IST-EPFL/">IST-EPFL</a> &gt;
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
@@ -131,8 +131,8 @@
 		
 		<div class="fs_form">
 		<fieldset style="display: block;">
-			<legend><bean:message key="title.public.phd.institution.id" bundle="PHD_RESOURCES"/></legend>
-			<p class="mvert05"><span><bean:message key="message.phd.public.institution.id.note" bundle="PHD_RESOURCES"/></span></p>
+			<legend><bean:message key="title.public.phd.institution.id" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PHD_RESOURCES"/></legend>
+			<p class="mvert05"><span><bean:message key="message.phd.public.institution.id.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym() %>" bundle="PHD_RESOURCES"/></span></p>
 			
 			<fr:edit id="candidacyBean.institution.id" name="candidacyBean" schema="Public.PhdProgramCandidacyProcessBean.institution.id">
 				<fr:layout name="tabular">
@@ -146,7 +146,7 @@
 		</fieldset>
 		</div>
 		
-		<p>Note: all the information required for the application process will be shared by both <a href="http://www.ist.utl.pt/">IST</a> and <a href="http://www.epfl.ch/">EPFL</a>.</p>
+		<p>Note: all the information required for the application process will be shared by both <a href="http://www.ist.utl.pt/"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> and <a href="http://www.epfl.ch/">EPFL</a>.</p>
 		
 		<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit></p>
 	</fr:form>

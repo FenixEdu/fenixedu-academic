@@ -9,7 +9,7 @@
 
 
 <p class="center">
-	<bean:message key="title.inquiries.GEP" bundle="INQUIRIES_RESOURCES"/>
+	<bean:message key="title.inquiries.GEP" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="INQUIRIES_RESOURCES"/>
 </p>
 <h2 class="center caps">
 	<bean:message key="title.inquiries.course.evaluation" bundle="INQUIRIES_RESOURCES"/>

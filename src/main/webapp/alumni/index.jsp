@@ -31,7 +31,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 
 
 <p> 
-	<bean:message key="label.alumni.firstMessage" bundle="ALUMNI_RESOURCES"/>
+	<bean:message key="label.alumni.firstMessage" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES"/>
 </p>
 
 <logic:present name="displayWarning">
@@ -145,7 +145,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 		</li>
 		<li class="homepage"><bean:message key="label.alumni.advantages.website" bundle="ALUMNI_RESOURCES"/> </li>
 		<li class="library"><bean:message key="label.alumni.advantages.library1" bundle="ALUMNI_RESOURCES"/>
-			<a target="_blank" href="http://bist.ist.utl.pt"><bean:message key="label.alumni.advantages.library2" bundle="ALUMNI_RESOURCES"/></a> 
+			<a target="_blank" href="http://bist.ist.utl.pt"><bean:message key="label.alumni.advantages.library2" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES"/></a> 
 			<bean:message key="label.alumni.advantages.library3" bundle="ALUMNI_RESOURCES"/>
 		</li>
 	</ul>
@@ -159,8 +159,8 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 <h3> <bean:message key="label.alumni.specialDiscounts" bundle="ALUMNI_RESOURCES"/></h3>
 <ul>
 
-	<li><bean:message key="label.alumni.specialDiscounts.publications" bundle="ALUMNI_RESOURCES"/><a target="_blank" href="http://www.istpress.ist.utl.pt/">IST Press</a>;</li>
-	<li><bean:message key="label.alumni.specialDiscounts.spaces" bundle="ALUMNI_RESOURCES"/> <a target="_blank" href="http://centrocongressos.ist.utl.pt/"><bean:message key="label.alumni.specialDiscounts.spaces.congress" bundle="ALUMNI_RESOURCES"/></a>.</li>
+	<li><bean:message key="label.alumni.specialDiscounts.publications" bundle="ALUMNI_RESOURCES"/><a target="_blank" href="http://www.istpress.ist.utl.pt/"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> Press</a>;</li>
+	<li><bean:message key="label.alumni.specialDiscounts.spaces" bundle="ALUMNI_RESOURCES"/> <a target="_blank" href="http://centrocongressos.ist.utl.pt/"><bean:message key="label.alumni.specialDiscounts.spaces.congress" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES"/></a>.</li>
 </ul>
 <!--
 	<h3>OPORTUNIDADES</h3>
@@ -173,7 +173,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	<li><a target="_blank" href="http://www.istpress.ist.utl.pt/">Oportunidades de publicação de livros</a></li>
 	<li><a href="mailto:empreendedorismo@ist.utl.pt">Empreendedorismo</a></li>
 	<li><a target="_blank" href="http://aep.ist.utl.pt/observatorio-de-empregabilidade/">Empregabilidade</a></li>
-	<li><a target="_blank" href="http://aep.ist.utl.pt/">Estudos, Projectos e Estatísticas do IST</a></li>
+	<li><a target="_blank" href="http://aep.ist.utl.pt/">Estudos, Projectos e Estatísticas do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a></li>
 	<li><a target="_blank" href="http://smap.ist.utl.pt/">Apoio Médico e Psicológico</a></li>
 	<li><a target="_blank" href="http://nape.ist.utl.pt">Cultura e Desporto</a></li>
 </ul>
@@ -213,5 +213,5 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	
 </ul>
 
-<p><em><bean:message key="label.alumni.ISTEndMessage" bundle="ALUMNI_RESOURCES"/></em></p>
+<p><em><bean:message key="label.alumni.ISTEndMessage" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES"/></em></p>
 

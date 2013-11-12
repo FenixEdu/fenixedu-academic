@@ -1296,8 +1296,14 @@ public class Unit extends Unit_Base {
     }
 
     static public MultiLanguageString getInstitutionName() {
-        final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
-        MultiLanguageString result = institutionUnit == null ? new MultiLanguageString() : institutionUnit.getNameI18n();
+        final RootDomainObject root = RootDomainObject.getInstance();
+        MultiLanguageString result = new MultiLanguageString();
+        if (root != null) {
+            final Unit institutionUnit = root.getInstitutionUnit();
+            if (root != null) {
+                result = institutionUnit.getNameI18n();
+            }
+        }
         if (result.isEmpty()) {
             result =
                     result.with(Language.getDefaultLanguage(),
@@ -1308,10 +1314,32 @@ public class Unit extends Unit_Base {
     }
 
     static public String getInstitutionAcronym() {
-        final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
-        String result = institutionUnit == null ? StringUtils.EMPTY : institutionUnit.getAcronym();
+        final RootDomainObject root = RootDomainObject.getInstance();
+        String result = StringUtils.EMPTY;
+        if (root != null) {
+            final Unit institutionUnit = root.getInstitutionUnit();
+            if (root != null) {
+                result = institutionUnit.getAcronym();
+            }
+        }
         if (result.isEmpty()) {
             result = BundleUtil.getStringFromResourceBundle("resources/GlobalResources", "institution.name.abbreviation");
+        }
+
+        return result;
+    }
+
+    static public String getInstitutionURL() {
+        final RootDomainObject root = RootDomainObject.getInstance();
+        String result = StringUtils.EMPTY;
+        if (root != null) {
+            final Unit institutionUnit = root.getInstitutionUnit();
+            if (root != null) {
+                result = institutionUnit.getDefaultWebAddressUrl();
+            }
+        }
+        if (result.isEmpty()) {
+            result = BundleUtil.getStringFromResourceBundle("resources/GlobalResources", "institution.url");
         }
 
         return result;

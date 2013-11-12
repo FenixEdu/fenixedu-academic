@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.student.scholarship.report;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventW
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegimeType;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -59,7 +61,8 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
     @Override
     public String getInstitutionName() {
-        return ACADEMIC_OFFICE_RESOURCE_BUNDLE.getString("label.utl.scholarship.report.institution.name");
+        return MessageFormat.format(ACADEMIC_OFFICE_RESOURCE_BUNDLE.getString("label.utl.scholarship.report.institution.name"),
+                Unit.getInstitutionName().getContent());
     }
 
     @Override

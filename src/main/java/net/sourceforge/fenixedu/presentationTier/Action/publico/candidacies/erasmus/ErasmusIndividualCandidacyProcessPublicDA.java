@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.util.email.EmailBean;
@@ -848,7 +849,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
             if (person.hasStudent() && !person.getStudent().getNumber().toString().equals(bean.getPersonNumber())) {
                 addActionMessage("individualCandidacyMessages", request,
-                        "mobility.error.person.with.same.identifier.exists.different.student");
+                        "mobility.error.person.with.same.identifier.exists.different.student", Unit.getInstitutionAcronym());
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             }
 
@@ -1126,7 +1127,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         sb.append(reportAppenderAuxString("Phone", personBean.getPhone()));
         sb.append(reportAppenderAuxString("Email", personBean.getEmail()));
         sb.append(reportAppenderAuxString("Email Confirmation", personBean.getEmailConfirmation()));
-        sb.append(reportAppenderAuxString("IST Number", mobilityBean.getPersonNumber()));
+        sb.append(reportAppenderAuxString("Student Number", mobilityBean.getPersonNumber()));
 
         MobilityStudentDataBean mobilityStudentDataBean = mobilityBean.getMobilityStudentDataBean();
         sb.append("\nMobility Data Entered:\n");
@@ -1181,7 +1182,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         String errorReportAddress =
                 BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.address");
         String errorReportSubject =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.subject");
+                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.subject",
+                        Unit.getInstitutionAcronym());
         String errorReportBody = sb.toString();
 
         SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();

@@ -7,7 +7,7 @@
 <html:xhtml />
 
 <em><bean:message bundle="DIRECTIVE_COUNCIL_RESOURCES" key="directiveCouncil"/></em>
-<h2><bean:message bundle="DIRECTIVE_COUNCIL_RESOURCES" key="title.manageCareerWorkshop" /></h2>
+<h2><bean:message bundle="DIRECTIVE_COUNCIL_RESOURCES" key="title.manageCareerWorkshop" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></h2>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 <bean:define id="event" name="eventsBean" property="affectedEvent" type="net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplicationEvent" />

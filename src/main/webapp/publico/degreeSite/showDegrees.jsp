@@ -20,10 +20,10 @@
 				<h1><bean:message key="public.degree.information.label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></h1>
 				<p class="greytxt">
 					<logic:equal name="degreeType" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
-						<bean:message key="text.masterDegree" />
+						<bean:message key="text.masterDegree" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" />
 					</logic:equal>
 					<logic:equal name="degreeType" value="<%= DegreeType.DEGREE.toString() %>">
-						<bean:message key="text.nonMasterDegree" />
+						<bean:message key="text.nonMasterDegree" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" />
 					</logic:equal>				
 				</p>
 			  

@@ -108,7 +108,7 @@
 <logic:present name="preferredSetting">
     <h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.title"/></h3>
 	<div class="infoop2">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help"/>
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
 	</div>
 	
 	<p>

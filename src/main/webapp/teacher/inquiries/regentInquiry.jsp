@@ -85,7 +85,7 @@ font-weight: normal;
 
 <h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
-<p><bean:message key="message.regent.details.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
+<p><bean:message key="message.regent.details.inquiry" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="INQUIRIES_RESOURCES"/></p>
 
 <html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>

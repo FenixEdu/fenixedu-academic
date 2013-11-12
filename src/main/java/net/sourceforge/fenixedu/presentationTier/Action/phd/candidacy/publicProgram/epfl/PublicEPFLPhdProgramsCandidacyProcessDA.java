@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.epfl;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -291,7 +293,8 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 
     private void sendRecoveryEmailForCandidate(PhdProgramPublicCandidacyHashCode candidacyHashCode, HttpServletRequest request) {
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-        final String subject = bundle.getString("message.phd.email.subject.recovery.access");
+        final String subject =
+                MessageFormat.format(bundle.getString("message.phd.email.subject.recovery.access"), Unit.getInstitutionAcronym());
         final String body = bundle.getString("message.phd.epfl.email.body.recovery.access");
         candidacyHashCode.sendEmail(
                 subject,
@@ -484,7 +487,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 
         final PhdParticipantBean g1 = new PhdParticipantBean(process);
         g1.setParticipantType(PhdParticipantType.EXTERNAL);
-        g1.setWorkLocation("IST");
+        g1.setWorkLocation(Unit.getInstitutionAcronym());
 
         final PhdParticipantBean g2 = new PhdParticipantBean(process);
         g2.setParticipantType(PhdParticipantType.EXTERNAL);

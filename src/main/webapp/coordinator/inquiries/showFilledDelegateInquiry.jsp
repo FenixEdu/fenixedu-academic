@@ -13,7 +13,7 @@
 	<title>
 		<bean:message key="public.QUC.delegateReport" bundle="TITLES_RESOURCES" /> -
 		<bean:write name="delegateInquiryDTO" property="executionCourse.nome"/> -
-		<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+		<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/layout.css"  media="screen"  />
