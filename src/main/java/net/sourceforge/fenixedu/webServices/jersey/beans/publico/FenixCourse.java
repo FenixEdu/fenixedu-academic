@@ -153,24 +153,22 @@ public class FenixCourse {
 
     String acronym;
     String name;
-    String evaluation;
-    String year;
-    Integer semester;
-    Integer numberOfStudents;
+    String academicTerm;
+    String evaluationMethod;
+    Integer numberOfAttendingStudents;
     String announcementLink;
     String summaryLink;
     List<FenixCompetence> moreInfo;
     List<FenixTeacher> teachers;
 
-    public FenixCourse(String acronym, String name, String evaluation, String year, Integer semester, Integer numberOfStudents,
+    public FenixCourse(String acronym, String name, String evaluationMethod, String academicTerm, Integer numberOfAttendingStudents,
             String announcementLink, String summaryLink, List<FenixCompetence> moreInfo, List<FenixTeacher> teachers) {
         super();
         this.acronym = acronym;
         this.name = name;
-        this.evaluation = evaluation;
-        this.year = year;
-        this.semester = semester;
-        this.numberOfStudents = numberOfStudents;
+        this.evaluationMethod = evaluationMethod;
+        this.academicTerm = academicTerm;
+        this.numberOfAttendingStudents = numberOfAttendingStudents;
         this.announcementLink = announcementLink;
         this.summaryLink = summaryLink;
         this.moreInfo = moreInfo;
@@ -193,36 +191,28 @@ public class FenixCourse {
         this.name = name;
     }
 
-    public String getEvaluation() {
-        return evaluation;
+    public String getEvaluationMethod() {
+        return evaluationMethod;
     }
 
-    public void setEvaluation(String evaluation) {
-        this.evaluation = evaluation;
+    public void setEvaluationMethod(String evaluationMethod) {
+        this.evaluationMethod = evaluationMethod;
     }
 
-    public String getYear() {
-        return year;
+    public String getAcademicTerm() {
+        return academicTerm;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setAcademicTerm(String academicTerm) {
+        this.academicTerm = academicTerm;
     }
 
-    public Integer getSemester() {
-        return semester;
+    public Integer getNumberOfAttendingStudents() {
+        return numberOfAttendingStudents;
     }
 
-    public void setSemester(Integer semester) {
-        this.semester = semester;
-    }
-
-    public Integer getNumberOfStudents() {
-        return numberOfStudents;
-    }
-
-    public void setNumberOfStudents(Integer numberOfStudents) {
-        this.numberOfStudents = numberOfStudents;
+    public void setNumberOfStudents(Integer numberOfAttendingStudents) {
+        this.numberOfAttendingStudents = numberOfAttendingStudents;
     }
 
     public String getAnnouncementLink() {
