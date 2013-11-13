@@ -1545,11 +1545,14 @@ public class Person extends Person_Base {
 
         private void sendManagerRoleMembershipChangeNotification(final Person person, final String subjectKey,
                 final String bodyKey) {
-            final Sender sender = Bennu.getInstance().getSystemSender();
-            final Recipient recipient = new Recipient(new RoleGroup(RoleType.MANAGER));
-            new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", subjectKey),
-                    BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", bodyKey,
-                            person.getPresentationName()));
+            final Sender sender = RootDomainObject.getInstance().getSystemSender();
+            
+            if (sender != null){
+                final Recipient recipient = new Recipient(new RoleGroup(RoleType.MANAGER));
+                new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", subjectKey), 
+                        BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", bodyKey,
+                               person.getPresentationName()));
+            }
         }
 
     }

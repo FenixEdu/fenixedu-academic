@@ -71,6 +71,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPayme
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -182,6 +183,7 @@ public class CreateTestData {
             person.setCountry(country);
             person.setCountryOfBirth(country);
             person.setCountryOfResidence(country);
+            person.setPassword(PasswordEncryptor.encryptPassword("pass"));
         }
     }
 
@@ -325,7 +327,7 @@ public class CreateTestData {
             return "Room" + roomCounter++;
         }
     }
-
+    static AdministrativeOffice administrativeOffice;
     public static class CreateOrganizationalStructure extends AtomicAction {
         @Override
         public void doIt() {
@@ -373,11 +375,12 @@ public class CreateTestData {
         }
 
         private void createServiceUnits(final AggregateUnit serviceUnits) {
-//	    final AdministrativeOffice administrativeOffice = new AdministrativeOffice(AdministrativeOfficeType.DEGREE);
-//	    final AdministrativeOfficeUnit administrativeOfficeUnit = AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(
-//		    new MultiLanguageString(Language.getDefaultLanguage(), "Office"), null, null, null, new YearMonthDay(), null,
-//		    serviceUnits, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null, null,
-//		    administrativeOffice, Boolean.FALSE, null);
+            administrativeOffice = new AdministrativeOffice();
+            Unit.createNewUnit(new MultiLanguageString(Language.getDefaultLanguage(), "Office"), null, null, null,
+                    new YearMonthDay(), null, serviceUnits,
+                    AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null, null,
+                    administrativeOffice, Boolean.FALSE, null);
+            new AdministrativeOfficeServiceAgreementTemplate(administrativeOffice);
         }
 
         private void createDepartmentUnits(final AggregateUnit departmentUnits) {
@@ -403,6 +406,7 @@ public class CreateTestData {
         }
 
         private int areaCounter = 0;
+        
 
         private void createCompetenceCourseGroupUnit(final DepartmentUnit departmentUnit) {
             final ScientificAreaUnit scientificAreaUnit =
@@ -462,11 +466,12 @@ public class CreateTestData {
                         final Degree degree = createDegree(degreeType, (degreeType.ordinal() * 10) + i);
                         createDegreeInfo(degree);
                         associateToDepartment(degree);
-//                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree);
-//                        createExecutionDegrees(degreeCurricularPlan, getCampus());
 
+                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree);
+                        createExecutionDegrees(degreeCurricularPlan, getCampus());
+                        degree.setAdministrativeOffice(administrativeOffice);
                         final DegreeSite degreeSite = degree.getSite();
-
+  
                         DegreeUnit.createNewInternalDegreeUnit(
                                 new MultiLanguageString(Language.getDefaultLanguage(), degree.getName()), null, null,
                                 degree.getSigla(), new YearMonthDay(), null, unit,
@@ -491,19 +496,23 @@ public class CreateTestData {
                     degreeType.getGradeScale());
         }
 
-//        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree) {
-//            final DegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-//            degreeCurricularPlan.setDegree(degree);
-//            degreeCurricularPlan.setName(degree.getSigla());
-//            degreeCurricularPlan.setCurricularStage(CurricularStage.APPROVED);
-//            degreeCurricularPlan.setDescription("Bla bla bla. Desc. do plano curricular do curso. Bla bla bla");
-//            degreeCurricularPlan.setDescriptionEn("Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.");
-//            degreeCurricularPlan.setState(DegreeCurricularPlanState.ACTIVE);
-//            if (degree.getDegreeType().isBolonhaType()) {
-//                RootCourseGroup.createRoot(degreeCurricularPlan, degree.getSigla(), degree.getSigla());
-//            }
-//            return degreeCurricularPlan;
-//        }
+
+        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree) {
+            final DegreeCurricularPlan degreeCurricularPlan =
+                    degree.createBolonhaDegreeCurricularPlan(degree.getSigla(), GradeScale.TYPE20,
+                            Person.readPersonByUsername("admin"));
+
+            degreeCurricularPlan.setCurricularStage(CurricularStage.APPROVED);
+            degreeCurricularPlan.setDescription("Bla bla bla. Desc. do plano curricular do curso. Bla bla bla");
+            degreeCurricularPlan.setDescriptionEn("Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.");
+            degreeCurricularPlan.setState(DegreeCurricularPlanState.ACTIVE);
+
+            if (degree.getDegreeType().isBolonhaType()) {
+                RootCourseGroup.createRoot(degreeCurricularPlan, degree.getSigla(), degree.getSigla());
+            }
+
+            return degreeCurricularPlan;
+        }
 
         private void createExecutionDegrees(final DegreeCurricularPlan degreeCurricularPlan, final Campus campus) {
             for (final ExecutionYear executionYear : getRootDomainObject().getExecutionYearsSet()) {
@@ -888,7 +897,6 @@ public class CreateTestData {
 
         private static void createAnnouncements(final AnnouncementBoard announcementBoard, final YearMonthDay day) {
             final Announcement announcement = new Announcement();
-            announcement.setAnnouncementBoard(announcementBoard);
             announcement.setAuthor("Autor do anuncio");
             announcement.setAuthorEmail("http://www.google.com/");
             announcement.setBody(new MultiLanguageString(Language.pt, "Corpo do anuncio. Bla bla bla bla.").with(Language.en,
@@ -905,6 +913,7 @@ public class CreateTestData {
             // announcement.setReferedSubjectEnd();
             announcement.setSubject(new MultiLanguageString(Language.pt, "Assunto Bla.").with(Language.en, "Subject blur."));
             announcement.setVisible(Boolean.TRUE);
+            announcement.setAnnouncementBoard(announcementBoard);
         }
 
         private static void createEvaluationMethod(final ExecutionCourse executionCourse) {

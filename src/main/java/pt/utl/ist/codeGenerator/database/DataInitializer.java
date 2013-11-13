@@ -1,5 +1,9 @@
 package pt.utl.ist.codeGenerator.database;
 
+import java.util.Locale;
+
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.District;
@@ -9,6 +13,13 @@ import net.sourceforge.fenixedu.domain.EmptyDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
@@ -21,7 +32,18 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+import pt.utl.ist.codeGenerator.database.CreateTestData.CreateCurricularPeriods;
+import pt.utl.ist.codeGenerator.database.CreateTestData.CreateCurricularStructure;
+import pt.utl.ist.codeGenerator.database.CreateTestData.CreateDegrees;
+import pt.utl.ist.codeGenerator.database.CreateTestData.CreateEvaluations;
+import pt.utl.ist.codeGenerator.database.CreateTestData.CreateExecutionCourses;
+import pt.utl.ist.codeGenerator.database.CreateTestData.CreateExecutionYears;
+import pt.utl.ist.codeGenerator.database.CreateTestData.CreateManagerUser;
+import pt.utl.ist.codeGenerator.database.CreateTestData.CreateOrganizationalStructure;
+import pt.utl.ist.codeGenerator.database.CreateTestData.CreateResources;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -35,21 +57,44 @@ public class DataInitializer {
         System.exit(0);
     }
 
-    @Atomic
+    @Atomic(mode = TxMode.WRITE)
     private static void initialize() {
+        RootDomainObject.ensureRootDomainObject();
+        RootDomainObject.initialize();
+        Language.setDefaultLocale(Locale.getDefault());
+
         createRoles();
-        createCurricularYearsAndSemesters();
-        createEmptyDegreeAndEmptyDegreeCurricularPlan();
-        createCountries();
-        createDistrictAndDistrictSubdivision();
         createManagerUser();
         createPartyTypeEnums();
         createAccountabilityTypeEnums();
+        createCountries();
+        createCurricularYearsAndSemesters();
+        createDistrictAndDistrictSubdivision();
         createOrganizationalStructure();
+
+        new CreateManagerUser().doIt();
+        new CreateExecutionYears().doIt();
+        new CreateResources().doIt();
+        new CreateOrganizationalStructure().doIt();
+        new CreateDegrees().doIt();
+        new CreateCurricularPeriods().doIt();
+        new CreateCurricularStructure().doIt();
+        new CreateExecutionCourses().doIt();
+        new CreateEvaluations().doIt();
+
+        createEmptyDegreeAndEmptyDegreeCurricularPlan();
+
+        Portal portal = new Portal();
+        portal.setName(new MultiLanguageString(Language.pt, "FenixEdu").append(new MultiLanguageString(Language.en, "FenixEdu")));
+        RootDomainObject rdo = RootDomainObject.getInstance();
+        portal.setRootDomainObject(rdo);
+        rdo.setRootPortal(portal);
+
     }
 
     private static void createEmptyDegreeAndEmptyDegreeCurricularPlan() {
         EmptyDegree.init();
+        EmptyDegree.getInstance().setAdministrativeOffice(CreateTestData.administrativeOffice);
         EmptyDegreeCurricularPlan.init();
     }
 
@@ -160,15 +205,27 @@ public class DataInitializer {
     }
 
     private static void createManagerUser() {
+        RootDomainObject rdo = RootDomainObject.getInstance();
         final Person person = new Person();
         person.setName("Fenix System Administrator");
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
+        person.addPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
         final User user = person.getUser();
-        // final Login login = Login.readUserLoginIdentification(user);
-        // login.setActive(Boolean.TRUE);
-        // LoginAlias.createNewCustomLoginAlias(login, "admin");
-        // login.openLoginIfNecessary(RoleType.MANAGER);
+        final Login login = user.readUserLoginIdentification();
+        login.setActive(Boolean.TRUE);
+        LoginAlias.createNewCustomLoginAlias(login, "admin");
+        login.openLoginIfNecessary(RoleType.MANAGER);
+        login.setRootDomainObject(rdo);
+        person.setRootDomainObject(rdo);
+        for (PartyContact partyContact : person.getPartyContactsSet()) {
+            PhysicalAddress add = (PhysicalAddress) partyContact;
+            add.setValid();
+            add.getPartyContactValidation().setState(PartyContactValidationState.VALID);
+        }
+        final IUserView mock = new Authenticate().mock(person, "https://fenix.ist.utl.pt");
+        UserView.setUser(mock);
+>>>>>>> f2e10ad... First steps to make it possible to start fenix from zero.
     }
 
     private static void createPartyTypeEnums() {
