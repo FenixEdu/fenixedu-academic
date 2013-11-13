@@ -703,7 +703,6 @@ public class FenixAPIv1 {
         return executionSemester;
     }
 
-    @SuppressWarnings("unchecked")
     private <T extends DomainObject> T getDomainObject(String externalId, Class<T> clazz) {
         T domainObject = OAuthUtils.getDomainObject(externalId, clazz);
         if (domainObject == null) {
@@ -881,10 +880,10 @@ public class FenixAPIv1 {
 
         ExecutionYear executionYear = getExecutionYear(year);
 
-        ExecutionSemester[] executionSemesters = executionYear.getExecutionPeriods().toArray(new ExecutionSemester[0]);
+        ExecutionSemester[] executionSemesters = executionYear.getExecutionPeriodsSet().toArray(new ExecutionSemester[0]);
 
         final Set<ExecutionCourseView> executionCourses = new HashSet<ExecutionCourseView>();
-        for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+        for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
             if (degreeCurricularPlan.isActive()) {
                 degreeCurricularPlan.addExecutionCourses(executionCourses, executionSemesters);
             }
@@ -909,7 +908,7 @@ public class FenixAPIv1 {
     }
 
     private String getCredits(ExecutionCourse ec, Degree degree) {
-        for (CurricularCourse curricularCourse : ec.getAssociatedCurricularCourses()) {
+        for (CurricularCourse curricularCourse : ec.getAssociatedCurricularCoursesSet()) {
             if (degree.equals(curricularCourse.getDegree())) {
                 return curricularCourse.getEctsCredits().toString();
             }
@@ -953,9 +952,8 @@ public class FenixAPIv1 {
 
         String acronym = executionCourse.getSigla();
         String name = executionCourse.getName();
-        String evaluation = executionCourse.getEvaluationMethodText();
-        String year = executionCourse.getExecutionYear().getName();
-        Integer semester = executionCourse.getExecutionPeriod().getSemester();
+        String evaluationMethod = executionCourse.getEvaluationMethodText();
+        String academicTerm = executionCourse.getExecutionPeriod().getQualifiedName();
 
         Map<CompetenceCourse, Set<CurricularCourse>> curricularCourses =
                 executionCourse.getCurricularCoursesIndexedByCompetenceCourse();
@@ -996,7 +994,7 @@ public class FenixAPIv1 {
         int numberOfStudents = executionCourse.getAttendsSet().size();
 
         List<FenixTeacher> teachers = new ArrayList<>();
-        for (Professorship professorship : executionCourse.getProfessorships()) {
+        for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
 
             String tname = professorship.getPerson().getName();
             String istid = professorship.getPerson().getIstUsername();
@@ -1013,7 +1011,7 @@ public class FenixAPIv1 {
         String summaryLink =
                 getServerLink().concat("/publico/summariesRSS.do?id=").concat(executionCourse.getExternalId().toString());
 
-        return new FenixCourse(acronym, name, evaluation, year, semester, numberOfStudents, annoucementLink, summaryLink,
+        return new FenixCourse(acronym, name, evaluationMethod, academicTerm, numberOfStudents, annoucementLink, summaryLink,
                 moreInfo, teachers);
     }
 
@@ -1049,7 +1047,7 @@ public class FenixAPIv1 {
                 Integer groupNumber = studentGroup.getGroupNumber();
 
                 List<FenixCourseGroup.Grouping.Group.Student> students = new ArrayList<>();
-                for (Attends attends : studentGroup.getAttends()) {
+                for (Attends attends : studentGroup.getAttendsSet()) {
                     String istId = attends.getRegistration().getPerson().getUsername();
                     String studentName = attends.getRegistration().getPerson().getName();
                     students.add(new FenixCourseGroup.Grouping.Group.Student(istId, studentName));
@@ -1129,7 +1127,7 @@ public class FenixAPIv1 {
 
         final List<FenixCourseEvaluation> evals = new ArrayList<>();
 
-        for (Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+        for (Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
             if (evaluation instanceof WrittenEvaluation) {
                 evals.add(getWrittenEvaluationJSON((WrittenEvaluation) evaluation));
             } else if (evaluation instanceof Project) {

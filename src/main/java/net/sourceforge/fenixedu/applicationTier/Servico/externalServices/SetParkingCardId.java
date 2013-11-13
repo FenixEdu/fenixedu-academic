@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
+import net.sourceforge.fenixedu.domain.cardGeneration.SantanderEntry;
 import pt.ist.fenixframework.Atomic;
 
 public class SetParkingCardId {
@@ -42,6 +43,28 @@ public class SetParkingCardId {
             throws FenixServiceException {
         if (isAllowed(password)) {
             return set(identificationCardCode, parkingCardID);
+        } else {
+            throw new NotAuthorizedException();
+        }
+    }
+    
+    private static String setSantander(final String categoryCode, final String identificationCardCode, final Long parkingCardID) throws FenixServiceException {
+        SantanderEntry entry = SantanderEntry.readByUsernameAndCategory(identificationCardCode, categoryCode);
+        if (entry == null) {
+            throw new UserDoesNotExistException();
+        }
+        if (entry.getPerson().getParkingParty() == null) {
+            CreateParkingParty.run(entry.getPerson());
+        }
+        entry.getPerson().getParkingParty().setCardNumber(parkingCardID);
+        return entry.getPerson().getIstUsername();
+    }
+
+    @Atomic
+    public static String runSantander(final String password, final String categoryCode, final String identificationCardCode, final Long parkingCardID)
+            throws FenixServiceException {
+        if (isAllowed(password)) {
+            return setSantander(categoryCode, identificationCardCode, parkingCardID);
         } else {
             throw new NotAuthorizedException();
         }

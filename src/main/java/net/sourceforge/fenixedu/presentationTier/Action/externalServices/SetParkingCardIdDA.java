@@ -45,5 +45,36 @@ public class SetParkingCardIdDA extends FenixDispatchAction {
 
         return null;
     }
+    
+    public ActionForward setSantanderId(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        final String password = request.getParameter("password");
+        final String identificationCardCode = request.getParameter("identificationCardCode");
+        final Long parkingCardID = Long.valueOf(request.getParameter("parkingCardId"));
+        final String categoryCode = request.getParameter("catCode");
+        
+        
+        
+        String message = "ko";
+
+        try {
+            message = SetParkingCardId.runSantander(password, categoryCode, identificationCardCode, parkingCardID);
+        } catch (NotAuthorizedException ex) {
+            message = "Not authorized";
+        } catch (UserDoesNotExistException ex) {
+            message = "User does not exist.";
+        } catch (Throwable ex) {
+            message = ex.getMessage();
+            ex.printStackTrace();
+        } finally {
+            final ServletOutputStream servletOutputStream = response.getOutputStream();
+            response.setContentType("text/html");
+            servletOutputStream.print(message);
+            servletOutputStream.flush();
+            response.flushBuffer();
+        }
+
+        return null;
+    }
 
 }
