@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -336,9 +337,11 @@ public class A3ESDegreeProcess implements Serializable {
                 json.put("q-6.2.1.8", q6218);
 
                 List<String> references = new ArrayList<String>();
-                for (BibliographicReference reference : competence.getBibliographicReferences(executionSemester)
-                        .getMainBibliographicReferences()) {
-                    references.add(extractReference(reference));
+                final BibliographicReferences bibliographicReferences = competence.getBibliographicReferences(executionSemester);
+                if (bibliographicReferences != null) {
+                    for (BibliographicReference reference : bibliographicReferences.getMainBibliographicReferences()) {
+                        references.add(extractReference(reference));
+                    }
                 }
                 json.put("q-6.2.1.9", StringUtils.join(references, "; "));
                 jsons.put(json, output.toString());
