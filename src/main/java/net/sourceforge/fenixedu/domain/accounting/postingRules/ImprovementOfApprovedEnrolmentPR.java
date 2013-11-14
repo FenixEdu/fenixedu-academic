@@ -88,17 +88,20 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
         if (event.hasAnyPenaltyExemptionsFor(ImprovementOfApprovedEnrolmentPenaltyExemption.class)) {
             return false;
         } else {
-            return !getEnrolmentPeriodInImprovementOfApprovedEnrolment(event).containsDate(when);
+            final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
+                    (ImprovementOfApprovedEnrolmentEvent) event;
+            final Set<EnrolmentEvaluation> enrolmentEvaluations =
+                    improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluations();
+            if (enrolmentEvaluations.isEmpty()) {
+                return false;
+            }
+            return !getEnrolmentPeriodInImprovementOfApprovedEnrolment(enrolmentEvaluations.iterator().next()).containsDate(when);
         }
     }
 
-    private EnrolmentPeriodInImprovementOfApprovedEnrolment getEnrolmentPeriodInImprovementOfApprovedEnrolment(Event event) {
-        final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
-                (ImprovementOfApprovedEnrolmentEvent) event;
-        final EnrolmentEvaluation enrolmentEvaluation =
-                improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluations().iterator().next();
+    private EnrolmentPeriodInImprovementOfApprovedEnrolment getEnrolmentPeriodInImprovementOfApprovedEnrolment(
+            EnrolmentEvaluation enrolmentEvaluation) {
         final DegreeCurricularPlan degreeCurricularPlan = enrolmentEvaluation.getDegreeCurricularPlan();
-
         final EnrolmentPeriod enrolmentPeriodInImprovementOfApprovedEnrolment =
                 enrolmentEvaluation.getExecutionPeriod().getEnrolmentPeriod(
                         EnrolmentPeriodInImprovementOfApprovedEnrolment.class, degreeCurricularPlan);
@@ -106,7 +109,6 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
             throw new DomainException(
                     "error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.enrolmentPeriodInImprovementOfApprovedEnrolment.must.not.be.null");
         }
-
         return (EnrolmentPeriodInImprovementOfApprovedEnrolment) enrolmentPeriodInImprovementOfApprovedEnrolment;
     }
 

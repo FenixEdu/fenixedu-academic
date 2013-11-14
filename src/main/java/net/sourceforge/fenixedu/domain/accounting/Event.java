@@ -266,6 +266,18 @@ public abstract class Event extends Event_Base {
         return result;
     }
 
+    public List<AccountingTransaction> getAllAdjustedAccountingTransactions() {
+        final List<AccountingTransaction> result = new ArrayList<AccountingTransaction>();
+
+        for (final AccountingTransaction transaction : super.getAccountingTransactionsSet()) {
+            if (transaction.isAdjustingTransaction()) {
+                result.add(transaction);
+            }
+        }
+
+        return result;
+    }
+
     public List<AccountingTransaction> getAdjustedTransactions() {
         final List<AccountingTransaction> result = new ArrayList<AccountingTransaction>();
 
