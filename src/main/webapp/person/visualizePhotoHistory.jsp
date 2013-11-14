@@ -19,7 +19,7 @@
 
 <p class="mtop2">
 	<html:link page="/photoHistory.do?method=backToShowInformation">
-		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		<bean:message key="link.back" bundle="COMMON_RESOURCES"/>
 	</html:link>
 </p>
 
