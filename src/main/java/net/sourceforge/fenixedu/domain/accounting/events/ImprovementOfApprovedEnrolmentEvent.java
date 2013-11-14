@@ -114,7 +114,8 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
     @Override
     public void removeImprovementEnrolmentEvaluations(EnrolmentEvaluation improvementEnrolmentEvaluations) {
         super.removeImprovementEnrolmentEvaluations(improvementEnrolmentEvaluations);
-        if (getImprovementEnrolmentEvaluationsSet().isEmpty() && getNonAdjustingTransactions().isEmpty()) {
+        if (getImprovementEnrolmentEvaluationsSet().isEmpty() && getNonAdjustingTransactions().isEmpty()
+                && getAdjustedTransactions().isEmpty()) {
             this.delete();
         }
 
