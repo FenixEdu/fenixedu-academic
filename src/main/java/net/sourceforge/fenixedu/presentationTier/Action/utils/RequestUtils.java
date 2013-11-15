@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.utils;
 
-import pt.ist.fenixframework.Atomic;
-
 import java.io.IOException;
 import java.text.Collator;
 import java.util.ArrayList;
@@ -19,6 +17,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -31,6 +30,10 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
+import pt.ist.fenixframework.Atomic;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * 
@@ -133,7 +136,8 @@ public class RequestUtils {
      */
     public static void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        request.getSession(true);
+        final HttpSession session = request.getSession(true);
+        I18NFilter.setLocale(request, session, Language.getLocale());
 
         final PendingRequest pendingRequest = STORE_PENDING_REQUEST ? storeRequest(request) : null;
         response.sendRedirect(generateRedirectLink(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()),
