@@ -159,6 +159,10 @@ public class Scheduleing extends Scheduleing_Base {
     }
 
     public boolean isInsideProposalSubmissionPeriod() {
+        if (getStartOfProposalPeriod() == null && getEndOfProposalPeriod() == null) {
+            return false;
+        }
+
         final DateTime start = new DateTime(getStartOfProposalPeriod());
         final DateTime end = new DateTime(getEndOfProposalPeriod());
         return !start.isAfterNow() && !end.isBeforeNow();
