@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrat
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.DSpaceFileStorage;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.contents.Container;
@@ -110,6 +111,7 @@ public class FenixInitializer implements ServletContextListener {
             logger.info("Check is alive is not working. Caught excpetion.");
             ex.printStackTrace();
         }
+        Instalation.ensureInstalation();
         loadLogins();
         loadPersonNames();
         loadUnitNames();

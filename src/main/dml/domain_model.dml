@@ -8193,11 +8193,26 @@ class AppUserSession {
 class AppUserAuthorization {
 }
 
+class Instalation {
+	String instituitionURL;
+	String instituitionEmailDomain;
+	String instalationName;
+	String instalationDomain;
+}
+
 /*
  * Relations definitions
  * 
  */
 
+relation BennuInstalation {
+	.pt.ist.bennu.core.domain.Bennu playsRole bennu {
+		multiplicity 1..1;
+	}
+	Instalation playsRole instalation {
+		multiplicity 0..1;
+	}
+}
 
 relation RootDomainObjectDSpaceFileStorage {
 	.pt.ist.bennu.core.domain.Bennu playsRole bennu {

@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPas
 import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPublicAccessBean;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -204,7 +205,8 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
         try {
             if (!request.getServerName().equals("localhost")) {
                 email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
-                email.send("alumni@ist.utl.pt", "Erro Registo Alumni", mailBody.toString());
+                String aluminiEmailAddress = Instalation.getInstance().getInstituitionalEmailAddress("alumni");
+                email.send(aluminiEmailAddress, "Erro Registo Alumni", mailBody.toString());
                 if (CoreConfiguration.getConfiguration().developmentMode()) {
                     System.out.println("send email to alumni@ist.utl.pt with subject Erro Registo Alumni and body : "
                             + mailBody.toString());

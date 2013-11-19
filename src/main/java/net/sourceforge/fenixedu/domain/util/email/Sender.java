@@ -9,6 +9,7 @@ import java.util.TreeSet;
 
 import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -16,7 +17,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.bennu.core.security.Authenticate;
-
 import pt.ist.fenixframework.Atomic;
 
 public class Sender extends Sender_Base {
@@ -59,7 +59,7 @@ public class Sender extends Sender_Base {
     }
 
     static public String getNoreplyMail() {
-        return BundleUtil.getMessageFromModuleOrApplication("GlobalResources", "noreply.mail");
+        return Instalation.getInstance().getInstituitionalEmailAddress("noreply");
     }
 
     public static boolean hasAvailableSender() {

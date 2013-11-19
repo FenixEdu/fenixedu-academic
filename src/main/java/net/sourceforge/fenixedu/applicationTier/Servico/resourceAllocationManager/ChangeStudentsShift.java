@@ -9,6 +9,7 @@ import java.util.Set;
 
 import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -67,7 +68,8 @@ public class ChangeStudentsShift {
 
         Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
         Sender sender = Bennu.getInstance().getSystemSender();
-        new Message(sender, new ConcreteReplyTo("gop@ist.utl.pt").asCollection(), recipient.asCollection(), subject, message, "");
+        String gopEmailAddress = Instalation.getInstance().getInstituitionalEmailAddress("gop");
+        new Message(sender, new ConcreteReplyTo(gopEmailAddress).asCollection(), recipient.asCollection(), subject, message, "");
     }
 
     public static class UnableToTransferStudentsException extends FenixServiceException {
