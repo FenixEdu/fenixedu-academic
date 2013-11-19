@@ -208,7 +208,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
                 String aluminiEmailAddress = Instalation.getInstance().getInstituitionalEmailAddress("alumni");
                 email.send(aluminiEmailAddress, "Erro Registo Alumni", mailBody.toString());
                 if (CoreConfiguration.getConfiguration().developmentMode()) {
-                    System.out.println("send email to alumni@ist.utl.pt with subject Erro Registo Alumni and body : "
+                    System.out.println("send email to " + aluminiEmailAddress + "with subject Erro Registo Alumni and body : "
                             + mailBody.toString());
                 }
             }

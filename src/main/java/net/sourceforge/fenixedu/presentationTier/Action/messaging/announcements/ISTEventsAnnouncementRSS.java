@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.Instalation;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "external", path = "/eventsAnnouncementsRSS", scope = "request", validate = false, parameter = "method")

@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
@@ -34,7 +35,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess.SendEmailForApplicationSubmission;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
@@ -646,10 +646,10 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
         String institutionalURL = Instalation.getInstance().getInstituitionURL();
         if ("PT".equals(countryCode)) {
-            return redirect(Unit.getInstitutionURL() + "pt/candidatos/candidaturas/", request, false);
+            return redirect(institutionalURL + "pt/candidatos/candidaturas/", request, false);
         }
 
-        return redirect(Unit.getInstitutionURL() + "en/prospective-students/admissions/", request, false);
+        return redirect(institutionalURL + "en/prospective-students/admissions/", request, false);
     }
 
     static private String readCountryCode(final Locale locale) {
