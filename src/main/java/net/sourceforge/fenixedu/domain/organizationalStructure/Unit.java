@@ -1325,22 +1325,6 @@ public class Unit extends Unit_Base {
         return result;
     }
 
-    static public String getInstitutionURL() {
-        final Bennu root = Bennu.getInstance();
-        String result = StringUtils.EMPTY;
-        if (root != null) {
-            final Unit institutionUnit = root.getInstitutionUnit();
-            if (root != null) {
-                result = institutionUnit.getDefaultWebAddressUrl();
-            }
-        }
-        if (result.isEmpty()) {
-            result = BundleUtil.getStringFromResourceBundle("resources/GlobalResources", "institution.url");
-        }
-
-        return result;
-    }
-
     @Override
     public UnitSite initializeSite() {
         return (UnitSite) super.initializeSite();
