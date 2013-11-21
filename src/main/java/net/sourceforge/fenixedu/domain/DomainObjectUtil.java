@@ -773,12 +773,6 @@ public final class DomainObjectUtil {
                 return Bennu.getInstance().getCareersSet();
             }
         });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.File.class.getName(), new DomainObjectReader() {
-            @Override
-            public java.util.Set readAllDomainObjects() {
-                return Bennu.getInstance().getFilesSet();
-            }
-        });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.MasterDegreeProofVersion.class.getName(), new DomainObjectReader() {
             @Override
             public java.util.Set readAllDomainObjects() {

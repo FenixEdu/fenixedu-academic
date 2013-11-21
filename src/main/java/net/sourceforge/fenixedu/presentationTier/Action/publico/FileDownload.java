@@ -35,7 +35,7 @@ public class FileDownload extends FenixAction {
             if (!file.isPrivate() || file.isPersonAllowedToAccess(person)) {
                 response.setContentType(file.getMimeType());
                 response.addHeader("Content-Disposition", "attachment; filename=" + file.getFilename());
-                response.setContentLength(file.getSize());
+                response.setContentLength(file.getSize().intValue());
                 final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
                 dos.write(file.getContents());
                 dos.close();

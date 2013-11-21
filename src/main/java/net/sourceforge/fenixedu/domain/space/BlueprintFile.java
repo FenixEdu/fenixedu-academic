@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.ByteArray;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -21,6 +22,7 @@ public class BlueprintFile extends BlueprintFile_Base {
         super();
         setBlueprint(blueprint);
         init(path, filename, displayName, metadata, content, permittedGroup);
+        setContentFile(new ByteArray(content));
     }
 
     @Override
@@ -49,6 +51,11 @@ public class BlueprintFile extends BlueprintFile_Base {
                 blueprintFile.delete();
             }
         }
+    }
+
+    @Override
+    public byte[] getContent() {
+        return super.getContentFile().getBytes();
     }
 
     @Deprecated

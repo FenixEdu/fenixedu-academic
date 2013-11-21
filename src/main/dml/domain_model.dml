@@ -1304,16 +1304,15 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class photograph.PictureOriginal extends photograph.Picture {
     }
 
-    class File  {
+    class File extends .pt.ist.bennu.io.domain.GenericFile {
         String checksum;
         String checksumAlgorithm;
-        String displayName;
         String externalStorageIdentification;
-        String filename;
         String mimeType;
         Group permittedGroup;
-        Integer size;
-        DateTime uploadTime;
+    }
+    
+    class DSpaceFileStorage extends .pt.ist.bennu.io.domain.FileStorage {
     }
     
 		class teacher.evaluation.TeacherEvaluationFile extends File {
@@ -1328,15 +1327,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 		}
     	
 
-    class FileLocalContent  {
-       VirtualPath path;
-       ByteArray content;
-    }
-    
-    class FileLocalContentMetadata  {
-       FileSetMetaData entry;
-    }
-    
     class log.FirstYearShiftsCapacityToggleLog  {
     	DateTime creationDate;
     }
@@ -1395,7 +1385,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         }
 
         class space.BlueprintFile extends File {
-            ByteArray content;
+            ByteArray contentFile;
         }
 
         class tests.PictureMaterialFile extends File {
@@ -8240,6 +8230,16 @@ class AppUserAuthorization {
  */
 
 
+relation RootDomainObjectDSpaceFileStorage {
+	.pt.ist.bennu.core.domain.Bennu playsRole bennu {
+		multiplicity 1..1;
+	}
+	
+	DSpaceFileStorage playsRole dSpaceFileStorage {
+		multiplicity 0..1;
+	}
+}
+
 relation RootDomainObjectOutboundMobilityCandidacyContestGroup {
 	.pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject {
 		multiplicity 1..1;
@@ -14704,35 +14704,9 @@ relation RootDomainObjectFAQSection {
     }
 }
 
-relation RootDomainObjectFile {
-    .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
-    File playsRole files {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectFileLocalContents {
-    .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
-    FileLocalContent playsRole fileLocalContents {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectFirstYearShiftsCapacityToggleLog {
     .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
     log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLogs {
-        multiplicity *;
-    }
-}
-
-relation FileLocalContents {
-    File playsRole file;
-    FileLocalContent playsRole localContent;
-}
-
-relation FileLocalContentMetadatas {
-    FileLocalContent playsRole content;
-    FileLocalContentMetadata playsRole metadata {
         multiplicity *;
     }
 }

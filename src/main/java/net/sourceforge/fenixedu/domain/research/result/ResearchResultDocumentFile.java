@@ -54,11 +54,6 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
         super.delete();
     }
 
-    @Override
-    protected Boolean deletItemOnDelete() {
-        return Boolean.FALSE;
-    }
-
     public final static Group getPermittedGroup(FileResultPermittedGroupType permissionType) {
         switch (permissionType) {
         case INSTITUTION:

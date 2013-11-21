@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
-import net.sourceforge.fenixedu.util.ByteArray;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -46,7 +45,7 @@ public abstract class BlueprintVersionManagmentService {
         final BlueprintFile blueprintFile =
                 new BlueprintFile(getVirtualPath(space.getMostRecentSpaceInformation()), blueprint, filename, displayName,
                         new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)), contents, metadata);
-        blueprintFile.setContent(new ByteArray(contents));
+//        blueprintFile.setContent(new ByteArray(contents));
     }
 
     private byte[] readInputStream(final InputStream inputStream) throws IOException {

@@ -1,19 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.startup;
 
-import pt.ist.fenixWebFramework.FenixWebFramework;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
-import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
-import pt.ist.fenixframework.plugins.scheduler.Scheduler;
-import pt.ist.fenixframework.plugins.scheduler.domain.SchedulerSystem;
-
-import pt.utl.ist.fenix.tools.util.FileUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecu
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
+import net.sourceforge.fenixedu.domain.DSpaceFileStorage;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.Role;
@@ -52,6 +44,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.exceptions.BennuCoreDomainException;
+import pt.ist.bennu.core.domain.groups.DynamicGroup;
+import pt.ist.bennu.core.domain.groups.Group;
 import pt.ist.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter;
 import pt.ist.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomeHandler;
 import pt.ist.bennu.core.util.ConfigurationManager;
@@ -60,6 +55,13 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumF
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriterFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriterFilter.RequestRewriterFactory;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
+import pt.utl.ist.fenix.tools.file.DSpaceFileManagerFactory;
+import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.dspace.DSpaceHttpClient;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @WebListener
 public class FenixInitializer implements ServletContextListener {
@@ -114,9 +116,24 @@ public class FenixInitializer implements ServletContextListener {
         registerContentInjectionRewriter();
         registerUncaughtExceptionHandler();
 
+        initializeFileManager();
         initializeFenixAPI();
+        initializeBennuManagersGroup();
 
         logger.info("Fenix initialized successfully");
+    }
+
+    private static void initializeBennuManagersGroup() {
+        try {
+            DynamicGroup.getInstance("managers");
+        } catch (BennuCoreDomainException e) {
+            logger.info("Create managers bennu group to RoleCustomGroup Managers");
+            DynamicGroup.initialize("managers", Group.parse("role(MANAGER)"));
+        }
+    }
+
+    private static void initializeDSpaceFileStorage() {
+        DSpaceFileStorage.getInstance();
     }
 
     private void initializeFenixAPI() {
@@ -126,6 +143,32 @@ public class FenixInitializer implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
 
+    }
+
+    private static void initializeFileManager() {
+        final Properties properties = new Properties();
+        properties.put("dspace.client.transport.class", DSpaceHttpClient.class.getName());
+        properties.put("file.manager.factory.implementation.class", DSpaceFileManagerFactory.class.getName());
+        properties.put("dspace.serverUrl", ConfigurationManager.getProperty("dspace.serverUrl"));
+        properties.put("dspace.downloadUriFormat", ConfigurationManager.getProperty("dspace.downloadUriFormat"));
+        properties.put("dspace.username", ConfigurationManager.getProperty("dspace.username"));
+        properties.put("dspace.password", ConfigurationManager.getProperty("dspace.password"));
+        properties.put("dspace.rmi.server.name", ConfigurationManager.getProperty("dspace.rmi.server.name"));
+        properties.put("jndi.properties.file", ConfigurationManager.getProperty("jndi.properties.file"));
+        properties.put("rmi.registry.port", ConfigurationManager.getProperty("rmi.registry.port"));
+        properties.put("rmi.port", ConfigurationManager.getProperty("rmi.port"));
+        properties.put("rmi.ssl", ConfigurationManager.getProperty("rmi.ssl"));
+        properties.put("rmi.ssl.truststore", ConfigurationManager.getProperty("rmi.ssl.truststore"));
+        properties.put("rmi.ssl.truststore.password", ConfigurationManager.getProperty("rmi.ssl.truststore.password"));
+        properties.put("rmi.stream.bytes.min", ConfigurationManager.getProperty("rmi.stream.bytes.min"));
+        properties.put("rmi.stream.bytes.max", ConfigurationManager.getProperty("rmi.stream.bytes.max"));
+        properties.put("rmi.stream.bytes.block", ConfigurationManager.getProperty("rmi.stream.bytes.block"));
+
+        FileManagerFactory.init(DSpaceFileManagerFactory.class.getName());
+
+        DSpaceFileManagerFactory.init(properties);
+
+        initializeDSpaceFileStorage();
     }
 
     private void startContactValidationServices() {

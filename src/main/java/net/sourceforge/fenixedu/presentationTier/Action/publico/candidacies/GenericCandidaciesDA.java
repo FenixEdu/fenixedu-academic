@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUserBean
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
@@ -195,9 +194,9 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
                         .equals(confirmationCode)) || application.getGenericApplicationPeriod().isCurrentUserAllowedToMange())) {
             response.setContentType(file.getMimeType());
             response.addHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
-            response.setContentLength(file.getSize());
+            response.setContentLength(file.getSize().intValue());
             final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-            dos.write(file.getContents());
+            dos.write(file.getContent());
             dos.close();
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -218,9 +217,9 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
                         .getRecomentation().getConfirmationCode().equals(confirmationCode))) {
             response.setContentType(file.getMimeType());
             response.addHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
-            response.setContentLength(file.getSize());
+            response.setContentLength(file.getSize().intValue());
             final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-            dos.write(file.getContents());
+            dos.write(file.getContent());
             dos.close();
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

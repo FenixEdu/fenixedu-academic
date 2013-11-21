@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,38 +12,31 @@ import javax.activation.MimetypesFileTypeMap;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ConnectionManager;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
+@Deprecated
 public abstract class File extends File_Base {
 
-    protected File() {
-        super();
-        setRootDomainObject(Bennu.getInstance());
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(File.class);
 
     protected void init(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
             byte[] content, Group group) {
-        setFilename(FileUtils.getFilenameOnly(filename));
-        setDisplayName(FileUtils.getFilenameOnly(displayName));
-        new FileLocalContent(this, path, metadata, content);
+        init(FileUtils.getFilenameOnly(filename), FileUtils.getFilenameOnly(displayName), content);
         setMimeType(MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(filename));
-        setSize(content == null ? 0 : content.length);
+        setSize(new Long(content == null ? 0 : content.length));
         setPermittedGroup(group);
-        setUploadTime(new DateTime());
+        setCreationDate(new DateTime());
         setChecksum(DigestUtils.shaHex(content));
         setChecksumAlgorithm("SHA");
     }
@@ -65,20 +55,20 @@ public abstract class File extends File_Base {
         }
     }
 
-    public void storeToContentManager() {
-        final FileDescriptor fileDescriptor =
-                FileManagerFactory
-                        .getFactoryInstance()
-                        .getFileManager()
-                        .saveFile(getLocalContent().getPath(), getFilename(), isPrivate(), getLocalContent().createMetadata(),
-                                new ByteArrayInputStream(getLocalContent().getContent().getBytes()));
-        setMimeType(fileDescriptor.getMimeType());
-        setChecksum(fileDescriptor.getChecksum());
-        setChecksumAlgorithm(fileDescriptor.getChecksumAlgorithm());
-        setSize(fileDescriptor.getSize());
-        setExternalStorageIdentification(fileDescriptor.getUniqueId());
-        getLocalContent().delete();
-    }
+//    public void storeToContentManager() {
+//        final FileDescriptor fileDescriptor =
+//                FileManagerFactory
+//                        .getFactoryInstance()
+//                        .getFileManager()
+//                        .saveFile(getLocalContent().getPath(), getFilename(), isPrivate(), getLocalContent().createMetadata(),
+//                                new ByteArrayInputStream(getLocalContent().getContent().getBytes()));
+//        setMimeType(fileDescriptor.getMimeType());
+//        setChecksum(fileDescriptor.getChecksum());
+//        setChecksumAlgorithm(fileDescriptor.getChecksumAlgorithm());
+//        setSize(new Long(fileDescriptor.getSize()));
+//        setExternalStorageIdentification(fileDescriptor.getUniqueId());
+//        getLocalContent().delete();
+//    }
 
     public boolean isPrivate() {
         if (getPermittedGroup() instanceof EveryoneGroup) {
@@ -87,70 +77,34 @@ public abstract class File extends File_Base {
         return true;
     }
 
-    public InputStream getStream() {
-        if (getLocalContent() != null) {
-            return new ByteArrayInputStream(getLocalContent().getContent().getBytes());
-        }
-        return FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(getExternalStorageIdentification());
-    }
+//    @Override
+//    public InputStream getStream() {
+//        if (getLocalContent() != null) {
+//            return new ByteArrayInputStream(getLocalContent().getContent().getBytes());
+//        }
+//        return super.getStream();
+//    }
 
+    @Deprecated
     public byte[] getContents() {
-        if (getLocalContent() != null) {
-            return getLocalContent().getContent().getBytes();
-        }
-        InputStream inputStream = null;
-        try {
-            inputStream =
-                    FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(getExternalStorageIdentification());
-            return ByteArray.toBytes(inputStream);
-        } catch (IOException e) {
-            throw new Error(e);
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    throw new Error(e);
-                }
-            }
-        }
+        return getContent();
     }
-
-    public static final String ACTION_PATH = ConfigurationManager.getProperty("file.download.url.local.content");
 
     /**
      * @return returns a public url that can be used by a client to download the
      *         associated file from the external file storage
      */
     public String getDownloadUrl() {
-        if (getLocalContent() != null) {
-            return ACTION_PATH + getExternalId();
-        }
-
-        return FileManagerFactory.getFactoryInstance().getFileManager()
-                .formatDownloadUrl(getExternalStorageIdentification(), getFilename());
-    }
-
-    public void delete() {
-        disconnect();
-        deleteDomainObject();
+        return ConfigurationManager.getProperty("file.download.url.local.content") + getExternalId() + "/" + getFilename();
     }
 
     protected void disconnect() {
-        if (getLocalContent() != null) {
-            getLocalContent().delete();
-        } else {
-            createDeleteFileRequest();
-        }
-        setRootDomainObject(null);
     }
 
-    protected void createDeleteFileRequest() {
-        new DeleteFileRequest(AccessControl.getPerson(), getExternalStorageIdentification(), deletItemOnDelete());
-    }
-
-    protected Boolean deletItemOnDelete() {
-        return Boolean.TRUE;
+    @Override
+    public void delete() {
+        disconnect();
+        deleteDomainObject();
     }
 
     public boolean isPersonAllowedToAccess(Person person) {
@@ -188,14 +142,9 @@ public abstract class File extends File_Base {
         }
     }
 
-    @Override
-    public void setPermittedGroup(Group permittedGroup) {
-        super.setPermittedGroup(permittedGroup == null ? new EveryoneGroup() : permittedGroup);
-        if (getLocalContent() == null) {
-            final boolean isPublic = permittedGroup != null && permittedGroup instanceof EveryoneGroup;
-            FileManagerFactory.getFactoryInstance().getContentFileManager()
-                    .changeFilePermissions(getExternalStorageIdentification(), !isPublic);
-        }
+    @Deprecated
+    public DateTime getUploadTime() {
+        return super.getCreationDate();
     }
 
     @Deprecated
@@ -206,11 +155,6 @@ public abstract class File extends File_Base {
     @Deprecated
     public boolean hasPermittedGroup() {
         return getPermittedGroup() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
     }
 
     @Deprecated
@@ -236,11 +180,6 @@ public abstract class File extends File_Base {
     @Deprecated
     public boolean hasDisplayName() {
         return getDisplayName() != null;
-    }
-
-    @Deprecated
-    public boolean hasLocalContent() {
-        return getLocalContent() != null;
     }
 
     @Deprecated

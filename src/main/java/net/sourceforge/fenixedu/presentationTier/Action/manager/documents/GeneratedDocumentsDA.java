@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.documents.DocumentSearchBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -22,6 +21,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.io.domain.GenericFile;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -44,7 +44,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         DocumentSearchBean searchBean = getRenderedObject();
         List<GeneratedDocument> documents = new ArrayList<GeneratedDocument>();
-        for (File file : rootDomainObject.getFilesSet()) {
+        for (GenericFile file : rootDomainObject.getFileSupport().getGenericFilesSet()) {
             if (file instanceof GeneratedDocument) {
                 documents.add((GeneratedDocument) file);
             }
