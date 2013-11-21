@@ -808,8 +808,13 @@ public class FenixAPIv1 {
             degreeCampus.add(campus.getName());
         }
 
-        DegreeInfo degreeInfo = degree.getDegreeInfoFor(executionYear);
         FenixDegreeInfo fenixDegreeInfo = null;
+
+        DegreeInfo degreeInfo = degree.getDegreeInfoFor(executionYear);
+        if (degreeInfo == null) {
+            degreeInfo = degree.getMostRecentDegreeInfo(executionYear);
+        }
+
         if (degreeInfo != null) {
 
             String description = mls(degreeInfo.getDescription());
