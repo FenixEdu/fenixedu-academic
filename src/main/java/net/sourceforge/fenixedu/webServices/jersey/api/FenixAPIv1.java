@@ -351,6 +351,10 @@ public class FenixAPIv1 {
     public Response calendarEvaluation(@QueryParam("format") String format, @Context HttpServletRequest httpRequest) {
         validateFormat(format);
         final Person person = getPerson();
+        if (!person.hasRole(RoleType.STUDENT)) {
+            return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, JSON_UTF8).entity("{}").build();
+        }
+
         final String serverName = httpRequest.getServerName();
         final int serverPort = httpRequest.getServerPort();
         final String serverScheme = httpRequest.getScheme();
@@ -571,6 +575,12 @@ public class FenixAPIv1 {
     @Produces(JSON_UTF8)
     public List<FenixEvaluation> evaluations(@Context HttpServletResponse response, @Context HttpServletRequest request,
             @Context ServletContext context) {
+
+        Person person = getPerson();
+        if (!person.hasRole(RoleType.STUDENT)) {
+            List<FenixEvaluation> evaluations = new ArrayList<FenixEvaluation>();
+            return evaluations;
+        }
 
         new JerseyFacesContext(context, request, response);
 
@@ -798,8 +808,13 @@ public class FenixAPIv1 {
             degreeCampus.add(campus.getName());
         }
 
-        DegreeInfo degreeInfo = degree.getDegreeInfoFor(executionYear);
         FenixDegreeInfo fenixDegreeInfo = null;
+
+        DegreeInfo degreeInfo = degree.getDegreeInfoFor(executionYear);
+        if (degreeInfo == null) {
+            degreeInfo = degree.getMostRecentDegreeInfo(executionYear);
+        }
+
         if (degreeInfo != null) {
 
             String description = mls(degreeInfo.getDescription());
