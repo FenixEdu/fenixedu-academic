@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.Del
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
-import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.QualificationBean;
@@ -209,18 +208,13 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
     private void sendSubmissionEmailForCandidacy(final PublicCandidacyHashCode hashCode, final HttpServletRequest request) {
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-        final String npfcEmail = Instalation.getInstance().getInstituitionalEmailAddress("npfc");
-        final String npfcUrl = "http://npfc.ist.utl.pt/";
-        final String phdInstitutionalUrl =
-                Instalation.getInstance().getInstituitionURL() + "pt/candidatos/candidaturas/doutoramentos/";
-
         final String subject =
                 MessageFormat.format(
                         bundle.getString("message.phd.institution.application.email.subject.send.link.to.submission"),
                         Unit.getInstitutionAcronym());
         final String body =
                 MessageFormat.format(bundle.getString("message.phd.institution.email.body.send.link.to.submission"),
-                        Unit.getInstitutionAcronym(), npfcEmail, phdInstitutionalUrl, npfcUrl);
+                        Unit.getInstitutionAcronym());
         hashCode.sendEmail(
                 subject,
                 String.format(body,

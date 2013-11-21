@@ -153,8 +153,11 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
             request.setAttribute("alumni", alumni);
 
         } catch (DomainException e) {
-            if ("error.no.concluded.registrations".equals(e.getKey()) || "error.no.registrations".equals(e.getKey())
-                    || "error.person.no.student".equals(e.getKey())) {
+            if ("error.no.registrations".equals(e.getKey())) {
+                request.setAttribute("showReportError", "true");
+                String alumniEmail = Instalation.getInstance().getInstituitionalEmailAddress("alumni");
+                request.setAttribute("errorMessage", getResources(request).getMessage(e.getKey(), e.getArgs(), alumniEmail));
+            } else if ("error.no.concluded.registrations".equals(e.getKey()) || "error.person.no.student".equals(e.getKey())) {
                 request.setAttribute("showReportError", "true");
                 request.setAttribute("errorMessage", getResources(request).getMessage(e.getKey(), e.getArgs()));
             }

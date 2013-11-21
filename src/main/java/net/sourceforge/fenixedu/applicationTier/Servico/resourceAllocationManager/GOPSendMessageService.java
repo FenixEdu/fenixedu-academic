@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Instalation;
 import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -135,7 +136,7 @@ public class GOPSendMessageService {
         Set<String> emails = new HashSet<String>();
         for (ExecutionDegree executionDegree : degrees) {
             if (executionDegree.getCampus().isCampusAlameda()) {
-                emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop.alameda"));
+                emails.add(Instalation.getInstance().getInstituitionalEmailAddress("gop"));
             }
             if (executionDegree.getCampus().isCampusTaguspark()) {
                 emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop.taguspark"));

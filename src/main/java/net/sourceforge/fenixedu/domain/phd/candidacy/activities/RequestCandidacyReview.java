@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import pt.ist.bennu.core.domain.User;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -60,7 +61,7 @@ public class RequestCandidacyReview extends PhdProgramCandidacyProcessActivity {
 
     private AlertMessage body(final PhdIndividualProgramProcess process) {
         return AlertMessage.create("message.phd.alert.candidacy.review.body").args(process.getProcessNumber(),
-                process.getPerson().getName());
+                process.getPerson().getName(), Instalation.getInstance().getInstituitionalEmailAddress("suporte"));
     }
 
 }

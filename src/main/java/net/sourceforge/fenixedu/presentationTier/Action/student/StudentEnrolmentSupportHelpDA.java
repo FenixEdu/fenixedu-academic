@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction;
@@ -51,8 +52,7 @@ public class StudentEnrolmentSupportHelpDA extends ExceptionHandlingAction {
 
     @Override
     protected String getSendToEmailAddress(HttpServletRequest request, SupportRequestBean requestBean) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
-        return bundle.getString("support.enrolments.mail");
+        return Instalation.getInstance().getInstituitionalEmailAddress("inscricoes");
     }
 
 }
