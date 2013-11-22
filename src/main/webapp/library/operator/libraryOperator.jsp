@@ -163,7 +163,8 @@
 								<fr:slot name="personLibraryCardNumber" key="label.person.libraryCardNumber" />
 							</logic:present>
 							<fr:slot name="person.emailForSendingEmails" layout="null-as-label" key="label.card.person.email" />
-
+							<fr:slot name="person.mobile" key="label.person.mobile" />
+							
 							<logic:notEmpty name="attendance" property="giafProfessionalDataSet">
 								<logic:iterate id="giafProfessionalDataSet" name="attendance" property="giafProfessionalDataSet" indexId="i">
 									<bean:define id="labelId" name="giafProfessionalDataSet" property="professionalCategory.categoryType"/>
