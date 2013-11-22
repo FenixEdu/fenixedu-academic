@@ -1,5 +1,5 @@
 DELETE FROM FILE
-WHERE OJB_CONCRETE CLASS = "net.sourceforge.fenixedu.domain.protocols.ProtocolFile";
+WHERE OJB_CONCRETE_CLASS = "net.sourceforge.fenixedu.domain.protocols.ProtocolFile";
 
 UPDATE FILE
 SET PERMITTED_GROUP = "noOne()"
