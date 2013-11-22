@@ -47,7 +47,10 @@
       </global-forwards>
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
-            <action path="/showErrorPage" forward="/supportHelpInquiry.jsp"></action>
+            <action path="/showErrorPage" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction">
+                  <forward name="exception" path="/supportHelpInquiry.jsp"></forward>
+                  <forward name="exception-debug" path="/debugExceptionPage.jsp"></forward>
+            </action>
             <action path="/showErrorPageRegistered" forward="/exception/errorRegistered.jsp"></action>
             <action path="/naoAutorizado" forward="/error.jsp"></action>
             <action path="/naoExecutado" forward="/error.jsp"></action>

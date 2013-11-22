@@ -30,6 +30,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -37,12 +40,25 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 /**
  * @author João Mota
  */
+
+@Mapping(path = "/showErrorPage", module = "default")
+@Forwards({ @Forward(name = "exception", path = "/supportHelpInquiry.jsp"),
+        @Forward(name = "exception-debug", path = "/debugExceptionPage.jsp") })
 public class ExceptionHandlingAction extends FenixDispatchAction {
 
     private final int INDENT = 15;
     private final String INDENT_TOKEN = "_";
     private final String SEPARATOR =
             "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        if (request.getServerName().equals("localhost")) {
+            return mapping.findForward("exception-debug");
+        }
+        return mapping.findForward("exception");
+    }
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
