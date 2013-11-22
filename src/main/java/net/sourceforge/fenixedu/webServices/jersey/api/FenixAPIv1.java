@@ -65,7 +65,6 @@ import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -1041,41 +1040,17 @@ public class FenixAPIv1 {
     @Produces(JSON_UTF8)
     @Path("courses/{id}/groups")
     @FenixAPIPublic
-    public FenixCourseGroup groupsCoursesByOid(@PathParam("id") String oid) {
+    public List<FenixCourseGroup> groupsCoursesByOid(@PathParam("id") final String oid) {
 
-        ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
+        final ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
 
-        String name = executionCourse.getName();
-        String year = executionCourse.getExecutionYear().getName();
-        Integer semester = executionCourse.getExecutionPeriod().getSemester();
+        final List<FenixCourseGroup> groupings = new ArrayList<>();
 
-        List<FenixCourseGroup.Grouping> groupings = new ArrayList<>();
-
-        for (Grouping grouping : executionCourse.getGroupings()) {
-
-            String groupingName = grouping.getName();
-            String groupingDescription = grouping.getProjectDescription();
-
-            List<FenixCourseGroup.Grouping.Group> groups = new ArrayList<>();
-
-            for (StudentGroup studentGroup : grouping.getStudentGroupsOrderedByGroupNumber()) {
-                Integer groupNumber = studentGroup.getGroupNumber();
-
-                List<FenixCourseGroup.Grouping.Group.Student> students = new ArrayList<>();
-                for (Attends attends : studentGroup.getAttendsSet()) {
-                    String istId = attends.getRegistration().getPerson().getUsername();
-                    String studentName = attends.getRegistration().getPerson().getName();
-                    students.add(new FenixCourseGroup.Grouping.Group.Student(istId, studentName));
-                }
-
-                groups.add(new FenixCourseGroup.Grouping.Group(groupNumber, students));
-            }
-
-            groupings.add(new FenixCourseGroup.Grouping(groupingName, groupingDescription, groups));
-
+        for (final Grouping grouping : executionCourse.getGroupings()) {
+            groupings.add(new FenixCourseGroup(grouping));
         }
 
-        return new FenixCourseGroup(name, year, semester, groupings);
+        return groupings;
 
     }
 
@@ -1206,30 +1181,17 @@ public class FenixAPIv1 {
 
         boolean isEnrolmentPeriod = writtenEvaluation.getIsInEnrolmentPeriod();
 
-        String enrollmentBeginDay = null;
-        String enrollmentBeginTime = null;
-        String enrollmentEndDay = null;
-        String enrollmentEndTime = null;
-
-        if (writtenEvaluation.getEnrollmentBeginDay() != null) {
-            enrollmentBeginDay = dataFormatHour.format(writtenEvaluation.getEnrollmentBeginDay().getTime());
-        }
-        if (writtenEvaluation.getEnrollmentBeginTime() != null) {
-            enrollmentBeginTime = dataFormatHour.format(writtenEvaluation.getEnrollmentBeginTime().getTime());
-        }
-        if (writtenEvaluation.getEnrollmentEndDay() != null) {
-            enrollmentEndDay = dataFormatDay.format(writtenEvaluation.getEnrollmentEndDay().getTime());
-        }
-        if (writtenEvaluation.getEnrollmentEndTime() != null) {
-            enrollmentEndTime = dataFormatHour.format(writtenEvaluation.getEnrollmentEndTime().getTime());
-        }
-
+        final DateTime start = writtenEvaluation.getEnrolmentPeriodStart();
+        final DateTime end = writtenEvaluation.getEnrolmentPeriodEnd();
+        final String enrollmentPeriodStart = start == null ? null : start.toString("yyyy-MM-dd HH:mm:ss");
+        final String enrollmentPeriodEnd = end == null ? null : end.toString("yyyy-MM-dd HH:mm:ss");
+        
         if (type.equals(EvaluationType.EXAM_TYPE)) {
-            return new FenixCourseEvaluation.Exam(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentBeginDay,
-                    enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
+            return new FenixCourseEvaluation.Exam(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentPeriodStart,
+                    enrollmentPeriodEnd, rooms);
         } else {
-            return new FenixCourseEvaluation.Test(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentBeginDay,
-                    enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
+            return new FenixCourseEvaluation.Test(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentPeriodStart,
+                    enrollmentPeriodEnd, rooms);
         }
     }
 

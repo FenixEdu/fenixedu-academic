@@ -166,8 +166,8 @@ public class FenixCourse {
         super();
         this.acronym = acronym;
         this.name = name;
-        this.evaluationMethod = evaluationMethod;
         this.academicTerm = academicTerm;
+        this.evaluationMethod = evaluationMethod;
         this.numberOfAttendingStudents = numberOfAttendingStudents;
         this.announcementLink = announcementLink;
         this.summaryLink = summaryLink;
