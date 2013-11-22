@@ -74,6 +74,11 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
         }
     }
 
+    @Override
+    public Group getPermittedGroup() {
+        return getPermittedGroup(getFileResultPermittedGroupType());
+    }
+
     public final static ResearchResultDocumentFile readByOID(String oid) {
         final ResearchResultDocumentFile documentFile = FenixFramework.getDomainObject(oid);
 
