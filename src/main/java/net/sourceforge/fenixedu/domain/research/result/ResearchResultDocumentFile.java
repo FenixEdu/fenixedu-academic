@@ -5,6 +5,7 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -64,13 +65,13 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
             return new RoleGroup(Role.getRoleByRoleType(RoleType.PERSON));
 
         case PUBLIC:
-            return null;
+            return new EveryoneGroup();
 
         case RESEARCHER:
             return new RoleGroup(Role.getRoleByRoleType(RoleType.RESEARCHER));
 
         default:
-            return null;
+            return new EveryoneGroup();
         }
     }
 

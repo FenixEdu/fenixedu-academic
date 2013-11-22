@@ -92,6 +92,9 @@ public class AcademicAuthorizationGroup extends LeafGroup {
 
     @Override
     public boolean isMember(Person person) {
+        if (person == null) {
+            return false;
+        }
         if (scope != null) {
             return PersistentAcademicAuthorizationGroup.isMember(person, scope);
         }

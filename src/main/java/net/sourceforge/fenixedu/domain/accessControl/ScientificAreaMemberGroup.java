@@ -34,7 +34,7 @@ public class ScientificAreaMemberGroup extends DomainBackedGroup<ScientificAreaU
 
     @Override
     public boolean isMember(Person person) {
-        return getObject().isUserMemberOfScientificArea(person);
+        return person != null && getObject().isUserMemberOfScientificArea(person);
     }
 
     @Override

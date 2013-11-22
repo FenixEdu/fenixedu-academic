@@ -25,7 +25,7 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
 
     @Override
     public boolean isPersonAllowedToAccess(Person person) {
-        if (person.hasRole(RoleType.RECTORATE) && getSource().hasRegistryCode()) {
+        if (person != null && person.hasRole(RoleType.RECTORATE) && getSource().hasRegistryCode()) {
             return true;
         }
         return super.isPersonAllowedToAccess(person);
@@ -48,6 +48,7 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
             new DocumentRequestGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
         }
     }
+
     @Deprecated
     public boolean hasSource() {
         return getSource() != null;

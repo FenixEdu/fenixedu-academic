@@ -47,3 +47,5 @@ execute "Add RegistrationStateLog Entity" addRegistrationStateLog.sql
 execute "Creates Campus Entry for Puntual Room Reservations"  createCampusForPunctualRoomReservation.sql
 
 execute "Update de institutional noreply email address" UpdateInstitutionalMail.sql
+
+execute "Changes file permission in DSpace to private for files with EveryoneGroup" updateFiles.sql
