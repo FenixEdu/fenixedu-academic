@@ -1,0 +1,191 @@
+td,th {
+	padding: 0.5ex;
+}
+
+tr {
+	
+}
+
+table{
+	border: 1px solid black;
+}
+
+span {
+	
+}
+
+div {
+	padding-bottom: 1em;
+}
+
+/* High-Level Debug Page Elements*/
+#errorInfo{
+
+}
+
+#userInfo{
+	
+}
+
+#requestInfo{
+	
+}
+
+#mappingInfo{
+	
+}
+
+#requestContextInfo{
+	
+}
+
+#sessionContextInfo{
+	
+}
+
+#extraInfo {
+	
+}
+
+#stackTrace{
+	
+}
+
+/* High-Level Stack Trace Elements*/
+.traceFirstLine {
+	
+}
+.traceLine {
+	
+}
+
+/* Mid-Level Stack Trace Elements*/
+.traceLineRole {
+	padding-right: 1ex;
+	font-weight: bold;
+}
+
+traceThread{
+	
+}
+
+traceException{
+	
+}
+
+.traceLocation {
+	
+}
+
+/* Trace Location Elements */
+.javaLocation {
+	
+}
+
+.fileLocation {
+	
+}
+
+/* Trace Exception Elements */
+.traceExceptionClass {
+	color: darkorange;
+}
+
+.traceExceptionClassLabel {
+	padding-right: 1ex;
+}
+
+.traceExceptionMessage {
+	font-style: italic
+}
+
+/* Java Location Elements */
+.className {
+	color: blue;
+}
+
+.methodName {
+	color: magenta;
+}
+
+/* File Location Elements */
+.fileName {
+	color: purple;
+}
+
+.lineNumber {
+	color: darkgreen;
+}
+
+
+/* Stack Trace Fixed Texts*/
+.causeText { 
+	
+}
+
+.suppressedText {
+	
+}
+
+.exceptionText {
+	
+}
+
+.locationText {
+
+}
+
+.nativeMethodText {
+	
+}
+
+.unknownSourceText {
+	
+}
+
+/* Stack Trace Indent Levels 
+ * Having more than 3 levels will be very very rare. Still, they are technically infinite.
+ * While CSS data parameters are not implemented in browsers we must use explicit class levels.
+ * When they are, use in the css:
+ * .level {
+ *		padding-left: attr(padding)px
+ * }
+ * , in the html:
+ * class="level" data-padding="<bean:write name="level"/>"
+ * and in the java change the level increment accordingly.
+ */
+.level0 {
+	padding-left: 0ex;
+}
+
+.level1 {
+	padding-left: 5ex;
+}
+
+.level2 {
+	padding-left: 10ex;
+}
+
+.level3 {
+	padding-left: 15ex;
+}
+
+.level4 {
+	padding-left: 20ex;
+}
+
+.level5 {
+	padding-left: 25ex;
+}
+
+.normalIndent {
+	padding-left: 7ex;
+}
+
+.suppressedIndent {
+	padding-left: 8ex;
+}
+
+.causeIndent {
+	padding-left: 7ex;
+}

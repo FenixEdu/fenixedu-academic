@@ -120,8 +120,12 @@ public class FenixExceptionHandler extends ExceptionHandler {
         // e.printStackTrace();
         // }
 
-        request.setAttribute("requestBean", requestBean);
-        request.setAttribute("exceptionInfo", exceptionInfo.getExceptionInfo());
+        if (request.getServerName().equals("localhost")) {
+            request.setAttribute("debugExceptionInfo", exceptionInfo);
+        } else {
+            request.setAttribute("requestBean", requestBean);
+            request.setAttribute("exceptionInfo", exceptionInfo.getExceptionInfo());
+        }
 
         return super.execute(ex, ae, mapping, formInstance, request, response);
     }
