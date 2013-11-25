@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
@@ -105,8 +104,6 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
         final Group group = getPermittedGroup(fileResultPermittedGroupType);
         super.setFileResultPermittedGroupType(fileResultPermittedGroupType);
         super.setPermittedGroup(group);
-        FileManagerFactory.getFactoryInstance().getContentFileManager()
-                .changeFilePermissions(getExternalStorageIdentification(), (group != null) ? true : false);
     }
 
     public void moveFileToNewResearchResultType(ResearchResult result) {
