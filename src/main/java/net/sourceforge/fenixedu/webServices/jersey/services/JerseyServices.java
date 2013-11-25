@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -36,6 +38,9 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.photograph.PictureMode;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
+import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication.PreferredComparator;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -51,7 +56,9 @@ import pt.ist.fenixframework.Atomic.TxMode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.google.common.base.Strings;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 @Path("/services")
 public class JerseyServices {
@@ -151,6 +158,37 @@ public class JerseyServices {
             }
         }
         return users.toJSONString();
+    }
+
+    @GET
+    @Path("preferred")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String readPreferred() {
+        JsonArray array = new JsonArray();
+        for (Party party : RootDomainObject.getInstance().getPartysSet()) {
+            if (party instanceof Person) {
+                Person person = (Person) party;
+                if (person.getUsername() != null && !person.getPreferredPublicationSet().isEmpty()) {
+                    SortedSet<ResearchResultPublication> results = new TreeSet<>(new PreferredComparator(person));
+                    for (PreferredPublication preferred : person.getPreferredPublicationSet()) {
+                        results.add(preferred.getPreferredPublication());
+                    }
+                    JsonObject researcher = new JsonObject();
+                    researcher.addProperty("istID", person.getUsername());
+                    JsonArray preferences = new JsonArray();
+                    int count = 5;
+                    for (ResearchResultPublication publication : results) {
+                        if (count-- == 0) {
+                            break;
+                        }
+                        preferences.add(new JsonPrimitive(publication.getExternalId()));
+                    }
+                    researcher.add("preference", preferences);
+                    array.add(researcher);
+                }
+            }
+        }
+        return array.toString();
     }
 
     @GET
