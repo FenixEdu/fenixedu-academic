@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.ByteArray;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
@@ -40,8 +39,9 @@ public class BlueprintFile extends BlueprintFile_Base {
     }
 
     public String getDirectDownloadUrlFormat() {
-        return FileManagerFactory.getFactoryInstance().getFileManager()
-                .formatDownloadUrl(getExternalStorageIdentification(), getDisplayName());
+        /*return FileManagerFactory.getFactoryInstance().getFileManager()
+                .formatDownloadUrl(getExternalStorageIdentification(), getDisplayName());*/
+        return getDownloadUrl();
     }
 
     private static class BlueprintBlueprintFileListener extends RelationAdapter<BlueprintFile, Blueprint> {
