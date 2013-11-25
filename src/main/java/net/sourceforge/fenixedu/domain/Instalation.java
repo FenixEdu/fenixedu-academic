@@ -25,6 +25,10 @@ public class Instalation extends Instalation_Base {
                 .getStringFromResourceBundle("resources/GlobalResources", "institution.email.domain");
     }
 
+    public String getNmciUrl() {
+        return "http://ncmi.ist.utl.pt/";
+    }
+
     public static Instalation getInstance() {
         return RootDomainObject.getInstance().getInstalation();
     }
