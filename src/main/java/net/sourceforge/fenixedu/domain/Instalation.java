@@ -29,6 +29,10 @@ public class Instalation extends Instalation_Base {
         return "http://ncmi.ist.utl.pt/";
     }
 
+    public String getAcademicDirectionEmailAddress() {
+        return getInstituitionalEmailAddress("da");
+    }
+
     public static Instalation getInstance() {
         return RootDomainObject.getInstance().getInstalation();
     }
