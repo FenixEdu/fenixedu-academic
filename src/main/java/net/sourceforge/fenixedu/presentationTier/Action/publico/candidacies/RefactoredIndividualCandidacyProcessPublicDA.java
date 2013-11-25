@@ -56,16 +56,17 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
-        request.setAttribute("application.name", bundle.getString(getCandidacyNameKey()));
+        request.setAttribute("application.name", getStringFromDefaultBundle(getCandidacyNameKey()));
         request.setAttribute("mappingPath", mapping.getPath());
         request.setAttribute("isApplicationSubmissionPeriodValid", isApplicationSubmissionPeriodValid());
-        request.setAttribute("application.information.link.default",
-                bundle.getString(getCandidacyInformationLinkDefaultLanguage()));
-        request.setAttribute("application.information.link.english", bundle.getString(getCandidacyInformationLinkEnglish()));
-
+        request.setAttribute("application.information.link.default", getCandidacyInformationLinkDefaultLanguage());
+        request.setAttribute("application.information.link.english", getCandidacyInformationLinkEnglish());
         setProcess(request);
         return super.execute(mapping, actionForm, request, response);
+    }
+
+    protected String getStringFromDefaultBundle(String key) {
+        return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(key);
     }
 
     @Override
