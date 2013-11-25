@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
+<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@page import="pt.ist.bennu.core.security.Authenticate"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
@@ -58,7 +59,7 @@
 <% if (!FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 <div id="top">
 	<h1 id="logo">
-		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" style="padding-left:30px;padding-top:20px;" src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
+		<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>" style="padding-left:30px;padding-top:20px;" src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 	</h1>
 
 	<tiles:insert page="/commons/headerButtons.jsp" />
@@ -74,7 +75,7 @@
 <div id="navtop">
 	<% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 	<h1 class="applicationName">
-		<bean:message key="application.name" bundle="GLOBAL_RESOURCES" /><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
+		<%Instalation.getInstance().getInstalationName() %><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
 	</h1>
 	<% } %>
 	<tiles:insert attribute="navGeral" />

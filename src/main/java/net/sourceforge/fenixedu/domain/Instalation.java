@@ -29,6 +29,11 @@ public class Instalation extends Instalation_Base {
         return "http://ncmi.ist.utl.pt/";
     }
 
+    @Override
+    public String getInstalationName() {
+        return ".IST";
+    }
+
     public String getAcademicDirectionEmailAddress() {
         return getInstituitionalEmailAddress("da");
     }

@@ -10,7 +10,7 @@
 
 <div class="breadcumbs mvert0">
     <bean:define id="institutionUrl">
-        <bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
+        <%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>
     </bean:define>
     <bean:define id="structureUrl">
         <bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>

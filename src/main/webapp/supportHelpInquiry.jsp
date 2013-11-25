@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -26,7 +27,7 @@
 <div id="container">
 
 	<div id="dotist_id">
-		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
+		<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
 	</div>
 
 	<div id="txt">
@@ -38,7 +39,7 @@
 
 		<logic:notPresent name="exceptionInfo">
 			<h1><bean:message key="support.Contact" bundle="APPLICATION_RESOURCES" /></h1>
-			<p><bean:message key="support.contact.welcome" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.allFieldsRequired" bundle="APPLICATION_RESOURCES" /></p>
+			<p><bean:message key="support.contact.welcome" arg0="<%=Instalation.getInstance().getInstituitionURL() %>" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.allFieldsRequired" bundle="APPLICATION_RESOURCES" /></p>
 		</logic:notPresent>
 		
 		<div id="alert">

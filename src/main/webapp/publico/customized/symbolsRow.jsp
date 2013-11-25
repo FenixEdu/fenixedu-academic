@@ -5,7 +5,7 @@
 
 <%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 <%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-<bean:define id="institutionUrl" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="institution.url"/></bean:define>
+<bean:define id="institutionUrl" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %></bean:define>
 <bean:define id="loginUrl" type="java.lang.String"><%= FenixConfigurationManager.getConfiguration().getLoginPage() %></bean:define>
 <bean:define id="siteMapUrl" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="siteMap.link"/></bean:define>
 <bean:define id="searchUrl" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="search.url"/></bean:define>
@@ -21,7 +21,7 @@
 
 	<logic:equal name="site" property="showInstitutionLogo" value="true">
 		<a href="<%= institutionUrl %>">
-			<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<%= request.getContextPath() + "/images/newImage2012/logo-ist.png"%>"/>
+			<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>" src="<%= request.getContextPath() + "/images/newImage2012/logo-ist.png"%>"/>
 		</a>
 	</logic:equal>
 

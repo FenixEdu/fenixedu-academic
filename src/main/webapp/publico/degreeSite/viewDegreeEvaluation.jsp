@@ -11,8 +11,8 @@
 
 <logic:present name="infoDegreeCurricularPlan">
 	
-	<div class="breadcumbs mvert0"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt/index.shtml"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>
-		&nbsp;&gt;&nbsp;<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt/html/ensino/index.shtml">Ensino</a>
+	<div class="breadcumbs mvert0"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>index.shtml"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>
+		&nbsp;&gt;&nbsp;<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>html/ensino/index.shtml">Ensino</a>
 		<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.degreeType" />	
 		&nbsp;&gt;&nbsp; 
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString()%>">
