@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
 <center>
-	<img alt="" src="<%= request.getContextPath() %>/images/logo-fenix.gif" width="100" height="100"/>
+	<img src="<%= request.getContextPath() %>/images/ID_FenixEdu.png" alt="<bean:message key="logo-fenix" bundle="IMAGE_RESOURCES" />" width="100" height="100" />
 </center>
 
 <ul>
