@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 public class PersistentSuportGiaf {
     private static PersistentSuportGiaf instance = null;
@@ -49,9 +49,9 @@ public class PersistentSuportGiaf {
 
     private Connection openConnection() throws ExcepcaoPersistencia {
         if (databaseUrl == null) {
-            String DBUserName = PropertiesManager.getProperty(connectionProperties.userNamePropertyName);
-            String DBUserPass = PropertiesManager.getProperty(connectionProperties.userPassPropertyName);
-            String DBUrl = PropertiesManager.getProperty(connectionProperties.urlPropertyName);
+            String DBUserName = ConfigurationManager.getProperty(connectionProperties.userNamePropertyName);
+            String DBUserPass = ConfigurationManager.getProperty(connectionProperties.userPassPropertyName);
+            String DBUrl = ConfigurationManager.getProperty(connectionProperties.urlPropertyName);
             if (DBUserName == null || DBUserPass == null || DBUrl == null) {
                 throw new ExcepcaoPersistencia();
             }
