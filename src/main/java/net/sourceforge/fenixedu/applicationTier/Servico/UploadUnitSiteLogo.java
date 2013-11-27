@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteFile;
@@ -24,14 +23,14 @@ public class UploadUnitSiteLogo {
 
     protected File run(UnitSite site, java.io.File fileToUpload, String name) throws IOException, FenixServiceException {
 
-        if (site.hasLogo()) {
-            UnitSiteFile logo = site.getLogo();
-            if (logo.getExternalStorageIdentification() != null) {
-                new DeleteFileRequest(AccessControl.getPerson(), logo.getExternalStorageIdentification());
-            }
-
-            logo.delete();
-        }
+//        if (site.hasLogo()) {
+//            UnitSiteFile logo = site.getLogo();
+//            if (logo.getExternalStorageIdentification() != null) {
+//                new DeleteFileRequest(AccessControl.getPerson(), logo.getExternalStorageIdentification());
+//            }
+//
+//            logo.delete();
+//        }
 
         if (fileToUpload == null || name == null) {
             return null;
