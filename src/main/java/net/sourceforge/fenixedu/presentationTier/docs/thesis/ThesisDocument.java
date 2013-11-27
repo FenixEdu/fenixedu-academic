@@ -56,7 +56,7 @@ public abstract class ThesisDocument extends FenixReport {
 
     protected void fillDegree() {
         final Degree degree = thesis.getDegree();
-        addParameter("studentDegreeName", neverNull(degree.getName()));
+        addParameter("studentDegreeName", neverNull(degree.getNameI18N(thesis.getExecutionYear()).toString()));
     }
 
     protected void fillStudent() {
