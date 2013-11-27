@@ -145,8 +145,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
     public boolean isPersonAllowedToAccess(Person person) {
         if (person != null) {
             if (getPhdProgramProcess().getPerson() == person
-                    || new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(AccessControl
-                            .getPerson())
+                    || new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(person)
                     || getPhdProgramProcess().getIndividualProgramProcess().isCoordinatorForPhdProgram(person)
                     || getPhdProgramProcess().getIndividualProgramProcess().isGuiderOrAssistentGuider(person)) {
                 return true;
