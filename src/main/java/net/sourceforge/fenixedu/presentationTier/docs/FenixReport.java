@@ -10,8 +10,8 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.util.DateI18NUtil;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -32,8 +32,6 @@ abstract public class FenixReport implements Serializable {
     private final Locale locale;
 
     private final Language language;
-
-    static final public Locale[] suportedLocales = { Language.getDefaultLocale(), new Locale("en") };
 
     static final protected String EMPTY_STR = StringUtils.EMPTY;
 

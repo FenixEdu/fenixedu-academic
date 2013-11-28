@@ -162,7 +162,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         String graduateTitleNative = getDocumentRequest().getGraduateTitle(getLocale());
 
-        addParameter("graduateTitle", degreeDesignation + ", " + graduateTitleNative);
+        addParameter("graduateTitle", degreeDesignation + "\n" + graduateTitleNative);
         addParameter("prevailingScientificArea", getDocumentRequest().getPrevailingScientificArea(getLocale()));
         addParameter("universityName", institutionsUniversityUnit.getName());
         addParameter(
@@ -209,7 +209,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         addParameter("documentIdNumber", person.getDocumentIdNumber());
         if (person.getExpirationDateOfDocumentIdYearMonthDay() != null) {
             addParameter("documentIdExpiration",
-                    " / " + person.getExpirationDateOfDocumentIdYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
+                    person.getExpirationDateOfDocumentIdYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
         } else {
             addParameter("documentIdExpiration", EMPTY_STR);
         }
@@ -476,8 +476,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         private String obtainAcademicUnitIdentifier(final Map<Unit, String> academicUnitIdentifiers) {
             final Unit unit =
-                    entry instanceof ExternalEnrolment ? ((ExternalEnrolment) entry).getAcademicUnit() : Bennu
-                            .getInstance().getInstitutionUnit();
+                    entry instanceof ExternalEnrolment ? ((ExternalEnrolment) entry).getAcademicUnit() : Bennu.getInstance()
+                            .getInstitutionUnit();
             return getAcademicUnitIdentifier(academicUnitIdentifiers, unit);
         }
 

@@ -21,8 +21,7 @@ import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
-        IRectorateSubmissionBatchDocumentEntry {
+public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base implements IDiplomaSupplementRequest {
 
     public DiplomaSupplementRequest() {
         super();
@@ -112,7 +111,7 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
 
     @Override
     public boolean isPagedDocument() {
-        return false;
+        return true;
     }
 
     @Override
@@ -137,17 +136,17 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
 
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isToPrint() {
-        return false;
+        return true;
     }
 
     @Override
@@ -176,9 +175,7 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
                     diploma.getRegistryCode().addDocumentRequest(this);
                 } else {
                     getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
-                    getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
                 }
-                getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
             }
             if (getLastGeneratedDocument() == null) {
                 generateDocument();
@@ -278,26 +275,6 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
         return false;
     }
 
-    @Override
-    public String getProgrammeTypeDescription() {
-        return getDegreeType().getLocalizedName();
-    }
-
-    @Override
-    public String getViewStudentProgrammeLink() {
-        return "/student.do?method=visualizeRegistration&amp;registrationID=" + getRegistration().getExternalId();
-    }
-
-    @Override
-    public String getReceivedActionLink() {
-        return "/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId="
-                + getExternalId();
-    }
-
-    @Override
-    public boolean isProgrammeLinkVisible() {
-        return getRegistration().isAllowedToManageRegistration();
-    }
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity> getExtraCurricularActivity() {
         return getExtraCurricularActivitySet();
