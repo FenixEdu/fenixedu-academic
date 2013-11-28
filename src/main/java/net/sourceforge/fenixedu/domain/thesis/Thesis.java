@@ -382,7 +382,7 @@ public class Thesis extends Thesis_Base {
         // setExtendedAbstract(null);
 
         setDegree(null);
-        setEnrolment(null);
+        removeEnrolment();
 
         deleteDomainObject();
     }
