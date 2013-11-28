@@ -70,7 +70,7 @@
 <div id="navtop">
 	<% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 	<h1 class="applicationName">
-		<%= Instalation.getInstance().getInstalationName() %><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
+		<%=Instalation.getInstance().getInstalationName() %><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
 	</h1>
 	<% } %>
 	<tiles:insert attribute="navGeral" />

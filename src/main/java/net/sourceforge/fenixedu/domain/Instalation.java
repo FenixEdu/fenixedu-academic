@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixframework.Atomic;
 
 public class Instalation extends Instalation_Base {
@@ -15,23 +18,24 @@ public class Instalation extends Instalation_Base {
 
     @Override
     public String getInstituitionURL() {
-        return super.getInstituitionURL() != null ? super.getInstituitionURL() : BundleUtil.getStringFromResourceBundle(
-                "resources/GlobalResources", "institution.url");
+        return StringUtils.isEmpty(super.getInstituitionURL()) ? BundleUtil.getStringFromResourceBundle(
+                "resources/GlobalResources", "institution.url") : super.getInstituitionURL();
     }
 
     @Override
     public String getInstituitionEmailDomain() {
-        return super.getInstituitionEmailDomain() != null ? super.getInstituitionEmailDomain() : BundleUtil
-                .getStringFromResourceBundle("resources/GlobalResources", "institution.email.domain");
-    }
-
-    public String getNmciUrl() {
-        return "http://ncmi.ist.utl.pt/";
+        return StringUtils.isEmpty(super.getInstituitionEmailDomain()) ? BundleUtil.getStringFromResourceBundle(
+                "resources/GlobalResources", "institution.email.domain") : super.getInstituitionEmailDomain();
     }
 
     @Override
     public String getInstalationName() {
-        return ".IST";
+        return StringUtils.isEmpty(super.getInstalationName()) ? BundleUtil.getStringFromResourceBundle(
+                "resources/GlobalResources", "application.name") : super.getInstalationName();
+    }
+
+    public String getNmciUrl() {
+        return "http://ncmi.ist.utl.pt/";
     }
 
     public String getAcademicDirectionEmailAddress() {

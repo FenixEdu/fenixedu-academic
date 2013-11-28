@@ -58,7 +58,7 @@ public class Sender extends Sender_Base {
         deleteDomainObject();
     }
 
-    static public String getNoreplyMail() {
+    public static String getNoreplyMail() {
         return Instalation.getInstance().getInstituitionalEmailAddress("noreply");
     }
 
