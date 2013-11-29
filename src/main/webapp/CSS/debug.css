@@ -1,5 +1,24 @@
+body {
+	margin: 0;
+	font: small sans-serif;
+	background: #F0F0F0;
+	color:#363636;
+}
+
 td,th {
-	padding: 0.5ex;
+	padding-left: 0;
+	text-align: left;
+	vertical-align: top;
+	padding-bottom:3px;
+}
+
+
+
+th{
+	font-size: 20px;
+	padding-right:20px;
+	padding-bottom:15px;
+	
 }
 
 tr {
@@ -7,7 +26,10 @@ tr {
 }
 
 table{
-	border: 1px solid black;
+	
+	padding: 1em;
+	
+	font: small sans-serif;
 }
 
 span {
@@ -15,12 +37,18 @@ span {
 }
 
 div {
-	padding-bottom: 1em;
+	margin-bottom: 1em;
 }
 
 /* High-Level Debug Page Elements*/
 #errorInfo{
+	background-color: #5C6D7E;
+	color:#EDE8DF;
+	border-top: 1px solid #7C899C;
+}
 
+#errorInfo tr {
+	color: white;
 }
 
 #userInfo{
@@ -48,6 +76,22 @@ div {
 }
 
 #stackTrace{
+	
+}
+
+#debugPage {
+	background-color: #3E4651;
+	color: white;
+	margin-bottom: 0;
+	padding: 1em;
+}
+
+.debugTitleException{
+	font-family:Menlo, Monaco, Inconsolata, "Lucida Console", monospace;
+}
+
+.debugTitleCause{
+	margin-top:-15px;
 	
 }
 
@@ -165,7 +209,7 @@ traceException{
 .level2 {
 	padding-left: 10ex;
 }
-
+requestInfoTable
 .level3 {
 	padding-left: 15ex;
 }
@@ -188,4 +232,33 @@ traceException{
 
 .causeIndent {
 	padding-left: 7ex;
+}
+
+.userRole{
+	font-family:Menlo, Monaco, Inconsolata, "Lucida Console", monospace;
+	margin-bottom:5px;
+}
+
+.label{
+	font-weight:bold;
+	color:#545454;
+	padding-right: 20px;
+}
+
+.value{
+	font-family:Menlo, Monaco, Inconsolata, "Lucida Console", monospace;
+}
+
+.label.key{
+	font-size:12px;
+	color:#585B61;
+}
+
+.super-table {
+	padding-bottom: 0;
+}
+
+.parameters-table {
+	padding-top: 0;
+	margin-left:1em; padding: 1em; background:white; border:1px solid #CECECE;
 }

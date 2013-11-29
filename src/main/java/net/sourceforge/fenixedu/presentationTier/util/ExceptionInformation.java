@@ -42,7 +42,9 @@ public class ExceptionInformation {
 
     //request dependent info
     private String requestURI;
+    private String requestFullUrl;
     private String requestURL;
+    private String requestMethod;
     private String queryString;
     private Map<String, String> queryParameters;
     private ActionMapping actionMapping;
@@ -252,7 +254,9 @@ public class ExceptionInformation {
         if (info != null) {
             info.setRequestURI(request.getRequestURI());
             info.setRequestURL(request.getRequestURL().toString());
+            info.setRequestFullUrl(getRequestFullUrl(request));
             info.setQueryString(query);
+            info.setRequestMethod(request.getMethod());
 
             String[] params = query.split("&");
             Map<String, String> queryParameters = new HashMap<String, String>();
@@ -279,6 +283,12 @@ public class ExceptionInformation {
         } else {
             exceptionInfo.append("[Path|Name] impossible to get (exception through UncaughtExceptionFilter)\n");
         }
+    }
+
+    private static String getRequestFullUrl(HttpServletRequest request) {
+        StringBuffer requestFullURL = request.getRequestURL();
+        String queryString = request.getQueryString();
+        return queryString == null ? requestFullURL.toString() : requestFullURL.append('?').append(queryString).toString();
     }
 
     private static void requestContextAppend(HttpServletRequest request, StringBuilder exceptionInfo, ExceptionInformation info) {
@@ -519,5 +529,21 @@ public class ExceptionInformation {
 
     private void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getRequestFullUrl() {
+        return requestFullUrl;
+    }
+
+    public void setRequestFullUrl(String requestFullUrl) {
+        this.requestFullUrl = requestFullUrl;
+    }
+
+    public String getRequestMethod() {
+        return requestMethod;
+    }
+
+    public void setRequestMethod(String requestMethod) {
+        this.requestMethod = requestMethod;
     }
 }
