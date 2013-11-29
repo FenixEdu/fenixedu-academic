@@ -119,7 +119,7 @@ public class PhoneValidationUtils {
 
     public boolean sendSMS(String number, String token) {
         number = number.replace(" ", "");
-        final String message = "Bem-vindo ao sistema Fénix. Introduza o código " + token + " . Obrigado!";
+        final String message = "Bem-vindo ao sistema Fenix. Introduza o codigo " + token + " . Obrigado!";
         if (canRun()) {
             PostMethod method = new PostMethod(CIIST_SMS_GATEWAY_URL);
             method.addParameter(new NameValuePair("number", number));
