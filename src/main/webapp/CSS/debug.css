@@ -1,5 +1,29 @@
+::selection {
+	background-color: #6c71c4;
+	color: white;
+}
+
+body {
+	margin: 0;
+	font: small sans-serif;
+	background: #fdf6e3;
+	color:#363636;
+}
+
 td,th {
-	padding: 0.5ex;
+	padding-left: 0;
+	text-align: left;
+	vertical-align: top;
+	padding-bottom:3px;
+}
+
+
+
+th{
+	font-size: 20px;
+	padding-right:20px;
+	padding-bottom:15px;
+	
 }
 
 tr {
@@ -7,7 +31,10 @@ tr {
 }
 
 table{
-	border: 1px solid black;
+	
+	padding: 1em;
+	
+	font: small sans-serif;
 }
 
 span {
@@ -15,12 +42,93 @@ span {
 }
 
 div {
-	padding-bottom: 1em;
+	margin-bottom: 1em;
 }
 
 /* High-Level Debug Page Elements*/
-#errorInfo{
+#errorInfo {
+	background-color: #073642;
+	color: #EDE8DF;
+	border-top: 1px solid #1B4F5C;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.42);
+}
 
+#errorInfo td {
+	color: white;
+	font-size: 14px;
+	padding-right: 1em;
+}
+
+#errorInfo .traceLine, #errorInfo .className, #errorInfo .methodName, #errorInfo .fileLocation  {
+	font-size: 15px;
+}
+
+#errorInfo .traceExceptionMessage {
+	font: small sans-serif;
+	font-size: 15px;
+}
+
+#errorInfo .fileName {
+	color: #dc322f;
+}
+
+.lineNumber {
+	color: #268bd2;
+}
+
+.methodName {
+	color: #5F8709;
+	font-weight: bold;
+}
+
+.className {
+	color:  #B58902;
+	font-weight: bold;
+}
+
+#errorInfo .classPackage {
+	color:	#B58949;
+}
+
+#errorInfo table td {
+	font-weight: bold !important;
+	font-size: 13px;
+}
+#errorInfo .level0, #errorInfo .traceException {
+		font-family:Menlo, Monaco, Inconsolata, "Lucida Console", monospace;
+		font-weight: normal;
+}
+
+/*stacktrace*/
+.externalException {
+	opacity:0.3;
+	filter:alpha(opacity=30); /* For IE8 and earlier */
+}
+
+.externalException:hover {
+	opacity:0.6;
+	filter:alpha(opacity=60); /* For IE8 and earlier */
+}
+
+.fileName {
+	color: #DC3209;
+}
+
+.traceExceptionClassPackage {
+	color: #B58949;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.traceExceptionClass {
+	color:	#DC3209;
+}
+.classPackage {
+	color:	#b58900;
+}
+
+.traceExceptionClassName {
+	color:  #dc322f;
 }
 
 #userInfo{
@@ -47,13 +155,32 @@ div {
 	
 }
 
-#stackTrace{
+#stackTrace table{
+	font-family:Menlo, Monaco, Inconsolata, "Lucida Console", monospace;
+	line-height: 1.75em;
+}
+
+#debugPage {
+	background-color: #002b36;
+	color: white;
+	margin-bottom: 0;
+	padding: 1em;
+	font-size: 13px;
+}
+
+.debugTitleException{
+	font-family:Menlo, Monaco, Inconsolata, "Lucida Console", monospace;
+}
+
+.debugTitleCause{
+	margin-top:-15px;
 	
 }
 
 /* High-Level Stack Trace Elements*/
 .traceFirstLine {
-	
+	font-size: 14px;
+	line-height: 1.5em
 }
 .traceLine {
 	
@@ -87,9 +214,6 @@ traceException{
 }
 
 /* Trace Exception Elements */
-.traceExceptionClass {
-	color: darkorange;
-}
 
 .traceExceptionClassLabel {
 	padding-right: 1ex;
@@ -100,23 +224,7 @@ traceException{
 }
 
 /* Java Location Elements */
-.className {
-	color: blue;
-}
-
-.methodName {
-	color: magenta;
-}
-
 /* File Location Elements */
-.fileName {
-	color: purple;
-}
-
-.lineNumber {
-	color: darkgreen;
-}
-
 
 /* Stack Trace Fixed Texts*/
 .causeText { 
@@ -124,18 +232,6 @@ traceException{
 }
 
 .suppressedText {
-	
-}
-
-.exceptionText {
-	
-}
-
-.locationText {
-
-}
-
-.nativeMethodText {
 	
 }
 
@@ -155,7 +251,7 @@ traceException{
  * and in the java change the level increment accordingly.
  */
 .level0 {
-	padding-left: 0ex;
+	padding-left: 0ex;he monotones have symmetric CIELAB lightness differences, so switching from dark to light mode retains the same perceived contrast in brightness between each value. Each mode is equally readable. The accent colors are based off specific colorwheel relations and subsequently translated to CIELAB to ensure perceptual uniformity in terms of lightness. The hues themselves, as with the monotone *a*b values, have been adjusted within a small range to achieve the most pleasing combination of colors.
 }
 
 .level1 {
@@ -165,7 +261,7 @@ traceException{
 .level2 {
 	padding-left: 10ex;
 }
-
+requestInfoTable
 .level3 {
 	padding-left: 15ex;
 }
@@ -188,4 +284,34 @@ traceException{
 
 .causeIndent {
 	padding-left: 7ex;
+}
+
+.userRole {
+	font-family:Menlo, Monaco, Inconsolata, "Lucida Console", monospace;
+	margin-bottom:5px;
+}
+
+.label {
+	font-weight:bold;
+	color:#545454;
+	padding-right: 20px;
+}
+
+.value{
+	font-family:Menlo, Monaco, Inconsolata, "Lucida Console", monospace;
+}
+
+.label.key{
+	font-size:12px;
+	color:#585B61;
+}
+
+.super-table {
+	padding-bottom: 0;
+}
+
+.parameters-table {
+	padding-top: 0;
+	margin-left:1em; padding: 1em; background:white; border:1px solid #CECECE;
+	line-height: 1.75em;
 }
