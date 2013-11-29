@@ -1,1 +1,12 @@
 package pt.ist.fenix;
+
+class user.management.IstUsernameCounter {
+    long lastValue;
+}
+
+relation BennuHasIstUsernameCounter {
+    .pt.ist.bennu.core.domain.Bennu playsRole bennu {
+        multiplicity 1..1;
+    }
+    user.management.IstUsernameCounter playsRole istUsernameCounter;
+}
