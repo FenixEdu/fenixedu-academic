@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInform
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.AuthScope;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -56,6 +57,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Mark;
@@ -64,6 +66,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Project;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -117,6 +120,9 @@ import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree.FenixDegreeInfo;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree.FenixTeacher;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixExecutionCourse;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixExternalApplications;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixExternalApplications.FenixAuthor;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixExternalApplications.FenixScopes;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSchedule;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace.Room.RoomEvent.WrittenEvaluationEvent;
@@ -768,6 +774,47 @@ public class FenixAPIv1 {
             }
         }
         return urls;
+    }
+
+    /**
+     * All external applications
+     * 
+     * @summary Shows information for all external applications
+     */
+    @GET
+    @Produces(JSON_UTF8)
+    @Path("externalapplications")
+    @FenixAPIPublic
+    public List<FenixExternalApplications> externalApplications() {
+
+        List<FenixExternalApplications> fenixExternalApplications = new ArrayList<>();
+
+        Set<ExternalApplication> externalApplications = RootDomainObject.getInstance().getAppsSet();
+
+        for (ExternalApplication externalApplication : externalApplications) {
+
+            fenixExternalApplications.add(getFenixExternalApplications(externalApplication));
+        }
+        return fenixExternalApplications;
+    }
+
+    private FenixExternalApplications getFenixExternalApplications(ExternalApplication externalApplication) {
+
+        String name = externalApplication.getName();
+        String description = externalApplication.getDescription();
+        String siteUrl = externalApplication.getSiteUrl();
+        byte[] logo = externalApplication.getLogo();
+        Person author = externalApplication.getAuthor().getPerson();
+        List<FenixScopes> fenixscopes = new ArrayList<FenixScopes>();
+        int authorizations = externalApplication.getAppUserAuthorizationSet().size();
+
+        for (AuthScope authScope : externalApplication.getScopesSet()) {
+            fenixscopes.add(new FenixScopes(authScope.getName()));
+        }
+
+        FenixAuthor fenixauthor = new FenixAuthor(author.getName(), author.getIstUsername());
+
+        return new FenixExternalApplications(name, description, siteUrl, fenixauthor, logo, fenixscopes, authorizations);
     }
 
     /**
