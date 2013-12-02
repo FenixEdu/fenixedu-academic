@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
-
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixframework.Atomic;
 
 public class Instalation extends Instalation_Base {
+
+    private static final String DEFAULT_INSTALATION_NAME = ".IST";
+    private static final String DEFAULT_INSTITUTION_URL = "http://www.ist.utl.pt/";
+    private static final String DEFAULT_INSTITUTION_EMAIL_DOMAIN = "ist.utl.pt";
 
     public Instalation() {
         setRootDomainObject(RootDomainObject.getInstance());
@@ -18,20 +20,18 @@ public class Instalation extends Instalation_Base {
 
     @Override
     public String getInstituitionURL() {
-        return StringUtils.isEmpty(super.getInstituitionURL()) ? BundleUtil.getStringFromResourceBundle(
-                "resources/GlobalResources", "institution.url") : super.getInstituitionURL();
+        return StringUtils.isEmpty(super.getInstituitionURL()) ? DEFAULT_INSTITUTION_URL : super.getInstituitionURL();
     }
 
     @Override
     public String getInstituitionEmailDomain() {
-        return StringUtils.isEmpty(super.getInstituitionEmailDomain()) ? BundleUtil.getStringFromResourceBundle(
-                "resources/GlobalResources", "institution.email.domain") : super.getInstituitionEmailDomain();
+        return StringUtils.isEmpty(super.getInstituitionEmailDomain()) ? DEFAULT_INSTITUTION_EMAIL_DOMAIN : super
+                .getInstituitionEmailDomain();
     }
 
     @Override
     public String getInstalationName() {
-        return StringUtils.isEmpty(super.getInstalationName()) ? BundleUtil.getStringFromResourceBundle(
-                "resources/GlobalResources", "application.name") : super.getInstalationName();
+        return StringUtils.isEmpty(super.getInstalationName()) ? DEFAULT_INSTALATION_NAME : super.getInstalationName();
     }
 
     public String getNmciUrl() {
