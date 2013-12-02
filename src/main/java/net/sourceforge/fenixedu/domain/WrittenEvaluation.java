@@ -1104,4 +1104,24 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return getVigilantsReport() != null;
     }
 
+    public DateTime getEnrolmentPeriodStart() {
+        final YearMonthDay yearMonthDay = getEnrollmentBeginDayDateYearMonthDay();
+        final HourMinuteSecond hourMinuteSecond = getEnrollmentBeginTimeDateHourMinuteSecond();
+        return toDateTime(yearMonthDay, hourMinuteSecond);
+    }
+
+    public DateTime getEnrolmentPeriodEnd() {
+        final YearMonthDay yearMonthDay = getEnrollmentEndDayDateYearMonthDay();
+        final HourMinuteSecond hourMinuteSecond = getEnrollmentEndTimeDateHourMinuteSecond();
+        return toDateTime(yearMonthDay, hourMinuteSecond);
+    }
+
+    private DateTime toDateTime(final YearMonthDay yearMonthDay, final HourMinuteSecond hourMinuteSecond) {
+        if (yearMonthDay == null || hourMinuteSecond == null) {
+            return null;
+        }
+        return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
+                hourMinuteSecond.getHour(), hourMinuteSecond.getMinuteOfHour(), hourMinuteSecond.getSecondOfMinute(), 0);
+    }
+
 }

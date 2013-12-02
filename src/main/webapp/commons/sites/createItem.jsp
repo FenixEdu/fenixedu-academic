@@ -21,7 +21,7 @@
 <logic:messagesPresent message="true">
     <div class="mvert15">
         <span class="error0">
-            <html:messages id="error" message="true" bundle="SITE_RESOURCES"> 
+            <html:messages id="error" message="true" bundle="APPLICATION_RESOURCES"> 
                 <bean:write name="error"/>
             </html:messages>
         </span>

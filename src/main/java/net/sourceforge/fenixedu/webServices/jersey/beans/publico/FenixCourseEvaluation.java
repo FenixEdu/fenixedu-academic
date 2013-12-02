@@ -61,26 +61,19 @@ public abstract class FenixCourseEvaluation {
         String day;
         String beginningTime;
         String endTime;
-        Boolean isEnrolmentPeriod;
-        String enrollmentBeginDay;
-        String enrollmentBeginTime;
-        String enrollmentEndDay;
-        String enrollmentEndTime;
+        Boolean isInEnrolmentPeriod;
+        FenixInterval enrollmentPeriod;
 
         List<Room> rooms;
 
         public WrittenEvaluation(String name,String day, String beginningTime, String endTime,
-                Boolean isEnrolmentPeriod, String enrollmentBeginDay, String enrollmentBeginTime, String enrollmentEndDay,
-                String enrollmentEndTime, List<Room> rooms) {
+                Boolean isInEnrolmentPeriod, String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Room> rooms) {
             super(name);
             this.day = day;
             this.beginningTime = beginningTime;
             this.endTime = endTime;
-            this.isEnrolmentPeriod = isEnrolmentPeriod;
-            this.enrollmentBeginDay = enrollmentBeginDay;
-            this.enrollmentBeginTime = enrollmentBeginTime;
-            this.enrollmentEndDay = enrollmentEndDay;
-            this.enrollmentEndTime = enrollmentEndTime;
+            this.isInEnrolmentPeriod = isInEnrolmentPeriod;
+            enrollmentPeriod = new FenixInterval(enrollmentPeriodStart, enrolmentPeriodEnd);
             this.rooms = rooms;
         }
 
@@ -108,44 +101,20 @@ public abstract class FenixCourseEvaluation {
             this.endTime = endTime;
         }
 
-        public Boolean getIsEnrolmentPeriod() {
-            return isEnrolmentPeriod;
+        public Boolean getIsInEnrolmentPeriod() {
+            return isInEnrolmentPeriod;
         }
 
-        public void setIsEnrolmentPeriod(Boolean isEnrolmentPeriod) {
-            this.isEnrolmentPeriod = isEnrolmentPeriod;
+        public void setIsInEnrolmentPeriod(Boolean isInEnrolmentPeriod) {
+            this.isInEnrolmentPeriod = isInEnrolmentPeriod;
         }
 
-        public String getEnrollmentBeginDay() {
-            return enrollmentBeginDay;
+        public FenixInterval getEnrollmentPeriod() {
+            return enrollmentPeriod;
         }
 
-        public void setEnrollmentBeginDay(String enrollmentBeginDay) {
-            this.enrollmentBeginDay = enrollmentBeginDay;
-        }
-
-        public String getEnrollmentBeginTime() {
-            return enrollmentBeginTime;
-        }
-
-        public void setEnrollmentBeginTime(String enrollmentBeginTime) {
-            this.enrollmentBeginTime = enrollmentBeginTime;
-        }
-
-        public String getEnrollmentEndDay() {
-            return enrollmentEndDay;
-        }
-
-        public void setEnrollmentEndDay(String enrollmentEndDay) {
-            this.enrollmentEndDay = enrollmentEndDay;
-        }
-
-        public String getEnrollmentEndTime() {
-            return enrollmentEndTime;
-        }
-
-        public void setEnrollmentEndTime(String enrollmentEndTime) {
-            this.enrollmentEndTime = enrollmentEndTime;
+        public void setEnrollmentPeriod(FenixInterval enrollmentPeriod) {
+            this.enrollmentPeriod = enrollmentPeriod;
         }
 
         public List<Room> getRooms() {
@@ -163,11 +132,9 @@ public abstract class FenixCourseEvaluation {
 
 		public Test(String name, String day, String beginningTime,
 				String endTime, Boolean isEnrolmentPeriod,
-				String enrollmentBeginDay, String enrollmentBeginTime,
-				String enrollmentEndDay, String enrollmentEndTime,
+				String enrollmentPeriodStart, String enrolmentPeriodEnd,
 				List<Room> rooms) {
-			super(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentBeginDay,
-					enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
+			super(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms);
 		}
     }
     
@@ -175,11 +142,9 @@ public abstract class FenixCourseEvaluation {
 
 		public Exam(String name, String day, String beginningTime,
 				String endTime, Boolean isEnrolmentPeriod,
-				String enrollmentBeginDay, String enrollmentBeginTime,
-				String enrollmentEndDay, String enrollmentEndTime,
+				String enrollmentPeriodStart, String enrolmentPeriodEnd,
 				List<Room> rooms) {
-			super(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentBeginDay,
-					enrollmentBeginTime, enrollmentEndDay, enrollmentEndTime, rooms);
+			super(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms);
 		}
     	
     }

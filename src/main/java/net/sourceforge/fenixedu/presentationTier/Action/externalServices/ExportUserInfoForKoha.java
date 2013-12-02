@@ -302,13 +302,13 @@ public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
 
     public String getEmail(final Person person) {
         final EmailAddress email = person.getEmailAddressForSendingEmails();
-        return email != null && isVisible(email) ? email.getValue() : " ";
+        return email != null ? email.getValue() : " ";
     }
 
     private String getTelefone(final Person person) {
         final StringBuilder builder = new StringBuilder();
         for (final PartyContact partyContact : person.getPartyContactsSet()) {
-            if (partyContact.isActiveAndValid() && isVisible(partyContact)) {
+            if (partyContact.isActiveAndValid()) {
                 if (partyContact.isPhone()) {
                     final Phone phone = (Phone) partyContact;
                     if (builder.length() > 0) {
@@ -325,10 +325,6 @@ public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
             }
         }
         return builder.toString();
-    }
-
-    private boolean isVisible(final PartyContact partyContact) {
-        return partyContact.getVisibleToEmployees() || partyContact.getVisibleToPublic();
     }
 
     private String getCGDCode(final Person person) {

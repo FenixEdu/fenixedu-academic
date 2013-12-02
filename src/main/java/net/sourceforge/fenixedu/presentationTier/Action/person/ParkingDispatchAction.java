@@ -368,7 +368,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             response.reset();
             response.setContentType("application/pdf");
             response.setHeader("Content-disposition", "attachment; filename=" + fileName);
-            InputStream stream = ParkingDispatchAction.class.getClassLoader().getResourceAsStream("person/parking/" + fileName);
+            InputStream stream = getClass().getResourceAsStream("/parking/" + fileName);
             ByteStreams.copy(stream, response.getOutputStream());
             response.flushBuffer();
         } catch (java.io.IOException e) {

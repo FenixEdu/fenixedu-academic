@@ -441,7 +441,7 @@ public abstract class Content extends Content_Base {
     }
 
     private void checkInvalidCharacters(MultiLanguageString name) {
-        String validChars = "_\\- .()*'";
+        String validChars = "_\\- .,:;!()*$&'=@";
         for (String content : name.getAllContents()) {
             // if the accepted character list is changed, consider changing the 'File.java' list as well
             if (!Pattern.matches("[\\p{IsLatin}0-9" + validChars + "]+", content)) {

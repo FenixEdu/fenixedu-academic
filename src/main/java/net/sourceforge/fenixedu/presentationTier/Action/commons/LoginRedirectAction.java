@@ -59,6 +59,21 @@ public class LoginRedirectAction extends Action {
         }
     }
 
+    private static String addParametersFromAttributes(String url, HttpServletRequest request) {
+        final Object attributes = request.getAttribute("body_param_list");
+
+        if (attributes != null) {
+            for (PendingRequestParameter parameter : (List<PendingRequestParameter>) attributes) {
+                final String parameterKey = parameter.getParameterKey();
+                if (!parameterKey.startsWith("javax.")) { // dirty hack because javax properties are present as attributes
+                    url = addToUrl(url, parameterKey, parameter.getParameterValue());
+                }
+            }
+        }
+
+        return url;
+    }
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -66,7 +81,7 @@ public class LoginRedirectAction extends Action {
             if (reconstructURL(request)) {
                 String url = (String) request.getAttribute("url");
                 if (url.contains("oauth")) {
-                    response.sendRedirect(url);
+                    response.sendRedirect(addParametersFromAttributes(url, request));
                     return null;
                 }
                 return mapping.findForward("show-redirect-page");

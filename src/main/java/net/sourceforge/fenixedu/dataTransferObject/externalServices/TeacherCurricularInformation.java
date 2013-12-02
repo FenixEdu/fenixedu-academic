@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
@@ -338,11 +339,14 @@ public class TeacherCurricularInformation implements Serializable {
             }
             for (ThesisEvaluationParticipant thesisEvaluationParticipant : teacher.getPerson().getThesisEvaluationParticipants(
                     executionSemester)) {
-                ExecutionCourse executionCourse =
-                        thesisEvaluationParticipant.getThesis().getEnrolment().getExecutionCourseFor(executionSemester);
-                if (executionCourse != null) {
-                    addLecturedCurricularUnit(executionCourse.getDegreePresentationString(), executionCourse.getName(), "OT",
-                            (float) 0);
+                final ThesisParticipationType type = thesisEvaluationParticipant.getType();
+                if (type == ThesisParticipationType.ORIENTATOR || type == ThesisParticipationType.COORIENTATOR) {
+                    ExecutionCourse executionCourse =
+                            thesisEvaluationParticipant.getThesis().getEnrolment().getExecutionCourseFor(executionSemester);
+                    if (executionCourse != null) {
+                        addLecturedCurricularUnit(executionCourse.getDegreePresentationString(), executionCourse.getName(), "OT",
+                                (float) 0);
+                    }
                 }
             }
             if (degree.getPhdProgram() != null) {

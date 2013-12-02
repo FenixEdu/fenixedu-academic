@@ -1,187 +1,180 @@
 package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+
+import net.sourceforge.fenixedu.domain.CourseLoad;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.LessonInstance;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+
+import org.joda.time.Interval;
 
 public class FenixSchedule {
 
-    public static class Lesson {
+    public static class FenixCourseLoad {
 
-        public static class Room {
+        String type;
+        BigDecimal totalQuantity;
+        BigDecimal unitQuantity;
 
-            private String id;
-            private String name;
-            private String description;
-
-            public Room(String id, String name, String description) {
-                this.id = id;
-                this.name = name;
-                this.description = description;
-            }
-
-            public String getId() {
-                return id;
-            }
-
-            public void setId(String id) {
-                this.id = id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getDescription() {
-                return description;
-            }
-
-            public void setDescription(String description) {
-                this.description = description;
-            }
-
+        public FenixCourseLoad(final CourseLoad courseLoad) {
+            final ShiftType shiftType = courseLoad.getType();
+            type = shiftType == null ? null : shiftType.name();
+            totalQuantity = courseLoad.getTotalQuantity();
+            unitQuantity = courseLoad.getUnitQuantity();
         }
 
-        private String weekDay;
-        private String lessonType;
-        private String start;
-        private String end;
-        private Room room;
-
-        public Lesson(String weekDay, String lessonType, String start, String end, Room room) {
-            this.weekDay = weekDay;
-            this.lessonType = lessonType;
-            this.start = start;
-            this.end = end;
-            this.room = room;
+        public String getType() {
+            return type;
         }
 
-        public String getWeekDay() {
-            return weekDay;
+        public void setType(String type) {
+            this.type = type;
         }
 
-        public void setWeekDay(String weekDay) {
-            this.weekDay = weekDay;
+        public BigDecimal getTotalQuantity() {
+            return totalQuantity;
         }
 
-        public String getLessonType() {
-            return lessonType;
+        public void setTotalQuantity(BigDecimal totalQuantity) {
+            this.totalQuantity = totalQuantity;
         }
 
-        public void setLessonType(String lessonType) {
-            this.lessonType = lessonType;
+        public BigDecimal getUnitQuantity() {
+            return unitQuantity;
         }
 
-        public String getStart() {
-            return start;
+        public void setUnitQuantity(BigDecimal unitQuantity) {
+            this.unitQuantity = unitQuantity;
+        }
+    }
+
+    public static class FenixRoom {
+
+        String name;
+        String id;
+
+        public FenixRoom(final AllocatableSpace room) {
+            this.name = room.getName();
+            this.id = room.getExternalId();
         }
 
-        public void setStart(String start) {
-            this.start = start;
+        public String getName() {
+            return name;
         }
 
-        public String getEnd() {
-            return end;
+        public void setName(String name) {
+            this.name = name;
         }
 
-        public void setEnd(String end) {
-            this.end = end;
+        public String getId() {
+            return id;
         }
 
-        public Room getRoom() {
+        public void setId(String id) {
+            this.id = id;
+        }
+
+    }
+
+    public static class FenixLessonOccuremce extends FenixInterval {
+
+        FenixRoom room;
+
+        public FenixLessonOccuremce(final LessonInstance instance) {
+            super(instance.getBeginDateTime(), instance.getEndDateTime());
+            final AllocatableSpace room = instance.getRoom();
+            this.room = room == null ? null : new FenixRoom(room);
+        }
+
+        public FenixLessonOccuremce(final Interval interval, final AllocatableSpace room) {
+            super(interval);
+            this.room = room == null ? null : new FenixRoom(room);
+        }
+
+        public FenixRoom getRoom() {
             return room;
         }
 
-        public void setRoom(Room room) {
+        public void setRoom(FenixRoom room) {
             this.room = room;
         }
 
     }
 
-    public static class Period {
+    public static class FenixShift {
 
-        private String start;
-        private String end;
+        String name;
+        List<String> types = new ArrayList<>();
+        List<FenixLessonOccuremce> lessons;
 
-        public Period(String start, String end) {
-            this.start = start;
-            this.end = end;
+        public FenixShift(final Shift shift) {
+            this.name = shift.getNome();
+            for (CourseLoad courseLoad : shift.getCourseLoadsSet()) {
+                final ShiftType type = courseLoad.getType();
+                if (type != null) {
+                    types.add(type.name());
+                }
+            }
+            for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
+                for (final LessonInstance lessonInstance : lesson.getLessonInstancesSet()) {
+                    lessons.add(new FenixLessonOccuremce(lessonInstance));
+                }
+                for (final Interval interval : lesson.getAllLessonIntervalsWithoutInstanceDates()) {
+                    lessons.add(new FenixLessonOccuremce(interval, lesson.getSala()));
+                }
+            }
         }
 
-        public String getStart() {
-            return start;
+        public String getName() {
+            return name;
         }
 
-        public void setStart(String start) {
-            this.start = start;
+        public void setName(String name) {
+            this.name = name;
         }
 
-        public String getEnd() {
-            return end;
+        public List<FenixLessonOccuremce> getLessons() {
+            return lessons;
         }
 
-        public void setEnd(String end) {
-            this.end = end;
+        public void setLessons(List<FenixLessonOccuremce> lessons) {
+            this.lessons = lessons;
+        }
+
+        public List<String> getTypes() {
+            return types;
+        }
+
+        public void setTypes(List<String> types) {
+            this.types = types;
         }
 
     }
 
-    String name;
-    String year;
-    Integer semester;
 
-    List<Period> periods;
-    List<Lesson> lessons;
+    List<FenixInterval> lessonPeriods = new ArrayList<>();
+    List<FenixCourseLoad> courseLoads = new ArrayList<>();
+    List<FenixShift> shifts = new ArrayList<>();
 
-    public FenixSchedule(String name, String year, Integer semester, List<Period> periods, List<Lesson> lessons) {
-        super();
-        this.name = name;
-        this.year = year;
-        this.semester = semester;
-        this.periods = periods;
-        this.lessons = lessons;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public Integer getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Integer semester) {
-        this.semester = semester;
-    }
-
-    public List<Period> getPeriods() {
-        return periods;
-    }
-
-    public void setPeriods(List<Period> periods) {
-        this.periods = periods;
-    }
-
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
+    public FenixSchedule(final ExecutionCourse executionCourse) {
+        for (final OccupationPeriod occupationPeriod : executionCourse.getLessonPeriods()) {
+            for (final Interval interval : occupationPeriod.getIntervals()) {
+                lessonPeriods.add(new FenixInterval(interval));
+            }
+        }
+        for (final CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
+            courseLoads.add(new FenixCourseLoad(courseLoad));
+            for (final Shift shift : courseLoad.getShiftsSet()) {
+                shifts.add(new FenixShift(shift));
+            }
+        }
     }
 
 }

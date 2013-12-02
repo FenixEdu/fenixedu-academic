@@ -704,6 +704,25 @@ public class Lesson extends Lesson_Base {
         return dates;
     }
 
+    public SortedSet<Interval> getAllLessonIntervalsWithoutInstanceDates() {
+        SortedSet<Interval> dates = new TreeSet<Interval>();
+        if (!wasFinished()) {
+            YearMonthDay startDateToSearch = getLessonStartDay();
+            YearMonthDay endDateToSearch = getLessonEndDay();
+            for (final YearMonthDay yearMonthDay : getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch)) {
+                final HourMinuteSecond b = getBeginHourMinuteSecond();
+                final HourMinuteSecond e = getEndHourMinuteSecond();
+                final DateTime start = new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
+                        b.getHour(), b.getMinuteOfHour(), b.getSecondOfMinute(), 0);
+                final DateTime end = new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(), 
+                        e.getHour(), e.getMinuteOfHour(), e.getSecondOfMinute(), 0);
+                dates.add(new Interval(start, end));
+            }
+        }
+        return dates;
+    }
+
+
     public SortedSet<YearMonthDay> getAllLessonDates() {
         SortedSet<YearMonthDay> dates = getAllLessonInstanceDates();
         if (!wasFinished()) {

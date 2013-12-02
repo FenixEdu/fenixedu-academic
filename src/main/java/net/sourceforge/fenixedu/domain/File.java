@@ -58,7 +58,7 @@ public abstract class File extends File_Base {
 
     private void checkInvalidCharacters(String displayName) {
         // if the accepted character list is changed, consider changing the 'Content.java' list as well
-        String validChars = "_\\- .()*'";
+        String validChars = "_\\- .,:;!()*$&'=@";
         if (!Pattern.matches("[\\p{IsLatin}0-9" + validChars + "]+", displayName)) {
             throw new DomainException("errors.file.displayName.invalid.characters", validChars.replace("\\", ""));
         }
@@ -80,9 +80,6 @@ public abstract class File extends File_Base {
     }
 
     public boolean isPrivate() {
-        if (getPermittedGroup() == null) {
-            return false;
-        }
         if (getPermittedGroup() instanceof EveryoneGroup) {
             return false;
         }
@@ -192,9 +189,9 @@ public abstract class File extends File_Base {
 
     @Override
     public void setPermittedGroup(Group permittedGroup) {
-        super.setPermittedGroup(permittedGroup);
+        super.setPermittedGroup(permittedGroup == null ? new EveryoneGroup() : permittedGroup);
         if (getLocalContent() == null) {
-            final boolean isPublic = permittedGroup == null || permittedGroup instanceof EveryoneGroup;
+            final boolean isPublic = permittedGroup != null && permittedGroup instanceof EveryoneGroup;
             FileManagerFactory.getFactoryInstance().getContentFileManager()
                     .changeFilePermissions(getExternalStorageIdentification(), !isPublic);
         }
