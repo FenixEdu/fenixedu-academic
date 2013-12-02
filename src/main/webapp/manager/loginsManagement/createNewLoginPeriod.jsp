@@ -20,18 +20,18 @@
 	</logic:messagesPresent>	
 			
 	<p class="infoop2">
-		<b><bean:message key="label.name" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="login" property="user.person.name"/><br/>
-		<b><bean:message key="label.person.username" bundle="MANAGER_RESOURCES"/></b> <bean:write name="login" property="user.person.username"/>
+		<b><bean:message key="label.name" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="user" property="person.name"/><br/>
+		<b><bean:message key="label.person.username" bundle="MANAGER_RESOURCES"/></b> <bean:write name="user" property="username"/>
 	</p>
 	
-	<bean:define id="managePeriodsURL" type="java.lang.String">/loginsManagement.do?method=prepareManageLoginTimeIntervals&personID=<bean:write name="login" property="user.person.externalId"/></bean:define>								
-	<fr:create id="createNewLoginPeriodID" type="net.sourceforge.fenixedu.domain.LoginPeriod" schema="CreateLoginPeriod" action="<%= managePeriodsURL %>">
+	<bean:define id="managePeriodsURL" type="java.lang.String">/loginsManagement.do?method=prepareManageLoginTimeIntervals&personID=<bean:write name="user" property="person.externalId"/></bean:define>								
+	<fr:create id="createNewLoginPeriodID" type="pt.ist.bennu.user.management.UserLoginPeriod" schema="CreateUserLoginPeriod" action="<%= managePeriodsURL %>">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1"/>
 		    <fr:property name="columnClasses" value=",,noborder"/>
 		</fr:layout>
-		<fr:hidden slot="login" name="login"/>
+		<fr:hidden slot="user" name="user"/>
 		<fr:destination name="cancel" path="<%= managePeriodsURL %>"/>	
-	</fr:create>				
+	</fr:create>
 	
-</logic:present>	
+</logic:present>

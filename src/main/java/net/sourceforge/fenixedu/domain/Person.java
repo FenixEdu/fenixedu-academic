@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -167,6 +168,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.user.management.UserLoginPeriod;
 import pt.ist.bennu.user.management.UserManager;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
@@ -1356,6 +1358,10 @@ public class Person extends Person_Base {
 
     private static class PersonRoleListener extends RelationAdapter<Role, Person> {
 
+        private static final Set<RoleType> LOGIN_GRANTING_ROLE_TYPES = EnumSet.of(RoleType.MANAGER, RoleType.TEACHER,
+                RoleType.RESEARCHER, RoleType.EMPLOYEE, RoleType.STUDENT, RoleType.ALUMNI, RoleType.CANDIDATE,
+                RoleType.GRANT_OWNER);
+
         @Override
         public void beforeAdd(final Role newRole, final Person person) {
             if (newRole != null && person != null && !person.hasPersonRoles(newRole)) {
@@ -1372,6 +1378,9 @@ public class Person extends Person_Base {
                 addDependencies(role, person);
                 if (person.getUser() == null) {
                     person.createUser();
+                }
+                if (LOGIN_GRANTING_ROLE_TYPES.contains(role.getRoleType())) {
+                    UserLoginPeriod.createOpenPeriod(person.getUser());
                 }
             }
         }
@@ -1391,6 +1400,13 @@ public class Person extends Person_Base {
         @Override
         public void afterRemove(final Role removedRole, final Person person) {
             if (person != null && removedRole != null) {
+                for (Role role : person.getPersonRolesSet()) {
+                    // User still has one login granting role
+                    if (LOGIN_GRANTING_ROLE_TYPES.contains(role.getRoleType())) {
+                        return;
+                    }
+                }
+                UserLoginPeriod.closeOpenPeriod(person.getUser());
             }
         }
 

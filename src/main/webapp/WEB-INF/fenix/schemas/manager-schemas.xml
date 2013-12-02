@@ -351,6 +351,18 @@
 	<slot name="responsiblePerson" layout="username-as-person" key="label.responsibility.person.username" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>				
 </schema>
 
+<schema name="EditUserLoginPeriod" type="pt.ist.bennu.user.management.UserLoginPeriod" bundle="MANAGER_RESOURCES">
+		<slot name="beginDate" required="true" />
+        <slot name="endDate" required="true" />
+        <setter signature="edit(beginDate, endDate)" />
+</schema>
+
+<schema name="CreateUserLoginPeriod" type="pt.ist.bennu.user.management.UserLoginPeriod" bundle="MANAGER_RESOURCES" constructor="user, beginDate, endDate">
+        <slot name="user" hidden="true"/>
+        <slot name="beginDate" required="true" />
+        <slot name="endDate" required="true" />
+</schema>
+
 <schema name="AcademicCalendarInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry" bundle="MANAGER_RESOURCES">
 	<slot name="title" layout="link" key="label.academicCalendar.title">
 		<property name="linkFormat" value="/academicCalendarsManagement.do?method=prepareViewAcademicCalendar&amp;entryID=${externalId}"/>

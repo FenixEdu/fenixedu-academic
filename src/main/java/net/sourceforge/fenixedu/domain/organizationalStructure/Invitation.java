@@ -6,7 +6,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.bennu.user.management.UserLoginPeriod;
 
 public class Invitation extends Invitation_Base {
 
@@ -26,6 +29,13 @@ public class Invitation extends Invitation_Base {
 
     public void setInvitationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
         checkInvitationDatesIntersection(getInvitedPerson(), beginDate, endDate);
+        if (getBeginDate() == null) {
+            // When editing from the constructor
+            new UserLoginPeriod(getInvitedPerson().getUser(), beginDate.toLocalDate(), endDate.toLocalDate());
+        } else {
+            // When editing from the functionality
+            editLoginPeriod(beginDate.toLocalDate(), endDate.toLocalDate());
+        }
         super.setBeginDate(beginDate);
         super.setEndDate(endDate);
     }
@@ -66,8 +76,21 @@ public class Invitation extends Invitation_Base {
 
     @Override
     public void delete() {
+        UserLoginPeriod period = readExactPeriod();
+        if (period != null) {
+            period.delete();
+        }
         super.setResponsible(null);
         super.delete();
+    }
+
+    private UserLoginPeriod readExactPeriod() {
+        for (UserLoginPeriod period : getInvitedPerson().getUser().getLoginPeriodSet()) {
+            if (period.matches(getBeginDate().toLocalDate(), getEndDate().toLocalDate())) {
+                return period;
+            }
+        }
+        return null;
     }
 
     private void checkInvitationDatesIntersection(Person person, YearMonthDay begin, YearMonthDay end) {
@@ -94,6 +117,15 @@ public class Invitation extends Invitation_Base {
         }
         if (end != null && !end.isAfter(begin)) {
             throw new DomainException("error.invitation.endDateBeforeBeginDate");
+        }
+    }
+
+    private void editLoginPeriod(LocalDate beginDate, LocalDate endDate) {
+        UserLoginPeriod period = readExactPeriod();
+        if (period != null) {
+            period.edit(beginDate, endDate);
+        } else {
+            new UserLoginPeriod(getInvitedPerson().getUser(), beginDate, endDate);
         }
     }
 
