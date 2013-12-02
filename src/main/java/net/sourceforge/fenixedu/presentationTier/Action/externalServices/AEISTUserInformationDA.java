@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentDataShareAuthorization;
@@ -15,6 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.json.simple.JSONObject;
 
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "external", path = "/userForAEIST", scope = "request", parameter = "method")
@@ -43,7 +43,7 @@ public class AEISTUserInformationDA extends ExternalInterfaceDispatchAction {
         final JSONObject payload = new JSONObject();
         if (doLogin(mapping, actionForm, request, response)) {
             final String istID = (String) getFromRequest(request, "istID");
-            final Person person = Person.readPersonByIstUsername(istID);
+            final Person person = Person.readPersonByUsername(istID);
 
             if (person != null) {
                 Registration registration = person.getStudent().getLastActiveRegistration();

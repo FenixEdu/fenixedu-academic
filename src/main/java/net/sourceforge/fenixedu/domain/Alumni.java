@@ -439,12 +439,7 @@ public class Alumni extends Alumni_Base {
     }
 
     public String getLoginUsername() {
-        Person person = getStudent().getPerson();
-        if (person.getIstUsername() == null) {
-            return person.getLoginAlias().iterator().next().getAlias();
-        }
-
-        return person.getIstUsername();
+        return getStudent().getPerson().getUsername();
     }
 
     public boolean hasStartedPublicRegistry() {

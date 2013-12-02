@@ -3,12 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 import java.util.HashSet;
 import java.util.Set;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixframework.Atomic;
 
 public class ConsultRoles {
@@ -38,8 +37,7 @@ public class ConsultRoles {
     public static Set<Role> run(final String host, final String ip, final String password, final String userUId)
             throws FenixServiceException {
         if (isAllowed(host, ip, password)) {
-            final Login login = Login.readLoginByUsername(userUId);
-            final User user = login.getUser();
+            final User user = User.findByUsername(userUId);
             final Person person = user.getPerson();
             return user == null ? null : person.getPersonRolesSet();
         } else {

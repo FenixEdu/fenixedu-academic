@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.webServices;
 
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationBean;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;
@@ -27,7 +26,7 @@ public class PersonInformation implements IPersonInformation {
     public PersonInformationBean getPersonInformation(String username, String password, String istUserName, MessageContext context)
             throws NotAuthorizedException {
         checkPermissions(username, password, context);
-        User foundUser = Login.readUserByUserUId(istUserName);
+        User foundUser = User.findByUsername(istUserName);
         return foundUser == null ? null : new PersonInformationBean(foundUser.getPerson());
     }
 

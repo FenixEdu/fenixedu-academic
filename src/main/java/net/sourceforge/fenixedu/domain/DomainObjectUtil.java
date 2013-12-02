@@ -420,12 +420,6 @@ public final class DomainObjectUtil {
                         return Bennu.getInstance().getCandidacysSet();
                     }
                 });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.LoginAlias.class.getName(), new DomainObjectReader() {
-            @Override
-            public java.util.Set readAllDomainObjects() {
-                return Bennu.getInstance().getLoginAliasSet();
-            }
-        });
         closureAccessMap.put(pt.ist.bennu.core.domain.User.class.getName(), new DomainObjectReader() {
             @Override
             public java.util.Set readAllDomainObjects() {
@@ -495,12 +489,6 @@ public final class DomainObjectUtil {
             @Override
             public java.util.Set readAllDomainObjects() {
                 return Bennu.getInstance().getDepartmentsSet();
-            }
-        });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.LoginPeriod.class.getName(), new DomainObjectReader() {
-            @Override
-            public java.util.Set readAllDomainObjects() {
-                return Bennu.getInstance().getLoginPeriodsSet();
             }
         });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.SchoolClass.class.getName(), new DomainObjectReader() {
@@ -823,12 +811,6 @@ public final class DomainObjectUtil {
                         return Bennu.getInstance().getResultsSet();
                     }
                 });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.Identification.class.getName(), new DomainObjectReader() {
-            @Override
-            public java.util.Set readAllDomainObjects() {
-                return Bennu.getInstance().getIdentificationsSet();
-            }
-        });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.Country.class.getName(), new DomainObjectReader() {
             @Override
             public java.util.Set readAllDomainObjects() {
@@ -1289,12 +1271,6 @@ public final class DomainObjectUtil {
             @Override
             public java.util.Set readAllDomainObjects() {
                 return Bennu.getInstance().getVigilanciesSet();
-            }
-        });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.LoginRequest.class.getName(), new DomainObjectReader() {
-            @Override
-            public java.util.Set readAllDomainObjects() {
-                return Bennu.getInstance().getLoginRequestsSet();
             }
         });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.research.activity.Cooperation.class.getName(),

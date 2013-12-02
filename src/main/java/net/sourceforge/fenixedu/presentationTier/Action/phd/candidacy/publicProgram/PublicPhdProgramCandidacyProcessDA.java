@@ -119,7 +119,7 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
         }
 
         if (bean.hasInstitutionId()) {
-            Person personByIstId = Person.readPersonByIstUsername(bean.getInstitutionId());
+            Person personByIstId = Person.readPersonByUsername(bean.getInstitutionId());
 
             if (personByIstId == null) {
                 addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id.noIstIdPerson");
@@ -140,9 +140,9 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
             // ist Id if it has
 
             if (person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
-                if (person.hasIstUsername() && person.getIstUsername().equals(bean.getInstitutionId())) {
+                if (person.getUsername() != null && person.getUsername().equals(bean.getInstitutionId())) {
                     personBean.setPerson(person);
-                } else if (!person.hasIstUsername() && !bean.hasInstitutionId()) {
+                } else if (person.getUsername() == null && !bean.hasInstitutionId()) {
                     personBean.setPerson(person);
                 } else {
                     addErrorMessage(request,

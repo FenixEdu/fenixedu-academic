@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu._development.OAuthProperties;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.AuthScope;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken.FenixOAuthTokenException;
@@ -74,7 +73,7 @@ public class JerseyOAuth2Filter implements Filter {
         if (allowIstIds() && currentUserIsManager()) {
             String istId = request.getParameter("_istid_");
             if (!StringUtils.isBlank(istId)) {
-                User user = Login.readUserByUserUId(istId);
+                User user = User.findByUsername(istId);
                 if (user != null) {
                     authenticateUser(request, user);
                     return true;

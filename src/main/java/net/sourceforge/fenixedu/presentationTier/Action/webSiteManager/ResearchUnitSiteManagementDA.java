@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.LoginRequestManagement;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -123,7 +122,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
         if (viewState != null && getSite(request).getManagersSet().contains(getLoggedPerson(request))) {
             ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
             try {
-                CreateResearchContract.run(bean, getLoggedPerson(request), LoginRequestManagement.getRequestURL(request));
+                CreateResearchContract.run(bean);
             } catch (FenixServiceException e) {
                 addActionMessage(request, e.getMessage());
                 return managePeople(mapping, actionForm, request, response);
@@ -145,7 +144,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
                 return managePeoplePostBack(mapping, actionForm, request, response);
             }
             try {
-                CreateResearchContract.run(bean, getLoggedPerson(request), LoginRequestManagement.getRequestURL(request));
+                CreateResearchContract.run(bean);
             } catch (DomainException e) {
                 addActionMessage(request, e.getMessage());
                 return managePeople(mapping, actionForm, request, response);

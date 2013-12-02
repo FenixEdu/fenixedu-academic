@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.lang.StringUtils;
@@ -55,7 +54,7 @@ public class SetEmail {
     }
 
     private static void set(final String userUId, final String email) throws FenixServiceException {
-        final User user = Login.readUserByUserUId(userUId);
+        final User user = User.findByUsername(userUId);
         if (user == null) {
             throw new UserDoesNotExistException();
         }

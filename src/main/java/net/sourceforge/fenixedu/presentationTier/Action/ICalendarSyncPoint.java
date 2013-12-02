@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -183,7 +182,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
         final DomainObject object = FenixFramework.getDomainObject(regId);
         if (object instanceof Registration) {
-            User user = Login.readUserByUserUId(userId);
+            User user = User.findByUsername(userId);
             Registration registration = (Registration) object;
 
             if (user.getPrivateKey() != null && user.getPrivateKey().getPrivateKeyValidity() != null) {

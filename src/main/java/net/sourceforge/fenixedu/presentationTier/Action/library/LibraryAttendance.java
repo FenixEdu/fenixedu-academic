@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -31,6 +30,7 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
@@ -273,7 +273,6 @@ public class LibraryAttendance implements Serializable {
                 .getPersonProfessionalData().getGiafProfessionalDatas();
     }
 
-
     public Registration getStudentRegistration() {
         return studentRegistration;
     }
@@ -327,7 +326,7 @@ public class LibraryAttendance implements Serializable {
         this.matches = null;
         if (!StringUtils.isEmpty(getPersonId())) {
             if (getPersonId().startsWith("ist")) {
-                setPerson(Person.readPersonByIstUsername(getPersonId()));
+                setPerson(Person.readPersonByUsername(getPersonId()));
             } else {
                 setPerson(Person.readPersonByLibraryCardNumber(getPersonId()));
             }

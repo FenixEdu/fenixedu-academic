@@ -36,7 +36,6 @@ enum net.sourceforge.fenixedu.domain.GrantOwnerType                             
 enum net.sourceforge.fenixedu.domain.GuideState                                                                           as GuideState;
 enum net.sourceforge.fenixedu.domain.JobApplicationType                                                                   as JobApplicationType;
 enum net.sourceforge.fenixedu.domain.Level                                                                                as Level;
-enum net.sourceforge.fenixedu.domain.LoginAliasType                                                                       as LoginAliasType;
 enum net.sourceforge.fenixedu.domain.MarkSheetState                                                                       as MarkSheetState;
 enum net.sourceforge.fenixedu.domain.MarkSheetType                                                                        as MarkSheetType;
 enum net.sourceforge.fenixedu.domain.OccupationPeriodType                                                                 as OccupationPeriodType;
@@ -1492,17 +1491,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         LocalDate date;
     }
 
-    class Identification  {
-        Boolean active;
-        DateTime beginDateDateTime;
-        DateTime endDateDateTime;
-    }
-
-        class Login extends Identification {
-            Boolean isPassInKerberos;
-            String password;
-        }
-
     class InsuranceValue  {
         BigDecimal annualValueBigDecimal;
         YearMonthDay endDateYearMonthDay;
@@ -1535,21 +1523,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
     class Locality  {
         String name;
-    }
-
-    class LoginAlias  {
-        String alias;
-        RoleType roleType;
-        LoginAliasType type;
-    }
-
-    class LoginPeriod  {
-        YearMonthDay beginDate;
-        YearMonthDay endDate;
-    }
-
-    class LoginRequest  {
-        String hash;
     }
 
     class ManagementGroups  {
@@ -6083,10 +6056,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class util.FunctionalityPrinters  {
         String functionality;
         String keyPrinters;
-    }
-
-    class util.UsernameCounter  {
-        Integer invitationCounter;
     }
 
     class vigilancy.ExamCoordinator  {
@@ -12404,20 +12373,6 @@ relation LessonShift {
     Shift playsRole shift;
 }
 
-relation LoginAliasLogin {
-    Login playsRole login;
-    LoginAlias playsRole alias {
-        multiplicity *;
-    }
-}
-
-relation LoginLoginPeriod {
-    Login playsRole login;
-    LoginPeriod playsRole loginPeriods {
-        multiplicity *;
-    }
-}
-
 relation MakeExportProposal {
     ExportGrouping playsRole exportGroupingSenders {
         multiplicity *;
@@ -14858,13 +14813,6 @@ relation RootDomainObjectIdDocumentTypeObject {
     }
 }
 
-relation RootDomainObjectIdentification {
-    .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Identification playsRole identifications {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectInquiriesCourse {
     .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.InquiriesCourse playsRole inquiriesCourses {
@@ -14950,27 +14898,6 @@ relation RootDomainObjectLessonPlanning {
 relation RootDomainObjectLocality {
     .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
     Locality playsRole localities {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectLoginAlias {
-    .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
-    LoginAlias playsRole loginAlias {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectLoginPeriod {
-    .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
-    LoginPeriod playsRole loginPeriods {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectLoginRequest {
-    .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
-    LoginRequest playsRole loginRequests {
         multiplicity *;
     }
 }
@@ -16067,11 +15994,6 @@ relation RootDomainObjectUniversity {
     }
 }
 
-relation RootDomainObjectUsernameCounter {
-    .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
-    util.UsernameCounter playsRole usernameCounter;
-    }
-
 relation RootDomainObjectVehicle {
     .pt.ist.bennu.core.domain.Bennu playsRole rootDomainObject;
     parking.Vehicle playsRole vehicles {
@@ -17165,18 +17087,6 @@ relation UnitUnitSpaceOccupation {
     space.UnitSpaceOccupation playsRole unitSpaceOccupations {
         multiplicity *;
     }
-}
-
-relation UserIdentification {
-    .pt.ist.bennu.core.domain.User playsRole user;
-    Identification playsRole identifications {
-        multiplicity *;
-    }
-}
-
-relation UserLoginRequest {
-    LoginRequest playsRole loginRequest;
-    .pt.ist.bennu.core.domain.User playsRole user;
 }
 
 relation UserPerson {

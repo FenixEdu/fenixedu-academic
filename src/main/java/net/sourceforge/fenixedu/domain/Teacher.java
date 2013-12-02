@@ -102,7 +102,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public static Teacher readByIstId(String istId) {
-        User user = Login.readUserByUserUId(istId);
+        User user = User.findByUsername(istId);
         if (user != null) {
             return user.getPerson().getTeacher();
         } else {
@@ -1284,15 +1284,6 @@ public class Teacher extends Teacher_Base {
 
     private RoleType getRoleType() {
         return RoleType.TEACHER;
-    }
-
-    public String getRoleLoginAlias() {
-        final List<LoginAlias> roleLoginAlias = getPerson().getLoginIdentification().getRoleLoginAlias(getRoleType());
-        if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
-            return "D" + getPerson().getEmployee().getEmployeeNumber();
-        } else {
-            return roleLoginAlias.iterator().next().getAlias();
-        }
     }
 
     public boolean teachesAt(final Campus campus) {

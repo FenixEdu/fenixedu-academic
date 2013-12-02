@@ -40,7 +40,7 @@
             <h:outputText value="<ul>" escape="false"/>
         		<fc:dataRepeater value="#{DepartmentManagement.teachersByCategory[category]}" var="teacher" >
                     <h:outputText value="<li>" escape="false"/>
-        				<h:outputLink rendered="#{!empty teacher.person.homepage && teacher.person.homepage.activated}" value="../../homepage/#{teacher.person.user.userUId}">
+        				<h:outputLink rendered="#{!empty teacher.person.homepage && teacher.person.homepage.activated}" value="../../homepage/#{teacher.person.user.username}">
 					<h:outputText value="#{teacher.person.nickname}"/>
         				</h:outputLink>
         				<h:outputText rendered="#{empty teacher.person.homepage || !teacher.person.homepage.activated}" value="#{teacher.person.nickname}"/>

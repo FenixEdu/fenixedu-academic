@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -30,6 +29,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -154,7 +154,7 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
         final ExecutionDegree executiondegree = FenixFramework.getDomainObject(selectedStudentsBean.getExecutionDegreeID());
         List<Teacher> possibleTutorsForExecutionDegree = executiondegree.getPossibleTutorsFromExecutionDegreeDepartments();
 
-        final Teacher teacher = Login.readUserByUserUId(selectedStudentsBean.getTeacherId()).getPerson().getTeacher();
+        final Teacher teacher = User.findByUsername(selectedStudentsBean.getTeacherId()).getPerson().getTeacher();
 
         if (!possibleTutorsForExecutionDegree.contains(teacher)) {
             selectedStudentsBean.setTeacherId(null);

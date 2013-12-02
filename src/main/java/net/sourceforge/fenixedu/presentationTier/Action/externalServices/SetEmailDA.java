@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmai
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.UserAlreadyHasEmailException;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.UserDoesNotExistException;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -48,7 +47,7 @@ public class SetEmailDA extends FenixDispatchAction {
         try {
 
             SetEmail.run(host, ip, password, userUId, email);
-            final User user = Login.readUserByUserUId(userUId);
+            final User user = User.findByUsername(userUId);
             if (user.getPerson() != null && user.getPerson().hasStudent()) {
                 final Student student = user.getPerson().getStudent();
                 for (final Registration registration : student.getRegistrationsSet()) {

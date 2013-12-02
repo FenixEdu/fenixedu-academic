@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,7 +22,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrat
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.DSpaceFileStorage;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.contents.Container;
@@ -44,6 +44,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.exceptions.BennuCoreDomainException;
 import pt.ist.bennu.core.domain.groups.DynamicGroup;
 import pt.ist.bennu.core.domain.groups.Group;
@@ -62,6 +63,7 @@ import pt.utl.ist.fenix.tools.file.DSpaceFileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.dspace.DSpaceHttpClient;
 import pt.utl.ist.fenix.tools.util.FileUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @WebListener
 public class FenixInitializer implements ServletContextListener {
@@ -73,6 +75,8 @@ public class FenixInitializer implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
 
         logger.info("Initializing Fenix");
+
+        Language.setDefaultLocale(Locale.getDefault());
 
         try {
             final InputStream inputStream = FenixInitializer.class.getResourceAsStream("/build.version");
@@ -177,9 +181,9 @@ public class FenixInitializer implements ServletContextListener {
 
     private void loadLogins() {
         long start = System.currentTimeMillis();
-        Login.readLoginByUsername("...PlaceANonExistingLoginHere...");
+        User.findByUsername("...PlaceANonExistingLoginHere...");
         long end = System.currentTimeMillis();
-        logger.info("Load of all logins took: " + (end - start) + "ms.");
+        logger.info("Load of all users took: " + (end - start) + "ms.");
     }
 
     private void loadPersonNames() {

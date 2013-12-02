@@ -14,7 +14,7 @@ public class HomePagePathProcessor extends AbstractPathProcessor {
     @Override
     public Content processPath(String path) {
         String istUserName = getIstUserName(path);
-        Person person = Person.readPersonByIstUsername(istUserName);
+        Person person = Person.readPersonByUsername(istUserName);
         Homepage homepage = person != null ? person.getHomepage() : null;
         return homepage != null && homepage.isAvailable() ? homepage : null;
     }

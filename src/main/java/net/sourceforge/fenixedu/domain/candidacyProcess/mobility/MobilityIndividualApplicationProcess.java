@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -57,6 +56,7 @@ import org.restlet.data.Protocol;
 import org.restlet.data.Status;
 
 import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -773,7 +773,6 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                 new Student(process.getPersonalDetails().getPerson(), null);
                 process.getPersonalDetails().getPerson().addPersonRoleByRoleType(RoleType.PERSON);
                 process.getPersonalDetails().getPerson().addPersonRoleByRoleType(RoleType.CANDIDATE);
-                process.getPersonalDetails().getPerson().setIstUsername();
 
                 if (StringUtils.isEmpty(process.getPersonalDetails().getPerson().getIstUsername())) {
                     throw new DomainException("error.erasmus.create.user", new String[] { null, "User not created" });

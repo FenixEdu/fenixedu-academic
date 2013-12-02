@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.webServices;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
 import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -27,7 +26,7 @@ public class RetrieveCandidacySummaryFile implements IRetrieveCandidacySummaryFi
 
         checkPermissions(username, password, context);
 
-        final User foundUser = Login.readUserByUserUId(userUID);
+        final User foundUser = User.findByUsername(userUID);
         final StudentCandidacy candidacy =
                 foundUser.getPerson().getStudent().getRegistrations().iterator().next().getStudentCandidacy();
         final CandidacySummaryFile file = candidacy.getSummaryFile();

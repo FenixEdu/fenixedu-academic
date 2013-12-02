@@ -3,9 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
@@ -134,10 +132,6 @@ public class InfoPerson extends InfoObject {
         return getPerson().getDocumentIdNumber();
     }
 
-    public String getPassword() {
-        return getPerson().getPassword();
-    }
-
     public String getProfissao() {
         return getPerson().getProfession();
     }
@@ -172,10 +166,6 @@ public class InfoPerson extends InfoObject {
 
     public Boolean getAvailableWebSite() {
         return getPerson().getAvailableWebSite();
-    }
-
-    public Set<LoginAlias> getLoginAlias() {
-        return getPerson().getLoginAliasOrderByImportance();
     }
 
     public InfoExternalPerson getInfoExternalPerson() {

@@ -265,15 +265,6 @@ public class Employee extends Employee_Base {
         return RoleType.EMPLOYEE;
     }
 
-    public String getRoleLoginAlias() {
-        final List<LoginAlias> roleLoginAlias = getPerson().getLoginIdentification().getRoleLoginAlias(getRoleType());
-        if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
-            return "F" + getEmployeeNumber();
-        } else {
-            return roleLoginAlias.iterator().next().getAlias();
-        }
-    }
-
     public Unit getCurrentSectionOrScientificArea() {
         return getSectionOrScientificArea(getCurrentWorkingPlace());
     }

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorBean;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
@@ -27,6 +26,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -105,7 +105,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
         TutorshipManagementBean bean = (TutorshipManagementBean) request.getAttribute("tutorshipManagementBean");
 
         final ExecutionDegree executiondegree = FenixFramework.getDomainObject(bean.getExecutionDegreeID());
-        final Teacher teacher = Login.readUserByUserUId(bean.getTeacherId()).getPerson().getTeacher();
+        final Teacher teacher = User.findByUsername(bean.getTeacherId()).getPerson().getTeacher();
 
         if (teacher == null) {
             addActionMessage(request, "error.tutor.unExistTeacher", new String[] { bean.getTeacherId() });
@@ -152,7 +152,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 
         TutorshipManagementBean bean = getTutorshipBeanWithRequestParameters(request);
 
-        final Teacher teacher = Login.readUserByUserUId(bean.getTeacherId()).getPerson().getTeacher();
+        final Teacher teacher = User.findByUsername(bean.getTeacherId()).getPerson().getTeacher();
         bean.setTeacher(teacher);
         bean.setNumberOfCurrentTutorships(teacher.getNumberOfActiveTutorships());
         bean.setNumberOfPastTutorships(teacher.getNumberOfPastTutorships());

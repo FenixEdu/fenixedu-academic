@@ -115,7 +115,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
     public ActionForward selectPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         Person person = getPersonFromParameter(request);
-        request.setAttribute("login", person.getLoginIdentification());
+        request.setAttribute("login", person.getUser());
         request.setAttribute("documents", person.getAddressedDocumentSet());
         return mapping.findForward("search");
     }

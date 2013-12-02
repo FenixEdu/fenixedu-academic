@@ -17,7 +17,7 @@ public class DeleteFileRequest extends DeleteFileRequest_Base {
     public DeleteFileRequest(Person person, String storageID) {
         this();
         this.setExternalStorageIdentification(storageID);
-        this.setRequestorIstUsername(person.hasIstUsername() ? person.getIstUsername() : person.getMostImportantAlias());
+        this.setRequestorIstUsername(person.getUsername());
         this.setDeleteItem(Boolean.TRUE);
     }
 

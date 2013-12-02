@@ -93,7 +93,7 @@ public class GroupCheckService {
 
         GroupCheckQuery groupCheckQuery = parseQuery(query);
 
-        Person person = Person.readPersonByIstUsername(groupCheckQuery.username);
+        Person person = Person.readPersonByUsername(groupCheckQuery.username);
 
         if (person == null) {
             return false;

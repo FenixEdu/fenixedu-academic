@@ -284,7 +284,6 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
         bean.setPersonBean(new PersonBean());
         bean.getPersonBean().setEmail(hashCode.getEmail());
-        bean.getPersonBean().setCreateLoginIdentificationAndUserIfNecessary(false);
         bean.setCandidacyHashCode(hashCode);
         bean.setExecutionYear(phdCandidacyPeriod.getExecutionInterval());
         bean.setState(PhdProgramCandidacyProcessState.PRE_CANDIDATE);

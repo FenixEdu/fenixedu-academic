@@ -2,19 +2,13 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.Login;
-import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.util.UsernameCounter;
 
 import org.joda.time.YearMonthDay;
 
 public class Invitation extends Invitation_Base {
-
-    private static final int MAX_USER_UID = 99999;
 
     public Invitation(Person person, Unit unit, Party responsible, YearMonthDay begin, YearMonthDay end) {
 
@@ -32,11 +26,6 @@ public class Invitation extends Invitation_Base {
 
     public void setInvitationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
         checkInvitationDatesIntersection(getInvitedPerson(), beginDate, endDate);
-        if (getBeginDate() == null) {
-            new LoginPeriod(beginDate, endDate, getInvitedPerson().getLoginIdentification());
-        } else {
-            editLoginPeriod(getBeginDate(), getEndDate(), beginDate, endDate);
-        }
         super.setBeginDate(beginDate);
         super.setEndDate(endDate);
     }
@@ -77,11 +66,6 @@ public class Invitation extends Invitation_Base {
 
     @Override
     public void delete() {
-        LoginPeriod period =
-                getInvitedPerson().getLoginIdentification().readLoginPeriodByTimeInterval(getBeginDate(), getEndDate());
-        if (period != null) {
-            period.delete();
-        }
         super.setResponsible(null);
         super.delete();
     }
@@ -113,30 +97,10 @@ public class Invitation extends Invitation_Base {
         }
     }
 
-    private void editLoginPeriod(YearMonthDay oldBegin, YearMonthDay oldEnd, YearMonthDay newBeginDate, YearMonthDay newEndDate) {
-
-        Login login = getInvitedPerson().getLoginIdentification();
-        LoginPeriod period = login.readLoginPeriodByTimeInterval(oldBegin, oldEnd);
-        if (period != null) {
-            period.edit(newBeginDate, newEndDate);
-        } else {
-            new LoginPeriod(newBeginDate, newEndDate, getInvitedPerson().getLoginIdentification());
-        }
-    }
-
     public static AccountabilityType getInvitationAccountabilityType() {
         return AccountabilityType.readByType(AccountabilityTypeEnum.INVITATION);
     }
 
-    public static int nextUserIDForInvitedPerson() {
-        final UsernameCounter usernameCounter = Bennu.getInstance().getUsernameCounter();
-        final int nextUserID = usernameCounter.getInvitationCounter().intValue();
-        usernameCounter.setInvitationCounter(Integer.valueOf(nextUserID + 1));
-        if (nextUserID > MAX_USER_UID) {
-            throw new DomainException("error.invitation.uid.pool.exhausted");
-        }
-        return nextUserID;
-    }
     @Deprecated
     public boolean hasResponsible() {
         return getResponsible() != null;

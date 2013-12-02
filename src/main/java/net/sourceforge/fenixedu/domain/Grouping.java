@@ -154,7 +154,7 @@ public class Grouping extends Grouping_Base {
 
     public Attends getStudentAttend(String studentUsername) {
         for (final Attends attend : this.getAttends()) {
-            if (attend.getRegistration().getPerson().hasUsername(studentUsername)) {
+            if (attend.getRegistration().getPerson().getUsername().equals(studentUsername)) {
                 return attend;
             }
         }

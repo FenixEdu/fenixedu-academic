@@ -23,7 +23,6 @@ import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
@@ -154,7 +153,6 @@ import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.PersonNameFormatter;
 import net.sourceforge.fenixedu.util.StringFormatter;
-import net.sourceforge.fenixedu.util.UsernameUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -169,6 +167,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.user.management.UserManager;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -345,27 +344,15 @@ public class Person extends Person_Base {
     public Person() {
         super();
         setMaritalStatus(MaritalStatus.UNKNOWN);
-        createLoginIdentificationAndUserIfNecessary();
-        setIsPassInKerberos(Boolean.FALSE);
+        createUser();
     }
 
-    /**
-     * 
-     * @deprecated use Person(PersonBean personBean)
-     * @see Person(PersonBean personBean)
-     */
-    @Deprecated
-    public Person(final InfoPersonEditor personToCreate, final Country country) {
-
-        super();
-        if (personToCreate.getExternalId() != null) {
-            throw new DomainException("error.person.existentPerson");
+    public void createUser() {
+        if (getUser() == null) {
+            setUser(UserManager.createDynamicUser(this));
+        } else {
+            throw new DomainException("error.person.already.has.user");
         }
-
-        createLoginIdentificationAndUserIfNecessary();
-        setProperties(personToCreate);
-        setCountry(country);
-        setIsPassInKerberos(Boolean.FALSE);
     }
 
     public Person(final String name, final String identificationDocumentNumber, final IDDocumentType identificationDocumentType,
@@ -386,11 +373,6 @@ public class Person extends Person_Base {
         super();
 
         setProperties(personBean);
-
-        if (personBean.createLoginIdentificationAndUserIfNecessary()) {
-            createLoginIdentificationAndUserIfNecessary();
-            setIsPassInKerberos(Boolean.FALSE);
-        }
 
         final PhysicalAddress physicalAddress =
                 PhysicalAddress.createPhysicalAddress(this, personBean.getPhysicalAddressData(), PartyContactType.PERSONAL, true);
@@ -637,124 +619,18 @@ public class Person extends Person_Base {
         }
     }
 
-    public Login getLoginIdentification() {
-        final User personUser = getUser();
-        return personUser == null ? null : Login.readUserLoginIdentification(personUser);
-    }
-
-    public Set<LoginAlias> getLoginAliasOrderByImportance() {
-        final Login login = getLoginIdentification();
-        return login != null ? login.getLoginAliasOrderByImportance() : new HashSet<LoginAlias>();
-    }
-
-    public Set<LoginAlias> getLoginAlias() {
-        final Login login = getLoginIdentification();
-        return login != null ? login.getAliasSet() : new HashSet<LoginAlias>();
-    }
-
-    public boolean hasUsername(final String username) {
-        final Login login = getLoginIdentification();
-        return login != null ? login.hasUsername(username) : false;
-    }
-
     public String getUsername() {
-        final Login login = getLoginIdentification();
-        return login != null ? login.getUsername() : null;
+        User user = getUser();
+        return user == null ? null : user.getUsername();
     }
 
-    public void setUsername(final RoleType roleType) {
-        final Login login = createLoginIdentificationAndUserIfNecessary();
-        login.setUsername(roleType);
-    }
-
-    public String getUserAliass() {
-        final StringBuilder aliass = new StringBuilder();
-        for (final LoginAlias loginAlias : Login.readUserLoginIdentification(getUser()).getLoginAliasOrderByImportance()) {
-            if (aliass.length() > 0) {
-                aliass.append(", ");
-            }
-            aliass.append(loginAlias.getAlias());
-        }
-        return aliass.toString();
-    }
-
-    public String getPassword() {
-        final Login login = getLoginIdentification();
-        return login != null ? login.getPassword() : null;
-    }
-
-    public void setPassword(final String password) {
-        createLoginIdentificationAndUserIfNecessary().setPassword(password);
-    }
-
-    public void setIsPassInKerberos(final Boolean isPassInKerberos) {
-        createLoginIdentificationAndUserIfNecessary().setIsPassInKerberos(isPassInKerberos);
-    }
-
-    public Boolean getIsPassInKerberos() {
-        final Login login = getLoginIdentification();
-        return login != null ? login.getIsPassInKerberos() : null;
-    }
-
-    public void setIstUsername() {
-        createLoginIdentificationAndUserIfNecessary().setUserUID();
-    }
-
-    public Login createLoginIdentificationAndUserIfNecessary() {
-        Login login = getLoginIdentification();
-        if (login == null) {
-            User user = getUser();
-            if (user == null) {
-                user = new User((String) null);
-            }
-            login = new Login(getUser());
-        }
-        return login;
-    }
-
+    @Deprecated
     public String getIstUsername() {
-        return getUser() != null ? getUser().getUsername() : null;
-    }
-
-    public void changeUsername(final RoleType roleType) {
-        setUsername(roleType);
-    }
-
-    public void changePassword(final String oldPassword, final String newPassword) {
-
-        if (newPassword == null) {
-            throw new DomainException("error.person.invalidNullPassword");
-        }
-
-        if (getUser() == null) {
-            throw new DomainException("error.person.unExistingUser");
-        }
-
-        if (newPassword.equals("")) {
-            throw new DomainException("error.person.invalidEmptyPassword");
-        }
-
-        setPassword(PasswordEncryptor.encryptPassword(newPassword));
-    }
-
-    public void addAlias(final Role role) {
-        setUsername(role.getRoleType());
-    }
-
-    public void removeAlias(final Role removedRole) {
-        final Login loginIdentification = getLoginIdentification();
-        if (loginIdentification != null) {
-            loginIdentification.removeAlias(removedRole.getRoleType());
-        }
-    }
-
-    public void updateIstUsername() {
-        setIstUsername();
+        return getUsername();
     }
 
     public Role getPersonRole(final RoleType roleType) {
-
-        for (final Role role : this.getPersonRoles()) {
+        for (final Role role : this.getPersonRolesSet()) {
             if (role.getRoleType().equals(roleType)) {
                 return role;
             }
@@ -791,23 +667,6 @@ public class Person extends Person_Base {
         for (final Registration registration : this.getStudents()) {
             if (registration.getDegreeType() == degreeType) {
                 return registration;
-            }
-        }
-        return null;
-    }
-
-    // FIXME: Remove as soon as possible.
-    @Deprecated
-    public Registration getStudentByUsername() {
-        final Login loginIdentification = getLoginIdentification();
-        if (loginIdentification != null) {
-            final List<LoginAlias> loginAlias = loginIdentification.getRoleLoginAlias(RoleType.STUDENT);
-            for (final Registration registration : this.getStudents()) {
-                for (final LoginAlias alias : loginAlias) {
-                    if (alias.getAlias().contains(registration.getNumber().toString())) {
-                        return registration;
-                    }
-                }
             }
         }
         return null;
@@ -1511,8 +1370,9 @@ public class Person extends Person_Base {
         public void afterAdd(final Role role, final Person person) {
             if (person != null && role != null) {
                 addDependencies(role, person);
-                person.addAlias(role);
-                person.updateIstUsername();
+                if (person.getUser() == null) {
+                    person.createUser();
+                }
             }
         }
 
@@ -1531,8 +1391,6 @@ public class Person extends Person_Base {
         @Override
         public void afterRemove(final Role removedRole, final Person person) {
             if (person != null && removedRole != null) {
-                person.removeAlias(removedRole);
-                person.updateIstUsername();
             }
         }
 
@@ -1849,20 +1707,8 @@ public class Person extends Person_Base {
     // static methods
     // -------------------------------------------------------------
 
-    public static Person readPersonByUsernameWithOpenedLogin(final String username) {
-        final Login login = Login.readLoginByUsername(username);
-        final User user = login == null ? null : login.isOpened() ? login.getUser() : null;
-        return user == null ? null : user.getPerson();
-    }
-
-    public static Person readPersonByUsername(final String username) {
-        final Login login = Login.readLoginByUsername(username);
-        final User user = login == null ? null : login.getUser();
-        return user == null ? null : user.getPerson();
-    }
-
-    public static Person readPersonByIstUsername(final String istUsername) {
-        final User user = Login.readUserByUserUId(istUsername);
+    public static Person readPersonByUsername(final String istUsername) {
+        final User user = User.findByUsername(istUsername);
         return user == null ? null : user.getPerson();
     }
 
@@ -2035,17 +1881,6 @@ public class Person extends Person_Base {
             }
         }
         return attends;
-    }
-
-    public boolean hasIstUsername() {
-        if (this.getIstUsername() != null) {
-            return true;
-        }
-        if (UsernameUtils.shouldHaveUID(this)) {
-            setIstUsername();
-            return getIstUsername() != null;
-        }
-        return false;
     }
 
     public static class FindPersonFactory implements Serializable, FactoryExecutor {
@@ -2969,11 +2804,6 @@ public class Person extends Person_Base {
 
     public List<String> getMainRoles() {
         return getImportantRoles(new ArrayList<String>());
-    }
-
-    public String getMostImportantAlias() {
-        final Login login = getLoginIdentification();
-        return login != null ? login.getMostImportantAlias() : "";
     }
 
     public static Collection<Person> findPerson(final String name) {
@@ -4249,7 +4079,7 @@ public class Person extends Person_Base {
     }
 
     public static Person findByUsername(final String username) {
-        final User user = Login.readUserByUserUId(username);
+        final User user = User.findByUsername(username);
         return user == null ? null : user.getPerson();
     }
 

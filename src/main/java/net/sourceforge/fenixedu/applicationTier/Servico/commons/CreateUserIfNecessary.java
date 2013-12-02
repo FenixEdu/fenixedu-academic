@@ -1,14 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-
 import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixframework.Atomic;
 
-public class SetUserUID {
+public class CreateUserIfNecessary {
 
     @Atomic
     public static void run(final Person person) {
-        person.hasIstUsername();
+        if (person.getUser() == null) {
+            person.createUser();
+        }
     }
 
 }

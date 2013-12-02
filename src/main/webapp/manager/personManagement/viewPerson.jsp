@@ -603,8 +603,7 @@
 		<fr:edit name="person"
 			action="<%="/findPerson.do?method=viewPerson&personID=" + personID %>">
 			<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
-				<fr:slot readOnly="true" name="user.userUId" key="label.person.istUsername"/>
-				<fr:slot readOnly="true" name="user.aliass" key="label.person.aliass"/>			
+				<fr:slot readOnly="true" name="user.username" key="label.person.username"/>
 				<fr:slot name="eidentifier" key="label.eidentifier" layout="null-as-value"/>
 			</fr:schema>
 			<fr:layout name="tabular">
@@ -616,8 +615,7 @@
 	<logic:notPresent parameter="editUserInfo">
 		<fr:view name="person">
 			<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
-				<fr:slot name="user.userUId" key="label.person.istUsername"/>
-				<fr:slot name="user.aliass" key="label.person.aliass"/>			
+				<fr:slot name="user.username" key="label.person.username"/>
 				<fr:slot name="eidentifier" key="label.eidentifier" layout="null-as-value"/>
 			</fr:schema>
 			<fr:layout name="tabular">

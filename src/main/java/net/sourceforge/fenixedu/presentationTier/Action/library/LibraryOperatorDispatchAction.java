@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.LibraryCardSystem;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.space.RoomSubdivision;
@@ -37,6 +36,7 @@ import org.jfree.chart.renderer.CategoryItemRenderer;
 import org.jfree.data.DefaultCategoryDataset;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -284,7 +284,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 
     private Person getPersonFromRequest(HttpServletRequest request) {
         String istUsername = request.getParameter("istUsername");
-        return Person.readPersonByIstUsername(istUsername);
+        return Person.readPersonByUsername(istUsername);
     }
 
     private Set<Person> getSetFromFixedSetGroupWithout(Group g, Person toRemove) {

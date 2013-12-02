@@ -16,13 +16,13 @@
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
-<logic:notPresent name="USER_SESSION_ATTRIBUTE" property="user.person.user.userUId">
+<logic:notPresent name="USER_SESSION_ATTRIBUTE" property="user.person.user.username">
 	<span class="error">
 		<bean:message key="message.resource.not.available.for.external.users" bundle="HOMEPAGE_RESOURCES"/>
 	</span>
 </logic:notPresent>
 
-<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.user.userUId">
+<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.user.username">
 <html:form action="/manageHomepage">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeHomepageOptions"/>
 
@@ -53,7 +53,7 @@
     <% final String appContext = pt.ist.bennu.core.util.ConfigurationManager.getProperty("app.context"); %>
     <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
-    <bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="USER_SESSION_ATTRIBUTE" property="user.person.user.userUId"/></bean:define>
+    <bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="USER_SESSION_ATTRIBUTE" property="user.person.user.username"/></bean:define>
     <p>
     <bean:message key="person.homepage.adress" bundle="HOMEPAGE_RESOURCES"/>:
     <logic:notPresent name="USER_SESSION_ATTRIBUTE" property="user.person.homepage">

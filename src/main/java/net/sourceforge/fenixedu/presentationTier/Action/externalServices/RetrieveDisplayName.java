@@ -5,7 +5,6 @@ import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
@@ -40,7 +39,7 @@ public class RetrieveDisplayName extends ExternalInterfaceDispatchAction {
     }
 
     private String getNickname(final String username) {
-        return username == null || username.isEmpty() ? "" : getNickname(Login.readUserByUserUId(username));
+        return username == null || username.isEmpty() ? "" : getNickname(User.findByUsername(username));
     }
 
     private String getNickname(final User user) {

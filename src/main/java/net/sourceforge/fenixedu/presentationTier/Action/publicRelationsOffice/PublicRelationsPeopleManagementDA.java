@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -58,7 +57,7 @@ public class PublicRelationsPeopleManagementDA extends FenixDispatchAction {
         PersonBean bean = (PersonBean) RenderUtils.getViewState("addPerson").getMetaObject().getObject();
         String username = bean.getUsername();
         User user;
-        if (username != null && (user = Login.readUserByUserUId(username)) != null) {
+        if (username != null && (user = User.findByUsername(username)) != null) {
             Person person = user.getPerson();
             if (person != null) {
                 person.addPersonRoleByRoleTypeService(RoleType.PUBLIC_RELATIONS_OFFICE);

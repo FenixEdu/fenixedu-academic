@@ -6,7 +6,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,6 +16,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -42,7 +42,7 @@ public class ISTConnectDA extends ExternalInterfaceDispatchAction {
             HttpServletResponse response) throws Exception {
         if (doLogin(mapping, actionForm, request, response)) {
             final String istID = (String) getFromRequest(request, "istID");
-            final Person person = Person.readPersonByIstUsername(istID);
+            final Person person = Person.readPersonByUsername(istID);
             final JSONObject jsonObject = DomainObjectJSONSerializer.getDomainObject(person);
             writeJSONObject(response, jsonObject);
         } else {
@@ -55,7 +55,7 @@ public class ISTConnectDA extends ExternalInterfaceDispatchAction {
             HttpServletResponse response) throws Exception {
         if (doLogin(mapping, actionForm, request, response)) {
             final String istID = (String) getFromRequest(request, "istID");
-            final Person person = Person.readPersonByIstUsername(istID);
+            final Person person = Person.readPersonByUsername(istID);
 
             final JSONObject jsonObject = new JSONObject();
 

@@ -5,14 +5,13 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 
@@ -51,7 +50,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
     @Atomic
     public void addPeople(final Set<String> usernames) {
         for (final String username : usernames) {
-            final User user = Login.readUserByUserUId(username);
+            final User user = User.findByUsername(username);
             if (user != null) {
                 final Person person = user.getPerson();
                 if (!containsPerson(person)) {

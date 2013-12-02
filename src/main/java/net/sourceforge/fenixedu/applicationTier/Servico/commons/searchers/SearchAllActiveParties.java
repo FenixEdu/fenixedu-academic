@@ -16,7 +16,7 @@ public class SearchAllActiveParties extends SearchParties<Party> {
         ArrayList<Party> result = new ArrayList<Party>();
 
         if (value.length() > 3 && value.substring(0, 3).equals("ist")) {
-            Person person = Person.readPersonByIstUsername(value);
+            Person person = Person.readPersonByUsername(value);
             if (person != null) {
                 result.add(person);
             }

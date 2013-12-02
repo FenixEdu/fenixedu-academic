@@ -5,7 +5,6 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.student.ICalStudentTimeTable;
@@ -27,7 +26,7 @@ public class CalendarDebugDA extends FenixDispatchAction {
             throws Exception {
         String info = request.getParameter("user");
         if (info != null) {
-            User u = Login.readUserByUserUId(info);
+            User u = User.findByUsername(info);
             HashMap<Registration, String> hm = new HashMap<>();
             if (u.getPerson().getStudent() != null) {
                 for (Registration registration : u.getPerson().getStudent().getActiveRegistrations()) {

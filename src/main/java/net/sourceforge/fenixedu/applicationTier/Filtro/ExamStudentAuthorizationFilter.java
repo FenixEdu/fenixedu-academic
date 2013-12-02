@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
@@ -52,7 +51,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
 
             for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
                 for (final Attends attend : executionCourse.getAttends()) {
-                    if (attend.getRegistration().getPerson().hasUsername(studentUsername)) {
+                    if (attend.getRegistration().getPerson().getUsername().equals(studentUsername)) {
                         return true;
                     }
                 }

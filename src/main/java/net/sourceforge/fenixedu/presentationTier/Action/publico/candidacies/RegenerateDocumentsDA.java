@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.candidate.degree.DegreeCandidacyManagementDispatchAction;
 
@@ -25,7 +24,7 @@ public class RegenerateDocumentsDA extends FenixDispatchAction {
     public ActionForward doOperation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         try {
-            User user = Login.readUserByUserUId("ist24439");
+            User user = User.findByUsername("ist24439");
             Authenticate.setUser(user);
             return new DegreeCandidacyManagementDispatchAction().doOperation(mapping, form, request, response);
         } finally {

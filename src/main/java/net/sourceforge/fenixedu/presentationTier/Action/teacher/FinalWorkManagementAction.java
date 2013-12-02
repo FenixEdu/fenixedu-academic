@@ -16,7 +16,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlans;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurriculum;
@@ -84,6 +83,7 @@ import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -448,7 +448,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
         final Person person;
         if (number.substring(0, 3).equals("ist")) {
-            person = Person.readPersonByIstUsername(number);
+            person = Person.readPersonByUsername(number);
         } else {
             if (StringUtils.isNumeric(number)) {
                 final Employee employee = Employee.readByNumber(Integer.valueOf(number));

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.GrantOwnerType;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ProfessionType;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
@@ -112,7 +111,7 @@ public class PersonalInformationForm extends Form {
 
     private void validateSocialSecurityNumber(List<LabelFormatter> result) {
         final Party party = PartySocialSecurityNumber.readPartyBySocialSecurityNumber(socialSecurityNumber);
-        final User user = Login.readUserByUserUId(username);
+        final User user = User.findByUsername(username);
         if (party != null && party != user.getPerson()) {
             result.add(new LabelFormatter().appendLabel(
                     "error.candidacy.workflow.PersonalInformationForm.socialSecurityNumber.already.exists", "application"));

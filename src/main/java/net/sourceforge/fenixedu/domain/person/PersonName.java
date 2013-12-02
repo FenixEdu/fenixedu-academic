@@ -108,8 +108,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
                 personNameLimitedOrderedSet.addAll(personNamePart.getPersonNameSet());
             } else {
                 final Set<PersonName> personNames =
-                        personNamePart == null ? Bennu.getInstance().getPersonNameSet() : personNamePart
-                                .getPersonNameSet();
+                        personNamePart == null ? Bennu.getInstance().getPersonNameSet() : personNamePart.getPersonNameSet();
                 for (final PersonName personName : personNames) {
                     final String normalizedPersonName = personName.getName();
                     if (containsAll(normalizedPersonName, nameParts)) {
@@ -164,7 +163,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
             if (person.hasExternalContract()) {
                 textToAppend = person.getExternalContract().getInstitutionUnit().getName();
             } else {
-                textToAppend = person.getMostImportantAlias();
+                textToAppend = person.getUsername();
             }
         }
         appendText(text, textToAppend);

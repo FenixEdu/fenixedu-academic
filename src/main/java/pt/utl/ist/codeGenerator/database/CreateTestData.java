@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -47,8 +46,6 @@ import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
-import net.sourceforge.fenixedu.domain.Login;
-import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -180,7 +177,7 @@ public class CreateTestData {
     public static class CreateManagerUser extends AtomicAction {
         @Override
         public void doIt() {
-            final Person person = Person.readPersonByUsernameWithOpenedLogin("admin");
+            final Person person = Person.readPersonByUsername("admin");
             final Country country = Country.readCountryByNationality("Portuguesa");
             person.setCountry(country);
             person.setCountryOfBirth(country);
@@ -1105,8 +1102,8 @@ public class CreateTestData {
         final Teacher teacher = new Teacher(person);
         person.addPersonRoleByRoleType(RoleType.EMPLOYEE);
         person.addPersonRoleByRoleType(RoleType.TEACHER);
-        final Login login = Login.readUserLoginIdentification(person.getUser());
-        login.openLoginIfNecessary(RoleType.TEACHER);
+        // final Login login = Login.readUserLoginIdentification(person.getUser());
+        // login.openLoginIfNecessary(RoleType.TEACHER);
         new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), Bennu.getInstance()
                 .getInstitutionUnit(), AccountabilityTypeEnum.WORKING_CONTRACT, true);
         new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), Bennu.getInstance()
@@ -1147,11 +1144,10 @@ public class CreateTestData {
         EmailAddress.createEmailAddress(person, "abc" + person.getExternalId() + "@gmail.com", PartyContactType.PERSONAL, true);
 
         final User user = person.getUser();
-        final Login login = Login.readUserLoginIdentification(user);
-        login.setPassword(PasswordEncryptor.encryptPassword("pass"));
-        login.setActive(Boolean.TRUE);
-        LoginAlias.createNewCustomLoginAlias(login, usernamePrefix + i);
-        person.setIsPassInKerberos(Boolean.TRUE);
+//        final Login login = Login.readUserLoginIdentification(user);
+//        login.setPassword(PasswordEncryptor.encryptPassword("pass"));
+//        login.setActive(Boolean.TRUE);
+//        LoginAlias.createNewCustomLoginAlias(login, usernamePrefix + i);
         return person;
     }
 
@@ -1177,8 +1173,8 @@ public class CreateTestData {
                 StudentCurricularPlan.createWithEmptyStructure(registration, degreeCurricularPlan,
                         new YearMonthDay().minusMonths(6));
         person.addPersonRoleByRoleType(RoleType.STUDENT);
-        final Login login = Login.readUserLoginIdentification(person.getUser());
-        login.openLoginIfNecessary(RoleType.STUDENT);
+        // final Login login = Login.readUserLoginIdentification(person.getUser());
+        // login.openLoginIfNecessary(RoleType.STUDENT);
         createStudentEnrolments(studentCurricularPlan);
         new DegreeCurricularPlanServiceAgreement(student.getPerson(), degreeCurricularPlan.getServiceAgreementTemplate());
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
@@ -1200,7 +1196,7 @@ public class CreateTestData {
     }
 
     private static void createDegrees() {
-        final Person person = Person.readPersonByUsernameWithOpenedLogin("admin");
+        final Person person = Person.readPersonByUsername("admin");
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         final Campus campus = Space.getAllCampus().iterator().next();
 

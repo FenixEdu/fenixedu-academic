@@ -20,7 +20,7 @@ public class SpaceAttendances extends SpaceAttendances_Base {
     }
 
     public Person getPerson() {
-        return Person.readPersonByIstUsername(getPersonIstUsername());
+        return Person.readPersonByUsername(getPersonIstUsername());
     }
 
     public void exit(String responsibleUsername) {
@@ -36,6 +36,7 @@ public class SpaceAttendances extends SpaceAttendances_Base {
         setVisitedLibraryPlace(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasPersonIstUsername() {
         return getPersonIstUsername() != null;

@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.dataTransferObject.WrittenEvaluationVigilancyVie
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -683,7 +682,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         Collection<VigilantGroup> groups = bean.getVigilantGroups();
         String username = bean.getUsername();
 
-        User user = Login.readUserByUserUId(username);
+        User user = User.findByUsername(username);
         Person person;
         if (user != null && (person = user.getPerson()) != null) {
             List<Person> people = new ArrayList<Person>();

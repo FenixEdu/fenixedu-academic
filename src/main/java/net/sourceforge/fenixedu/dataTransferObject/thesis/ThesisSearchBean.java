@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.thesis;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -76,10 +75,8 @@ public class ThesisSearchBean implements Serializable {
     }
 
     private boolean isMatchPerson(Person person, String text) {
-        for (LoginAlias alias : person.getLoginAlias()) {
-            if (alias.getAlias().equals(text)) {
-                return true;
-            }
+        if (person.getUsername().equals(text)) {
+            return true;
         }
         if (person.getPersonName().match(PersonNamePart.getNameParts(text))) {
             return true;

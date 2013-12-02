@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExam
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteExamCoordinator;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
@@ -63,7 +62,7 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         request.setAttribute("bean", bean);
 
         String username = bean.getUsername();
-        User user = Login.readUserByUserUId(username);
+        User user = User.findByUsername(username);
         if (user != null && user.getPerson() != null) {
 
             AddExamCoordinator.run(user.getPerson(), bean.getExecutionYear(), bean.getSelectedUnit());

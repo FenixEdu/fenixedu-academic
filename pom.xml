@@ -448,6 +448,11 @@
 			<artifactId>bennu-core</artifactId>
 			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
+        <dependency>
+            <groupId>pt.ist.bennu</groupId>
+            <artifactId>bennu-user-management</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
 		<dependency>
 			<groupId>pt.ist.bennu</groupId>
 			<artifactId>bennu-scheduler</artifactId>

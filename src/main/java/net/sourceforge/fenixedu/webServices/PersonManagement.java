@@ -8,7 +8,6 @@ import javax.servlet.ServletRequest;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.UpdatePersonInformationFromCitizenCard;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationDTO;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
@@ -37,7 +36,7 @@ public class PersonManagement implements IPersonManagement {
     public PersonInformationDTO getPersonInformation(String username, String password, String unserUID, MessageContext context)
             throws NotAuthorizedException {
         checkPermissions(username, password, context);
-        User foundUser = Login.readUserByUserUId(unserUID);
+        User foundUser = User.findByUsername(unserUID);
         return foundUser == null ? null : new PersonInformationDTO(foundUser.getPerson());
     }
 

@@ -6,8 +6,6 @@ import net.sourceforge.fenixedu.domain.District;
 import net.sourceforge.fenixedu.domain.DistrictSubdivision;
 import net.sourceforge.fenixedu.domain.EmptyDegree;
 import net.sourceforge.fenixedu.domain.EmptyDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Login;
-import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.Role;
@@ -166,12 +164,11 @@ public class DataInitializer {
         person.setName("Fenix System Administrator");
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
-        person.setIsPassInKerberos(Boolean.FALSE);
         final User user = person.getUser();
-        final Login login = Login.readUserLoginIdentification(user);
-        login.setActive(Boolean.TRUE);
-        LoginAlias.createNewCustomLoginAlias(login, "admin");
-        login.openLoginIfNecessary(RoleType.MANAGER);
+        // final Login login = Login.readUserLoginIdentification(user);
+        // login.setActive(Boolean.TRUE);
+        // LoginAlias.createNewCustomLoginAlias(login, "admin");
+        // login.openLoginIfNecessary(RoleType.MANAGER);
     }
 
     private static void createPartyTypeEnums() {

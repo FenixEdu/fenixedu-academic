@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.person.RetrievePersonalPhotoAction;
 
@@ -25,7 +24,7 @@ public class PhotographRetrievalOnPublicSpaceDA extends RetrievePersonalPhotoAct
 
     public ActionForward retrieveByIstId(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        User user = Login.readUserByUserUId(request.getParameter("istId"));
+        User user = User.findByUsername(request.getParameter("istId"));
         return retrievePhotograph(request, response, user.getPerson());
     }
 }

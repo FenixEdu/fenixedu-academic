@@ -123,7 +123,7 @@
 							<logic:equal name="person" property="homepage.activated" value="true">
 								<% final String appContext = pt.ist.bennu.core.util.ConfigurationManager.getProperty("app.context"); %>
 								<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-								<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="person" property="user.userUId"/></bean:define>
+								<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="person" property="user.username"/></bean:define>
 								<html:link href="<%= homepageURL %>"><bean:write name="person" property="name"/></html:link>
 							</logic:equal>
 							<logic:equal name="person" property="homepage.activated" value="false">
@@ -157,7 +157,7 @@
 							<logic:equal name="person" property="homepage.activated" value="true">
 								<% final String appContext = pt.ist.bennu.core.util.ConfigurationManager.getProperty("app.context"); %>
 								<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-								<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="person" property="user.userUId"/></bean:define>
+								<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="person" property="user.username"/></bean:define>
 								<html:link href="<%= homepageURL %>"><bean:write name="person" property="name"/></html:link>
 							</logic:equal>
 							<logic:equal name="person" property="homepage.activated" value="false">

@@ -24,7 +24,6 @@ import javax.ws.rs.core.Response.Status;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.File;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -416,9 +415,9 @@ public class JerseyServices {
         Person clientPerson = null;
         //set users
         try {
-            photoPerson = Login.readUserByUserUId(photoUsername).getPerson();
+            photoPerson = User.findByUsername(photoUsername).getPerson();
             if (!clientUsername.equals("NoUser")) {
-                clientPerson = Login.readUserByUserUId(clientUsername).getPerson();
+                clientPerson = User.findByUsername(clientUsername).getPerson();
             }
         } catch (NullPointerException e) {
             throw new WebApplicationException(Status.BAD_REQUEST);
@@ -459,7 +458,7 @@ public class JerseyServices {
     @POST
     @Path("role/developer/{istid}")
     public static Response addDeveloperRole(@PathParam("istid") String istid) {
-        User user = Login.readUserByUserUId(istid);
+        User user = User.findByUsername(istid);
         if (user != null && user.getPerson() != null) {
             if (user.getPerson().getPersonRole(RoleType.DEVELOPER) == null) {
                 addDeveloper(user);

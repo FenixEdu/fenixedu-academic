@@ -310,6 +310,6 @@
 		<property name="eachLayout" value="values"></property>
 		<property name="eachSchema" value="oauthapps.view.scope.complete"></property>
 	</slot>
-	<slot name="author.userUId" />
+	<slot name="author.username" />
 	<slot name="author.person.email" />
 </schema>

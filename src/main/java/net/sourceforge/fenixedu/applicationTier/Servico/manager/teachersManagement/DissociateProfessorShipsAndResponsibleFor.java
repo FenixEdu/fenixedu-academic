@@ -30,7 +30,7 @@ public class DissociateProfessorShipsAndResponsibleFor {
         if (personNumber == null) {
             throw new FenixServiceException("nullPersonNumber");
         }
-        final Person person = Person.readPersonByIstUsername(personNumber);
+        final Person person = Person.readPersonByUsername(personNumber);
         // final Teacher teacher = Teacher.readByNumber(teacherNumber);
         if (person == null) {
             throw new NonExistingServiceException("noPerson");

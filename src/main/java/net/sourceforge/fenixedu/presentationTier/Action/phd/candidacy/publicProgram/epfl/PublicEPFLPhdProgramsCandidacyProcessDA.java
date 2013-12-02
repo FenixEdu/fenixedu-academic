@@ -323,7 +323,6 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean();
         bean.setPersonBean(new PersonBean());
         bean.getPersonBean().setEmail(hashCode.getEmail());
-        bean.getPersonBean().setCreateLoginIdentificationAndUserIfNecessary(false);
         bean.setCandidacyHashCode(hashCode);
         bean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
         bean.setCollaborationType(PhdIndividualProgramCollaborationType.EPFL);

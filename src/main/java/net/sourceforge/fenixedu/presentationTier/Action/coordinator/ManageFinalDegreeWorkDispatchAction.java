@@ -19,7 +19,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddExecutionDegreeToScheduling;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AttributeFinalDegreeWork;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ChangeStatusOfFinalDegreeWorkProposals;
@@ -97,8 +96,9 @@ import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
@@ -949,7 +949,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         Person person = null;
         if (number.substring(0, 3).equals("ist")) {
-            person = Person.readPersonByIstUsername(number);
+            person = Person.readPersonByUsername(number);
         }
         if (StringUtils.isNumeric(number)) {
             final Integer n = new Integer(number);

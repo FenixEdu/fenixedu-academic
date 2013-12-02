@@ -3,9 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons.password;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.SetUserUID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.CreateUserIfNecessary;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswordService;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsername;
@@ -20,6 +19,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -69,13 +69,13 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
         final Person person = (Person) FenixFramework.getDomainObject(personID);
         if (person != null) {
-            SetUserUID.run(person);
+            CreateUserIfNecessary.run(person);
         }
 
         // Change the Password
         try {
 
-            password = GenerateNewPasswordService.run(personID);
+            password = GenerateNewPasswordService.run(person);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

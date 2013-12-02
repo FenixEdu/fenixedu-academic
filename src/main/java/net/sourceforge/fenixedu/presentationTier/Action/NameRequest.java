@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -38,7 +37,7 @@ public class NameRequest extends FenixDispatchAction {
 
         if (storedUsername.equals(providedUsername) && digest.equals(providedDigest)) {
             String id = request.getParameter("id");
-            User user = Login.readUserByUserUId(id);
+            User user = User.findByUsername(id);
 
             String name = user.getPerson().getName();
             String nickName = user.getPerson().getNickname();

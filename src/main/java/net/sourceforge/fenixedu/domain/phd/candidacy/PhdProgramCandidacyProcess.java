@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -62,6 +61,8 @@ import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.LocalDate;
+
+import pt.ist.bennu.core.domain.User;
 
 public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base {
 
@@ -432,7 +433,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         person.addPersonRoleByRoleType(RoleType.PERSON);
         person.addPersonRoleByRoleType(RoleType.STUDENT);
         person.addPersonRoleByRoleType(RoleType.RESEARCHER);
-        person.setIstUsername();
 
         if (!person.hasPersonalPhoto()) {
             final Photograph photograph = person.getPersonalPhotoEvenIfPending();

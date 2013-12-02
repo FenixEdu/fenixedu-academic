@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipEr
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementByEntryYearBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 
@@ -27,6 +26,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -42,7 +42,7 @@ public class ChangeTutorshipDispatchAction extends TutorManagementDispatchAction
         final String executionDegreeId = getFromRequest(request, "executionDegreeId");
         final String degreeCurricularPlanID = getFromRequest(request, "degreeCurricularPlanID");
         final String teacherId = getFromRequest(request, "teacherId");
-        final Teacher teacher = Login.readUserByUserUId(teacherId).getPerson().getTeacher();
+        final Teacher teacher = User.findByUsername(teacherId).getPerson().getTeacher();
 
         TutorshipManagementBean bean = new TutorshipManagementBean(executionDegreeId, degreeCurricularPlanID, teacherId);
         bean.setTeacher(teacher);
