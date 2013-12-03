@@ -46,10 +46,11 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
         @Forward(name = "showThesisDetails", path = "/scientificCouncil/thesis/showThesisDetails.jsp"),
         @Forward(name = "editThesisEvaluationParticipant", path = "/scientificCouncil/thesis/editThesisEvaluationParticipant.jsp"),
         @Forward(name = "editThesisDetails", path = "/scientificCouncil/thesis/editThesisDetails.jsp"),
-        @Forward(name = "addJuryMember", path = "/scientificCouncil/thesis/addJuryMember.jsp") })
+        @Forward(name = "addJuryMember", path = "/scientificCouncil/thesis/addJuryMember.jsp"),
+        @Forward(name = "addOrientationMember", path = "/scientificCouncil/thesis/addOrientationMember.jsp") })
 public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
-    public abstract static class JuryMemberBean implements Serializable {
+    public abstract static class EvaluationMemberBean implements Serializable {
         ThesisParticipationType thesisParticipationType;
 
         public ThesisParticipationType getThesisParticipationType() {
@@ -63,7 +64,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
         public abstract void addMember(final Thesis thesis);
     }
 
-    public static class InternalJuryMemberBean extends JuryMemberBean {
+    public static class InternalEvaluationMemberBean extends EvaluationMemberBean {
         Person person;
         Unit unit;
 
@@ -89,7 +90,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
         }
     }
 
-    public static class ExternalJuryMemberBean extends JuryMemberBean {
+    public static class ExternalEvaluationMemberBean extends EvaluationMemberBean {
         String personName;
         String unitName;
 
@@ -224,20 +225,33 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final Thesis thesis = getDomainObject(request, "thesisOid");
         request.setAttribute("thesis", thesis);
-        JuryMemberBean juryMemberBean = getRenderedObject();
-        if (juryMemberBean == null) {
-            juryMemberBean =
-                    request.getParameter("external") == null ? new InternalJuryMemberBean() : new ExternalJuryMemberBean();
+        EvaluationMemberBean evaluationMemberBean = getRenderedObject();
+        if (evaluationMemberBean == null) {
+            evaluationMemberBean =
+                    request.getParameter("external") == null ? new InternalEvaluationMemberBean() : new ExternalEvaluationMemberBean();
         }
-        request.setAttribute("juryMemberBean", juryMemberBean);
+        request.setAttribute("evaluationMemberBean", evaluationMemberBean);
         return mapping.findForward("addJuryMember");
     }
 
-    public ActionForward addJuryMember(final ActionMapping mapping, final ActionForm actionForm,
+    public ActionForward prepareAddOrientationMember(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final Thesis thesis = getDomainObject(request, "thesisOid");
-        final JuryMemberBean juryMemberBean = getRenderedObject();
-        juryMemberBean.addMember(thesis);
+        request.setAttribute("thesis", thesis);
+        EvaluationMemberBean evaluationMemberBean = getRenderedObject();
+        if (evaluationMemberBean == null) {
+            evaluationMemberBean =
+                    request.getParameter("external") == null ? new InternalEvaluationMemberBean() : new ExternalEvaluationMemberBean();
+        }
+        request.setAttribute("evaluationMemberBean", evaluationMemberBean);
+        return mapping.findForward("addOrientationMember");
+    }
+
+    public ActionForward addEvaluationMember(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+        final Thesis thesis = getDomainObject(request, "thesisOid");
+        final EvaluationMemberBean evaluationMemberBean = getRenderedObject();
+        evaluationMemberBean.addMember(thesis);
         return showThesisDetails(mapping, request, thesis);
     }
 

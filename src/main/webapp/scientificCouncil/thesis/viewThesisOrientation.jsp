@@ -20,37 +20,23 @@
 <html:xhtml/>
 
 <%-- Jury --%>
-<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.jury"/></h3>
+<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.orientation"/></h3>
 
 <%
 	final Thesis thesis = (Thesis) request.getAttribute("thesis");
-	final ThesisEvaluationParticipant president = thesis.getPresident();
+	final ThesisEvaluationParticipant orientator = thesis.getOrientator();
+	final ThesisEvaluationParticipant coorientator = thesis.getCoorientator();
 %>
 
 <div style="margin-left: 35px; width: 90%;">
-	<html:link action="<%= "/manageSecondCycleThesis.do?method=prepareAddJuryMember&amp;thesisOid=" + thesis.getExternalId() %>">
-		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.add.jury.member"/>
+	<html:link action="<%= "/manageSecondCycleThesis.do?method=prepareAddOrientationMember&amp;thesisOid=" + thesis.getExternalId() %>">
+		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.add.orientation.member"/>
 	</html:link>
-	|
-	<bean:define id="url">/scientificCouncilManageThesis.do?method=listScientificComission&amp;degreeId=<%= thesis.getDegree().getExternalId() %>&amp;executionYearId=<%= thesis.getEnrolment().getExecutionYear().getExternalId() %></bean:define>
-	<html:link page="<%= url %>">
-		<bean:message key="link.list.scientific.comission"/>
-	</html:link>
-	<%
-		if (thesis.getState().ordinal() >= ThesisState.SUBMITTED.ordinal()) {
-	%>
-	|
-	<html:link href="<%= request.getContextPath() + String.format("/coordinator/manageThesis.do?method=printApprovalDocument&amp;executionYearId=%s&amp;thesisID=%s", thesis.getExecutionYear().getExternalId(), thesis.getExternalId()) %>">
-		<bean:message bundle="APPLICATION_RESOURCES" key="label.coordinator.list.submitted.thesis.reprint"/>
-	</html:link>
-	<%
-		}
-	%>
 </div>
 <table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
 	<tr>
 		<th style="width: 5%;">
-			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.jury.member"/>
+			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.orientation.member"/>
 		</th>
 		<th>
 		</th>
@@ -70,17 +56,19 @@
 		</th>
 	</tr>
 	<%
-		if (president != null) {
-		    request.setAttribute("thesisEvaluationParticipant", president);
+		if (orientator != null) {
+		    request.setAttribute("thesisEvaluationParticipant", orientator);
 	%>
 			<jsp:include page="thesisEvaluationParticipantLine.jsp"/>
 	<%
 		}
-		for (final ThesisEvaluationParticipant participant : thesis.getAllParticipants(ThesisParticipationType.VOWEL)) {
-			request.setAttribute("thesisEvaluationParticipant", participant);
+	%>
+	<%
+		if (coorientator != null) {
+		    request.setAttribute("thesisEvaluationParticipant", coorientator);
 	%>
 			<jsp:include page="thesisEvaluationParticipantLine.jsp"/>
-	<%		    
+	<%
 		}
 	%>
 </table>

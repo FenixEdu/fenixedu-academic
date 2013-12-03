@@ -21,17 +21,17 @@
 
 <jsp:include page="viewThesisHeader.jsp"/>
 
-<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.jury.add"/></h3>
+<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.orientation.add"/></h3>
 
 <div style="margin-left: 35px; width: 90%;">
 	<fr:edit name="evaluationMemberBean"
     	     action="<%= "/manageSecondCycleThesis.do?method=addEvaluationMember&amp;thesisOid=" + thesis.getExternalId() %>"
         	 schema="thesis.jury.proposal.information.edit">
 		<fr:schema type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-			<fr:slot name="thesisParticipationType" key="label.jury.member.type" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ThesisJuryTypeProvider"/>
+			<fr:slot name="thesisParticipationType" key="label.orientation.member.type" layout="menu-select">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ThesisOrientationTypeProvider"/>
 			</fr:slot>
-			<fr:slot name="person" layout="autoComplete" key="label.jury.member.person" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+			<fr:slot name="person" layout="autoComplete" key="label.orientation.member.person" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 				<fr:property name="size" value="70" />
 				<fr:property name="labelField" value="name" />
 				<fr:property name="format" value="${presentationName}" />
