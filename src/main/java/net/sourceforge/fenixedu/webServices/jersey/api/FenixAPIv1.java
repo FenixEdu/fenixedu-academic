@@ -869,7 +869,9 @@ public class FenixAPIv1 {
         ExecutionYear executionYear = getExecutionYear(year);
 
         if (degree.isBolonhaMasterOrDegree()) {
-            return getFenixDegree(executionYear, degree);
+            for (final ExecutionDegree executionDegree : degree.getExecutionDegreesForExecutionYear(executionYear)) {
+                return getFenixDegree(executionYear, executionDegree);
+            }
         }
 
         return new FenixDegree();
