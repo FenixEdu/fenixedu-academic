@@ -126,6 +126,10 @@ public class EnrolmentContext {
         return userView.hasRoleType(RoleType.STUDENT);
     }
 
+    public boolean isRegistrationFromResponsiblePerson() {
+        return getResponsiblePerson() == getRegistration().getPerson();
+    }
+
     public boolean isNormal() {
         return getCurricularRuleLevel().isNormal();
     }
