@@ -301,9 +301,7 @@ public class A3ESDegreeProcess implements Serializable {
 
                 JSONObject q6213 = new JSONObject();
                 String teachersAndTeachingHours = getTeachersAndTeachingHours(course, false);
-                q6213.put("en", teachersAndTeachingHours);
-                q6213.put("pt", teachersAndTeachingHours);
-                json.put("q-6.2.1.3", q6213);
+                json.put("q-6.2.1.3", teachersAndTeachingHours);
 
                 JSONObject q6214 = new JSONObject();
                 MultiLanguageString objectives = competence.getObjectivesI18N(executionSemester);
