@@ -32,7 +32,7 @@
 	<logic:present role="MANAGER">
 		<li><html:link page="/externalApps.do?method=viewAllApplications"><bean:message key="oauthapps.label.manage.all.applications"  bundle="APPLICATION_RESOURCES"/></html:link></li>
 	</logic:present>
-	
+		
 	<!-- Vigilancy link for people who do not have ROLE TEACHER -->
 
 	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.vigilantWrappers">

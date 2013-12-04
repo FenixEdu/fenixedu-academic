@@ -10,6 +10,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <html:xhtml />
 
+<logic:present role="DEVELOPER">
 <em><bean:message key="label.person.main.title" /></em>
 <h2>
 	<bean:message key="oauthapps.label.create.application" bundle="APPLICATION_RESOURCES" />
@@ -20,3 +21,7 @@
 	<fr:destination name="success" path="/externalApps.do?method=createApplication"/>
 	<fr:destination name="cancel" path="/externalApps.do?method=createApplication" />
 </fr:create>
+</logic:present>
+<logic:notPresent  role="DEVELOPER">
+	<p>Nesta interface pode registar aplicações criadas por si que utilizem as API's disponibilizadas pelo sistema FenixEdu. No site de desenvolvimento do FenixEdu pode encontrar informação sobre como utilizar a API em:</p>
+</logic:notPresent>
