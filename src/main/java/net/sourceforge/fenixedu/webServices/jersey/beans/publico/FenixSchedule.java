@@ -158,7 +158,6 @@ public class FenixSchedule {
 
     }
 
-
     List<FenixInterval> lessonPeriods = new ArrayList<>();
     List<FenixCourseLoad> courseLoads = new ArrayList<>();
     List<FenixShift> shifts = new ArrayList<>();
@@ -175,6 +174,30 @@ public class FenixSchedule {
                 shifts.add(new FenixShift(shift));
             }
         }
+    }
+
+    public List<FenixInterval> getLessonPeriods() {
+        return lessonPeriods;
+    }
+
+    public void setLessonPeriods(List<FenixInterval> lessonPeriods) {
+        this.lessonPeriods = lessonPeriods;
+    }
+
+    public List<FenixCourseLoad> getCourseLoads() {
+        return courseLoads;
+    }
+
+    public void setCourseLoads(List<FenixCourseLoad> courseLoads) {
+        this.courseLoads = courseLoads;
+    }
+
+    public List<FenixShift> getShifts() {
+        return shifts;
+    }
+
+    public void setShifts(List<FenixShift> shifts) {
+        this.shifts = shifts;
     }
 
 }

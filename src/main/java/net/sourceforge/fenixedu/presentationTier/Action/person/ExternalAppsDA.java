@@ -1,12 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-
-import pt.ist.fenixframework.Atomic;
-
 import java.io.InputStream;
 import java.util.Set;
 
@@ -19,6 +12,7 @@ import net.sourceforge.fenixedu.domain.AppUserAuthorization;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -29,6 +23,12 @@ import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
@@ -41,9 +41,10 @@ import com.google.common.collect.ImmutableSet;
         @Forward(name = "returnKeys", path = "/auth/returnkeys.jsp"),
         @Forward(name = "manageApplications", path = "/auth/manageApplications.jsp"),
         @Forward(name = "viewAuthorizations", path = "/auth/viewAuthorizations.jsp"),
-        @Forward(name = "viewApplicationDetails", path = "/auth/viewApplicationDetails.jsp")
-
-})
+        @Forward(name = "viewApplicationDetails", path = "/auth/viewApplicationDetails.jsp"),
+        @Forward(name = "viewAllApplications", path = "/auth/viewAllApplications.jsp"),
+        @Forward(name = "viewAllAuthorizations", path = "/auth/viewAllAuthorizations.jsp"),
+        @Forward(name = "viewAllSessions", path = "/auth/viewAllSessions.jsp") })
 public class ExternalAppsDA extends FenixDispatchAction {
 
     private User getUser() {
@@ -109,6 +110,41 @@ public class ExternalAppsDA extends FenixDispatchAction {
         request.setAttribute("application", application);
 
         return mapping.findForward("viewApplicationDetails");
+    }
+
+    public ActionForward viewAllApplications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        Set<ExternalApplication> externalApplications = RootDomainObject.getInstance().getAppsSet();
+
+        request.setAttribute("application", externalApplications);
+
+        return mapping.findForward("viewAllApplications");
+    }
+
+    public ActionForward viewAllAuthorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ExternalApplication application = getDomainObject(request, "appOid");
+
+        Set<AppUserAuthorization> appUserAuthorization = application.getAppUserAuthorizationSet();
+
+        request.setAttribute("application", application);
+
+        request.setAttribute("userAuthorizations", appUserAuthorization);
+
+        return mapping.findForward("viewAllAuthorizations");
+    }
+
+    public ActionForward viewAllSessions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        AppUserAuthorization appUserAuthorization = getDomainObject(request, "session");
+
+        request.setAttribute("sessions", appUserAuthorization.getSessionSet());
+        request.setAttribute("appOid", appUserAuthorization.getApplication().getExternalId());
+
+        return mapping.findForward("viewAllSessions");
     }
 
     public ActionForward deleteApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
