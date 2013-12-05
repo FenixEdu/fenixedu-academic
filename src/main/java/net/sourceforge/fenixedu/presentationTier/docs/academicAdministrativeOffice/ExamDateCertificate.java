@@ -116,8 +116,10 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
     protected void fillReport() {
         super.fillReport();
         addDataSourceElements(getExamDateEntries());
+        fillEmployeeFields();
         addParameter("name", getDocumentRequest().getRegistration().getPerson().getName());
         addParameter("studentNumber", getStudentNumber());
+
     }
 
     private String getStudentNumber() {
