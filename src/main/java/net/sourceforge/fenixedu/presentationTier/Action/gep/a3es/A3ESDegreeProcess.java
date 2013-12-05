@@ -301,9 +301,7 @@ public class A3ESDegreeProcess implements Serializable {
 
                 JSONObject q6213 = new JSONObject();
                 String teachersAndTeachingHours = getTeachersAndTeachingHours(course, false);
-                q6213.put("en", teachersAndTeachingHours);
-                q6213.put("pt", teachersAndTeachingHours);
-                json.put("q-6.2.1.3", q6213);
+                json.put("q-6.2.1.3", teachersAndTeachingHours);
 
                 JSONObject q6214 = new JSONObject();
                 MultiLanguageString objectives = competence.getObjectivesI18N(executionSemester);
@@ -343,7 +341,7 @@ public class A3ESDegreeProcess implements Serializable {
                         references.add(extractReference(reference));
                     }
                 }
-                json.put("q-6.2.1.9", StringUtils.join(references, "; "));
+                json.put("q-6.2.1.9", cut("Referências Bibliográficas", StringUtils.join(references, "; "), output, 1000));
                 jsons.put(json, output.toString());
             }
         }
@@ -588,7 +586,9 @@ public class A3ESDegreeProcess implements Serializable {
 
                 if (qualifications.hasNext()) {
                     JSONArray academicArray = new JSONArray();
+                    int i = 0;
                     while (qualifications.hasNext()) {
+                        i++;
                         JSONObject academic = new JSONObject();
                         QualificationBean qualification = qualifications.next();
                         if (qualification.getYear() != null) {
@@ -616,6 +616,15 @@ public class A3ESDegreeProcess implements Serializable {
                         } else {
                             output.append(" Qualificações: rank vazio.");
                         }
+                        academicArray.add(academic);
+                    }
+                    for (int j = i; j < 3; j++) {
+                        JSONObject academic = new JSONObject();
+                            academic.put("year", StringUtils.EMPTY);
+                            academic.put("degree", StringUtils.EMPTY);
+                            academic.put("area", StringUtils.EMPTY);
+                            academic.put("ies", StringUtils.EMPTY);
+                            academic.put("rank", StringUtils.EMPTY);
                         academicArray.add(academic);
                     }
                     file.put("form-academic", academicArray);
