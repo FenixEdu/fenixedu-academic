@@ -19,7 +19,7 @@
 
 <html:xhtml/>
 
-<%-- Jury --%>
+<%-- Orientation --%>
 <h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.orientation"/></h3>
 
 <%
