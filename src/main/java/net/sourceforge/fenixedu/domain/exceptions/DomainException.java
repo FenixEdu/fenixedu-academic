@@ -1,33 +1,25 @@
 package net.sourceforge.fenixedu.domain.exceptions;
 
-public class DomainException extends RuntimeException {
+import javax.ws.rs.core.Response.Status;
 
-    private final String key;
+public class DomainException extends pt.ist.bennu.core.domain.exceptions.DomainException {
 
-    private final String[] args;
+    private static final String DEFAULT_BUNDLE = "resources.ApplicationResources";
 
     protected DomainException() {
         this(null, (String[]) null);
     }
 
     public DomainException(final String key, final String... args) {
-        super(key); // setting the message attribute
-        this.key = key;
-        this.args = args;
+        super(DEFAULT_BUNDLE, key, args);
+    }
+
+    public DomainException(Status status, String key, String... args) {
+        super(status, DEFAULT_BUNDLE, key, args);
     }
 
     public DomainException(final String key, final Throwable cause, final String... args) {
-        super(key, cause);
-        this.key = key;
-        this.args = args;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public String[] getArgs() {
-        return args;
+        super(cause, DEFAULT_BUNDLE, key, args);
     }
 
 }
