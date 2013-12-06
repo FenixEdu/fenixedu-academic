@@ -13,6 +13,9 @@ public abstract class StudentCycleInquiryTemplate extends StudentCycleInquiryTem
 
     public static StudentCycleInquiryTemplate getStudentCycleInquiryTemplate(Registration registration) {
         CycleType cycleType = registration.getCycleType(ExecutionYear.readCurrentExecutionYear());
+        if (cycleType == null) {
+            cycleType = registration.getDegree().getDegreeType().getLastOrderedCycleType();
+        }
         switch (cycleType) {
         case FIRST_CYCLE:
             return Student1rstCycleInquiryTemplate.getCurrentTemplate();
