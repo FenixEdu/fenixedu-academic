@@ -10,7 +10,9 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  * {@link ExpressionGroup}. Each context can define it's variables
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public interface GroupContext {
 
     /**

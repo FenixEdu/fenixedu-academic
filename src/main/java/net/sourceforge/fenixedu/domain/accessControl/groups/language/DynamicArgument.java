@@ -8,10 +8,12 @@ import java.util.List;
  * An argument that represents a dynamic value.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public abstract class DynamicArgument extends Argument {
 
-    private List<NestedProperty> properties;
+    private final List<NestedProperty> properties;
 
     public DynamicArgument() {
         super();

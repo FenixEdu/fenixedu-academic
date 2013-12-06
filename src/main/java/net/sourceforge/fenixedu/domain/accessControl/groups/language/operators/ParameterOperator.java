@@ -16,7 +16,9 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  * <code>$P(name) = "john smith"</code>
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public class ParameterOperator extends OperatorArgument {
 
     private static final long serialVersionUID = 1L;

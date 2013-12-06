@@ -5,7 +5,9 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language;
  * parts of the expression group.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public interface GroupContextProvider {
 
     /**

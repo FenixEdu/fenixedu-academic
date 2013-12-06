@@ -6,11 +6,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import pt.ist.bennu.core.domain.User;
 
+/**
+ * @deprecated Use Bennu Groups instead
+ */
+@Deprecated
 public final class GroupIntersection extends NodeGroup {
 
     private static final long serialVersionUID = 1L;

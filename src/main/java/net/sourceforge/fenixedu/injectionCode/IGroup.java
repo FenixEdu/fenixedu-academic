@@ -5,8 +5,8 @@ package net.sourceforge.fenixedu.injectionCode;
 
 import java.util.Set;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.Person;
+import pt.ist.bennu.core.domain.User;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
@@ -14,7 +14,10 @@ import net.sourceforge.fenixedu.domain.Person;
  * <br/>
  *         Created on 14:40:00,17/Fev/2006
  * @version $Id$
+ * 
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public interface IGroup {
 
     public int getElementsCount();

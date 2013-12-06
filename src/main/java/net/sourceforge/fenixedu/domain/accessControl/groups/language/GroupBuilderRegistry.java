@@ -115,7 +115,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
  * Keeps all the registered {@link GroupBuilder} by name.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public class GroupBuilderRegistry {
 
     private static final Logger logger = LoggerFactory.getLogger(GroupBuilderRegistry.class);

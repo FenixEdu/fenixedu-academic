@@ -4,12 +4,12 @@ import java.io.StringReader;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.NodeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupContextRequiredException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
+import pt.ist.bennu.core.domain.User;
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import antlr.TokenStreamRecognitionException;
@@ -26,7 +26,9 @@ import antlr.TokenStreamRecognitionException;
  * Note that because the group may require a context to be evaluated it cannot be easily combined with other groups.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public class ExpressionGroup extends Group implements GroupContextProvider {
 
     private static Logger logger = Logger.getLogger(ExpressionGroup.class.getName());
