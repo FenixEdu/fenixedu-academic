@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityCont
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
@@ -31,7 +32,7 @@ public class ExceptionInformation {
     private Throwable exception;
     private List<ThrowableInfo> flatExceptionStack;
     private String formattedStackTrace;
-    private String actionErrorClass;
+    private Class<? extends ActionMapping> actionErrorClass;
     private String actionErrorMethod;
     private String actionErrorFile;
     private String actionErrorLine;
@@ -79,6 +80,7 @@ public class ExceptionInformation {
         private boolean suppressed;
         private int level;
         private Throwable subject;
+        private List<ElementInfo> subjectInfo;
 
         public ThrowableInfo(boolean isCause, boolean isSurpressed, int level, Throwable subject) {
             super();
@@ -86,6 +88,7 @@ public class ExceptionInformation {
             this.suppressed = isSurpressed;
             this.level = level;
             this.subject = subject;
+            this.subjectInfo = getSubjectInfo(subject);
         }
 
         public boolean isCause() {
@@ -102,6 +105,18 @@ public class ExceptionInformation {
 
         public Throwable getSubject() {
             return subject;
+        }
+
+        public List<ElementInfo> getSubjectInfo() {
+            return subjectInfo;
+        }
+
+        private static List<ElementInfo> getSubjectInfo(Throwable subject) {
+            List<ElementInfo> subjectInfo = new ArrayList<>();
+            for (StackTraceElement element : subject.getStackTrace()) {
+                subjectInfo.add(new ElementInfo(element));
+            }
+            return subjectInfo;
         }
 
         public static List<ThrowableInfo> getFlatThrowableInfoList(Throwable t) {
@@ -121,6 +136,79 @@ public class ExceptionInformation {
             }
             return list;
         }
+
+    }
+
+    public static class ElementInfo {
+        private final StackTraceElement element;
+        private boolean isExternalClass;
+        private final String simpleClassName;
+        private final String methodName;
+        private final String packageName;
+        private final int line;
+        private final boolean isNative;
+        private final String fileName;
+
+        public ElementInfo(StackTraceElement element) {
+            this.element = element;
+            this.simpleClassName = getSimpleClassName(element.getClassName());
+            this.packageName = getPackageName(element.getClassName());
+            this.isExternalClass = isExternalClass(element.getClassName());
+            this.methodName = element.getMethodName();
+            this.line = element.getLineNumber();
+            this.isNative = element.isNativeMethod();
+            this.fileName = element.getFileName();
+        }
+
+        private boolean isExternalClass(String className) {
+            return StringUtils.startsWith(className, "net.sourceforge.fenixedu") || StringUtils.startsWith(className, "pt.ist");
+        }
+
+        private String getSimpleClassName(String className) {
+            String[] parse = StringUtils.split(className, ".");
+            return parse[parse.length - 1];
+        }
+
+        private String getPackageName(String className) {
+            return className.substring(0, className.lastIndexOf("."));
+        }
+
+        public StackTraceElement getElement() {
+            return element;
+        }
+
+        public boolean isExternalClass() {
+            return isExternalClass;
+        }
+
+        public void setExternalClass(boolean isExternalClass) {
+            this.isExternalClass = isExternalClass;
+        }
+
+        public String getSimpleClassName() {
+            return simpleClassName;
+        }
+
+        public String getMethodName() {
+            return methodName;
+        }
+
+        public String getPackageName() {
+            return packageName;
+        }
+
+        public int getLine() {
+            return line;
+        }
+
+        public boolean isNative() {
+            return isNative;
+        }
+
+        public String getFileName() {
+            return fileName;
+        }
+
     }
 
     //this method is does too much for non-debug applications. sloowww.
@@ -168,9 +256,9 @@ public class ExceptionInformation {
 
         ActionMapping mapping = info.getActionMapping();
         if (mapping != null) {
-            info.setActionErrorClass(mapping.getType());
+            info.setActionErrorClass(mapping.getClass());
             info.setActionErrorMethod(mapping.getParameter().equals("method") ? info.getQueryParameters().get("method") : "execute");
-            String getString = info.getActionErrorClass() + "." + info.getActionErrorMethod();
+            String getString = mapping.getType() + "." + info.getActionErrorMethod();
             String actionError = formattedST.substring(formattedST.indexOf(getString));
             actionError = actionError.substring(0, actionError.indexOf("\n"));
 
@@ -491,7 +579,7 @@ public class ExceptionInformation {
         this.actionErrorLine = actionErrorLine;
     }
 
-    public String getActionErrorClass() {
+    public Class<? extends ActionMapping> getActionErrorClass() {
         return actionErrorClass;
     }
 
@@ -503,7 +591,7 @@ public class ExceptionInformation {
         return actionErrorFile;
     }
 
-    private void setActionErrorClass(String actionErrorClass) {
+    private void setActionErrorClass(Class<? extends ActionMapping> actionErrorClass) {
         this.actionErrorClass = actionErrorClass;
     }
 

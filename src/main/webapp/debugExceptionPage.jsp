@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation"%>
 <%@page language="java" %>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <%@page import="org.apache.struts.Globals"%>
@@ -9,7 +10,6 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
 <html>
-
 
 <head>
 	<title>
@@ -42,11 +42,11 @@
    		<table>
 			<tr>
 				<td>Exception Description:</td>
-				<td><!--
+				<td style="font-size: 15px;"><!--
 					--><span class="traceException"><!--
 						--><span class="traceExceptionClassLabel"><!--
-							--><span class="traceExceptionClass"><bean:write name="exceptionClass" property="name"/></span><!--
-							-->:<!--
+							--><span class="traceExceptionClassPackage"><bean:write name="exceptionClass" property="package.name"/>.</span><!--
+							--><span class="traceExceptionClassName"><bean:write name="exceptionClass" property="simpleName"/></span><!--
 						--></span><!-- 
 						--><span class="traceExceptionMessage"><bean:write name="exception" property="localizedMessage"/></span><!--
 					--></span><!--
@@ -54,12 +54,14 @@
 			</tr>
 			<tr>
 				<td>Thrown at:</td>
-				<td><!--
+				<td style="font-size: 15px;"><!--
 				--><logic:present name="debugExceptionInfo" property="actionMapping"><!-- 
 					--><span class="traceLine level0"><!-- 
 						--><span class="traceLocation"><!--
 							--><span class="javaLocation"><!--
-								--><span class="className"><bean:write name="debugExceptionInfo" property="actionErrorClass"/></span><!--
+								--><span class="classPackage"><bean:write name="debugExceptionInfo" property="actionErrorClass.package.name"/></span><!--
+								-->.<!--
+								--><span class="className"><bean:write name="debugExceptionInfo" property="actionErrorClass.simpleName"/></span><!--
 								-->.<!--
 								--><span class="methodName"><bean:write name="debugExceptionInfo" property="actionErrorMethod"/></span><!--
 							--></span><!--
@@ -278,9 +280,9 @@
 				<bean:define id="cause" name="exceptionInfo" property="cause"/>
 				<bean:define id="suppressed" name="exceptionInfo" property="suppressed"/>
 				<bean:define id="level" name="exceptionInfo" property="level"/>
-				<bean:define id="exception" name="exceptionInfo" property="subject"/>
-				<bean:define id="stackTrace" name="exception" property="stackTrace"/>
-				<bean:define id="exceptionClass" name="exception" property="class"/>
+<%-- 				<bean:define id="exception" name="exceptionInfo" property="subject"/> --%>
+				<bean:define id="stackTrace" name="exceptionInfo" property="subjectInfo"/>
+				<bean:define id="exceptionClass" name="exceptionInfo" property="subject.class"/>
 				
 				<span class="traceFirstLine level<bean:write name="level"/>"><!--
 					--><span class="traceLineRole"><!--
@@ -305,27 +307,41 @@
 					--></span><!--
 					--><span class="traceException"><!--
 						--><span class="traceExceptionClassLabel"><!--
-							--><span class="traceExceptionClass"><bean:write name="exceptionClass" property="name"/></span><!--
+							--><span class="traceExceptionClassPackage"><bean:write name="exceptionClass" property="package.name"/><!--
+							-->.<!--
+							--><span class="traceExceptionClass"><bean:write name="exceptionClass" property="simpleName"/></span><!--
 							-->:<!--
 						--></span><!-- 
 						--><span class="traceExceptionMessage"><bean:write name="exception" property="localizedMessage"/></span><!--
 					--></span><!--
 				--></span>
 				<br/>
+		
 				<logic:iterate name="stackTrace" id="element">
+				
 					<span class="traceLine level<bean:write name="level"/>"><!--
+					
+						--><logic:equal name="element" property="externalClass" value="false"><!--
+							--><span class="externalException"><!--
+						--></logic:equal><!--
+					
 						--><span class="traceLineRole"><!--
 							--><span class="locationText <bean:write name="role"/>Indent">at</span><!--
 							-->:<!--
 						--></span><!-- 
+
 						--><span class="traceLocation"><!--
-							--><bean:define id="line" name="element" property="lineNumber"/><!--
-							--><bean:define id="isNative" name="element" property="nativeMethod"/><!--
+							--><bean:define id="line" name="element" property="line"/><!--
+							--><bean:define id="isNative" name="element" property="native"/><!--
+							
 							--><span class="javaLocation"><!--
-								--><span class="className"><bean:write name="element" property="className"/></span><!--
+								--><span class="classPackage"><bean:write name="element" property="packageName"/></span><!--
+								-->.<!--
+								--><span class="className"><bean:write name="element" property="simpleClassName"/></span><!--
 								-->.<!--
 								--><span class="methodName"><bean:write name="element" property="methodName"/></span><!--
 							--></span><!--
+							
 							-->(<!--
 							--><span class="fileLocation"><!--
 								--><logic:notEmpty name="element" property="fileName"><!--
@@ -345,7 +361,11 @@
 								--></logic:empty><!--
 							--></span><!--
 							-->)<!--
+							
 						--></span><!--
+						--><logic:equal name="element" property="externalClass" value="true"><!--
+							--></span><!--
+						--></logic:equal><!--
 					--></span>
 					<br/>
 				</logic:iterate>
