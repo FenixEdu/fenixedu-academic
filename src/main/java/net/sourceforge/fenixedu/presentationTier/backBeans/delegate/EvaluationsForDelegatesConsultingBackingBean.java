@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.PeriodState;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -138,7 +139,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 
     public CurricularYear getCurricularYear() {
         final String curricularYearID = getCurricularYearID();
-        if (curricularYearID != null) {
+        if (!StringUtils.isEmpty(curricularYearID)) {
             return FenixFramework.getDomainObject(curricularYearID);
         } else {
             return null;
@@ -273,7 +274,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
     private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse) {
         final Map<String, String> linkParameters = new HashMap<String, String>();
         linkParameters.put("method", "evaluations");
-        linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
+        linkParameters.put("executionCourseID", executionCourse.getExternalId());
         return linkParameters;
     }
 
