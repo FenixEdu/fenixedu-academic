@@ -13,11 +13,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.util.ConfigurationManager;
-import pt.ist.bennu.core.util.ConfigurationManager.CasConfig;
+import pt.ist.bennu.core.util.CoreConfiguration;
+import pt.ist.bennu.core.util.CoreConfiguration.CasConfig;
 
 public class CASFilter implements Filter {
 
@@ -28,18 +28,12 @@ public class CASFilter implements Filter {
             if (pendingRequest == null) {
                 pendingRequest = (String) request.getAttribute("pendingRequest");
             }
-            final String barraAsAuthBroker = ConfigurationManager.getProperty("barra.as.authentication.broker");
-            final boolean useBarraAsAuthenticationBroker = barraAsAuthBroker != null && barraAsAuthBroker.equals("true");
-            final String serviceString = encodeUrl(RequestUtils.generateRedirectLink(casConfig.getServiceUrl(), pendingRequest));
-            String casLoginUrl = "";
-            if (useBarraAsAuthenticationBroker) {
-                final String barraLoginUrl = ConfigurationManager.getProperty("barra.loginUrl");
-                casLoginUrl += barraLoginUrl;
-                casLoginUrl += "?next=";
+            final String service = encodeUrl(RequestUtils.generateRedirectLink(casConfig.getCasServiceUrl(), pendingRequest));
+            String casLoginUrl = casConfig.getCasLoginUrl(service);
+            if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) {
+                casLoginUrl = FenixConfigurationManager.getConfiguration().barraLoginUrl() + "?next=" + casLoginUrl;
             }
-            casLoginUrl += casConfig.getCasLoginUrl();
-            final String casLoginString = casLoginUrl + "?service=" + serviceString;
-            response.sendRedirect(casLoginString);
+            response.sendRedirect(casLoginUrl);
         } else {
             response.sendRedirect(request.getContextPath() + "/home.do");
         }
@@ -61,7 +55,7 @@ public class CASFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        final CasConfig casConfig = ConfigurationManager.getCasConfig();
+        final CasConfig casConfig = CoreConfiguration.casConfig();
         if (casConfig != null && casConfig.isCasEnabled()) {
             if (!isHttpResource(servletRequest, servletResponse)) {
                 throw new ServletException("CASFilter only applies to HTTP resources");

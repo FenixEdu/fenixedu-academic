@@ -244,8 +244,8 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         sendSubmissionEmailForCandidacy(hashCode, request);
 
         String url =
-                String.format("%s?hash=%s", EPFLPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(),
-                        hashCode.getValue());
+                String.format("%s?hash=%s", EPFLPhdCandidacyProcessProperties.getConfiguration()
+                        .getPublicCandidacySubmissionLink(), hashCode.getValue());
 
         request.setAttribute("processLink", url);
 
@@ -256,8 +256,8 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
         final String subject = bundle.getString("message.phd.epfl.application.email.subject.send.link.to.submission");
         final String body = bundle.getString("message.phd.epfl.email.body.send.link.to.submission");
-        hashCode.sendEmail(subject,
-                String.format(body, EPFLPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(), hashCode.getValue()));
+        hashCode.sendEmail(subject, String.format(body, EPFLPhdCandidacyProcessProperties.getConfiguration()
+                .getPublicCandidacySubmissionLink(), hashCode.getValue()));
     }
 
     public ActionForward prepareCandidacyIdentificationRecovery(ActionMapping mapping, ActionForm form,
@@ -294,10 +294,8 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
         final String subject = bundle.getString("message.phd.email.subject.recovery.access");
         final String body = bundle.getString("message.phd.epfl.email.body.recovery.access");
-        candidacyHashCode.sendEmail(
-                subject,
-                String.format(body, EPFLPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(),
-                        candidacyHashCode.getValue()));
+        candidacyHashCode.sendEmail(subject, String.format(body, EPFLPhdCandidacyProcessProperties.getConfiguration()
+                .getPublicCandidacyAccessLink(), candidacyHashCode.getValue()));
     }
 
     public ActionForward prepareCreateCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -669,7 +667,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         final String subject = bundle.getString("message.phd.epfl.email.subject.application.submited");
         final String body = bundle.getString("message.phd.epfl.email.body.application.submited");
         hashCode.sendEmail(subject, String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(),
-                EPFLPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(), hashCode.getValue()));
+                EPFLPhdCandidacyProcessProperties.getConfiguration().getPublicCandidacyAccessLink(), hashCode.getValue()));
     }
 
     private void clearDocumentsInformation(final PhdProgramCandidacyProcessBean bean) {

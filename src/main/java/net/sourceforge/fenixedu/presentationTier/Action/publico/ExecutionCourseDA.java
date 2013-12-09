@@ -58,9 +58,9 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.DomainObject;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ExecutionCourseDA extends SiteVisualizationDA {
@@ -210,7 +210,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
             return true;
         }
 
-        if (!Authenticate.hasUser()) { //public access
+        if (!Authenticate.isLogged()) { //public access
             return false;
         }
 

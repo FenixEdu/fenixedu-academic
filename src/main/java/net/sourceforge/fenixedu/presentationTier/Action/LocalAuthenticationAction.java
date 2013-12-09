@@ -11,8 +11,8 @@ import org.apache.struts.action.ActionForm;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.exceptions.AuthorizationException;
 import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.util.ConfigurationManager;
-import pt.ist.bennu.core.util.ConfigurationManager.CasConfig;
+import pt.ist.bennu.core.util.CoreConfiguration;
+import pt.ist.bennu.core.util.CoreConfiguration.CasConfig;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/login", formBeanClass = AuthenticationForm.class)
@@ -53,7 +53,7 @@ public class LocalAuthenticationAction extends BaseAuthenticationAction {
 
     @Override
     protected User doAuthentication(ActionForm form, HttpServletRequest request) {
-        final CasConfig casConfig = ConfigurationManager.getCasConfig();
+        final CasConfig casConfig = CoreConfiguration.casConfig();
         if (casConfig != null && casConfig.isCasEnabled()) {
             throw AuthorizationException.authenticationFailed();
         }

@@ -12,15 +12,15 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
 
 @WebFilter(urlPatterns = "/api/fenix/services/*")
 public class JerseyAuthFilter implements Filter {
 
-    final static String systemUsername = ConfigurationManager.getProperty("jersey.username");
-    final static String systemPassword = ConfigurationManager.getProperty("jersey.password");
+    final static String systemUsername = FenixConfigurationManager.getConfiguration().getJerseyUsername();
+    final static String systemPassword = FenixConfigurationManager.getConfiguration().getJerseyPassword();
     final static String USERNAME_KEY = "__username__";
     final static String PASSWORD_KEY = "__password__";
 

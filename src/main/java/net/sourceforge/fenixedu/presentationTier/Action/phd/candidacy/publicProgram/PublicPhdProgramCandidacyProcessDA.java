@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -21,10 +22,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.ConfigurationManager;
 
 public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
-    private static final String SIBS_ENTITY_CODE = ConfigurationManager.getProperty("sibs.entityCode");
+    private static final String SIBS_ENTITY_CODE = FenixConfigurationManager.getConfiguration().getSibsEntityCode();
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

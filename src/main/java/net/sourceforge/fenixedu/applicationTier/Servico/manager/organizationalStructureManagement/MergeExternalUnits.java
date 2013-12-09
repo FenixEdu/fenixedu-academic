@@ -6,18 +6,18 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class MergeExternalUnits {
@@ -35,7 +35,7 @@ public class MergeExternalUnits {
 
             if (sendMail != null && sendMail.booleanValue()) {
 
-                String emails = ConfigurationManager.getProperty("merge.units.emails");
+                String emails = FenixConfigurationManager.getConfiguration().getMergeUnitsEmails();
                 if (!StringUtils.isEmpty(emails)) {
 
                     Set<String> resultEmails = new HashSet<String>();

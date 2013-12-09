@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -16,21 +17,17 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "external", path = "/connect", scope = "request", parameter = "method")
 public class ISTConnectDA extends ExternalInterfaceDispatchAction {
 
-    private static final String USERNAME_KEY = "externalServices.ISTConnect.username";
-    private static final String PASSWORD_KEY = "externalServices.ISTConnect.password";
-
     private boolean doLogin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         final String username = (String) getFromRequest(request, "username");
         final String password = (String) getFromRequest(request, "password");
-        final String usernameProp = ConfigurationManager.getProperty(USERNAME_KEY);
-        final String passwordProp = ConfigurationManager.getProperty(PASSWORD_KEY);
+        final String usernameProp = FenixConfigurationManager.getConfiguration().getExternalServicesISTConnectUsername();
+        final String passwordProp = FenixConfigurationManager.getConfiguration().getExternalServicesISTConnectPassword();
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(usernameProp)
                 || StringUtils.isEmpty(passwordProp)) {
             return false;

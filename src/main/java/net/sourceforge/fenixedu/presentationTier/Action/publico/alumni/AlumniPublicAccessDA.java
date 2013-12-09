@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.ist.bennu.core.util.CoreConfiguration;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -205,7 +205,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
             if (!request.getServerName().equals("localhost")) {
                 email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
                 email.send("alumni@ist.utl.pt", "Erro Registo Alumni", mailBody.toString());
-                if (ConfigurationManager.getBooleanProperty("development.mode", false)) {
+                if (CoreConfiguration.getConfiguration().developmentMode()) {
                     System.out.println("send email to alumni@ist.utl.pt with subject Erro Registo Alumni and body : "
                             + mailBody.toString());
                 }

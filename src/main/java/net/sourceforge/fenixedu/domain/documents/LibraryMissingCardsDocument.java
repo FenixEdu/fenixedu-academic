@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.ist.bennu.core.util.CoreConfiguration;
 import pt.ist.fenixframework.Atomic;
 
 public class LibraryMissingCardsDocument extends LibraryMissingCardsDocument_Base {
@@ -32,7 +32,7 @@ public class LibraryMissingCardsDocument extends LibraryMissingCardsDocument_Bas
 
     @Atomic
     public static void store(List<LibraryCard> source, Person operator, byte[] content) {
-        if (ConfigurationManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE, false)) {
+        if (!CoreConfiguration.getConfiguration().developmentMode()) {
             DateTime time = new DateTime();
             new LibraryMissingCardsDocument(source, operator, "missing_cards_" + time.toString("yMd_kms") + ".pdf", content);
         }

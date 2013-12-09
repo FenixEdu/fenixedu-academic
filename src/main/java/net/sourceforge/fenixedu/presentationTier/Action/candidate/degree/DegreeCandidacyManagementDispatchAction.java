@@ -13,8 +13,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.ExecuteStateOperation;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -38,6 +36,7 @@ import net.sourceforge.fenixedu.domain.util.workflow.Form;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -48,6 +47,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
@@ -197,7 +197,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
                     "firstInstallmentEndDate",
                     calculateFirstInstallmentEndDate(candidacy.getRegistration(), getCandidacy(request)
                             .getAvailablePaymentCodes()));
-            request.setAttribute("sibsEntityCode", ConfigurationManager.getProperty("sibs.entityCode"));
+            request.setAttribute("sibsEntityCode", FenixConfigurationManager.getConfiguration().getSibsEntityCode());
 
             final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(candidacy.getRegistration(), null);
             request.setAttribute("infoLessons", infoLessons);
@@ -222,7 +222,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_GRATUITY_PAYMENT_CODES) {
             request.setAttribute("registration", getCandidacy(request).getRegistration());
             request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
-            request.setAttribute("sibsEntityCode", ConfigurationManager.getProperty("sibs.entityCode"));
+            request.setAttribute("sibsEntityCode", FenixConfigurationManager.getConfiguration().getSibsEntityCode());
             request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
                     administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodes()));
             request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)

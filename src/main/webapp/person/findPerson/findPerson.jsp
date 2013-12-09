@@ -5,6 +5,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/collection-pager" prefix="cp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
+<%@ page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <script type="text/javascript">
@@ -316,8 +317,7 @@ function check(e,v){
 					<logic:equal name="personalInfo" property="homePageAvailable"
 						value="true">
 						<%
-						    final String appContext = pt.ist.bennu.core.util.ConfigurationManager
-										.getProperty("app.context");
+						    final String appContext = FenixConfigurationManager.getConfiguration().appContext();
 						%>
 						<%
 						    final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";

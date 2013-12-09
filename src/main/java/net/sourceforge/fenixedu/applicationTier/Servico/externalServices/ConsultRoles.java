@@ -6,8 +6,8 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixframework.Atomic;
 
 public class ConsultRoles {
@@ -18,14 +18,14 @@ public class ConsultRoles {
     private static final Set<String> allowedHosts = new HashSet<String>();
     private static final String password;
     static {
-        final String allowedHostString = ConfigurationManager.getProperty("consult.roles.admin.allowed.hosts");
+        final String allowedHostString = FenixConfigurationManager.getConfiguration().getConsultRolesAdminAllowedHosts();
         if (allowedHostString != null) {
             final String[] allowedHostTokens = allowedHostString.split(",");
             for (String allowedHostToken : allowedHostTokens) {
                 allowedHosts.add(allowedHostToken);
             }
         }
-        password = ConfigurationManager.getProperty("consult.roles.admin.password");
+        password = FenixConfigurationManager.getConfiguration().getConsultRolesAdminPassword();
     }
 
     public static boolean isAllowed(final String host, final String ip, final String password) {

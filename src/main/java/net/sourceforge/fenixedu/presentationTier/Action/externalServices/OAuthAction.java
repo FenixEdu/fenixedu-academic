@@ -243,7 +243,7 @@ public class OAuthAction extends FenixDispatchAction {
 
             OAuthResponse r =
                     OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
-                            .setExpiresIn(OAuthProperties.getAccessTokenExpirationSeconds().toString()).buildJSONMessage();
+                            .setExpiresIn(OAuthProperties.getConfiguration().getAccessTokenExpirationSeconds().toString()).buildJSONMessage();
 
             return sendOAuthResponse(response, r);
         } catch (FenixOAuthTokenException fote) {
@@ -296,7 +296,7 @@ public class OAuthAction extends FenixDispatchAction {
 
             r =
                     OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
-                            .setExpiresIn(OAuthProperties.getAccessTokenExpirationSeconds().toString())
+                            .setExpiresIn(OAuthProperties.getConfiguration().getAccessTokenExpirationSeconds().toString())
                             .setRefreshToken(refreshToken).buildJSONMessage();
         } else {
             r = getOAuthProblemResponse(SC_BAD_REQUEST, OAuthError.TokenResponse.INVALID_GRANT, "Code expired");

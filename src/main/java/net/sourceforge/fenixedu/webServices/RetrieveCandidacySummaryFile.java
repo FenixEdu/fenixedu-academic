@@ -4,20 +4,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCa
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
 import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;
 
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.ConfigurationManager;
 
 public class RetrieveCandidacySummaryFile implements IRetrieveCandidacySummaryFile {
     private static final String storedPassword;
     private static final String storedUsername;
 
     static {
-        storedUsername = ConfigurationManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
-        storedPassword = ConfigurationManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
+        storedUsername = FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementGetPersonInformationUsername();
+        storedPassword = FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementGetPersonInformationPassword();
     }
 
     @Override

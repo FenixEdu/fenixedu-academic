@@ -1,25 +1,68 @@
 package net.sourceforge.fenixedu.util.phd;
 
 import java.util.Locale;
+import java.util.Map;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.bennu.core.annotation.ConfigurationManager;
+import pt.ist.bennu.core.annotation.ConfigurationProperty;
+import pt.ist.bennu.core.util.ConfigurationInvocationHandler;
+
 public class InstitutionPhdCandidacyProcessProperties {
+    @ConfigurationManager(description = "Phd Institution Public Candidacy Properties")
+    public interface ConfigurationProperties {
+        @ConfigurationProperty(key = "phd.institution.public.candidacy.access.link.*")
+        public Map<String, String> phdInstitutionPublicCandidacyAccessLink();
 
-    static private final long serialVersionUID = 1L;
+        @ConfigurationProperty(key = "phd.institution.public.candidacy.submission.link.*")
+        public Map<String, String> phdInstitutionPublicCandidacySubmissionLink();
 
-    static private String getProperty(final String key) {
-        return ConfigurationManager.getProperty(key);
+        @ConfigurationProperty(key = "phd.institution.public.candidacy.referee.form.link.*")
+        public Map<String, String> phdInstitutionPublicCandidacyRefereeFormLink();
+
+        @ConfigurationProperty(key = "phd.public.external.access.link")
+        public String phdPublicExternalAccessLink();
     }
 
     static public String getPublicCandidacyAccessLink(final Locale locale) {
+        return getConfiguration().phdInstitutionPublicCandidacyAccessLink().get(readCountryCode(locale));
+    }
+
+    static public String getPublicCandidacySubmissionLink(final Locale locale) {
+        return getConfiguration().phdInstitutionPublicCandidacySubmissionLink().get(readCountryCode(locale));
+    }
+
+    static public String getPublicCandidacyRefereeFormLink(final Locale locale) {
+        return getConfiguration().phdInstitutionPublicCandidacyRefereeFormLink().get(readCountryCode(locale));
+    }
+
+    static public String getPhdExternalAccessLink() {
+        return getConfiguration().phdPublicExternalAccessLink();
+    }
+
+    static public String getPublicCandidacyAccessLink(PhdProgramPublicCandidacyHashCode candidacyProcessHashCode,
+            final Locale locale) {
+
         String countryCode = readCountryCode(locale);
 
-        return getProperty("phd.institution.public.candidacy.access.link." + countryCode);
+        String url =
+                String.format("%s?hash=%s&locale=", getPublicCandidacyAccessLink(locale), candidacyProcessHashCode.getValue());
+
+        if ("PT".equals(countryCode)) {
+            return url + "pt_PT";
+        } else if ("EN".equals(countryCode)) {
+            return url + "en_EN";
+        }
+
+        throw new DomainException("unable to build url");
+    }
+
+    public static ConfigurationProperties getConfiguration() {
+        return ConfigurationInvocationHandler.getConfiguration(ConfigurationProperties.class);
     }
 
     static private String readCountryCode(final Locale locale) {
@@ -38,38 +81,5 @@ public class InstitutionPhdCandidacyProcessProperties {
         }
 
         return "PT";
-    }
-
-    static public String getPublicCandidacySubmissionLink(final Locale locale) {
-        String countryCode = readCountryCode(locale);
-
-        return getProperty("phd.institution.public.candidacy.submission.link." + countryCode);
-    }
-
-    static public String getPublicCandidacyRefereeFormLink(final Locale locale) {
-        String countryCode = readCountryCode(locale);
-
-        return getProperty("phd.institution.public.candidacy.referee.form.link." + countryCode);
-    }
-
-    static public String getPhdExternalAccessLink() {
-        return getProperty("phd.public.external.access.link");
-    }
-
-    static public String getPublicCandidacyAccessLink(PhdProgramPublicCandidacyHashCode candidacyProcessHashCode,
-            final Locale locale) {
-
-        String countryCode = readCountryCode(locale);
-
-        String url =
-                String.format("%s?hash=%s&locale=", getPublicCandidacyAccessLink(locale), candidacyProcessHashCode.getValue());
-
-        if ("PT".equals(countryCode)) {
-            return url + "pt_PT";
-        } else if ("EN".equals(countryCode)) {
-            return url + "en_EN";
-        }
-
-        throw new DomainException("unable to build url");
     }
 }

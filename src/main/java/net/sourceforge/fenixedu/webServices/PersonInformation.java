@@ -4,12 +4,12 @@
 package net.sourceforge.fenixedu.webServices;
 
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationBean;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;
 
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.ConfigurationManager;
 
 public class PersonInformation implements IPersonInformation {
 
@@ -18,8 +18,10 @@ public class PersonInformation implements IPersonInformation {
     private static final String storedUsername;
 
     static {
-        storedUsername = ConfigurationManager.getProperty("webServices.PersonInformation.getPersonInformation.username");
-        storedPassword = ConfigurationManager.getProperty("webServices.PersonInformation.getPersonInformation.password");
+        storedUsername =
+                FenixConfigurationManager.getConfiguration().getWebServicesPersonInformationGetPersonInformationUsername();
+        storedPassword =
+                FenixConfigurationManager.getConfiguration().getWebServicesPersonInformationGetPersonInformationPassword();
     }
 
     @Override
@@ -37,7 +39,7 @@ public class PersonInformation implements IPersonInformation {
         }
 
         // check hosts accessing this service
-        //	if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
+        //	if (!FenixConfigurationManager.getHostAccessControl().isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
         //	    throw new NotAuthorizedException();
         //	}
     }

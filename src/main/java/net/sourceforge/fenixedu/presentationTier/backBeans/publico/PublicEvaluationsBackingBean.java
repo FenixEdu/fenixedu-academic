@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.faces.model.SelectItem;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -30,6 +29,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
@@ -318,7 +318,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     }
 
     public String getApplicationContext() {
-        final String appContext = ConfigurationManager.getProperty("app.context");
+        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
         return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
     }
 

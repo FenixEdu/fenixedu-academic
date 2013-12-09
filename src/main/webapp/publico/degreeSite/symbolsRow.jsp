@@ -1,6 +1,6 @@
-<%@page import="pt.ist.bennu.core.util.ConfigurationManager"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <bean:define id="fenixUrl" type="java.lang.String"><bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/></bean:define>
@@ -12,7 +12,7 @@
 	</a>
 </div>
 
-<% if (!ConfigurationManager.getBooleanProperty("barra.as.authentication.broker", false)) { %>
+<% if (!FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 <div id="header_links">
 	<a href="<%= fenixUrl %>/loginPage.jsp">Login .IST<!--bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/--></a>
 	| <a href="<%= institutionUrl %>/pt/sobre-IST/contacto">Contactos</a>

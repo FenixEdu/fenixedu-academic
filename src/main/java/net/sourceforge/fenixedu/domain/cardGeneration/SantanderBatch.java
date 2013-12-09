@@ -11,13 +11,13 @@ import java.util.zip.ZipOutputStream;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.core.util.ConfigurationManager;
+import edu.emory.mathcs.backport.java.util.Collections;
 
 public class SantanderBatch extends SantanderBatch_Base {
 
@@ -89,7 +89,7 @@ public class SantanderBatch extends SantanderBatch_Base {
             visibleLine += SantanderSequenceNumberGenerator.decodeSantanderPIN(entryLine.getPerson().getSantanderPIN());
 
             // Update line with the institutions own PIN
-            visibleLine += ConfigurationManager.getProperty("app.institution.PIN");
+            visibleLine += FenixConfigurationManager.getConfiguration().appInstitutionPIN();
 
             visibleLine += line.substring(315);
 

@@ -9,9 +9,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixframework.Atomic;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.ist.fenixframework.Atomic;
 
 public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGenerator_Base {
 
@@ -55,7 +55,7 @@ public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGen
         String pin = generatePIN(4);
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
-            byte[] secret = ConfigurationManager.getProperty("app.institution.AES128.secretKey").getBytes("UTF-8");
+            byte[] secret = FenixConfigurationManager.getConfiguration().appInstitutionAES128SecretKey().getBytes("UTF-8");
             SecretKey key = new SecretKeySpec(secret, "AES");
             cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(new byte[cipher.getBlockSize()]));
             byte[] cipheredPIN = cipher.doFinal(pin.getBytes("UTF-8"));
@@ -68,7 +68,7 @@ public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGen
     public static String decodeSantanderPIN(SantanderPIN santanderPIN) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
-            byte[] secret = ConfigurationManager.getProperty("app.institution.AES128.secretKey").getBytes("UTF-8");
+            byte[] secret = FenixConfigurationManager.getConfiguration().appInstitutionAES128SecretKey().getBytes("UTF-8");
             SecretKey key = new SecretKeySpec(secret, "AES");
             cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(new byte[cipher.getBlockSize()]));
             byte[] decipheredPIN = cipher.doFinal(santanderPIN.getEncryptedPINAsByteArray());
@@ -77,5 +77,4 @@ public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGen
             throw new DomainException("santanderPINGenerator.errorDecipheringPIN", e);
         }
     }
-
 }

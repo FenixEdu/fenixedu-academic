@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MenuEntry;
@@ -17,7 +16,7 @@ import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -55,7 +54,8 @@ public class CreateContentsContextAction extends FenixAction {
     }
 
     private void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.sendRedirect(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()));
+        response.sendRedirect(FenixConfigurationManager.getHostRedirector().getRedirectPageLogin(
+                request.getRequestURL().toString()));
     }
 
     protected ActionForward menuActionForward(Content content, HttpServletRequest request) {

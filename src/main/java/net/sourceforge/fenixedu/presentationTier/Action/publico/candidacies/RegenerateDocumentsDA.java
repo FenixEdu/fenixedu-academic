@@ -12,7 +12,6 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.security.UserSession;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -25,10 +24,10 @@ public class RegenerateDocumentsDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         try {
             User user = User.findByUsername("ist24439");
-            Authenticate.setUser(user);
+            Authenticate.mock(user);
             return new DegreeCandidacyManagementDispatchAction().doOperation(mapping, form, request, response);
         } finally {
-            Authenticate.setUser((UserSession) null);
+            Authenticate.unmock();
         }
     }
 

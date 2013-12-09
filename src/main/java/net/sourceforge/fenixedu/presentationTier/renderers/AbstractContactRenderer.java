@@ -88,10 +88,10 @@ public abstract class AbstractContactRenderer extends OutputRenderer {
     }
 
     private boolean isVisible(PartyContact contact, boolean publicSpace) {
-        if (!Authenticate.hasUser() && publicSpace && contact.getVisibleToPublic().booleanValue()) {
+        if (!Authenticate.isLogged() && publicSpace && contact.getVisibleToPublic().booleanValue()) {
             return true;
         }
-        if (Authenticate.hasUser()) {
+        if (Authenticate.isLogged()) {
             User user = Authenticate.getUser();
             Person reader = user.getPerson();
             if (reader.hasRole(RoleType.CONTACT_ADMIN).booleanValue() || reader.hasRole(RoleType.MANAGER).booleanValue()

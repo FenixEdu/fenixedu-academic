@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+import pt.ist.bennu.core.domain.Bennu;
 
 public abstract class DebtsFile extends DebtsFile_Base {
 
@@ -25,9 +25,9 @@ public abstract class DebtsFile extends DebtsFile_Base {
     protected static final String DESTINATION_INSTITUTION_ID;
 
     static {
-        ENTITY_CODE = ConfigurationManager.getProperty("sibs.entityCode");
-        SOURCE_INSTITUTION_ID = ConfigurationManager.getProperty("sibs.sourceInstitutionId");
-        DESTINATION_INSTITUTION_ID = ConfigurationManager.getProperty("sibs.destinationInstitutionId");
+        ENTITY_CODE = FenixConfigurationManager.getConfiguration().getSibsEntityCode();
+        SOURCE_INSTITUTION_ID = FenixConfigurationManager.getConfiguration().getSibsSourceInstitutionId();
+        DESTINATION_INSTITUTION_ID = FenixConfigurationManager.getConfiguration().getSibsDestinationInstitutionId();
     }
 
     public DebtsFile() {

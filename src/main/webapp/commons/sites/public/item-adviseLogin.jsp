@@ -46,12 +46,12 @@
     <p>
         <em><bean:message key="message.item.view.mustLogin" bundle="SITE_RESOURCES"/></em>
         <%
-			if (pt.ist.bennu.core.util.ConfigurationManager.getCasConfig().isCasEnabled()) {
-			    final String schema = request.getScheme();
-			    final String server = request.getServerName();
-			    final int port = request.getServerPort();
-		%>
-				<a href="<%= "https://barra.ist.utl.pt/login?next=https://id.ist.utl.pt/cas/login?service=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + section.getReversePath() %>">
+            if (pt.ist.bennu.core.util.CoreConfiguration.casConfig().isCasEnabled()) {
+                			    final String schema = request.getScheme();
+                			    final String server = request.getServerName();
+                			    final int port = request.getServerPort();
+        %>
+         		<a href="<%= "https://barra.ist.utl.pt/login?next=https://id.ist.utl.pt/cas/login?service=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + section.getReversePath() %>">
             		<bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
        			</a>.
 		<%

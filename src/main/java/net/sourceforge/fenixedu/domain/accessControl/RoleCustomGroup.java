@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -69,7 +68,7 @@ public class RoleCustomGroup extends RoleCustomGroup_Base {
     }
 
     @CustomGroupArgument
-    public static Argument<Role, RoleCustomGroup> roleArg() {
+    public static Argument<Role> roleArg() {
         return new SimpleArgument<Role, RoleCustomGroup>() {
 
             private static final long serialVersionUID = 7891697517211605643L;

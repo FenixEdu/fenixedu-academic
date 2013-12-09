@@ -22,8 +22,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.util.ConfigurationManager;
-import pt.ist.bennu.core.util.ConfigurationManager.CasConfig;
+import pt.ist.bennu.core.util.CoreConfiguration;
+import pt.ist.bennu.core.util.CoreConfiguration.CasConfig;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/logoff")
@@ -37,7 +37,7 @@ public class LogOffAction extends Action {
 
         ActionForward result = null;
 
-        final CasConfig casConfig = ConfigurationManager.getCasConfig();
+        final CasConfig casConfig = CoreConfiguration.casConfig();
 
         if (casConfig != null && casConfig.isCasEnabled()) {
             if (request.getParameter("logoutFromCAS") != null && request.getParameter("logoutFromCAS").equals("true")) {

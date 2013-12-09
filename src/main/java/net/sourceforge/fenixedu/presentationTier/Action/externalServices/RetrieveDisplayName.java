@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.util.HostAccessControl;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -22,7 +22,7 @@ public class RetrieveDisplayName extends ExternalInterfaceDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final String responseMessage;
-        if (HostAccessControl.isAllowed(this, request)) {
+        if (FenixConfigurationManager.getHostAccessControl().isAllowed(this, request)) {
             final String username = request.getParameter("username");
             responseMessage = getNickname(username);
         } else {

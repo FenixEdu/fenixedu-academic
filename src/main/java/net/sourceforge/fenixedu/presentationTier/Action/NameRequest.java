@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.CharEncoding;
@@ -12,7 +13,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import com.lowagie.text.DocumentException;
@@ -24,8 +24,8 @@ public class NameRequest extends FenixDispatchAction {
     private static final String storedUsername;
 
     static {
-        storedUsername = ConfigurationManager.getProperty("nameresolution.name");
-        storedPassword = ConfigurationManager.getProperty("nameresolution.password");
+        storedUsername = FenixConfigurationManager.getConfiguration().getNameResolutionName();
+        storedPassword = FenixConfigurationManager.getConfiguration().getNameResolutionPassword();
     }
 
     public ActionForward resolve(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

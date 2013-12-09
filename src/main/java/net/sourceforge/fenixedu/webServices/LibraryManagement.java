@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.webServices;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,8 +17,8 @@ public class LibraryManagement implements ILibraryManagement {
     private static final String CC = "CC";
 
     static {
-        storedUsername = ConfigurationManager.getProperty("webServices.LibraryManagement.username");
-        storedPassword = ConfigurationManager.getProperty("webServices.LibraryManagement.password");
+        storedUsername = FenixConfigurationManager.getConfiguration().getWebServicesLibraryManagementUsername();
+        storedPassword = FenixConfigurationManager.getConfiguration().getWebServicesLibraryManagementPassword();
     }
 
     @Override
@@ -52,7 +52,7 @@ public class LibraryManagement implements ILibraryManagement {
         }
 
         // check hosts accessing this service
-        // if (!HostAccessControl.isAllowed(this, (ServletRequest)
+        // if (!FenixConfigurationManager.getHostAccessControl().isAllowed(this, (ServletRequest)
         // context.getProperty("XFireServletController.httpServletRequest"))) {
         // throw new NotAuthorizedException();
         // }

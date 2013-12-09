@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.ResearcherDT
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.research.Researcher;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -17,7 +18,6 @@ import org.apache.commons.collections.Predicate;
 import org.codehaus.xfire.MessageContext;
 
 import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.core.util.ConfigurationManager;
 
 public class SearchResearcher implements ISearchResearcher {
 
@@ -25,8 +25,8 @@ public class SearchResearcher implements ISearchResearcher {
     private static final String storedUsername;
 
     static {
-        storedUsername = ConfigurationManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
-        storedPassword = ConfigurationManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
+        storedUsername = FenixConfigurationManager.getConfiguration().getWebServicesPaymentManagementUsername();
+        storedPassword = FenixConfigurationManager.getConfiguration().getWebServicesPaymentManagementPassword();
     }
 
     @Override
@@ -115,7 +115,7 @@ public class SearchResearcher implements ISearchResearcher {
 
         // check hosts accessing this service
         // FIXME Anil: Its urgent to access this webservice for tests
-        // if (!HostAccessControl.isAllowed(this, (ServletRequest)
+        // if (!FenixConfigurationManager.getHostAccessControl().isAllowed(this, (ServletRequest)
         // context.getProperty("XFireServletController.httpServletRequest"))) {
         // throw new NotAuthorizedException();
         // }

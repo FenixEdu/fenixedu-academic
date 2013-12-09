@@ -1,6 +1,8 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<% final String url = pt.ist.bennu.core.util.ConfigurationManager.getProperty("institution.url"); %>
+<%@ page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
+
+<% final String url = FenixConfigurationManager.getConfiguration().getInstitutionURL(); %>
 <html>
 	<META http-equiv="refresh" content="0;URL=<%= url %>">
 <body>

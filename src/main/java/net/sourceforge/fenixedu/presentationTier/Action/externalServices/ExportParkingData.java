@@ -6,10 +6,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.reports.ParkingDataReportFile;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.apache.struts.action.ActionForm;
@@ -46,8 +46,8 @@ public class ExportParkingData extends FenixAction {
     }
 
     private void checkPermissions(String username, String password) throws NotAuthorizedException {
-        final String allowedUser = ConfigurationManager.getProperty("exportParkingData.username");
-        final String allowedPass = ConfigurationManager.getProperty("exportParkingData.password");
+        final String allowedUser = FenixConfigurationManager.getConfiguration().getExportParkingDataUsername();
+        final String allowedPass = FenixConfigurationManager.getConfiguration().getExportParkingDataPassword();
         if ((!allowedUser.equals(username)) || (!allowedPass.equals(password))) {
             throw new NotAuthorizedException();
         }

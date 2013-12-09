@@ -28,14 +28,13 @@ import org.apache.commons.lang.StringUtils;
 
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.security.UserSession;
 
 @WebFilter(urlPatterns = "/api/fenix/v1/*")
 public class JerseyOAuth2Filter implements Filter {
 
     final static String ACCESS_TOKEN = "access_token";
 
-    private static boolean allowIstIds = OAuthProperties.getFenixApiAllowIstIds();
+    private static boolean allowIstIds = OAuthProperties.getConfiguration().getFenixApiAllowIstIds();
 
     @Override
     public void destroy() {
@@ -63,7 +62,7 @@ public class JerseyOAuth2Filter implements Filter {
             try {
                 filterChain.doFilter(request, response);
             } finally {
-                Authenticate.setUser((UserSession) null);
+                Authenticate.unmock();
             }
         }
     }
@@ -148,7 +147,7 @@ public class JerseyOAuth2Filter implements Filter {
     }
 
     private void authenticateUser(final HttpServletRequest request, User foundUser) {
-        Authenticate.setUser(foundUser);
+        Authenticate.mock(foundUser);
     }
 
     private boolean validScope(AppUserSession appUserSession, String uri) throws IOException, ServletException {

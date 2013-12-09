@@ -1,9 +1,9 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@page import="pt.ist.bennu.core.util.ConfigurationManager"%>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="institution.url"/></bean:define>
-<bean:define id="loginUrl" type="java.lang.String"><%= ConfigurationManager.getProperty("login.page") %></bean:define>
+<bean:define id="loginUrl" type="java.lang.String"><%= FenixConfigurationManager.getConfiguration().getLoginPage() %></bean:define>
 <bean:define id="siteMapUrl" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="siteMap.link"/></bean:define>
 <bean:define id="searchUrl" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="search.url"/></bean:define>
 <bean:define id="searchDomain" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="search.domain"/></bean:define>
@@ -16,7 +16,7 @@
 	</a>
 </div>
 
-<% if (!ConfigurationManager.getBooleanProperty("barra.as.authentication.broker", false)) { %>
+<% if (!FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 <div id="header_links">
 	<a href="<%= loginUrl %>">
 		<bean:message bundle="GLOBAL_RESOURCES" key="dot.login"/>

@@ -4,6 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <html:xhtml/>
 
@@ -50,7 +51,7 @@
     </p>
     
 
-    <% final String appContext = pt.ist.bennu.core.util.ConfigurationManager.getProperty("app.context"); %>
+    <% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
     <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
     <bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="USER_SESSION_ATTRIBUTE" property="user.person.user.username"/></bean:define>

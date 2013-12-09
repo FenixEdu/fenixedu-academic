@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -56,7 +57,6 @@ import org.restlet.data.Protocol;
 import org.restlet.data.Status;
 
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -1379,14 +1379,14 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     private static boolean importToLDAP(MobilityIndividualApplicationProcess process) {
-        String ldapServiceImportationURL = ConfigurationManager.getProperty("ldap.user.importation.service.url");
+        String ldapServiceImportationURL = FenixConfigurationManager.getConfiguration().getLdapUserImportationServiceUrl();
 
         Request request =
                 new Request(Method.POST, ldapServiceImportationURL + process.getPersonalDetails().getPerson().getIstUsername());
         ChallengeScheme scheme = ChallengeScheme.HTTP_BASIC;
 
-        String ldapServiceUsername = ConfigurationManager.getProperty("ldap.user.importation.service.username");
-        String ldapServicePassword = ConfigurationManager.getProperty("ldap.user.importation.service.password");
+        String ldapServiceUsername = FenixConfigurationManager.getConfiguration().getLdapUserImportationServiceUsername();
+        String ldapServicePassword = FenixConfigurationManager.getConfiguration().getLdapUserImportationServicePassword();
 
         ChallengeResponse authentication = new ChallengeResponse(scheme, ldapServiceUsername, ldapServicePassword);
         request.setChallengeResponse(authentication);

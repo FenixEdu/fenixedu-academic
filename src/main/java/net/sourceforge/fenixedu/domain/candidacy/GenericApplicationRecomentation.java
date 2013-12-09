@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Random;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class GenericApplicationRecomentation extends GenericApplicationRecomentation_Base {
@@ -47,7 +47,7 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
     }
 
     private String generateConfirmationLink() {
-        return ConfigurationManager.getProperty("generic.application.email.recommendation.link") + getConfirmationCode()
+        return FenixConfigurationManager.getConfiguration().getGenericApplicationEmailRecommendationLink() + getConfirmationCode()
                 + "&recommendationExternalId=" + getExternalId();
     }
 

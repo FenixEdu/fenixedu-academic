@@ -1,14 +1,14 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
-<% final String url = pt.ist.bennu.core.util.ConfigurationManager.getProperty("institution.url"); %>
 <div id="latnav">
         <ul>
-        	<li><a href="<%= url %>/html/instituto/">Instituto</a></li>
-        	<li><a href="<%= url %>/html/estrutura/">Estrutura</a></li>
-        	<li><a href="<%= url %>/html/ensino/">Ensino</a></li>
-        	<li><a href="<%= url %>/html/id/">I &amp; D</a></li>
-        	<li><a href="<%= url %>/html/viverist/">Viver no IST</a></li>
+			<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/instituto/"><bean:message key="label.institution" bundle="GLOBAL_RESOURCES"/></a></li>
+			<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/estrutura/"><bean:message key="label.structure" bundle="GLOBAL_RESOURCES"/></a></li>
+			<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/ensino/"><bean:message key="label.education" bundle="GLOBAL_RESOURCES"/></a></li>
+			<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/id/"><bean:message key="label.research.and.development.acronyms" bundle="GLOBAL_RESOURCES"/></a></li>
+			<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/viverist/"><bean:message key="label.life.at.ist" bundle="GLOBAL_RESOURCES"/></a></li>
         </ul>
 </div>
 

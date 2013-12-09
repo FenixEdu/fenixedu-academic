@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@page import="pt.ist.bennu.core.security.Authenticate"%>
-<%@page import="pt.ist.bennu.core.util.ConfigurationManager"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -41,7 +41,7 @@
 </head>
 
 <body>
-<% if (ConfigurationManager.getBooleanProperty("barra.as.authentication.broker", false)) { %>
+<% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 <script id="ist-bar" data-logout="https://fenix.ist.utl.pt/logoff.do" data-login="https://fenix.ist.utl.pt/loginPage.jsp" data-fluid="true" data-lang="<%= Language.getLocale().getLanguage() %>" <% if(Authenticate.getUser() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.ist.utl.pt/site_media/static/js/barra.js"></script>
 <% } %>
 <jsp:include page="deployWarning.jsp" flush="true"/>
@@ -55,7 +55,7 @@
 
 
 <!-- Header -->
-<% if (!ConfigurationManager.getBooleanProperty("barra.as.authentication.broker", false)) { %>
+<% if (!FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 <div id="top">
 	<h1 id="logo">
 		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" style="padding-left:30px;padding-top:20px;" src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
@@ -72,7 +72,7 @@
 
 <!-- NavGeral -->
 <div id="navtop">
-	<% if (ConfigurationManager.getBooleanProperty("barra.as.authentication.broker", false)) { %>
+	<% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 	<h1 class="applicationName">
 		<bean:message key="application.name" bundle="GLOBAL_RESOURCES" /><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
 	</h1>

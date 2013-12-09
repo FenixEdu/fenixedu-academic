@@ -27,7 +27,6 @@ import javax.faces.model.SelectItem;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -67,6 +66,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -601,9 +601,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             }
             return "";
         } catch (IllegalDataAccessException idae) {
-        	addErrorMessage(getFormatedMessage("resources/ApplicationResources", "message.teacger.evaluation.editMarks",
-        			ExecutionSemester.readActualExecutionSemester().getExecutionYear().getName(), ExecutionSemester.readActualExecutionSemester().getName()));
-        	return "";
+            addErrorMessage(getFormatedMessage("resources/ApplicationResources", "message.teacger.evaluation.editMarks",
+                    ExecutionSemester.readActualExecutionSemester().getExecutionYear().getName(), ExecutionSemester
+                            .readActualExecutionSemester().getName()));
+            return "";
         }
         return getEvaluation().getClass().getSimpleName();
     }
@@ -845,7 +846,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     protected String getApplicationContext() {
-        final String appContext = ConfigurationManager.getProperty("app.context");
+        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
         return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
     }
 

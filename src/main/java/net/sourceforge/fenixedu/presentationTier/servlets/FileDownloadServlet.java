@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.httpclient.HttpStatus;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.ist.bennu.core.util.CoreConfiguration;
 
 @WebServlet(urlPatterns = "/downloadFile/*")
 public class FileDownloadServlet extends HttpServlet {
@@ -50,12 +51,12 @@ public class FileDownloadServlet extends HttpServlet {
     }
 
     private String sendLoginRedirect(final HttpServletRequest request, final File file) {
-        final boolean isCasEnabled = ConfigurationManager.getBooleanProperty("cas.enabled", false);
-        final String loginLinkPropery = isCasEnabled ? "cas.loginUrl" : "login.page";
-        final String serviceLink =
-                isCasEnabled ? ConfigurationManager.getProperty("file.download.url.local.content") + file.getExternalId() : request
-                        .getRequestURI();
-        return ConfigurationManager.getProperty(loginLinkPropery) + "?service=" + serviceLink;
+        final boolean isCasEnabled = CoreConfiguration.casConfig().isCasEnabled();
+        if (isCasEnabled) {
+            return CoreConfiguration.casConfig().getCasLoginUrl(
+                    FenixConfigurationManager.getConfiguration().getFileDownloadUrlLocalContent() + file.getExternalId());
+        }
+        return FenixConfigurationManager.getConfiguration().getLoginPage() + "?service=" + request.getRequestURI();
     }
 
     private void sendBadRequest(final HttpServletResponse response) throws IOException {

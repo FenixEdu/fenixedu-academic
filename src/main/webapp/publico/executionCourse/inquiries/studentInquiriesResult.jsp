@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<%@page import="pt.ist.bennu.core.util.ConfigurationManager"%>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
+<%@page import="pt.ist.bennu.core.util.CoreConfiguration"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.net.URLEncoder"%>
@@ -64,18 +65,16 @@
 		session.setAttribute("ORIGINAL_PARAMETER_MAP", map);
 		session.setAttribute("ORIGINAL_ATTRIBUTE_MAP", map);
 
-	boolean isCasEnabled = ConfigurationManager.getBooleanProperty("cas.enabled");
+		boolean isCasEnabled = CoreConfiguration.casConfig().isCasEnabled();
 		if (isCasEnabled) {
-			String casValue = request.getScheme() + "://" + request.getServerName()
-				+ port + request.getContextPath() + "/loginCAS.do";
-			String urlSuffix = "?service=" + casValue;
-		    String loginPage = ConfigurationManager.getProperty("cas.loginUrl") + urlSuffix;
+		    String casValue = request.getScheme() + "://" + request.getServerName() + port + request.getContextPath() + "/loginCAS.do";
+			String loginPage = CoreConfiguration.casConfig().getCasLoginUrl(casValue);
 	%>
 			<html:link href="<%= loginPage %>">Login</html:link>
 	<%
 		} else {
 			String urlSuffix = "?service=" + value;
-			String loginPage = ConfigurationManager.getProperty("login.page") + urlSuffix;
+			String loginPage = FenixConfigurationManager.getConfiguration().getLoginPage() + urlSuffix;
 	%>
 			<html:link href="<%= loginPage %>">Login</html:link>
 	<%

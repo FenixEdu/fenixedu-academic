@@ -35,7 +35,6 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.security.UserSession;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -129,11 +128,11 @@ public class InsertDistributedTest {
         @Override
         public void run() {
             try {
-                Authenticate.setUser(userView);
+                Authenticate.mock(userView);
                 doIt();
                 distributedTestId = tempDistributedTestId;
             } finally {
-                Authenticate.setUser((UserSession) null);
+                Authenticate.unmock();
             }
         }
 

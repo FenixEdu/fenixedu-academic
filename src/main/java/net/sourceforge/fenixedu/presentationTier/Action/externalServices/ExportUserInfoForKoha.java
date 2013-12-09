@@ -11,7 +11,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
@@ -40,6 +39,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -55,14 +55,11 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 @Mapping(module = "external", path = "/exportUserInfoForKoha", scope = "request", parameter = "method")
 public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
 
-    private static final String USERNAME_KEY = "externalServices.koha.username";
-    private static final String PASSWORD_KEY = "externalServices.koha.password";
-
     private boolean chackCredentials(final HttpServletRequest request) {
         final String username = (String) getFromRequest(request, "username");
         final String password = (String) getFromRequest(request, "password");
-        final String usernameProp = ConfigurationManager.getProperty(USERNAME_KEY);
-        final String passwordProp = ConfigurationManager.getProperty(PASSWORD_KEY);
+        final String usernameProp = FenixConfigurationManager.getConfiguration().getExternalServicesKohaUsername();
+        final String passwordProp = FenixConfigurationManager.getConfiguration().getExternalServicesKohaPassword();
 
         return !StringUtils.isEmpty(username) && !StringUtils.isEmpty(password) && !StringUtils.isEmpty(usernameProp)
                 && !StringUtils.isEmpty(passwordProp) && username.equals(usernameProp) && password.equals(passwordProp);

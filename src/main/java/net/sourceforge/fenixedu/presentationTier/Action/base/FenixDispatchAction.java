@@ -12,12 +12,9 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResultMessage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -27,6 +24,7 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -39,6 +37,9 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
 import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
@@ -46,7 +47,6 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.plugin.ExceptionHandler;
 import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -54,7 +54,7 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
 
     protected static final Bennu rootDomainObject = Bennu.getInstance();
-    private static boolean DEBUG_ACTIONS = Boolean.parseBoolean(ConfigurationManager.getProperty("debug.actions"));
+    private static boolean DEBUG_ACTIONS = FenixConfigurationManager.getConfiguration().getDebugActions();
     protected static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
     @Override

@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.domain.util;
 
-import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.core.util.ConfigurationManager;
-import pt.utl.ist.fenix.tools.util.StringAppender;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,10 +23,14 @@ import javax.mail.internet.MimeUtility;
 
 import net.sourceforge.fenixedu.domain.util.email.MessageId;
 import net.sourceforge.fenixedu.domain.util.email.MessageTransportResult;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import pt.ist.bennu.core.domain.Bennu;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class Email extends Email_Base {
 
@@ -41,10 +41,10 @@ public class Email extends Email_Base {
 
     private static synchronized Session init() {
         final Properties properties = new Properties();
-        properties.put("mail.smtp.host", ConfigurationManager.getProperty("mail.smtp.host"));
-        properties.put("mail.smtp.name", ConfigurationManager.getProperty("mail.smtp.name"));
-        properties.put("mailSender.max.recipients", ConfigurationManager.getProperty("mailSender.max.recipients"));
-        properties.put("mailingList.host.name", ConfigurationManager.getProperty("mailingList.host.name"));
+        properties.put("mail.smtp.host", FenixConfigurationManager.getConfiguration().getMailSmtpHost());
+        properties.put("mail.smtp.name", FenixConfigurationManager.getConfiguration().getMailSmtpName());
+        properties.put("mailSender.max.recipients", FenixConfigurationManager.getConfiguration().getMailSenderMaxRecipients());
+        properties.put("mailingList.host.name", FenixConfigurationManager.getConfiguration().getMailingListHostName());
         properties.put("mail.debug", "false");
         final Session tempSession = Session.getDefaultInstance(properties, null);
         MAX_MAIL_RECIPIENTS = Integer.parseInt(properties.getProperty("mailSender.max.recipients"));

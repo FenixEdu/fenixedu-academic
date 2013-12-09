@@ -5,6 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/messaging" prefix="messaging" %>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <html:xhtml/>
 
@@ -216,7 +217,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 	<logic:present name="announcementBoard">
 		<bean:define id="board" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
 		<%
-		final String appContext = pt.ist.bennu.core.util.ConfigurationManager.getProperty("app.context");
+		final String appContext = FenixConfigurationManager.getConfiguration().appContext();
 		final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
 	    final String module = org.apache.struts.util.ModuleUtils.getInstance().getModuleConfig(request).getPrefix();
 		%>

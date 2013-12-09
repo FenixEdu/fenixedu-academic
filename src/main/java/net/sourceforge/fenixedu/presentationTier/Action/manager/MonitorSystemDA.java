@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -65,8 +66,6 @@ import org.restlet.util.Series;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
-
 /**
  * @author Luis Cruz
  */
@@ -83,7 +82,7 @@ public class MonitorSystemDA extends FenixDispatchAction {
         SystemInfo systemInfoWebContainer = new SystemInfo();
         request.setAttribute("systemInfoWebContainer", systemInfoWebContainer);
 
-        String useBarraAsAuth = ConfigurationManager.getProperty("barra.as.authentication.broker");
+        boolean useBarraAsAuth = FenixConfigurationManager.isBarraAsAuthenticationBroker();
         request.setAttribute("useBarraAsAuth", useBarraAsAuth);
 
         request.setAttribute("startMillis", ""
@@ -101,12 +100,12 @@ public class MonitorSystemDA extends FenixDispatchAction {
 
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");
         byte[] hashedSecret =
-                messageDigest.digest(ConfigurationManager.getProperty("external.application.workflow.equivalences.uri.secret")
-                        .getBytes());
+                messageDigest.digest(FenixConfigurationManager.getConfiguration()
+                        .getExternalApplicationWorkflowEquivalencesUriSecret().getBytes());
 
         final Reference reference =
-                new Reference(ConfigurationManager.getProperty("external.application.workflow.equivalences.uri") + "aaaa")
-                        .addQueryParameter("creator", "xxxx").addQueryParameter("requestor", "yyyyy")
+                new Reference(FenixConfigurationManager.getConfiguration().getExternalApplicationWorkflowEquivalencesUri()
+                        + "aaaa").addQueryParameter("creator", "xxxx").addQueryParameter("requestor", "yyyyy")
                         .addQueryParameter("base64Secret", new String(Base64.encode(hashedSecret)));
 
         TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
@@ -164,8 +163,8 @@ public class MonitorSystemDA extends FenixDispatchAction {
     public ActionForward switchBarraAsAuthenticationBroker(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final String useBarraAsAuth = request.getParameter("useBarraAsAuth");
-        ConfigurationManager.setProperty("barra.as.authentication.broker", useBarraAsAuth);
+        final boolean useBarraAsAuth = Boolean.parseBoolean(request.getParameter("useBarraAsAuth"));
+        FenixConfigurationManager.setBarraAsAuthenticationBroker(useBarraAsAuth);
 
         return monitor(mapping, form, request, response);
     }

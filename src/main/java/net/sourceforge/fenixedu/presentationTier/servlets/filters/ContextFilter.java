@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
-import pt.ist.bennu.core.util.ConfigurationManager;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import com.google.common.collect.Sets;
 
@@ -28,7 +28,7 @@ public class ContextFilter implements Filter {
     private static final Set<String> exceptions = Sets.newHashSet();
 
     static {
-        String property = ConfigurationManager.getProperty("context.filter.exceptions", "/api");
+        String property = FenixConfigurationManager.getConfiguration().getContextFilterExceptions();
         exceptions.addAll(Arrays.asList(property.split(";")));
     }
 

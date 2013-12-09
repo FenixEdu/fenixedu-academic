@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.ist.bennu.core.util.CoreConfiguration;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -33,7 +33,7 @@ public class ReceiptGeneratedDocument extends ReceiptGeneratedDocument_Base {
 
     @Atomic
     public static void store(Receipt source, String filename, byte[] content) {
-        if (ConfigurationManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE, false)) {
+        if (!CoreConfiguration.getConfiguration().developmentMode()) {
             new ReceiptGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
         }
     }

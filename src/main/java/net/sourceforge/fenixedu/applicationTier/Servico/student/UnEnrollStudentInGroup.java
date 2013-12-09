@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -26,9 +24,11 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.util.MessageResources;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -40,7 +40,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class UnEnrollStudentInGroup {
 
     public static String mailServer() {
-        final String server = ConfigurationManager.getProperty("mail.smtp.host");
+        final String server = FenixConfigurationManager.getConfiguration().getMailSmtpHost();
         return (server != null) ? server : "mail.adm";
     }
 

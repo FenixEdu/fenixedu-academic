@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -15,7 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.ist.bennu.core.util.CoreConfiguration;
 
 import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;
@@ -41,14 +43,13 @@ public class PhoneValidationUtils {
     }
 
     public boolean canRun() {
-        final boolean devMode = ConfigurationManager.getBooleanProperty("development.mode", false);
-        return TWILIO_CLIENT != null && CIIST_CLIENT != null && !devMode;
+        return TWILIO_CLIENT != null && CIIST_CLIENT != null && !CoreConfiguration.getConfiguration().developmentMode();
     }
 
     private void initCIISTSMSGateway() {
-        final String CIIST_SMS_USERNAME = ConfigurationManager.getProperty("ciist.sms.username");
-        final String CIIST_SMS_PASSWORD = ConfigurationManager.getProperty("ciist.sms.password");
-        CIIST_SMS_GATEWAY_URL = ConfigurationManager.getProperty("ciist.sms.gateway.url");
+        final String CIIST_SMS_USERNAME = FenixConfigurationManager.getConfiguration().getCIISTSMSUsername();
+        final String CIIST_SMS_PASSWORD = FenixConfigurationManager.getConfiguration().getCIISTSMSPassword();
+        CIIST_SMS_GATEWAY_URL = FenixConfigurationManager.getConfiguration().getCIISTSMSGatewayUrl();
         if (!StringUtils.isEmpty(CIIST_SMS_USERNAME) && !StringUtils.isEmpty(CIIST_SMS_PASSWORD)) {
             CIIST_CLIENT = new HttpClient();
             Credentials credentials = new UsernamePasswordCredentials(CIIST_SMS_USERNAME, CIIST_SMS_PASSWORD);
@@ -57,10 +58,10 @@ public class PhoneValidationUtils {
     }
 
     private void initHostname() {
-        final String appName = ConfigurationManager.getProperty("http.host");
-        final String appContext = ConfigurationManager.getProperty("app.context");
-        final String httpPort = ConfigurationManager.getProperty("http.port");
-        final String httpProtocol = ConfigurationManager.getProperty("http.protocol");
+        final String appName = FenixConfigurationManager.getConfiguration().getHTTPHost();
+        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
+        final String httpPort = FenixConfigurationManager.getConfiguration().getHTTPPort();
+        final String httpProtocol = FenixConfigurationManager.getConfiguration().getHTTPProtocol();
 
         if (StringUtils.isEmpty(httpPort)) {
             HOST = String.format("%s://%s/", httpProtocol, appName);
@@ -74,9 +75,9 @@ public class PhoneValidationUtils {
     }
 
     private void initTwilio() {
-        final String TWILIO_SID = ConfigurationManager.getProperty("twilio.sid");
-        final String TWILIO_STOKEN = ConfigurationManager.getProperty("twilio.stoken");
-        TWILIO_FROM_NUMBER = ConfigurationManager.getProperty("twilio.from.number");
+        final String TWILIO_SID = FenixConfigurationManager.getConfiguration().getTwilioSid();
+        final String TWILIO_STOKEN = FenixConfigurationManager.getConfiguration().getTwilioStoken();
+        TWILIO_FROM_NUMBER = FenixConfigurationManager.getConfiguration().getTwilioFromNumber();
         if (!StringUtils.isEmpty(TWILIO_SID) && !StringUtils.isEmpty(TWILIO_STOKEN) && !StringUtils.isEmpty(TWILIO_FROM_NUMBER)) {
             TWILIO_CLIENT = new TwilioRestClient(TWILIO_SID, TWILIO_STOKEN);
         }

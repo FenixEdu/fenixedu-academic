@@ -108,6 +108,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -122,7 +123,6 @@ import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
@@ -159,7 +159,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public static String mailingListDomainConfiguration() {
-        return ConfigurationManager.getProperty("mailingList.host.name");
+        return FenixConfigurationManager.getConfiguration().getMailingListHostName();
     }
 
     public ActionForward submitDataToImportCustomizationOptions(ActionMapping mapping, ActionForm actionForm,

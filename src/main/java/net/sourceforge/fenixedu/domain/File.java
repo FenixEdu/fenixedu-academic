@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.ConnectionManager;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -100,7 +100,7 @@ public abstract class File extends File_Base {
     }
 
     public final static String getFileDownloadPrefix() {
-        return ConfigurationManager.getProperty("file.download.url.local.content");
+        return FenixConfigurationManager.getConfiguration().getFileDownloadUrlLocalContent();
     }
 
     public final static File getFileFromURL(String url) {

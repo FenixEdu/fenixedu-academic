@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
-import net.sourceforge.fenixedu.util.HostAccessControl;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -64,7 +64,8 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
         String responseCode = SERVICE_NOT_EXECUTED;
         String responseString = String.valueOf("");
 
-        if (HostAccessControl.isAllowed(this, request) && getRequestedAnnouncementBoard(request).getReaders() == null) {
+        if (FenixConfigurationManager.getHostAccessControl().isAllowed(this, request)
+                && getRequestedAnnouncementBoard(request).getReaders() == null) {
             final AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
             responseString = buildInfo(buildStickyDTOCollection((List<Announcement>) board.getVisibleAnnouncements(), request));
             responseCode = SUCCESS_CODE;

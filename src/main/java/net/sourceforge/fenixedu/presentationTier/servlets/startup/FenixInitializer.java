@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
 
 import org.apache.commons.fileupload.FileUpload;
@@ -50,7 +51,6 @@ import pt.ist.bennu.core.domain.groups.DynamicGroup;
 import pt.ist.bennu.core.domain.groups.Group;
 import pt.ist.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter;
 import pt.ist.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomeHandler;
-import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter;
@@ -153,20 +153,20 @@ public class FenixInitializer implements ServletContextListener {
         final Properties properties = new Properties();
         properties.put("dspace.client.transport.class", DSpaceHttpClient.class.getName());
         properties.put("file.manager.factory.implementation.class", DSpaceFileManagerFactory.class.getName());
-        properties.put("dspace.serverUrl", ConfigurationManager.getProperty("dspace.serverUrl"));
-        properties.put("dspace.downloadUriFormat", ConfigurationManager.getProperty("dspace.downloadUriFormat"));
-        properties.put("dspace.username", ConfigurationManager.getProperty("dspace.username"));
-        properties.put("dspace.password", ConfigurationManager.getProperty("dspace.password"));
-        properties.put("dspace.rmi.server.name", ConfigurationManager.getProperty("dspace.rmi.server.name"));
-        properties.put("jndi.properties.file", ConfigurationManager.getProperty("jndi.properties.file"));
-        properties.put("rmi.registry.port", ConfigurationManager.getProperty("rmi.registry.port"));
-        properties.put("rmi.port", ConfigurationManager.getProperty("rmi.port"));
-        properties.put("rmi.ssl", ConfigurationManager.getProperty("rmi.ssl"));
-        properties.put("rmi.ssl.truststore", ConfigurationManager.getProperty("rmi.ssl.truststore"));
-        properties.put("rmi.ssl.truststore.password", ConfigurationManager.getProperty("rmi.ssl.truststore.password"));
-        properties.put("rmi.stream.bytes.min", ConfigurationManager.getProperty("rmi.stream.bytes.min"));
-        properties.put("rmi.stream.bytes.max", ConfigurationManager.getProperty("rmi.stream.bytes.max"));
-        properties.put("rmi.stream.bytes.block", ConfigurationManager.getProperty("rmi.stream.bytes.block"));
+        properties.put("dspace.serverUrl", FenixConfigurationManager.getConfiguration().getDspaceServerUrl());
+        properties.put("dspace.downloadUriFormat", FenixConfigurationManager.getConfiguration().getDspaceDownloadUriFormat());
+        properties.put("dspace.username", FenixConfigurationManager.getConfiguration().getDspaceUsername());
+        properties.put("dspace.password", FenixConfigurationManager.getConfiguration().getDspacePassword());
+        properties.put("dspace.rmi.server.name", FenixConfigurationManager.getConfiguration().getDspaceRMIServerName());
+        properties.put("jndi.properties.file", FenixConfigurationManager.getConfiguration().getJNDIPropertiesFile());
+        properties.put("rmi.registry.port", FenixConfigurationManager.getConfiguration().getRMIRegistryPort());
+        properties.put("rmi.port", FenixConfigurationManager.getConfiguration().getRMIPort());
+        properties.put("rmi.ssl", FenixConfigurationManager.getConfiguration().getRMISSL());
+        properties.put("rmi.ssl.truststore", FenixConfigurationManager.getConfiguration().getRMISSLTruststore());
+        properties.put("rmi.ssl.truststore.password", FenixConfigurationManager.getConfiguration().getRMISSLTruststorePassword());
+        properties.put("rmi.stream.bytes.min", FenixConfigurationManager.getConfiguration().getRMIStreamBytesMin());
+        properties.put("rmi.stream.bytes.max", FenixConfigurationManager.getConfiguration().getRMIStreamBytesMax());
+        properties.put("rmi.stream.bytes.block", FenixConfigurationManager.getConfiguration().getRMIStreamBytesBlock());
 
         FileManagerFactory.init(DSpaceFileManagerFactory.class.getName());
 
@@ -236,7 +236,7 @@ public class FenixInitializer implements ServletContextListener {
 
         try {
             Calendar calendar = Calendar.getInstance();
-            String hourString = ConfigurationManager.getProperty("gratuity.situation.creator.task.hour");
+            String hourString = FenixConfigurationManager.getConfiguration().getGratuitySituationCreatorTaskHour();
             int scheduledHour = Integer.parseInt(hourString);
             if (scheduledHour == -1) {
                 return;
@@ -262,7 +262,7 @@ public class FenixInitializer implements ServletContextListener {
 
     }
 
-    static final int APP_CONTEXT_LENGTH = ConfigurationManager.getProperty("app.context").length() + 1;
+    static final int APP_CONTEXT_LENGTH = FenixConfigurationManager.getConfiguration().appContext().length() + 1;
 
     private void registerChecksumFilterRules() {
         RequestChecksumFilter.registerFilterRule(new ChecksumPredicate() {

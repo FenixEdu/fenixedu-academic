@@ -17,7 +17,6 @@ import java.util.zip.ZipOutputStream;
 
 import javax.ws.rs.core.MediaType;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -35,6 +34,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.ApprovementInfoForEquivalenceProcess;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -125,11 +125,11 @@ public class SendAcademicServiceRequestToExternalEntity {
 
             final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(resultStream.toByteArray());
 
-            final String restEndpoint = ConfigurationManager.getProperty("external.application.workflow.equivalences.uri");
+            final String restEndpoint = FenixConfigurationManager.getConfiguration().getExternalApplicationWorkflowEquivalencesUri();
             System.out.println("SendAcademicServiceRequestToExternalEntity : " + restEndpoint);
 
-            final String restUser = ConfigurationManager.getProperty("jersey.username");
-            final String restPass = ConfigurationManager.getProperty("jersey.password");
+            final String restUser = FenixConfigurationManager.getConfiguration().getJerseyUsername();
+            final String restPass = FenixConfigurationManager.getConfiguration().getJerseyPassword();
 
             Client client = new Client();
             final String username = Authenticate.getUser().getUsername();

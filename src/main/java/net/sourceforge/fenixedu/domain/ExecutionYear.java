@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -34,7 +35,6 @@ import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
@@ -391,14 +391,12 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     static transient private ExecutionYear startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments = null;
 
-    static private ExecutionYear readFromProperties(ExecutionYear executionYear, String yearKey) {
+    static private ExecutionYear readFromProperties(ExecutionYear executionYear, String yearString) {
         if (executionYear == null || executionYear.getRootDomainObject() != Bennu.getInstance()) {
-
-            final String yearString = ConfigurationManager.getProperty(yearKey);
             if (yearString == null || yearString.length() == 0) {
                 executionYear = null;
             } else {
-                executionYear = readExecutionYearByName(yearKey);
+                executionYear = readExecutionYearByName(yearString);
             }
         }
 
@@ -408,7 +406,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     public static ExecutionYear readStartExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments() {
         startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments =
                 readFromProperties(startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments,
-                        "startExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments");
+                        FenixConfigurationManager.getConfiguration().getStartExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments());
         return startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments;
     }
 

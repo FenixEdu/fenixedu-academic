@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.ist.bennu.core.util.CoreConfiguration;
 import pt.ist.fenixframework.Atomic;
 
 public class LibraryMissingLettersDocument extends LibraryMissingLettersDocument_Base {
@@ -39,7 +39,7 @@ public class LibraryMissingLettersDocument extends LibraryMissingLettersDocument
 
     @Atomic
     public static void store(List<LibraryCard> source, Person operator, byte[] content, boolean forStudents) {
-        if (ConfigurationManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE, false)) {
+        if (!CoreConfiguration.getConfiguration().developmentMode()) {
             DateTime time = new DateTime();
             new LibraryMissingLettersDocument(source, operator, "missing_letters_" + time.toString("yMd_kms") + ".pdf", content,
                     forStudents);

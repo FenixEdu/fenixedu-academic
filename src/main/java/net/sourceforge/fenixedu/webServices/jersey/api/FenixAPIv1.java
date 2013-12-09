@@ -88,6 +88,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUt
 import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.EvaluationType;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar.FenixCalendarEvent;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCurriculum;
@@ -125,7 +126,6 @@ import org.json.simple.JSONObject;
 
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -933,10 +933,10 @@ public class FenixAPIv1 {
 
     private String getServerLink() {
         String serverLink;
-        final String appName = ConfigurationManager.getProperty("http.host");
-        final String appContext = ConfigurationManager.getProperty("app.context");
-        final String httpPort = ConfigurationManager.getProperty("http.port");
-        final String httpProtocol = ConfigurationManager.getProperty("http.protocol");
+        final String appName = FenixConfigurationManager.getConfiguration().getHTTPHost();
+        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
+        final String httpPort = FenixConfigurationManager.getConfiguration().getHTTPPort();
+        final String httpProtocol = FenixConfigurationManager.getConfiguration().getHTTPProtocol();
 
         if (StringUtils.isEmpty(httpPort)) {
             serverLink = String.format("%s://%s/", httpProtocol, appName);

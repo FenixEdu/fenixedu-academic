@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.utils;
 
-import pt.ist.fenixframework.Atomic;
-
 import java.io.IOException;
 import java.text.Collator;
 import java.util.ArrayList;
@@ -23,15 +21,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.PendingRequest;
-import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -42,7 +40,7 @@ import pt.ist.bennu.core.util.ConfigurationManager;
  */
 public class RequestUtils {
 
-    private static final boolean STORE_PENDING_REQUEST = ConfigurationManager.getBooleanProperty("store.pending.request", false);
+    private static final boolean STORE_PENDING_REQUEST = FenixConfigurationManager.getConfiguration().getStorePendingRequest();
 
     public static String getAndSetStringToRequest(HttpServletRequest request, String name) {
         String parameter = request.getParameter(name);
@@ -136,7 +134,8 @@ public class RequestUtils {
         request.getSession(true);
 
         final PendingRequest pendingRequest = STORE_PENDING_REQUEST ? storeRequest(request) : null;
-        response.sendRedirect(generateRedirectLink(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()),
+        response.sendRedirect(generateRedirectLink(
+                FenixConfigurationManager.getHostRedirector().getRedirectPageLogin(request.getRequestURL().toString()),
                 pendingRequest));
     }
 

@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
 import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.core.util.ConfigurationManager;
 
 public class GenericApplication extends GenericApplication_Base {
 
@@ -67,7 +67,7 @@ public class GenericApplication extends GenericApplication_Base {
                 DigestUtils.sha512Hex(getEmail() + System.currentTimeMillis() + hashCode()
                         + new Random(System.currentTimeMillis()).nextGaussian());
         setConfirmationCode(confirmationCode);
-        return ConfigurationManager.getProperty("generic.application.email.confirmation.link") + confirmationCode
+        return FenixConfigurationManager.getConfiguration().getGenericApplicationEmailConfirmationLink() + confirmationCode
                 + "&applicationExternalId=" + getExternalId();
     }
 

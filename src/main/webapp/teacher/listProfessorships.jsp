@@ -7,10 +7,11 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 
 <%@page import="java.util.Collections"%>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
-<% final String appContext = pt.ist.bennu.core.util.ConfigurationManager.getProperty("app.context"); %>
+<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
 <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 <bean:define id="hostURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/</bean:define>
 <bean:define id="hostURL2" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %></bean:define>
