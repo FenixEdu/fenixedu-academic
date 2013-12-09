@@ -1252,8 +1252,6 @@ public class Thesis extends Thesis_Base {
     public List<ThesisCondition> getOrientationConditions() {
         List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
 
-        boolean hasInternal = false;
-
         Person orientator = getParticipationPerson(getOrientator());
         Person coorientator = getParticipationPerson(getCoorientator());
 
@@ -1271,18 +1269,10 @@ public class Thesis extends Thesis_Base {
                 conditions.add(new ThesisCondition("thesis.condition.orientation.credits.notDefined"));
             }
 
-            if (!orientator.hasExternalContract()) {
-                hasInternal = true;
-            }
-
             // check for duplicated persons
             if (orientator == coorientator) {
                 conditions.add(new ThesisCondition("thesis.condition.people.repeated.orientation"));
             }
-        }
-
-        if (coorientator != null && !coorientator.hasExternalContract()) {
-            hasInternal = true;
         }
 
         return conditions;
