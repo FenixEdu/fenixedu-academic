@@ -427,7 +427,7 @@ public abstract class Content extends Content_Base {
     @Override
     public void setAvailabilityPolicy(AvailabilityPolicy availabilityPolicy) {
         AvailabilityPolicy currentAvailabilityPolicy = getAvailabilityPolicy();
-        if (currentAvailabilityPolicy != null) {
+	if (currentAvailabilityPolicy != null && currentAvailabilityPolicy != availabilityPolicy) {
             currentAvailabilityPolicy.delete();
         }
         super.setAvailabilityPolicy(availabilityPolicy);
