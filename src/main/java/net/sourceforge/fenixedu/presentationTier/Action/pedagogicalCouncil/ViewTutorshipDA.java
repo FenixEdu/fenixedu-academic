@@ -318,17 +318,18 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         student.getActiveRegistrations();
         if (student.getActiveRegistrations().size() > 1) {
             // mandar mensagem de erro se tiver mais que uma matricula
-            addActionMessage(request, "Aluno tem mais que uma matricula");
+            addActionMessage(request, "error.student.enrolment.more.than.one");
             return mapping.findForward("viewTutorship");
         }
 
         if (student.getActiveRegistrations().isEmpty()) {
             // mandar mensagem de erro se não tiver matricula
-            addActionMessage(request, "Aluno não tem matricula");
+            addActionMessage(request, "error.student.enrolment.none");
             return mapping.findForward("viewTutorship");
         }
 
-        StudentCurricularPlan studentCurricularPlan = student.getActiveRegistrations().iterator().next().getActiveStudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlan =
+                student.getActiveRegistrations().iterator().next().getActiveStudentCurricularPlan();
         Degree degree = studentCurricularPlan.getDegree();
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         ExecutionDegree executionDegree =
