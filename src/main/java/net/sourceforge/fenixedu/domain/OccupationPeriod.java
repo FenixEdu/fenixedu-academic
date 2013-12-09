@@ -436,7 +436,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
                             executionDegree.getPeriodLessons(executionCourse.getExecutionPeriod());
                     if (result == null) {
                         result = occupationPeriod;
-                    } else if (result != occupationPeriod) {
+                    } else if (!result.isEqualTo(occupationPeriod)) {
                         ok = false;
                     }
                 }
