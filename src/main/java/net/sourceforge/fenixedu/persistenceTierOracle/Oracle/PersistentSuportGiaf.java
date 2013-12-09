@@ -8,50 +8,28 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.FenixIstConfiguration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.bennu.core.util.ConfigurationManager;
 
 public class PersistentSuportGiaf {
     private static PersistentSuportGiaf instance = null;
 
     private static String databaseUrl = null;
 
-    private static Map<Thread, Connection> connectionsMap = new HashMap<Thread, Connection>();
-
-    public class ConnectionProperties {
-        private String userNamePropertyName;
-
-        private String userPassPropertyName;
-
-        private String urlPropertyName;
-
-        public ConnectionProperties(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
-            super();
-            this.userNamePropertyName = userNamePropertyName;
-            this.userPassPropertyName = userPassPropertyName;
-            this.urlPropertyName = urlPropertyName;
-        }
-    }
-
-    private static ConnectionProperties connectionProperties;
-
-    public PersistentSuportGiaf(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
-        super();
-        connectionProperties = new ConnectionProperties(userNamePropertyName, userPassPropertyName, urlPropertyName);
-    }
+    private static Map<Thread, Connection> connectionsMap = new HashMap<>();
 
     public static synchronized PersistentSuportGiaf getInstance() {
         if (instance == null) {
-            instance = new PersistentSuportGiaf("db.giaf.user", "db.giaf.pass", "db.giaf.alias");
+            instance = new PersistentSuportGiaf();
         }
         return instance;
     }
 
     private Connection openConnection() throws ExcepcaoPersistencia {
         if (databaseUrl == null) {
-            String DBUserName = ConfigurationManager.getProperty(connectionProperties.userNamePropertyName);
-            String DBUserPass = ConfigurationManager.getProperty(connectionProperties.userPassPropertyName);
-            String DBUrl = ConfigurationManager.getProperty(connectionProperties.urlPropertyName);
+            String DBUserName = FenixIstConfiguration.getConfiguration().dbGiafUser();
+            String DBUserPass = FenixIstConfiguration.getConfiguration().dbGiafPass();
+            String DBUrl = FenixIstConfiguration.getConfiguration().dbGiafAlias();
             if (DBUserName == null || DBUserPass == null || DBUrl == null) {
                 throw new ExcepcaoPersistencia();
             }

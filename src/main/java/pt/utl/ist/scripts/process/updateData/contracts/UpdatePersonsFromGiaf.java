@@ -29,7 +29,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.security.UserSession;
 import pt.ist.bennu.scheduler.annotation.Task;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.scripts.process.importData.contracts.giaf.ImportFromGiaf;
@@ -52,7 +51,7 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
     public void runTask() {
         getLogger().debug("Start UpdatePersonsFromGiaf");
         try {
-            Authenticate.setUser(pt.ist.bennu.core.domain.User.findByUsername("ist23932"));
+            Authenticate.mock(pt.ist.bennu.core.domain.User.findByUsername("ist23932"));
 
             int count = 0, notImported = 0;
             Set<Person> newPersons = new HashSet<Person>();
@@ -213,7 +212,7 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
             getLogger().debug("\nEditados: " + editedPersons.size());
             getLogger().debug("\nThe end");
         } finally {
-            Authenticate.setUser((UserSession) null);
+            Authenticate.unmock();
         }
 
     }
