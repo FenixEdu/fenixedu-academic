@@ -797,13 +797,17 @@ public class Lesson extends Lesson_Base {
         startDateToSearch = startDateToSearch != null ? getValidBeginDate(startDateToSearch) : null;
 
         if (!wasFinished() && startDateToSearch != null && endDateToSearch != null && !startDateToSearch.isAfter(endDateToSearch)) {
-
             Campus lessonCampus = getLessonCampus();
+            final int dayIncrement = getFrequency() == FrequencyType.BIWEEKLY ? FrequencyType.WEEKLY.getNumberOfDays() : getFrequency().getNumberOfDays();
+            boolean shouldAdd = true;
             while (true) {
                 if (isDayValid(startDateToSearch, lessonCampus)) {
-                    result.add(startDateToSearch);
+                    if (getFrequency() != FrequencyType.BIWEEKLY || shouldAdd) {
+                        result.add(startDateToSearch);
+                    }
+                    shouldAdd = !shouldAdd;
                 }
-                startDateToSearch = startDateToSearch.plusDays(getNumberOfDaysToSumBetweenTwoLessons());
+                startDateToSearch = startDateToSearch.plusDays(dayIncrement);
                 if (startDateToSearch.isAfter(endDateToSearch)) {
                     break;
                 }
@@ -852,10 +856,6 @@ public class Lesson extends Lesson_Base {
         SortedSet<Summary> lessonSummaries = new TreeSet<Summary>(comparator);
         lessonSummaries.addAll(getAssociatedSummaries());
         return lessonSummaries;
-    }
-
-    private int getNumberOfDaysToSumBetweenTwoLessons() {
-        return getFrequency().getNumberOfDays();
     }
 
     public LessonInstance getLessonInstanceFor(YearMonthDay date) {
