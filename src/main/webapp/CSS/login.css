@@ -3,119 +3,116 @@
 /******************************************
 	Global Text Proprieties
 ******************************************/
-
 body {
-	background-color:/* #B5BDD6*/ #999;
-	font: 11px Verdana, Arial, Helvetica, sans-serif;
-	}
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F6F4ED;
+}
+
+table,div,span {
+	color: #333;
+}
+
+form {
 	
-table, div, span {
-	background-color: #fff;
-	}
+}
 
 h1 {
-	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font: bold 17px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color: #036;
-	margin: 0;
-	padding: 20px 0 0 20px;
-	}
+}
 
-/******************************************
-	Global Link Proprieties
-******************************************/
-
-a:link, a:visited {
-	font: 11px Verdana, Arial, Helvetica, sans-serif;
-	color: #00427b;
-	background: transparent;
-	}
-	
 /******************************************
 	Structural Classes: Header & Tables
 ******************************************/
-
 #container {
 	margin: 80px auto 0 auto;
-	background: #fff;
-	width:500px;
-	border: 1px solid #113344;
+	width: 500px;
+	background-color: #f7f7f7;
 	padding: 0 0 20px 0;
-	}
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	-moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
 
-#darkcontainer {
-	margin: 100px auto 0 auto;
-	background: #000;
-	width:500px;
-	border: 1px solid #ddd;
-	padding: 0 0 20px 0;
-	}
+#content {
+	width: 90%;
+	margin: 0 auto;
+}
 
-#dotist_id {
+#header {
 	height: 70px;
- 	background: #16576b;
+	background: #16576b;
 	border-bottom: 4px solid #277b97;
-
-	}
+}
 
 #dotist_id_container {
-		width:115px;
- 	margin-left:auto;
-	margin-right:auto;
+	width: 115px;
+	margin-left: auto;
+	margin-right: auto;
 	background: transparent;
 	padding-top: 25px;
 }
-	
-	
-#txt {
-line-height: 1.5em;
-}
-#txt ul {
-line-height: 1.5em;
-}
-#txt p {
-	font: 11px/1.5em Verdana, Arial, Helvetica, sans-serif;
-	padding: 0 20px 0 20px;
-	margin: 1em 0;
-	}
-	
-#alert p{
-	font: 11px/15px Verdana, Arial, Helvetica, sans-serif;
-	text-align: center;
-	margin: 0;
-	padding: 0 20px 0 20px;
-	}
-	 
+
 .error {
-	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
 	color: #c00;
 	text-align: center;
-	background: #ffc;
-	}
+}
 
-.wrapper {
-/* 	text-align: left; */
+.label {
+	font-weight: bold;
+	font-size: 13px;
 	}
+	
+#footer {
+	float: right;
+	padding: 10px;
+	vertical-align: bottom;
+}
+
+#footer tr {
+	vertical-align: bottom;
+}
+
+#login_button {
+	padding-top: 10px;
+}
+
+.clear_both {
+	clear: both;
+}
+
+#support {
+	padding-right: 15px;
+	position: relative;
+}
+
 
 /******************************************
 	Form Classes: Input & Input Table
 ******************************************/
-
 form {
-	font: 11px Verdana, Arial, Helvetica, sans-serif;
 	color: #333;
-	}
-
+}
 
 input.button {
-	font:11px Verdana, Arial, Helvetica, sans-serif;
 	color: #000;
-	background: #b5bdd6;
-	width: 100px;
+	width: 70px;
 	padding: 2px;
 }
 
+input {
+	font: 14px Verdana, Arial, Helvetica, sans-serif;
+}
+
+input[type="text"], input[type="password"] {
+	font-size: 15px;
+	padding: 3px;
+}
+
 a.button {
-	font:11px Verdana, Arial, Helvetica, sans-serif;
 	color: #000;
 	background: #b5bdd6;
 	padding: 4px 6px;
@@ -126,30 +123,6 @@ a.button {
 	border-left: 2px solid #f8f7f0;
 }
 
-/****************************************************
-	Message for Old Browsers (not applied yet...)
-*****************************************************/
-
-.oldbrowser {
-	display: none;
+a[href] {
+	color: #427fed;
 }
-
-
-.pub-mark {
-background: #faf5ca;
-color: #000;
-}
-h3 {
-font-size: 1.2em;
-padding: 0 0 0 20px;
-margin: 1em 0;
-}
-
-.infoop2 {
-background-color: #faf5de; /*faf5de,f2e5a6 or f5fade,e5f2a6 */
-vertical-align: middle;
-padding: 0.5em 0;
-border-bottom: 1px solid #f2e5a6;
-}
-
-.infoop2 p { margin: 0.25em 0; }
