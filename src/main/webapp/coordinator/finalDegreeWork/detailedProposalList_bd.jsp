@@ -71,7 +71,7 @@
 		</tr>
 		<tr>
 			<td bgcolor="#c2cec8" align="center">
-				<bean:message key="label.teacher.finalWork.number"/>
+				<bean:message key="label.teacher.finalWork.number" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
 			</td>
 			<td bgcolor="#c2cec8" align="center">
 				<bean:message key="label.teacher.finalWork.name"/>
@@ -99,7 +99,7 @@
 			</tr>
 			<tr>
 				<td bgcolor="#c2cec8" align="center">
-					<bean:message key="label.teacher.finalWork.number"/>
+					<bean:message key="label.teacher.finalWork.number" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
 				</td>
 				<td bgcolor="#c2cec8" align="center">
 					<bean:message key="label.teacher.finalWork.name"/>

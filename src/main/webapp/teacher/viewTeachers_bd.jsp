@@ -9,7 +9,7 @@
 
 <div class="infoop2">
 	<bean:message key="label.teachers.explanation" />
-	<p><bean:message key="label.teachers.specialTeacherWarning" /></p>
+	<p><bean:message key="label.teachers.specialTeacherWarning" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></p>
 </div>
 
 <p>

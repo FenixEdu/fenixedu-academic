@@ -30,7 +30,7 @@
 			<p>
 				<bean:message key="label.read.parkingRegulation" bundle="PARKING_RESOURCES" />: 
 				<a href="http://www.ist.utl.pt/files/viver-IST/gestao-estacionamento/reg_estac.pdf" target="_blank">
-					<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
+					<bean:message key="label.parkingRegulation" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PARKING_RESOURCES" />
 					<bean:message key="label.parkingRegulation.pdf" bundle="PARKING_RESOURCES" />
 				</a>
 			</p>
@@ -38,8 +38,8 @@
 
 			<logic:equal name="parkingParty" property="acceptedRegulation" value="false">				
 				<div class="mvert1 infoop2">
-					<p class="mvert05"><bean:message key="message.acceptRegulationCondition" bundle="PARKING_RESOURCES" /></p>
-					<p class="mvert05"><bean:message key="message.acceptRegulation" bundle="PARKING_RESOURCES" /></p>
+					<p class="mvert05"><bean:message key="message.acceptRegulationCondition" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PARKING_RESOURCES" /></p>
+					<p class="mvert05"><bean:message key="message.acceptRegulation" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PARKING_RESOURCES" /></p>
 					<p class="mvert05">
 						<strong>
 							<html:link page="/parking.do?method=acceptRegulation">
@@ -52,7 +52,7 @@
 
 			<logic:notEqual name="parkingParty" property="acceptedRegulation" value="false">
 				
-				<div class="infoop2 mtop15"> <%-- message.acceptedRegulation --%>
+				<div class="infoop2 mtop15">
 					<div style="padding-bottom: 0.25em;"><bean:write name="parkingParty" property="parkingAcceptedRegulationMessage" filter="false"/></div>
 					<p>
 						<strong>
@@ -72,7 +72,7 @@
 		<p>
 			<bean:message key="label.read.parkingRegulation" bundle="PARKING_RESOURCES" />: 
 			<a href="http://www.ist.utl.pt/files/viver-IST/gestao-estacionamento/reg_estac.pdf" target="_blank">
-				<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
+				<bean:message key="label.parkingRegulation" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PARKING_RESOURCES" />
 				<bean:message key="label.parkingRegulation.pdf" bundle="PARKING_RESOURCES" />
 			</a>
 		</p>
@@ -103,7 +103,7 @@
 		<%-- editar --%>
 		<logic:equal name="canEdit" value="true">
 			<p>
-				<div class="infoop2"><bean:message key="message.pendingParkingRequestState" bundle="PARKING_RESOURCES" /></div>
+				<div class="infoop2"><bean:message key="message.pendingParkingRequestState" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PARKING_RESOURCES" /></div>
 			</p>
 			<p>
 				<html:link page="/parking.do?method=prepareEditParking">

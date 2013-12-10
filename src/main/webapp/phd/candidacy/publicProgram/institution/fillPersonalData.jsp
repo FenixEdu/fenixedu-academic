@@ -15,10 +15,10 @@
 		Locale locale = Language.getLocale();
 		if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
 	%>
-		<a href="http://www.ist.utl.pt/en/">IST</a> &gt;
+		<a href="http://www.ist.utl.pt/en/"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt/en/prospective-students/admissions/PhD/"><bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.institution.breadcumbs.phd.program" /></a> &gt;
 	<% } else { %>
-		<a href="http://www.ist.utl.pt">IST</a> &gt;
+		<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt/pt/candidatos/candidaturas/doutoramentos/"><bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.institution.breadcumbs.phd.program" /></a> &gt;
 	<% } %>
 	
@@ -152,8 +152,8 @@
 	
 	<div class="fs_form">
 	<fieldset style="display: block;">
-		<legend><bean:message key="title.public.phd.institution.id" bundle="PHD_RESOURCES"/></legend>
-		<p class="mvert05"><span><bean:message key="message.phd.public.institution.id.note" bundle="PHD_RESOURCES"/></span></p>
+		<legend><bean:message key="title.public.phd.institution.id" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PHD_RESOURCES"/></legend>
+		<p class="mvert05"><span><bean:message key="message.phd.public.institution.id.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym() %>" bundle="PHD_RESOURCES"/></span></p>
 		
 		<fr:edit id="candidacyBean.institution.id" name="candidacyBean" schema="Public.PhdProgramCandidacyProcessBean.institution.id">
 			<fr:layout name="tabular">

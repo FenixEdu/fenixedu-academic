@@ -19,7 +19,7 @@
 			</div>
 			<div id="txt">
 				<h1>Login</h1>
-				<p><bean:message key="message.login.page" bundle="GLOBAL_RESOURCES" /></p>
+				<p><bean:message key="message.login.page" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="GLOBAL_RESOURCES" /></p>
 				<div id="alert">
 					<p><span class="error"><!-- Error messages go here --><html:errors property="invalidAuthentication" /></span></p>
 					<p><span class="error"><!-- Error messages go here --><html:errors property="errors.noAuthorization" /></span></p>

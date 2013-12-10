@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -154,7 +155,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             if (e.getMessage().equals("error.noEmployeeForIstUsername")) {
-                actionErrors.add("unknownTeacher", new ActionError(e.getMessage(), istUsername));
+                actionErrors.add("unknownTeacher", new ActionError(e.getMessage(), istUsername, Unit.getInstitutionAcronym()));
             } else {
                 actionErrors.add("unknownTeacher", new ActionError(e.getMessage()));
             }

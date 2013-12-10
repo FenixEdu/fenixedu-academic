@@ -12,7 +12,7 @@
 <h2><bean:message key="title.manage.homepage" bundle="HOMEPAGE_RESOURCES"/></h2>
 
 <div class="infoop2">
-    <p class="mvert0"><bean:message key="message.homepage.activation" bundle="HOMEPAGE_RESOURCES"/></p>
+    <p class="mvert0"><bean:message key="message.homepage.activation" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="HOMEPAGE_RESOURCES"/></p>
 </div>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>

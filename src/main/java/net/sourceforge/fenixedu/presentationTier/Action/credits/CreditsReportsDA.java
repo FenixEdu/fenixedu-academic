@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits;
 import net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunctionShared;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection;
 import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -119,7 +120,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
             spreadsheet.getSheet(sheetName);
             spreadsheet.newHeaderRow();
             spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
-                    "label.teacher.id"));
+                    "label.teacher.id", Unit.getInstitutionAcronym()));
             spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.name"),
                     10000);
             spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
@@ -172,7 +173,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
             spreadsheet.newHeaderRow();
 
             spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
-                    "label.teacher.id"));
+                    "label.teacher.id", Unit.getInstitutionAcronym()));
             spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.name"),
                     10000);
 

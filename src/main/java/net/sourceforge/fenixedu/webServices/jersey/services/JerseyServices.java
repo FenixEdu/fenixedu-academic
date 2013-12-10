@@ -355,10 +355,10 @@ public class JerseyServices {
                 case WITH_SUPERVISION:
                 case ERASMUS_MUNDUS:
                 case OTHER:
-                    schools.add("Instituto Superior Técnico");
+                    schools.add(Unit.getInstitutionName());
                     break;
                 default:
-                    schools.add("Instituto Superior Técnico");
+                    schools.add(Unit.getInstitutionName());
                     schools.add(phdProcess.getCollaborationType().getLocalizedName());
                 }
                 phdInfo.put("schools", schools);
@@ -391,7 +391,7 @@ public class JerseyServices {
                 mscInfo.put("month", t.getDiscussed().monthOfYear().getAsShortText());
 
                 JSONArray schools = new JSONArray();
-                schools.add("Instituto Superior Técnico");
+                schools.add(Unit.getInstitutionName());
                 mscInfo.put("schools", schools);
 
                 mscInfo.put("url", t.getDissertation().getDownloadUrl());

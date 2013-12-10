@@ -120,7 +120,7 @@
 							name="cardGenerationEntry" property="entityCode"/>
 					<jsp:include page="underline.jsp"/>
 				</td>
-				<td class="aleft"><bean:message key="cardGeneration.entityCode.description"/></td>
+				<td class="aleft"><bean:message key="cardGeneration.entityCode.description" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.categoryCode"/></td>

@@ -19,7 +19,7 @@
 			<div class="mbottom2" style="font-size: 0.85em; margin-left: 3em;">
 				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: <bean:write name="person" property="name"/> </p>
 				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="person" property="student.number"/> </p>
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.istUsername" bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="person" property="istUsername"/> </p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.istUsername"  bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="person" property="istUsername"/> </p>
 			</div>	
 
 		</logic:present>

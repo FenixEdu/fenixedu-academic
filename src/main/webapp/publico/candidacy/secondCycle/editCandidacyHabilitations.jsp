@@ -17,7 +17,7 @@
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<% 
 		Locale locale = Language.getLocale();
 		if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
@@ -74,7 +74,7 @@
 		<% 
 			if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
 		%>
-		<p class="mbottom05"><bean:message key="label.ist.number.if.former.ist.student" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<p class="mbottom05"><bean:message key="label.ist.number.if.former.ist.student" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/>:</p>
 		<div class="flowerror">
 			<fr:edit id="individualCandidacyProcessBean.formerStudentIstNumber"
 				name="individualCandidacyProcessBean"
@@ -242,7 +242,7 @@
 			}
 		%>
 		
-		<h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
+		<h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></h2>
 				
 				
 		<div class="flowerror mtop1">

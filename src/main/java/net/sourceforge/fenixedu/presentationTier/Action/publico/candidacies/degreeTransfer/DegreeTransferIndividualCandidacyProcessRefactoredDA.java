@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTra
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
@@ -199,7 +200,8 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
             }
 
             if (isOrWasEnrolledInInstitution(bean)) {
-                addActionMessage("error", request, "error.degreeTransfer.is.or.was.enrolled.in.institution");
+                addActionMessage("error", request, "error.degreeTransfer.is.or.was.enrolled.in.institution", Unit
+                        .getInstitutionName().getContent());
                 invalidateDocumentFileRelatedViewStates();
                 request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
                 return mapping.findForward("candidacy-continue-creation");
@@ -312,7 +314,8 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
             }
 
             if (isOrWasEnrolledInInstitution(bean)) {
-                addActionMessage("error", request, "error.degreeTransfer.is.or.was.enrolled.in.institution");
+                addActionMessage("error", request, "error.degreeTransfer.is.or.was.enrolled.in.institution", Unit
+                        .getInstitutionName().getContent());
                 request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
                 return mapping.findForward("edit-candidacy-habilitations");
             }

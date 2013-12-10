@@ -49,7 +49,7 @@
 	<tr>		
 		<th>
 			<html:link page="/prepareListDepartmentTeachersCredits.do?sortBy=number" paramProperty="executionPeriodId">
-				<bean:message key="label.departmentTeachersList.teacherId" />
+				<bean:message key="label.departmentTeachersList.teacherId" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" />
 			</html:link>
 		</th>
 		<th>

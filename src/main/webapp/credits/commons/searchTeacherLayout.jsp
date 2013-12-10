@@ -20,7 +20,7 @@
 <html:form action="<%= path %>" focus="teacherId">
 	<input alt="input.method" type="hidden" name="method" value="doSearch"/>
 	<input alt="input.page" type="hidden" name="page" value="1"/>
-	<bean:message key="label.teacher.id"/> <html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" property="teacherId"	/>
+	<bean:message key="label.teacher.id" /> <html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" property="teacherId"	/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.ok"/>
 	</html:submit>

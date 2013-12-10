@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -65,7 +66,8 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
     private void sendPhysicalAddressValidationEmail(PhysicalAddressValidation physicalAddressValidation) {
         final Person person = (Person) physicalAddressValidation.getPartyContact().getParty();
         final String subject =
-                BundleUtil.getMessageFromModuleOrApplication("manager", "label.contacts.validation.operator.email.subject");
+                BundleUtil.getMessageFromModuleOrApplication("manager", "label.contacts.validation.operator.email.subject",
+                        Unit.getInstitutionAcronym());
         final String state = StringUtils.uncapitalize(physicalAddressValidation.getState().getPresentationName());
         String body =
                 BundleUtil.getMessageFromModuleOrApplication("manager", "label.contacts.validation.operator.email.body",

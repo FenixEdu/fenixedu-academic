@@ -40,7 +40,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 /**
  * @author João Mota
  */
-@Mapping(path = "/exceptionHandlingAction", formBeanClass = ErrorMailForm.class)
+@Mapping(path = "/showErrorPage", formBeanClass = ErrorMailForm.class)
 public class ExceptionHandlingAction extends FenixDispatchAction {
 
     public static class ErrorMailForm extends FenixActionForm {
@@ -88,6 +88,15 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     private final String INDENT_TOKEN = "_";
     private final String SEPARATOR =
             "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        if (request.getServerName().equals("localhost")) {
+            return new ActionMapping("/debugExceptionPage.jsp");
+        }
+        return new ActionMapping("/supportHelpInquiry.jsp");
+    }
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {

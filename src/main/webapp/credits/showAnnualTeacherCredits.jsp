@@ -59,7 +59,7 @@ $(document).ready(function() {
 
 <div class="infoop2">
 	<ul>
-		<li><a href="https://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/regulamento-de-prestacao-de-servico-dos-docentes-do-ist">Regulamento de Prestação de Serviço dos Docentes do IST</a></li>
+		<li><a href="https://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/regulamento-de-prestacao-de-servico-dos-docentes-do-ist">Regulamento de Prestação de Serviço dos Docentes do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a></li>
 		<li><a href="http://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/glossario-do-rsd-(versao-19-9-2012)">Glossário do RSD (versão 19-9-2012)</a></li>
 	</ul>
 </div>
@@ -246,7 +246,7 @@ $(document).ready(function() {
 	</div>
 </div>
 <div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
-<b><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.optional" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<b><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.optional" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
 	<span>-</span>
 </logic:equal></h3>

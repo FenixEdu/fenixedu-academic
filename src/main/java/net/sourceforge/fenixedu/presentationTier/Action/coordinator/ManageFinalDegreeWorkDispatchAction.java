@@ -1257,9 +1257,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         spreadsheet.setHeader("Proposta");
         spreadsheet.setHeader("Estado da Proposta");
         spreadsheet.setHeader("T�tulo");
-        spreadsheet.setHeader("Utilizador IST Orientador");
+        spreadsheet.setHeader("Utilizador " + Unit.getInstitutionAcronym() + " Orientador");
         spreadsheet.setHeader("Nome Orientador");
-        spreadsheet.setHeader("Utilizador IST Coorientador");
+        spreadsheet.setHeader("Utilizador " + Unit.getInstitutionAcronym() + " Coorientador");
         spreadsheet.setHeader("Nome Coorientador");
         spreadsheet.setHeader("Percentagem Cr�ditos Orientador");
         spreadsheet.setHeader("Percentagem Cr�ditos Coorientador");
@@ -1286,9 +1286,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         spreadsheet.setHeader("N�mero");
         spreadsheet.setHeader("Estado da Proposta");
         spreadsheet.setHeader("T�tulo");
-        spreadsheet.setHeader("Utilizador IST Orientador");
+        spreadsheet.setHeader("Utilizador " + Unit.getInstitutionAcronym() + " Orientador");
         spreadsheet.setHeader("Nome Orientador");
-        spreadsheet.setHeader("Utilizador IST Coorientador");
+        spreadsheet.setHeader("Utilizador " + Unit.getInstitutionAcronym() + " Coorientador");
         spreadsheet.setHeader("Nome Coorientador");
         spreadsheet.setHeader("Percentagem Cr�ditos Orientador");
         spreadsheet.setHeader("Percentagem Cr�ditos Coorientador");

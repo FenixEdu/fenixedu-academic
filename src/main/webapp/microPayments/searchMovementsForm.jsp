@@ -113,7 +113,7 @@
 		<option>Cliente</option> 
 		<option>Unidade</option> 
 	</select>
-<p>Cliente (IST ID): <input type="text"/> <input type="button" value="Pesquisar"  onClick="parent.location='reprografia_movimentos_01.html'"/></p> 
+<p>Cliente (<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> ID): <input type="text"/> <input type="button" value="Pesquisar"  onClick="parent.location='reprografia_movimentos_01.html'"/></p> 
 <p>Operador: <select><option>Joaquim da Silva Arimateia (ist167200)</option><option>Joaquim da Silva Arimateia (ist167200)</option></select></p>
 <p>Unidade: <select><option>Reprografia do Central .012</option><option>Reprografia do Central .012</option></select></p>
 </p>

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.thesis;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,6 +16,7 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -92,11 +94,13 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
             result.setWhenJuryRequired(bean.getWhenThesisDiscussionRequired());
 
             String presidentTitlePt =
-                    ResourceBundle.getBundle("resources.PhdResources", new Locale("pt", "PT")).getString(
-                            "message.phd.thesis.president.title.default");
+                    MessageFormat.format(
+                            ResourceBundle.getBundle("resources.PhdResources", new Locale("pt", "PT")).getString(
+                                    "message.phd.thesis.president.title.default"), Unit.getInstitutionAcronym());
             String presidentTitleEn =
-                    ResourceBundle.getBundle("resources.PhdResources", new Locale("en", "EN")).getString(
-                            "message.phd.thesis.president.title.default");
+                    MessageFormat.format(
+                            ResourceBundle.getBundle("resources.PhdResources", new Locale("en", "EN")).getString(
+                                    "message.phd.thesis.president.title.default"), Unit.getInstitutionAcronym());
 
             result.setPresidentTitle(new MultiLanguageString(Language.pt, presidentTitlePt).with(Language.en, presidentTitleEn));
 

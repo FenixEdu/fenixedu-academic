@@ -12,7 +12,7 @@
     <p><bean:message key="label.info.dislocatedStudent.inquiry" /></p>
     </div>
 
-    <p class="mtop2 mbottom05"><bean:message key="label.enrollment.personalData.authorization" /></p>
+    <p class="mtop2 mbottom05"><bean:message key="label.enrollment.personalData.authorization" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" /></p>
 
     <fr:form action="/studentEnrollmentManagement.do?method=choosePersonalDataAuthorizationChoice">
 

@@ -19,7 +19,7 @@
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<% 
 		Locale locale = Language.getLocale();
 		if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
@@ -78,13 +78,13 @@
 		if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
 			if(individualCandidacyProcess instanceof DegreeChangeIndividualCandidacyProcess || individualCandidacyProcess instanceof DegreeTransferIndividualCandidacyProcess) {
 	%>
-	<p><em><bean:message key="message.ist.student.obtain.grades.on.fenix" bundle="CANDIDATE_RESOURCES"/></em></p>
+	<p><em><bean:message key="message.ist.student.obtain.grades.on.fenix" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></em></p>
 	<%
 			}
 		}
 	%>
 
-	<p><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></p>
+	<p><bean:message key="message.ist.conditions.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></p>
 </div>
 </logic:equal>
 
@@ -94,5 +94,5 @@
 <p><em><bean:message key="message.national.candidates.must.send.vat.number.document" bundle="CANDIDATE_RESOURCES"/></em></p>
 <% 	} %>
 
-<div class="mtop15"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
+<div class="mtop15"><bean:message key="message.nape.contacts" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></div>
 

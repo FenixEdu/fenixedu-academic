@@ -8,11 +8,11 @@
 <html:xhtml />
 
 <em><bean:message key="title.student.portalTitle" /></em>
-<h2><bean:message key="label.careerWorkshopApplication.title" /></h2>
+<h2><bean:message key="label.careerWorkshopApplication.title" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></h2>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
-<div class="CareerWorkshop-Terms"><bean:message key="label.careerWorkshopApplication.termsAcceptance" /></div>
+<div class="CareerWorkshop-Terms"><bean:message key="label.careerWorkshopApplication.termsAcceptance" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></div>
 
 <div class="CareerWorkshop-Form">
 	<fr:form action="/careerWorkshopApplication.do?method=acceptConfirmation">

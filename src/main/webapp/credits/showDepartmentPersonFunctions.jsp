@@ -44,7 +44,7 @@
 		</logic:present>
 		<table class="tstyle2 thlight thleft mtop05 mbottom05">
 			<tr>
-				<th><bean:message key="label.teacher.id" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				<th><bean:message key="label.teacher.id" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 				<th><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 				<th><bean:message key="label.managementPosition.position" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 				<th><bean:message key="label.managementPosition.unit" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>

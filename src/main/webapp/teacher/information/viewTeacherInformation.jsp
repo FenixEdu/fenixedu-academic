@@ -145,7 +145,7 @@
 		</logic:empty>
 		<br/>
 		<p class="infoop mtop2"><span class="emphasis-box">4</span>
-			<bean:message key="message.teacherInformation.externalActivities" />
+			<bean:message key="message.teacherInformation.externalActivities" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" />
 			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
@@ -400,7 +400,7 @@
 		</table>
 
 		<p class="infoop mtop2"><span class="emphasis-box">11</span>
-			<bean:message key="message.teacherInformation.weeklySpendTime" />
+			<bean:message key="message.teacherInformation.weeklySpendTime" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" />
 			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>

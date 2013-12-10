@@ -69,7 +69,8 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
     public void delete() {
 
         if (hasAnyAssociatedInquiriesTeachers()) {
-            throw new DomainException("error.NonAffiliatedTeacher.hasAnyAssociatedInquiriesTeachers");
+            throw new DomainException("error.NonAffiliatedTeacher.hasAnyAssociatedInquiriesTeachers",
+                    Unit.getInstitutionAcronym());
         }
 
         setRootDomainObject(null);

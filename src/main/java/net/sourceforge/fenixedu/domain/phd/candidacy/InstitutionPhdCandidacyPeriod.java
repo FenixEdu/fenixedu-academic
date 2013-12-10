@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
@@ -138,12 +140,12 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
         Locale locale = Language.getLocale();
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
 
-        return String.format(bundle.getString("message.phd.institution.email.body.referee"), referee
+        return MessageFormat.format(String.format(bundle.getString("message.phd.institution.email.body.referee"), referee
                 .getPhdProgramCandidacyProcess().getPhdProgram().getName().getContent(Language.en),
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("en", "EN")),
                 referee.getValue(), referee.getPhdProgramCandidacyProcess().getPhdProgram().getName().getContent(Language.pt),
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("pt", "PT")),
-                referee.getValue());
+                referee.getValue()), Unit.getInstitutionName().getContent());
     }
 
     public String getRefereeSubmissionFormLinkPt(final PhdCandidacyReferee referee) {
@@ -162,9 +164,15 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
     public MultiLanguageString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
         final ResourceBundle englishBundle = getResourceBundle(Locale.ENGLISH);
         final ResourceBundle portugueseBundle = getResourceBundle();
-        return new MultiLanguageString().with(Language.pt,
-                portugueseBundle.getString("message.phd.institution.email.subject.missing.candidacy.validation")).with(
-                Language.en, englishBundle.getString("message.phd.institution.email.subject.missing.candidacy.validation"));
+        return new MultiLanguageString().with(
+                Language.pt,
+                MessageFormat.format(
+                        portugueseBundle.getString("message.phd.institution.email.subject.missing.candidacy.validation"),
+                        Unit.getInstitutionAcronym())).with(
+                Language.en,
+                MessageFormat.format(
+                        englishBundle.getString("message.phd.institution.email.subject.missing.candidacy.validation"),
+                        Unit.getInstitutionAcronym()));
     }
 
     @Override
@@ -172,13 +180,15 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
         final ResourceBundle englishBundle = getResourceBundle(Locale.ENGLISH);
         final ResourceBundle portugueseBundle = getResourceBundle();
         final String englishBody =
-                String.format(englishBundle.getString("message.phd.institution.email.body.missing.candidacy.validation"),
+                MessageFormat.format(String.format(
+                        englishBundle.getString("message.phd.institution.email.body.missing.candidacy.validation"),
                         PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode()
-                                .getValue());
+                                .getValue()), Unit.getInstitutionAcronym());
         final String portugueseBody =
-                String.format(portugueseBundle.getString("message.phd.institution.email.body.missing.candidacy.validation"),
+                MessageFormat.format(String.format(
+                        portugueseBundle.getString("message.phd.institution.email.body.missing.candidacy.validation"),
                         PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode()
-                                .getValue());
+                                .getValue()), Unit.getInstitutionAcronym());
 
         return new MultiLanguageString().with(Language.en, englishBody).with(Language.pt, portugueseBody);
     }

@@ -472,9 +472,9 @@
 </logic:notPresent>
 
 <%-- ========================== TEACHER INSTITUTION WORKING TIME ============================ --%>
-<h3 class="mtop2"><span class="underline1">5) <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span class="underline1">5) <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
-<p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
+<p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 
 <logic:present name="institutionWorkTimeList">
 	<table class="tstyle4 mbottom05">
@@ -506,7 +506,7 @@
 	<table class="tstyle4 mbottom05">
 		<tr>
 			<td colspan="3">
-				<i><bean:message key="label.teacherCreditsSheet.noInstitutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>			
+				<i><bean:message key="label.teacherCreditsSheet.noInstitutionWorkingTime" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>			
 			</td>
 		</tr>
 	</table>

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import pt.ist.bennu.core.domain.Bennu;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.DateTime;
@@ -119,7 +120,7 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
     }
 
     public String getEmployer() {
-        return isADIST() ? "ADIST" : (isISTID() ? "IST-ID" : "IST");
+        return isADIST() ? "ADIST" : (isISTID() ? "IST-ID" : Unit.getInstitutionAcronym());
     }
 
     public boolean isActive() {

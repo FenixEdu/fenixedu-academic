@@ -340,7 +340,6 @@
 	<definition name="chooseRoom" extends="definition.public.mainPage">
 		<put name="titleString" value="public.general.chooseRoom" />
 		<put name="bundle" value="TITLES_RESOURCES"/>
-		<put name="serviceName" value="Instituto Superior Técnico" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 		<put name="lateral_nav" value="/publico/commonNavLocalPub.jsp" />
@@ -351,7 +350,6 @@
 	<definition name="viewRoom" extends="chooseRoom">
 		<put name="titleString" value="public.general.viewRoom" />
 		<put name="bundle" value="TITLES_RESOURCES"/>
-		<put name="serviceName" value="Instituto Superior Técnico" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 		<put name="lateral_nav" value="/publico/commonNavLocalPub.jsp" />

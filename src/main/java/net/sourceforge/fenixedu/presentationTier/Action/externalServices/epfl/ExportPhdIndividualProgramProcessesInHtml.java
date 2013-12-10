@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationType;
 import pt.ist.bennu.core.domain.Bennu;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
@@ -195,7 +196,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         page.rowStart().headerStartWithStyle("width: 125px;").write("Candidacy Date:").headerEnd()
                 .column(process.getCandidacyDate().toString("dd/MM/yyyy")).rowEnd();
         page.rowStart().header("Area:").column(process.getPhdProgramFocusArea().getName().getContent()).rowEnd();
-        page.rowStart().header("IST Phd Program:").column(process.getPhdProgram().getName().getContent(Language.en)).rowEnd();
+        page.rowStart().header(Unit.getInstitutionAcronym() + " Phd Program:")
+                .column(process.getPhdProgram().getName().getContent(Language.en)).rowEnd();
         page.rowStart().header("EPFL Phd Program:").column(process.getExternalPhdProgram().getName().getContent(Language.en));
         page.rowStart().header("Title:").column(string(process.getThesisTitle())).rowEnd();
         page.rowStart().header("Collaboration:").column(process.getCollaborationTypeName()).rowEnd();

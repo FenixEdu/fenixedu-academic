@@ -218,8 +218,9 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
         String date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", new Date());
         String currentPersonName = currentPerson.getNickname();
+        String institutionAcronym = Unit.getInstitutionAcronym();
 
-        return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, date, currentPersonName);
+        return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, date, currentPersonName, institutionAcronym);
     }
 
     @Override

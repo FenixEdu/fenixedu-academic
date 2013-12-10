@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.GuiderType;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -33,7 +34,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        String institution = properties.getProperty("institution.name.abbreviation");
+        String institution = Unit.getInstitutionAcronym();
 
         this.allGuiders = new ArrayList<GuiderDTO>();
 

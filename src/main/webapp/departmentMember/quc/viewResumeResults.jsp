@@ -11,7 +11,7 @@
 <h3><bean:message key="link.quc.resume" bundle="INQUIRIES_RESOURCES"/> (<bean:write name="executionSemester" property="executionYear.year"/> - 
 	<bean:write name="executionSemester" property="semester"/>º <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>)</h3>
 
-<p><bean:message key="message.department.resume" bundle="INQUIRIES_RESOURCES"/></p>
+<p><bean:message key="message.department.resume" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="INQUIRIES_RESOURCES"/></p>
 
 <logic:notEqual name="nothingToImprove" value="true">
 	<logic:notEmpty name="competenceCoursesToAudit">

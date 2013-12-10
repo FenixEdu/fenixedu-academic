@@ -17,7 +17,7 @@
 			<bean:message name="titleK" bundle="<%= bundleT.toString() %>" /> -
 		</logic:present>
 	</logic:present>
-	<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+	<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 </title> <%-- TITLE --%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,7 +33,7 @@
 <p class="skipnav"><a href="#main">Saltar men&uacute; de navega&ccedil;&atilde;o</a></p>
 <!-- START HEADER -->
 	<div id="logoist">
-		<h1><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt">Instituto Superior Técnico</a></h1>
+		<h1><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt"><%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent() %></a></h1>
 		<!-- <img alt="[Logo] Instituto Superior Técnico" height="51" src="http://www.ist.utl.pt/img/wwwist.gif" width="234" /> -->
 	</div>
 	<div id="header_links"><a href="https://fenix.ist.utl.pt/loginPage.jsp">Login .IST</a> | <a href="#">Contactos</a></div>
