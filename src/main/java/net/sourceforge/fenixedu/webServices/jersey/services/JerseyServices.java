@@ -165,7 +165,7 @@ public class JerseyServices {
     @Produces(MediaType.APPLICATION_JSON)
     public String readPreferred() {
         JsonArray array = new JsonArray();
-        for (Party party : RootDomainObject.getInstance().getPartysSet()) {
+        for (Party party : Bennu.getInstance().getPartysSet()) {
             if (party instanceof Person) {
                 Person person = (Person) party;
                 if (person.getUsername() != null && !person.getPreferredPublicationSet().isEmpty()) {

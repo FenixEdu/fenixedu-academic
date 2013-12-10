@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class FenixAbout {
 
@@ -40,14 +40,14 @@ public class FenixAbout {
     List<FenixRSSFeed> rssFeeds = new ArrayList<>();
 
     private FenixAbout() {
-        final RootDomainObject instance = RootDomainObject.getInstance();
+        final Bennu instance = Bennu.getInstance();
         final Unit unit = instance.getInstitutionUnit();
         if (unit != null) {
             institutionName = unit.getName();
             institutionUrl = unit.getDefaultWebAddressUrl();
         }
-        rssFeeds.add(new FenixRSSFeed("News", PropertiesManager.getProperty("fenix.api.news.rss.url")));
-        rssFeeds.add(new FenixRSSFeed("Events", PropertiesManager.getProperty("fenix.api.events.rss.url")));
+        rssFeeds.add(new FenixRSSFeed("News", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrl()));
+        rssFeeds.add(new FenixRSSFeed("Events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrl()));
     }
 
     public static FenixAbout getInstance() {
