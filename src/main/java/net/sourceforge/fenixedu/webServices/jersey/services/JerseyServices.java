@@ -60,7 +60,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-@Path("/services")
+@Path("/jersey/services")
 public class JerseyServices {
 
     @GET
