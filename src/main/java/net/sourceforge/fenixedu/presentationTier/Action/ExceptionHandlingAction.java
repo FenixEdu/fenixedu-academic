@@ -93,9 +93,9 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         if (request.getServerName().equals("localhost")) {
-            return new ActionMapping("/debugExceptionPage.jsp");
+            return new ActionForward("/debugExceptionPage.jsp");
         }
-        return new ActionMapping("/supportHelpInquiry.jsp");
+        return new ActionForward("/supportHelpInquiry.jsp");
     }
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,

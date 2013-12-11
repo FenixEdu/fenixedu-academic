@@ -6,13 +6,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -73,10 +76,10 @@ public class ExceptionInformation {
      * */
 
     public static class ThrowableInfo {
-        private boolean cause;
-        private boolean suppressed;
-        private int level;
-        private Throwable subject;
+        private final boolean cause;
+        private final boolean suppressed;
+        private final int level;
+        private final Throwable subject;
 
         public ThrowableInfo(boolean isCause, boolean isSurpressed, int level, Throwable subject) {
             super();
@@ -236,11 +239,15 @@ public class ExceptionInformation {
             }
             if (info != null) {
                 info.setUserName(user);
-                info.setUserRoles(userView.getRoleTypes());
+                Set<RoleType> roles = new HashSet<RoleType>();
+                for (Role role : userView.getPerson().getPersonRolesSet()) {
+                    roles.add(role.getRoleType());
+                }
+                info.setUserRoles(roles);
             }
         } else {
             user = "No user logged in, or session was lost.\n";
-            requestBean = new SupportRequestBean();
+            requestBean = SupportRequestBean.generateExceptionBean(null);
         }
         exceptionInfo.append(user + "\n");
         return requestBean;

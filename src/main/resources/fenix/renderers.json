@@ -110,18 +110,11 @@
     { "name": "gep", "configFile": "struts-gep.xml" },
     { "name": "messaging", "configFile": "struts-messaging.xml" },
     { "name": "internationalRelatOffice", "configFile": "struts-internationalRelatOffice.xml" },
-    { "name": "institucionalProjectsManagement", "configFile": "struts-institucionalProjectsManagement.xml" },
     { "name": "pedagogicalCouncil", "configFile": "struts-pedagogicalCouncil.xml" },
     { "name": "facultyAdmOffice", "configFile": "struts-facultyAdmOffice.xml" },
     { "name": "student", "configFile": "struts-student.xml" },
     { "name": "person/functionalities", "configFile": "struts-functionalities.xml" },
-    { "name": "manager/functionalities", "configFile": "struts-functionalities.xml" },
-    { "name": "projectsManagement", "configFile": "struts-institucionalProjectsManagement.xml" },
-    { "name": "itProjectsManagement", "configFile": "struts-institucionalProjectsManagement.xml" },
-    { "name": "istidProjectsManagement", "configFile": "struts-institucionalProjectsManagement.xml" },
-    { "name": "istidInstitucionalProjectsManagement", "configFile": "struts-institucionalProjectsManagement.xml" },
-    { "name": "adistProjectsManagement", "configFile": "struts-institucionalProjectsManagement.xml" },
-    { "name": "adistInstitucionalProjectsManagement", "configFile": "struts-institucionalProjectsManagement.xml" }
+    { "name": "manager/functionalities", "configFile": "struts-functionalities.xml" }
   ],
   "exceptionHandlers": [
     {

@@ -1326,7 +1326,7 @@ public class Unit extends Unit_Base {
     }
 
     static public String getInstitutionURL() {
-        final RootDomainObject root = RootDomainObject.getInstance();
+        final Bennu root = Bennu.getInstance();
         String result = StringUtils.EMPTY;
         if (root != null) {
             final Unit institutionUnit = root.getInstitutionUnit();
