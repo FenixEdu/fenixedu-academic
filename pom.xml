@@ -30,10 +30,10 @@
 				<targetPath>${project.build.outputDirectory}/images</targetPath>
 				<filtering>false</filtering>
 			</resource>
-               <resource>
-                <directory>src/main/webapp</directory>
-                <targetPath>META-INF/resources</targetPath>
-            </resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<targetPath>META-INF/resources</targetPath>
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>
@@ -379,7 +379,7 @@
 		</dependency>
 		<dependency>
 			<groupId>pt.ist</groupId>
-			<artifactId>jodaplace</artifactId>
+			<artifactId>standards</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>
@@ -506,7 +506,8 @@
 							</execution>
 						</executions>
 						<configuration>
-							<licence> <!-- Free open source license for the pro version of MireDot, valid for one year (expires 2014-09-23) -->
+							<licence> <!-- Free open source license for the pro version of MireDot, valid for one 
+									year (expires 2014-09-23) -->
 								UHJvamVjdHxwdC5pc3R8ZmVuaXgjTUN3Q0ZIWGIrVlJsQ2hIWUJLUDJONWkyNG1CekpObHlBaFJDTnZ2K0hqZlcraVhoVFhwRG1BVWlubG9DVlE9PQ==
 							</licence>
 						</configuration>

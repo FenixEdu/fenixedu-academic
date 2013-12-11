@@ -143,6 +143,7 @@ import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
+import pt.utl.ist.codeGenerator.database.DataInitializer.InstallationProcess;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -173,18 +174,6 @@ public class CreateTestData {
 
     private static Bennu getRootDomainObject() {
         return Bennu.getInstance();
-    }
-
-    public static class CreateManagerUser extends AtomicAction {
-        @Override
-        public void doIt() {
-            final Person person = Person.readPersonByUsername("admin");
-            final Country country = Country.readCountryByNationality("Portuguesa");
-            person.setCountry(country);
-            person.setCountryOfBirth(country);
-            person.setCountryOfResidence(country);
-            person.setPassword(PasswordEncryptor.encryptPassword("pass"));
-        }
     }
 
     public static class CreateExecutionYears extends AtomicAction {
@@ -328,12 +317,11 @@ public class CreateTestData {
         }
     }
     static AdministrativeOffice administrativeOffice;
-    public static class CreateOrganizationalStructure extends AtomicAction {
-        @Override
-        public void doIt() {
-            final CountryUnit countryUnit = getCountryUnit("Portugal");
-            final UniversityUnit universityUnit = createUniversityUnit(countryUnit);
-            final SchoolUnit institutionUnit = createSchoolUnit(universityUnit, "Escola do Galo", "Fenix");
+    public static class CreateOrganizationalStructure {
+        public void doIt(InstallationProcess process) {
+            final CountryUnit countryUnit = getCountryUnit(process.country.getName());
+            final UniversityUnit universityUnit = createUniversityUnit(countryUnit, process.universityName, process.universityAcronym);
+            final SchoolUnit institutionUnit = createSchoolUnit(universityUnit, process.schoolName, process.schoolAcronym);
             getRootDomainObject().setInstitutionUnit(institutionUnit);
             final AggregateUnit serviceUnits = createAggregateUnit(institutionUnit, "Services");
             createServiceUnits(serviceUnits);
@@ -355,10 +343,11 @@ public class CreateTestData {
             return null;
         }
 
-        private UniversityUnit createUniversityUnit(final CountryUnit countryUnit) {
+        private UniversityUnit createUniversityUnit(final CountryUnit countryUnit, final String universityName,
+                final String universityAcronym) {
             return UniversityUnit
-                    .createNewUniversityUnit(new MultiLanguageString(Language.getDefaultLanguage(), "Universidade de Barcelos"),
-                            null, null, "UB", new YearMonthDay(), null, countryUnit, null, null, false, null);
+                    .createNewUniversityUnit(new MultiLanguageString(Language.getDefaultLanguage(), universityName),
+                            null, null, universityAcronym, new YearMonthDay(), null, countryUnit, null, null, false, null);
         }
 
         private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
@@ -454,9 +443,8 @@ public class CreateTestData {
         return new RoleGroup(Role.getRoleByRoleType(roleType));
     }
 
-    public static class CreateDegrees extends AtomicAction {
-        @Override
-        public void doIt() {
+    public static class CreateDegrees {
+        public void doIt(InstallationProcess process) {
             Language.setLocale(Language.getDefaultLocale());
 
             final Unit unit = findUnitByName("Degrees");
@@ -467,7 +455,8 @@ public class CreateTestData {
                         createDegreeInfo(degree);
                         associateToDepartment(degree);
 
-                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree);
+                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree, process);
+
                         createExecutionDegrees(degreeCurricularPlan, getCampus());
                         degree.setAdministrativeOffice(administrativeOffice);
                         final DegreeSite degreeSite = degree.getSite();
@@ -496,11 +485,11 @@ public class CreateTestData {
                     degreeType.getGradeScale());
         }
 
+        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree, InstallationProcess process) {
 
-        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree) {
             final DegreeCurricularPlan degreeCurricularPlan =
                     degree.createBolonhaDegreeCurricularPlan(degree.getSigla(), GradeScale.TYPE20,
-                            Person.readPersonByUsername("admin"));
+                            process.person);
 
             degreeCurricularPlan.setCurricularStage(CurricularStage.APPROVED);
             degreeCurricularPlan.setDescription("Bla bla bla. Desc. do plano curricular do curso. Bla bla bla");
@@ -1060,45 +1049,10 @@ public class CreateTestData {
         }
     }
 
-    private static void createTestData() {
-        Language.setLocale(Language.getDefaultLocale());
-
-        doAction(new CreateManagerUser());
-        doAction(new CreateExecutionYears());
-        doAction(new CreateResources());
-        doAction(new CreateOrganizationalStructure());
-        doAction(new CreateDegrees());
-        doAction(new CreateCurricularPeriods());
-        doAction(new CreateCurricularStructure());
-        doAction(new CreateExecutionCourses());
-        doAction(new CreateEvaluations());
-
-        // createUnits();
-        // createExecutionYears();
-        // createCampus();
-        // createRooms();
-        // createDegrees();
-        // createExecutionCourses();
-        // connectShiftsToSchoolClasses();
-        // createWrittenEvaluations();
-        // createStudents();
-    }
-
-    public static void main(String[] args) {
-        try {
-            doIt();
-        } finally {
-            System.err.flush();
-            System.out.flush();
-        }
-        System.out.println("Creation of test data complete.");
-        System.exit(0);
-    }
-
     @Atomic(mode = TxMode.READ)
     private static void doIt() {
         setPrivledges();
-        createTestData();
+        //createTestData();
     }
 
     private static final LessonRoomManager lessonRoomManager = new LessonRoomManager();
@@ -1204,8 +1158,9 @@ public class CreateTestData {
         return null;
     }
 
-    private static void createDegrees() {
-        final Person person = Person.readPersonByUsername("admin");
+    private static void createDegrees(InstallationProcess process) {
+        final Person person = process.person;
+
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         final Campus campus = Space.getAllCampus().iterator().next();
 

@@ -44,7 +44,6 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateInterval() {
-        System.out.println(toString() + ": " + getBeginDateYearMonthDay() + " - " + getEndDateYearMonthDay());
         return getBeginDateYearMonthDay() != null && getEndDateYearMonthDay() != null
                 && getBeginDateYearMonthDay().isBefore(getEndDateYearMonthDay());
     }
