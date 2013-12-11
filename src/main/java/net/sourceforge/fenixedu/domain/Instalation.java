@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class Instalation extends Instalation_Base {
@@ -11,7 +12,7 @@ public class Instalation extends Instalation_Base {
     private static final String DEFAULT_INSTITUTION_EMAIL_DOMAIN = "ist.utl.pt";
 
     public Instalation() {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setBennu(Bennu.getInstance());
     }
 
     public String getInstituitionalEmailAddress(String prefix) {
@@ -43,12 +44,12 @@ public class Instalation extends Instalation_Base {
     }
 
     public static Instalation getInstance() {
-        return RootDomainObject.getInstance().getInstalation();
+        return Bennu.getInstance().getInstalation();
     }
 
     @Atomic
     public static void ensureInstalation() {
-        if (RootDomainObject.getInstance().getInstalation() == null) {
+        if (Bennu.getInstance().getInstalation() == null) {
             new Instalation();
         }
     }
