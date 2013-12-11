@@ -11,10 +11,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 public final class DefaultForwards {
 
-    @Mapping(path = "/showErrorPage", parameter = "/supportHelpInquiry.jsp")
-    public static class ShowErrorPage extends ForwardAction {
-    }
-
     @Mapping(path = "/showErrorPageRegistered", parameter = "/exception/errorRegistered.jsp")
     public static class ShowErrorPageRegistered extends ForwardAction {
     }

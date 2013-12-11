@@ -32,6 +32,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.RequestUtils;
 
+import pt.ist.bennu.core.util.CoreConfiguration;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.EMail;
@@ -92,7 +93,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        if (request.getServerName().equals("localhost")) {
+        if (CoreConfiguration.getConfiguration().developmentMode()) {
             return new ActionForward("/debugExceptionPage.jsp");
         }
         return new ActionForward("/supportHelpInquiry.jsp");

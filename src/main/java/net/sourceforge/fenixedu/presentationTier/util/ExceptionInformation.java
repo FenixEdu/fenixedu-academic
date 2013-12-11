@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
 
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
@@ -170,7 +171,14 @@ public class ExceptionInformation {
         ActionMapping mapping = info.getActionMapping();
         if (mapping != null) {
             info.setActionErrorClass(mapping.getType());
-            info.setActionErrorMethod(mapping.getParameter().equals("method") ? info.getQueryParameters().get("method") : "execute");
+            Class<?> actionClass = actionClass(mapping.getType());
+            if (DispatchAction.class.isAssignableFrom(actionClass)) {
+                // For DispatchActions we can try to better pinpoint the method...
+                info.setActionErrorMethod(request.getParameter(mapping.getParameter()));
+            } else {
+                // ... for the others, we can just look for execute
+                info.setActionErrorMethod("execute");
+            }
             String getString = info.getActionErrorClass() + "." + info.getActionErrorMethod();
             String actionError = formattedST.substring(formattedST.indexOf(getString));
             actionError = actionError.substring(0, actionError.indexOf("\n"));
@@ -182,6 +190,14 @@ public class ExceptionInformation {
 
         info.setExceptionInfo(exceptionInfo.toString());
         return info;
+    }
+
+    private static final Class<?> actionClass(String type) {
+        try {
+            return Class.forName(type);
+        } catch (ClassNotFoundException e) {
+            throw new Error("I can't seem to find the class I was just in");
+        }
     }
 
     public static String buildUncaughtExceptionInfo(HttpServletRequest request, Throwable ex) {
