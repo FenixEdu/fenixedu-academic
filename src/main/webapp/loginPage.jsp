@@ -31,75 +31,61 @@
 				<bean:message key="title.login" bundle="GLOBAL_RESOURCES" />
 			</h1>
 			
-<!-- 			Version with Table -->
-			<html:form action="/login" focus="username">
+		<div class="institutionName"><%=Unit.getInstitutionName() %> </div>
+
+			<html:form action="/login" focus="usernameField" styleId="authenticationForm">
 				<table align="center" border="0">
+
 					<tr>
-						<td colspan="2"><span class="error"><!-- Error messages go here --><html:errors property="username" /></span></td>
+						<td><html:text styleId="usernameField" bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" /></td>
 					</tr>
+					
 					<tr>
-						<td><span class="label"><bean:message key="label.username" bundle="GLOBAL_RESOURCES" />:</span></td>
-						<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" /></td>
+						<td colspan="2"><div class="error"><!-- Error messages go here --><html:errors property="username" /></div></td>
 					</tr>
+					
 					<html:hidden property="pendingRequest" value="<%=request.getParameter("pendingRequest")%>" />
+
 					<tr>
-						<td colspan="2"><span class="error"><!-- Error messages go here --><html:errors property="password" /></span></td>
-					</tr>
-					<tr>
-						<td><span class="label"><bean:message key="label.password" bundle="GLOBAL_RESOURCES" />:</span></td>
-						<td><html:password bundle="HTMLALT_RESOURCES" altKey="password.password" property="password" redisplay="false" /></td>
+						<td><html:password bundle="HTMLALT_RESOURCES" altKey="password.password" property="password" redisplay="false" styleId="password"/></td>
 					</tr>
 
+					<tr>
+						<td colspan="2"><div class="error"><!-- Error messages go here --><html:errors property="password" /></div></td>
+					</tr>
 				</table>
-			</html:form>
-<!-- 			END -->
-
-<!-- 			Version with divs -->
-<%-- 			<html:form action="/login" focus="username"> --%>
-<!-- 				<div style="display: block; width: 45%; margin: 0 auto;"> -->
-					
-<%-- 					<p><span class="error"><!-- Error messages go here --><html:errors property="username" /></span></p> --%>
-					
-<!-- 					<div> -->
-<%-- 						<p><span class="label"><bean:message key="label.username" bundle="GLOBAL_RESOURCES" /></span></p> --%>
-<%-- 						<html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" /> --%>
-<!-- 					</div> -->
-<%-- 					<html:hidden property="pendingRequest" value="<%=request.getParameter("pendingRequest")%>" /> --%>
-<!-- 					<div> -->
-<%-- 						<span class="error"><!-- Error messages go here --><p><html:errors property="password" /></p></span> --%>
-<!-- 					</div> -->
-<!-- 					<div> -->
-<%-- 						<p><span class="label"><bean:message key="label.password" bundle="GLOBAL_RESOURCES" /></span></p> --%>
-<%-- 						<html:password bundle="HTMLALT_RESOURCES" altKey="password.password" property="password" redisplay="false" /> --%>
-<!-- 					</div> -->
-<!-- 				</div> -->
-<%-- 			</html:form> --%>
-			<!-- 			END -->
+				
+				<div id="footer">					
+					<table>
+						<tr>
+							<td>
+								<div id="support">
+									<a href="<bean:message key="institution.email.support" bundle="GLOBAL_RESOURCES" />">
+										<bean:message key="message.footer.help" bundle="GLOBAL_RESOURCES" />
+									</a>
+								</div>
+							</td>
+							<td>
+								<div id="login_button">
+									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" styleClass="button" property="ok" >
+										<bean:message key="title.login" bundle="GLOBAL_RESOURCES" />
+									</html:submit>
+								</div>
+							</td>
+		
+						</tr>
+					</table>
+				</div>
 			
-			<div id="footer">					
-				<table>
-					<tr>
-						<td>
-							<span id="support">
-								<a href="<bean:message key="institution.email.support" bundle="GLOBAL_RESOURCES" />">
-									<bean:message key="message.footer.help" bundle="GLOBAL_RESOURCES" />
-								</a>
-							</span>
-						</td>
-						<td>
-							<div id="login_button">
-								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" styleClass="button" property="ok" >
-									<bean:message key="button.submit" />
-								</html:submit>
-							</div>
-						</td>
-	
-					</tr>
-				</table>
-			</div>
+			</html:form>
 			
 			<div class="clear_both" />
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+		document.getElementById("usernameField").setAttribute("placeholder", "<bean:message key="label.username" bundle="GLOBAL_RESOURCES" />");
+		document.getElementById("password").setAttribute("placeholder", "<bean:message key="label.password" bundle="GLOBAL_RESOURCES" />");
+	</script>
 </body>
 </html:html>
