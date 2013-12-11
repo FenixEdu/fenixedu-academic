@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -35,7 +35,7 @@ public class Installment extends Installment_Base {
 
     protected Installment() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setWhenCreated(new DateTime());
     }
 
@@ -204,7 +204,7 @@ public class Installment extends Installment_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.tests;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer;
 import net.sourceforge.fenixedu.domain.tests.answers.NullAnswer;
@@ -16,7 +16,7 @@ public class NewAnswer extends NewAnswer_Base {
     public NewAnswer() {
         super();
 
-        this.setRootDomainObject(RootDomainObject.getInstance());
+        this.setRootDomainObject(Bennu.getInstance());
         this.setConcreteAnswer(new NullAnswer());
     }
 
@@ -81,7 +81,7 @@ public class NewAnswer extends NewAnswer_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

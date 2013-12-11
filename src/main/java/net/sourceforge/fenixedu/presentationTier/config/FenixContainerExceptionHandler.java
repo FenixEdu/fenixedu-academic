@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -21,7 +21,7 @@ import org.apache.struts.config.ExceptionConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * 
@@ -42,7 +42,7 @@ public class FenixContainerExceptionHandler extends FenixExceptionHandler {
             }
         }
 
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
         if (userView != null) {
             final Person person = userView.getPerson();
             request.setAttribute("loggedPersonEmail", person.getEmail());

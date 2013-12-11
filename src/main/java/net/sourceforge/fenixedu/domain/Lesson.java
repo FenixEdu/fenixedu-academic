@@ -41,6 +41,8 @@ import org.joda.time.Minutes;
 import org.joda.time.Weeks;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class Lesson extends Lesson_Base {
 
     public static int NUMBER_OF_MINUTES_IN_HOUR = 60;
@@ -78,7 +80,7 @@ public class Lesson extends Lesson_Base {
             }
         }
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setDiaSemana(diaSemana);
         setInicio(inicio);
         setFim(fim);
@@ -111,7 +113,7 @@ public class Lesson extends Lesson_Base {
             period = OccupationPeriod.createOccupationPeriodForLesson(executionCourse, beginDate, endDate);
         }
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setDiaSemana(diaSemana);
         setInicio(inicio);
         setFim(fim);
@@ -704,6 +706,25 @@ public class Lesson extends Lesson_Base {
         return dates;
     }
 
+    public SortedSet<Interval> getAllLessonIntervalsWithoutInstanceDates() {
+        SortedSet<Interval> dates = new TreeSet<Interval>();
+        if (!wasFinished()) {
+            YearMonthDay startDateToSearch = getLessonStartDay();
+            YearMonthDay endDateToSearch = getLessonEndDay();
+            for (final YearMonthDay yearMonthDay : getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch)) {
+                final HourMinuteSecond b = getBeginHourMinuteSecond();
+                final HourMinuteSecond e = getEndHourMinuteSecond();
+                final DateTime start = new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
+                        b.getHour(), b.getMinuteOfHour(), b.getSecondOfMinute(), 0);
+                final DateTime end = new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(), 
+                        e.getHour(), e.getMinuteOfHour(), e.getSecondOfMinute(), 0);
+                dates.add(new Interval(start, end));
+            }
+        }
+        return dates;
+    }
+
+
     public SortedSet<YearMonthDay> getAllLessonDates() {
         SortedSet<YearMonthDay> dates = getAllLessonInstanceDates();
         if (!wasFinished()) {
@@ -778,13 +799,17 @@ public class Lesson extends Lesson_Base {
         startDateToSearch = startDateToSearch != null ? getValidBeginDate(startDateToSearch) : null;
 
         if (!wasFinished() && startDateToSearch != null && endDateToSearch != null && !startDateToSearch.isAfter(endDateToSearch)) {
-
             Campus lessonCampus = getLessonCampus();
+            final int dayIncrement = getFrequency() == FrequencyType.BIWEEKLY ? FrequencyType.WEEKLY.getNumberOfDays() : getFrequency().getNumberOfDays();
+            boolean shouldAdd = true;
             while (true) {
                 if (isDayValid(startDateToSearch, lessonCampus)) {
-                    result.add(startDateToSearch);
+                    if (getFrequency() != FrequencyType.BIWEEKLY || shouldAdd) {
+                        result.add(startDateToSearch);
+                    }
+                    shouldAdd = !shouldAdd;
                 }
-                startDateToSearch = startDateToSearch.plusDays(getNumberOfDaysToSumBetweenTwoLessons());
+                startDateToSearch = startDateToSearch.plusDays(dayIncrement);
                 if (startDateToSearch.isAfter(endDateToSearch)) {
                     break;
                 }
@@ -833,10 +858,6 @@ public class Lesson extends Lesson_Base {
         SortedSet<Summary> lessonSummaries = new TreeSet<Summary>(comparator);
         lessonSummaries.addAll(getAssociatedSummaries());
         return lessonSummaries;
-    }
-
-    private int getNumberOfDaysToSumBetweenTwoLessons() {
-        return getFrequency().getNumberOfDays();
     }
 
     public LessonInstance getLessonInstanceFor(YearMonthDay date) {
@@ -1166,7 +1187,7 @@ public class Lesson extends Lesson_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

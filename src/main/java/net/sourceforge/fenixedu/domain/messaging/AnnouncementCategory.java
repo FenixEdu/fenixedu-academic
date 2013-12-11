@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -8,7 +8,7 @@ public class AnnouncementCategory extends AnnouncementCategory_Base {
 
     public AnnouncementCategory() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public AnnouncementCategory(String namePt, String nameEn, AnnouncementCategoryType type) {
@@ -33,7 +33,7 @@ public class AnnouncementCategory extends AnnouncementCategory_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

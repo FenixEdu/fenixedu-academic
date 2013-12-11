@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 	

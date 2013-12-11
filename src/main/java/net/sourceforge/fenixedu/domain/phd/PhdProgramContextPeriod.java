@@ -118,7 +118,7 @@ public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
         deleteDomainObject();
     }
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

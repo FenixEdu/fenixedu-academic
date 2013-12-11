@@ -9,7 +9,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadBuildings;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.Season;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.util.Season;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Util {
@@ -45,7 +45,7 @@ public class Util {
             tipos.add(new LabelValueBean(name, value));
         }
 
-        Collection<RoomClassification> roomClassifications = RootDomainObject.getInstance().getRoomClassification();
+        Collection<RoomClassification> roomClassifications = Bennu.getInstance().getRoomClassificationSet();
         for (RoomClassification classification : RoomClassification.sortByRoomClassificationAndCode(roomClassifications)) {
             if (classification.hasParentRoomClassification()) {
                 tipos.add(new LabelValueBean(classification.getPresentationCode() + " - "

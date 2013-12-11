@@ -11,7 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -58,13 +58,13 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEnrollStudentGroupShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         String studentGroupCodeString = request.getParameter("studentGroupCode");
 
         try {
-            VerifyStudentGroupAtributes.run(groupPropertiesCodeString, null, studentGroupCodeString, userView.getUtilizador(),
+            VerifyStudentGroupAtributes.run(groupPropertiesCodeString, null, studentGroupCodeString, userView.getUsername(),
                     new Integer(5));
 
         } catch (NotAuthorizedException e) {
@@ -177,7 +177,7 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         DynaActionForm enrollStudentGroupForm = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -194,7 +194,7 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
         }
 
         try {
-            EnrollGroupShift.run(studentGroupCodeString, groupPropertiesCodeString, newShiftString, userView.getUtilizador());
+            EnrollGroupShift.run(studentGroupCodeString, groupPropertiesCodeString, newShiftString, userView.getUsername());
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors2 = new ActionErrors();
             ActionError error2 = null;

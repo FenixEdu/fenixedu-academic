@@ -11,7 +11,7 @@
 	--%>
 	<li class="navheader"><bean:message key="consult"/></li>
   	<li><html:link page="/viewCurriculum.do?method=prepare" titleKey="link.title.curriculum"><bean:message key="link.student.curriculum"/></html:link></li>
-	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.phdIndividualProgramProcesses">
+	<logic:notEmpty name="USER_SESSION_ATTRIBUTE" property="user.person.phdIndividualProgramProcesses">
 		<li><html:link page="/phdIndividualProgramProcess.do?method=viewProcess"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></html:link></li>
 	</logic:notEmpty>
 	<li><html:link page="/studentTimeTable.do?method=prepare" titleKey="link.title.timetable"><bean:message key="link.my.timetable"/></html:link></li>
@@ -28,13 +28,13 @@
 	<li><html:link page="/viewTutorInfo.do?method=prepare" titleKey="link.title.tutorInfo"><bean:message key="link.student.tutorInfo"/></html:link></li>
 	<li><html:link page="/administrativeOfficeServicesSection.do" titleKey="administrative.office.services"><bean:message key="administrative.office.services"/></html:link></li>
 	<li><html:link page="/studentDataShareAuthorization.do?method=manageAuthorizations" titleKey="title.student.dataShareAuthorizations"><bean:message key="title.student.dataShareAuthorizations.short"/></html:link></li>
-	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.residencePaymentEvents">
+	<logic:notEmpty name="USER_SESSION_ATTRIBUTE" property="user.person.residencePaymentEvents">
 		<li><html:link page="/viewResidencePayments.do?method=listEvents" titleKey="link.title.residencePayments"><bean:message key="link.title.residencePayments"/></html:link></li>
 	</logic:notEmpty>
 	<li><html:link page="/delegatesInfo.do?method=prepare" titleKey="link.title.delegatesInfo"><bean:message key="link.student.delegatesInfo"/></html:link></li>
 
-	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.student">
-    	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.student.executionCourseAudits">
+	<logic:notEmpty name="USER_SESSION_ATTRIBUTE" property="user.person.student">
+    	<logic:notEmpty name="USER_SESSION_ATTRIBUTE" property="user.person.student.executionCourseAudits">
 			<li class="navheader"><bean:message key="link.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></li>
 			<li>
 				<html:link page="/qucAudit.do?method=showAuditProcesses" titleKey="link.inquiry.auditProcesses" bundle="INQUIRIES_RESOURCES">
@@ -49,7 +49,7 @@
 	<li><html:link page="/weeklyWorkLoad.do?method=prepare" titleKey="link.weekly.work.load"><bean:message key="link.weekly.work.load"/></html:link></li>
 	<li><html:link page="/studentInquiry.do?method=showCoursesToAnswer" titleKey="link.title.inquiry.students.courses"><bean:message key="link.inquiries" bundle="INQUIRIES_RESOURCES"/></html:link></li>
 	<li><html:link page="/yearDelegateManagement.do?method=prepare" titleKey="link.title.yearDelegateElections"><bean:message key="link.student.yearDelegateElections"/></html:link></li>
-	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.student.eligibleForCareerWorkshopApplication" value="true">
+	<logic:equal name="USER_SESSION_ATTRIBUTE" property="user.person.student.eligibleForCareerWorkshopApplication" value="true">
 		<li><html:link page="/careerWorkshopApplication.do?method=prepare" titleKey="link.title.careerWorkshop"><bean:message key="link.student.careerWorkshop" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></html:link></li>
 	</logic:equal>
 	<li><html:link page="/studentCycleInquiry.do?method=prepare" titleKey="link.title.inquiry.students.firstTimeCycle"><bean:message key="link.inquiries.firstTimeCycle" bundle="INQUIRIES_RESOURCES"/></html:link></li>	

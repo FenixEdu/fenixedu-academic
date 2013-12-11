@@ -46,7 +46,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 
         // infoTeacher = (InfoTeacher)
         // ReadInfoTeacherByTeacherNumber.run(teacherNumber);
-        person = Person.readPersonByIstUsername(personId);
+        person = Person.readPersonByUsername(personId);
 
         if (person == null) {
             addErrorMessage(request, "chosenTeacher", "error.manager.teachersManagement.noTeacher", personId);

@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -12,6 +11,8 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -32,10 +33,10 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
     }
 
     public void execute(String executionCourseID, String evaluationID) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
 
         try {
-            if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+            if ((id == null) || (id.getPerson().getPersonRolesSet() == null) || !id.getPerson().hasRole(getRoleType())
                     || !lecturesExecutionCourse(id, executionCourseID)
                     || !examBelongsExecutionCourse(id, executionCourseID, evaluationID)) {
                 throw new NotAuthorizedException();
@@ -46,12 +47,12 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
 
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, String executionCourseID) {
+    private boolean lecturesExecutionCourse(User id, String executionCourseID) {
         if (executionCourseID == null) {
             return false;
         }
         try {
-            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUsername());
             Professorship professorship = null;
             if (teacher != null) {
                 ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
@@ -64,7 +65,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
         }
     }
 
-    private boolean examBelongsExecutionCourse(IUserView id, String executionCourseID, String evaluationID) {
+    private boolean examBelongsExecutionCourse(User id, String executionCourseID, String evaluationID) {
         if (executionCourseID == null || evaluationID == null) {
             return false;
         }

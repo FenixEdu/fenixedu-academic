@@ -7,8 +7,8 @@
 
 <html:xhtml/>
 
-<logic:present role="PERSON">
-<bean:define id="person" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person"/>
+<logic:present role="role(PERSON)">
+<bean:define id="person" name="USER_SESSION_ATTRIBUTE" property="user.person"/>
 
 <em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="label.person.title.personalConsult"/></h2>
@@ -17,6 +17,14 @@
     <span class="error0"><!-- Error messages go here --><html:errors /></span>
 </p>
 
+
+		
+<span class="mtop5 mbottom5">		
+	<html:link action="/partyContacts.do?method=viewStudentLog">
+		<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
+	</html:link>
+</span>
+		
 <script type="text/javascript" src="<%=request.getContextPath()%>/CSS/scripts/checkall.js"></script>
 
     <!-- Photo -->
@@ -57,12 +65,6 @@
 		<span class="pleft05">
 			<html:link page="/photoHistory.do?method=userHistory">
 				<bean:message key="link.person.photo.history" bundle="APPLICATION_RESOURCES" />
-			</html:link>
-		</span>
-		
-		<span class="pleft05">		
-			<html:link action="/partyContacts.do?method=viewStudentLog">
-				<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</span>
 	</p>
@@ -619,7 +621,7 @@
 	<p class="mtop15">
 		<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
 	</p>
-	<fr:edit id="nickname" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person" schema="net.sourceforge.fenixedu.domain.Person.nickname">
+	<fr:edit id="nickname" name="USER_SESSION_ATTRIBUTE" property="user.person" schema="net.sourceforge.fenixedu.domain.Person.nickname">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05 thwhite"/>
 			<fr:property name="columnClasses" value=",,tdclear "/>
@@ -630,7 +632,7 @@
 	</html:submit>
 </fr:form>
 
-<fr:view name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person" schema="net.sourceforge.fenixedu.domain.Person.personal.info">
+<fr:view name="USER_SESSION_ATTRIBUTE" property="user.person" schema="net.sourceforge.fenixedu.domain.Person.personal.info">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight mtop15 thwhite"/>
 	</fr:layout>	
@@ -644,7 +646,7 @@
 		<td class="infoop"><strong><bean:message key="label.person.login.info" /></strong></td>
 	</tr>
 </table>
-<fr:view name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person" schema="net.sourceforge.fenixedu.domain.Person.user.info">
+<fr:view name="USER_SESSION_ATTRIBUTE" property="user.person" schema="net.sourceforge.fenixedu.domain.Person.user.info">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
 	</fr:layout>	
@@ -658,7 +660,7 @@
 		<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>
 	</tr>
 </table>
-<fr:view name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person" schema="net.sourceforge.fenixedu.domain.Person.family">
+<fr:view name="USER_SESSION_ATTRIBUTE" property="user.person" schema="net.sourceforge.fenixedu.domain.Person.family">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
 	</fr:layout>	

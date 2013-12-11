@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.ReadClassTimeTableByStudent;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.WriteStudentAttendingCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -104,7 +104,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
         checkParameter(request);
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         final DynaActionForm form = (DynaActionForm) actionForm;
         final String executionCourseId = (String) form.get("wantedCourse");
 
@@ -186,7 +186,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
         final SchoolClass schoolClass = setSelectedSchoolClass(request, classIdSelected, schoolClassesToEnrol);
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         final List<InfoShowOccupation> infoClasslessons =
                 ReadClassTimeTableByStudent.runReadClassTimeTableByStudent(registration, schoolClass, executionCourse);

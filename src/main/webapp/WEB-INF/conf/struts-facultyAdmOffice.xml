@@ -25,7 +25,7 @@
       <action-mappings type="org.apache.struts.action.ActionMapping">
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" parameter="resources.FacultyAdmOfficeResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>

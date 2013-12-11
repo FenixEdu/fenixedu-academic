@@ -10,7 +10,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.degree.ReadExecutionDegreeByCandidateID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -47,7 +47,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -152,7 +152,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
         // Get the Master Degree List
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         List masterDegreeList = null;
         try {
 
@@ -236,7 +236,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         request.setAttribute("degree", degree);
         // Get the Curricular Course List
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         List curricularCourseList = null;
         curricularCourseList = ReadCurricularCoursesByDegree.run(degreeCurricularPlanID);
 
@@ -376,7 +376,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
     public ActionForward chooseCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 

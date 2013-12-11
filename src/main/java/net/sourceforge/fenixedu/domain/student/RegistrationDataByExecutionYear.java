@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.ManageEnrolmentModelBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 /**
@@ -14,7 +14,7 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
 
     public RegistrationDataByExecutionYear() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public RegistrationDataByExecutionYear(Registration registration) {
@@ -54,7 +54,7 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

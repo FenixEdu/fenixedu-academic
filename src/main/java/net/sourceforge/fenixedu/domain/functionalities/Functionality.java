@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
@@ -697,7 +697,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
             String firstLookupPath =
                     executionPathValue.substring(firstIndex > 0 ? firstIndex : 0,
                             endIndex > 0 ? endIndex : executionPathValue.length());
-            for (final ExecutionPath executionPath : RootDomainObject.getInstance().getExecutionPathsSet()) {
+            for (final ExecutionPath executionPath : Bennu.getInstance().getExecutionPathsSet()) {
                 if (executionPath.getExecutionPath().contains(firstLookupPath)) {
                     if (executionPathValue.startsWith(executionPath.getFunctionality().getPath())) {
                         return executionPath.getFunctionality();

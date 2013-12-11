@@ -72,12 +72,6 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
         if (bean.getMobilityProgram() != null && bean.isIgnoreExternalEntries()) {
             throw new DomainException("ApprovementCertificateRequest.cannot.ignore.external.entries.within.a.mobility.program");
         }
-        if (bean.getExecutionYear() == null) {
-            throw new DomainException(
-                    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
-        } else if (!bean.getRegistration().hasAnyEnrolmentsIn(bean.getExecutionYear())) {
-            throw new DomainException("EnrolmentCertificateRequest.no.enrolments.for.registration.in.given.executionYear");
-        }
     }
 
     @Override
@@ -168,8 +162,7 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
         final Registration registration = getRegistration();
         ICurriculum curriculum;
         if (registration.isBolonha()) {
-            for (final CycleCurriculumGroup cycle : registration.getStudentCurricularPlan(getExecutionYear())
-                    .getInternalCycleCurriculumGrops()) {
+            for (final CycleCurriculumGroup cycle : registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
                 if (cycle.hasAnyApprovedCurriculumLines() && (useConcluded || !cycle.isConclusionProcessed())) {
                     curriculum = cycle.getCurriculum(getFilteringDate());
                     filterEntries(result, this, curriculum);
@@ -177,7 +170,7 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
             }
             if (isMobilityStudent()) {
                 final StandaloneCurriculumGroup standalone =
-                        registration.getStudentCurricularPlan(getExecutionYear()).getStandaloneCurriculumGroup();
+                        registration.getLastStudentCurricularPlan().getStandaloneCurriculumGroup();
                 if (standalone != null && standalone.hasAnyApprovedCurriculumLines()) {
                     result.addAll(getStandaloneEntriesToReport());
                 }
@@ -271,8 +264,7 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
     }
 
     private void reportExternalGroups(final Collection<ICurriculumEntry> result) {
-        for (final ExternalCurriculumGroup group : getRegistration().getStudentCurricularPlan(getExecutionYear())
-                .getExternalCurriculumGroups()) {
+        for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan().getExternalCurriculumGroups()) {
             filterEntries(result, this, group.getCurriculumInAdvance(getFilteringDate()));
         }
     }

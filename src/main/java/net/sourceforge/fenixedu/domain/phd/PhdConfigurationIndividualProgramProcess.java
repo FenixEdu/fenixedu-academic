@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.phd;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class PhdConfigurationIndividualProgramProcess extends PhdConfigurationIndividualProgramProcess_Base {
 
     private PhdConfigurationIndividualProgramProcess() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setGenerateAlert(true);
         setMigratedProcess(false);
     }
@@ -45,7 +45,7 @@ public class PhdConfigurationIndividualProgramProcess extends PhdConfigurationIn
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

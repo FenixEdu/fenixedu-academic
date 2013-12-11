@@ -26,7 +26,7 @@ public class UndoneQueueJobsDA extends FenixDispatchAction {
     public ActionForward prepareUndoneQueueJobList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        Collection<QueueJob> allJobs = rootDomainObject.getQueueJob();
+        Collection<QueueJob> allJobs = rootDomainObject.getQueueJobSet();
         List<QueueJob> queueJobs = new ArrayList<QueueJob>();
 
         for (QueueJob job : allJobs) {

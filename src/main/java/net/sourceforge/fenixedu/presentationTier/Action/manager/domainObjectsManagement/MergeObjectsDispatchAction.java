@@ -14,7 +14,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferDomainObjectProperty;
@@ -29,7 +29,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -197,7 +197,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException, IllegalAccessException, InvocationTargetException,
             NoSuchMethodException, ClassNotFoundException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String object1ExternalId = request.getParameter("object1ExternalId");
         String object2ExternalId = request.getParameter("object2ExternalId");
@@ -219,7 +219,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
             throws FenixServiceException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
             ClassNotFoundException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         String objectExternalId = request.getParameter("objectExternalId");
 
         final String classToMerge = request.getParameter("classToMerge");

@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -44,7 +45,7 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 
     public EnrolmentPeriod() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected void init(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester,
@@ -137,7 +138,7 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

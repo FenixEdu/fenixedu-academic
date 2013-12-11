@@ -10,7 +10,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetRectifyBean;
@@ -67,7 +67,7 @@ public class OldMarkSheetCreateDispatchAction extends MarkSheetCreateDispatchAct
     }
 
     @Override
-    protected MarkSheet createMarkSheet(MarkSheetManagementCreateBean createBean, IUserView userView) {
+    protected MarkSheet createMarkSheet(MarkSheetManagementCreateBean createBean, User userView) {
         return createBean.createOldMarkSheet(userView.getPerson());
     }
 

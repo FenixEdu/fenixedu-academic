@@ -413,7 +413,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{markSheet}.getCreator().getUserAliass()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{markSheet}.getCreator().getUsername()]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-16" x="283" y="213" width="31" height="19"/>

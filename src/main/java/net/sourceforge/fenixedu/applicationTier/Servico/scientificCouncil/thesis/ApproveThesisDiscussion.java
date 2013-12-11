@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthoriz
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
@@ -57,7 +57,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
         @Atomic
         private void callService() {
-            for (final Thesis thesis : RootDomainObject.getInstance().getThesesPendingPublicationSet()) {
+            for (final Thesis thesis : Bennu.getInstance().getThesesPendingPublicationSet()) {
                 if (thesis.getExternalId().equals(thesisOid)) {
                     createResult(thesis);
                     thesis.setRootDomainObjectFromPendingPublication(null);
@@ -111,9 +111,9 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
                         ThesisType.Graduation_Thesis,
                         titleForFile,
                         thesis.getKeywords(),
-                        RootDomainObject.getInstance().getInstitutionUnit().getName(),
+                        Bennu.getInstance().getInstitutionUnit().getName(),
                         thesis.getDiscussed().getYear(), // publication year
-                        getAddress(RootDomainObject.getInstance().getInstitutionUnit()), // address
+                        getAddress(Bennu.getInstance().getInstitutionUnit()), // address
                         thesis.getThesisAbstract(),
                         null, // number of pages
                         BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",

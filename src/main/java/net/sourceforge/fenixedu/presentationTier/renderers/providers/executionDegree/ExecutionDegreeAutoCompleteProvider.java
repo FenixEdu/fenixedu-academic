@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
+import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.ist.fenixframework.FenixFramework;
 

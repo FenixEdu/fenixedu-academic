@@ -9,7 +9,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments"%>
 <html:xhtml/>
 
-<logic:present role="COORDINATOR">
+<logic:present role="role(COORDINATOR)">
 
 <bean:define id="process" name="process" />
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />

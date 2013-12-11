@@ -13,8 +13,8 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
@@ -86,7 +86,7 @@ public abstract class PostingRule extends PostingRule_Base {
 
     protected PostingRule() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setCreationDate(new DateTime());
     }
 
@@ -366,7 +366,7 @@ public abstract class PostingRule extends PostingRule_Base {
 
     static public Collection<PostingRule> findPostingRules(final EventType eventType) {
         final Collection<PostingRule> result = new HashSet<PostingRule>();
-        for (final PostingRule postingRule : RootDomainObject.getInstance().getPostingRulesSet()) {
+        for (final PostingRule postingRule : Bennu.getInstance().getPostingRulesSet()) {
             if (postingRule.has(eventType)) {
                 result.add(postingRule);
             }
@@ -379,7 +379,7 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

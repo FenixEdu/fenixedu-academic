@@ -1,11 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.SiteManagerScormFileAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -18,11 +14,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
 import pt.ist.fenixframework.Atomic;
 import pt.linkare.scorm.utils.ScormMetaDataHash;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.IScormFileManager;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class CreateScormFile extends CreateFileContent {
 
@@ -143,29 +134,13 @@ public class CreateScormFile extends CreateFileContent {
                 args.getPermittedGroup(), args.getPerson(), args.getEducationalResourceType());
     }
 
-    @Override
-    protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
-            Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
-        final IScormFileManager fileManager = FileManagerFactory.getFactoryInstance().getScormFileManager();
-        InputStream is = null;
-        try {
-            is = new FileInputStream(file);
-            return fileManager.saveScormFile(filePath, originalFilename, permission, metaData, is, extraScormParam.get());
-        } catch (FileNotFoundException e) {
-            throw new FenixServiceException(e.getMessage());
-        } finally {
-            if (is != null) {
-                is.close();
-            }
-        }
-    }
-
     // Service Invokers migrated from Berserk
 
     private static final CreateScormFile serviceInstance = new CreateScormFile();
 
     @Atomic
-    public static void runCreateScormFile(CreateScormFileItemForItemArgs args) throws FenixServiceException, DomainException, IOException  , NotAuthorizedException {
+    public static void runCreateScormFile(CreateScormFileItemForItemArgs args) throws FenixServiceException, DomainException,
+            IOException, NotAuthorizedException {
         SiteManagerScormFileAuthorizationFilter.instance.execute(args);
         serviceInstance.run(args);
     }

@@ -21,6 +21,7 @@ import org.joda.time.Partial;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -60,7 +61,7 @@ public class Summary extends Summary_Base {
             AllocatableSpace room, Partial hour, ShiftType type, Boolean taught) {
 
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
                 lesson, date, room, hour, type, taught);
 
@@ -390,7 +391,7 @@ public class Summary extends Summary_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

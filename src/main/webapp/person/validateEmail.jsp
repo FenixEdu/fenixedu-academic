@@ -6,7 +6,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
 <html:xhtml/>
 
-<logic:present role="PERSON">
+<logic:present role="role(PERSON)">
 
 	<em><bean:message key="label.person.main.title" /></em>
 	<h2><bean:message key="label.validate.email"/></h2>

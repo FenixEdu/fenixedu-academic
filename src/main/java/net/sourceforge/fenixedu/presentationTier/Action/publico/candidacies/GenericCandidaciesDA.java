@@ -7,8 +7,6 @@ import java.util.SortedSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationLetterOfRecomentation;
@@ -20,7 +18,6 @@ import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUserBean
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
@@ -29,6 +26,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -47,8 +46,8 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         final SortedSet<GenericApplicationPeriod> periods = GenericApplicationPeriod.getPeriods();
         request.setAttribute("periods", periods);
 
-        final IUserView userView = AccessControl.getUserView();
-        if (userView != null && userView.hasRoleType(RoleType.MANAGER)) {
+        final User userView = Authenticate.getUser();
+        if (userView != null && userView.getPerson().hasRole(RoleType.MANAGER)) {
             final GenericApplicationPeriodBean genericApplicationPeriodBean = new GenericApplicationPeriodBean();
             request.setAttribute("genericApplicationPeriodBean", genericApplicationPeriodBean);
         }
@@ -195,9 +194,9 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
                         .equals(confirmationCode)) || application.getGenericApplicationPeriod().isCurrentUserAllowedToMange())) {
             response.setContentType(file.getMimeType());
             response.addHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
-            response.setContentLength(file.getSize());
+            response.setContentLength(file.getSize().intValue());
             final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-            dos.write(file.getContents());
+            dos.write(file.getContent());
             dos.close();
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -218,9 +217,9 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
                         .getRecomentation().getConfirmationCode().equals(confirmationCode))) {
             response.setContentType(file.getMimeType());
             response.addHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
-            response.setContentLength(file.getSize());
+            response.setContentLength(file.getSize().intValue());
             final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-            dos.write(file.getContents());
+            dos.write(file.getContent());
             dos.close();
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

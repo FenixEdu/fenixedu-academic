@@ -8,7 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ListGuidesByState;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
@@ -55,7 +55,7 @@ public class GuideListingByStateDispatchAction extends FenixDispatchAction {
     public ActionForward chooseState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         DynaActionForm chooseGuide = (DynaActionForm) form;
 

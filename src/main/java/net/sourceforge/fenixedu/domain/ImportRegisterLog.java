@@ -2,17 +2,19 @@ package net.sourceforge.fenixedu.domain;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class ImportRegisterLog extends ImportRegisterLog_Base {
 
     public ImportRegisterLog(final ImportRegister importRegister) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setImportRegister(importRegister);
         setInstant(new DateTime());
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

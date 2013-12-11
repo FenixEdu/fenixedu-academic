@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
@@ -12,7 +12,7 @@ public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
 
     private ReceiptPrintVersion() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     ReceiptPrintVersion(Receipt receipt, Person person) {
@@ -61,7 +61,7 @@ public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
         super.deleteDomainObject();
     }
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

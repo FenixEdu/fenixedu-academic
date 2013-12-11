@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs.phd.notification;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
@@ -52,7 +52,7 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
         addParameter("administrativeOfficeCoordinator", getCandidacyProcess().getIndividualProgramProcess().getPhdProgram()
                 .getAdministrativeOffice().getUnit().getActiveUnitCoordinator().getFirstAndLastName());
 
-        addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getPartyName().getContent());
+        addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getPartyName().getContent());
         addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent());
     }
 

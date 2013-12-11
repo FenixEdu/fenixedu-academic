@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
@@ -33,6 +32,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+import pt.ist.bennu.core.domain.User;
 
 public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividualCandidacyProcess_Base {
 
@@ -104,9 +104,9 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
-        return isAllowedToManageProcess(this, userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)
-                || userView.hasRoleType(RoleType.COORDINATOR);
+    public boolean canExecuteActivity(User userView) {
+        return isAllowedToManageProcess(this, userView) || userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)
+                || userView.getPerson().hasRole(RoleType.COORDINATOR);
     }
 
     @Override
@@ -186,7 +186,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
         return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
-    static private boolean isAllowedToManageProcess(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+    static private boolean isAllowedToManageProcess(SecondCycleIndividualCandidacyProcess process, User userView) {
         Set<AcademicProgram> programs =
                 AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                         AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
@@ -207,7 +207,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static public class IndividualCandidacyInformation extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             /*
              * 06/04/2009 The candidacy may be submited by someone who's not
              * authenticated in the system
@@ -219,7 +219,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess dummy,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             return new SecondCycleIndividualCandidacyProcess((SecondCycleIndividualCandidacyProcessBean) object);
         }
     }
@@ -227,7 +227,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class CandidacyPayment extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -239,7 +239,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             return process; // nothing to be done, for now payment is being
             // done by existing interface
         }
@@ -248,7 +248,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class EditCandidacyPersonalInformation extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -259,7 +259,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             final SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) object;
             process.editPersonalCandidacyInformation(bean.getPersonBean());
             return process;
@@ -269,7 +269,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class EditCandidacyInformation extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -280,7 +280,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.editCandidacyHabilitations((SecondCycleIndividualCandidacyProcessBean) object);
             process.getCandidacy().editObservations((SecondCycleIndividualCandidacyProcessBean) object);
             process.editCandidacyInformation((SecondCycleIndividualCandidacyProcessBean) object);
@@ -292,8 +292,8 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class IntroduceCandidacyResult extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-            if (!isAllowedToManageProcess(process, userView) && !userView.hasRoleType(RoleType.COORDINATOR)) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
+            if (!isAllowedToManageProcess(process, userView) && !userView.getPerson().hasRole(RoleType.COORDINATOR)) {
                 throw new PreConditionNotValidException();
             }
 
@@ -312,7 +312,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             SecondCycleIndividualCandidacyResultBean bean = (SecondCycleIndividualCandidacyResultBean) object;
             SecondCycleIndividualCandidacySeriesGrade seriesGrade =
                     process.getCandidacy().getSecondCycleIndividualCandidacySeriesGradeForDegree(bean.getDegree());
@@ -331,7 +331,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class CancelCandidacy extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -342,7 +342,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.cancelCandidacy(userView.getPerson());
             return process;
         }
@@ -351,7 +351,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class CreateRegistration extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -370,7 +370,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             final SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) object;
             createRegistration(process, bean);
             return process;
@@ -390,7 +390,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class ChangeIndividualCandidacyState extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -410,7 +410,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             SecondCycleIndividualCandidacyResultBean bean = (SecondCycleIndividualCandidacyResultBean) object;
             process.getCandidacy().setState(bean.getState());
             return process;
@@ -421,7 +421,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class EditPublicCandidacyPersonalInformation extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
             }
@@ -429,7 +429,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.editPersonalCandidacyInformation(((SecondCycleIndividualCandidacyProcessBean) object).getPersonBean());
             return process;
         }
@@ -444,7 +444,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class EditPublicCandidacyDocumentFile extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
             }
@@ -452,7 +452,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
             process.bindIndividualCandidacyDocumentFile(bean);
             return process;
@@ -468,7 +468,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class EditPublicCandidacyHabilitations extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
             }
@@ -476,7 +476,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) object;
             process.editCandidacyHabilitations(bean);
             process.editFormerIstStudentNumber(bean);
@@ -498,7 +498,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class EditDocuments extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -510,7 +510,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
             process.bindIndividualCandidacyDocumentFile(bean);
             return process;
@@ -520,7 +520,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class BindPersonToCandidacy extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -537,7 +537,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) object;
 
             // First edit personal information
@@ -559,7 +559,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class ChangeProcessCheckedState extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -572,7 +572,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.setProcessChecked(((IndividualCandidacyProcessBean) object).getProcessChecked());
             return process;
         }
@@ -581,7 +581,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class ChangePaymentCheckedState extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -594,7 +594,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.setPaymentChecked(((IndividualCandidacyProcessBean) object).getPaymentChecked());
             return process;
         }
@@ -608,12 +608,12 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
     static private class SendEmailForApplicationSubmission extends Activity<SecondCycleIndividualCandidacyProcess> {
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
         }
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             DegreeOfficePublicCandidacyHashCode hashCode = (DegreeOfficePublicCandidacyHashCode) object;
             hashCode.sendEmailForApplicationSuccessfullySubmited();
             return process;
@@ -656,7 +656,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static protected class RevokeDocumentFile extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -664,7 +664,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             ((CandidacyProcessDocumentUploadBean) object).getDocumentFile().setCandidacyFileActive(Boolean.FALSE);
             return process;
         }
@@ -679,7 +679,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class RejectCandidacy extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -690,7 +690,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.rejectCandidacy(userView.getPerson());
             return process;
         }
@@ -699,7 +699,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class RevertApplicationToStandBy extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -711,7 +711,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.getCandidacy().setState(IndividualCandidacyState.STAND_BY);
 
             return process;
@@ -747,7 +747,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private class CopyIndividualCandidacyToNextCandidacyProcess extends Activity<SecondCycleIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
 
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
@@ -760,7 +760,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) object;
             SecondCycleCandidacyProcess destinationCandidacyProcess = bean.getCopyDestinationProcess();
 

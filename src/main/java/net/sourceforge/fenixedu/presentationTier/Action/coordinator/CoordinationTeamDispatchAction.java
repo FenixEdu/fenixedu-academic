@@ -7,7 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddCoordinator;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCoordinationResponsibility;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCoordinationTeam;
@@ -31,7 +31,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * 
@@ -50,7 +50,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
@@ -70,7 +70,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     public ActionForward viewTeam(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException, FenixServiceException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
@@ -111,7 +111,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareAddCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
@@ -133,7 +133,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
     public ActionForward AddCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         DynaActionForm teacherForm = (DynaActionForm) form;
         String istUsername = new String((String) teacherForm.get("newCoordinatorIstUsername"));
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
@@ -168,7 +168,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
     public ActionForward removeCoordinators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
         String[] coordinatorsIds = (String[]) removeCoordinatorsForm.get("coordinatorsIds");
         List<String> coordinators = Arrays.asList(coordinatorsIds);

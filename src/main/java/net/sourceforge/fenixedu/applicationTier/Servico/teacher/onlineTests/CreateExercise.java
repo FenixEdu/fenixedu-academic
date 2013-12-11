@@ -5,10 +5,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -83,7 +83,7 @@ public class CreateExercise {
         xmlFile =
                 new String(xmlQuestion.getXmlQuestion(questionText, secondQuestionText, subQuestion.getQuestionType(), options,
                         shuffle, subQuestion.getResponseProcessingInstructions(), correctFeedbackText, wrongFeedbackText,
-                        breakLineBeforeResponseBox, breakLineAfterResponseBox).getBytes(), PropertiesManager.DEFAULT_CHARSET);
+                        breakLineBeforeResponseBox, breakLineAfterResponseBox).getBytes(), Charset.defaultCharset().name());
         return xmlFile;
     }
 

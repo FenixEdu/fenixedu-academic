@@ -5,10 +5,11 @@ import java.util.Comparator;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 
 import org.joda.time.DateTime;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
 
@@ -23,7 +24,7 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
 
     public InquiryResponsePeriod() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public InquiryResponsePeriod(final ExecutionSemester executionSemester, final Date inquiryResponseBegin,
@@ -47,8 +48,7 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
     }
 
     public static InquiryResponsePeriod readOpenPeriod(final InquiryResponsePeriodType type) {
-        final Collection<InquiryResponsePeriod> inquiryResponsePeriods =
-                RootDomainObject.getInstance().getInquiryResponsePeriods();
+        final Collection<InquiryResponsePeriod> inquiryResponsePeriods = Bennu.getInstance().getInquiryResponsePeriodsSet();
         for (final InquiryResponsePeriod inquiryResponsePeriod : inquiryResponsePeriods) {
             if (inquiryResponsePeriod.getType() == type && inquiryResponsePeriod.isOpen()) {
                 return inquiryResponsePeriod;
@@ -87,7 +87,7 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

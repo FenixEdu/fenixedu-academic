@@ -3,25 +3,25 @@ package net.sourceforge.fenixedu.domain.accounting;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGeneratorFactory;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class PaymentCode extends PaymentCode_Base {
 
-    private static final String ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
+    private static final String ENTITY_CODE = FenixConfigurationManager.getConfiguration().getSibsEntityCode();
     public static final String SIBS_IGNORE_MAX_AMOUNT = "99999999.99";
 
     public static Comparator<PaymentCode> COMPARATOR_BY_CODE = new Comparator<PaymentCode>() {
@@ -45,7 +45,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
     protected PaymentCode() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setWhenCreated(new DateTime());
         super.setWhenUpdated(new DateTime());
         super.setState(PaymentCodeState.NEW);
@@ -247,7 +247,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
         if (StringUtils.isEmpty(code)) {
             return null;
         }
-        for (final PaymentCode paymentCode : RootDomainObject.getInstance().getPaymentCodesSet()) {
+        for (final PaymentCode paymentCode : Bennu.getInstance().getPaymentCodesSet()) {
             if (paymentCode.getCode().equals(code)) {
                 return paymentCode;
             }
@@ -271,6 +271,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
     public boolean isForRectorate() {
         return false;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping> getNewPaymentCodeMappings() {
         return getNewPaymentCodeMappingsSet();
@@ -292,7 +293,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

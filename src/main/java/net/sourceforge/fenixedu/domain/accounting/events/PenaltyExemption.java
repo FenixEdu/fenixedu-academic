@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -13,7 +13,7 @@ abstract public class PenaltyExemption extends PenaltyExemption_Base {
 
     protected PenaltyExemption() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     protected PenaltyExemption(final PenaltyExemptionJustificationType justificationType, final GratuityEvent gratuityEvent,

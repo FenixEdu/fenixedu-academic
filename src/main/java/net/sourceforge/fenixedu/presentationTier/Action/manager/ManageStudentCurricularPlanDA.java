@@ -12,7 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
@@ -31,7 +31,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * @author Luis Cruz
@@ -74,7 +74,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         final Integer studentNumber = Integer.valueOf(studentNumberString);
         final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
 
         DeleteEnrollment.run(studentNumber, degreeType, enrollmentIdString);
 
@@ -92,7 +92,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
             final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 
-            final IUserView userView = UserView.getUser();
+            final User userView = Authenticate.getUser();
 
             final List infoDegreeCurricularPlans = ReadDegreeCurricularPlansByDegreeType.run(degreeType);
 
@@ -121,7 +121,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
                     StudentCurricularPlanState.valueOf(studentCurricularPlanStateString);
             final Date startDate = simpleDateFormat.parse(startDateString);
 
-            final IUserView userView = UserView.getUser();
+            final User userView = Authenticate.getUser();
 
             CreateStudentCurricularPlan.run(studentNumber, degreeType, studentCurricularPlanState, degreeCurricularPlanIdString,
                     startDate);
@@ -147,7 +147,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         if (isPresent(selectedStudentCurricularPlanIdString) && enrollmentStringIDsToTransfer != null
                 && enrollmentStringIDsToTransfer.length > 0) {
 
-            final IUserView userView = UserView.getUser();
+            final User userView = Authenticate.getUser();
 
             TransferEnrollments.run(selectedStudentCurricularPlanIdString, enrollmentStringIDsToTransfer,
                     selectedCurriculumGroupID);
@@ -158,7 +158,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
     protected void putStudentCurricularInformationInRequest(final HttpServletRequest request, final Integer studentNumber,
             final DegreeType degreeType) throws FenixServiceException {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
 
         final List infoStudentCurricularPlans = ReadStudentCurricularInformation.run(studentNumber, degreeType);
         request.setAttribute("infoStudentCurricularPlans", infoStudentCurricularPlans);

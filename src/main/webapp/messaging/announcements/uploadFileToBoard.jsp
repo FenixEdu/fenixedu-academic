@@ -48,7 +48,7 @@
 		<p class="mvert1">
 		    <span class="error0">
 		        <html:errors property="unableToStoreFile"/>
-		        <html:errors property="section" bundle="SITE_RESOURCES"/>
+		        <html:errors property="section" bundle="APPLICATION_RESOURCES"/>
 		    </span>
 		</p>
 

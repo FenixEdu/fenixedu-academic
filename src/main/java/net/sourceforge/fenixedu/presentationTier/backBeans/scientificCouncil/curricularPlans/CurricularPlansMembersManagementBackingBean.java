@@ -77,7 +77,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
     public List<SelectItem> getDepartments() {
         List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(0, scouncilBundle.getString("choose")));
-        for (Department department : rootDomainObject.getDepartments()) {
+        for (Department department : rootDomainObject.getDepartmentsSet()) {
             result.add(new SelectItem(department.getExternalId(), department.getRealName()));
         }
 

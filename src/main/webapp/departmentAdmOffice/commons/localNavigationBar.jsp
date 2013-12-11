@@ -4,16 +4,15 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
-<%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
-<%@page import="pt.ist.fenixWebFramework.security.UserView"%>
+<%@page import="pt.ist.bennu.core.domain.User"%>
 <html:xhtml/>
 
 <%
-	final IUserView userView = (IUserView) UserView.getUser();
+	final User userView = (User) Authenticate.getUser();
 	request.setAttribute("userView", userView);
 %>
 
-<logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
+<logic:present role="role(DEPARTMENT_ADMINISTRATIVE_OFFICE)">
 	<ul>
 		<li class="navheader">
 			<bean:message key="link.group.view.title"/>
@@ -37,7 +36,7 @@
 	</ul>
 	
 	<ul>
-		<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+		<logic:present role="role(DEPARTMENT_CREDITS_MANAGER)">
 
 			<li class="navheader">
 				<strong><bean:message key="link.group.teacher.title"/></strong>

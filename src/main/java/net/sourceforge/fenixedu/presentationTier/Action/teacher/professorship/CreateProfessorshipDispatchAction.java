@@ -78,7 +78,7 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 
     public Person getPerson(DynaActionForm personExecutionCourseForm) {
         String id = (String) personExecutionCourseForm.get("teacherId");
-        Person person = Person.readPersonByIstUsername(id);
+        Person person = Person.readPersonByUsername(id);
         return person;
     }
 
@@ -176,7 +176,7 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
         DynaValidatorForm personExecutionCourseForm = (DynaValidatorForm) form;
 
         String personId = (String) personExecutionCourseForm.get("teacherId");
-        Person person = Person.readPersonByIstUsername(personId);
+        Person person = Person.readPersonByUsername(personId);
         setChoosedExecutionPeriod(request, ReadNotClosedExecutionPeriods.run(), personExecutionCourseForm);
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute("infoExecutionPeriod");
         final ExecutionSemester executionPeriod = infoExecutionPeriod.getExecutionPeriod();

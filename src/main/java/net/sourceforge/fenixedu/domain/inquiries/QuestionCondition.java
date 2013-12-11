@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class QuestionCondition extends QuestionCondition_Base {
 
     public QuestionCondition() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -18,7 +18,7 @@ public class QuestionCondition extends QuestionCondition_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

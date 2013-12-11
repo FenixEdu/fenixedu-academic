@@ -30,6 +30,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.security.Authenticate;
+
 public class RegistrationOperation extends CandidacyOperation {
 
     static private final long serialVersionUID = 1L;
@@ -133,7 +135,7 @@ public class RegistrationOperation extends CandidacyOperation {
     }
 
     private String getCurrentUsername() {
-        if (AccessControl.getUserView() != null) {
+        if (Authenticate.getUser() != null) {
             return AccessControl.getPerson().getUsername();
         }
         return getStudentCandidacy().getPerson().getUsername();

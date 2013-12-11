@@ -63,7 +63,7 @@
 
 <%-- Registration Average and Curricular Year calculations --%>
 
-<logic:notPresent role="INTERNATIONAL_RELATION_OFFICE">
+<logic:notPresent role="role(INTERNATIONAL_RELATION_OFFICE)">
 
 	<p class="mtop1 mbottom1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />

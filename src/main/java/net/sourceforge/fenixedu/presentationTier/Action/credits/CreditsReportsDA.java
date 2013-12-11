@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -84,17 +83,15 @@ public class CreditsReportsDA extends FenixDispatchAction {
                     "label.hasSchedule"));
             spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
                     "label.enrolmentsNumber"));
-            for (CompetenceCourse competenceCourse : department.getDepartmentUnit().getCompetenceCourses()) {
-                for (ExecutionCourse executionCourse : competenceCourse
-                        .getExecutionCoursesByExecutionPeriod(departmentCreditsBean.getExecutionSemester())) {
-                    spreadsheet.newRow();
-                    spreadsheet.addCell(executionCourse.getName());
-                    spreadsheet.addCell(executionCourse.getDegreePresentationString());
-                    spreadsheet
-                            .addCell(executionCourse.isDissertation() ? "DISS" : executionCourse.getProjectTutorialCourse() ? "A" : "B");
-                    spreadsheet.addCell(executionCourse.hasAnyLesson() ? "S" : "N");
-                    spreadsheet.addCell(executionCourse.getEnrolmentCount());
-                }
+            for (ExecutionCourse executionCourse : department.getDepartmentUnit().getAllExecutionCoursesByExecutionPeriod(
+                    departmentCreditsBean.getExecutionSemester())) {
+                spreadsheet.newRow();
+                spreadsheet.addCell(executionCourse.getName());
+                spreadsheet.addCell(executionCourse.getDegreePresentationString());
+                spreadsheet
+                        .addCell(executionCourse.isDissertation() ? "DISS" : executionCourse.getProjectTutorialCourse() ? "A" : "B");
+                spreadsheet.addCell(executionCourse.hasAnyLesson() ? "S" : "N");
+                spreadsheet.addCell(executionCourse.getEnrolmentCount());
             }
         }
 

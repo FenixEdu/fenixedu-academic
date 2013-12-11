@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class ServiceProviderRegime extends ServiceProviderRegime_Base {
     public ServiceProviderRegime() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
 
     }
 
@@ -66,7 +66,7 @@ public class ServiceProviderRegime extends ServiceProviderRegime_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -1,12 +1,12 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
-<bean:define id="institutionUrl" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="institution.url"/></bean:define>
-<bean:define id="loginUrl" type="java.lang.String"><%= PropertiesManager.getProperty("login.page") %></bean:define>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
+<bean:define id="institutionUrl" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %></bean:define>
+<bean:define id="loginUrl" type="java.lang.String"><%= FenixConfigurationManager.getConfiguration().getLoginPage() %></bean:define>
 <bean:define id="siteMapUrl" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="siteMap.link"/></bean:define>
 <bean:define id="searchUrl" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="search.url"/></bean:define>
 <bean:define id="searchDomain" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="search.domain"/></bean:define>
@@ -21,7 +21,7 @@
 
 	<logic:equal name="site" property="showInstitutionLogo" value="true">
 		<a href="<%= institutionUrl %>">
-			<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<%= request.getContextPath() + "/images/newImage2012/logo-ist.png"%>"/>
+			<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>" src="<%= request.getContextPath() + "/images/newImage2012/logo-ist.png"%>"/>
 		</a>
 	</logic:equal>
 
@@ -64,7 +64,7 @@
 	</logic:notPresent>
 </logic:equal>
 
-<% if (!PropertiesManager.useBarraAsAuthenticationBroker()) { %>
+<% if (!FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 <div id="header_links">
 	<a href="<%= loginUrl %>">
 		<bean:message bundle="GLOBAL_RESOURCES" key="dot.login"/>
@@ -87,7 +87,7 @@
 
 <div id="search">
 	<form method="get" action="<%= searchUrl %>">
-		<input alt="input.ie" type="hidden" name="ie" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" />
+		<input alt="input.ie" type="hidden" name="ie" value="UTF-8" />
 		<input alt="input.domains" type="hidden" name="domains" value="<%= searchDomain %>" />
 		<input alt="input.sitesearch" type="hidden" name="sitesearch" value="<%= searchSite %>" />
 		<label for="textfield">

@@ -1,6 +1,6 @@
-<%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
-<% 
-		if (PropertiesManager.isInDevelopmentMode()) {
+<%@page import="pt.ist.bennu.core.util.CoreConfiguration"%>
+<%
+	if (CoreConfiguration.getConfiguration().developmentMode()) {
 %>
 		
 <style type="text/css">

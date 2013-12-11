@@ -46,7 +46,7 @@
 -->
 </style>
 
-<logic:present role="RESOURCE_ALLOCATION_MANAGER">
+<logic:present role="role(RESOURCE_ALLOCATION_MANAGER)">
 
 	<p>
 	<span class="error0"><!-- Error messages go here -->

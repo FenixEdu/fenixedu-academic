@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public abstract class NewTestElement extends NewTestElement_Base {
@@ -14,7 +14,7 @@ public abstract class NewTestElement extends NewTestElement_Base {
     public NewTestElement() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public List<NewPresentationMaterial> getOrderedPresentationMaterials() {
@@ -141,7 +141,7 @@ public abstract class NewTestElement extends NewTestElement_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

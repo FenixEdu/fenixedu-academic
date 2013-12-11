@@ -9,11 +9,13 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationRequest_Base {
@@ -32,14 +34,16 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
-    public PunctualRoomsOccupationRequest(Person requestor, MultiLanguageString subject, MultiLanguageString description) {
+    public PunctualRoomsOccupationRequest(Person requestor, MultiLanguageString subject, Campus campus,
+            MultiLanguageString description) {
 //        check(this, ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationRequests);
         super();
         checkIfRequestAlreadyExists(requestor, subject, description);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRequestor(requestor);
         DateTime now = new DateTime();
         setInstant(now);
+        setCampus(campus);
         addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.NEW, now));
         addComments(new PunctualRoomsOccupationComment(this, subject, description, requestor, now));
         setTeacherReadComments(1);
@@ -173,11 +177,11 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         return getInstant().toString("dd/MM/yyyy HH:mm");
     }
 
-    public static Set<PunctualRoomsOccupationRequest> getRequestsByTypeOrderByDate(RequestState state) {
+    public static Set<PunctualRoomsOccupationRequest> getRequestsByTypeOrderByDate(RequestState state, Campus campus) {
         Set<PunctualRoomsOccupationRequest> result =
                 new TreeSet<PunctualRoomsOccupationRequest>(PunctualRoomsOccupationRequest.COMPARATOR_BY_INSTANT);
-        for (PunctualRoomsOccupationRequest request : RootDomainObject.getInstance().getPunctualRoomsOccupationRequestsSet()) {
-            if (request.getCurrentState().equals(state)) {
+        for (PunctualRoomsOccupationRequest request : Bennu.getInstance().getPunctualRoomsOccupationRequestsSet()) {
+            if (request.getCurrentState().equals(state) && (request.getCampus() == null || request.getCampus().equals(campus))) {
                 result.add(request);
             }
         }
@@ -185,7 +189,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     }
 
     public static PunctualRoomsOccupationRequest getRequestById(Integer requestID) {
-        for (PunctualRoomsOccupationRequest request : RootDomainObject.getInstance().getPunctualRoomsOccupationRequestsSet()) {
+        for (PunctualRoomsOccupationRequest request : Bennu.getInstance().getPunctualRoomsOccupationRequestsSet()) {
             if (request.getIdentification().equals(requestID)) {
                 return request;
             }
@@ -193,12 +197,13 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         return null;
     }
 
-    public static Set<PunctualRoomsOccupationRequest> getResolvedRequestsOrderByMoreRecentComment() {
+    public static Set<PunctualRoomsOccupationRequest> getResolvedRequestsOrderByMoreRecentComment(Campus campus) {
         Set<PunctualRoomsOccupationRequest> result =
                 new TreeSet<PunctualRoomsOccupationRequest>(
                         PunctualRoomsOccupationRequest.COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT);
-        for (PunctualRoomsOccupationRequest request : RootDomainObject.getInstance().getPunctualRoomsOccupationRequestsSet()) {
-            if (request.getCurrentState().equals(RequestState.RESOLVED)) {
+        for (PunctualRoomsOccupationRequest request : Bennu.getInstance().getPunctualRoomsOccupationRequestsSet()) {
+            if (request.getCurrentState().equals(RequestState.RESOLVED)
+                    && (request.getCampus() == null || request.getCampus().equals(campus))) {
                 result.add(request);
             }
         }
@@ -206,11 +211,12 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     }
 
     public static Set<PunctualRoomsOccupationRequest> getRequestsByTypeAndDiferentOwnerOrderByDate(RequestState state,
-            Person owner) {
+            Person owner, Campus campus) {
         Set<PunctualRoomsOccupationRequest> result =
                 new TreeSet<PunctualRoomsOccupationRequest>(PunctualRoomsOccupationRequest.COMPARATOR_BY_INSTANT);
-        for (PunctualRoomsOccupationRequest request : RootDomainObject.getInstance().getPunctualRoomsOccupationRequestsSet()) {
-            if (request.getCurrentState().equals(state) && (request.getOwner() == null || !request.getOwner().equals(owner))) {
+        for (PunctualRoomsOccupationRequest request : Bennu.getInstance().getPunctualRoomsOccupationRequestsSet()) {
+            if (request.getCurrentState().equals(state) && (request.getOwner() == null || !request.getOwner().equals(owner))
+                    && (request.getCampus() == null || request.getCampus().equals(campus))) {
                 result.add(request);
             }
         }
@@ -274,7 +280,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     private Integer getNextRequestIdentification() {
         SortedSet<PunctualRoomsOccupationRequest> result =
                 new TreeSet<PunctualRoomsOccupationRequest>(PunctualRoomsOccupationRequest.COMPARATOR_BY_IDENTIFICATION);
-        Collection<PunctualRoomsOccupationRequest> requests = RootDomainObject.getInstance().getPunctualRoomsOccupationRequests();
+        Collection<PunctualRoomsOccupationRequest> requests = Bennu.getInstance().getPunctualRoomsOccupationRequestsSet();
         for (PunctualRoomsOccupationRequest request : requests) {
             if (!request.equals(this)) {
                 result.add(request);
@@ -340,7 +346,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

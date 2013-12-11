@@ -64,7 +64,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
             ActionErrors errors = new ActionErrors();
             errors.add("error.invalid.session", new ActionError("error.invalid.session"));
             request.setAttribute(Globals.ERROR_KEY, errors);
-            return mapping.findForward("firstPage");
+            return new ActionForward("/loginPage.jsp");
         }
 
         request.setAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY, mapping);
@@ -103,8 +103,8 @@ public class FenixExceptionHandler extends ExceptionHandler {
         // "_request_checksum_", "jsessionid");
         // ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(),
         // request.getHeader("referer"), parameters, request
-        // .getQueryString(), UserView.getUser() == null ? StringUtils.EMPTY :
-        // ((IUserView) UserView.getUser())
+        // .getQueryString(), Authenticate.getUser() == null ? StringUtils.EMPTY :
+        // ((User) Authenticate.getUser())
         // .getUtilizador(), requestContext, sessionContext, stackTrace,
         // ex.getClass().getName(),
         // request.getMethod().equalsIgnoreCase("POST"));

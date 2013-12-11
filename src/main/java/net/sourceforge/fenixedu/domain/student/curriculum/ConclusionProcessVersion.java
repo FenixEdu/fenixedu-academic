@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -42,7 +42,7 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
 
     protected ConclusionProcessVersion(final RegistrationConclusionBean bean) {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setCreationDateTime(new DateTime());
         super.setResponsible(AccessControl.getPerson());
 
@@ -134,7 +134,7 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
     }
 
     @Override
-    public void setRootDomainObject(RootDomainObject rootDomainObject) {
+    public void setRootDomainObject(Bennu rootDomainObject) {
         throw new DomainException("error.ConclusionProcessVersion.method.not.allowed");
     }
 
@@ -219,7 +219,7 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -14,8 +14,7 @@
 hideButtons();
 </script>
 
-<bean:define id="userView" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" ></bean:define>
-<logic:present name="userView" property="person.student">
+<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.student">
 
 <h2><bean:message  key="label.fill.information" bundle="STUDENT_RESOURCES"/></h2>
 

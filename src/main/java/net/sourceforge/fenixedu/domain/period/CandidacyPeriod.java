@@ -7,10 +7,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
 
@@ -24,7 +25,7 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
 
     protected CandidacyPeriod() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected void init(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
@@ -94,7 +95,7 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
     public static List<CandidacyPeriod> readAllByType(Class<? extends CandidacyPeriod> clazz) {
         List<CandidacyPeriod> result = new ArrayList<CandidacyPeriod>();
 
-        Collection<CandidacyPeriod> candidacyPeriods = RootDomainObject.getInstance().getCandidacyPeriods();
+        Collection<CandidacyPeriod> candidacyPeriods = Bennu.getInstance().getCandidacyPeriodsSet();
 
         for (CandidacyPeriod candidacyPeriod : candidacyPeriods) {
             if (clazz.equals(candidacyPeriod.getClass())) {
@@ -114,7 +115,7 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -38,7 +38,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
     protected AccountingTransaction() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     public AccountingTransaction(User responsibleUser, Event event, Entry debit, Entry credit,
@@ -359,7 +359,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

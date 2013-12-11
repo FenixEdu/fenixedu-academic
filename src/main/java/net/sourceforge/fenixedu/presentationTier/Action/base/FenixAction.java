@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.base;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -14,20 +14,20 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 public abstract class FenixAction extends Action {
 
-    protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+    protected static final Bennu rootDomainObject = Bennu.getInstance();
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
-    protected IUserView getUserView(HttpServletRequest request) {
-        return UserView.getUser();
+    protected User getUserView(HttpServletRequest request) {
+        return Authenticate.getUser();
     }
 
     protected Person getLoggedPerson(HttpServletRequest request) {
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         return userView == null ? null : userView.getPerson();
     }
 

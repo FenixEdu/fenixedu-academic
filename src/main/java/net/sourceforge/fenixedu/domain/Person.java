@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -23,7 +24,6 @@ import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
@@ -121,6 +121,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -153,7 +154,6 @@ import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.PersonNameFormatter;
 import net.sourceforge.fenixedu.util.StringFormatter;
-import net.sourceforge.fenixedu.util.UsernameUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -166,6 +166,10 @@ import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.user.management.UserLoginPeriod;
+import pt.ist.bennu.user.management.UserManager;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -342,27 +346,15 @@ public class Person extends Person_Base {
     public Person() {
         super();
         setMaritalStatus(MaritalStatus.UNKNOWN);
-        createLoginIdentificationAndUserIfNecessary();
-        setIsPassInKerberos(Boolean.FALSE);
+        createUser();
     }
 
-    /**
-     * 
-     * @deprecated use Person(PersonBean personBean)
-     * @see Person(PersonBean personBean)
-     */
-    @Deprecated
-    public Person(final InfoPersonEditor personToCreate, final Country country) {
-
-        super();
-        if (personToCreate.getExternalId() != null) {
-            throw new DomainException("error.person.existentPerson");
+    public void createUser() {
+        if (getUser() == null) {
+            setUser(UserManager.createDynamicUser(this));
+        } else {
+            throw new DomainException("error.person.already.has.user");
         }
-
-        createLoginIdentificationAndUserIfNecessary();
-        setProperties(personToCreate);
-        setCountry(country);
-        setIsPassInKerberos(Boolean.FALSE);
     }
 
     public Person(final String name, final String identificationDocumentNumber, final IDDocumentType identificationDocumentType,
@@ -383,11 +375,6 @@ public class Person extends Person_Base {
         super();
 
         setProperties(personBean);
-
-        if (personBean.createLoginIdentificationAndUserIfNecessary()) {
-            createLoginIdentificationAndUserIfNecessary();
-            setIsPassInKerberos(Boolean.FALSE);
-        }
 
         final PhysicalAddress physicalAddress =
                 PhysicalAddress.createPhysicalAddress(this, personBean.getPhysicalAddressData(), PartyContactType.PERSONAL, true);
@@ -634,117 +621,18 @@ public class Person extends Person_Base {
         }
     }
 
-    public Login getLoginIdentification() {
-        final User personUser = getUser();
-        return personUser == null ? null : personUser.readUserLoginIdentification();
-    }
-
-    public Set<LoginAlias> getLoginAliasOrderByImportance() {
-        final Login login = getLoginIdentification();
-        return login != null ? login.getLoginAliasOrderByImportance() : new HashSet<LoginAlias>();
-    }
-
-    public Set<LoginAlias> getLoginAlias() {
-        final Login login = getLoginIdentification();
-        return login != null ? login.getAliasSet() : new HashSet<LoginAlias>();
-    }
-
-    public boolean hasUsername(final String username) {
-        final Login login = getLoginIdentification();
-        return login != null ? login.hasUsername(username) : false;
-    }
-
     public String getUsername() {
-        final Login login = getLoginIdentification();
-        return login != null ? login.getUsername() : null;
+        User user = getUser();
+        return user == null ? null : user.getUsername();
     }
 
-    public void setUsername(final RoleType roleType) {
-        final Login login = createLoginIdentificationAndUserIfNecessary();
-        login.setUsername(roleType);
-    }
-
-    public String getUserAliass() {
-        return getUser().getAliass();
-    }
-
-    public String getPassword() {
-        final Login login = getLoginIdentification();
-        return login != null ? login.getPassword() : null;
-    }
-
-    public void setPassword(final String password) {
-        createLoginIdentificationAndUserIfNecessary().setPassword(password);
-    }
-
-    public void setIsPassInKerberos(final Boolean isPassInKerberos) {
-        createLoginIdentificationAndUserIfNecessary().setIsPassInKerberos(isPassInKerberos);
-    }
-
-    public Boolean getIsPassInKerberos() {
-        final Login login = getLoginIdentification();
-        return login != null ? login.getIsPassInKerberos() : null;
-    }
-
-    public void setIstUsername() {
-        createLoginIdentificationAndUserIfNecessary().setUserUID();
-    }
-
-    public Login createLoginIdentificationAndUserIfNecessary() {
-        Login login = getLoginIdentification();
-        if (login == null) {
-            User user = getUser();
-            if (user == null) {
-                user = new User(this);
-            }
-            login = new Login(getUser());
-        }
-        return login;
-    }
-
+    @Deprecated
     public String getIstUsername() {
-        return getUser() != null ? getUser().getUserUId() : null;
-    }
-
-    public void changeUsername(final RoleType roleType) {
-        setUsername(roleType);
-    }
-
-    public void changePassword(final String oldPassword, final String newPassword) {
-
-        if (newPassword == null) {
-            throw new DomainException("error.person.invalidNullPassword");
-        }
-
-        if (getUser() == null) {
-            throw new DomainException("error.person.unExistingUser");
-        }
-
-        if (newPassword.equals("")) {
-            throw new DomainException("error.person.invalidEmptyPassword");
-        }
-
-        setPassword(PasswordEncryptor.encryptPassword(newPassword));
-    }
-
-    public void addAlias(final Role role) {
-        setUsername(role.getRoleType());
-    }
-
-    public void removeAlias(final Role removedRole) {
-        final Login loginIdentification = getLoginIdentification();
-        if (loginIdentification != null) {
-            loginIdentification.removeAlias(removedRole.getRoleType());
-        }
-    }
-
-    public void updateIstUsername() {
-        setIstUsername();
+        return getUsername();
     }
 
     public Role getPersonRole(final RoleType roleType) {
-
-        for (final Role role : this.getPersonRoles()) {
+        for (final Role role : this.getPersonRolesSet()) {
             if (role.getRoleType().equals(roleType)) {
                 return role;
             }
@@ -781,23 +669,6 @@ public class Person extends Person_Base {
         for (final Registration registration : this.getStudents()) {
             if (registration.getDegreeType() == degreeType) {
                 return registration;
-            }
-        }
-        return null;
-    }
-
-    // FIXME: Remove as soon as possible.
-    @Deprecated
-    public Registration getStudentByUsername() {
-        final Login loginIdentification = getLoginIdentification();
-        if (loginIdentification != null) {
-            final List<LoginAlias> loginAlias = loginIdentification.getRoleLoginAlias(RoleType.STUDENT);
-            for (final Registration registration : this.getStudents()) {
-                for (final LoginAlias alias : loginAlias) {
-                    if (alias.getAlias().contains(registration.getNumber().toString())) {
-                        return registration;
-                    }
-                }
             }
         }
         return null;
@@ -1391,9 +1262,13 @@ public class Person extends Person_Base {
         }
 
         getPersonRoles().clear();
-        if (hasUser()) {
-            getUser().delete();
-        }
+
+        /*
+         * One does not simply delete a User...
+         */
+//        if (hasUser()) {
+//            getUser().delete();
+//        }
 
         getPersonRoleOperationLog().clear();
         getGivenRoleOperationLog().clear();
@@ -1483,6 +1358,10 @@ public class Person extends Person_Base {
 
     private static class PersonRoleListener extends RelationAdapter<Role, Person> {
 
+        private static final Set<RoleType> LOGIN_GRANTING_ROLE_TYPES = EnumSet.of(RoleType.MANAGER, RoleType.TEACHER,
+                RoleType.RESEARCHER, RoleType.EMPLOYEE, RoleType.STUDENT, RoleType.ALUMNI, RoleType.CANDIDATE,
+                RoleType.GRANT_OWNER);
+
         @Override
         public void beforeAdd(final Role newRole, final Person person) {
             if (newRole != null && person != null && !person.hasPersonRoles(newRole)) {
@@ -1497,8 +1376,12 @@ public class Person extends Person_Base {
         public void afterAdd(final Role role, final Person person) {
             if (person != null && role != null) {
                 addDependencies(role, person);
-                person.addAlias(role);
-                person.updateIstUsername();
+                if (person.getUser() == null) {
+                    person.createUser();
+                }
+                if (LOGIN_GRANTING_ROLE_TYPES.contains(role.getRoleType())) {
+                    UserLoginPeriod.createOpenPeriod(person.getUser());
+                }
             }
         }
 
@@ -1517,8 +1400,13 @@ public class Person extends Person_Base {
         @Override
         public void afterRemove(final Role removedRole, final Person person) {
             if (person != null && removedRole != null) {
-                person.removeAlias(removedRole);
-                person.updateIstUsername();
+                for (Role role : person.getPersonRolesSet()) {
+                    // User still has one login granting role
+                    if (LOGIN_GRANTING_ROLE_TYPES.contains(role.getRoleType())) {
+                        return;
+                    }
+                }
+                UserLoginPeriod.closeOpenPeriod(person.getUser());
             }
         }
 
@@ -1657,7 +1545,7 @@ public class Person extends Person_Base {
 
         private void sendManagerRoleMembershipChangeNotification(final Person person, final String subjectKey,
                 final String bodyKey) {
-            final Sender sender = RootDomainObject.getInstance().getSystemSender();
+            final Sender sender = Bennu.getInstance().getSystemSender();
             final Recipient recipient = new Recipient(new RoleGroup(RoleType.MANAGER));
             new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", subjectKey),
                     BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", bodyKey,
@@ -1835,20 +1723,8 @@ public class Person extends Person_Base {
     // static methods
     // -------------------------------------------------------------
 
-    public static Person readPersonByUsernameWithOpenedLogin(final String username) {
-        final Login login = Login.readLoginByUsername(username);
-        final User user = login == null ? null : login.isOpened() ? login.getUser() : null;
-        return user == null ? null : user.getPerson();
-    }
-
-    public static Person readPersonByUsername(final String username) {
-        final Login login = Login.readLoginByUsername(username);
-        final User user = login == null ? null : login.getUser();
-        return user == null ? null : user.getPerson();
-    }
-
-    public static Person readPersonByIstUsername(final String istUsername) {
-        final User user = User.readUserByUserUId(istUsername);
+    public static Person readPersonByUsername(final String istUsername) {
+        final User user = User.findByUsername(istUsername);
         return user == null ? null : user.getPerson();
     }
 
@@ -1939,7 +1815,7 @@ public class Person extends Person_Base {
 
     public static List<Person> readAllPersons() {
         final List<Person> allPersons = new ArrayList<Person>();
-        for (final Party party : RootDomainObject.getInstance().getPartys()) {
+        for (final Party party : Bennu.getInstance().getPartysSet()) {
             if (party.isPerson()) {
                 allPersons.add((Person) party);
             }
@@ -2021,17 +1897,6 @@ public class Person extends Person_Base {
             }
         }
         return attends;
-    }
-
-    public boolean hasIstUsername() {
-        if (this.getIstUsername() != null) {
-            return true;
-        }
-        if (UsernameUtils.shouldHaveUID(this)) {
-            setIstUsername();
-            return getIstUsername() != null;
-        }
-        return false;
     }
 
     public static class FindPersonFactory implements Serializable, FactoryExecutor {
@@ -2468,8 +2333,7 @@ public class Person extends Person_Base {
         externalPerson.getPendingOrValidPhysicalAddresses().iterator().next().setValid();
         externalPerson.setSocialSecurityNumber(contributorNumber);
 
-        new ExternalContract(externalPerson, RootDomainObject.getInstance().getExternalInstitutionUnit(), new YearMonthDay(),
-                null);
+        new ExternalContract(externalPerson, Bennu.getInstance().getExternalInstitutionUnit(), new YearMonthDay(), null);
 
         return externalPerson;
     }
@@ -2671,7 +2535,7 @@ public class Person extends Person_Base {
                 people.addAll(findPerson(name));
             }
             if (isSpecified(documentIdNumber)) {
-                for (final IdDocument idDocument : RootDomainObject.getInstance().getIdDocumentsSet()) {
+                for (final IdDocument idDocument : Bennu.getInstance().getIdDocumentsSet()) {
                     final String[] documentIdNumberValues =
                             documentIdNumber == null ? null : StringNormalizer.normalize(documentIdNumber).toLowerCase()
                                     .split("\\p{Space}+");
@@ -2897,10 +2761,11 @@ public class Person extends Person_Base {
         return result;
     }
 
-    public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsToProcessOrderByDate() {
+    public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsToProcessOrderByDate(Campus campus) {
         final List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();
         for (final PunctualRoomsOccupationRequest request : getPunctualRoomsOccupationRequestsToProcess()) {
-            if (!request.getCurrentState().equals(RequestState.RESOLVED)) {
+            if (!request.getCurrentState().equals(RequestState.RESOLVED)
+                    && (request.getCampus() == null || request.getCampus().equals(campus))) {
                 result.add(request);
             }
         }
@@ -2955,11 +2820,6 @@ public class Person extends Person_Base {
 
     public List<String> getMainRoles() {
         return getImportantRoles(new ArrayList<String>());
-    }
-
-    public String getMostImportantAlias() {
-        final Login login = getLoginIdentification();
-        return login != null ? login.getMostImportantAlias() : "";
     }
 
     public static Collection<Person> findPerson(final String name) {
@@ -4203,7 +4063,7 @@ public class Person extends Person_Base {
     }
 
     public static Person readPersonByLibraryCardNumber(final String cardNumber) {
-        for (final LibraryCard card : RootDomainObject.getInstance().getLibraryCards()) {
+        for (final LibraryCard card : Bennu.getInstance().getLibraryCardsSet()) {
             if (card.getCardNumber() != null && card.getCardNumber().equals(cardNumber)) {
                 return card.getPerson();
             }
@@ -4235,7 +4095,7 @@ public class Person extends Person_Base {
     }
 
     public static Person findByUsername(final String username) {
-        final User user = User.readUserByUserUId(username);
+        final User user = User.findByUsername(username);
         return user == null ? null : user.getPerson();
     }
 
@@ -4407,14 +4267,14 @@ public class Person extends Person_Base {
     @Deprecated
     public static String readAllEmails() {
         final StringBuilder builder = new StringBuilder();
-        for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+        for (final Party party : Bennu.getInstance().getPartysSet()) {
             if (party.isPerson()) {
                 final Person person = (Person) party;
                 final String email = person.getEmailForSendingEmails();
                 if (email != null) {
                     final User user = person.getUser();
                     if (user != null) {
-                        final String username = user.getUserUId();
+                        final String username = user.getUsername();
                         builder.append(username);
                         builder.append("\t");
                         builder.append(email);
@@ -4439,11 +4299,11 @@ public class Person extends Person_Base {
             roles = new RoleType[0];
         }
         final StringBuilder builder = new StringBuilder();
-        for (final User user : RootDomainObject.getInstance().getUsersSet()) {
-            if (!StringUtils.isEmpty(user.getUserUId())) {
+        for (final User user : Bennu.getInstance().getUsersSet()) {
+            if (!StringUtils.isEmpty(user.getUsername())) {
                 final Person person = user.getPerson();
                 if (roles.length == 0 || person.hasAnyRole(roles)) {
-                    builder.append(user.getUserUId());
+                    builder.append(user.getUsername());
                     builder.append("\t");
                     builder.append(person.getName());
                     builder.append("\t");
@@ -4485,10 +4345,10 @@ public class Person extends Person_Base {
         Object argNew, argOld;
         String strNew, strOld;
         argOld =
-                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle("resources.HtmlAltResources", "text.dateEmpty"),
+                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle("resources.HtmlaltResources", "text.dateEmpty"),
                         oldValue);
         argNew =
-                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle("resources.HtmlAltResources", "text.dateEmpty"),
+                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle("resources.HtmlaltResources", "text.dateEmpty"),
                         newValue);
 
         if (argOld instanceof YearMonthDay) {

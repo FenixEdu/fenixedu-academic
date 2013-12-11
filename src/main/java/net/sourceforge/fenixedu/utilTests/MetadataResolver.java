@@ -12,17 +12,14 @@ import org.xml.sax.InputSource;
  * 
  */
 public class MetadataResolver implements EntityResolver {
-    private String path;
-
-    private String metadataDtd = "WEB-INF/ims/imsmd2_rootv1p2.dtd";
 
     public MetadataResolver(String dtdPath) {
-        this.path = dtdPath;
+        // Path is ignored, DTD file is loaded from the JAR
     }
 
     @Override
     public InputSource resolveEntity(String publicId, String systemId) {
-        return new InputSource("file:///" + path.concat(metadataDtd));
+        return new InputSource(getClass().getClassLoader().getResourceAsStream("ims/imsmd2_rootv1p2.dtd"));
     }
 
 }

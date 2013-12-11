@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 
 import org.joda.time.DateTime;
@@ -58,7 +58,7 @@ public class GuideDocument extends FenixReport {
 
         addParameter("total", this.paymentsManagementDTO.getTotalAmountToPay().toPlainString());
         addParameter("date", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
-        addParameter("unitPhone", RootDomainObject.getInstance().getInstitutionUnit().getDefaultPhoneNumber());
+        addParameter("unitPhone", Bennu.getInstance().getInstitutionUnit().getDefaultPhoneNumber());
         addParameter("documentIdType", this.paymentsManagementDTO.getPerson().getIdDocumentType().getLocalizedName());
         addParameter("documentIdNumber", this.paymentsManagementDTO.getPerson().getDocumentIdNumber());
         addParameter("name", this.paymentsManagementDTO.getPerson().getName());

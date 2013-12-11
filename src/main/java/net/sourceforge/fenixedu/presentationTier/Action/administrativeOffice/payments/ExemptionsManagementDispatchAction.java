@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.C
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateInstallmentPenaltyExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePhdRegistrationFeePenaltyExemptionBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
@@ -51,6 +50,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -428,7 +428,7 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
             HttpServletRequest request, HttpServletResponse response) {
         PhdEventExemptionBean phdEventExemptionBean = new PhdEventExemptionBean((PhdEvent) getEvent(request));
         phdEventExemptionBean.setJustificationType(PhdEventExemptionJustificationType.PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION);
-        phdEventExemptionBean.setProviders(new ArrayList<Party>(RootDomainObject.getInstance().getExternalScholarshipProvider()));
+        phdEventExemptionBean.setProviders(new ArrayList<Party>(Bennu.getInstance().getExternalScholarshipProviderSet()));
         request.setAttribute("exemptionBean", phdEventExemptionBean);
         return mapping.findForward("createFCTExemption");
     }

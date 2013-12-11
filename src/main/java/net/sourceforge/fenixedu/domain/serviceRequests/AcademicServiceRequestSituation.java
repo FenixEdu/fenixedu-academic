@@ -5,7 +5,7 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
@@ -35,7 +35,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 
     protected AcademicServiceRequestSituation() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setCreationDate(new DateTime());
     }
 
@@ -195,7 +195,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.gesdis;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
@@ -26,7 +26,7 @@ public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthor
     }
 
     @Override
-    protected boolean verifyCondition(IUserView id, String executionCourseID) {
+    protected boolean verifyCondition(User id, String executionCourseID) {
         final Person person = id.getPerson();
 
         for (final Professorship professorship : person.getProfessorshipsSet()) {

@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
@@ -14,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPayme
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricularPlanServiceAgreementTemplate_Base {
 
@@ -118,8 +118,7 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricul
 
     public static DegreeCurricularPlanServiceAgreementTemplate readByDegreeCurricularPlan(
             final DegreeCurricularPlan degreeCurricularPlan) {
-        for (final ServiceAgreementTemplate serviceAgreementTemplate : RootDomainObject.getInstance()
-                .getServiceAgreementTemplates()) {
+        for (final ServiceAgreementTemplate serviceAgreementTemplate : Bennu.getInstance().getServiceAgreementTemplatesSet()) {
 
             if (serviceAgreementTemplate instanceof DegreeCurricularPlanServiceAgreementTemplate) {
                 final DegreeCurricularPlanServiceAgreementTemplate degreeCurricularPlanServiceAgreementTemplate =

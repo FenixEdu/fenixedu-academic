@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -26,10 +27,10 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
     }
 
     public void execute(String candidateID) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
-        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, candidateID)) || (id == null)
-                || (id.getRoleTypes() == null)) {
+        User id = Authenticate.getUser();
+        if ((id != null && id.getPerson().getPersonRolesSet() != null && !containsRoleType(id.getPerson().getPersonRolesSet()))
+                || (id != null && id.getPerson().getPersonRolesSet() != null && !hasPrivilege(id, candidateID)) || (id == null)
+                || (id.getPerson().getPersonRolesSet() == null)) {
             throw new NotAuthorizedException();
         }
     }
@@ -50,12 +51,12 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, String candidateID) {
-        if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+    private boolean hasPrivilege(User id, String candidateID) {
+        if (id.getPerson().hasRole(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }
 
-        if (id.hasRoleType(RoleType.COORDINATOR)) {
+        if (id.getPerson().hasRole(RoleType.COORDINATOR)) {
             final Person person = id.getPerson();
             // Read The ExecutionDegree
 

@@ -5,7 +5,7 @@
 
 <html:xhtml/>
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 <bean:define id="processId" name="process" property="externalId" />
 

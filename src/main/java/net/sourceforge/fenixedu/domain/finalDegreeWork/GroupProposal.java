@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.finalDegreeWork;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -12,7 +12,7 @@ public class GroupProposal extends GroupProposal_Base {
 
     public GroupProposal() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -47,7 +47,7 @@ public class GroupProposal extends GroupProposal_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

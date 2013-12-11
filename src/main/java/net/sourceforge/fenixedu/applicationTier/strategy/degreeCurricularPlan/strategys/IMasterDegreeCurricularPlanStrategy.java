@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.s
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * 

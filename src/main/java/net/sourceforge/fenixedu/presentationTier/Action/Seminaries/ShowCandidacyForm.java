@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.Seminaries;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -29,7 +29,7 @@ public class ShowCandidacyForm extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String equivalencyIDString = request.getParameter("objectCode");
         if (equivalencyIDString == null) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));

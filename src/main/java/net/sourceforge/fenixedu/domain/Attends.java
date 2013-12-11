@@ -33,6 +33,7 @@ import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -122,7 +123,7 @@ public class Attends extends Attends_Base {
 
     public Attends() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Attends(Registration registration, ExecutionCourse executionCourse) {
@@ -623,7 +624,7 @@ public class Attends extends Attends_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

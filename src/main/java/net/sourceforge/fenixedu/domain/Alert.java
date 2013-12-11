@@ -4,14 +4,15 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class Alert extends Alert_Base {
 
     public Alert() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setRootDomainObjectForActiveAlerts(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
+        setRootDomainObjectForActiveAlerts(Bennu.getInstance());
         setWhenCreated(new DateTime());
     }
 
@@ -115,7 +116,7 @@ public abstract class Alert extends Alert_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 
@@ -130,7 +131,7 @@ public abstract class Alert extends Alert_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectForActiveAlerts() {
+    public boolean hasBennuForActiveAlerts() {
         return getRootDomainObjectForActiveAlerts() != null;
     }
 

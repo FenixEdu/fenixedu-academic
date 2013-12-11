@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administra
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan.ReadPosGradStudentCurricularPlanById;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -31,7 +31,7 @@ public class ShowStudentCurricularCoursePlanAction extends FenixDispatchAction {
 
         String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         InfoStudentCurricularPlan infoStudentCurricularPlan =
                 (InfoStudentCurricularPlan) ReadPosGradStudentCurricularPlanById.run(studentCurricularPlanIdString);

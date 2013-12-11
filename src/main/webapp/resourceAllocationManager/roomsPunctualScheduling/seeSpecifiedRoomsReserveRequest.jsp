@@ -9,7 +9,7 @@
 <em><bean:message key="link.rooms.reserve.management" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="view.rooms.reserve.request.title" bundle="SOP_RESOURCES"/></h2>
 
-<logic:present role="RESOURCE_ALLOCATION_MANAGER">
+<logic:present role="role(RESOURCE_ALLOCATION_MANAGER)">
 
 	<logic:messagesPresent message="true">
 		<p>
@@ -140,6 +140,15 @@
 					</logic:empty>
 				</td>						
 			</tr>	
+			<tr>
+				<th><bean:message key="label.find.spaces.campus" bundle="APPLICATION_RESOURCES"/></th>
+				<logic:notEmpty name="punctualRequest" property="campus">
+					<td><fr:view name="punctualRequest" property="campus.spaceInformation.presentationName"/></td>
+				</logic:notEmpty>
+				<logic:empty name="punctualRequest" property="campus">
+					<td>-</td>
+				</logic:empty>
+			</tr>
 			<tr>
 				<th><bean:message key="label.rooms.reserve.description" bundle="SOP_RESOURCES"/></th>
 				<td><fr:view name="punctualRequest" property="description"/></td>

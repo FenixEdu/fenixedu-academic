@@ -17,6 +17,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlList;
 import pt.ist.fenixWebFramework.renderers.components.HtmlListItem;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 /**
  * This renderer generates the top level menu of the application. This menus is
@@ -119,8 +120,7 @@ public class TopLevelMenuRenderer extends OutputRenderer {
                 HtmlComponent component = new HtmlText(child.getName().getContent());
 
                 if (path != null && content.isAvailable()) {
-                    final String linkPrefix =
-                            child.isPublic() ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
+                    final String linkPrefix = GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX;
                     HtmlLink link = new HtmlLinkWithPreprendedComment(linkPrefix);
 
                     HtmlInlineContainer container = new HtmlInlineContainer();

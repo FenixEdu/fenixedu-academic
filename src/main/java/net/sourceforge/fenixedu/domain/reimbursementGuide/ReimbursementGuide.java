@@ -9,12 +9,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * This class contains all the information regarding a Reimbursement Guide. <br/>
@@ -27,7 +28,7 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
 
     public ReimbursementGuide() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     /**
@@ -64,7 +65,7 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
     }
 
     public static Integer generateReimbursementGuideNumber() {
-        Collection<ReimbursementGuide> reimbursementGuides = RootDomainObject.getInstance().getReimbursementGuides();
+        Collection<ReimbursementGuide> reimbursementGuides = Bennu.getInstance().getReimbursementGuidesSet();
 
         return (reimbursementGuides.isEmpty()) ? Integer.valueOf(1) : Collections.max(reimbursementGuides, NUMBER_COMPARATOR)
                 .getNumber() + 1;
@@ -115,7 +116,7 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

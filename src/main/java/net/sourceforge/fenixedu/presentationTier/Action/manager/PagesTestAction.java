@@ -37,7 +37,7 @@ public class PagesTestAction extends FenixDispatchAction {
 
     private ActionForward setObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response, PageContainerBean pageContainerBean) {
-        pageContainerBean.setObjects((List) rootDomainObject.getExecutionPeriods());
+        pageContainerBean.setObjects((List) rootDomainObject.getExecutionPeriodsSet());
         request.setAttribute("pagesBean", pageContainerBean);
         return mapping.findForward("showPage");
     }

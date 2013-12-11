@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ProfessionType;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -19,6 +18,7 @@ import net.sourceforge.fenixedu.domain.util.workflow.Form;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.User;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PersonalInformationForm extends Form {
@@ -111,11 +111,10 @@ public class PersonalInformationForm extends Form {
 
     private void validateSocialSecurityNumber(List<LabelFormatter> result) {
         final Party party = PartySocialSecurityNumber.readPartyBySocialSecurityNumber(socialSecurityNumber);
-        final User user = User.readUserByUserUId(username);
+        final User user = User.findByUsername(username);
         if (party != null && party != user.getPerson()) {
             result.add(new LabelFormatter().appendLabel(
-                    "error.candidacy.workflow.PersonalInformationForm.socialSecurityNumber.already.exists",
-                    "application"));            
+                    "error.candidacy.workflow.PersonalInformationForm.socialSecurityNumber.already.exists", "application"));
         }
     }
 

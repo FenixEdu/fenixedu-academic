@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class RoleOperationLog extends RoleOperationLog_Base {
 
     public RoleOperationLog() {
@@ -22,9 +24,10 @@ public class RoleOperationLog extends RoleOperationLog_Base {
         }
     }
 
-    protected RootDomainObject getRootDomainObject() {
+    protected Bennu getRootDomainObject() {
         return hasRole() ? getRole().getRootDomainObject() : null;
     }
+
     @Deprecated
     public boolean hasIstUsername() {
         return getIstUsername() != null;

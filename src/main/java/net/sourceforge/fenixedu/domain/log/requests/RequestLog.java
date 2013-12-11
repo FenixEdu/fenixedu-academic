@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.log.requests;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.joda.time.DateTime;
 
@@ -13,7 +13,7 @@ public class RequestLog extends RequestLog_Base {
 
     public RequestLog() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRequestTime(new DateTime());
     }
 
@@ -52,7 +52,7 @@ public class RequestLog extends RequestLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

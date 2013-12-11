@@ -221,7 +221,7 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class ExternalTeacherAuthorization extends ExternalTeacherAuthorization_Base {
@@ -24,7 +25,7 @@ public class ExternalTeacherAuthorization extends ExternalTeacherAuthorization_B
 
     public static Set<ExternalTeacherAuthorization> getExternalTeacherAuthorizationSet(ExecutionSemester executionSemester) {
         Set<ExternalTeacherAuthorization> teacherAuthorizations = new HashSet<ExternalTeacherAuthorization>();
-        for (TeacherAuthorization ta : RootDomainObject.getInstance().getTeacherAuthorizationSet()) {
+        for (TeacherAuthorization ta : Bennu.getInstance().getTeacherAuthorizationSet()) {
             if (ta instanceof ExternalTeacherAuthorization) {
                 ExternalTeacherAuthorization externalTeacherAuthorization = (ExternalTeacherAuthorization) ta;
                 if (externalTeacherAuthorization.getActive()
@@ -35,6 +36,7 @@ public class ExternalTeacherAuthorization extends ExternalTeacherAuthorization_B
         }
         return teacherAuthorizations;
     }
+
     @Deprecated
     public boolean hasCanHaveCard() {
         return getCanHaveCard() != null;

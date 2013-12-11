@@ -16,7 +16,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditExamRooms;
@@ -39,7 +39,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -49,7 +49,7 @@ public class EditExamRoomsDA extends
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
         ContextUtils.setExecutionCourseContext(request);
@@ -111,7 +111,7 @@ public class EditExamRoomsDA extends
     public ActionForward select(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
         ContextUtils.setExecutionCourseContext(request);

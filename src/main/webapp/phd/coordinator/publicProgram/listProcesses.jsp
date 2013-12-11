@@ -5,7 +5,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
 
-<logic:present role="COORDINATOR">
+<logic:present role="role(COORDINATOR)">
 
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES" /></h2>

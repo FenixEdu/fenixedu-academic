@@ -2,18 +2,19 @@ package net.sourceforge.fenixedu.domain;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class CoordinatorLog extends CoordinatorLog_Base {
 
     public CoordinatorLog() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CoordinatorLog(DateTime time, OperationType operation, Person person, ExecutionDegree executionDegree, Person personWho) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         super.setDate(time);
         super.setOperation(operation);
         super.setPerson(person);
@@ -34,7 +35,7 @@ public class CoordinatorLog extends CoordinatorLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

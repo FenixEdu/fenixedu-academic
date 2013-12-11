@@ -7,8 +7,8 @@
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
-	<a href="http://www.ist.utl.pt/en/about-IST/global-cooperation/IST-EPFL/">IST-EPFL</a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>en/about-IST/global-cooperation/IST-EPFL/">IST-EPFL</a> &gt;
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
@@ -103,7 +103,7 @@
 		</fieldset>
 		
 		<p>
-			Once you have submitted the recommendation, you will no longer be able to modify it. Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the EPFL doctoral program at http://www.ist.utl.pt/en/about-IST/global-cooperation/IST-EPFL.
+			Once you have submitted the recommendation, you will no longer be able to modify it. Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the EPFL doctoral program at <%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>en/about-IST/global-cooperation/IST-EPFL.
 		</p>
 		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>

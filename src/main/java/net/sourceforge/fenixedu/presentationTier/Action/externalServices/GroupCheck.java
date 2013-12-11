@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.GroupCheckService;
-import net.sourceforge.fenixedu.util.HostAccessControl;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -40,7 +40,7 @@ public class GroupCheck extends ExternalInterfaceDispatchAction {
         String responseMessage = "";
         String responseCode;
 
-        if (!HostAccessControl.isAllowed(this, request)) {
+        if (!FenixConfigurationManager.getHostAccessControl().isAllowed(this, request)) {
             responseCode = NOT_AUTHORIZED_CODE;
         } else {
             try {

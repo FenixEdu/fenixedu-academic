@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -47,7 +48,7 @@ public class ExecutionCourseSiteComponentService {
         final ExecutionCourseSiteView executionCourseSiteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
         executionCourseSiteView.setExecutionCourse(site.getExecutionCourse());
 
-        if (!AccessControl.getUserView().hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        if (!Authenticate.getUser().getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             PublishedExamsMapAuthorizationFilter.execute(executionCourseSiteView);
         }
 

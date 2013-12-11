@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,10 +15,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.io.FileUtils;
 
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -61,22 +55,6 @@ public class UnitSiteBannerFileService {
         metaData.add(FileSetMetaData.createTitleMeta(site.getUnit().getNameWithAcronym() + " Banner"));
 
         return metaData;
-    }
-
-    protected FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
-            Collection<FileSetMetaData> metaData, File fileToUpload) throws FenixServiceException, IOException {
-        IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-        InputStream is = null;
-        try {
-            is = new FileInputStream(fileToUpload);
-            return fileManager.saveFile(filePath, fileName, isPrivate, metaData, is);
-        } catch (FileNotFoundException e) {
-            throw new FenixServiceException(e);
-        } finally {
-            if (is != null) {
-                is.close();
-            }
-        }
     }
 
     protected void updateBanner(UnitSite site, UnitSiteBanner banner, File mainFile, String mainName, File backFile,

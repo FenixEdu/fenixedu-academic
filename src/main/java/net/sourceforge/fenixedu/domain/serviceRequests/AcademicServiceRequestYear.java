@@ -3,19 +3,19 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 import java.util.Collection;
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class AcademicServiceRequestYear extends AcademicServiceRequestYear_Base {
     private AcademicServiceRequestYear(final int year) {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
 
         setYear(Integer.valueOf(year));
         setLatestServiceRequestNumber(Integer.valueOf(0));
     }
 
     static final public AcademicServiceRequestYear readByYear(final int year, boolean create) {
-        for (final AcademicServiceRequestYear requestYear : RootDomainObject.getInstance().getAcademicServiceRequestYearsSet()) {
+        for (final AcademicServiceRequestYear requestYear : Bennu.getInstance().getAcademicServiceRequestYearsSet()) {
             if (requestYear.getYear().intValue() == year) {
                 return requestYear;
             }
@@ -55,7 +55,7 @@ public class AcademicServiceRequestYear extends AcademicServiceRequestYear_Base 
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

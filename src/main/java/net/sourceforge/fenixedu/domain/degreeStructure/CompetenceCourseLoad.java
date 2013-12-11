@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 
 public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements Comparable {
@@ -9,7 +9,7 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
 
     protected CompetenceCourseLoad() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CompetenceCourseLoad(CompetenceCourseLoad existingLoad) {
@@ -88,7 +88,7 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

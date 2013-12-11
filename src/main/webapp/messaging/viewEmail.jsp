@@ -78,7 +78,7 @@
 	%>
 
 	
-	<logic:present role="MANAGER">
+	<logic:present role="role(MANAGER)">
 		<br>
 		<br>
 		<br>

@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -16,6 +15,8 @@ import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotati
 import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.joda.time.YearMonthDay;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public class Building extends Building_Base {
 
@@ -78,7 +79,7 @@ public class Building extends Building_Base {
 
     public static List<Building> getActiveBuildingsByNames(List<String> names) {
         List<Building> result = new ArrayList<Building>();
-        for (Resource space : RootDomainObject.getInstance().getResources()) {
+        for (Resource space : Bennu.getInstance().getResourcesSet()) {
             if (space.isBuilding() && ((Building) space).isActive()) {
                 Building building = (Building) space;
                 for (String name : names) {

@@ -11,13 +11,10 @@ public class PhotographContent extends PhotographContent_Base {
         setContent(content);
     }
 
-    protected RootDomainObject getRootDomainObject() {
-        return getPhotograph().getRootDomainObject();
-    }
-
     public byte[] getBytes() {
         return getContent().getBytes();
     }
+
     @Deprecated
     public boolean hasPhotograph() {
         return getPhotograph() != null;

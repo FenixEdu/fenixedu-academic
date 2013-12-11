@@ -4,7 +4,7 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
-<logic:present role="CANDIDATE">
+<logic:present role="role(CANDIDATE)">
 	<ul>
 		<li><html:link page="/viewCandidacies.do?method=prepare" ><bean:message key="link.candidacies"/></html:link></li>
 	</ul>	

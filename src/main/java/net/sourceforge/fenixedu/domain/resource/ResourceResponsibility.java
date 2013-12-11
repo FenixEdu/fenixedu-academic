@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.resource;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
@@ -10,7 +10,7 @@ public abstract class ResourceResponsibility extends ResourceResponsibility_Base
 
     protected ResourceResponsibility() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -65,7 +65,7 @@ public abstract class ResourceResponsibility extends ResourceResponsibility_Base
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

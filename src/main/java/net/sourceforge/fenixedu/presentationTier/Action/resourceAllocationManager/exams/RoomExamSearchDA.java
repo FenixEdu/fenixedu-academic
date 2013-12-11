@@ -7,7 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadBuildings;
@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -48,7 +48,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         List infoBuildings = ReadBuildings.run();
         List buildingsStrings = (List) CollectionUtils.collect(infoBuildings, new Transformer() {
@@ -77,7 +77,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
 
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaValidatorForm roomExamForm = (DynaValidatorForm) form;
 
         String rooms[] = (String[]) roomExamForm.get("roomsId");
@@ -96,7 +96,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
 
     private List getExamsMap(HttpServletRequest request, List infoRooms) throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);

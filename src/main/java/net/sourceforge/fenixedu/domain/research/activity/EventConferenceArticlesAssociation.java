@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.activity;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -27,7 +27,7 @@ public class EventConferenceArticlesAssociation extends EventConferenceArticlesA
 
     public EventConferenceArticlesAssociation(EventEdition eventEdition, ConferenceArticles article, Person person) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         this.setEventEdition(eventEdition);
         this.setConferenceArticle(article);
         this.setPerson(person);
@@ -42,7 +42,7 @@ public class EventConferenceArticlesAssociation extends EventConferenceArticlesA
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

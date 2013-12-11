@@ -17,7 +17,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -60,6 +59,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.util.Base64;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -90,7 +90,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
     public ActionForward viewStudentExecutionCoursesWithTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         final Student student = userView.getPerson().getStudent();
         RegistrationSelectExecutionYearBean registrationSelectExecutionYearBean =
                 new RegistrationSelectExecutionYearBean(student.getRegistrations().iterator().next());
@@ -109,7 +109,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
     public ActionForward testsFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         final String objectCode = request.getParameter("objectCode");
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(objectCode);
 
@@ -446,7 +446,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     public ActionForward exportChecksum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String logId = request.getParameter("logId");
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         if (logId != null && logId.length() != 0) {
             StudentTestLog studentTestLog = FenixFramework.getDomainObject(logId);
             if (studentTestLog.getStudent().getPerson().equals(userView.getPerson())) {
@@ -484,7 +484,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             throws FenixActionException {
         request.setAttribute("exerciseCode", request.getParameter("exerciseCode"));
         request.setAttribute("item", request.getParameter("item"));
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         String testCode = null;
         String exerciseCode = null;
@@ -503,7 +503,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             return mapping.findForward("testError");
         }
 
-        Registration registration = Registration.readByUsername(userView.getUtilizador());
+        Registration registration = Registration.readByUsername(userView.getUsername());
         try {
             GiveUpQuestion.run(registration, distributedTest, exerciseCode, itemCode, getServlet().getServletContext()
                     .getRealPath("/"));
@@ -677,7 +677,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             return null;
         }
 
-        Person person = Person.readPersonByUsername(getUserView(request).getUtilizador());
+        Person person = Person.readPersonByUsername(getUserView(request).getUsername());
         if (!person.getStudent().equals(registration.getStudent())) {
             return null;
         }

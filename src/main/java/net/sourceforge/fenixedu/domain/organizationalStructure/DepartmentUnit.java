@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -9,6 +11,8 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitSite;
@@ -281,9 +285,18 @@ public class DepartmentUnit extends DepartmentUnit_Base {
         return !getParticipatingAnyCurricularCourseCurricularRulesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public boolean hasDepartment() {
         return getDepartment() != null;
+    }
+
+    public Set<ExecutionCourse> getAllExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
+        Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
+        for (CompetenceCourse competenceCourse : getCompetenceCourses()) {
+            competenceCourse.getExecutionCoursesByExecutionPeriod(executionSemester, executionCourses);
+        }
+        return executionCourses;
     }
 
 }

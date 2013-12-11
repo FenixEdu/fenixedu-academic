@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsBean;
@@ -33,6 +32,7 @@ import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -89,7 +89,7 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
         spreadsheet.setHeader("SNE - Descrição");
         spreadsheet.setHeader("O - Descrição");
 
-        Collection<Teacher> teachers = RootDomainObject.getInstance().getTeachers();
+        Collection<Teacher> teachers = Bennu.getInstance().getTeachersSet();
         for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
             Interval semesterInterval =
                     new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),

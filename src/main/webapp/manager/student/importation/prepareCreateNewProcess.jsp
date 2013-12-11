@@ -5,7 +5,7 @@
 
 <html:xhtml />
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 	<h2><bean:message key="title.dges.importation.process" bundle="MANAGER_RESOURCES" /></h2>
 

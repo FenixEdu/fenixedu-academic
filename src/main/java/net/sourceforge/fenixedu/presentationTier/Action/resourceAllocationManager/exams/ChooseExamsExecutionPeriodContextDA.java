@@ -7,7 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
@@ -37,7 +37,7 @@ public class ChooseExamsExecutionPeriodContextDA extends FenixContextDispatchAct
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         InfoExecutionPeriod selectedExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
@@ -75,7 +75,7 @@ public class ChooseExamsExecutionPeriodContextDA extends FenixContextDispatchAct
 
         DynaActionForm chooseExamsExecutionPeriodForm = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         List infoExecutionPeriodList = ReadExecutionPeriods.run();
         ComparatorChain chainComparator = new ComparatorChain();

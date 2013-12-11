@@ -57,7 +57,7 @@ public class RemoveProfessorshipAction extends FenixDispatchAction {
 
         ActionMessages actionMessages = getMessages(request);
         try {
-            RemoveProfessorshipWithPerson.run(Person.readPersonByIstUsername(id),
+            RemoveProfessorshipWithPerson.run(Person.readPersonByUsername(id),
                     FenixFramework.<ExecutionCourse> getDomainObject(executionCourseId));
         } catch (DomainException de) {
             actionMessages.add(de.getMessage(), new ActionMessage(de.getMessage()));

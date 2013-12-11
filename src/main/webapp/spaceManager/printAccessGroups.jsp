@@ -9,7 +9,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.accessControl.RoleGroup"%>
 <html:xhtml/>
 
-<logic:present role="SPACE_MANAGER">
+<logic:present role="role(SPACE_MANAGER)">
 	
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformationId"/>
 	<bean:define id="accessGroupType" name="accessGroupType" type="org.apache.struts.util.LabelValueBean"/>

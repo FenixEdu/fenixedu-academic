@@ -16,7 +16,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlans;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurriculum;
@@ -71,6 +70,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -83,7 +83,8 @@ import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -114,8 +115,6 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         // finalWorkForm.get("minimumNumberOfGroupElements");
         // String maximumNumberOfGroupElements = (String)
         // finalWorkForm.get("maximumNumberOfGroupElements");
-        String minimumNumberOfGroupElements = "1";
-        String maximumNumberOfGroupElements = "1";
         // String degreeType = (String) finalWorkForm.get("degreeType");
         String degreeType = null;
         String observations = (String) finalWorkForm.get("observations");
@@ -127,9 +126,11 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         String degree = (String) finalWorkForm.get("degree");
         String[] branchList = (String[]) finalWorkForm.get("branchList");
 
-        Integer min = Integer.valueOf(minimumNumberOfGroupElements);
-        Integer max = Integer.valueOf(maximumNumberOfGroupElements);
-        if (min.intValue() > max.intValue() || min.intValue() <= 0) {
+        Integer minimumNumberOfGroupElements = 1;
+        Integer maximumNumberOfGroupElements = 1;
+
+        if (minimumNumberOfGroupElements.intValue() > maximumNumberOfGroupElements.intValue()
+                || minimumNumberOfGroupElements.intValue() <= 0) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalWorkInformationForm.numberGroupElements.invalidInterval", new ActionError(
                     "finalWorkInformationForm.numberGroupElements.invalidInterval"));
@@ -143,9 +144,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
             saveErrors(request, actionErrors);
             return mapping.getInputForward();
         }
-
-        Integer orientatorCreditsPercentage = Integer.valueOf(responsibleCreditsPercentage);
-        Integer coorientatorCreditsPercentage = Integer.valueOf(coResponsibleCreditsPercentage);
+        Integer orientatorCreditsPercentage = NumberUtils.toInt(responsibleCreditsPercentage);
+        Integer coorientatorCreditsPercentage = NumberUtils.toInt(coResponsibleCreditsPercentage);
         if (orientatorCreditsPercentage.intValue() < 0 || coorientatorCreditsPercentage.intValue() < 0
                 || orientatorCreditsPercentage.intValue() + coorientatorCreditsPercentage.intValue() != 100) {
             ActionErrors actionErrors = new ActionErrors();
@@ -160,16 +160,16 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
             infoFinalWorkProposal.setExternalId(externalId);
         }
         infoFinalWorkProposal.setTitle(title);
-        infoFinalWorkProposal.setOrientatorsCreditsPercentage(Integer.valueOf(responsibleCreditsPercentage));
-        infoFinalWorkProposal.setCoorientatorsCreditsPercentage(Integer.valueOf(coResponsibleCreditsPercentage));
+        infoFinalWorkProposal.setOrientatorsCreditsPercentage(orientatorCreditsPercentage);
+        infoFinalWorkProposal.setCoorientatorsCreditsPercentage(coorientatorCreditsPercentage);
         infoFinalWorkProposal.setFraming(framing);
         infoFinalWorkProposal.setObjectives(objectives);
         infoFinalWorkProposal.setDescription(description);
         infoFinalWorkProposal.setRequirements(requirements);
         infoFinalWorkProposal.setDeliverable(deliverable);
         infoFinalWorkProposal.setUrl(url);
-        infoFinalWorkProposal.setMinimumNumberOfGroupElements(Integer.valueOf(minimumNumberOfGroupElements));
-        infoFinalWorkProposal.setMaximumNumberOfGroupElements(Integer.valueOf(maximumNumberOfGroupElements));
+        infoFinalWorkProposal.setMinimumNumberOfGroupElements(minimumNumberOfGroupElements);
+        infoFinalWorkProposal.setMaximumNumberOfGroupElements(maximumNumberOfGroupElements);
         infoFinalWorkProposal.setObservations(observations);
         infoFinalWorkProposal.setLocation(location);
         DegreeType tipoCurso = degreeType != null && degreeType.length() > 0 ? DegreeType.valueOf(degreeType) : null;
@@ -203,7 +203,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         }
 
         try {
-            IUserView userView = UserView.getUser();
+            User userView = Authenticate.getUser();
             SubmitFinalWorkProposal.runSubmitFinalWorkProposal(infoFinalWorkProposal);
         } catch (DomainException ex) {
             ActionErrors actionErrors = new ActionErrors();
@@ -236,7 +236,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     public ActionForward chooseDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException, IllegalAccessException,
             InstantiationException {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
 
         final DynaActionForm finalWorkForm = (DynaActionForm) form;
         finalWorkForm.set("role", "responsable");
@@ -300,7 +300,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     public ActionForward listProposals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException, IllegalAccessException,
             InstantiationException {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
 
         TreeSet<Proposal> proposals = new TreeSet<Proposal>(new Comparator<Proposal>() {
 
@@ -352,7 +352,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareFinalWorkInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String role = (String) finalWorkForm.get("role");
@@ -420,7 +420,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
     public ActionForward showTeacherName(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String alteredField = (String) finalWorkForm.get("alteredField");
@@ -439,6 +439,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
             } else if (alteredField.equals("coorientator")) {
                 finalWorkForm.set("coorientatorOID", "");
                 finalWorkForm.set("coResponsableTeacherName", "");
+                finalWorkForm.set("coResponsibleCreditsPercentage", "0");
+                finalWorkForm.set("responsibleCreditsPercentage", "100");
             }
 
             return prepareFinalWorkInformation(mapping, form, request, response);
@@ -446,7 +448,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
         final Person person;
         if (number.substring(0, 3).equals("ist")) {
-            person = Person.readPersonByIstUsername(number);
+            person = Person.readPersonByUsername(number);
         } else {
             if (StringUtils.isNumeric(number)) {
                 final Employee employee = Employee.readByNumber(Integer.valueOf(number));
@@ -546,7 +548,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
 
         if (finalDegreeWorkProposalOIDString != null) {
-            IUserView userView = UserView.getUser();
+            User userView = Authenticate.getUser();
 
             try {
                 InfoProposal infoProposal =
@@ -566,7 +568,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
         final String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         if (finalDegreeWorkProposalOIDString != null && userView != null) {
             final String finalDegreeWorkProposalOID = finalDegreeWorkProposalOIDString;
             final Proposal finalDegreeWorkProposal = FenixFramework.getDomainObject(finalDegreeWorkProposalOID);
@@ -583,7 +585,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
 
         if (finalDegreeWorkProposalOIDString != null) {
-            IUserView userView = UserView.getUser();
+            User userView = Authenticate.getUser();
 
             try {
                 InfoProposal infoProposal =
@@ -723,7 +725,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
         String selectedGroupProposalOID = (String) finalWorkAttributionForm.get("selectedGroupProposal");
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
 
@@ -753,7 +755,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     public ActionForward getCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String studentCurricularPlanID = request.getParameter("studentCPID");
         if (studentCurricularPlanID == null) {
@@ -790,7 +792,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String studentNumber = getStudent(request);
         List infoStudents = null;
@@ -798,7 +800,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         if (studentNumber == null) {
             try {
 
-                InfoPerson infoPerson = ReadPersonByUsername.run(userView.getUtilizador());
+                InfoPerson infoPerson = ReadPersonByUsername.run(userView.getUsername());
 
                 infoStudents = ReadStudentsByPerson.runReadStudentsByPerson(infoPerson);
             } catch (FenixServiceException e) {

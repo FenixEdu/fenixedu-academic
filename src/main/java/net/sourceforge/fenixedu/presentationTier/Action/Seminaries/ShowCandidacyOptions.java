@@ -12,7 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetCandidaciesByStudentIDAndSeminaryID;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetSeminary;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadCurricularCoursesByUsername;
@@ -39,7 +39,7 @@ public class ShowCandidacyOptions extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String seminaryIDString = request.getParameter("objectCode");
         String seminaryID;
         if (seminaryIDString == null) {
@@ -56,8 +56,8 @@ public class ShowCandidacyOptions extends FenixAction {
         ActionForward destiny = null;
         try {
             seminary = GetSeminary.runGetSeminary(seminaryID);
-            student = ReadStudentByUsername.runReadStudentByUsername(userView.getUtilizador());
-            disciplines = ReadCurricularCoursesByUsername.runReadCurricularCoursesByUsername(userView.getUtilizador());
+            student = ReadStudentByUsername.runReadStudentByUsername(userView.getUsername());
+            disciplines = ReadCurricularCoursesByUsername.runReadCurricularCoursesByUsername(userView.getUsername());
             List avaliableEquivalencies = new LinkedList();
             for (Iterator iterator = disciplines.iterator(); iterator.hasNext();) {
                 InfoCurricularCourse curricularCourse = (InfoCurricularCourse) iterator.next();

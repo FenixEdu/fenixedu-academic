@@ -11,7 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlansByNumberAndDegreeType;
@@ -40,7 +40,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * @author Tânia Pousão
@@ -92,7 +92,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
     public ActionForward readStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         // Read parameters
         String executionYearStr = request.getParameter("executionYear");
@@ -144,7 +144,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         request.setAttribute("percentageOfExemption", ExemptionGratuityType.percentageOfExemption());
         request.setAttribute("exemptionGratuityList", ExemptionGratuityType.values());

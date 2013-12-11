@@ -5,7 +5,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.MissingPersonalDataException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.ParseException;
 
@@ -17,13 +17,13 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
 
     protected PhdMigrationProcess() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected PhdMigrationProcess(String[] institutionEntries, String[] processDataEntries, String[] personalDataEntries,
             String[] guidingEntries) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
 
         indexInstitutionEntries(institutionEntries);
         createPersonalDataEntries(personalDataEntries);
@@ -129,7 +129,7 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

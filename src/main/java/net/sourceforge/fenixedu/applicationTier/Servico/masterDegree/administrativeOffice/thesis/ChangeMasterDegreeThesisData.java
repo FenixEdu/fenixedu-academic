@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlreadyChosenServiceException;
@@ -33,7 +33,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ChangeMasterDegreeThesisData {
 
     @Atomic
-    public static void run(IUserView userView, String studentCurricularPlanID, String dissertationTitle,
+    public static void run(User userView, String studentCurricularPlanID, String dissertationTitle,
             List<String> guidersNumbers, List<String> assistentGuidersNumbers, List<String> externalGuidersIDs,
             List<String> externalAssistentGuidersIDs) throws FenixServiceException {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);

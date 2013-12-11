@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.Seminaries;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.DeleteCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -35,7 +35,7 @@ public class CancelCandidacy extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String candidacyIDString = request.getParameter("objectCode");
         if (candidacyIDString == null) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));

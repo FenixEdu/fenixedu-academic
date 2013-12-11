@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.classProperties;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * @author David Santos in Apr 7, 2004
@@ -10,7 +10,7 @@ public class ExecutionCourseProperty extends ExecutionCourseProperty_Base {
 
     public ExecutionCourseProperty() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {

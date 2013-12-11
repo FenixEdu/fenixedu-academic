@@ -49,14 +49,12 @@
 	  <put name="body" value="/commons/blank.jsp" />
 	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
 	  <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
-	</definition>
-	
+	</definition>	
 	<definition name="df.teacher.evaluation-management" extends="definition.teacher.two-column">
 	    <put name="navLocal" value="/teacher/evaluation/evaluationMenu.jsp"/>
 	    <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
   	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
-	</definition>
-	
+	</definition>	
 	<definition name="df.teacher.credits-management" extends="definition.teacher.two-column">
 	    <put name="navLocal" value="/teacher/commons/creditsManagementLocalNavigationBar.jsp"/>	
 	    <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
@@ -72,7 +70,7 @@
     	<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
 	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
 	</definition>
-	<definition name="execution-course-administration" extends="definition.teacher.testsPage">
+	<definition name="execution-course-administration" extends="definition.teacher.two-column">
 		<put name="executionCourseName" value="/teacher/commons/manageExecutionCourseHeader.jsp"/>
         <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>

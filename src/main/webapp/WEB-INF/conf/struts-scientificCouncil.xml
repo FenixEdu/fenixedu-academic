@@ -176,7 +176,7 @@
             <action forward="df.page.send.email.redirect" path="/sendEmail"></action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" parameter="resources.ScientificCouncilResources"></message-resources>
       <message-resources null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>

@@ -11,11 +11,11 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -76,7 +76,7 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup {
     }
 
     private static boolean belongsToOtherGroupsWithSameRole(Department departmentWhoAsks, Person person) {
-        Collection<Department> departments = RootDomainObject.getInstance().getDepartments();
+        Collection<Department> departments = Bennu.getInstance().getDepartmentsSet();
         for (Department department : departments) {
             if (department != departmentWhoAsks) {
                 Group group = department.getCompetenceCourseMembersGroup();

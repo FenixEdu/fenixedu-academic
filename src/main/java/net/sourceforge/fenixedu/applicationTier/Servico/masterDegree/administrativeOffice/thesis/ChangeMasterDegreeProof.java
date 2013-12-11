@@ -5,7 +5,7 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
@@ -34,7 +34,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ChangeMasterDegreeProof {
 
     @Atomic
-    public static void run(IUserView userView, String studentCurricularPlanID, Date proofDate, Date thesisDeliveryDate,
+    public static void run(User userView, String studentCurricularPlanID, Date proofDate, Date thesisDeliveryDate,
             MasterDegreeClassification finalResult, Integer attachedCopiesNumber, List<String> teacherJuriesNumbers,
             List<String> externalJuriesIDs) throws FenixServiceException {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);

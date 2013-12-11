@@ -9,7 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.interest.ChangeResearchInterestOrder;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.interest.DeleteResearchInterest;
@@ -109,7 +109,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
     }
 
     private void changeOrder(HttpServletRequest request, int direction) throws FenixServiceException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         Person person = userView.getPerson();
 
         ResearchInterest interest = FenixFramework.getDomainObject(request.getParameter("oid"));

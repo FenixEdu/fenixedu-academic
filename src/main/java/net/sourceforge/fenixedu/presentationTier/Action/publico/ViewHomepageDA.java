@@ -65,7 +65,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
         }
 
         try {
-            return RequestUtils.absoluteURL(request, "/homepage/" + homepage.getPerson().getUser().getUserUId()).toString();
+            return RequestUtils.absoluteURL(request, "/homepage/" + homepage.getPerson().getUser().getUsername()).toString();
         } catch (MalformedURLException e) {
             return null;
         }

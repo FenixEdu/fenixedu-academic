@@ -5,7 +5,6 @@ import java.util.Set;
 
 import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -13,12 +12,13 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
     protected PersistentAccessGroup() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     {
@@ -99,17 +99,11 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
         throw new UnsupportedOperationException();
     }
 
-    public RootDomainObject getRootDomainObject() {
-        if (super.getRootDomainObject() != null) {
-            return super.getRootDomainObject();
-        }
-        return super.getDeletedRootDomainObject();
-    }
-
     @ConsistencyPredicate
     public final boolean hasRootLink() {
         return super.getRootDomainObject() != null || super.getDeletedRootDomainObject() != null || super.getNewGroup() != null;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Party> getMember() {
         return getMemberSet();
@@ -121,7 +115,7 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 
@@ -146,7 +140,7 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
     }
 
     @Deprecated
-    public boolean hasDeletedRootDomainObject() {
+    public boolean hasDeletedBennu() {
         return getDeletedRootDomainObject() != null;
     }
 

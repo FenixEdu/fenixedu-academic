@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * This class contains all the information regarding a Reimbursement Guide
@@ -21,7 +21,7 @@ public class ReimbursementGuideEntry extends ReimbursementGuideEntry_Base {
 
     public ReimbursementGuideEntry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -58,7 +58,7 @@ public class ReimbursementGuideEntry extends ReimbursementGuideEntry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

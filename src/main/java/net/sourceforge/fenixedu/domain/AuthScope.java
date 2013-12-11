@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
-
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -12,6 +9,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+
 import com.google.common.base.Joiner;
 
 public class AuthScope extends AuthScope_Base {
@@ -20,11 +21,11 @@ public class AuthScope extends AuthScope_Base {
 
     public AuthScope() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static AuthScope getAuthScope(String name) {
-        for (AuthScope scope : RootDomainObject.getInstance().getAuthScopesSet()) {
+        for (AuthScope scope : Bennu.getInstance().getAuthScopesSet()) {
             if (scope.getName().equals(name)) {
                 return scope;
             }

@@ -11,7 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
@@ -32,7 +32,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.LookupDispatchAction;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -210,7 +210,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
     public ActionForward changeMasterDegreeProof(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm changeMasterDegreeProofForm = (DynaActionForm) form;
 
@@ -268,7 +268,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
     }
 
-    private void executeChangeMasterDegreeProofService(ActionMapping mapping, IUserView userView,
+    private void executeChangeMasterDegreeProofService(ActionMapping mapping, User userView,
             MasterDegreeClassification finalResult, Integer attachedCopiesNumber, Date proofDate, Date thesisDeliveryDate,
             String scpID, List<String> juriesNumbers, List<String> externalJuriesIDs) throws NonExistingActionException,
             ScholarshipNotFinishedActionException, ExistingActionException {

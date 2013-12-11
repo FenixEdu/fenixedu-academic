@@ -27,7 +27,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ProjectTutorialExecutionCoursesDA extends FenixDispatchAction {
 
     public ActionForward showDepartmentExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
         if (departmentCreditsBean == null) {
             departmentCreditsBean = new DepartmentCreditsBean();
@@ -38,14 +38,13 @@ public class ProjectTutorialExecutionCoursesDA extends FenixDispatchAction {
     }
 
     public ActionForward changeExecutionCourseType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
-        ExecutionCourse executionCourse =
-                FenixFramework.getDomainObject((String) getFromRequest(request, "executionCourseOid"));
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject((String) getFromRequest(request, "executionCourseOid"));
         executionCourse.changeProjectTutorialCourse();
         Department department = FenixFramework.getDomainObject((String) getFromRequest(request, "departmentOid"));
         DepartmentCreditsBean departmentCreditsBean =
-                new DepartmentCreditsBean(department, new ArrayList<Department>(rootDomainObject.getDepartments()));
+                new DepartmentCreditsBean(department, new ArrayList<Department>(rootDomainObject.getDepartmentsSet()));
         request.setAttribute("departmentCreditsBean", departmentCreditsBean);
         return mapping.findForward("showDepartmentExecutionCourses");
     }

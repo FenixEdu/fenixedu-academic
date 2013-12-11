@@ -8,7 +8,7 @@
 <html:xhtml/>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>">Licenciaturas</a> &gt;
 	Concurso Nacional de Acesso
@@ -226,7 +226,7 @@
 <h2 id="rec">Recursos</h2>
 <ul> 
 	<li><a href="http://nape.ist.utl.pt/acesso/notas.php">Vagas e notas m&iacute;nimas de seria&ccedil;&atilde;o dos &uacute;ltimos 5 anos lectivos</a></li> 
-	<li><a href="http://www.ist.utl.pt/html/campus/tagus/sat/">Servi&ccedil;os Administrativos do IST-Taguspark (SAT)</a></li> 
+	<li><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>html/campus/tagus/sat/">Servi&ccedil;os Administrativos do IST-Taguspark (SAT)</a></li> 
 	<li><a href="http://guiatecnico.aeist.pt/">Guia do T&eacute;cnico </a> &nbsp;(Publica&ccedil;&atilde;o da responsabilidade da <a href="http://ae.ist.utl.pt/">Associa&ccedil;&atilde;o de Estudantes do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>) </li> 
 	<li><a href="http://guialisboa.aeist.pt/">Guia de Lisboa</a>&nbsp;(Publica&ccedil;&atilde;o da responsabilidade da <a href="http://ae.ist.utl.pt/">Associa&ccedil;&atilde;o de Estudantes do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>) </li> 
 
@@ -234,6 +234,6 @@
 </div>
 <h2 id="doc">Documentos</h2>
 <ul class="material">
-	<li class="pdf"><a href="http://www.ist.utl.pt/files/ensino/reg_1e2ciclo_20082009.pdf">Regulamento do 1º e 2º ciclo para 2008/2009</a> (PDF, 826KB)</li>
-	<li class="pdf"><a href="http://www.ist.utl.pt/files/ensino/propinas_20082009.pdf">Propinas do 1º e 2º ciclo para 2008/2009</a> (PDF, 28KB)</li>
+	<li class="pdf"><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/ensino/reg_1e2ciclo_20082009.pdf">Regulamento do 1º e 2º ciclo para 2008/2009</a> (PDF, 826KB)</li>
+	<li class="pdf"><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/ensino/propinas_20082009.pdf">Propinas do 1º e 2º ciclo para 2008/2009</a> (PDF, 28KB)</li>
 </ul>

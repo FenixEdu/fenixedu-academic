@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -37,6 +38,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection;
+import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 
@@ -56,8 +59,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class A3ESDegreeProcess implements Serializable {
-    // private static final String BASE_URL = "http://www.a3es.pt/si/iportal.php";
-    private static final String BASE_URL = "http://formacao.a3es.pt/iportal.php";
+    private static final String BASE_URL = "http://www.a3es.pt/si/iportal.php";
+    //private static final String BASE_URL = "http://formacao.a3es.pt/iportal.php";
 
     private static final String API_PROCESS = "api_process";
 
@@ -72,26 +75,40 @@ public class A3ESDegreeProcess implements Serializable {
     static {
         // This being hard-coded prevents future executions without our
         // interference, this should be persisted and managed by UI.
-//
-//        acefIndex.put("ACEF/1213/06697", "LEE");
-//        acefIndex.put("ACEF/1213/06707", "LEIC-A");
-//        acefIndex.put("ACEF/1213/06712", "LEIC-T");
-//        acefIndex.put("ACEF/1213/12622", "LERC");
-//        acefIndex.put("ACEF/1213/06752", "MEE");
-//        acefIndex.put("ACEF/1213/06762", "MEIC-A");
-//        acefIndex.put("ACEF/1213/06767", "MEIC-T");
-//        acefIndex.put("ACEF/1213/06772", "MERC");
-//        acefIndex.put("ACEF/1213/06797", "MUOT");
-//        acefIndex.put("ACEF/1213/06832", "MEEC");
-//        acefIndex.put("ACEF/1213/06852", "MA");
-//        acefIndex.put("ACEF/1213/06862", "DArq");
-//        acefIndex.put("ACEF/1213/06872", "DEEC");
-//        acefIndex.put("ACEF/1213/06882", "DEIC");
-//        acefIndex.put("ACEF/1213/06917", "DMte");
-//        acefIndex.put("ACEF/1213/06927", "DEASegInf");
-//        acefIndex.put("ACEF/1213/06967", "DEAEngCmp");
-//        acefIndex.put("ACEF/1213/06987", "DET");
-        acefIndex.put("ACEF/1314/06812", "MEAER");
+
+        acefIndex.put("ACEF/1314/06702", "LEGI");
+        acefIndex.put("ACEF/1314/06722", "LEAN");
+        acefIndex.put("ACEF/1314/06727", "LEMat");
+        acefIndex.put("ACEF/1314/06737", "LMAC");
+        acefIndex.put("ACEF/1314/06742", "MEAN");
+        acefIndex.put("ACEF/1314/06747", "MBiotec");
+        acefIndex.put("ACEF/1314/06757", "MEGI");
+        acefIndex.put("ACEF/1314/06777", "MMA");
+        acefIndex.put("ACEF/1314/06787", "MEMat");
+        acefIndex.put("ACEF/1314/06792", "MBioNano");
+        acefIndex.put("ACEF/1314/06807", "MQ");
+        acefIndex.put("ACEF/1314/13727", "MEFarm");
+        acefIndex.put("ACEF/1314/06812", "MEAer");
+        acefIndex.put("ACEF/1314/06817", "MEAmbi");
+        acefIndex.put("ACEF/1314/06822", "MEBiol");
+        acefIndex.put("ACEF/1314/06842", "MEQ");
+        acefIndex.put("ACEF/1314/06847", "MEBiom");
+        acefIndex.put("ACEF/1314/06857", "MEMec");
+        acefIndex.put("ACEF/1314/06867", "DBiotec");
+        acefIndex.put("ACEF/1314/06877", "DEGest");
+        acefIndex.put("ACEF/1314/06892", "DEN");
+        acefIndex.put("ACEF/1314/06902", "DEAEPP");
+        acefIndex.put("ACEF/1314/06952", "DEMec");
+        acefIndex.put("ACEF/1314/06957", "DEPE");
+        acefIndex.put("ACEF/1314/06982", "DEAer");
+        acefIndex.put("ACEF/1314/06947", "DEAmb");
+        acefIndex.put("ACEF/1314/06887", "DEMat");
+        acefIndex.put("ACEF/1314/06897", "DEQuim");
+        acefIndex.put("ACEF/1314/06912", "DMat");
+        acefIndex.put("ACEF/1314/06922", "DQuim");
+        acefIndex.put("ACEF/1314/06932", "DEBiom");
+
+//        acefIndex.put("ACEF/1314/06812", "MEAER");
     }
 
     protected String user;
@@ -280,14 +297,11 @@ public class A3ESDegreeProcess implements Serializable {
                 StringBuilder output = new StringBuilder();
 
                 json.put("q-6.2.1.1", competence.getName(executionSemester));
-
-                json.put("q-6.2.1.2", getTeachersAndTeachingHours(course, true));
+                json.put("q-6.2.1.2", cut("Docente responsavel", getTeachersAndTeachingHours(course, true), output, 100));
 
                 JSONObject q6213 = new JSONObject();
                 String teachersAndTeachingHours = getTeachersAndTeachingHours(course, false);
-                q6213.put("en", teachersAndTeachingHours);
-                q6213.put("pt", teachersAndTeachingHours);
-                json.put("q-6.2.1.3", q6213);
+                json.put("q-6.2.1.3", teachersAndTeachingHours);
 
                 JSONObject q6214 = new JSONObject();
                 MultiLanguageString objectives = competence.getObjectivesI18N(executionSemester);
@@ -321,11 +335,13 @@ public class A3ESDegreeProcess implements Serializable {
                 json.put("q-6.2.1.8", q6218);
 
                 List<String> references = new ArrayList<String>();
-                for (BibliographicReference reference : competence.getBibliographicReferences(executionSemester)
-                        .getMainBibliographicReferences()) {
-                    references.add(extractReference(reference));
+                final BibliographicReferences bibliographicReferences = competence.getBibliographicReferences(executionSemester);
+                if (bibliographicReferences != null) {
+                    for (BibliographicReference reference : bibliographicReferences.getMainBibliographicReferences()) {
+                        references.add(extractReference(reference));
+                    }
                 }
-                json.put("q-6.2.1.9", StringUtils.join(references, "; "));
+                json.put("q-6.2.1.9", cut("Referências Bibliográficas", StringUtils.join(references, "; "), output, 1000));
                 jsons.put(json, output.toString());
             }
         }
@@ -373,7 +389,9 @@ public class A3ESDegreeProcess implements Serializable {
         int counter = 1000;
         List<String> responsibles = new ArrayList<String>();
         for (Teacher teacher : responsiblesMap.keySet()) {
-            String responsible = teacher.getPerson().getName() + " (" + responsiblesMap.get(teacher) + ")";
+            String responsible =
+                    (responsibleTeacher ? teacher.getPerson().getFirstAndLastName() : teacher.getPerson().getName()) + " ("
+                            + responsiblesMap.get(teacher) + ")";
             counter -= JSONObject.escape(responsible + ", ").getBytes().length;
             responsibles.add(responsible);
         }
@@ -398,7 +416,9 @@ public class A3ESDegreeProcess implements Serializable {
                 }
             }
             for (Teacher teacher : teachers) {
-                String responsible = teacher.getPerson().getName() + " (0.0)";
+                String responsible =
+                        (responsibleTeacher ? teacher.getPerson().getFirstAndLastName() : teacher.getPerson().getName())
+                                + " (0.0)";
                 if (counter - JSONObject.escape(responsible).getBytes().length < 0) {
                     break;
                 }
@@ -424,6 +444,19 @@ public class A3ESDegreeProcess implements Serializable {
                         result =
                                 result + courseLoad.getTotalQuantity().doubleValue()
                                         * (degreeTeachingService.getPercentage().doubleValue() / 100);
+                    }
+                }
+            }
+            for (OtherService otherService : teacherService.getOtherServices()) {
+                if (otherService instanceof DegreeTeachingServiceCorrection) {
+                    DegreeTeachingServiceCorrection degreeTeachingServiceCorrection =
+                            (DegreeTeachingServiceCorrection) otherService;
+                    if (degreeTeachingServiceCorrection.getProfessorship().getExecutionCourse()
+                            .equals(professorhip.getExecutionCourse())
+                            && (!degreeTeachingServiceCorrection.getProfessorship().getExecutionCourse().isDissertation())
+                            && (!degreeTeachingServiceCorrection.getProfessorship().getExecutionCourse()
+                                    .getProjectTutorialCourse())) {
+                        result = result + degreeTeachingServiceCorrection.getCorrection().doubleValue();
                     }
                 }
             }
@@ -516,7 +549,7 @@ public class A3ESDegreeProcess implements Serializable {
 
             toplevel.put("q-cf-name", info.getTeacher().getPerson().getName());
             // toplevel.put("q-cf-ies",
-            // RootDomainObject.getInstance().getInstitutionUnit().getName());
+            // Bennu.getInstance().getInstitutionUnit().getName());
             // toplevel.put("q-cf-uo", info.getUnitName());
             toplevel.put("q-cf-cat", info.getProfessionalCategoryName());
             toplevel.put("q-cf-time", info.getProfessionalRegimeTime());
@@ -524,7 +557,7 @@ public class A3ESDegreeProcess implements Serializable {
             {
                 file.put("name", cut("nome", info.getTeacher().getPerson().getName(), output, 200));
                 // file.put("ies", cut("ies",
-                // RootDomainObject.getInstance().getInstitutionUnit().getName(),
+                // Bennu.getInstance().getInstitutionUnit().getName(),
                 // output, 200));
                 // file.put("uo", cut("uo", info.getUnitName(), output, 200));
                 file.put("cat", info.getProfessionalCategoryName());
@@ -553,7 +586,9 @@ public class A3ESDegreeProcess implements Serializable {
 
                 if (qualifications.hasNext()) {
                     JSONArray academicArray = new JSONArray();
+                    int i = 0;
                     while (qualifications.hasNext()) {
+                        i++;
                         JSONObject academic = new JSONObject();
                         QualificationBean qualification = qualifications.next();
                         if (qualification.getYear() != null) {
@@ -581,6 +616,15 @@ public class A3ESDegreeProcess implements Serializable {
                         } else {
                             output.append(" Qualificações: rank vazio.");
                         }
+                        academicArray.add(academic);
+                    }
+                    for (int j = i; j < 3; j++) {
+                        JSONObject academic = new JSONObject();
+                            academic.put("year", StringUtils.EMPTY);
+                            academic.put("degree", StringUtils.EMPTY);
+                            academic.put("area", StringUtils.EMPTY);
+                            academic.put("ies", StringUtils.EMPTY);
+                            academic.put("rank", StringUtils.EMPTY);
                         academicArray.add(academic);
                     }
                     file.put("form-academic", academicArray);

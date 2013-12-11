@@ -5,10 +5,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
-import net.sourceforge.fenixedu._development.PropertiesManager;
 
 public class FenixGWTAntTasksCreator {
 
@@ -68,7 +67,7 @@ public class FenixGWTAntTasksCreator {
 
     private void writeHeader() {
 
-        out.println("<?xml version=\"1.0\" encoding=\"" + PropertiesManager.DEFAULT_CHARSET + "\"?>");
+        out.println("<?xml version=\"1.0\" encoding=\"" + Charset.defaultCharset().name() + "\"?>");
         out.println("<project basedir=\".\">");
         out.println("");
 

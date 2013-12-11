@@ -9,7 +9,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -36,7 +36,7 @@ public class ShowProfessorshipsDA extends FenixDispatchAction {
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String executionPeriodIDString = request.getParameter("executionPeriodID");
 

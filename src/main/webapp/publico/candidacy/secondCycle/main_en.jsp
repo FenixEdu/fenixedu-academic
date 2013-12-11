@@ -11,7 +11,7 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="title.application.name.secondCycle" bundle="CANDIDATE_RESOURCES"/>
 </div>
@@ -266,7 +266,7 @@
 <p>No, in these cases the transition to the 2nd cycle is automatic.</p>
 
 <h3>Q2: I am a final-year student of a 1st cycle programme at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>. In which conditions is the transition to a different 2nd cycle automatic?</h3>
-<p>A2: After completing the 1st cycle programme at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> you can always pursuit your studies in a different 2nd cycle programme at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> as long as both programmes are scientifically coherent. This <a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">scientific coherence</a> occurs whenever the training skills of the 1st cycle respect the training needs for admission to the 2nd cycle.</p>
+<p>A2: After completing the 1st cycle programme at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> you can always pursuit your studies in a different 2nd cycle programme at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> as long as both programmes are scientifically coherent. This <a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/ensino/coerencias_cientificas_0910.pdf">scientific coherence</a> occurs whenever the training skills of the 1st cycle respect the training needs for admission to the 2nd cycle.</p>
 
 <h3>Q3: I am a final-year student of a 1st programme at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>. What should I do if I want to pursuit my studies in a 2nd cycle programme at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> which have no scientific coherence with the 1st cycle programme?</h3>
 <p>A3: You should submit your application for the 2nd cycle programme following the deadlines and regulations defined for that purpose. The application will be analysed along with the applications of external students that intend to enroll in a 2nd cycle programme at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>.</p>

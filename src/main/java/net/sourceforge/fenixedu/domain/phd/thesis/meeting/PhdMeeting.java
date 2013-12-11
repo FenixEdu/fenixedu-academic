@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.phd.thesis.meeting;
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
@@ -16,7 +16,7 @@ public class PhdMeeting extends PhdMeeting_Base {
 
     public PhdMeeting() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public PhdMeeting init(final PhdMeetingSchedulingProcess process, final DateTime meetingDate, final String meetingPlace) {
@@ -80,7 +80,7 @@ public class PhdMeeting extends PhdMeeting_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

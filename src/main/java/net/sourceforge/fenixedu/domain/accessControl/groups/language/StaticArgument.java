@@ -4,7 +4,9 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language;
  * An argument with a fixed value.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public class StaticArgument extends Argument {
 
     private static final long serialVersionUID = 1L;

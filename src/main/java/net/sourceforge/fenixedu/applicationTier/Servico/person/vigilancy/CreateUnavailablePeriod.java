@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
@@ -51,7 +51,7 @@ public class CreateUnavailablePeriod {
                     BundleUtil.getStringFromResourceBundle("resources.VigilancyResources",
                             "email.convoke.unavailablePeriod.subject", new String[] { group.getName() });
 
-            Sender sender = RootDomainObject.getInstance().getSystemSender();
+            Sender sender = Bennu.getInstance().getSystemSender();
             new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(), Collections.EMPTY_LIST, subject,
                     message, bccs);
         }

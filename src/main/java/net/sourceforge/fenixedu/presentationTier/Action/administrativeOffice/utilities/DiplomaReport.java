@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.utilities;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
@@ -34,7 +34,7 @@ abstract public class DiplomaReport extends FenixReport {
         addParameter("birthLocale", StringFormatter.prettyPrint(this.studentDiplomaInformation.getBirthLocale()));
 
         addParameter("conclusionDate", this.studentDiplomaInformation.getConclusionDate().toString(DD_MMMM_YYYY, getLocale()));
-        addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+        addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
         addParameter("day", new YearMonthDay().toString(DD_MMMM_YYYY, getLocale()));
         addParameter("dissertationTitle", this.studentDiplomaInformation.getDissertationTitle());
 

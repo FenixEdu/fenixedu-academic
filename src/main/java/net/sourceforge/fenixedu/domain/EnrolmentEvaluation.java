@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.util.MarkType;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Comparable {
@@ -91,7 +92,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
     public EnrolmentEvaluation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
         setGrade(Grade.createEmptyGrade());
         setContext(EnrolmentEvaluationContext.MARK_SHEET_EVALUATION);
@@ -745,7 +746,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

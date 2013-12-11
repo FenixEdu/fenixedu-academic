@@ -6,7 +6,7 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
 <html:xhtml />
 
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
 
 	<em><bean:message bundle="STUDENT_RESOURCES"  key="title.student.portalTitle" /></em>
 	<h2><bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses" /></h2>

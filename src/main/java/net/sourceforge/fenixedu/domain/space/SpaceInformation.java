@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
@@ -16,7 +16,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
 
     protected SpaceInformation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -138,7 +138,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

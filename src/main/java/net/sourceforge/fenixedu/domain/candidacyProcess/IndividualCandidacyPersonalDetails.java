@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -41,7 +41,7 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
         super();
     }
 
-    protected RootDomainObject getRootDomainObject() {
+    protected Bennu getRootDomainObject() {
         return getCandidacy().getRootDomainObject();
     }
 

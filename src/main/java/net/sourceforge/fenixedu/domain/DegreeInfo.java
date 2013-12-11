@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -30,7 +31,7 @@ public class DegreeInfo extends DegreeInfo_Base {
 
     protected DegreeInfo(Degree degree, ExecutionYear executionYear) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
 
         DegreeInfo degreeInfo = degree.getMostRecentDegreeInfo(executionYear);
 
@@ -277,7 +278,7 @@ public class DegreeInfo extends DegreeInfo_Base {
     @SuppressWarnings("unchecked")
     public static String readAllDegreeInfos() {
         JSONArray infos = new JSONArray();
-        for (Degree degree : RootDomainObject.getInstance().getDegrees()) {
+        for (Degree degree : Bennu.getInstance().getDegreesSet()) {
             Collection<DegreeInfo> degreeInfos = degree.getDegreeInfos();
             if (!degreeInfos.isEmpty()) {
                 for (DegreeInfo degreeInfo : degreeInfos) {
@@ -314,7 +315,7 @@ public class DegreeInfo extends DegreeInfo_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

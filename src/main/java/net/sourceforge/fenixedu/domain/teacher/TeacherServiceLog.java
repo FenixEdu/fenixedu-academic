@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -50,7 +50,7 @@ public class TeacherServiceLog extends TeacherServiceLog_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

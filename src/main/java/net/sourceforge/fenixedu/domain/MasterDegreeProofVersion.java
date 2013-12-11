@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
@@ -26,7 +28,7 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
 
     public MasterDegreeProofVersion() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public MasterDegreeProofVersion(MasterDegreeThesis masterDegreeThesis, Employee responsibleEmployee, Date lastModification,
@@ -152,7 +154,7 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -133,7 +133,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         }
         request.setAttribute("executionDegrees", executionDegrees);
 
-        final Set<CurricularYear> curricularYears = new TreeSet<CurricularYear>(rootDomainObject.getCurricularYears());
+        final Set<CurricularYear> curricularYears = new TreeSet<CurricularYear>(rootDomainObject.getCurricularYearsSet());
         request.setAttribute("curricularYears", curricularYears);
 
         final Set<ExecutionCourse> executionCourses =

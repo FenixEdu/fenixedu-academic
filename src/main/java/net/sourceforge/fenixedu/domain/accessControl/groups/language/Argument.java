@@ -8,7 +8,9 @@ import java.io.Serializable;
  * obtained.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public abstract class Argument implements Serializable, GroupContextProvider {
 
     private GroupContextProvider provider;

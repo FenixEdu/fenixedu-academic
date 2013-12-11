@@ -20,10 +20,6 @@ public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
         setPublication(date);
     }
 
-    protected RootDomainObject getRootDomainObject() {
-        return getDegree().getRootDomainObject();
-    }
-
     @Atomic
     public DegreeSpecializationArea createSpecializationArea(String nameEn, String namePt) {
 
@@ -45,6 +41,7 @@ public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
 
         super.deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.DegreeSpecializationArea> getSpecializationArea() {
         return getSpecializationAreaSet();

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.parking;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -9,12 +9,12 @@ public class NewParkingDocument extends NewParkingDocument_Base {
 
     public NewParkingDocument() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public NewParkingDocument(NewParkingDocumentType parkingDocumentType, ParkingFile parkingFile, Vehicle vehicle) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setParkingDocumentType(parkingDocumentType);
         setParkingFile(parkingFile);
         setVehicle(vehicle);
@@ -22,7 +22,7 @@ public class NewParkingDocument extends NewParkingDocument_Base {
 
     public NewParkingDocument(NewParkingDocumentType parkingDocumentType, ParkingFile parkingFile, ParkingRequest parkingRequest) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setParkingDocumentType(parkingDocumentType);
         setParkingFile(parkingFile);
         setParkingRequest(parkingRequest);
@@ -64,7 +64,7 @@ public class NewParkingDocument extends NewParkingDocument_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

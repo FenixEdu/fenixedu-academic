@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -35,8 +35,8 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
 
     private StudentsPerformanceReport() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
+        setRootDomainObjectQueueUndone(Bennu.getInstance());
     }
 
     private StudentsPerformanceReport(final ExecutionSemester executionSemester, List<Student> studentList) {

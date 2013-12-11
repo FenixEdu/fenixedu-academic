@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -26,7 +26,7 @@ public class ShowMarksListOptionsAction extends FenixDispatchAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String executionCourseCodeString = request.getParameter("objectCode");
         if (executionCourseCodeString == null) {

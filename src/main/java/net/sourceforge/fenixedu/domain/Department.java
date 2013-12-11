@@ -44,6 +44,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -57,7 +58,7 @@ public class Department extends Department_Base {
 
     public Department() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public List<Employee> getAllCurrentActiveWorkingEmployees() {
@@ -322,7 +323,7 @@ public class Department extends Department_Base {
     // read static methods
     // -------------------------------------------------------------
     public static Department readByName(final String departmentName) {
-        for (final Department department : RootDomainObject.getInstance().getDepartments()) {
+        for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
             if (department.getName().equals(departmentName)) {
                 return department;
             }
@@ -442,7 +443,7 @@ public class Department extends Department_Base {
     }
 
     public static Department find(final String departmentCode) {
-        for (final Department department : RootDomainObject.getInstance().getDepartmentsSet()) {
+        for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
             if (department.getAcronym().equals(departmentCode)) {
                 return department;
             }
@@ -460,7 +461,7 @@ public class Department extends Department_Base {
 
     public static List<Department> readActiveDepartments() {
         final List<Department> departments = new ArrayList<Department>();
-        for (final Department department : RootDomainObject.getInstance().getDepartments()) {
+        for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
             if (department.getActive()) {
                 departments.add(department);
             }
@@ -565,7 +566,7 @@ public class Department extends Department_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

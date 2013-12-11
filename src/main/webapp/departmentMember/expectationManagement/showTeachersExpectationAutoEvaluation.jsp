@@ -8,7 +8,7 @@
 <em><bean:message key="label.departmentMember" bundle="DEPARTMENT_MEMBER_RESOURCES"/></em>
 <h2><bean:message key="label.autoEvaluation"/></h2>
 
-<logic:present role="DEPARTMENT_MEMBER">
+<logic:present role="role(DEPARTMENT_MEMBER)">
 
 	<fr:form action="/teacherExpectationAutoAvaliation.do?method=show">
 		<div class="mtop2 mbottom1">

@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
     <h2><bean:message key="link.shift.enrollment.item2" /></h2>
     
     <html:form action="/studentTimeTable.do" target="_blank">

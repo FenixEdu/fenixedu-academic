@@ -74,7 +74,7 @@
 							<fr:slot name="personName" layout="autoComplete">
 								<fr:property name="size" value="50"/>
 								<fr:property name="labelField" value="person.name"/>
-								<fr:property name="format" value="${person.name} (${person.user.userUId})" />
+								<fr:property name="format" value="${person.name} (${person.user.username})" />
 								<fr:property name="indicatorShown" value="true"/>		
 								<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersonsByNameHavingTeacherOrIsResearcher"/>
 								<fr:property name="args" value="size=50"/>

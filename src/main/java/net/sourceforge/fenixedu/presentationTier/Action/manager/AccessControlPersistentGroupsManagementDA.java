@@ -28,7 +28,7 @@ public class AccessControlPersistentGroupsManagementDA extends FenixDispatchActi
     public ActionForward listAllGroups(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        request.setAttribute("persistentGroups", rootDomainObject.getPersistentGroupMembers());
+        request.setAttribute("persistentGroups", rootDomainObject.getPersistentGroupMembersSet());
         return mapping.findForward("seeAllPersistentGroups");
     }
 

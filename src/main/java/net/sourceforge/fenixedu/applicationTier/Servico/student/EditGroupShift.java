@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
@@ -132,7 +132,7 @@ public class EditGroupShift {
         final Collection<Recipient> recipients =
                 Collections.singletonList(new Recipient(groupName, new FixedSetGroup(recievers)));
 
-        SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+        SystemSender systemSender = Bennu.getInstance().getSystemSender();
         new Message(systemSender, systemSender.getConcreteReplyTos(), recipients,
                 messages.getMessage("message.subject.grouping.change"), message, "");
     }

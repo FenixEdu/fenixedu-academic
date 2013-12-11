@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
@@ -68,7 +68,7 @@ public class ReceiptDocument extends FenixReport {
     @Override
     protected void fillReport() {
 
-        addParameter("ownerUnitPhone", RootDomainObject.getInstance().getInstitutionUnit().getDefaultPhoneNumber());
+        addParameter("ownerUnitPhone", Bennu.getInstance().getInstitutionUnit().getDefaultPhoneNumber());
         addParameter("documentIdType", this.receipt.getPerson().getIdDocumentType().getLocalizedName());
         addParameter("documentIdNumber", this.receipt.getPerson().getDocumentIdNumber());
         addParameter("name", this.receipt.getPerson().getName());

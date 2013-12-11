@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -19,7 +19,7 @@ public class WeeklyOcupation extends WeeklyOcupation_Base {
 
     public WeeklyOcupation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public WeeklyOcupation(Teacher teacher, InfoWeeklyOcupation infoWeeklyOcupation) {
@@ -70,7 +70,7 @@ public class WeeklyOcupation extends WeeklyOcupation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class DomainOperationLog extends DomainOperationLog_Base {
 
     protected static final String SEPARATOR = " - ";
@@ -24,7 +26,7 @@ public class DomainOperationLog extends DomainOperationLog_Base {
 
     public DomainOperationLog() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         this.setPerson(AccessControl.getPerson());
         this.setWhenDateTime(new DateTime());
     }
@@ -46,7 +48,7 @@ public class DomainOperationLog extends DomainOperationLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

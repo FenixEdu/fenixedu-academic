@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -19,7 +19,7 @@ public class PublicationsNumber extends PublicationsNumber_Base {
 
     public PublicationsNumber() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public PublicationsNumber(Teacher teacher, InfoPublicationsNumber infoPublicationsNumber) {
@@ -71,7 +71,7 @@ public class PublicationsNumber extends PublicationsNumber_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

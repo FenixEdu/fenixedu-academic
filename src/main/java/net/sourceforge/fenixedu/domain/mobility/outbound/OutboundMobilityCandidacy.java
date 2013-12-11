@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.mobility.outbound;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -14,7 +14,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
 
     public OutboundMobilityCandidacy(final OutboundMobilityCandidacyContest outboundMobilityCandidacyContest,
             final OutboundMobilityCandidacySubmission outboundMobilityCandidacySubmission) {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setOutboundMobilityCandidacyContest(outboundMobilityCandidacyContest);
         setOutboundMobilityCandidacySubmission(outboundMobilityCandidacySubmission);
         setPreferenceOrder(outboundMobilityCandidacySubmission.getOutboundMobilityCandidacySet().size());
@@ -124,7 +124,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

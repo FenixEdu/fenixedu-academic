@@ -18,7 +18,7 @@ public class SupportRequestBean implements Serializable {
     private SupportRequestPriority requestPriority;
     private ErrorLog errorLog;
 
-    public SupportRequestBean() {
+    private SupportRequestBean() {
     }
 
     public static SupportRequestBean generateExceptionBean(final Person person) {

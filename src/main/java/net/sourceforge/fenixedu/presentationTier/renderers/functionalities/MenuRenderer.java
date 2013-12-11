@@ -18,6 +18,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlList;
 import pt.ist.fenixWebFramework.renderers.components.HtmlListItem;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -40,9 +41,9 @@ public class MenuRenderer extends OutputRenderer {
 
     private String moduleStyle;
 
-    private Map<Integer, String> levelClasses;
+    private final Map<Integer, String> levelClasses;
 
-    private Map<Integer, String> levelStyle;
+    private final Map<Integer, String> levelStyle;
 
     public MenuRenderer() {
         super();
@@ -231,8 +232,7 @@ public class MenuRenderer extends OutputRenderer {
         String path = entry.getPath();
         if (path != null && canMakeLink && entry.isAvailable()) {
             final Content content = entry.getReferingContent();
-            final String linkPrefix =
-                    content.isPublic() ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
+            final String linkPrefix = GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX;
             HtmlLink link = new HtmlLinkWithPreprendedComment(linkPrefix);
 
             link.setContextRelative(false);

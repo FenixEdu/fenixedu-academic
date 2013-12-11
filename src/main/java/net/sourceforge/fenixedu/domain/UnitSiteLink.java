@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -66,7 +67,7 @@ public class UnitSiteLink extends UnitSiteLink_Base {
     public UnitSiteLink() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Override
@@ -90,7 +91,7 @@ public class UnitSiteLink extends UnitSiteLink_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

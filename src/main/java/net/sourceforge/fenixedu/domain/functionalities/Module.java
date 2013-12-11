@@ -5,12 +5,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -179,7 +179,7 @@ public class Module extends Module_Base implements IFunctionality {
     }
 
     public static Module getRootModule() {
-        return RootDomainObject.getInstance().getRootModule();
+        return Bennu.getInstance().getRootModule();
     }
 
     public Module findModule(UUID uuid) {
@@ -217,14 +217,10 @@ public class Module extends Module_Base implements IFunctionality {
     public void addChild(Content content) {
         createChildNode(content);
     }
+
     @Deprecated
     public boolean hasVisible() {
         return getVisible() != null;
-    }
-
-    @Deprecated
-    public boolean hasModuleRootDomainObject() {
-        return getModuleRootDomainObject() != null;
     }
 
     @Deprecated

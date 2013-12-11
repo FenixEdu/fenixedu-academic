@@ -10,6 +10,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/isAlive")
 public class CheckIsAliveAction extends FenixAction {
 
     @Override
@@ -33,7 +36,7 @@ public class CheckIsAliveAction extends FenixAction {
             System.out.println("Thread: " + thread.hashCode() + " has woken up.");
         }
 
-        return mapping.findForward("Success");
+        return new ActionForward("/ok.jsp");
     }
 
 }

@@ -5,10 +5,10 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <bean:define id="OR_CONDITION" value="false"/>
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
 	<bean:define id="OR_CONDITION" value="true"/>
 </logic:present>
-<logic:present role="RESOURCE_ALLOCATION_MANAGER">
+<logic:present role="role(RESOURCE_ALLOCATION_MANAGER)">
    <bean:define id="OR_CONDITION" value="true"/>
 </logic:present>
 

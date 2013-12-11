@@ -4,9 +4,9 @@
 
 package net.sourceforge.fenixedu.injectionCode;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.DomainObject;
 
 /**
@@ -18,17 +18,9 @@ import pt.ist.fenixframework.DomainObject;
  */
 public class AccessControl {
 
-    static public IUserView getUserView() {
-        return UserView.getUser();
-    }
-
     static public Person getPerson() {
-        final IUserView userView = getUserView();
+        final User userView = Authenticate.getUser();
         return userView == null ? null : userView.getPerson();
-    }
-
-    static public boolean hasPerson() {
-        return getPerson() != null;
     }
 
     public static <T extends DomainObject> void check(T c, AccessControlPredicate<T> predicate) {

@@ -9,7 +9,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmailBean" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" %>
 
-<logic:present role="COORDINATOR">
+<logic:present role="role(COORDINATOR)">
 
 
 <%-- ### Title #### --%>

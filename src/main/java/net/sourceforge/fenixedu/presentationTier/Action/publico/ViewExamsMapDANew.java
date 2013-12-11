@@ -15,7 +15,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap;
@@ -111,7 +111,7 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
         request.removeAttribute(PresentationConstants.INFO_EXAMS_MAP);
         try {
-            final IUserView userView = getUserView(request);
+            final User userView = getUserView(request);
             final InfoExamsMap infoExamsMap =
                     ReadFilteredExamsMap.runReadFilteredExamsMap(infoExecutionDegree, curricularYears, infoExecutionPeriod);
             request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);

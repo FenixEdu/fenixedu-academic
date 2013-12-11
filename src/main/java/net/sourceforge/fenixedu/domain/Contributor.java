@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * This class only exists to allow database access in scripts. A Contributor is
@@ -35,7 +36,7 @@ public class Contributor extends Contributor_Base {
     }
 
     public static Contributor readByContributorNumber(final Integer contributorNumber) {
-        for (final Contributor contributor : RootDomainObject.getInstance().getContributors()) {
+        for (final Contributor contributor : Bennu.getInstance().getContributorsSet()) {
             if (contributor.getContributorNumber().equals(contributorNumber)) {
                 return contributor;
             }
@@ -59,7 +60,7 @@ public class Contributor extends Contributor_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

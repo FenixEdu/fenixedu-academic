@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 
 import org.apache.struts.Globals;
@@ -15,8 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.config.ExceptionConfig;
 
-import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
+import pt.ist.bennu.core.domain.User;
 
 public class LoginInvalidPasswordExceptionHandler extends FenixExceptionHandler {
 
@@ -27,7 +25,7 @@ public class LoginInvalidPasswordExceptionHandler extends FenixExceptionHandler 
         super.execute(ex, ae, mapping, formInstance, request, response);
 
         ActionMessage error = null;
-        IUserView userView = null;
+        User userView = null;
         String errorMessage = "message.invalid.password";
 
         // Figure out the error
@@ -47,8 +45,8 @@ public class LoginInvalidPasswordExceptionHandler extends FenixExceptionHandler 
         sessao = request.getSession(true);
 
         // Store the UserView into the session and return
-        UserView.setUser(userView);
-        sessao.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
+        // UserView.setUser(userView);
+        // sessao.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
 
         ActionForward forward = mapping.findForward("changePass");
         request.setAttribute(Globals.EXCEPTION_KEY, ex);

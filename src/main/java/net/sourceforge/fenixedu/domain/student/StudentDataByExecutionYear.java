@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.student;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -23,7 +23,7 @@ public class StudentDataByExecutionYear extends StudentDataByExecutionYear_Base 
 
     private StudentDataByExecutionYear() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setWorkingStudent(false);
     }
 
@@ -78,7 +78,7 @@ public class StudentDataByExecutionYear extends StudentDataByExecutionYear_Base 
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -9,7 +9,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventState;
@@ -22,6 +21,8 @@ import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public abstract class AnnualEvent extends AnnualEvent_Base {
 
@@ -100,7 +101,7 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
     static public Set<AccountingTransaction> readPaymentsFor(final Class<? extends AnnualEvent> eventClass,
             final YearMonthDay startDate, final YearMonthDay endDate) {
         final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
-        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
             for (final AnnualEvent each : executionYear.getAnnualEvents()) {
                 if (eventClass.equals(each.getClass()) && !each.isCancelled()) {
                     for (final AccountingTransaction transaction : each.getNonAdjustingTransactions()) {
@@ -124,6 +125,7 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
     public boolean isInsuranceEvent() {
         return false;
     }
+
     @Deprecated
     public boolean hasExecutionYear() {
         return getExecutionYear() != null;

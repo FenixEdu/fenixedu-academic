@@ -7,7 +7,7 @@
 
 <h2><bean:message key="label.edit.login.period" bundle="MANAGER_RESOURCES"/></h2>
 
-<logic:present role="MANAGER,OPERATOR">
+<logic:present role="(role(MANAGER) | role(OPERATOR))">
 
 	<logic:messagesPresent message="true">
 		<p>
@@ -19,14 +19,14 @@
 		<p>
 	</logic:messagesPresent>	
 		
-	<logic:notEmpty name="loginPeriod">
+	<logic:notEmpty name="period">
 		<p class="infoop2">
-			<b><bean:message key="label.name" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="loginPeriod" property="login.user.person.name"/><br/>
-			<b><bean:message key="label.person.username" bundle="MANAGER_RESOURCES"/></b> <bean:write name="loginPeriod" property="login.user.person.username"/>
+			<b><bean:message key="label.name" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="period" property="user.person.name"/><br/>
+			<b><bean:message key="label.person.username" bundle="MANAGER_RESOURCES"/></b> <bean:write name="period" property="user.username"/>
 		</p>
 		
-		<bean:define id="managePeriodsURL" type="java.lang.String">/loginsManagement.do?method=prepareManageLoginTimeIntervals&personID=<bean:write name="loginPeriod" property="login.user.person.externalId"/></bean:define>								
-		<fr:edit id="editLoginPeridoID" name="loginPeriod" schema="EditLoginPeriod" action="<%= managePeriodsURL %>">
+		<bean:define id="managePeriodsURL" type="java.lang.String">/loginsManagement.do?method=prepareManageLoginTimeIntervals&personID=<bean:write name="period" property="user.person.externalId"/></bean:define>								
+		<fr:edit id="editLoginPeridoID" name="period" schema="EditUserLoginPeriod" action="<%= managePeriodsURL %>">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1"/>
 			    <fr:property name="columnClasses" value=",,noborder"/>

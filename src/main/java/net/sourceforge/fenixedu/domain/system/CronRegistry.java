@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.system;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CronRegistry extends CronRegistry_Base {
@@ -12,16 +12,16 @@ public class CronRegistry extends CronRegistry_Base {
         if (getInstance() != null) {
             throw new DomainException("error.cron.registry.instance.exists");
         }
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static CronRegistry getInstance() {
-        final Set<CronRegistry> cronRegistries = RootDomainObject.getInstance().getCronRegistrySet();
+        final Set<CronRegistry> cronRegistries = Bennu.getInstance().getCronRegistrySet();
         return cronRegistries.isEmpty() ? null : cronRegistries.iterator().next();
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

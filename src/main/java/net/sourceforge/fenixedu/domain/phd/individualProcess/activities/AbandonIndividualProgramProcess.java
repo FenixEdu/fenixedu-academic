@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
@@ -14,14 +14,14 @@ import org.joda.time.DateTime;
 public class AbandonIndividualProgramProcess extends PhdIndividualProgramProcessActivity {
 
     @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+    protected void activityPreConditions(PhdIndividualProgramProcess process, User userView) {
         if (!process.isAllowedToManageProcessState(userView)) {
             throw new PreConditionNotValidException();
         }
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, User userView, Object object) {
 
         PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
         DateTime stateDate = bean.getStateDate().toDateTimeAtStartOfDay();

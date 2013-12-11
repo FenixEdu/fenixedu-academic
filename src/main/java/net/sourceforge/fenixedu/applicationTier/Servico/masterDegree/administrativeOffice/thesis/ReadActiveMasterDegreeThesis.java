@@ -11,9 +11,9 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeThesisState;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -27,7 +27,7 @@ public class ReadActiveMasterDegreeThesis {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         Collection<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
-        for (MasterDegreeThesis masterDegreeThesis : RootDomainObject.getInstance().getMasterDegreeThesiss()) {
+        for (MasterDegreeThesis masterDegreeThesis : Bennu.getInstance().getMasterDegreeThesissSet()) {
 
             if (masterDegreeThesis.getStudentCurricularPlan().getDegree() != degree) {
                 continue;

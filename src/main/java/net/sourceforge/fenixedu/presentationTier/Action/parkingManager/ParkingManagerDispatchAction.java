@@ -343,7 +343,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         }
 
         Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat("/images/Logo_IST_color.tiff"));
+        parameters.put("imageUrl", "images/Logo_IST_color.tiff");
 
         Person person = (Person) parkingParty.getParty();
         parameters.put("number", getMostSignificantNumberString(person, parkingGroup));
@@ -421,7 +421,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     }
 
     private boolean isValidGroup(String groupId) {
-        for (ParkingGroup group : rootDomainObject.getParkingGroups()) {
+        for (ParkingGroup group : rootDomainObject.getParkingGroupsSet()) {
             if (group.getExternalId().equals(groupId)) {
                 return true;
             }
@@ -430,7 +430,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     }
 
     private boolean isRepeatedCardNumber(Long cardNumber, ParkingParty parkingParty) {
-        for (ParkingParty tempParkingParty : rootDomainObject.getParkingParties()) {
+        for (ParkingParty tempParkingParty : rootDomainObject.getParkingPartiesSet()) {
             if (tempParkingParty.getCardNumber() != null && tempParkingParty.getCardNumber() != 0
                     && tempParkingParty.getCardNumber().equals(cardNumber) && tempParkingParty != parkingParty) {
                 return false;

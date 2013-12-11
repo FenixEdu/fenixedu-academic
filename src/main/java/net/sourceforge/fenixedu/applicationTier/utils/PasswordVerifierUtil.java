@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.utils;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 public class PasswordVerifierUtil {
-    private static Integer MIN_PASSWORD_LENGTH = PropertiesManager.getIntegerProperty("passSize");
+    private static Integer MIN_PASSWORD_LENGTH = FenixConfigurationManager.getConfiguration().getGeneratedPasswordSize();
 
     public static boolean isValid(String password) {
         return (has3ClassesOfCharacters(password.toCharArray()) && hasMinLength(password.toCharArray()));

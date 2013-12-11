@@ -245,8 +245,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
             } catch (DomainException e) {
                 addActionMessage("error", request, e.getKey(), e.getArgs());
-                return prepareThesisSubmission(mapping, actionForm, request, response);
-
+                return prepareUploadDissertation(mapping, actionForm, request, response);
             } finally {
                 if (temporaryFile != null) {
                     temporaryFile.delete();
@@ -291,6 +290,10 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
                 temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
                 CreateThesisAbstractFile.runCreateThesisAbstractFile(getThesis(request), temporaryFile, bean.getSimpleFileName(),
                         null, null, null);
+            } catch (DomainException e) {
+                addActionMessage("error", request, e.getKey(), e.getArgs());
+                return prepareUploadAbstract(mapping, actionForm, request, response);
+
             } finally {
                 if (temporaryFile != null) {
                     temporaryFile.delete();

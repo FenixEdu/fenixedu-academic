@@ -5,7 +5,7 @@ import java.util.List;
 
 import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
 import net.sourceforge.fenixedu.domain.contents.IDateContent;
@@ -20,7 +20,7 @@ public class ConversationThread extends ConversationThread_Base implements IDate
 
     public ConversationThread() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCreationDate(new DateTime());
     }
 

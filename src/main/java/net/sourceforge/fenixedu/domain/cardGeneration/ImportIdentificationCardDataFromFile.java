@@ -13,7 +13,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -348,7 +348,7 @@ public class ImportIdentificationCardDataFromFile {
     public static Collection<Person> findPersonByDocumentID(final String documentIDValue) {
         final Collection<Person> people = new ArrayList<Person>();
         if (!StringUtils.isEmpty(documentIDValue)) {
-            for (final IdDocument idDocument : RootDomainObject.getInstance().getIdDocumentsSet()) {
+            for (final IdDocument idDocument : Bennu.getInstance().getIdDocumentsSet()) {
                 if (StringUtils.trim(idDocument.getValue()).replace(" ", "").equalsIgnoreCase(documentIDValue)) {
                     people.add(idDocument.getPerson());
                 }
@@ -358,7 +358,7 @@ public class ImportIdentificationCardDataFromFile {
     }
 
     private void loadIndexes() {
-        for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+        for (final Party party : Bennu.getInstance().getPartysSet()) {
             if (party.isPerson()) {
                 final Person person = (Person) party;
                 try {

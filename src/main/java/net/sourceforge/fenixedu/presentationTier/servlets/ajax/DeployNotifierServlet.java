@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DeployNotifier;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @WebServlet(urlPatterns = "/ajax/DeployNotifierServlet")
@@ -56,7 +56,7 @@ public class DeployNotifierServlet extends HttpServlet {
 
     private DeployNotifier getDeployNotifier() {
         if (deployNotifier == null) {
-            deployNotifier = RootDomainObject.getInstance().getDeployNotifier();
+            deployNotifier = Bennu.getInstance().getDeployNotifier();
         }
         return deployNotifier;
     }

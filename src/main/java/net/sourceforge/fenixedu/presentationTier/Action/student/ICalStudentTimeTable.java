@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.messaging.RegistrationsBean;
-import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.UserPrivateKey;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -20,6 +20,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -67,7 +69,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
     public ActionForward generateKey(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         try {
-            AccessControl.getPerson().getUser().generateNewKey();
+            UserPrivateKey.generateNewKeyForUser(AccessControl.getPerson().getUser());
         } catch (Exception E) {
             throw new DomainException("error.impossible.to.generate.sha256.key");
         }
@@ -79,12 +81,13 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
             throws Exception {
         request.setAttribute("registrationId", registration.getExternalId());
 
-        if (AccessControl.getPerson().getUser().getPrivateKeyValidity() != null
-                && AccessControl.getPerson().getUser().getPrivateKeyValidity().isAfter(new DateTime())) {
-            if (AccessControl.getPerson().getUser().getPrivateKeyValidity() != null) {
-                request.setAttribute("expirationDate",
-                        AccessControl.getPerson().getUser().getPrivateKeyValidity().toString("dd/MM/yyyy HH:mm"));
-                request.setAttribute("user", AccessControl.getPerson().getUser().getUserUId());
+        UserPrivateKey privateKey = Authenticate.getUser().getPrivateKey();
+
+        if (privateKey != null && privateKey.getPrivateKeyValidity() != null
+                && privateKey.getPrivateKeyValidity().isAfter(new DateTime())) {
+            if (privateKey.getPrivateKeyValidity() != null) {
+                request.setAttribute("expirationDate", privateKey.getPrivateKeyValidity().toString("dd/MM/yyyy HH:mm"));
+                request.setAttribute("user", AccessControl.getPerson().getUser().getUsername());
                 request.setAttribute("classURL", getUrl("syncClasses", registration, request));
                 request.setAttribute("examsURL", getUrl("syncExams", registration, request));
             }
@@ -100,13 +103,14 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
 
         Cipher cipher = Cipher.getInstance("AES");
 
-        SecretKeySpec skeySpec = new SecretKeySpec(user.getPrivateKey().getBytes(), "AES");
+        SecretKeySpec skeySpec = new SecretKeySpec(user.getPrivateKey().getPrivateKey().getBytes(), "AES");
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
 
         byte[] encrypted =
                 cipher.doFinal(("This is for " + to + " calendar ##" + "1.6180339##Sistema Fenix##"
-                        + user.getPrivateKeyCreation().toString() + "##" + reg.getExternalId() + "##"
-                        + user.getPrivateKeyValidity().toString() + "##" + "## This is for " + to + " calendar").getBytes());
+                        + user.getPrivateKey().getPrivateKeyCreation().toString() + "##" + reg.getExternalId() + "##"
+                        + user.getPrivateKey().getPrivateKeyValidity().toString() + "##" + "## This is for " + to + " calendar")
+                        .getBytes());
 
         return DigestUtils.shaHex(encrypted);
     }
@@ -120,14 +124,13 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
                     scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort)
                             + request.getContextPath();
             url +=
-                    "/external/iCalendarSync.do?method=" + to + "&user=" + AccessControl.getPerson().getUser().getUserUId() + ""
+                    "/external/iCalendarSync.do?method=" + to + "&user=" + AccessControl.getPerson().getUser().getUsername() + ""
                             + "&registrationID=" + registration.getExternalId() + "&payload="
                             + calculatePayload(to, registration, AccessControl.getPerson().getUser());
             return url;
         } catch (Exception e) {
             return null;
         }
-
     }
 
 }

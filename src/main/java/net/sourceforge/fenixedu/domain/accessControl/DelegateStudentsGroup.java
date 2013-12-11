@@ -97,7 +97,7 @@ public class DelegateStudentsGroup extends LeafGroup {
 
     @Override
     public boolean isMember(Person person) {
-        if (person.hasStudent()) {
+        if (person != null && person.hasStudent()) {
             if (getElements().contains(person.getStudent())) {
                 return true;
             }

@@ -5,12 +5,12 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 public abstract class StudentInquiryTemplate extends StudentInquiryTemplate_Base {
 
     public static StudentInquiryTemplate getCurrentTemplate() {
-        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = Bennu.getInstance().getInquiryTemplatesSet();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof StudentInquiryTemplate && inquiryTemplate.isOpen()) {
                 return (StudentInquiryTemplate) inquiryTemplate;
@@ -21,7 +21,7 @@ public abstract class StudentInquiryTemplate extends StudentInquiryTemplate_Base
 
     public static List<StudentInquiryTemplate> getInquiryTemplatesByExecutionPeriod(ExecutionSemester executioPeriod) {
         List<StudentInquiryTemplate> studentInquiryTemplates = new ArrayList<StudentInquiryTemplate>();
-        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = Bennu.getInstance().getInquiryTemplatesSet();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof StudentInquiryTemplate && inquiryTemplate.getExecutionPeriod() == executioPeriod) {
                 studentInquiryTemplates.add((StudentInquiryTemplate) inquiryTemplate);

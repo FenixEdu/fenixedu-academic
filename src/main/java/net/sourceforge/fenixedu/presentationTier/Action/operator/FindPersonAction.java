@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.operator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
@@ -22,7 +22,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -39,7 +39,7 @@ public class FindPersonAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm findPersonForm = (DynaActionForm) actionForm;
         String username = null;

@@ -15,7 +15,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetAllCasesStudy;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetAllEquivalencies;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetAllModalities;
@@ -103,7 +103,7 @@ public class ShowCandidacies extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         //
         List candidacies = new LinkedList();
         ActionForward destiny = null;
@@ -136,7 +136,7 @@ public class ShowCandidacies extends FenixAction {
         return destiny;
     }
 
-    private void setAvaliableOptionsForInputQueries(HttpServletRequest request, IUserView userView) throws FenixActionException {
+    private void setAvaliableOptionsForInputQueries(HttpServletRequest request, User userView) throws FenixActionException {
         List seminaries = null;
         List cases = null;
         List modalities = null;

@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.ConclusionYearDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -45,6 +44,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 import org.json.JSONArray;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -67,11 +67,11 @@ public class AlumniInformationAction extends FenixDispatchAction {
 
         Map<Long, Integer> registrationsByDay = new TreeMap<Long, Integer>();
 
-        int totalAlumniCount = RootDomainObject.getInstance().getAlumnisSet().size();
+        int totalAlumniCount = Bennu.getInstance().getAlumnisSet().size();
 
         int newAlumniCount = 0;
         int registeredAlumniCount = 0;
-        for (Alumni alumni : RootDomainObject.getInstance().getAlumnis()) {
+        for (Alumni alumni : Bennu.getInstance().getAlumnisSet()) {
             if (alumni.hasStartedPublicRegistry()) {
                 newAlumniCount++;
             }
@@ -88,10 +88,10 @@ public class AlumniInformationAction extends FenixDispatchAction {
             }
         }
 
-        int jobCount = RootDomainObject.getInstance().getJobsSet().size();
+        int jobCount = Bennu.getInstance().getJobsSet().size();
 
         int formationCount = 0;
-        for (Qualification q : RootDomainObject.getInstance().getQualifications()) {
+        for (Qualification q : Bennu.getInstance().getQualificationsSet()) {
             if (q.getClass().equals(Formation.class)) {
                 formationCount++;
             }

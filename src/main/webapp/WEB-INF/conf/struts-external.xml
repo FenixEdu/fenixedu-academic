@@ -13,7 +13,7 @@
       <!-- ========== Action Mapping Definitions ============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping"><!-- by gedl September the 11th, 2003 --></action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
       <message-resources null="false" key="CMS_RESOURCES" parameter="resources.CmsResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="MESSAGING_RESOURCES" parameter="resources.MessagingResources"></message-resources>

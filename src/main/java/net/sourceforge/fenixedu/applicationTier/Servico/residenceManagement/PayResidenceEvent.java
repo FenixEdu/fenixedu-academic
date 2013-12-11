@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement;
 
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
-import net.sourceforge.fenixedu.domain.User;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 

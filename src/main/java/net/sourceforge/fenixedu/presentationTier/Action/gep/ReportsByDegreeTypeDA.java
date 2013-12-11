@@ -151,7 +151,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
         Predicate predicate = new FindSelectedGepReports(executionYear, degreeType, reportClass);
 
         List<GepReportFile> selectedJobs =
-                (List<GepReportFile>) org.apache.commons.collections.CollectionUtils.select(rootDomainObject.getQueueJob(),
+                (List<GepReportFile>) org.apache.commons.collections.CollectionUtils.select(rootDomainObject.getQueueJobSet(),
                         predicate);
 
         return getValidCounterForReports(selectedJobs.size());
@@ -710,7 +710,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
         Predicate predicate = new FindSelectedGepReports(executionYear, degreeType, reportClass);
 
         List<GepReportFile> selectedJobs =
-                (List<GepReportFile>) org.apache.commons.collections.CollectionUtils.select(rootDomainObject.getQueueJob(),
+                (List<GepReportFile>) org.apache.commons.collections.CollectionUtils.select(rootDomainObject.getQueueJobSet(),
                         predicate);
         String reportName = "";
         if (selectedJobs.size() > 0) {

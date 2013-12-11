@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -16,6 +15,8 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * @author David Santos in Mar 1, 2004
@@ -34,7 +35,7 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends Filtr
         return roles;
     }
 
-    protected String hasPrevilege(IUserView id, Object registration, DegreeType degreeType) {
+    protected String hasPrevilege(User id, Object registration, DegreeType degreeType) {
         try {
             if (!verifyDegreeTypeIsMasterDegree(degreeType)) {
                 return "error.degree.type";
@@ -77,12 +78,12 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends Filtr
     }
 
     public void execute(Object registration, DegreeType degreeType) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
         String messageException = hasPrevilege(id, registration, degreeType);
 
-        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && messageException != null) || (id == null)
-                || (id.getRoleTypes() == null)) {
+        if ((id != null && id.getPerson().getPersonRolesSet() != null && !containsRoleType(id.getPerson().getPersonRolesSet()))
+                || (id != null && id.getPerson().getPersonRolesSet() != null && messageException != null) || (id == null)
+                || (id.getPerson().getPersonRolesSet() == null)) {
             throw new NotAuthorizedException(messageException);
         }
     }

@@ -104,7 +104,7 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
 
     public String enrolStudent() {
         try {
-            EnrolStudentInWrittenEvaluation.runEnrolStudentInWrittenEvaluation(getUserView().getUtilizador(), getEvaluationID());
+            EnrolStudentInWrittenEvaluation.runEnrolStudentInWrittenEvaluation(getUserView().getUsername(), getEvaluationID());
             clearAttributes();
         } catch (DomainException e) {
             setErrorMessage(e.getMessage());
@@ -118,7 +118,7 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
 
     public String unenrolStudent() {
         try {
-            UnEnrollStudentInWrittenEvaluation.runUnEnrollStudentInWrittenEvaluation(getUserView().getUtilizador(),
+            UnEnrollStudentInWrittenEvaluation.runUnEnrollStudentInWrittenEvaluation(getUserView().getUsername(),
                     getEvaluationID());
             clearAttributes();
         } catch (DomainException e) {

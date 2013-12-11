@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 /**
  * @author T�nia Pous�o
  * 
@@ -12,7 +14,7 @@ public class CostCenter extends CostCenter_Base {
 
     public CostCenter() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CostCenter(String code, String departament, String section1, String section2) {
@@ -28,7 +30,7 @@ public class CostCenter extends CostCenter_Base {
     // -------------------------------------------------------------
 
     public static CostCenter readByCode(final String code) {
-        for (final CostCenter costCenter : RootDomainObject.getInstance().getCostCenters()) {
+        for (final CostCenter costCenter : Bennu.getInstance().getCostCentersSet()) {
             if (costCenter.getCode().equals(code)) {
                 return costCenter;
             }
@@ -67,7 +69,7 @@ public class CostCenter extends CostCenter_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

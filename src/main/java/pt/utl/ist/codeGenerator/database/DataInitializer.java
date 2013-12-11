@@ -6,13 +6,9 @@ import net.sourceforge.fenixedu.domain.District;
 import net.sourceforge.fenixedu.domain.DistrictSubdivision;
 import net.sourceforge.fenixedu.domain.EmptyDegree;
 import net.sourceforge.fenixedu.domain.EmptyDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Login;
-import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
@@ -23,6 +19,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -39,9 +37,6 @@ public class DataInitializer {
 
     @Atomic
     private static void initialize() {
-        RootDomainObject.ensureRootDomainObject();
-        RootDomainObject.initialize();
-
         createRoles();
         createCurricularYearsAndSemesters();
         createEmptyDegreeAndEmptyDegreeCurricularPlan();
@@ -169,12 +164,11 @@ public class DataInitializer {
         person.setName("Fenix System Administrator");
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
-        person.setIsPassInKerberos(Boolean.FALSE);
         final User user = person.getUser();
-        final Login login = user.readUserLoginIdentification();
-        login.setActive(Boolean.TRUE);
-        LoginAlias.createNewCustomLoginAlias(login, "admin");
-        login.openLoginIfNecessary(RoleType.MANAGER);
+        // final Login login = Login.readUserLoginIdentification(user);
+        // login.setActive(Boolean.TRUE);
+        // LoginAlias.createNewCustomLoginAlias(login, "admin");
+        // login.openLoginIfNecessary(RoleType.MANAGER);
     }
 
     private static void createPartyTypeEnums() {
@@ -191,7 +185,7 @@ public class DataInitializer {
     }
 
     private static void createOrganizationalStructure() {
-        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+        final Bennu rootDomainObject = Bennu.getInstance();
         final PlanetUnit planetUnit =
                 PlanetUnit.createNewPlanetUnit(new MultiLanguageString(Language.getDefaultLanguage(), "Earth"), null, null, "E",
                         new YearMonthDay(), null, null, null, null, false, null);
@@ -200,7 +194,7 @@ public class DataInitializer {
         createCountryUnits(rootDomainObject, planetUnit);
     }
 
-    private static void createCountryUnits(final RootDomainObject rootDomainObject, final PlanetUnit planetUnit) {
+    private static void createCountryUnits(final Bennu rootDomainObject, final PlanetUnit planetUnit) {
         for (final Country country : Country.readDistinctCountries()) {
             CountryUnit.createNewCountryUnit(new MultiLanguageString(Language.getDefaultLanguage(), country.getName()), null,
                     null, country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);

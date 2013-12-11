@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupDifference;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
@@ -28,7 +28,7 @@ public class TSDProcess extends TSDProcess_Base {
 
     protected TSDProcess() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public TSDProcess(Department department, List<ExecutionSemester> executionPeriodList, Person creator, String name,
@@ -422,7 +422,7 @@ public class TSDProcess extends TSDProcess_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

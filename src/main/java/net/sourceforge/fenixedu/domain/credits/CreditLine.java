@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.domain.credits;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 
 /**
@@ -14,13 +14,13 @@ public abstract class CreditLine extends CreditLine_Base implements
 
     public CreditLine() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected abstract CreditsEvent getCreditEventGenerated();
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.ReadMasterDegrees;
@@ -38,7 +38,7 @@ public class ChooseMasterDegreeDispatchAction extends FenixDispatchAction {
 
         // Get the Degree List
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         List degreeList = null;
         try {
 

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.classProperties;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyName;
 import net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyValue;
 
@@ -12,7 +12,7 @@ public abstract class GeneralClassProperty extends GeneralClassProperty_Base {
 
     public GeneralClassProperty() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public GeneralClassPropertyName getName() {
@@ -37,7 +37,7 @@ public abstract class GeneralClassProperty extends GeneralClassProperty_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

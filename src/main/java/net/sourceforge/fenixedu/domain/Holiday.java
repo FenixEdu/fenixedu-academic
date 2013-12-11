@@ -11,6 +11,8 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class Holiday extends Holiday_Base {
 
     public static abstract class HolidayFactory implements Serializable, FactoryExecutor {
@@ -64,7 +66,7 @@ public class Holiday extends Holiday_Base {
 
     public Holiday() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Holiday(final HolidayFactoryCreator creator) {
@@ -108,7 +110,7 @@ public class Holiday extends Holiday_Base {
     }
 
     public static boolean isHoliday(LocalDate date, Campus campus) {
-        for (Holiday holiday : RootDomainObject.getInstance().getHolidays()) {
+        for (Holiday holiday : Bennu.getInstance().getHolidaysSet()) {
             if ((holiday.getLocality() == null || (campus != null && holiday.getLocality() == campus.getSpaceInformation()
                     .getLocality())) && holiday.getDate().isMatch(date)) {
                 return true;
@@ -116,8 +118,9 @@ public class Holiday extends Holiday_Base {
         }
         return false;
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 
