@@ -1,20 +1,21 @@
+<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
-<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<bean:define id="institutionUrl" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %></bean:define>
 <bean:define id="fenixUrl" type="java.lang.String"><bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <bean:define id="searchTitle" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="search.title"/></bean:define>
 
 <div id="logoist">
 	<a href="<%= institutionUrl %>">
-		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="university.logo.public" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
+		<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>" src="<bean:message key="university.logo.public" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 	</a>
 </div>
 
 <% if (!FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 <div id="header_links">
-	<a href="<%= fenixUrl %>/loginPage.jsp">Login .IST<!--bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/--></a>
+	<a href="<%= fenixUrl %>/loginPage.jsp">Login <%= Instalation.getInstance().getInstalationName() %><!--bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/--></a>
 	| <a href="<%= institutionUrl %>/pt/sobre-IST/contacto">Contactos</a>
 	| <a href="<%= institutionUrl %>/html/mapadosite/">Mapa do Site</a>
 </div>
@@ -33,7 +34,7 @@
 		<input alt="input.sa" type="submit" id="submit" name="sa" value="Google" />
 	</form>
 	 --%>
-	<form action="http://www.ist.utl.pt/search/">
+	<form action="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>search/">
 		<input type="hidden" name="cx" value="007266409324096302065:xkagxvojzme" />
 		<input type="hidden" name="cof" value="FORID:10" />
 		<input type="hidden" name="ie" value="UTF-8" />

@@ -1,9 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-
-<% final String url = FenixConfigurationManager.getConfiguration().getInstitutionUrl(); %>
-
+<% final String url = net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL(); %>
 <div id="latnav">
         <ul>
         	<li><a href="<%= url %>/html/instituto/">Instituto</a></li>

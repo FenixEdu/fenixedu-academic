@@ -9,7 +9,7 @@
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<bean:message key="label.phds" bundle="PHD_RESOURCES"/>
 </div>
 

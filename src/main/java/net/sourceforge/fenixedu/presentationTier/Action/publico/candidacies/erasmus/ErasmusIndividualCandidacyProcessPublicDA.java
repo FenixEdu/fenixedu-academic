@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.era
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
@@ -114,12 +116,14 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     @Override
     protected String getCandidacyInformationLinkDefaultLanguage() {
-        return "link.candidacy.information.default.erasmus";
+        String message = getStringFromDefaultBundle("link.candidacy.information.default.erasmus");
+        return MessageFormat.format(message, Instalation.getInstance().getNmciUrl());
     }
 
     @Override
     protected String getCandidacyInformationLinkEnglish() {
-        return "link.candidacy.information.english.erasmus";
+        String message = getStringFromDefaultBundle("link.candidacy.information.english.erasmus");
+        return MessageFormat.format(message, Instalation.getInstance().getNmciUrl());
     }
 
     @Override
@@ -1181,8 +1185,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         sb.append("\n");
 
         // Email construction and sending
-        String errorReportAddress =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.address");
+        String errorReportAddress = Instalation.getInstance().getInstituitionalEmailAddress("nmci");
         String errorReportSubject =
                 BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.subject",
                         Unit.getInstitutionAcronym());

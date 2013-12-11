@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <html:html xhtml="true">
 	<head>
 		<title>
-			<bean:message key="application.name" bundle="GLOBAL_RESOURCES" /> - <bean:message key="title.login" bundle="GLOBAL_RESOURCES" />
+			<%=Instalation.getInstance().getInstalationName() %> - <bean:message key="title.login" bundle="GLOBAL_RESOURCES" />
 		</title>
 
 		<link href="<%= request.getContextPath() %>/CSS/logdotist.css" rel="stylesheet" type="text/css" />
@@ -14,12 +15,12 @@
 	<body>
 		<div id="container">
 			<div id="dotist_id">
-				<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
+				<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>"
 						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
 			</div>
 			<div id="txt">
 				<h1>Login</h1>
-				<p><bean:message key="message.login.page" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="GLOBAL_RESOURCES" /></p>
+				<p><bean:message key="message.login.page" arg0="<%= Instalation.getInstance().getInstituitionURL() %>" arg1="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="GLOBAL_RESOURCES" /></p>
 				<div id="alert">
 					<p><span class="error"><!-- Error messages go here --><html:errors property="invalidAuthentication" /></span></p>
 					<p><span class="error"><!-- Error messages go here --><html:errors property="errors.noAuthorization" /></span></p>

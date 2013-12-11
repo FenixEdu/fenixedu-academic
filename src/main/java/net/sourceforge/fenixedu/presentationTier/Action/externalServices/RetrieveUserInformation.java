@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsernameOrIstUsername;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
@@ -51,7 +52,7 @@ public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
                     responseCode = SUCCESS_CODE;
 
                     final String uniqueUsername = person.getIstUsername();
-                    final String email = String.format("%s@ist.utl.pt", uniqueUsername);
+                    final String email = Instalation.getInstance().getInstituitionalEmailAddress(uniqueUsername);
                     responseMessage =
                             "email=" + URLEncoder.encode(email, ENCODING) + "&" + "uniqueUsername="
                                     + URLEncoder.encode(uniqueUsername, ENCODING);

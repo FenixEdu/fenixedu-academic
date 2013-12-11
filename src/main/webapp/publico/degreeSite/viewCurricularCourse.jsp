@@ -12,11 +12,11 @@
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="publicDegreeInfoBundle"/>
 
-	<h:outputLink value="#{globalBundle['institution.url']}" >
+	<h:outputLink value="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>" >
 		<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
-	<h:outputLink value="#{globalBundle['institution.url']}#{globalBundle['link.institution']}" >
+	<h:outputLink value="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>#{globalBundle['link.institution']}" >
 		<h:outputText value="#{publicDegreeInfoBundle['public.degree.information.label.education']}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;

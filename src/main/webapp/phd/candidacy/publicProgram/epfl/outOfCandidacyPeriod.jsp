@@ -7,8 +7,8 @@
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
-	<a href="http://www.ist.utl.pt/en/about-IST/global-cooperation/IST-EPFL/">IST-EPFL</a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>en/about-IST/global-cooperation/IST-EPFL/">IST-EPFL</a> &gt;
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
