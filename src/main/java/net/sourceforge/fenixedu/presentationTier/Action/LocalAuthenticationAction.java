@@ -64,9 +64,8 @@ public class LocalAuthenticationAction extends BaseAuthenticationAction {
 
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             throw AuthorizationException.authenticationFailed();
-        } else {
-            return Authenticate.login(request.getSession(true), username, password, true).getUser();
         }
+        return Authenticate.login(request.getSession(true), username, password).getUser();
     }
 
 }
