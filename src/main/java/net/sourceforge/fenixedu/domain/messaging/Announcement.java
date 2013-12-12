@@ -307,20 +307,6 @@ public class Announcement extends Announcement_Base {
         }
     }
 
-    private static final String CAMPUS_ALAMEDA = "ALAMEDA";
-    private static final String CAMPUS_TAGUSPARK = "TAGUSPARK";
-    private static final String CAMPUS_EXTERNAL = "EXTERNAL";
-
-    public String getCampusCode() {
-        if (this.getCampus() != null && this.getCampus().isCampusAlameda()) {
-            return CAMPUS_ALAMEDA;
-        } else if (this.getCampus() != null && this.getCampus().isCampusTaguspark()) {
-            return CAMPUS_TAGUSPARK;
-        }
-
-        return CAMPUS_EXTERNAL;
-    }
-
     @Atomic
     public static Announcement createAnnouncement(AnnouncementBoard board, String authorName, String authorEmail,
             MultiLanguageString body, Campus campus, List<AnnouncementCategory> categories, String place,

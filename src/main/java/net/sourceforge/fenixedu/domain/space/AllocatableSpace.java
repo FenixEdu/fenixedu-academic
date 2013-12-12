@@ -208,19 +208,6 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
         return null;
     }
 
-    public static List<Room> getAllRoomsForAlameda() {
-        List<Room> result = new ArrayList<Room>();
-        for (Resource space : RootDomainObject.getInstance().getResources()) {
-            if (space.isAllocatableSpace() && space.isRoom()) {
-                AllocatableSpace allocSpace = ((AllocatableSpace) space);
-                if (allocSpace.isActive() && allocSpace.getSpaceBuilding().getSpaceCampus().isCampusAlameda()) {
-                    result.add((Room) allocSpace);
-                }
-            }
-        }
-        return result;
-    }
-
     public static List<AllocatableSpace> getAllActiveAllocatableSpacesExceptLaboratoriesForEducation() {
         return findAllocatableSpacesByPredicates(ACTIVE_FOR_EDUCATION_EXCEPT_LABS_PREDICATE);
     }
@@ -258,12 +245,13 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 
     }
 
-    public static final AllocatableSpaceTransformer<AllocatableSpace> NO_TRANSFORMER = new AllocatableSpaceTransformer<AllocatableSpace>() {
-        @Override
-        public AllocatableSpace transform(final AllocatableSpace space) {
-            return space;
-        }
-    };
+    public static final AllocatableSpaceTransformer<AllocatableSpace> NO_TRANSFORMER =
+            new AllocatableSpaceTransformer<AllocatableSpace>() {
+                @Override
+                public AllocatableSpace transform(final AllocatableSpace space) {
+                    return space;
+                }
+            };
 
     public static <T> List<T> findAllocatableSpacesByPredicates(final AllocatableSpaceTransformer<T> transformer,
             final AllocatableSpacePredicate... predicates) {

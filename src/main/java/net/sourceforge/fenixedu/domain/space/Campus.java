@@ -15,16 +15,16 @@ import org.joda.time.YearMonthDay;
 
 public class Campus extends Campus_Base {
 
-    private static final String ALAMEDA_NAME = "Alameda";
-    private static final String TAGUSPARK_NAME = "Taguspark";
-
-    private static final String ALAMEDA_UNIVERSITY_CODE = "0807";
-    private static final String TAGUSPARK_UNIVERSITY_CODE = "0808";
-    public static final String DEFAULT_UNIVERSITY_CODE = ALAMEDA_UNIVERSITY_CODE;
-
     public Campus(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
         super();
         new CampusInformation(this, name, begin, end, blueprintNumber);
+    }
+
+    public static Campus getDefaultCampus() {
+        if (RootDomainObject.getInstance().getDefaultCampus() == null) {
+            return Space.getAllCampus().iterator().next();
+        }
+        return RootDomainObject.getInstance().getDefaultCampus();
     }
 
     @Override
@@ -91,28 +91,6 @@ public class Campus extends Campus_Base {
     public Integer getNormalCapacity() {
         // Necessary for Renderers
         return null;
-    }
-
-    static public String getUniversityCode(final Campus campus) {
-        if (campus == null) {
-            return DEFAULT_UNIVERSITY_CODE;
-        }
-
-        if (campus.getName().equalsIgnoreCase(ALAMEDA_NAME)) {
-            return ALAMEDA_UNIVERSITY_CODE;
-        } else if (campus.getName().equalsIgnoreCase(TAGUSPARK_NAME)) {
-            return TAGUSPARK_UNIVERSITY_CODE;
-        } else {
-            return DEFAULT_UNIVERSITY_CODE;
-        }
-    }
-
-    public Boolean isCampusAlameda() {
-        return this.getName().equals(ALAMEDA_NAME);
-    }
-
-    public Boolean isCampusTaguspark() {
-        return this.getName().equals(TAGUSPARK_NAME);
     }
 
     public static abstract class CampusFactory implements Serializable, FactoryExecutor {

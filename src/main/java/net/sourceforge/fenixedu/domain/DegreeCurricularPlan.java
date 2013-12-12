@@ -1575,7 +1575,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         if (hasAnyExecutionDegrees()) {
             return getMostRecentExecutionDegree().getCampus().getSpaceCampus();
         }
-        return Campus.readActiveCampusByName("Alameda");
+        return Campus.getDefaultCampus();
     }
 
     @Override
