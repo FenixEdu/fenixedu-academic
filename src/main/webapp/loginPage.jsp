@@ -13,7 +13,7 @@
 	<link href="<%=request.getContextPath()%>/CSS/login.css" rel="stylesheet" type="text/css" />
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
+</head> 
 
 <body>
 	<div id="container">
