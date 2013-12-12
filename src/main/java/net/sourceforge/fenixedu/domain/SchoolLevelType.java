@@ -82,7 +82,7 @@ public enum SchoolLevelType implements IPresentableEnum {
         }
     },
 
-    DEGREE(true, true, true) {
+    DEGREE(true, true, false) {
         @Override
         public boolean isHigherEducation() {
             return true;
@@ -94,7 +94,7 @@ public enum SchoolLevelType implements IPresentableEnum {
         }
     },
 
-    DEGREE_PRE_BOLOGNA(true, true, true) {
+    DEGREE_PRE_BOLOGNA(true, true, false) {
         @Override
         public boolean isHigherEducation() {
             return true;
@@ -130,7 +130,7 @@ public enum SchoolLevelType implements IPresentableEnum {
         }
     },
 
-    MASTER_DEGREE_INTEGRATED(true, false, true) {
+    MASTER_DEGREE_INTEGRATED(true, false, false) {
         @Override
         public boolean isHigherEducation() {
             return true;
@@ -142,7 +142,7 @@ public enum SchoolLevelType implements IPresentableEnum {
         }
     },
 
-    MASTER_DEGREE_PRE_BOLOGNA(true, false, true) {
+    MASTER_DEGREE_PRE_BOLOGNA(true, false, false) {
         @Override
         public boolean isHigherEducation() {
             return true;
@@ -171,7 +171,7 @@ public enum SchoolLevelType implements IPresentableEnum {
         }
     },
 
-    DOCTORATE_DEGREE_PRE_BOLOGNA(true, false, true) {
+    DOCTORATE_DEGREE_PRE_BOLOGNA(true, false, false) {
         @Override
         public boolean isPhDDegree() {
             return true;
