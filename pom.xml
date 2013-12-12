@@ -150,9 +150,9 @@
 			<version>5.4</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4.2</version>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>bibtex</groupId>
@@ -448,11 +448,11 @@
 			<artifactId>bennu-core</artifactId>
 			<version>2.0.0-M2</version>
 		</dependency>
-        <dependency>
-            <groupId>pt.ist.bennu</groupId>
-            <artifactId>bennu-user-management</artifactId>
-            <version>1.0.0-M1</version>
-        </dependency>
+		<dependency>
+			<groupId>pt.ist.bennu</groupId>
+			<artifactId>bennu-user-management</artifactId>
+			<version>1.0.0-M1</version>
+		</dependency>
 		<dependency>
 			<groupId>pt.ist.bennu</groupId>
 			<artifactId>bennu-scheduler</artifactId>

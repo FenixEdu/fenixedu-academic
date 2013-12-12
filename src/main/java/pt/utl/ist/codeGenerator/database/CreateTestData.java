@@ -1096,22 +1096,11 @@ public class CreateTestData {
     }
 
     private static Person createPerson(final String namePrefix, final String usernamePrefix, final int i) {
-        final Person person = new Person();
-
-        person.setName(namePrefix + i);
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
-        person.setDateOfBirthYearMonthDay(new YearMonthDay().minusYears(23));
-        person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
-        person.setDocumentIdNumber(person.getExternalId().toString());
-
-        EmailAddress.createEmailAddress(person, "abc" + person.getExternalId() + "@gmail.com", PartyContactType.PERSONAL, true);
-
-        final User user = person.getUser();
 //        final Login login = Login.readUserLoginIdentification(user);
 //        login.setPassword(PasswordEncryptor.encryptPassword("pass"));
 //        login.setActive(Boolean.TRUE);
 //        LoginAlias.createNewCustomLoginAlias(login, usernamePrefix + i);
-        return person;
+        return null;
     }
 
     private static void createStudents() {

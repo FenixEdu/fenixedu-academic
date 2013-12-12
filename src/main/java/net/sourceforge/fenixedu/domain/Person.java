@@ -343,10 +343,16 @@ public class Person extends Person_Base {
         return StringFormatter.prettyPrint(getName());
     }
 
-    public Person() {
+    private Person() {
         super();
         setMaritalStatus(MaritalStatus.UNKNOWN);
         createUser();
+    }
+    
+    public Person(User user) {
+        super();
+        setMaritalStatus(MaritalStatus.UNKNOWN);
+        setUser(user);
     }
 
     public void createUser() {
@@ -1545,7 +1551,7 @@ public class Person extends Person_Base {
 
         private void sendManagerRoleMembershipChangeNotification(final Person person, final String subjectKey,
                 final String bodyKey) {
-            final Sender sender = RootDomainObject.getInstance().getSystemSender();
+            final Sender sender = Bennu.getInstance().getSystemSender();
             
             if (sender != null){
                 final Recipient recipient = new Recipient(new RoleGroup(RoleType.MANAGER));

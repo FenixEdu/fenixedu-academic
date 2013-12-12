@@ -1,6 +1,5 @@
 package pt.utl.ist.codeGenerator.database;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Container;
@@ -10,12 +9,13 @@ import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateFunctionallityTree {
     public static void doIt(){
-        RootDomainObject rdo = RootDomainObject.getInstance();
+        Bennu bennu =  Bennu.getInstance();
         // DEBUG: tldNode x823 1198295917755 null
         Module x823 = new Module(MultiLanguageString.importFromString("en4:Rootpt4:Raiz"),"/");
         x823.setNormalizedName(MultiLanguageString.importFromString("en4:rootpt4:raiz"));
@@ -2194,7 +2194,7 @@ public class CreateFunctionallityTree {
                     x1315.setNormalizedName(MultiLanguageString.importFromString("pt10:ver-seccao"));
                     x1315.setExecutionPath("/executionCourse.do?method=section");
                     x1315.setVisible(false);
-                    Functionality x1316 = new Functionality(MultiLanguageString.importFromString("en15:Search Contentspt21:Pesquisa de Conte�dos"));
+                    Functionality x1316 = new Functionality(MultiLanguageString.importFromString("en15:Search Contentspt21:Pesquisa de Conteúdos"));
                     x1301.addChild(x1316);
                     x1316.setTitle(MultiLanguageString.importFromString("en15:Search Contentspt19:Pesquisar Conteúdos"));
                     x1316.setNormalizedName(MultiLanguageString.importFromString("en15:search-contentspt21:pesquisa-de-conteudos"));
@@ -2234,9 +2234,9 @@ public class CreateFunctionallityTree {
                     x1323.setNormalizedName(MultiLanguageString.importFromString("en7:patentspt8:patentes"));
                     x1323.setExecutionPath("/showPatents.do?method=showPatents");
                     x1323.setVisible(true);
-                    Functionality x1324 = new Functionality(MultiLanguageString.importFromString("en23:Scientifical Activitiespt23:Actividades Cient�ficas"));
+                    Functionality x1324 = new Functionality(MultiLanguageString.importFromString("en23:Scientifical Activitiespt23:Actividades Científicas"));
                     x1320.addChild(x1324);
-                    x1324.setTitle(MultiLanguageString.importFromString("en23:Scientifical Activitiespt23:Actividades Cient�ficas"));
+                    x1324.setTitle(MultiLanguageString.importFromString("en23:Scientifical Activitiespt23:Actividades Científicas"));
                     x1324.setNormalizedName(MultiLanguageString.importFromString("en23:scientifical-activitiespt23:actividades-cientificas"));
                     x1324.setExecutionPath("/showParticipations.do?method=showParticipations");
                     x1324.setVisible(true);
@@ -4192,6 +4192,7 @@ public class CreateFunctionallityTree {
            x479.setName(MultiLanguageString.importFromString("pt8:PúblicoX"));
            x479.setNormalizedName(MultiLanguageString.importFromString("pt8:publicox"));
            x479.setMaximizable(false);
+           x479.setVisible(false);
               Section x478 = new Section(x479, MultiLanguageString.importFromString("pt5:Sites"));
               x478.setName(MultiLanguageString.importFromString("pt5:Sites"));
               x478.setNormalizedName(MultiLanguageString.importFromString("pt5:sites"));
@@ -4211,7 +4212,7 @@ public class CreateFunctionallityTree {
                     FunctionalityCall x489 = makeFunctionalityCall(x477, x1313, "en10:Evaluationpt9:Avaliaçâo", null, null, null, "en10:evaluationpt9:avaliacao");
                     FunctionalityCall x490 = makeFunctionalityCall(x477, x1314, "en6:Groupspt12:Agrupamentos", null, null, null, "en6:groupspt12:agrupamentos");
                     FunctionalityCall x491 = makeFunctionalityCall(x477, x1315, "pt10:Ver Secção", null, null, null, "pt10:ver-seccao");
-                    FunctionalityCall x492 = makeFunctionalityCall(x477, x1316, "en15:Search Contentspt21:Pesquisa de Conte�dos", null, null, null, "en15:search-contentspt21:pesquisa-de-conteudos");
+                    FunctionalityCall x492 = makeFunctionalityCall(x477, x1316, "en15:Search Contentspt21:Pesquisa de Conteúdos", null, null, null, "en15:search-contentspt21:pesquisa-de-conteudos");
                  Section x495 = new Section(x478, MultiLanguageString.importFromString("pt12:Site Pessoal"));
                  x495.setName(MultiLanguageString.importFromString("pt12:Site Pessoal"));
                  x495.setNormalizedName(MultiLanguageString.importFromString("pt12:site-pessoal"));
@@ -4219,7 +4220,7 @@ public class CreateFunctionallityTree {
                     FunctionalityCall x496 = makeFunctionalityCall(x495, x1321, "en18:Research Interestspt22:Interesses Científicos", null, null, null, "en18:research-interestspt22:interesses-cientificos");
                     FunctionalityCall x497 = makeFunctionalityCall(x495, x1322, "en12:Publicationspt11:Publicações", null, null, null, "en12:publicationspt11:publicacoes");
                     FunctionalityCall x498 = makeFunctionalityCall(x495, x1323, "en7:Patentspt8:Patentes", null, null, null, "en7:patentspt8:patentes");
-                    FunctionalityCall x499 = makeFunctionalityCall(x495, x1324, "en23:Scientifical Activitiespt23:Actividades Cient�ficas", null, null, null, "en23:scientifical-activitiespt23:actividades-cientificas");
+                    FunctionalityCall x499 = makeFunctionalityCall(x495, x1324, "en23:Scientifical Activitiespt23:Actividades Científicas", null, null, null, "en23:scientifical-activitiespt23:actividades-cientificas");
                     FunctionalityCall x500 = makeFunctionalityCall(x495, x1325, "en6:Prizespt7:Prémios", null, null, null, "en6:prizespt7:premios");
                  Section x503 = new Section(x478, MultiLanguageString.importFromString("en6:Degreept5:Curso"));
                  x503.setName(MultiLanguageString.importFromString("en6:Degreept5:Curso"));
@@ -4360,7 +4361,7 @@ public class CreateFunctionallityTree {
            x585.setName(MultiLanguageString.importFromString("pt11:disciplinas"));
            x585.setNormalizedName(MultiLanguageString.importFromString("pt11:disciplinas"));
            x585.setPrefix("");
-              FunctionalityCall x584 = makeFunctionalityCall(x585, x1316, "en15:Search Contentspt21:Pesquisa de Conte�dos", null, null, null, "en15:search-contentspt21:pesquisa-de-conteudos");
+              FunctionalityCall x584 = makeFunctionalityCall(x585, x1316, "en15:Search Contentspt21:Pesquisa de Conteúdos", null, null, null, "en15:search-contentspt21:pesquisa-de-conteudos");
               FunctionalityCall x586 = makeFunctionalityCall(x585, x1315, "pt10:Ver Secção", null, null, null, "pt10:ver-seccao");
               FunctionalityCall x587 = makeFunctionalityCall(x585, x1314, "en6:Groupspt12:Agrupamentos", null, null, null, "en6:groupspt12:agrupamentos");
               FunctionalityCall x588 = makeFunctionalityCall(x585, x1313, "en10:Evaluationpt9:Avaliaçâo", null, null, null, "en10:evaluationpt9:avaliacao");
@@ -4475,8 +4476,8 @@ public class CreateFunctionallityTree {
            ExpressionGroupAvailability x1727 = new ExpressionGroupAvailability(x659, "role(IDENTIFICATION_CARD_MANAGER)");
            x1727.setTargetGroup(Group.fromString("role(IDENTIFICATION_CARD_MANAGER)"));
            x659.setAvailabilityPolicy(x1727);
-           Section x663 = new Section(x3, MultiLanguageString.importFromString("en23:Public Relations Officept29:Gabinete de Relações P�blicas"));
-           x663.setName(MultiLanguageString.importFromString("en23:Public Relations Officept29:Gabinete de Relações P�blicas"));
+           Section x663 = new Section(x3, MultiLanguageString.importFromString("en23:Public Relations Officept29:Gabinete de Relações Públicas"));
+           x663.setName(MultiLanguageString.importFromString("en23:Public Relations Officept29:Gabinete de Relações Públicas"));
            x663.setNormalizedName(MultiLanguageString.importFromString("en23:public-relations-officept29:gabinete-de-relacoes-publicas"));
            x663.setMaximizable(false);
               FunctionalityCall x662 = makeFunctionalityCall(x663, x1539, "pt19:Listagens de Alunos", null, null, null, "pt19:listagens-de-alunos");
@@ -4598,6 +4599,7 @@ public class CreateFunctionallityTree {
               Section x735 = new Section(x686, MultiLanguageString.importFromString("pt3:phd"));
               x735.setName(MultiLanguageString.importFromString("pt3:phd"));
               x735.setNormalizedName(MultiLanguageString.importFromString("pt3:phd"));
+              x735.setVisible(false);
                  FunctionalityCall x734 = makeFunctionalityCall(x735, x1461, "en14:identificationpt13:identificacao", null, null, null, "pt13:identificacao");
                  FunctionalityCall x736 = makeFunctionalityCall(x735, x1463, "en10:submissionpt9:submissao", null, null, null, "en10:submissionpt9:submissao");
                  FunctionalityCall x737 = makeFunctionalityCall(x735, x1464, "en6:accesspt6:acesso", null, null, null, "en6:accesspt6:acesso");
@@ -4667,6 +4669,7 @@ public class CreateFunctionallityTree {
            Section x790 = new Section(x3, MultiLanguageString.importFromString("pt3:phd"));
            x790.setName(MultiLanguageString.importFromString("pt3:phd"));
            x790.setNormalizedName(MultiLanguageString.importFromString("pt3:phd"));
+           x790.setVisible(false);
               Section x789 = new Section(x790, MultiLanguageString.importFromString("pt4:epfl"));
               x789.setName(MultiLanguageString.importFromString("pt4:epfl"));
               x789.setNormalizedName(MultiLanguageString.importFromString("pt4:epfl"));
@@ -4697,43 +4700,13 @@ public class CreateFunctionallityTree {
            ExpressionGroupAvailability x1736 = new ExpressionGroupAvailability(x805, "role(TREASURY)");
            x1736.setTargetGroup(Group.fromString("role(TREASURY)"));
            x805.setAvailabilityPolicy(x1736);
-           Section x808 = new Section(x3, MultiLanguageString.importFromString("pt16:Projectos IST-ID"));
-           x808.setName(MultiLanguageString.importFromString("pt16:Projectos IST-ID"));
-           x808.setNormalizedName(MultiLanguageString.importFromString("pt16:projectos-ist-id"));
-           x808.setMaximizable(false);
-              FunctionalityCall x807 = makeFunctionalityCall(x808, x1592, "pt16:Projectos IST-ID", null, null, null, "pt16:projectos-ist-id");
-           ExpressionGroupAvailability x1737 = new ExpressionGroupAvailability(x808, "role(ISTID_PROJECTS_MANAGER)");
-           x1737.setTargetGroup(Group.fromString("role(ISTID_PROJECTS_MANAGER)"));
-           x808.setAvailabilityPolicy(x1737);
-           Section x811 = new Section(x3, MultiLanguageString.importFromString("pt34:Projectos Institucionais do IST-ID"));
-           x811.setName(MultiLanguageString.importFromString("pt34:Projectos Institucionais do IST-ID"));
-           x811.setNormalizedName(MultiLanguageString.importFromString("pt34:projectos-institucionais-do-ist-id"));
-           x811.setMaximizable(false);
-              FunctionalityCall x810 = makeFunctionalityCall(x811, x1595, "pt34:Projectos Institucionais do IST-ID", null, null, null, "pt34:projectos-institucionais-do-ist-id");
-           ExpressionGroupAvailability x1738 = new ExpressionGroupAvailability(x811, "role(ISTID_INSTITUCIONAL_PROJECTS_MANAGER)");
-           x1738.setTargetGroup(Group.fromString("role(ISTID_INSTITUCIONAL_PROJECTS_MANAGER)"));
-           x811.setAvailabilityPolicy(x1738);
-           Section x814 = new Section(x3, MultiLanguageString.importFromString("pt15:Projectos ADIST"));
-           x814.setName(MultiLanguageString.importFromString("pt15:Projectos ADIST"));
-           x814.setNormalizedName(MultiLanguageString.importFromString("pt15:projectos-adist"));
-              FunctionalityCall x813 = makeFunctionalityCall(x814, x1598, "pt15:Projectos ADIST", null, null, null, "pt15:projectos-adist");
-           ExpressionGroupAvailability x1739 = new ExpressionGroupAvailability(x814, "role(ADIST_PROJECTS_MANAGER)");
-           x1739.setTargetGroup(Group.fromString("role(ADIST_PROJECTS_MANAGER)"));
-           x814.setAvailabilityPolicy(x1739);
-           Section x817 = new Section(x3, MultiLanguageString.importFromString("pt33:Projectos Institucionais da ADIST"));
-           x817.setName(MultiLanguageString.importFromString("pt33:Projectos Institucionais da ADIST"));
-           x817.setNormalizedName(MultiLanguageString.importFromString("pt33:projectos-institucionais-da-adist"));
-              FunctionalityCall x816 = makeFunctionalityCall(x817, x1601, "pt33:Projectos Institucionais da ADIST", null, null, null, "pt33:projectos-institucionais-da-adist");
-           ExpressionGroupAvailability x1740 = new ExpressionGroupAvailability(x817, "role(ADIST_INSTITUCIONAL_PROJECTS_MANAGER)");
-           x1740.setTargetGroup(Group.fromString("role(ADIST_INSTITUCIONAL_PROJECTS_MANAGER)"));
-           x817.setAvailabilityPolicy(x1740);
         ExpressionGroupAvailability x1741 = new ExpressionGroupAvailability(x3, "everyone()");
         x1741.setTargetGroup(Group.fromString("everyone()"));
         x3.setAvailabilityPolicy(x1741);
      
      x3.setName(new MultiLanguageString(Language.pt, "FenixEdu").append(new MultiLanguageString(Language.en, "FenixEdu")));
-     x3.setRootDomainObject(rdo);
-     rdo.setRootPortal(x3);
+     x3.setRootDomainObject(bennu);
+     bennu.setRootPortal(x3);
     }
     
     private static FunctionalityCall makeFunctionalityCall(Container parent, Functionality func, String name, String fcTitle, String fcBody, String fcDescription, String fcNName) {

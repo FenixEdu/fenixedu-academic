@@ -7,9 +7,6 @@ import java.io.InputStreamReader;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.EmptyDegree;
@@ -17,13 +14,10 @@ import net.sourceforge.fenixedu.domain.EmptyDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
@@ -38,18 +32,11 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.standards.geographic.Planet;
-import pt.utl.ist.codeGenerator.database.CreateTestData.CreateCurricularPeriods;
-import pt.utl.ist.codeGenerator.database.CreateTestData.CreateCurricularStructure;
-import pt.utl.ist.codeGenerator.database.CreateTestData.CreateDegrees;
-import pt.utl.ist.codeGenerator.database.CreateTestData.CreateEvaluations;
-import pt.utl.ist.codeGenerator.database.CreateTestData.CreateExecutionCourses;
-import pt.utl.ist.codeGenerator.database.CreateTestData.CreateExecutionYears;
 import pt.utl.ist.codeGenerator.database.CreateTestData.CreateOrganizationalStructure;
-import pt.utl.ist.codeGenerator.database.CreateTestData.CreateResources;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -136,9 +123,6 @@ public class DataInitializer {
         System.out.println("");
 
         InstallationProcess process = new InstallationProcess();
-
-        RootDomainObject.ensureRootDomainObject();
-        RootDomainObject.initialize();
         
         Language.setDefaultLocale(Locale.getDefault());
         while (true) {
@@ -259,6 +243,7 @@ public class DataInitializer {
         new Role(RoleType.TREASURY, "/treasury", "/index.do", "portal.treasury");
         new Role(RoleType.TUTORSHIP, "/pedagogicalCouncil", "/index.do", "portal.PedagogicalCouncil");
         new Role(RoleType.WEBSITE_MANAGER, "/webSiteManager", "/index.do", "portal.webSiteManager");
+        new Role(RoleType.DEVELOPER, "/person", "/index.do", "portal.developer");
     }
 
     private static void createCurricularYearsAndSemesters() {
@@ -344,30 +329,26 @@ public class DataInitializer {
     }
 
     private static void createManagerUser(InstallationProcess process) {
-        RootDomainObject rdo = RootDomainObject.getInstance();
-        final Person person = new Person();
+        Bennu bennu = Bennu.getInstance();
+        final User user = new User(process.adminUsername);
+        final Person person = new Person(user);
         person.setName(process.adminName);
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
-        final User user = person.getUser();
-        final Login login = user.readUserLoginIdentification();
-        login.setActive(Boolean.TRUE);
-        LoginAlias.createNewCustomLoginAlias(login, process.adminUsername);
-        login.openLoginIfNecessary(RoleType.MANAGER);
-        login.setRootDomainObject(rdo);
-        person.setRootDomainObject(rdo);
+        
+        person.setRootDomainObject(bennu);
         person.setCountry(process.country);
         person.setCountryOfBirth(process.country);
-        person.setPassword(PasswordEncryptor.encryptPassword(process.adminPass));
+        user.setPassword(process.adminPass);
         process.person = person;
+        
         EmailAddress.createEmailAddress(person, process.email, PartyContactType.PERSONAL, true, true, true, true, true, true);
         for (PartyContact partyContact : person.getPartyContactsSet()) {
             partyContact.setValid();
             partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
         }
-        final IUserView mock = new Authenticate().mock(person, "");
-        UserView.setUser(mock);
+        Authenticate.mock(user);
     }
 
     private static void createPartyTypeEnums() {
