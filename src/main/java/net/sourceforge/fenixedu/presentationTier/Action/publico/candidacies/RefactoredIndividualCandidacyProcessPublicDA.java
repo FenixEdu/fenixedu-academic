@@ -157,12 +157,8 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
                     String.format(
                             bundle.getString(getProcessType().getSimpleName() + ".const.public.application.submission.link"),
                             hash.getValue(), Language.getLocale().getLanguage());
-            String localLink =
-                    String.format("http://localhost:8080/ciapl/applications/erasmus/access?hash=%s&locale=%s", hash.getValue(),
-                            Language.getLocale().getLanguage());
 
             request.setAttribute("link", link);
-            request.setAttribute("localLink", localLink);
 
             return mapping.findForward("show-email-message-sent");
         } catch (HashCodeForEmailAndProcessAlreadyBounded e) {

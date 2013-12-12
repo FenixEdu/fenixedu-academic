@@ -116,7 +116,7 @@
 	<slot name="socialSecurityNumber" />
 	<slot name="professionType" />
 	<slot name="professionalCondition" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 	</slot>
 	<slot name="profession" />
 	<slot name="maritalStatus">

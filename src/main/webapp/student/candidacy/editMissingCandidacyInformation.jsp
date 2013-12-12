@@ -79,6 +79,13 @@ hideButtons();
 				<fr:property name="sortBy" value="name=asc" />
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 			</fr:slot>	
+			<% if ((personalInformationBean.getSchoolLevel() != null) && !personalInformationBean.getSchoolLevel().isHighSchoolOrEquivalent() && !personalInformationBean.getSchoolLevel().isSchoolLevelBasicCycle()) { %>
+				<fr:slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+					<fr:property name="format" value="${localizedName}"/>
+					<fr:property name="sortBy" value="name=asc" />
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+				</fr:slot>
+			<% } %>
 			<% if (personalInformationBean.isUnitFromRaidesListMandatory()) { %>
 				<fr:slot name="institutionUnitName" layout="autoCompleteWithPostBack" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
@@ -136,6 +143,7 @@ hideButtons();
 	
 	<br/>
 
+	
 	<h3><bean:message  key="label.personal.information" bundle="STUDENT_RESOURCES"/></h3>
 	
 	<div><bean:message  key="label.personal.information.details" bundle="STUDENT_RESOURCES"/></div>
@@ -170,7 +178,9 @@ hideButtons();
 					<fr:property name="className" value="net.sourceforge.fenixedu.domain.DistrictSubdivision"/>
 					<fr:property name="minChars" value="1"/>
 				</fr:slot>
-				<fr:slot name="grantOwnerType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+				<fr:slot name="grantOwnerType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.GratOwnerTypesProvider" />
+				</fr:slot>
 			   	<fr:slot name="grantOwnerProviderUnitName" layout="autoComplete">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
@@ -191,7 +201,7 @@ hideButtons();
 					<fr:property name="excludedValues" value="UNKNOWN" />
 				</fr:slot>
 				<fr:slot name="professionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 				</fr:slot>
 				<fr:slot name="professionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
@@ -201,7 +211,7 @@ hideButtons();
 					<fr:property name="eachLayout" value="this-does-not-exist" />
 				</fr:slot>	
 				<fr:slot name="motherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 				</fr:slot>
 				<fr:slot name="motherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
@@ -211,7 +221,7 @@ hideButtons();
 					<fr:property name="eachLayout" value="this-does-not-exist" />
 				</fr:slot>
 				<fr:slot name="fatherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 				</fr:slot>
 				<fr:slot name="fatherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />

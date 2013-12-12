@@ -98,7 +98,7 @@ public class EtiReportFile extends EtiReportFile_Base {
         final Student student = registration.getStudent();
 
         final Row row = spreadsheet.addRow();
-        row.setCell(student.getNumber().toString());
+        row.setCell(registration.getNumber());
         setDegreeCells(row, registration.getDegree());
         row.setCell(executionSemester.getSemester().toString());
         row.setCell(executionSemester.getExecutionYear().getYear());

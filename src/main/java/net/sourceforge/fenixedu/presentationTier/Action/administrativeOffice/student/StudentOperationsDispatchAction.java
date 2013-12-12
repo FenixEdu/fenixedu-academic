@@ -275,10 +275,13 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
     public ActionForward fillNewPersonDataPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
+        PrecedentDegreeInformationBean pdiBean = getRenderedObject("precedentDegreeInformation");
+        pdiBean.checkCountryHighSchoolLevel();
+
         request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
         request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
         request.setAttribute("personBean", getRenderedObject("person"));
-        request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
+        request.setAttribute("precedentDegreeInformationBean", pdiBean);
         request.setAttribute("originInformationBean", getRenderedObject("originInformation"));
         RenderUtils.invalidateViewState("precedentDegreeInformation");
         RenderUtils.invalidateViewState("precedentDegreeInformationExternal");
@@ -350,7 +353,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         try {
             Registration registration =

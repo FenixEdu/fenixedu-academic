@@ -1736,14 +1736,23 @@ public class Student extends Student_Base {
 
     public boolean hasAnyMissingPersonalInformation() {
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        for (final Registration registration : getRegistrations()) {
+        for (final Registration registration : getRegistrationsSet()) {
             if (registration.isValidForRAIDES() && registration.hasMissingPersonalInformation(currentExecutionYear)) {
                 return true;
             }
         }
 
-        for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcesses()) {
+        for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcessesSet()) {
             if (isValidAndActivePhdProcess(phdProcess) && phdProcess.hasMissingPersonalInformation(currentExecutionYear)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasActivePhdProgramProcess() {
+        for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcessesSet()) {
+            if (isValidAndActivePhdProcess(phdProcess)) {
                 return true;
             }
         }

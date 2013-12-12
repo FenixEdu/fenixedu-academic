@@ -33,6 +33,7 @@ public class PrecedentDegreeInformationBean implements Serializable {
     private SchoolLevelType schoolLevel;
     private String otherSchoolLevel;
     private Country country;
+    private Country countryWhereFinishedHighSchoolLevel;
 
     private boolean degreeChangeOrTransferOrErasmusStudent = false;
     private SchoolLevelType precedentSchoolLevel;
@@ -63,6 +64,7 @@ public class PrecedentDegreeInformationBean implements Serializable {
         setConclusionGrade(information.getConclusionGrade());
         setConclusionYear(information.getConclusionYear());
         setCountry(information.getCountry());
+        setCountryWhereFinishedHighSchoolLevel(information.getCountryHighSchool());
         setSchoolLevel(information.getSchoolLevel());
         setOtherSchoolLevel(information.getOtherSchoolLevel());
     }
@@ -104,7 +106,18 @@ public class PrecedentDegreeInformationBean implements Serializable {
     }
 
     public void setCountry(Country country) {
+        if ((getSchoolLevel() != null) && getSchoolLevel().isHighSchoolOrEquivalent()) {
+            setCountryWhereFinishedHighSchoolLevel(country);
+        }
         this.country = country;
+    }
+
+    public Country getCountryWhereFinishedHighSchoolLevel() {
+        return this.countryWhereFinishedHighSchoolLevel;
+    }
+
+    public void setCountryWhereFinishedHighSchoolLevel(Country countryHighSchool) {
+        this.countryWhereFinishedHighSchoolLevel = countryHighSchool;
     }
 
     public String getDegreeDesignation() {
@@ -307,5 +320,13 @@ public class PrecedentDegreeInformationBean implements Serializable {
 
     public void setConclusionDate(LocalDate conclusionDate) {
         this.conclusionDate = conclusionDate;
+    }
+
+    public void checkCountryHighSchoolLevel() {
+        if (getSchoolLevel() != null && getSchoolLevel().isSchoolLevelBasicCycle()) {
+            setCountryWhereFinishedHighSchoolLevel(null);
+        } else if (getSchoolLevel() != null && getSchoolLevel().isHighSchoolOrEquivalent()) {
+            setCountryWhereFinishedHighSchoolLevel(getCountry());
+        }
     }
 }
