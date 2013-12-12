@@ -360,16 +360,6 @@ public class Announcement extends Announcement_Base {
 
     }
 
-    public static Campus getCampus(String campusCode) {
-        if (campusCode != null && campusCode.equals(CAMPUS_ALAMEDA)) {
-            return Campus.readActiveCampusByName("Alameda");
-        } else if (campusCode != null && campusCode.equals(CAMPUS_TAGUSPARK)) {
-            return Campus.readActiveCampusByName("Taguspark");
-        }
-
-        return null;
-    }
-
     @Override
     protected void disconnectContent() {
 

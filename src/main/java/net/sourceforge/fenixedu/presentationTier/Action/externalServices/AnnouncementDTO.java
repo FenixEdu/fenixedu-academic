@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.DateTime;
 
@@ -70,7 +71,7 @@ public class AnnouncementDTO {
         setVisible(announcement.getVisible().toString());
         setId(announcement.getExternalId().toString());
         setPhotoUrl(announcement.getPhotoUrl());
-        setCampus(announcement.getCampusCode());
+        setCampus(announcement.getCampus());
         setCategoriesFromAnnouncement(announcement, language);
         setPressRelease(announcement.getPressRelease());
         setSticky(announcement.getSticky());
@@ -221,8 +222,8 @@ public class AnnouncementDTO {
         return this.campus;
     }
 
-    public void setCampus(String value) {
-        this.campus = value;
+    public void setCampus(Campus campus) {
+        this.campus = campus == null ? "EXTERNAL" : campus.getSpaceInformation().getName();
     }
 
     public String[] getCategories() {
