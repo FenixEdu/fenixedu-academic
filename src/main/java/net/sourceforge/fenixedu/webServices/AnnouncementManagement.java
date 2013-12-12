@@ -74,7 +74,7 @@ public class AnnouncementManagement implements IAnnouncementManagement {
                 return FAILURE + " - " + "announcementBoard value must be EVENT_BOARD or NEWS_BOARD";
             }
 
-            Campus selectedCampus = Announcement.getCampus(campus);
+            Campus selectedCampus = Campus.readActiveCampusByName(campus);
             java.util.List<AnnouncementCategory> announcementCategories = readCategories(categories);
             DateTime publicationBeginDateValue = dateTimeFormatter.parseDateTime(publicationBeginDate);
             DateTime publicationEndDateValue = dateTimeFormatter.parseDateTime(publicationEndDate);
