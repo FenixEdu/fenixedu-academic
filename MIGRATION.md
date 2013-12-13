@@ -49,9 +49,6 @@ Note that in order to properly migrate the application, there must be NO `FileLo
     alter table `CONTENT` add `TYPE` text, add `OID_BENNU` bigint unsigned;
     update CONTENT join META_DOMAIN_OBJECT on CONTENT.OID_META_DOMAIN_OBJECT = META_DOMAIN_OBJECT.OID set CONTENT.TYPE = META_DOMAIN_OBJECT.TYPE;
     update CONTENT set OID_BENNU = (SELECT OID FROM BENNU) where TYPE is not null;
-    
-    -- Sets the User's password to 'pass' - Review this!
-    update USER set PASSWORD = '5b722b307fce6c944905d132691d5e4a2214b7fe92b738920eb3fce3a90420a19511c3010a0e7712b054daef5b57bad59ecbd93b3280f210578f547f4aed4d25';
     ```
 
     Another SQL needs to be run, to remove the roles related to the Project Management module. Run the following:
