@@ -143,6 +143,25 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                         "referenceOrder");
         getRelationExecutionCourseBibliographicReference().addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
 
+        getRelationCurricularCourseExecutionCourse().addListener(new RelationAdapter<ExecutionCourse, CurricularCourse>() {
+
+            @Override
+            public void beforeAdd(final ExecutionCourse executionCourse, final CurricularCourse curricularCourse) {
+                if (executionCourse != null && curricularCourse != null && executionCourse.getAssociatedCurricularCoursesSet().size() == 0) {
+                    ExecutionCourse previous = null;
+                    for (final ExecutionCourse otherExecutionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+                        if (previous == null || otherExecutionCourse.getExecutionPeriod().isAfter(previous.getExecutionPeriod())) {
+                            previous = otherExecutionCourse;
+                        }
+                    }
+                    if (previous != null) {
+                        executionCourse.setProjectTutorialCourse(previous.getProjectTutorialCourse());
+                    }
+                }
+            }
+
+        });
+
         THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deamb");
         THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("dec");
         THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("erpq");
