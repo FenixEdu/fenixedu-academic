@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.util;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -10,6 +11,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -66,6 +69,40 @@ public class ExceptionInformation {
     private final String sessionContext;
     private final String stackTrace;
 
+    public static class JSPLine{
+        public String lineNumber;
+        public String line;
+
+        public JSPLine(String lineNumber, String line) {
+            this.lineNumber = lineNumber.trim();
+            this.line = line;
+        }
+        
+        public String getLineNumber(){
+            return lineNumber;
+        }
+        
+        public void setLineNumber(String ln){
+            lineNumber = ln;
+        }
+       
+        public String getLine(){
+            return line;
+        }
+        
+        public void setLine(String ln){
+            line = ln;
+        }
+    }
+    
+    private String jspExceptionMessage;
+    private ArrayList<JSPLine> jspExceptionSourceBefore;
+    private JSPLine jspExceptionSourceLine;
+    private ArrayList<JSPLine> jspExceptionSourceAfter;
+    private String jspExceptionLine;
+    
+ 
+    
     public static class ThrowableInfo {
         private final boolean cause;
         private final boolean suppressed;
@@ -127,7 +164,6 @@ public class ExceptionInformation {
             }
             return list;
         }
-
     }
 
     public static class ElementInfo {
@@ -244,8 +280,50 @@ public class ExceptionInformation {
                 this.actionErrorLine = element.getLineNumber();
             }
         }
-
         this.exceptionInfo = exceptionInfo.toString();
+        
+        if (ex.getClass().getName().equals("org.apache.jasper.JasperException")) {
+            String message = ex.getLocalizedMessage();
+            if (message.contains("\n")) {
+                String[] name = message.split("\n");
+                final Pattern lastIntPattern = Pattern.compile("([0-9]+)$");
+                Matcher matcher = lastIntPattern.matcher(name[0]);
+                if (matcher.find()) {
+                    jspExceptionLine = matcher.group(1);
+                    jspExceptionMessage = name[0];
+                    setJspExceptionSourceBefore(new ArrayList<JSPLine>());
+                    setJspExceptionSourceAfter(new ArrayList<JSPLine>());
+                    int state = 0;
+                    for (String s : Arrays.copyOfRange(name, 2, name.length - 3)) {
+                        int i = s.indexOf(":");
+                        JSPLine line = new JSPLine(s.substring(0, i).toString(), s.substring(i+1,s.length()).toString());                                
+                        switch (state) {
+                        case 0:
+                            if (s.startsWith(jspExceptionLine)){
+                                
+                                setJspExceptionSourceLine(line);
+                                state = 1;
+                            }else{
+                                getJspExceptionSourceBefore().add(line);                                    
+                            }
+                            break;
+                        case 1:
+                            getJspExceptionSourceAfter().add(line);
+                        default:
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public String getJspExceptionMessage() {
+        return jspExceptionMessage;
+    }
+
+    public String getJspExceptionLine() {
+        return jspExceptionLine;
     }
 
     private final StackTraceElement getStackTraceElementForActionMapping(HttpServletRequest request, ActionMapping mapping,
@@ -316,17 +394,17 @@ public class ExceptionInformation {
         setRequestFullUrl(getRequestFullUrl(request));
         setQueryString(query);
         setRequestMethod(request.getMethod());
-
-        String[] params = query.split("&");
         Map<String, String> queryParameters = new HashMap<String, String>();
-        for (String param : params) {
-            String[] entry = param.split("=");
-            String name = entry[0];
-            String value = entry[1];
-            queryParameters.put(name, value);
+        if (query != null) {
+            String[] params = query.split("&");
+            for (String param : params) {
+                String[] entry = param.split("=");
+                String name = entry[0];
+                String value = entry[1];
+                queryParameters.put(name, value);
+            }
         }
         setQueryParameters(queryParameters);
-
         exceptionInfo.append("[RequestURI] ").append(request.getRequestURI()).append("\n");
         exceptionInfo.append("[RequestURL] ").append(request.getRequestURL()).append("\n");
         exceptionInfo.append("[QueryString] ").append(request.getQueryString()).append("\n");
@@ -561,5 +639,29 @@ public class ExceptionInformation {
 
     public void setRequestMethod(String requestMethod) {
         this.requestMethod = requestMethod;
+    }
+
+    public JSPLine getJspExceptionSourceLine() {
+        return jspExceptionSourceLine;
+    }
+
+    public void setJspExceptionSourceLine(JSPLine jspExceptionSourceLine) {
+        this.jspExceptionSourceLine = jspExceptionSourceLine;
+    }
+
+    public ArrayList<JSPLine> getJspExceptionSourceBefore() {
+        return jspExceptionSourceBefore;
+    }
+
+    public void setJspExceptionSourceBefore(ArrayList<JSPLine> jspExceptionSourceBefore) {
+        this.jspExceptionSourceBefore = jspExceptionSourceBefore;
+    }
+
+    public ArrayList<JSPLine> getJspExceptionSourceAfter() {
+        return jspExceptionSourceAfter;
+    }
+
+    public void setJspExceptionSourceAfter(ArrayList<JSPLine> jspExceptionSourceAfter) {
+        this.jspExceptionSourceAfter = jspExceptionSourceAfter;
     }
 }

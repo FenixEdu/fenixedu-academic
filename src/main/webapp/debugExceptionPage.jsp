@@ -16,6 +16,7 @@
 		<bean:message key="debug.page.title" bundle="GLOBAL_RESOURCES"/>
 	</title>
    	<link rel="stylesheet"  href="<%= request.getContextPath() %>/CSS/debug.css">
+   	<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery.js"></script>
 	<meta charset="UTF-8">
 </head>
 
@@ -26,13 +27,17 @@
 	<div id="debugPage">
 		<h1 class="debugTitleException"><bean:write name="exceptionClass" property="name"/></h1>
 		<div class="debugTitleCause">
-		<logic:notEmpty name="exception" property="message">
-			<bean:write name="exception" property="message"/>
-		</logic:notEmpty>
-		<logic:empty name="exception" property="message">
-			&nbsp;
-		</logic:empty>
-		
+		<logic:notPresent name="debugExceptionInfo" property="jspExceptionMessage">
+			<logic:notEmpty name="exception" property="message">
+				<bean:write name="exception" property="message"/>
+			</logic:notEmpty>
+			<logic:empty name="exception" property="message">
+				&nbsp;
+			</logic:empty>
+		</logic:notPresent>
+		<logic:present name="debugExceptionInfo" property="jspExceptionMessage">
+			<bean:write name="debugExceptionInfo" property="jspExceptionMessage"/>
+		</logic:present>
 		</div>
 		
 	</div>
@@ -48,7 +53,14 @@
 							--><span class="traceExceptionClassPackage"><bean:write name="exceptionClass" property="package.name"/>.</span><!--
 							--><span class="traceExceptionClassName"><bean:write name="exceptionClass" property="simpleName"/></span><!--
 						--></span><!-- 
-						--><span class="traceExceptionMessage"><bean:write name="exception" property="localizedMessage"/></span><!--
+						--><span class="traceExceptionMessage">
+					<logic:present name="debugExceptionInfo" property="jspExceptionMessage">
+						<bean:write name="debugExceptionInfo" property="jspExceptionMessage"/>
+					</logic:present>
+					<logic:notPresent name="debugExceptionInfo" property="jspExceptionMessage">
+						<bean:write name="exception" property="localizedMessage"/>
+					</logic:notPresent>
+						</span><!--
 					--></span><!--
 				--></td>
 			</tr>
@@ -82,12 +94,37 @@
 			</tr>
 		</table>
     </div>
+    
+   	<logic:present name="debugExceptionInfo" property="jspExceptionMessage">
+		<h2>Template</h2>
+		
+		<table class="source cut-top cut-bottom">
+   
+   <bean:define id="lines"  name="debugExceptionInfo" property = "jspExceptionSourceBefore"/>
+			<logic:iterate id="l" name="lines">
+      <tr><th><bean:write name="l" property="lineNumber" /></th>
+      <td>    <bean:write name="l" property="line"/>
+</td></tr>
+			</logic:iterate>
+	<bean:define id="l"  name="debugExceptionInfo" property = "jspExceptionSourceLine"/>
+      <tr class="error"><th><bean:write name="l" property="lineNumber" /></th>
+      <td>    <bean:write name="l" property="line"/>
+</td></tr>
+   <bean:define id="lines"  name="debugExceptionInfo" property = "jspExceptionSourceAfter"/>
+			<logic:iterate id="l" name="lines">
+      <tr><th><bean:write name="l" property="lineNumber" /></th>
+      <td>    <bean:write name="l" property="line"/>
+</td></tr>
+			</logic:iterate>
+   
+   
+   </tbody></table>
+
+	</logic:present>
 
     <div id="userInfo">
+    	<h2>User Information</h2>
 		<table border="0" cellspacing="0">
-			<tr>
-				<th>User info</th>
-			</tr>
 			<logic:present name="debugExceptionInfo" property="userName">
 			<tr>
 			<td><span class="label">User id:</span></td>
@@ -104,15 +141,12 @@
 			<logic:notPresent name="debugExceptionInfo" property="userName">
 				<tr><td>No user</td></tr>
 			</logic:notPresent>
-			
 		</table>
     </div>
     
     <div id="requestInfo">
+    	<h2>Request description</h2>
     	<table id="requestInfoTable" class="super-table">
-			<tr>
-				<th colspan="2">Request description</th>
-			</tr>
 			<tr>
 				<td><span class="label">Method:</span></td>
 				<td><bean:write name="debugExceptionInfo" property="requestMethod"/></td>
@@ -134,8 +168,9 @@
 			</tr>
 
 		</table>
+		<bean:define id="queryParameters"  name="debugExceptionInfo" property = "queryParameters"/>
+		<logic:notEmpty name="queryParameters">
 		<table class="parameters-table">
-			<bean:define id="queryParameters"  name="debugExceptionInfo" property = "queryParameters"/>
  			<logic:iterate id="element" name="queryParameters">
 				<tr>
  					<td><span class="label key"><bean:write name="element" property="key"/></span></td>
@@ -143,14 +178,13 @@
  				</tr>
     		</logic:iterate>
 		</table>
+		</logic:notEmpty>
     </div>
     
     
     <div id="mappingInfo">
+    	<h2>Mapping Description</h2>
     	<table id="mappingInfoTable" class="super-table">
-			<tr>
-				<th colspan="2">Mapping Description</th>
-			</tr>
 			<logic:present name="debugExceptionInfo" property="actionMapping">
 				<bean:define id="mapping" name="debugExceptionInfo" property="actionMapping"/>
 				<bean:define id="module" name="mapping" property="moduleConfig"/>
@@ -206,19 +240,15 @@
 				</tr>
 			</logic:present>
 			<logic:notPresent name="debugExceptionInfo" property="actionMapping">
-				<tr><td>UncaughtException</td></tr>
+				<tr><td><i>Unavailable</i></td></tr>
 			</logic:notPresent>
 			
 		</table>
     </div>
     
     <div id="requestContextInfo" class="super-table">
+    	<h2>Request Context</h2>
     	<bean:define id="contextEntries"  name="debugExceptionInfo" property = "requestContextEntries"/>
-    	<table class="super-table">
-			<tr>
-				<th colspan="2">Request Context</th>
-			</tr>
-    	</table>
     	<table class="parameters-table">			
    			<logic:iterate name="contextEntries" id="entry">
    				<tr>
@@ -230,12 +260,8 @@
     </div>
     
     <div id="sessionContextInfo">
+    	<h2>Session Context</h2>
     	<bean:define id="sessionEntries"  name="debugExceptionInfo" property = "sessionContextEntries"/>
-   		<table class="super-table">
-			<tr>
-				<th colspan="2">Session Context</th>
-			</tr>
-		</table>
 		<table class="parameters-table">
    			<logic:iterate name="sessionEntries" id="entry">
    				<tr>
@@ -247,9 +273,9 @@
     </div>
     
 	<logic:present name="debugExceptionInfo" property="extraInfo">
+	<h2>Extra Information</h2>
     <div id="extraInfo">
     	<table>
-    		<tr><th>Extra Information</th></tr>
 			<logic:iterate name="debugExceptionInfo" property="extraInfo" id="object">
 				<tr>
 					<td>
@@ -269,13 +295,18 @@
 	<!-- TODO: 	Hide uninteresting parts of the stack trace.
 				Like java, remove all lines that are repeated in causes. -->
 	<div id="stackTrace">
+		<h2>Stack Trace</h2>
 		<table>
-			<tr>
-				<th>Stack Trace</th>
-			</tr>
 			<tr>
 			<td>
 			<bean:define id="exceptionInfoStack" name="debugExceptionInfo" property="flatExceptionStack"/>
+			<script>
+				$(function(){
+					$("#stackTrace span.traceExceptionMessage").map(function(i,x){
+						$(x).html($(x).html().replace(/\n/g, "<br />"))
+					})
+				})
+			</script>
 			<logic:iterate name="exceptionInfoStack" id="exceptionInfo">
 				<bean:define id="cause" name="exceptionInfo" property="cause"/>
 				<bean:define id="suppressed" name="exceptionInfo" property="suppressed"/>
@@ -300,7 +331,7 @@
 								--><span class="exceptionText"><!--
 									-->Exception in thread "<!--
 									--><span class="traceThread"><bean:write name="debugExceptionInfo" property="threadName"/></span><!-- 
-									-->" -<!--
+									-->": <br/><!--
 								--></span><!--
 							--></logic:notEqual><!--
 						--></logic:notEqual><!--

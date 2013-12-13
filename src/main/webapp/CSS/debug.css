@@ -17,7 +17,11 @@ td,th {
 	padding-bottom:3px;
 }
 
-
+h2{
+	margin-bottom:10px;
+	margin-left:20px;
+	margin-top:30px;
+}
 
 th{
 	font-size: 20px;
@@ -32,7 +36,7 @@ tr {
 
 table{
 	
-	padding: 1em;
+	margin-left:20px;
 	
 	font: small sans-serif;
 }
@@ -312,6 +316,59 @@ requestInfoTable
 
 .parameters-table {
 	padding-top: 0;
-	margin-left:1em; padding: 1em; background:white; border:1px solid #CECECE;
+	margin-left:20px; 
+	padding: 1em; 
+	background:white; 
+	border:1px solid #CECECE;
 	line-height: 1.75em;
+}
+
+table.source  {
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+	background: white;
+	
+}
+
+table.source tbody th {
+	width: 50px;
+	text-align: right;
+	color: #666;
+	padding-right: .5em;
+	font-size: 13px;
+	vertical-align: top;
+	padding: 2px 3px;
+}
+
+
+
+table.source td {
+	font-family: Menlo, Monaco, Inconsolata, "Lucida Console", monospace;
+	white-space: pre;
+	border-bottom: 1px solid #eee;
+	padding:2px 3px 2px 3px;
+	height:15px;
+	text-align: start;
+	vertical-align: middle;
+	padding-right:20px;
+}
+
+table.source tr:last {
+	font-family: monospace;
+	white-space: pre;
+	border-bottom: 1px solid #eee;
+}
+
+table.source tr:last-child td{
+	border-bottom: none;
+} 
+
+
+table.source .error{
+background: #ffc;
+}
+
+table.source .error td{
+	color: #cc3300;
+	font-weight: bold;
 }
