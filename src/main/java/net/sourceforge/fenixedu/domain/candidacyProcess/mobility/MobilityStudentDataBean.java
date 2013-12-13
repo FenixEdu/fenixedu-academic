@@ -27,7 +27,10 @@ public class MobilityStudentDataBean implements Serializable {
     private String homeInstitutionPhone;
     private String homeInstitutionFax;
     private String homeInstitutionEmail;
+    private Country countryWhereFinishedHighSchoolLevel;
 
+    private SchoolLevelType currentSchoolLevel;
+    private String currentOtherSchoolLevel;
     private Boolean hasDiplomaOrDegree;
     private Integer diplomaConclusionYear;
     private String diplomaName;
@@ -73,6 +76,8 @@ public class MobilityStudentDataBean implements Serializable {
         this.setDiplomaName(erasmusStudentData.getDiplomaName());
         this.setExperienceCarryingOutProject(erasmusStudentData.getExperienceCarryingOutProject());
         this.setHasContactedOtherStaff(erasmusStudentData.getHasContactedOtherStaff());
+        this.setCurrentSchoolLevel(erasmusStudentData.getCurrentSchoolLevel());
+        this.setCurrentOtherSchoolLevel(erasmusStudentData.getCurrentOtherSchoolLevel());
         this.setHasDiplomaOrDegree(erasmusStudentData.getHasDiplomaOrDegree());
         this.setHomeInstitutionAddress(erasmusStudentData.getHomeInstitutionAddress());
         this.setHomeInstitutionEmail(erasmusStudentData.getHomeInstitutionEmail());
@@ -80,6 +85,7 @@ public class MobilityStudentDataBean implements Serializable {
         this.setHomeInstitutionFax(erasmusStudentData.getHomeInstitutionFax());
         this.setHomeInstitutionName(erasmusStudentData.getHomeInstitutionName());
         this.setHomeInstitutionPhone(erasmusStudentData.getHomeInstitutionPhone());
+        this.setCountryWhereFinishedHighSchoolLevel(erasmusStudentData.getMobilityCountryHighSchool());
         this.setMainSubjectThesis(erasmusStudentData.getMainSubjectThesis());
         this.setNameOfContact(erasmusStudentData.getNameOfContact());
         this.setTypesOfProgramme(erasmusStudentData.getTypesOfProgramme());
@@ -151,6 +157,30 @@ public class MobilityStudentDataBean implements Serializable {
 
     public void setHomeInstitutionEmail(String homeInstitutionEmail) {
         this.homeInstitutionEmail = homeInstitutionEmail;
+    }
+
+    public Country getCountryWhereFinishedHighSchoolLevel() {
+        return this.countryWhereFinishedHighSchoolLevel;
+    }
+
+    public void setCountryWhereFinishedHighSchoolLevel(Country countryHighSchool) {
+        this.countryWhereFinishedHighSchoolLevel = countryHighSchool;
+    }
+
+    public SchoolLevelType getCurrentSchoolLevel() {
+        return currentSchoolLevel;
+    }
+
+    public void setCurrentSchoolLevel(SchoolLevelType currentSchoolLevel) {
+        this.currentSchoolLevel = currentSchoolLevel;
+    }
+
+    public String getCurrentOtherSchoolLevel() {
+        return currentOtherSchoolLevel;
+    }
+
+    public void setCurrentOtherSchoolLevel(String currentOtherSchoolLevel) {
+        this.currentOtherSchoolLevel = currentOtherSchoolLevel;
     }
 
     public Boolean getHasDiplomaOrDegree() {

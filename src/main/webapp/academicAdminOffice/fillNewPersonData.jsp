@@ -33,7 +33,7 @@
 			<fr:slot name="socialSecurityNumber" />
 			<fr:slot name="professionType" />
 			<fr:slot name="professionalCondition" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 			</fr:slot>
 			<fr:slot name="profession" />
 			<fr:slot name="maritalStatus">
@@ -90,7 +90,7 @@
 	
 	<bean:define id="precedentDegreeInformationBean" name="precedentDegreeInformationBean" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean"/>
 	<h3 class="mtop1 mbottom025"><bean:message key="label.person.title.previousCompleteDegree" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-	<a name="precedentDegree"> </a>
+	<a name="precedentDegree"></a>
 	<fr:edit name="precedentDegreeInformationBean" id="precedentDegreeInformation" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean">
 		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
 			<fr:slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
@@ -105,6 +105,13 @@
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 				<fr:property name="destination" value="schoolLevel-postback" />
 			</fr:slot>
+			<% if ((precedentDegreeInformationBean.getSchoolLevel() != null) && !precedentDegreeInformationBean.getSchoolLevel().isHighSchoolOrEquivalent() && !precedentDegreeInformationBean.getSchoolLevel().isSchoolLevelBasicCycle()) { %>
+				<fr:slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+					<fr:property name="format" value="${localizedName}"/>
+					<fr:property name="sortBy" value="name=asc" />
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+				</fr:slot>
+			<% } %>
 			<% if(precedentDegreeInformationBean.isUnitFromRaidesListMandatory()) { %>
 				<fr:slot name="institutionUnitName" layout="autoCompleteWithPostBack" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>

@@ -94,6 +94,7 @@ public class RaidesCommonReportFieldsWrapper {
         spreadsheet.setHeader("Codigo do grau habl anterior");
         spreadsheet.setHeader("Outro grau habl anterior compl");
         spreadsheet.setHeader("país habilitação anterior");
+        spreadsheet.setHeader("país habilitação 12º ano ou equivalente");
         spreadsheet.setHeader("ano de conclusão da habilitação anterior");
         spreadsheet.setHeader("nota da habilitação anterior");
         spreadsheet.setHeader("Duração programa mobilidade");
@@ -452,6 +453,10 @@ public class RaidesCommonReportFieldsWrapper {
         // País de Habilitação Anterior ao Curso Actual
         row.setCell(personalInformationBean.getCountryWhereFinishedPreviousCompleteDegree() != null ? personalInformationBean
                 .getCountryWhereFinishedPreviousCompleteDegree().getName() : "");
+
+        // País de Habilitação do 12º ano ou equivalente
+        row.setCell(personalInformationBean.getCountryWhereFinishedHighSchoolLevel() != null ? personalInformationBean
+                .getCountryWhereFinishedHighSchoolLevel().getName() : "");
 
         // Ano de conclusão da habilitação anterior
         row.setCell(personalInformationBean.getConclusionYear());

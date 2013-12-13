@@ -2249,10 +2249,16 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	
-	<slot name="schoolLevel" key="label.person.title.precedenceDegreeInfo" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="schoolLevel" key="label.erasmus.home.previous.concluded.degree.type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForMobilityStudentProvider" />
 	</slot>
 	<slot name="otherSchoolLevel" />
+	
+	<slot name="countryWhereFinishedHighSchoolLevel" key="label.erasmus.country.highschool" layout="menu-select">
+		<property name="format" value="${localizedName}" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
 	
 	<slot name="homeInstitutionExchangeCoordinatorName" key="label.erasmus.home.institution.coordinator.name" >
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
@@ -2334,6 +2340,8 @@
 
  
 <schema name="MobilityIndividualApplicationProcess.current.study.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="currentSchoolLevel" key="label.erasmus.current.study.current.school.level"></slot>
+	<slot name="currentOtherSchoolLevel" key="label.erasmus.current.study.current.other.school.level"></slot>
 	<slot name="hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" />
 	<slot name="diplomaName" key="label.erasmus.current.study.name.of.diploma.or.degree" />
 	<slot name="diplomaConclusionYear" key="label.erasmus.current.study.conclusion.year.of.diploma" />
@@ -2343,6 +2351,13 @@
 
 
 <schema name="ErasmusIndividualCandidacyProcess.current.study.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="mobilityStudentDataBean.currentSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select" key="label.erasmus.current.study.current.school.level">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForMobilityStudentProvider" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	
+	<slot name="mobilityStudentDataBean.currentOtherSchoolLevel" key="label.erasmus.current.study.current.other.school.level.edit" />
+
 	<slot name="mobilityStudentDataBean.hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	
 	<slot name="mobilityStudentDataBean.diplomaName" key="label.erasmus.current.study.name.of.diploma.or.degree" >
