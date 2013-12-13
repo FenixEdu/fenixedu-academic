@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.DSpaceFileStorage;
 import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.PendingRequest;
@@ -31,7 +30,6 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -52,6 +50,7 @@ import pt.ist.bennu.core.domain.groups.DynamicGroup;
 import pt.ist.bennu.core.domain.groups.Group;
 import pt.ist.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter;
 import pt.ist.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomeHandler;
+import pt.ist.bennu.core.util.CoreConfiguration;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter;
@@ -364,20 +363,18 @@ public class FenixInitializer implements ServletContextListener {
         @Override
         public void handle(HttpServletRequest request, ServletResponse response, final Throwable t) throws ServletException,
                 IOException {
-
-            if (request.getAttribute("requestBean") == null) {
-
-                SupportRequestBean requestBean = SupportRequestBean.generateExceptionBean(AccessControl.getPerson());
-
-                if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
-                    requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)
-                            .getSelectedTopLevelContainer());
-                }
-                request.setAttribute("requestBean", requestBean);
-                request.setAttribute("exceptionInfo", ExceptionInformation.buildUncaughtExceptionInfo(request, t));
+            ExceptionInformation exceptionInfo = new ExceptionInformation(request, t);
+            if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
+                exceptionInfo.getRequestBean().setRequestContext(
+                        AbstractFunctionalityContext.getCurrentContext(request).getSelectedTopLevelContainer());
             }
 
-            t.printStackTrace();
+            if (CoreConfiguration.getConfiguration().developmentMode()) {
+                request.setAttribute("debugExceptionInfo", exceptionInfo);
+            } else {
+                request.setAttribute("requestBean", exceptionInfo.getRequestBean());
+                request.setAttribute("exceptionInfo", exceptionInfo.getExceptionInfo());
+            }
 
             String urlToForward =
                     t instanceof IllegalDataAccessException ? "/exception/notAuthorizedForward.jsp" : "/showErrorPage.do";

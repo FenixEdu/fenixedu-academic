@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation.ThrowableInfo;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionMapping;
@@ -36,11 +35,11 @@ public class ExceptionInformation {
     //exception dependent info
     private Throwable exception;
     private List<ThrowableInfo> flatExceptionStack;
-    private String formattedStackTrace;
+    private final String formattedStackTrace;
     private Class<?> actionErrorClass;
     private String actionErrorMethod;
     private String actionErrorFile;
-    private String actionErrorLine;
+    private int actionErrorLine;
 
     //user dependent info
     private String userName;
@@ -61,24 +60,11 @@ public class ExceptionInformation {
     private Collection<Object> extraInfo;
 
     //old info messages
-    private SupportRequestBean requestBean;
-    private String exceptionInfo;
-    private String requestContext;
-    private String sessionContext;
-    private String stackTrace;
-
-    /*
-     * TODO Rework this class for efficiency an legibility.
-     * 
-     */
-
-    /*
-     * TODO add to mapping info:
-     * 
-        ModuleUtils.getInstance().getModuleConfig(request).findActionConfig(arg0)
-     * 
-     * 
-     * */
+    private final SupportRequestBean requestBean;
+    private final String exceptionInfo;
+    private final String requestContext;
+    private final String sessionContext;
+    private final String stackTrace;
 
     public static class ThrowableInfo {
         private final boolean cause;
@@ -146,7 +132,7 @@ public class ExceptionInformation {
 
     public static class ElementInfo {
         private final StackTraceElement element;
-        private boolean isExternalClass;
+        private final boolean isExternalClass;
         private final String simpleClassName;
         private final String methodName;
         private final String packageName;
@@ -186,10 +172,6 @@ public class ExceptionInformation {
             return isExternalClass;
         }
 
-        public void setExternalClass(boolean isExternalClass) {
-            this.isExternalClass = isExternalClass;
-        }
-
         public String getSimpleClassName() {
             return simpleClassName;
         }
@@ -216,25 +198,20 @@ public class ExceptionInformation {
 
     }
 
-    //this method is does too much for non-debug applications. sloowww.
-    public static ExceptionInformation buildExceptionInfo(HttpServletRequest request, Throwable ex) {
-
-        ExceptionInformation info = new ExceptionInformation();
-
+    public ExceptionInformation(HttpServletRequest request, Throwable ex) {
         StringBuilder tempBuilder = new StringBuilder();
 
-        StringBuilder exceptionInfo = headerAppend(ex, info);
+        StringBuilder exceptionInfo = headerAppend(ex);
 
         // user
-        SupportRequestBean requestBean = userInfoContextAppend(request, exceptionInfo, info);
-        info.setRequestBean(requestBean);
+        this.requestBean = userInfoContextAppend(request, exceptionInfo);
 
         // mapping
-        mappingContextAppend(request, exceptionInfo, info);
+        mappingContextAppend(request, exceptionInfo);
 
         // requestContext
-        requestContextAppend(request, tempBuilder, info);
-        info.setRequestContext(tempBuilder.toString());
+        requestContextAppend(request, tempBuilder);
+        this.requestContext = tempBuilder.toString();
         exceptionInfo.append("\n[RequestContext] \n");
         exceptionInfo.append(tempBuilder);
         exceptionInfo.append("\n\n");
@@ -242,45 +219,48 @@ public class ExceptionInformation {
 
         // sessionContext
         exceptionInfo.append("\n[SessionContext]\n");
-        sessionContextAppend(request, tempBuilder, info);
-        info.setSessionContext(tempBuilder.toString());
+        sessionContextAppend(request, tempBuilder);
+        this.sessionContext = tempBuilder.toString();
         exceptionInfo.append(tempBuilder);
         exceptionInfo.append("\n\n");
         tempBuilder.setLength(0);
 
         // stackTrace
         stackTrace2StringAppend(ex.getStackTrace(), tempBuilder);
-        info.setStackTrace(tempBuilder.toString());
+        this.stackTrace = tempBuilder.toString();
         exceptionInfo.append(tempBuilder);
 
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         ex.printStackTrace(pw);
         String formattedST = sw.toString();
-        info.setFormattedStackTrace(formattedST);
+        this.formattedStackTrace = formattedST;
 
-        ActionMapping mapping = info.getActionMapping();
+        ActionMapping mapping = this.getActionMapping();
         if (mapping != null) {
-            Class<?> actionClass = actionClass(mapping.getType());
-            info.setActionErrorClass(actionClass);
-            if (DispatchAction.class.isAssignableFrom(actionClass)) {
-                // For DispatchActions we can try to better pinpoint the method...
-                info.setActionErrorMethod(request.getParameter(mapping.getParameter()));
-            } else {
-                // ... for the others, we can just look for execute
-                info.setActionErrorMethod("execute");
+            StackTraceElement element = getStackTraceElementForActionMapping(request, mapping, ex.getStackTrace());
+            if (element != null) {
+                this.actionErrorFile = element.getFileName();
+                this.actionErrorLine = element.getLineNumber();
             }
-            String getString = info.getActionErrorClass().getName() + "." + info.getActionErrorMethod();
-            String actionError = formattedST.substring(formattedST.indexOf(getString));
-            actionError = actionError.substring(0, actionError.indexOf("\n"));
-
-            //This breaks if native method or unknown source. But that is supposed to never happen in this context.
-            info.setActionErrorFile(actionError.substring(actionError.indexOf("(") + 1, actionError.indexOf(":")));
-            info.setActionErrorLine(actionError.substring(actionError.indexOf(":") + 1, actionError.indexOf(")")));
         }
 
-        info.setExceptionInfo(exceptionInfo.toString());
-        return info;
+        this.exceptionInfo = exceptionInfo.toString();
+    }
+
+    private final StackTraceElement getStackTraceElementForActionMapping(HttpServletRequest request, ActionMapping mapping,
+            StackTraceElement[] elements) {
+        Class<?> actionClass = actionClass(mapping.getType());
+        setActionErrorClass(actionClass);
+        String methodName =
+                DispatchAction.class.isAssignableFrom(actionClass) ? request.getParameter(mapping.getParameter()) : "execute";
+        setActionErrorMethod(methodName);
+        for (StackTraceElement element : elements) {
+            if (element.getClassName().equals(mapping.getType()) && element.getMethodName().equals(methodName)) {
+                return element;
+            }
+        }
+        return null;
     }
 
     private static final Class<?> actionClass(String type) {
@@ -291,45 +271,16 @@ public class ExceptionInformation {
         }
     }
 
-    public static String buildUncaughtExceptionInfo(HttpServletRequest request, Throwable ex) {
-
-        final StringBuilder exceptionInfo = headerAppend(ex, null);
-
-        // user
-        userInfoContextAppend(request, exceptionInfo, null);
-
-        // mappings
-        mappingContextAppend(request, exceptionInfo, null);
-
-        // requestContext
-        exceptionInfo.append("\n[RequestContext] \n");
-        requestContextAppend(request, exceptionInfo, null);
-        exceptionInfo.append("\n\n");
-
-        // sessionContext
-        exceptionInfo.append("\n[SessionContext]\n");
-        sessionContextAppend(request, exceptionInfo, null);
-        exceptionInfo.append("\n\n");
-
-        // stackTrace
-        stackTrace2StringAppend(ex.getStackTrace(), exceptionInfo);
-
-        return exceptionInfo.toString();
-    }
-
-    private static StringBuilder headerAppend(Throwable ex, ExceptionInformation info) {
+    private StringBuilder headerAppend(Throwable ex) {
         StringBuilder exceptionInfo = new StringBuilder("- - - - - - - - - - - Error Origin - - - - - - - - - - -\n");
         exceptionInfo.append("\n[Exception] ").append(ex.toString()).append("\n\n");
-        if (info != null) {
-            info.setException(ex);
-            info.setThreadName(Thread.currentThread().getName());
-            info.setFlatExceptionStack(ThrowableInfo.getFlatThrowableInfoList(ex));
-        }
+        setException(ex);
+        setThreadName(Thread.currentThread().getName());
+        setFlatExceptionStack(ThrowableInfo.getFlatThrowableInfoList(ex));
         return exceptionInfo;
     }
 
-    private static SupportRequestBean userInfoContextAppend(HttpServletRequest request, final StringBuilder exceptionInfo,
-            ExceptionInformation info) {
+    private SupportRequestBean userInfoContextAppend(HttpServletRequest request, final StringBuilder exceptionInfo) {
 
         exceptionInfo.append("[UserLoggedIn] ");
 
@@ -344,14 +295,12 @@ public class ExceptionInformation {
                 requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)
                         .getSelectedTopLevelContainer());
             }
-            if (info != null) {
-                info.setUserName(user);
-                Set<RoleType> roles = new HashSet<RoleType>();
-                for (Role role : userView.getPerson().getPersonRolesSet()) {
-                    roles.add(role.getRoleType());
-                }
-                info.setUserRoles(roles);
+            setUserName(user);
+            Set<RoleType> roles = new HashSet<RoleType>();
+            for (Role role : userView.getPerson().getPersonRolesSet()) {
+                roles.add(role.getRoleType());
             }
+            setUserRoles(roles);
         } else {
             user = "No user logged in, or session was lost.\n";
             requestBean = SupportRequestBean.generateExceptionBean(null);
@@ -360,26 +309,23 @@ public class ExceptionInformation {
         return requestBean;
     }
 
-    private static void mappingContextAppend(HttpServletRequest request, final StringBuilder exceptionInfo,
-            ExceptionInformation info) {
+    private void mappingContextAppend(HttpServletRequest request, final StringBuilder exceptionInfo) {
         String query = request.getQueryString();
-        if (info != null) {
-            info.setRequestURI(request.getRequestURI());
-            info.setRequestURL(request.getRequestURL().toString());
-            info.setRequestFullUrl(getRequestFullUrl(request));
-            info.setQueryString(query);
-            info.setRequestMethod(request.getMethod());
+        setRequestURI(request.getRequestURI());
+        setRequestURL(request.getRequestURL().toString());
+        setRequestFullUrl(getRequestFullUrl(request));
+        setQueryString(query);
+        setRequestMethod(request.getMethod());
 
-            String[] params = query.split("&");
-            Map<String, String> queryParameters = new HashMap<String, String>();
-            for (String param : params) {
-                String[] entry = param.split("=");
-                String name = entry[0];
-                String value = entry[1];
-                queryParameters.put(name, value);
-            }
-            info.setQueryParameters(queryParameters);
+        String[] params = query.split("&");
+        Map<String, String> queryParameters = new HashMap<String, String>();
+        for (String param : params) {
+            String[] entry = param.split("=");
+            String name = entry[0];
+            String value = entry[1];
+            queryParameters.put(name, value);
         }
+        setQueryParameters(queryParameters);
 
         exceptionInfo.append("[RequestURI] ").append(request.getRequestURI()).append("\n");
         exceptionInfo.append("[RequestURL] ").append(request.getRequestURL()).append("\n");
@@ -387,9 +333,7 @@ public class ExceptionInformation {
 
         if (request.getAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY) != null) {
             ActionMapping mapping = (ActionMapping) request.getAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY);
-            if (info != null) {
-                info.setActionMapping(mapping);
-            }
+            setActionMapping(mapping);
             exceptionInfo.append("[Path] ").append(mapping.getPath()).append("\n");
             exceptionInfo.append("[Name] ").append(mapping.getName()).append("\n");
         } else {
@@ -403,24 +347,20 @@ public class ExceptionInformation {
         return queryString == null ? requestFullURL.toString() : requestFullURL.append('?').append(queryString).toString();
     }
 
-    private static void requestContextAppend(HttpServletRequest request, StringBuilder exceptionInfo, ExceptionInformation info) {
+    private void requestContextAppend(HttpServletRequest request, StringBuilder exceptionInfo) {
 
         Map<String, Object> requestContext = new HashMap<String, Object>();
         Enumeration requestContents = request.getAttributeNames();
         while (requestContents.hasMoreElements()) {
             String requestElement = requestContents.nextElement().toString();
-            if (info != null) {
-                requestContext.put(requestElement, request.getAttribute(requestElement));
-            }
+            requestContext.put(requestElement, request.getAttribute(requestElement));
             exceptionInfo.append("RequestElement:").append(requestElement).append("\n");
             exceptionInfo.append("RequestElement Value:").append(request.getAttribute(requestElement)).append("\n");
         }
-        if (info != null) {
-            info.setRequestContextEntries(requestContext);
-        }
+        this.requestContextEntries = requestContext;
     }
 
-    private static void sessionContextAppend(HttpServletRequest request, StringBuilder exceptionInfo, ExceptionInformation info) {
+    private void sessionContextAppend(HttpServletRequest request, StringBuilder exceptionInfo) {
 
         Map<String, Object> sessionContext = new HashMap<String, Object>();
         HttpSession session = request.getSession(false);
@@ -428,15 +368,11 @@ public class ExceptionInformation {
             Enumeration sessionContents = session.getAttributeNames();
             while (sessionContents.hasMoreElements()) {
                 String sessionElement = sessionContents.nextElement().toString();
-                if (info != null) {
-                    sessionContext.put(sessionElement, session.getAttribute(sessionElement));
-                }
+                sessionContext.put(sessionElement, session.getAttribute(sessionElement));
                 exceptionInfo.append("Element:").append(sessionElement).append("\n");
                 exceptionInfo.append("Element Value:").append(session.getAttribute(sessionElement)).append("\n");
             }
-            if (info != null) {
-                info.setSessionContextEntries(sessionContext);
-            }
+            this.sessionContextEntries = sessionContext;
         }
     }
 
@@ -531,10 +467,6 @@ public class ExceptionInformation {
         this.flatExceptionStack = flatExceptionStack;
     }
 
-    private void setFormattedStackTrace(String formattedStackTrace) {
-        this.formattedStackTrace = formattedStackTrace;
-    }
-
     private void setRequestURI(String requestURI) {
         this.requestURI = requestURI;
     }
@@ -575,32 +507,8 @@ public class ExceptionInformation {
         this.extraInfo.addAll(extraInfo);
     }
 
-    private void setRequestBean(SupportRequestBean requestBean) {
-        this.requestBean = requestBean;
-    }
-
-    private void setExceptionInfo(String exceptionInfo) {
-        this.exceptionInfo = exceptionInfo;
-    }
-
-    private void setRequestContext(String requestContext) {
-        this.requestContext = requestContext;
-    }
-
-    private void setSessionContext(String sessionContext) {
-        this.sessionContext = sessionContext;
-    }
-
-    private void setStackTrace(String stackTrace) {
-        this.stackTrace = stackTrace;
-    }
-
-    public String getActionErrorLine() {
+    public int getActionErrorLine() {
         return actionErrorLine;
-    }
-
-    private void setActionErrorLine(String actionErrorLine) {
-        this.actionErrorLine = actionErrorLine;
     }
 
     public Class<?> getActionErrorClass() {
@@ -621,10 +529,6 @@ public class ExceptionInformation {
 
     private void setActionErrorMethod(String actionErrorMethod) {
         this.actionErrorMethod = actionErrorMethod;
-    }
-
-    private void setActionErrorFile(String actionErrorFile) {
-        this.actionErrorFile = actionErrorFile;
     }
 
     public Collection<RoleType> getUserRoles() {

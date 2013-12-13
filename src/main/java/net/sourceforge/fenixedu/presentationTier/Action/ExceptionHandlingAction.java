@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.EmailValidator;
 import org.apache.struts.Globals;
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -41,7 +42,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 /**
  * @author João Mota
  */
-@Mapping(path = "/showErrorPage", formBeanClass = ErrorMailForm.class)
+@Mapping(path = "/exceptionHandlingAction", formBeanClass = ErrorMailForm.class)
 public class ExceptionHandlingAction extends FenixDispatchAction {
 
     public static class ErrorMailForm extends FenixActionForm {
@@ -90,13 +91,16 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     private final String SEPARATOR =
             "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        if (CoreConfiguration.getConfiguration().developmentMode()) {
-            return new ActionForward("/debugExceptionPage.jsp");
+    @Mapping(path = "/showErrorPage")
+    public static class ShowErrorPageAction extends Action {
+        @Override
+        public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            if (CoreConfiguration.getConfiguration().developmentMode()) {
+                return new ActionForward("/debugExceptionPage.jsp");
+            }
+            return new ActionForward("/supportHelpInquiry.jsp");
         }
-        return new ActionForward("/supportHelpInquiry.jsp");
     }
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
