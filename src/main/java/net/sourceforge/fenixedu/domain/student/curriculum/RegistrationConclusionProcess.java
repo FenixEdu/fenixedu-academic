@@ -7,7 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -21,7 +21,7 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
 
     private RegistrationConclusionProcess(final RegistrationConclusionBean bean) {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
 
         final Registration registration = bean.getRegistration();
         final ExecutionYear conclusionYear = bean.getConclusionYear();
@@ -108,7 +108,7 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
     }
 
     @Override
-    public void setRootDomainObject(RootDomainObject rootDomainObject) {
+    public void setRootDomainObject(Bennu rootDomainObject) {
         throw new DomainException("error.ConclusionProcess.method.not.allowed");
     }
 

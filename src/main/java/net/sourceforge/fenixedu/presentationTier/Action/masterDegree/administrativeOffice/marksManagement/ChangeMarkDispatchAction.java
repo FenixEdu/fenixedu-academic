@@ -9,7 +9,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadInfoEnrolmentEvaluationByEvaluationOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -40,7 +40,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -57,7 +57,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
         List listEnrolmentEvaluation = null;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         try {
             listEnrolmentEvaluation =
                     ReadStudentMarksListByCurricularCourse.runReadStudentMarksListByCurricularCourse(userView,
@@ -100,7 +100,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         String showMarks = MarksManagementDispatchAction.getFromRequest("showMarks", request);
 
         List infoSiteEnrolmentEvaluations = null;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         try {
 
             infoSiteEnrolmentEvaluations =
@@ -333,7 +333,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(enrolmentEvaluation.getEnrolment()));
 
         try {
-            IUserView userView = UserView.getUser();
+            User userView = Authenticate.getUser();
 
             AlterStudentEnrolmentEvaluation.run(Integer.valueOf(curricularCourseId), enrolmentEvaluationCode,
                     infoEnrolmentEvaluation, infoTeacher.getTeacherId(), userView);

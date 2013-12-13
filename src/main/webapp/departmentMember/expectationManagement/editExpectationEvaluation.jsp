@@ -8,7 +8,7 @@
 <em><bean:message key="label.departmentMember" bundle="DEPARTMENT_MEMBER_RESOURCES"/></em>
 <h2><bean:message key="label.evaluate.expectations" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h2>
 
-<logic:present role="DEPARTMENT_MEMBER">
+<logic:present role="role(DEPARTMENT_MEMBER)">
 	
 	<logic:messagesPresent message="true">
 		<p>

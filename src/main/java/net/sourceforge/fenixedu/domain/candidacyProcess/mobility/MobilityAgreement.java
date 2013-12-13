@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
 public class MobilityAgreement extends MobilityAgreement_Base {
 
     private MobilityAgreement() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public MobilityAgreement(MobilityProgram program, UniversityUnit university) {
@@ -58,7 +58,7 @@ public class MobilityAgreement extends MobilityAgreement_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -1,0 +1,145 @@
+/* login.css | SOP : 21.08.2003*/
+
+/******************************************
+	Global Text Proprieties
+******************************************/
+body {
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F6F4ED;
+}
+
+table,div,span {
+	color: #333;
+}
+
+form {
+	
+}
+
+h1 {
+	font: bold 16px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #036;
+	margin-bottom:0px;
+}
+
+/******************************************
+	Structural Classes: Header & Tables
+******************************************/
+#container {
+	margin: 80px auto 0 auto;
+	width: 500px;
+	background-color: #f7f7f7;
+	padding: 0 0 20px 0;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	-moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.institutionName {
+	color:#AAA;
+	font-weight:bold;
+	margin-top:2px;
+	margin-bottom:21px;
+}
+
+#content {
+	width: 90%;
+	margin: 0 auto;
+}
+
+#header {
+	height: 70px;
+	background: #16576b;
+	border-bottom: 4px solid #277b97;
+}
+
+#dotist_id_container {
+	width: 115px;
+	margin-left: 25px;
+	background: transparent;
+	padding-top: 25px;
+}
+
+.error {
+	color: #c00;
+	margin-bottom: 4px;
+}
+
+.label {
+	font-weight: bold;
+	font-size: 13px;
+	}
+	
+#footer {
+	float: right;
+	padding: 10px;
+	vertical-align: bottom;
+}
+
+#footer tr {
+	vertical-align: middle;
+}
+
+#login_button {
+	padding-top: 10px;
+}
+
+.clear_both {
+	clear: both;
+}
+
+#support {
+	padding-right: 15px;
+	position: relative;
+    margin-top: 13px;
+}
+
+
+/******************************************
+	Form Classes: Input & Input Table
+******************************************/
+form {
+	color: #333;
+}
+
+input.button {
+	color: #000;
+	width: 70px;
+	padding: 2px;
+}
+
+input {
+	font: 14px Verdana, Arial, Helvetica, sans-serif;
+}
+
+input[type="text"], input[type="password"] {
+	font-size: 16px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	-webkit-border-radius: 3px;
+	width: 312px;
+}
+
+input[type="text"]:focus , input[type="password"]:focus {
+	
+	outline-color: #657799;
+}
+
+
+a.button {
+	color: #000;
+	background: #b5bdd6;
+	padding: 4px 6px;
+	text-decoration: none;
+	border-bottom: 2px solid #8c8a80;
+	border-right: 2px solid #8c8a80;
+	border-top: 2px solid #f8f7f0;
+	border-left: 2px solid #f8f7f0;
+}
+
+a[href] {
+	color: #427fed;
+}

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.joda.time.LocalDate;
 
@@ -9,7 +9,7 @@ public class CardGenerationRegister extends CardGenerationRegister_Base {
 
     public CardGenerationRegister() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CardGenerationRegister(final Person person, final String linePrefix, final LocalDate emission,
@@ -28,7 +28,7 @@ public class CardGenerationRegister extends CardGenerationRegister_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

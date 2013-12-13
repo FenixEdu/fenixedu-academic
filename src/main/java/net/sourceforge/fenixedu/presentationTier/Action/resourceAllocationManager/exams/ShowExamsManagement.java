@@ -14,7 +14,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.DeleteWrittenEvaluation;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExamByOID;
@@ -73,7 +73,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
     }
 
     private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixServiceException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         InfoExecutionDegree infoExecutionDegree =
                 (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
@@ -133,7 +133,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         ContextUtils.setCurricularYearContext(request);
         ContextUtils.setExecutionCourseContext(request);
@@ -153,7 +153,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
 
         ActionErrors actionErrors = new ActionErrors();
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         ContextUtils.setCurricularYearContext(request);
         ContextUtils.setExecutionCourseContext(request);

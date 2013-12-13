@@ -1,19 +1,20 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.User;
+
 public class InstitutionAffiliationEventTicket extends InstitutionAffiliationEventTicket_Base {
 
     protected InstitutionAffiliationEventTicket() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setGenerated(new DateTime());
     }
 
@@ -33,7 +34,7 @@ public class InstitutionAffiliationEventTicket extends InstitutionAffiliationEve
         final InstitutionAffiliationEvent event = getInstitutionAffiliationEvent();
         final Person person = event.getPerson();
         final User user = person.getUser();
-        builder.append(user.getUserUId());
+        builder.append(user.getUsername());
         builder.append(user.getExternalId());
 
         final DateTime instant = getGenerated();
@@ -62,7 +63,7 @@ public class InstitutionAffiliationEventTicket extends InstitutionAffiliationEve
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

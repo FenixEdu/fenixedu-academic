@@ -8,7 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlans;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurriculum;
@@ -44,7 +44,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
     public ActionForward getCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String studentCurricularPlanID = request.getParameter("studentCPID");
         if (studentCurricularPlanID == null) {
@@ -84,7 +84,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String studentNumber = getStudent(request);
         List infoStudents = null;
@@ -93,7 +93,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
         if (studentNumber == null) {
             try {
 
-                infoPerson = ReadPersonByUsername.run(userView.getUtilizador());
+                infoPerson = ReadPersonByUsername.run(userView.getUsername());
 
                 infoStudents = ReadStudentsByPerson.runReadStudentsByPerson(infoPerson);
             } catch (FenixServiceException e) {

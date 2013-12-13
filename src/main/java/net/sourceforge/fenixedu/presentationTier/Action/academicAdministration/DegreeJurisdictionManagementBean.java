@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 
 public class DegreeJurisdictionManagementBean implements Serializable {
@@ -137,7 +137,7 @@ public class DegreeJurisdictionManagementBean implements Serializable {
         List<PhdProgram> phds = new ArrayList<PhdProgram>();
         List<Degree> specs = new ArrayList<Degree>();
 
-        for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+        for (Degree degree : Bennu.getInstance().getDegreesSet()) {
             switch (degree.getDegreeType()) {
             case DEGREE:
                 preBologna.add(degree);
@@ -171,7 +171,7 @@ public class DegreeJurisdictionManagementBean implements Serializable {
             }
         }
 
-        for (PhdProgram phd : RootDomainObject.getInstance().getPhdProgramsSet()) {
+        for (PhdProgram phd : Bennu.getInstance().getPhdProgramsSet()) {
             if (!deas.contains(phd.getDegree())) {
                 phds.add(phd);
             }

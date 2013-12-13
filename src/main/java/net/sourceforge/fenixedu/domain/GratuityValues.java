@@ -2,11 +2,13 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collections;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class GratuityValues extends GratuityValues_Base {
 
     public GratuityValues() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         super.setPenaltyApplicable(true);
     }
 
@@ -153,7 +155,7 @@ public class GratuityValues extends GratuityValues_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

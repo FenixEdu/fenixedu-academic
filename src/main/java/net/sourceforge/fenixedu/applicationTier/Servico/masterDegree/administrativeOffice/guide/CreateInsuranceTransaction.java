@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
@@ -31,14 +31,14 @@ import pt.ist.fenixframework.FenixFramework;
 public class CreateInsuranceTransaction {
 
     @Atomic
-    public static void run(String guideEntryID, IUserView userView) throws ExistingServiceException {
+    public static void run(String guideEntryID, User userView) throws ExistingServiceException {
         check(RolePredicates.MANAGER_PREDICATE);
 
         GuideEntry guideEntry = FenixFramework.getDomainObject(guideEntryID);
         Guide guide = guideEntry.getGuide();
 
         Registration registration = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
-        Person responsible = Person.readPersonByUsername(userView.getUtilizador());
+        Person responsible = Person.readPersonByUsername(userView.getUsername());
 
         List insuranceTransactionList =
                 registration.readAllNonReimbursedInsuranceTransactionsByExecutionYear(guide.getExecutionDegree()

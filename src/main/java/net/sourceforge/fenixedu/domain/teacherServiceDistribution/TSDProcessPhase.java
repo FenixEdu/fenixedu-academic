@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.predicates.TSDProcessPhasePredicates;
 
@@ -16,7 +16,7 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
 
     protected TSDProcessPhase() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public TSDProcessPhase(TSDProcess tsdProcess, String name, TSDProcessPhase previousTSDProcessPhase,
@@ -440,7 +440,7 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

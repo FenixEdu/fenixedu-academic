@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.StringUtils;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -25,7 +26,7 @@ public class EmptyDegree extends EmptyDegree_Base {
 
     private EmptyDegree() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         super.setDegreeType(DegreeType.EMPTY);
     }
 
@@ -38,7 +39,7 @@ public class EmptyDegree extends EmptyDegree_Base {
         if (instance == null) {
             synchronized (EmptyDegree.class) {
                 if (instance == null) {
-                    for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+                    for (final Degree degree : Bennu.getInstance().getDegreesSet()) {
                         if (degree.isEmpty()) {
                             instance = (EmptyDegree) degree;
                         }

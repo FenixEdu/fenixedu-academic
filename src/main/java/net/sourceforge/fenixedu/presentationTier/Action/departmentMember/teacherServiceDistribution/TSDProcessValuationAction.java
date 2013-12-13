@@ -13,7 +13,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.ReadTSDCoursesFromTSDProcesses;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.ReadTSDTeachersFromTSDProcesses;
@@ -37,7 +37,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
@@ -65,7 +65,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     public ActionForward loadTSDProcessPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
@@ -120,7 +120,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     public ActionForward loadTSDProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcess tsdProcess = getTSDProcess(userView, dynaForm);
@@ -215,7 +215,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     public ActionForward exportTeacherServiceDistributionPlanningToExcel(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcess tsdProcess = getTSDProcess(userView, dynaForm);
@@ -324,7 +324,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 
     public ActionForward exportTSDProcessValuationToExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcess tsdProcess = getTSDProcess(userView, dynaForm);
@@ -443,7 +443,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
         spreadsheet.exportToXLSSheet(outputStream);
     }
 
-    private TeacherServiceDistribution getSelectedTeacherServiceDistribution(IUserView userView, DynaActionForm dynaForm,
+    private TeacherServiceDistribution getSelectedTeacherServiceDistribution(User userView, DynaActionForm dynaForm,
             TeacherServiceDistribution rootTeacherServiceDistribution) {
         TeacherServiceDistribution selectedTeacherServiceDistribution = getDomainObject(dynaForm, "tsd");
 
@@ -454,11 +454,11 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
         return selectedTeacherServiceDistribution;
     }
 
-    private TSDProcessPhase getSelectedTSDProcessPhase(IUserView userView, DynaActionForm dynaForm) {
+    private TSDProcessPhase getSelectedTSDProcessPhase(User userView, DynaActionForm dynaForm) {
         return getDomainObject(dynaForm, "tsdProcessPhase");
     }
 
-    private TSDProcess getTSDProcess(IUserView userView, DynaActionForm dynaForm) {
+    private TSDProcess getTSDProcess(User userView, DynaActionForm dynaForm) {
         return getDomainObject(dynaForm, "tsdProcess");
     }
 
@@ -494,7 +494,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
         dynaForm.set("viewStudentsEnrolmentsPerShift", false);
     }
 
-    private List<TSDTeacherDTOEntry> getTSDTeacherDTOEntries(IUserView userView, TSDProcessPhase selectedTSDProcessPhase,
+    private List<TSDTeacherDTOEntry> getTSDTeacherDTOEntries(User userView, TSDProcessPhase selectedTSDProcessPhase,
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
             throws FenixServiceException {
         Map<String, Pair<String, String>> tsdProcessIdMap = new HashMap<String, Pair<String, String>>();
@@ -505,7 +505,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
         return ReadTSDTeachersFromTSDProcesses.runReadTSDTeachersFromTSDProcesses(tsdProcessIdMap);
     }
 
-    private List<TSDCourseDTOEntry> getTSDCourseDTOEntries(IUserView userView, TSDProcessPhase selectedTSDProcessPhase,
+    private List<TSDCourseDTOEntry> getTSDCourseDTOEntries(User userView, TSDProcessPhase selectedTSDProcessPhase,
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
             throws FenixServiceException {
         Map<String, Pair<String, String>> tsdProcessIdMap = new HashMap<String, Pair<String, String>>();
@@ -528,7 +528,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
         request.setAttribute("viewStudentsEnrolmentsPerShift", viewStudentsEnrolmentsPerShift);
     }
 
-    private ExecutionSemester getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm,
+    private ExecutionSemester getSelectedExecutionPeriod(User userView, DynaActionForm dynaForm,
             List<ExecutionSemester> executionPeriodList) {
         ExecutionSemester selectedExecutionPeriod = getDomainObject(dynaForm, "executionPeriod");
 

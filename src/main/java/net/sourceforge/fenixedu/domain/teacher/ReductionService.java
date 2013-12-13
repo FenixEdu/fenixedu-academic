@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentCreditsPool;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.ApprovedTeacherEvaluationProcessMark;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessYear;
@@ -17,11 +16,13 @@ import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class ReductionService extends ReductionService_Base {
 
     public ReductionService(final TeacherService teacherService, final BigDecimal creditsReduction) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         if (teacherService == null) {
             throw new DomainException("arguments can't be null");
         }
@@ -35,7 +36,7 @@ public class ReductionService extends ReductionService_Base {
 
     public ReductionService(final TeacherService teacherService, final Boolean requestCreditsReduction) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         if (teacherService == null) {
             throw new DomainException("arguments can't be null");
         }
@@ -49,7 +50,7 @@ public class ReductionService extends ReductionService_Base {
 
     public ReductionService(final BigDecimal creditsReductionAttributed, final TeacherService teacherService) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         if (teacherService == null) {
             throw new DomainException("arguments can't be null");
         }
@@ -140,7 +141,7 @@ public class ReductionService extends ReductionService_Base {
 
     private BigDecimal getTeacherEvaluationMark() {
         FacultyEvaluationProcessYear lastFacultyEvaluationProcessYear = null;
-        for (final FacultyEvaluationProcessYear facultyEvaluationProcessYear : RootDomainObject.getInstance()
+        for (final FacultyEvaluationProcessYear facultyEvaluationProcessYear : Bennu.getInstance()
                 .getFacultyEvaluationProcessYearSet()) {
             if (facultyEvaluationProcessYear.getApprovedTeacherEvaluationProcessMarkSet().size() != 0
                     && (lastFacultyEvaluationProcessYear == null || facultyEvaluationProcessYear.getYear().compareTo(

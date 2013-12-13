@@ -4,7 +4,6 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -12,6 +11,8 @@ import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotati
 import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.joda.time.YearMonthDay;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public class Campus extends Campus_Base {
 
@@ -58,7 +59,7 @@ public class Campus extends Campus_Base {
     }
 
     public static Campus readActiveCampusByName(String campusName) {
-        for (Resource space : RootDomainObject.getInstance().getResources()) {
+        for (Resource space : Bennu.getInstance().getResourcesSet()) {
             if (space.isCampus() && ((Campus) space).isActive()
                     && ((Campus) space).getSpaceInformation().getName().equals(campusName)) {
                 return (Campus) space;

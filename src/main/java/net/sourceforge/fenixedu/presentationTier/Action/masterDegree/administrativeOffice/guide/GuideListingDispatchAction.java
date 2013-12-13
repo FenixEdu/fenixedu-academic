@@ -11,7 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuide;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuideByPersonID;
@@ -55,7 +55,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 
         DynaActionForm chooseGuideForm = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         // Get the Information
         Integer guideYear = new Integer((String) chooseGuideForm.get("year"));
@@ -76,7 +76,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
     public ActionForward chooseGuide(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         Integer guideYear = new Integer(request.getParameter("year"));
         Integer guideNumber = new Integer(request.getParameter("number"));
 
@@ -108,7 +108,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
     public ActionForward getPersonGuideList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         DynaActionForm choosePersonForm = (DynaActionForm) form;
 
         String identificationDocumentNumber = (String) choosePersonForm.get("identificationDocumentNumber");
@@ -158,7 +158,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
     public ActionForward chooseGuideByPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String personID = request.getParameter("personID");
 

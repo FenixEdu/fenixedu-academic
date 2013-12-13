@@ -2,20 +2,20 @@ package net.sourceforge.fenixedu.presentationTier.renderers.actions;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 
 import org.apache.struts.action.Action;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 
 public abstract class NavigationAction extends Action {
     public static final String NAVIGATION_SHOW = "show";
 
-    protected IUserView getUserView(HttpServletRequest request) {
-        return UserView.getUser();
+    protected User getUserView(HttpServletRequest request) {
+        return Authenticate.getUser();
 
     }
 

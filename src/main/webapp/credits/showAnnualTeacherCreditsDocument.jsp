@@ -290,7 +290,7 @@ padding: 0;
 			</fr:view>
 		</logic:equal>
 		<logic:notEqual name="annualTeachingCreditsBean" property="canSeeCreditsReduction" value="true">
-			<bean:message key="label.confidencialInformation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+			<bean:message key="label.confidentialInformation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 		</logic:notEqual>
 
 

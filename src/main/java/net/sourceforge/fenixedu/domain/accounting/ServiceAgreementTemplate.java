@@ -9,7 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
@@ -20,7 +20,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 
     protected ServiceAgreementTemplate() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setCreationDate(new DateTime());
     }
 
@@ -209,7 +209,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

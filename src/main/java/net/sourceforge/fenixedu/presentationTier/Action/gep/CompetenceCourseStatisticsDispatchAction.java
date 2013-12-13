@@ -16,7 +16,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCurricularCourseStatistics;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -57,7 +57,7 @@ public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchActio
     public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, IOException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         String executionYearID = (String) dynaActionForm.get("executionYearID");
         String agreementName = (String) dynaActionForm.get("registrationAgreement");

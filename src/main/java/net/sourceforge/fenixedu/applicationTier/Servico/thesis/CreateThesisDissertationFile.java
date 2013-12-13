@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.io.FileUtils;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -28,7 +29,7 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
     protected void removePreviousFile(Thesis thesis) {
         ThesisFile dissertation = thesis.getDissertation();
         if (dissertation != null) {
-            if (AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+            if (Authenticate.getUser().getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
                 dissertation.deleteWithoutStateCheck();
             } else {
                 dissertation.delete();

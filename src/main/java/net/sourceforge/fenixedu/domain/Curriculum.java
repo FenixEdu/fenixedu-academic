@@ -5,11 +5,11 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -22,8 +22,8 @@ public class Curriculum extends Curriculum_Base {
 
     public Curriculum() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        final IUserView userView = AccessControl.getUserView();
+        setRootDomainObject(Bennu.getInstance());
+        final User userView = Authenticate.getUser();
         if (userView != null) {
             this.setPersonWhoAltered(userView.getPerson());
         }
@@ -39,7 +39,7 @@ public class Curriculum extends Curriculum_Base {
         this.setOperacionalObjectivesEn(operacionalObjectivesEn);
         this.setProgramEn(programEn);
 
-        final IUserView userView = AccessControl.getUserView();
+        final User userView = Authenticate.getUser();
         this.setPersonWhoAltered(userView.getPerson());
         this.setLastModificationDateDateTime(new DateTime());
     }
@@ -106,7 +106,7 @@ public class Curriculum extends Curriculum_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

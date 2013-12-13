@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInfo
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -54,16 +55,17 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
-        request.setAttribute("application.name", bundle.getString(getCandidacyNameKey()));
+        request.setAttribute("application.name", getStringFromDefaultBundle(getCandidacyNameKey()));
         request.setAttribute("mappingPath", mapping.getPath());
         request.setAttribute("isApplicationSubmissionPeriodValid", isApplicationSubmissionPeriodValid());
-        request.setAttribute("application.information.link.default",
-                bundle.getString(getCandidacyInformationLinkDefaultLanguage()));
-        request.setAttribute("application.information.link.english", bundle.getString(getCandidacyInformationLinkEnglish()));
-
+        request.setAttribute("application.information.link.default", getCandidacyInformationLinkDefaultLanguage());
+        request.setAttribute("application.information.link.english", getCandidacyInformationLinkEnglish());
         setProcess(request);
         return super.execute(mapping, actionForm, request, response);
+    }
+
+    protected String getStringFromDefaultBundle(String key) {
+        return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(key);
     }
 
     @Override
@@ -642,11 +644,12 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
         Locale locale = Language.getLocale();
         String countryCode = readCountryCode(locale);
 
+        String institutionalURL = Instalation.getInstance().getInstituitionURL();
         if ("PT".equals(countryCode)) {
-            return redirect("https://www.ist.utl.pt/pt/candidatos/candidaturas/", request, false);
+            return redirect(institutionalURL + "pt/candidatos/candidaturas/", request, false);
         }
 
-        return redirect("https://www.ist.utl.pt/en/prospective-students/admissions/", request, false);
+        return redirect(institutionalURL + "en/prospective-students/admissions/", request, false);
     }
 
     static private String readCountryCode(final Locale locale) {

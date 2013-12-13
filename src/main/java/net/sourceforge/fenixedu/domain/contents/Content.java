@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
@@ -46,7 +47,7 @@ public abstract class Content extends Content_Base {
     public Content() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         // setOjbConcreteClass(getClass().getName());
         setCreationDate(new DateTime());
         setContentId(UUID.randomUUID().toString());
@@ -196,7 +197,7 @@ public abstract class Content extends Content_Base {
      * this method <strong>must</strong> call super to remove all relations.
      * 
      * <p>
-     * If other objects should be deleted because of this object beeing deleted, this is the place to do it.
+     * If other objects should be deleted because of this object being deleted, this is the place to do it.
      */
     protected void disconnect() {
         disconnectContent();
@@ -227,7 +228,7 @@ public abstract class Content extends Content_Base {
 
     /**
      * Finalizes the state of this content, that is, does the last finalization
-     * after beeing disconnected but before being marked for deleting from the
+     * after being disconnected but before being marked for deleting from the
      * persistent storage.
      */
     protected void deleteSelf() {
@@ -426,7 +427,7 @@ public abstract class Content extends Content_Base {
     @Override
     public void setAvailabilityPolicy(AvailabilityPolicy availabilityPolicy) {
         AvailabilityPolicy currentAvailabilityPolicy = getAvailabilityPolicy();
-        if (currentAvailabilityPolicy != null) {
+	if (currentAvailabilityPolicy != null && currentAvailabilityPolicy != availabilityPolicy) {
             currentAvailabilityPolicy.delete();
         }
         super.setAvailabilityPolicy(availabilityPolicy);
@@ -434,21 +435,19 @@ public abstract class Content extends Content_Base {
 
     @Override
     public void setName(final MultiLanguageString name) {
-        if (!isNameValid(name)) {
-            throw new DomainException("label.error.content.invalid.name");
-        }
+        checkInvalidCharacters(name);
         super.setName(name);
         setNormalizedName(normalize(name));
     }
 
-    private boolean isNameValid(MultiLanguageString name) {
+    private void checkInvalidCharacters(MultiLanguageString name) {
+        String validChars = "_\\- .,:;!()*$&'=@";
         for (String content : name.getAllContents()) {
-            if (content.indexOf('?') >= 0 || content.indexOf('/') > 0 || content.indexOf('"') > 0 || content.indexOf('+') > 0
-                    || content.indexOf('>') > 0 || content.indexOf('<') > 0) {
-                return false;
+            // if the accepted character list is changed, consider changing the 'File.java' list as well
+            if (!Pattern.matches("[\\p{IsLatin}0-9" + validChars + "]+", content)) {
+                throw new DomainException("label.error.content.invalid.name", validChars.replace("\\", ""));
             }
         }
-        return true;
     }
 
     @Override
@@ -559,7 +558,7 @@ public abstract class Content extends Content_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

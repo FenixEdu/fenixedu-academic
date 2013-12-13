@@ -7,7 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan.ReadStudentsByNameIDnumberIDtypeAndStudentNumber;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -80,7 +80,7 @@ public class SeeStudentAndCurricularPlansDispatchAction extends FenixDispatchAct
             return mapping.getInputForward();
         }
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         List studentList = ReadStudentsByNameIDnumberIDtypeAndStudentNumber.run(studentName2, idNumber2, idType2, studentNumber2);
         if (studentList != null && !studentList.isEmpty()) {

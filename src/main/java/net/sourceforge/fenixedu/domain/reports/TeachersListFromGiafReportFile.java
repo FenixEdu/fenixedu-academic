@@ -74,7 +74,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
     private void listTeachers(Spreadsheet spreadsheet, final ExecutionYear executionYear) throws IOException {
         generateNameAndHeaders(spreadsheet, executionYear);
-        for (final Teacher teacher : getRootDomainObject().getTeachers()) {
+        for (final Teacher teacher : getRootDomainObject().getTeachersSet()) {
             PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
             if (personProfessionalData != null) {
                 GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalData();

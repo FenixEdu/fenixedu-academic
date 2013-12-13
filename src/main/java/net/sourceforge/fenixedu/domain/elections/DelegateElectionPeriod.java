@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.elections;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
@@ -8,7 +8,7 @@ import org.joda.time.YearMonthDay;
 public abstract class DelegateElectionPeriod extends DelegateElectionPeriod_Base {
 
     public DelegateElectionPeriod() {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Override
@@ -73,7 +73,7 @@ public abstract class DelegateElectionPeriod extends DelegateElectionPeriod_Base
     public abstract boolean isOpenRoundElections();
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

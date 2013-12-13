@@ -12,7 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -38,7 +38,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -78,7 +78,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
     public ActionForward showBranches(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         String degreeCurricularPlanIdString = request.getParameter("degreeCurricularPlanId");
         String degreeIdString = request.getParameter("degreeId");
 
@@ -118,7 +118,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm deleteForm = (DynaActionForm) form;
 
         List branchesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
@@ -152,7 +152,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
     public ActionForward forceDelete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm deleteForm = (DynaActionForm) form;
 
         List branchesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
@@ -181,7 +181,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         String degreeCurricularPlanIdString = request.getParameter("degreeCurricularPlanId");
         String degreeIdString = request.getParameter("degreeId");
 
@@ -238,7 +238,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         DynaActionForm editForm = (DynaActionForm) form;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         String branchId = request.getParameter("branchId");
 
         InfoBranch infoBranch;
@@ -263,7 +263,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         String branchId = request.getParameter("branchId");
 
         DynaActionForm editForm = (DynaActionForm) form;

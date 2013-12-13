@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.over23;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
@@ -49,12 +51,14 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
 
     @Override
     protected String getCandidacyInformationLinkDefaultLanguage() {
-        return "link.candidacy.information.default.over23";
+        String message = getStringFromDefaultBundle("link.candidacy.information.default.over23");
+        return MessageFormat.format(message, Instalation.getInstance().getInstituitionURL());
     }
 
     @Override
     protected String getCandidacyInformationLinkEnglish() {
-        return "link.candidacy.information.english.over23";
+        String message = getStringFromDefaultBundle("link.candidacy.information.english.over23");
+        return MessageFormat.format(message, Instalation.getInstance().getInstituitionURL());
     }
 
     @Override

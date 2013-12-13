@@ -8,7 +8,7 @@
 <em><bean:message key="label.departmentMember"/></em>
 <h2><bean:message key="label.see.teachers.personal.expectations"/></h2>
 
-<logic:present role="DEPARTMENT_MEMBER">
+<logic:present role="role(DEPARTMENT_MEMBER)">
 	
 	<bean:define id="teacher" name="teacherPersonalExpectation" property="teacher" />	
 	<p><bean:message key="label.common.executionYear" bundle="DEPARTMENT_MEMBER_RESOURCES"/>: <bean:write name="teacherPersonalExpectation" property="executionYear.year"/></p>

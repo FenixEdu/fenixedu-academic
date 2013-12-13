@@ -644,7 +644,6 @@
                   <forward path="manage-execution-course-confirmSectionDelete" name="confirmSectionDelete"></forward>
                   <forward path="manage-execution-course-editSectionPermissions" name="editSectionPermissions"></forward>
                   <forward path="manage-execution-course-editItemPermissions" name="editItemPermissions"></forward>
-                  <forward path="manage-execution-course-editFile" name="editFile"></forward>
                   <forward path="create-scorm" name="createScorm"></forward>
                   <forward path="upload-scorm" name="uploadScorm"></forward>
                   <forward path="manage-execution-course-pool" name="addInstitutionSection"></forward>
@@ -1105,7 +1104,7 @@
             <!-- End of action mappings for tests -->
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="DEFAULT" parameter="resources.ApplicationResources"></message-resources>

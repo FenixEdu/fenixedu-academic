@@ -10,9 +10,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.FenixUtilException;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.SmsSendUtilException;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -67,19 +67,19 @@ public class SmsUtil {
      * Default constructor (reads "/SMSCofiguration.properties")
      */
     private SmsUtil() {
-        this.host = PropertiesManager.getProperty("sms.gateway.host");
-        this.uri = PropertiesManager.getProperty("sms.gateway.uri");
-        this.port = (new Integer(PropertiesManager.getProperty("sms.gateway.port"))).intValue();
-        this.protocol = PropertiesManager.getProperty("sms.gateway.protocol");
-        this.username = PropertiesManager.getProperty("sms.gateway.username").trim();
-        this.password = PropertiesManager.getProperty("sms.gateway.password").trim();
-        this.monthlySmsLimit = (new Integer(PropertiesManager.getProperty("monthlySmsLimit"))).intValue();
-        this.deliveryUsername = PropertiesManager.getProperty("sms.delivery.username").trim();
-        this.deliveryPassword = PropertiesManager.getProperty("sms.delivery.password").trim();
-        this.deliveryHost = PropertiesManager.getProperty("sms.delivery.host");
-        this.deliveryPort = (new Integer(PropertiesManager.getProperty("sms.delivery.port"))).intValue();
-        this.deliveryUri = PropertiesManager.getProperty("sms.delivery.uri");
-        this.deliveryProtocol = PropertiesManager.getProperty("sms.delivery.protocol");
+        this.host = FenixConfigurationManager.getConfiguration().getSMSGatewayHost();
+        this.uri = FenixConfigurationManager.getConfiguration().getSMSGatewayUri();
+        this.port = FenixConfigurationManager.getConfiguration().getSMSGatewayPort();
+        this.protocol = FenixConfigurationManager.getConfiguration().getSMSGatewayProtocol();
+        this.username = FenixConfigurationManager.getConfiguration().getSMSGatewayUsername().trim();
+        this.password = FenixConfigurationManager.getConfiguration().getSMSGatewayPassword().trim();
+        this.monthlySmsLimit = FenixConfigurationManager.getConfiguration().getMonthlySmsLimit();
+        this.deliveryUsername = FenixConfigurationManager.getConfiguration().getSMSDeliveryUsername().trim();
+        this.deliveryPassword = FenixConfigurationManager.getConfiguration().getSMSDeliveryPassword().trim();
+        this.deliveryHost = FenixConfigurationManager.getConfiguration().getSMSDeliveryHost();
+        this.deliveryPort = FenixConfigurationManager.getConfiguration().getSMSDeliveryPort();
+        this.deliveryUri = FenixConfigurationManager.getConfiguration().getSMSDeliveryUri();
+        this.deliveryProtocol = FenixConfigurationManager.getConfiguration().getSMSDeliveryProtocol();
     }
 
     /**

@@ -4,6 +4,8 @@ import java.util.Comparator;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class ProjectSubmissionLog extends ProjectSubmissionLog_Base {
 
     public static Comparator<ProjectSubmissionLog> COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE =
@@ -20,7 +22,7 @@ public class ProjectSubmissionLog extends ProjectSubmissionLog_Base {
 
     public ProjectSubmissionLog() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ProjectSubmissionLog(DateTime submissionDateTime, String filename, String fileMimeType, String fileChecksum,
@@ -58,7 +60,7 @@ public class ProjectSubmissionLog extends ProjectSubmissionLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

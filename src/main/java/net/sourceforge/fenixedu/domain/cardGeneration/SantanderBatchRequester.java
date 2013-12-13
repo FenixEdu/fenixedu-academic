@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class SantanderBatchRequester extends SantanderBatchRequester_Base {
 
     private SantanderBatchRequester() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public SantanderBatchRequester(Person requester) {
@@ -23,7 +23,7 @@ public class SantanderBatchRequester extends SantanderBatchRequester_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

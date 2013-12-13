@@ -14,7 +14,7 @@
 	<body>
 		<div id="container">
 			<div id="dotist_id">
-				<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
+				<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>"
 						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
 			</div>
 			<div id="txt">

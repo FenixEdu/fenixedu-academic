@@ -5,9 +5,9 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
+<%@ page import="pt.ist.bennu.core.domain.User"%>
 
-<logic:present role="DEPARTMENT_MEMBER">
+<logic:present role="role(DEPARTMENT_MEMBER)">
 
 	<ul>	
 		<li class="navheader"><bean:message key="label.teacher"/></li>
@@ -46,7 +46,7 @@
             	</html:link>
         	</li>
 	--%>
-		<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.vigilantWrappers">
+		<logic:notEmpty name="USER_SESSION_ATTRIBUTE" property="user.person.vigilantWrappers">
 			<li>
 				<html:link page="/vigilancy/vigilantManagement.do?method=prepareMap">
 					<bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/>
@@ -96,7 +96,7 @@
 	<% } %>
 	<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 	<ul style="margin-top: 1em">
-		<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>"/>
+		<bean:define id="userView" name="USER_SESSION_ATTRIBUTE" property="user" />
 		<% String deiCode = "28"; %>
 		<logic:notEmpty name="userView" property="person.teacher">
 			<logic:notEmpty name="userView" property="person.teacher.currentWorkingDepartment">	
@@ -127,7 +127,7 @@
 			</logic:notEmpty>
 		</logic:notEmpty>	
 	</ul>	
-	<% IUserView user = (IUserView) userView; 
+	<% User user = (User) userView; 
 	 if (user.getPerson().hasTeacher() && user.getPerson().getTeacher().hasAnyExecutionCourseAudits()) { %>
 		<ul style="margin-top: 1em">
 			<li class="navheader"><bean:message key="link.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></li>

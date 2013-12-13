@@ -5,12 +5,13 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public class ExternalContract extends ExternalContract_Base {
 
@@ -70,7 +71,7 @@ public class ExternalContract extends ExternalContract_Base {
 
     private boolean externalPersonsAlreadyExists(final String name, final String address, final Unit institution) {
 
-        for (final Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
+        for (final Accountability accountability : Bennu.getInstance().getAccountabilitysSet()) {
             if (accountability instanceof ExternalContract) {
                 final ExternalContract externalPerson = (ExternalContract) accountability;
                 if (externalPerson.hasPerson()) {
@@ -100,7 +101,7 @@ public class ExternalContract extends ExternalContract_Base {
     public static List<ExternalContract> readByPersonName(String name) {
         List<ExternalContract> allExternalPersons = new ArrayList<ExternalContract>();
         final String nameToMatch = (name == null) ? null : name.replaceAll("%", ".*").toLowerCase();
-        for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
+        for (Accountability accountability : Bennu.getInstance().getAccountabilitysSet()) {
             if (accountability instanceof ExternalContract) {
                 ExternalContract externalPerson = (ExternalContract) accountability;
                 if (externalPerson.hasPerson() && externalPerson.getPerson().getName().toLowerCase().matches(nameToMatch)) {
@@ -113,7 +114,7 @@ public class ExternalContract extends ExternalContract_Base {
 
     public static ExternalContract readByPersonNameAddressAndInstitutionID(final String name, final String address,
             final String institutionID) {
-        for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
+        for (Accountability accountability : Bennu.getInstance().getAccountabilitysSet()) {
             if (accountability instanceof ExternalContract) {
                 ExternalContract externalPerson = (ExternalContract) accountability;
                 if (externalPerson.hasPerson() && externalPerson.getPerson().getName().equals(name)
@@ -132,7 +133,7 @@ public class ExternalContract extends ExternalContract_Base {
         if (accountabilityIDs == null || accountabilityIDs.isEmpty()) {
             return externalPersons;
         }
-        for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
+        for (Accountability accountability : Bennu.getInstance().getAccountabilitysSet()) {
             if (accountability instanceof ExternalContract) {
                 ExternalContract externalPerson = (ExternalContract) accountability;
                 if (accountabilityIDs.contains(externalPerson.getExternalId())) {

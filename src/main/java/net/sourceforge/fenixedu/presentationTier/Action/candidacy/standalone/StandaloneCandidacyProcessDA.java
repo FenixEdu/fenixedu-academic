@@ -27,6 +27,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -211,7 +212,7 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
         final Spreadsheet spreadsheet = createSpreadSheet();
         for (final StandaloneIndividualCandidacyProcess candidacy : process
                 .getSortedStandaloneIndividualCandidaciesThatCanBeSendToJury()) {
-            if (candidacy.canExecuteActivity(AccessControl.getUserView())) {
+            if (candidacy.canExecuteActivity(Authenticate.getUser())) {
                 addRow(spreadsheet, candidacy);
             }
         }

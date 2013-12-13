@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.material;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
@@ -59,7 +59,7 @@ public class PersonExtension extends PersonExtension_Base {
         return ((end == null || !this.getBegin().isAfter(end)) && (this.getEnd() == null || !this.getEnd().isBefore(begin)));
     }
 
-    public RootDomainObject getRootDomainObject() {
+    public Bennu getRootDomainObject() {
         Person person = getPerson();
         return (person == null) ? null : person.getRootDomainObject();
     }

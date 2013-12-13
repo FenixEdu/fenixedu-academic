@@ -13,7 +13,7 @@
             <action forward="/private/filter.do?method={1}" path="/filter/*"></action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================= -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="FUNCTIONALITY_RESOURCES" parameter="resources.FunctionalityResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>

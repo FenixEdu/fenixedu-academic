@@ -11,6 +11,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/respondToAlumniInquiriesQuestion")
 public class RespondToAlumniInquiriesQuestion extends FenixDispatchAction {
 
     public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -19,7 +22,7 @@ public class RespondToAlumniInquiriesQuestion extends FenixDispatchAction {
         for (final CerimonyInquiryPerson cerimonyInquiryPerson : person.getCerimonyInquiryPersonSet()) {
             if (cerimonyInquiryPerson.isPendingResponse()) {
                 request.setAttribute("cerimonyInquiryPerson", cerimonyInquiryPerson);
-                return mapping.findForward("respondToInquiriesQuestion");
+                return new ActionForward("/respondToAlumniInquiriesQuestion.jsp");
             }
         }
         return forward("/home.do");

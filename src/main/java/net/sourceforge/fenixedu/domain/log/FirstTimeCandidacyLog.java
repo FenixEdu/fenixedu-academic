@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.log;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 
@@ -21,8 +21,8 @@ public class FirstTimeCandidacyLog extends FirstTimeCandidacyLog_Base {
         this.addFirstTimeCandidacyLogEntry(new FirstTimeCandidacyLogEntry(stage, timestamp, this));
     }
 
-    protected RootDomainObject getRootDomainObject() {
-        return RootDomainObject.getInstance();
+    protected Bennu getRootDomainObject() {
+        return Bennu.getInstance();
     }
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.log.FirstTimeCandidacyLogEntry> getFirstTimeCandidacyLogEntry() {

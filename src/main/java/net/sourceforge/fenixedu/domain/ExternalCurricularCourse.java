@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
@@ -42,7 +43,7 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 
         checkForExternalCurricularCourseWithSameNameAndCode(unit, name, code);
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setUnit(unit);
         setName(name);
         setCode(code);
@@ -136,8 +137,7 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 
     static public List<ExternalCurricularCourse> readExternalCurricularCoursesByCode(String code) {
         List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>();
-        for (final ExternalCurricularCourse externalCurricularCourse : RootDomainObject.getInstance()
-                .getExternalCurricularCourses()) {
+        for (final ExternalCurricularCourse externalCurricularCourse : Bennu.getInstance().getExternalCurricularCoursesSet()) {
             if (StringUtils.isEmpty(externalCurricularCourse.getCode()) && StringUtils.isEmpty(code)
                     || externalCurricularCourse.getCode().equals(code)) {
                 result.add(externalCurricularCourse);
@@ -152,8 +152,7 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
         }
         final String nameToMatch = name.replaceAll("%", ".*").toLowerCase();
         final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>();
-        for (final ExternalCurricularCourse externalCurricularCourse : RootDomainObject.getInstance()
-                .getExternalCurricularCoursesSet()) {
+        for (final ExternalCurricularCourse externalCurricularCourse : Bennu.getInstance().getExternalCurricularCoursesSet()) {
             if (externalCurricularCourse.getName().toLowerCase().matches(nameToMatch)) {
                 result.add(externalCurricularCourse);
             }
@@ -177,7 +176,7 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

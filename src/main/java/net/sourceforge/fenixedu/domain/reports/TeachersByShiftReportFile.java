@@ -4,7 +4,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.NonRegularTeachingService;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -42,7 +42,7 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
 
         //TODO remove when the main external teachers structure is global for everyone
         Set<NonRegularTeachingService> nonRegularTeachingServices =
-                RootDomainObject.getInstance().getNonRegularTeachingServicesSet();
+                Bennu.getInstance().getNonRegularTeachingServicesSet();
 
         for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriods()) {
             //TODO remove this cycle when the main external teachers structure is global for everyone

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.reports;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
@@ -45,7 +45,7 @@ public class PublicationReportFile extends PublicationReportFile_Base {
         spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.GEPResources", "link.publication.journalOrEvent"));
         spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.GEPResources", "link.publication.id"));
 
-        for (final ResearchResult researchResult : RootDomainObject.getInstance().getResultsSet()) {
+        for (final ResearchResult researchResult : Bennu.getInstance().getResultsSet()) {
             if (researchResult instanceof ResearchResultPublication) {
                 final ResearchResultPublication researchResultPublication = (ResearchResultPublication) researchResult;
                 for (final ResultParticipation resultParticipation : researchResultPublication.getResultParticipationsSet()) {

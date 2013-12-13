@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.predicates.ResultPredicates;
@@ -19,7 +19,7 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
 
     private ResultUnitAssociation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     ResultUnitAssociation(ResearchResult result, Unit unit, ResultUnitAssociationRole role) {
@@ -109,7 +109,7 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

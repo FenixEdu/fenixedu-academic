@@ -15,7 +15,7 @@ public class AddCoordinator {
     @Atomic
     public static Boolean run(final String executionDegreeId, final String istUsername) throws FenixServiceException {
 
-        final Person person = Person.readPersonByIstUsername(istUsername);
+        final Person person = Person.readPersonByUsername(istUsername);
         if (person == null) {
             throw new FenixServiceException("error.noEmployeeForIstUsername");
         }

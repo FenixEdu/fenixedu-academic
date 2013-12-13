@@ -14,6 +14,10 @@
     </p>
 </div>
 
+<html:messages id="message" message="true" bundle="STUDENT_RESOURCES">
+    <p><span class="error0"><bean:write name="message"/></span></p>
+</html:messages>
+
 <bean:define id="callbackUrl" type="java.lang.String">/thesisSubmission.do?method=prepareThesisSubmission&amp;thesisId=<bean:write name="thesis" property="externalId"/></bean:define>
 <bean:define id="uploadUrl" type="java.lang.String">/thesisSubmission.do?method=uploadAbstract&amp;thesisId=<bean:write name="thesis" property="externalId"/></bean:define>
 <fr:form action="<%= uploadUrl %>" encoding="multipart/form-data">

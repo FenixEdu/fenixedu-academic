@@ -2,7 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.caseHandling;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixframework.Atomic;
@@ -12,12 +13,12 @@ public class CreateNewProcess {
 
     @Atomic
     public static Process run(String processName, Object object) {
-        return Process.createNewProcess(AccessControl.getUserView(), processName, object);
+        return Process.createNewProcess(Authenticate.getUser(), processName, object);
     }
 
     @Atomic
     public static Process run(Class<? extends Process> processClass, Object object) {
-        return Process.createNewProcess(AccessControl.getUserView(), processClass, object);
+        return Process.createNewProcess(Authenticate.getUser(), processClass, object);
     }
 
     /**
@@ -39,7 +40,7 @@ public class CreateNewProcess {
      */
     @Atomic
     public static Process run(Class<? extends Process> processClass, Object object, final List<Pair<Class<?>, Object>> activities) {
-        final IUserView userView = AccessControl.getUserView();
+        final User userView = Authenticate.getUser();
         final Process process = Process.createNewProcess(userView, processClass, object);
 
         for (final Pair<Class<?>, Object> activity : activities) {

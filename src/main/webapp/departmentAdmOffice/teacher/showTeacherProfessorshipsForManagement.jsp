@@ -72,13 +72,13 @@
 					<bean:message key="label.professorship.responsibleFor"/>
 				</th>
 				
-				<logic:present role="CREDITS_MANAGER">
+				<logic:present role="role(CREDITS_MANAGER)">
 					<th class="listClasses-header">
 						<bean:message key="label.professorship.hours"/>
 					</th>
 				</logic:present>
 				
-				<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+				<logic:present role="role(DEPARTMENT_CREDITS_MANAGER)">
 					<logic:equal name="isDepartmentManager" value="true">
 						<th class="listClasses-header">
 							<bean:message key="label.professorship.remove" />
@@ -93,7 +93,7 @@
 
 				<tr>
 					<td class="listClasses" style="text-align:left">
-						<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+						<logic:present role="role(DEPARTMENT_CREDITS_MANAGER)">
 							<html:hidden alt='<%= "hours("+ executionCourseId +")" %>' property='<%= "hours("+ executionCourseId +")" %>' />							
 						</logic:present>
 					
@@ -114,7 +114,7 @@
 						<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>
 					</td>
 					<td class="listClasses">
-						<logic:present role="DEPARTMENT_CREDITS_MANAGER,CREDITS_MANAGER">
+						<logic:present role="(role(DEPARTMENT_CREDITS_MANAGER) | role(CREDITS_MANAGER))">
 							<logic:equal name="isDepartmentManager" value="true">
 								<bean:define id="executionCourseId" name="infoExecutionCourse" property="externalId" />
 									<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.executionCourseResponsability" property="executionCourseResponsability" value="<%= executionCourseId.toString() %>" />
@@ -129,7 +129,7 @@
 							</logic:equal>
 						</logic:present>
 					</td>
-					<logic:present role="CREDITS_MANAGER">
+					<logic:present role="role(CREDITS_MANAGER)">
 						<td class="listClasses">
 							<logic:equal name="detailedProfessorship" property="masterDegreeOnly" value="true">
 								<html:text alt='<%= "hours("+ executionCourseId +")" %>' property='<%= "hours("+ executionCourseId +")" %>' size="5"/>
@@ -140,7 +140,7 @@
 						</td>
 					</logic:present>
 
-					<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+					<logic:present role="role(DEPARTMENT_CREDITS_MANAGER)">
 						<logic:equal name="isDepartmentManager" value="true">					
 							<td class="listClasses">
 								<bean:define id="removeLink">
@@ -155,14 +155,14 @@
 				</tr>
 			</logic:iterate>
 	 	</table>
-		<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+		<logic:present role="role(DEPARTMENT_CREDITS_MANAGER)">
 			<logic:equal name="isDepartmentManager" value="true">
 			 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			 		<bean:message key="button.save"/>
 			 	</html:submit>
 			</logic:equal>
 		</logic:present>		 	
-		<logic:present role="CREDITS_MANAGER">
+		<logic:present role="role(CREDITS_MANAGER)">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.save" property="save" styleClass="inputbutton">
 				<bean:message key="button.submit" />
 			</html:submit>

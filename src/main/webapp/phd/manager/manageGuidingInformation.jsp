@@ -5,7 +5,7 @@
 <html:xhtml/>
 
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 <script type="text/javascript">
 function toggle(obj) {

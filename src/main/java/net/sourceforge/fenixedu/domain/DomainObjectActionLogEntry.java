@@ -4,11 +4,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class DomainObjectActionLogEntry extends DomainObjectActionLogEntry_Base {
 
     public DomainObjectActionLogEntry(String name, String value, DomainObjectActionLog actionLog) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setName(name);
         setValue(value);
         setDomainObjectActionLog(actionLog);
@@ -33,6 +35,7 @@ public class DomainObjectActionLogEntry extends DomainObjectActionLogEntry_Base 
     public String getPresentationNameValue() {
         return getName() + "=" + getValue();
     }
+
     @Deprecated
     public boolean hasName() {
         return getName() != null;
@@ -44,7 +47,7 @@ public class DomainObjectActionLogEntry extends DomainObjectActionLogEntry_Base 
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

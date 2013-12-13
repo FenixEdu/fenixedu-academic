@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.CustomGratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -31,7 +31,7 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
     protected ServiceAgreement() {
         super();
         super.setCreationDate(new DateTime());
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     protected void init(Person person, ServiceAgreementTemplate serviceAgreementTemplate) {
@@ -103,7 +103,7 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

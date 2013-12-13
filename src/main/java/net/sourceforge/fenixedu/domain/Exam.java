@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Season;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class Exam extends Exam_Base {
@@ -153,7 +154,7 @@ public class Exam extends Exam_Base {
     public static List<Exam> readExams() {
         List<Exam> result = new ArrayList<Exam>();
 
-        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
+        for (Evaluation evaluation : Bennu.getInstance().getEvaluationsSet()) {
             if (evaluation instanceof Exam) {
                 result.add((Exam) evaluation);
             }
@@ -190,6 +191,7 @@ public class Exam extends Exam_Base {
         return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.exam") + " "
                 + BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", getSeason().getKey());
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest> getExamDateCertificateRequests() {
         return getExamDateCertificateRequestsSet();

@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
@@ -36,7 +36,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
     public ParkingRequest(ParkingRequestFactoryCreator creator) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setParkingRequestState(ParkingRequestState.PENDING);
         setDriverLicenseDeliveryType(creator.getDriverLicenseDeliveryType());
         setParkingParty(creator.getParkingParty());
@@ -69,7 +69,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
     public ParkingRequest(ParkingRequest oldParkingRequest, Boolean limitlessAccessCard) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setParkingRequestState(ParkingRequestState.PENDING);
         setDriverLicenseDeliveryType(oldParkingRequest.getDriverLicenseDeliveryType());
         setParkingParty(oldParkingRequest.getParkingParty());
@@ -966,7 +966,7 @@ public class ParkingRequest extends ParkingRequest_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

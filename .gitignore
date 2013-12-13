@@ -16,3 +16,6 @@ src/main/resources/fonts/*arial
 src/main/resources/fonts/*Arial
 bin
 .actionAnnotationLog
+/target
+/target
+/target

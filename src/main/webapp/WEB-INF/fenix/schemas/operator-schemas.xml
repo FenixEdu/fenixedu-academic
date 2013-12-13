@@ -140,7 +140,7 @@
 
 <schema name="operator.photo.photo.details" type="net.sourceforge.fenixedu.domain.Person"
 	bundle="MANAGER_RESOURCES">
-	<slot name="user.userUId" key="label.operator.photo.person.istUsername" read-only="true" />
+	<slot name="user.username" key="label.operator.photo.person.istUsername" read-only="true" />
 	<slot name="name" read-only="true" />
 	<slot name="dateOfBirthYearMonthDay" read-only="true" />
 	<slot name="gender" read-only="true" />

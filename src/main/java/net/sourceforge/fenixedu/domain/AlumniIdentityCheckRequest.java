@@ -12,6 +12,8 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base {
 
     public AlumniIdentityCheckRequest(String contactEmail, String documentIdNumber, String fullName,
@@ -37,7 +39,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
         setRequestType(requestType);
         setRequestToken(UUID.randomUUID());
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     private void checkParameters(String contactEmail, String documentIdNumber, String fullName,
@@ -60,7 +62,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
     }
 
     public static boolean hasPendingRequestsForDocumentNumber(String documentIdNumber) {
-        for (AlumniIdentityCheckRequest request : RootDomainObject.getInstance().getAlumniIdentityRequest()) {
+        for (AlumniIdentityCheckRequest request : Bennu.getInstance().getAlumniIdentityRequestSet()) {
             if (request.getDocumentIdNumber().equals(documentIdNumber)) {
                 return true;
             }
@@ -174,7 +176,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -341,7 +341,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         List<LibraryCardDTO> cardDTOList = new ArrayList<LibraryCardDTO>();
         List<LibraryCard> cardList = new ArrayList<LibraryCard>();
 
-        for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
+        for (LibraryCard libraryCard : rootDomainObject.getLibraryCardsSet()) {
             if (libraryCard.getCardEmitionDate() == null) {
                 cardDTOList.add(new LibraryCardDTO(libraryCard));
                 cardList.add(libraryCard);
@@ -442,7 +442,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         List<LibraryCardDTO> cardDTOList = new ArrayList<LibraryCardDTO>();
         List<LibraryCard> cardList = new ArrayList<LibraryCard>();
 
-        for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
+        for (LibraryCard libraryCard : rootDomainObject.getLibraryCardsSet()) {
             if (libraryCard.getLetterGenerationDate() == null) {
                 if (result.equalsIgnoreCase("no")
                         && (libraryCard.getPartyClassification().equals(PartyClassification.EMPLOYEE) || libraryCard
@@ -699,7 +699,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
     private List<Integer> getExistingPins() {
         List<Integer> pins = new ArrayList<Integer>();
-        for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
+        for (LibraryCard libraryCard : rootDomainObject.getLibraryCardsSet()) {
             if (libraryCard.getPin() != null) {
                 pins.add(libraryCard.getPin());
             }

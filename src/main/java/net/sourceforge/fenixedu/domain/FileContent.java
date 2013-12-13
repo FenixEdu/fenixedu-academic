@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
@@ -49,18 +47,6 @@ public class FileContent extends FileContent_Base {
         return FenixFramework.getDomainObject(externalId);
     }
 
-    public static List<FileContent> readAllFileItems() {
-        List<FileContent> fileItems = new ArrayList<FileContent>();
-
-        for (File file : RootDomainObject.getInstance().getFiles()) {
-            if (file instanceof FileContent) {
-                fileItems.add((FileContent) file);
-            }
-        }
-
-        return fileItems;
-    }
-
     public Site getSite() {
         return getAttachment().getSite();
     }
@@ -91,6 +77,7 @@ public class FileContent extends FileContent_Base {
             attachment.logItemFilePermittedGroup();
         }
     }
+
     @Deprecated
     public boolean hasAttachment() {
         return getAttachment() != null;

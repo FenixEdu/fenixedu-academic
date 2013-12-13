@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -63,17 +62,19 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.LocalDate;
 
+import pt.ist.bennu.core.domain.User;
+
 public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base {
 
     @StartActivity
     public static class CreateCandidacy extends PhdProgramCandidacyProcessActivity {
 
         @Override
-        protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+        protected void activityPreConditions(PhdProgramCandidacyProcess process, User userView) {
         }
 
         @Override
-        protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+        protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, User userView, Object object) {
             final Object[] values = (Object[]) object;
             final PhdProgramCandidacyProcessBean bean = readBean(values);
             final Person person = readPerson(values);
@@ -125,7 +126,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     @Override
-    public boolean isAllowedToManageProcess(IUserView userView) {
+    public boolean isAllowedToManageProcess(User userView) {
         return this.getIndividualProgramProcess().isAllowedToManageProcess(userView);
     }
 
@@ -234,7 +235,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
+    public boolean canExecuteActivity(User userView) {
         return false;
     }
 
@@ -432,7 +433,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         person.addPersonRoleByRoleType(RoleType.PERSON);
         person.addPersonRoleByRoleType(RoleType.STUDENT);
         person.addPersonRoleByRoleType(RoleType.RESEARCHER);
-        person.setIstUsername();
 
         if (!person.hasPersonalPhoto()) {
             final Photograph photograph = person.getPersonalPhotoEvenIfPending();

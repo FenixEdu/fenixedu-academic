@@ -13,6 +13,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class Qualification extends Qualification_Base {
 
     static public Comparator<Qualification> COMPARATOR_BY_YEAR = new Comparator<Qualification>() {
@@ -53,7 +55,7 @@ public class Qualification extends Qualification_Base {
 
     public Qualification() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         Person personLogin = AccessControl.getPerson();
         if (personLogin != null) {
             setCreator(personLogin);
@@ -245,7 +247,7 @@ public class Qualification extends Qualification_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

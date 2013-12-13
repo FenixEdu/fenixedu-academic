@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -14,7 +14,7 @@ public class PersonFunctionsAccumulation extends PersonFunctionsAccumulation_Bas
             final String functionsAccumulationGiafId, final ProfessionalRegime professionalRegime,
             final String professionalRegimeGiafId, final DateTime creationDate, final DateTime modifiedDate) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setGiafProfessionalData(giafProfessionalData);
         setBeginDate(beginDate);
         setEndDate(endDate);
@@ -39,7 +39,7 @@ public class PersonFunctionsAccumulation extends PersonFunctionsAccumulation_Bas
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

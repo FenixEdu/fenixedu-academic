@@ -10,6 +10,7 @@ import org.joda.time.DurationFieldType;
 import org.joda.time.Minutes;
 import org.joda.time.Period;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.PropertiesManager;
 
 public class DeployNotifier extends DeployNotifier_Base {
@@ -17,10 +18,10 @@ public class DeployNotifier extends DeployNotifier_Base {
     private static transient Boolean active = null;
 
     public DeployNotifier() {
-        if (RootDomainObject.getInstance().getDeployNotifier() != null) {
+        if (Bennu.getInstance().getDeployNotifier() != null) {
             throw new DomainException("There's already a deploy notifier");
         }
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Integer getEstimateMinutesForDeploy() {
@@ -38,13 +39,14 @@ public class DeployNotifier extends DeployNotifier_Base {
 
         return active;
     }
+
     @Deprecated
     public boolean hasTimeStamp() {
         return getTimeStamp() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

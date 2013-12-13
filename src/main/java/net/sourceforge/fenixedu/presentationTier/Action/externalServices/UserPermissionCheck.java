@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.CheckIfUserCanAccessFile;
-import net.sourceforge.fenixedu.util.HostAccessControl;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -30,7 +30,7 @@ public class UserPermissionCheck extends ExternalInterfaceDispatchAction {
     public ActionForward canUserAccessFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        if (!HostAccessControl.isAllowed(this, request)) {
+        if (!FenixConfigurationManager.getHostAccessControl().isAllowed(this, request)) {
             writeResponse(response, NOT_AUTHORIZED_CODE, "");
         } else {
             String dspaceBitstreamIdentification = request.getParameter("dspaceBitstreamIdentification");

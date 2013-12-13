@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <html:xhtml/>
 
-<logic:present role="SCIENTIFIC_COUNCIL">
+<logic:present role="role(SCIENTIFIC_COUNCIL)">
 	<%
 		request.setAttribute("site", ScientificCouncilSite.getSite());
 		request.setAttribute("unit", ScientificCouncilSite.getSite().getUnit());

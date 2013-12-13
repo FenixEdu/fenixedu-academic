@@ -37,8 +37,8 @@ import net.sf.jasperreports.engine.export.PdfFont;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
-import net.sourceforge.fenixedu.util.PrinterManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -184,7 +184,7 @@ public class ReportsUtils extends PropertiesManager {
             final Collection dataSource, final String printerName) {
         try {
             final JasperPrint jasperPrint = createJasperPrint(key, parameters, bundle, dataSource);
-            final PrintService printService = PrinterManager.getPrintServiceByName(printerName);
+            final PrintService printService = FenixConfigurationManager.getPrinterManager().getPrintServiceByName(printerName);
             if (jasperPrint != null && printService != null) {
                 export(new JRPrintServiceExporter(), Collections.singletonList(jasperPrint), (ByteArrayOutputStream) null,
                         printService, createPrintRequestAttributeSet(210, 297));
@@ -317,8 +317,8 @@ public class ReportsUtils extends PropertiesManager {
 
     static private void addFont(final Map<FontKey, PdfFont> result, final String fontName, final String pdfFontName,
             final String baseFont) {
-        final URL url = ReportsUtils.class.getResource("/fonts/" + pdfFontName);
-        result.put(new FontKey(fontName, false, false), new PdfFont(url.getFile(), baseFont, true));
+        final URL url = ReportsUtils.class.getClassLoader().getResource("fonts/" + pdfFontName);
+        result.put(new FontKey(fontName, false, false), new PdfFont(url.toExternalForm(), baseFont, true));
     }
 
 }

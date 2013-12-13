@@ -16,6 +16,8 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
@@ -26,7 +28,7 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
 
     public MasterDegreeThesisDataVersion() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public MasterDegreeThesisDataVersion(MasterDegreeThesis masterDegreeThesis, Employee responsibleEmployee,
@@ -40,8 +42,8 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
     }
 
     public static MasterDegreeThesisDataVersion readActiveByDissertationTitle(String dissertationTitle) {
-        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : RootDomainObject.getInstance()
-                .getMasterDegreeThesisDataVersions()) {
+        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : Bennu.getInstance()
+                .getMasterDegreeThesisDataVersionsSet()) {
             if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)
                     && masterDegreeThesisDataVersion.getDissertationTitle().equals(dissertationTitle)) {
                 return masterDegreeThesisDataVersion;
@@ -132,7 +134,7 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

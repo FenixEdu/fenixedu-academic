@@ -7,24 +7,24 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGenerator_Base {
 
     private SantanderSequenceNumberGenerator() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setSequenceNumber(0);
         setPhotoSequenceNumber(0);
     }
 
     private static SantanderSequenceNumberGenerator getInstance() {
         final Collection<SantanderSequenceNumberGenerator> instances =
-                RootDomainObject.getInstance().getSantanderSequenceNumberGeneratorsSet();
+                Bennu.getInstance().getSantanderSequenceNumberGeneratorsSet();
         if (instances.size() > 1) {
             throw new DomainException("santanderSequenceNumberGenerator.more.than.one.instances.exist");
         }
@@ -55,7 +55,7 @@ public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGen
         String pin = generatePIN(4);
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
-            byte[] secret = PropertiesManager.getProperty("app.institution.AES128.secretKey").getBytes("UTF-8");
+            byte[] secret = FenixConfigurationManager.getConfiguration().appInstitutionAES128SecretKey().getBytes("UTF-8");
             SecretKey key = new SecretKeySpec(secret, "AES");
             cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(new byte[cipher.getBlockSize()]));
             byte[] cipheredPIN = cipher.doFinal(pin.getBytes("UTF-8"));
@@ -68,7 +68,7 @@ public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGen
     public static String decodeSantanderPIN(SantanderPIN santanderPIN) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
-            byte[] secret = PropertiesManager.getProperty("app.institution.AES128.secretKey").getBytes("UTF-8");
+            byte[] secret = FenixConfigurationManager.getConfiguration().appInstitutionAES128SecretKey().getBytes("UTF-8");
             SecretKey key = new SecretKeySpec(secret, "AES");
             cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(new byte[cipher.getBlockSize()]));
             byte[] decipheredPIN = cipher.doFinal(santanderPIN.getEncryptedPINAsByteArray());
@@ -77,5 +77,4 @@ public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGen
             throw new DomainException("santanderPINGenerator.errorDecipheringPIN", e);
         }
     }
-
 }

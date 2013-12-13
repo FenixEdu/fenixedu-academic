@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import pt.ist.bennu.core.domain.User;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 
 public class AppUserAuthorization extends AppUserAuthorization_Base {
 

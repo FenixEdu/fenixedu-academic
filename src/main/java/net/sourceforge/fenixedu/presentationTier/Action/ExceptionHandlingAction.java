@@ -18,8 +18,11 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction.ErrorMailForm;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.EmailValidator;
@@ -27,11 +30,9 @@ import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.bennu.core.util.CoreConfiguration;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.EMail;
@@ -40,11 +41,49 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 /**
  * @author João Mota
  */
-
-@Mapping(path = "/showErrorPage", module = "default")
-@Forwards({ @Forward(name = "exception", path = "/supportHelpInquiry.jsp"),
-        @Forward(name = "exception-debug", path = "/debugExceptionPage.jsp") })
+@Mapping(path = "/showErrorPage", formBeanClass = ErrorMailForm.class)
 public class ExceptionHandlingAction extends FenixDispatchAction {
+
+    public static class ErrorMailForm extends FenixActionForm {
+        private static final long serialVersionUID = -7707167674528047795L;
+
+        private String email;
+        private String subject;
+        private String body;
+        private String exceptionInfo;
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getSubject() {
+            return subject;
+        }
+
+        public void setSubject(String subject) {
+            this.subject = subject;
+        }
+
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
+        }
+
+        public String getExceptionInfo() {
+            return exceptionInfo;
+        }
+
+        public void setExceptionInfo(String exceptionInfo) {
+            this.exceptionInfo = exceptionInfo;
+        }
+    }
 
     private final int INDENT = 15;
     private final String INDENT_TOKEN = "_";
@@ -54,20 +93,20 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        if (request.getServerName().equals("localhost")) {
-            return mapping.findForward("exception-debug");
+        if (CoreConfiguration.getConfiguration().developmentMode()) {
+            return new ActionForward("/debugExceptionPage.jsp");
         }
-        return mapping.findForward("exception");
+        return new ActionForward("/supportHelpInquiry.jsp");
     }
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        DynaActionForm emailForm = (DynaActionForm) form;
-        String formEmail = (String) emailForm.get("email");
-        String formSubject = (String) emailForm.get("subject");
-        String formBody = (String) emailForm.get("body");
-        String exceptionInfo = (String) emailForm.get("exceptionInfo");
+        ErrorMailForm emailForm = (ErrorMailForm) form;
+        String formEmail = emailForm.getEmail();
+        String formSubject = emailForm.getSubject();
+        String formBody = emailForm.getBody();
+        String exceptionInfo = emailForm.getExceptionInfo();
 
         String sender = "Sender: " + formEmail;
         String subject = " - " + formSubject;
@@ -131,7 +170,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     public ActionForward prepareSupportHelp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        SupportRequestBean requestBean = new SupportRequestBean();
+        SupportRequestBean requestBean = SupportRequestBean.generateExceptionBean(AccessControl.getPerson());
         requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
         final String parameter = request.getParameter("contextId");
         if (parameter != null && !parameter.isEmpty()) {
@@ -139,7 +178,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
         }
 
         request.setAttribute("requestBean", requestBean);
-        return mapping.findForward("supportHelpInquiry");
+        return new ActionForward("/supportHelpInquiry.jsp");
     }
 
     public final ActionForward supportFormFieldValidation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -148,7 +187,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
         request.setAttribute("exceptionInfo", request.getParameter("exceptionInfo"));
         request.setAttribute("requestBean", getRenderedObject("requestBean"));
 
-        return mapping.findForward("supportHelpInquiry");
+        return new ActionForward("/supportHelpInquiry.jsp");
     }
 
     public final ActionForward processSupportRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,

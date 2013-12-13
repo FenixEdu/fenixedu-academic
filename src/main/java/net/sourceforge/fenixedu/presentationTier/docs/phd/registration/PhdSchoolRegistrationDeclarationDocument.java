@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.docs.phd.registration;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -37,7 +37,7 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
         addParameter("administrativeOfficeName", unit.getName());
         addParameter("administrativeOfficeCoordinator", unit.getActiveUnitCoordinator().getName());
 
-        addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getPartyName().getContent());
+        addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getPartyName().getContent());
         addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent());
 
         addParameter("studentNumber", getStudentNumber());

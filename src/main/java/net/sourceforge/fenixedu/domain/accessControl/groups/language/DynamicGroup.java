@@ -16,7 +16,9 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
  * request parameter is obtained each time the group is evaluated.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public class DynamicGroup extends Group implements GroupContextProvider {
 
     private static final long serialVersionUID = 1L;
@@ -24,7 +26,7 @@ public class DynamicGroup extends Group implements GroupContextProvider {
     private final GroupContextProvider provider;
     private final String name;
 
-    private ArgumentList arguments;
+    private final ArgumentList arguments;
 
     public DynamicGroup(GroupContextProvider provider, String name) {
         super();

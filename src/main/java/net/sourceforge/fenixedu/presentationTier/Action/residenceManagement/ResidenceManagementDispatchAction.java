@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportRes
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceDebtEventBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidentListsHolderBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
@@ -32,6 +31,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -57,7 +57,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
     public ActionForward missingPayments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         List<ResidenceEvent> results = new ArrayList<ResidenceEvent>();
-        for (ResidenceMonth month : rootDomainObject.getResidenceMonths0()) {
+        for (ResidenceMonth month : rootDomainObject.getResidenceMonths0Set()) {
             for (ResidenceEvent residenceEvent : month.getEvents()) {
                 if (residenceEvent.isInDebt()) {
                     results.add(residenceEvent);
@@ -194,7 +194,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
     }
 
     private ResidenceManagementUnit getManagementUnit(HttpServletRequest request) {
-        return RootDomainObject.getInstance().getResidenceManagementUnit();
+        return Bennu.getInstance().getResidenceManagementUnit();
     }
 
     private ResidenceMonth getResidenceMonth(HttpServletRequest request) {

@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.resource.Resource;
@@ -19,6 +18,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public abstract class Material extends Material_Base {
 
@@ -98,7 +99,7 @@ public abstract class Material extends Material_Base {
     }
 
     private void checkBarCodeNumber(String barCodeNumber, Class<? extends Material> materialClass) {
-        for (Resource resource : RootDomainObject.getInstance().getResources()) {
+        for (Resource resource : Bennu.getInstance().getResourcesSet()) {
             if (!resource.equals(this) && resource.isMaterial() && resource.getClass().equals(materialClass)
                     && ((Material) resource).getBarCodeNumber().equals(barCodeNumber)) {
                 throw new DomainException("error.Material.already.exists.one.material.wiht.same.barCodeNumber");
@@ -137,7 +138,7 @@ public abstract class Material extends Material_Base {
     }
 
     private void checkIdentification(String identification, Class<? extends Material> materialClass) {
-        for (Resource resource : RootDomainObject.getInstance().getResources()) {
+        for (Resource resource : Bennu.getInstance().getResourcesSet()) {
             if (!resource.equals(this) && resource.isMaterial() && resource.getClass().equals(materialClass)
                     && ((Material) resource).getIdentification().equals(identification.trim())) {
                 throw new DomainException("error.Material.already.exists.one.material.wiht.same.identification");
@@ -146,7 +147,7 @@ public abstract class Material extends Material_Base {
     }
 
     public static Material getMaterialByTypeAndIdentification(Class<? extends Material> materialType, String identification) {
-        for (Resource resource : RootDomainObject.getInstance().getResources()) {
+        for (Resource resource : Bennu.getInstance().getResourcesSet()) {
             if (resource.isMaterial() && ((Material) resource).getIdentification().equals(identification)
                     && resource.getClass().equals(materialType)) {
                 return (Material) resource;
@@ -158,7 +159,7 @@ public abstract class Material extends Material_Base {
     public static List<Material> getAllMaterialByTypeOrderByIdentification(Class<? extends Material> materialClass) {
         List<Material> result = new ArrayList<Material>();
         if (materialClass != null) {
-            for (Resource resource : RootDomainObject.getInstance().getResources()) {
+            for (Resource resource : Bennu.getInstance().getResourcesSet()) {
                 if (resource.getClass().equals(materialClass)) {
                     result.add((Material) resource);
                 }

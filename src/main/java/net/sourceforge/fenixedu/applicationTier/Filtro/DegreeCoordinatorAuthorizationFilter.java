@@ -5,13 +5,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -31,9 +32,9 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
     }
 
     public void execute(String executionDegreeId) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
         try {
-            if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+            if ((id == null) || (id.getPerson().getPersonRolesSet() == null) || !id.getPerson().hasRole(getRoleType())
                     || !isCoordinatorOfExecutionDegree(id, executionDegreeId)) {
                 throw new NotAuthorizedException();
             }
@@ -42,7 +43,7 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
         }
     }
 
-    private boolean isCoordinatorOfExecutionDegree(IUserView id, String executionDegreeId) {
+    private boolean isCoordinatorOfExecutionDegree(User id, String executionDegreeId) {
         boolean result = false;
         if (executionDegreeId == null) {
             return result;

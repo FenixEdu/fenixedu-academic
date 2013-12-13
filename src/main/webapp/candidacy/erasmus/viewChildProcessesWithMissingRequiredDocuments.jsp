@@ -17,7 +17,7 @@
 	<bean:define id="childProcessName" name="childProcessName" />
 	<bean:size id="candidacyProcessesSize" name="candidacyProcesses" />
 		
-		<logic:present role="MANAGER">
+		<logic:present role="role(MANAGER)">
 			<ul>
 				<li>
 					<html:link action='<%= "/caseHandlingMobilityApplicationProcess.do?method=executeSendEmailToMissingRequiredDocumentsProcesses&amp;processId=" + processId.toString() %>'>

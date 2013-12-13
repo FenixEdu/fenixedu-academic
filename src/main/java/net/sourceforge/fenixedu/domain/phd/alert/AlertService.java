@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
@@ -132,7 +132,7 @@ public class AlertService {
                 toNotify.add(((InternalPhdParticipant) guiding).getPerson());
             } else {
                 guiding.ensureExternalAccess();
-                new Message(RootDomainObject.getInstance().getSystemSender(), Collections.<ReplyTo> emptyList(),
+                new Message(Bennu.getInstance().getSystemSender(), Collections.<ReplyTo> emptyList(),
                         Collections.<Recipient> emptyList(), getSubjectPrefixed(process, subjectKey), getBodyText(process,
                                 bodyKey), Collections.singleton(guiding.getEmail()));
             }
@@ -157,7 +157,7 @@ public class AlertService {
                 toNotify.add(((InternalPhdParticipant) guiding).getPerson());
             } else {
                 guiding.ensureExternalAccess();
-                new Message(RootDomainObject.getInstance().getSystemSender(), Collections.<ReplyTo> emptyList(),
+                new Message(Bennu.getInstance().getSystemSender(), Collections.<ReplyTo> emptyList(),
                         Collections.<Recipient> emptyList(), getSubjectPrefixed(process, subjectMessage), getBodyText(process,
                                 bodyMessage), Collections.singleton(guiding.getEmail()));
             }

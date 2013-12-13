@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
-
-import net.sourceforge.fenixedu._development.PropertiesManager;
 
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
@@ -126,7 +125,7 @@ public class DataSetGenerator {
             String destinationDataSetPath = this.props.getProperty(DESTINATION_DATASET_PROPERTY);
             destinationDataSetPath.replaceAll("\\\\", "/");
             FileWriter fileWriter = new FileWriter(new File(destinationDataSetPath));
-            FlatXmlDataSet.write(dataset, fileWriter, PropertiesManager.DEFAULT_CHARSET);
+            FlatXmlDataSet.write(dataset, fileWriter, Charset.defaultCharset().name());
             fileWriter.close();
 
         } catch (IOException e) {

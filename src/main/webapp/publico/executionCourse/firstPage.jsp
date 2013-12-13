@@ -16,14 +16,14 @@
 				<strong>
 					<bean:message key="message.inquiries.available.prefix"/>
 				</strong>
-				<logic:present role="STUDENT">
+				<logic:present role="role(STUDENT)">
 					<bean:message key="message.inquiries.available.students"/>
 					<html:link href="<%= request.getContextPath() + "/student/studentInquiry.do?method=showCoursesToAnswer"%>">
 						<bean:message key="message.inquiries.available.at.here"/>	
 					</html:link>
 					.
 				</logic:present>
-				<logic:notPresent role="STUDENT">
+				<logic:notPresent role="role(STUDENT)">
 					<bean:message key="message.inquiries.available.non.students"/>
 				</logic:notPresent>				
 			</p>

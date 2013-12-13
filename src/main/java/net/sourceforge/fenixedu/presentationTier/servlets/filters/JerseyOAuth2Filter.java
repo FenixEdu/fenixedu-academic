@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -16,27 +14,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.OAuthProperties;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.AuthScope;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken.FenixOAuthTokenException;
-import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyPackageResourceConfig;
+import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
 
 import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
 import org.apache.amber.oauth2.common.message.OAuthResponse.OAuthErrorResponseBuilder;
 import org.apache.commons.lang.StringUtils;
 
-@WebFilter(urlPatterns = "/api/fenix/*")
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
+
+@WebFilter(urlPatterns = "/api/fenix/v1/*")
 public class JerseyOAuth2Filter implements Filter {
 
     final static String ACCESS_TOKEN = "access_token";
 
-    private static boolean allowIstIds = OAuthProperties.getFenixApiAllowIstIds();
+    private static boolean allowIstIds = OAuthProperties.getConfiguration().getFenixApiAllowIstIds();
 
     @Override
     public void destroy() {
@@ -64,7 +62,7 @@ public class JerseyOAuth2Filter implements Filter {
             try {
                 filterChain.doFilter(request, response);
             } finally {
-                UserView.setUser(null);
+                Authenticate.unmock();
             }
         }
     }
@@ -74,7 +72,7 @@ public class JerseyOAuth2Filter implements Filter {
         if (allowIstIds() && currentUserIsManager()) {
             String istId = request.getParameter("_istid_");
             if (!StringUtils.isBlank(istId)) {
-                User user = User.readUserByUserUId(istId);
+                User user = User.findByUsername(istId);
                 if (user != null) {
                     authenticateUser(request, user);
                     return true;
@@ -87,7 +85,7 @@ public class JerseyOAuth2Filter implements Filter {
     }
 
     private boolean currentUserIsManager() {
-        IUserView userview = UserView.getUser();
+        User userview = Authenticate.getUser();
         if (userview == null) {
             return false;
         }
@@ -106,9 +104,10 @@ public class JerseyOAuth2Filter implements Filter {
     private Boolean checkAccessToken(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
             ServletException {
 
-        final String uri = StringUtils.removeStart(request.getRequestURI(), request.getContextPath() + request.getServletPath());
+        final String uri =
+                StringUtils.removeStart(request.getRequestURI(), request.getContextPath() + request.getServletPath() + "/fenix/");
 
-        if (FenixJerseyPackageResourceConfig.isPublicScope(uri)) {
+        if (FenixJerseyAPIConfig.isPublicScope(uri)) {
             return true;
         }
 
@@ -148,12 +147,12 @@ public class JerseyOAuth2Filter implements Filter {
     }
 
     private void authenticateUser(final HttpServletRequest request, User foundUser) {
-        UserView.setUser(Authenticate.mockUser(foundUser.getPerson(), request.getRequestURL().toString()));
+        Authenticate.mock(foundUser);
     }
 
     private boolean validScope(AppUserSession appUserSession, String uri) throws IOException, ServletException {
         uri = StringUtils.removeStart(StringUtils.removeEnd(uri, "/"), "/");
-        AuthScope scope = FenixJerseyPackageResourceConfig.getScope(uri);
+        AuthScope scope = FenixJerseyAPIConfig.getScope(uri);
         if (scope != null) {
             if (appUserSession.getAppUserAuthorization().getApplication().getScopesSet().contains(scope)) {
                 return true;

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentsSearchBean;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -16,6 +15,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.FenixFramework;
 
 public class SearchForStudents extends FenixDispatchAction {
@@ -31,7 +31,7 @@ public class SearchForStudents extends FenixDispatchAction {
 
             final Set<AcademicProgram> programs = new HashSet<AcademicProgram>();
 
-            programs.addAll(RootDomainObject.getInstance().getDegrees());
+            programs.addAll(Bennu.getInstance().getDegreesSet());
 
             final Set<Student> students = studentsSearchBean.searchForPrograms(programs);
 

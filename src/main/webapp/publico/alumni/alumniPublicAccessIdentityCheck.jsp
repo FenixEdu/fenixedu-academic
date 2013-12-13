@@ -12,7 +12,7 @@
 <h1><bean:message key="label.alumni.registration" bundle="ALUMNI_RESOURCES" /></h1>
 
 <div class="alumnilogo" style="background: none;">
-<%-- <div class="col_right_alumni"><img src="http://www.ist.utl.pt/img/alumni/alumni_deco_3.gif" alt="[Image] Alumni" /></div> --%>
+<%-- <div class="col_right_alumni"><img src="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>img/alumni/alumni_deco_3.gif" alt="[Image] Alumni" /></div> --%>
 	
 	<h2><bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /></h2>
 	

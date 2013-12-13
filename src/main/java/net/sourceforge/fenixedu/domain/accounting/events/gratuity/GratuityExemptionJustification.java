@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
@@ -8,7 +8,7 @@ public class GratuityExemptionJustification extends GratuityExemptionJustificati
 
     protected GratuityExemptionJustification() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     public GratuityExemptionJustification(final GratuityExemption gratuityExemption,

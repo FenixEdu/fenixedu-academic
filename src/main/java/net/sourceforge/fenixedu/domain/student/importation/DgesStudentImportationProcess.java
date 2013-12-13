@@ -209,7 +209,6 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
             if (!person.hasStudent()) {
                 new Student(person);
-                person.setIstUsername();
                 logCreatedStudent(person.getStudent());
             }
 

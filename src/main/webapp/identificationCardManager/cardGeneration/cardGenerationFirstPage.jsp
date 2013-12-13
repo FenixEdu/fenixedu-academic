@@ -18,7 +18,7 @@
 			<bean:message key="link.manage.card.generation.consult.category.codes" />
 		</html:link>
 	</li>
-	<logic:present role="MANAGER">
+	<logic:present role="role(MANAGER)">
 		<li>
 			<html:link page="/manageCardGeneration.do?method=prepareCrossReferenceNewBatch">
 				<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.croosRefNewBatch" />
@@ -94,7 +94,7 @@
 				<html:link page="<%= urlManage %>">
 					<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.manage"/>
 				</html:link>
-				<logic:present role="MANAGER">
+				<logic:present role="role(MANAGER)">
 					| 
 					<bean:define id="urlDelete" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="externalId"/>&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.externalId"/></bean:define>
 					<html:link page="<%= urlDelete %>" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>

@@ -2,9 +2,10 @@ package net.sourceforge.fenixedu.domain.credits.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -69,15 +70,13 @@ public class DepartmentCreditsBean implements Serializable {
         }
     }
 
-    public List<ExecutionCourse> getDepartmentExecutionCourses() {
-        List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+    public Set<ExecutionCourse> getDepartmentExecutionCourses() {
+        Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
         if (department != null) {
-            for (CompetenceCourse competenceCourse : department.getDepartmentUnit().getCompetenceCourses()) {
-                for (ExecutionCourse executionCourse : competenceCourse
-                        .getExecutionCoursesByExecutionPeriod(getExecutionSemester())) {
-                    if (!executionCourse.isDissertation()) {
-                        result.add(executionCourse);
-                    }
+            for (ExecutionCourse executionCourse : department.getDepartmentUnit().getAllExecutionCoursesByExecutionPeriod(
+                    getExecutionSemester())) {
+                if (!executionCourse.isDissertation()) {
+                    result.add(executionCourse);
                 }
             }
         }

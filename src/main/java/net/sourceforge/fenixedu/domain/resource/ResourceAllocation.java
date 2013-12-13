@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain.resource;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class ResourceAllocation extends ResourceAllocation_Base {
 
     protected ResourceAllocation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -77,7 +77,7 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

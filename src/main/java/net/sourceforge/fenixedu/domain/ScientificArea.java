@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 /**
  * 
  * @author Nuno Correia
@@ -10,13 +12,14 @@ public class ScientificArea extends ScientificArea_Base {
 
     public ScientificArea() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ScientificArea(final String name) {
         this();
         super.setName(name);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getAssociatedCurricularCourses() {
         return getAssociatedCurricularCoursesSet();
@@ -43,7 +46,7 @@ public class ScientificArea extends ScientificArea_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

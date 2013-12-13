@@ -153,7 +153,7 @@ public class FindSpacesDA extends FenixDispatchAction {
         if (mostRecentBlueprint != null) {
 
             final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
-            final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
+            final byte[] blueprintBytes = blueprintFile.getContentFile().getBytes();
             final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
             BlueprintTextRectangles blueprintTextRectangles =
                     SpaceBlueprintsDWGProcessor.getBlueprintTextRectangles(inputStream, mostRecentBlueprint.getSpace(), false,

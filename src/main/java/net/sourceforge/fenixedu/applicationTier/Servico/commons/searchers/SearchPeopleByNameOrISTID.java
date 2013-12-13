@@ -11,7 +11,7 @@ public class SearchPeopleByNameOrISTID extends SearchPeople {
     protected Collection<Person> search(final String value, final int size) {
         if (value.length() > 3 && value.substring(0, 3).equals("ist")) {
             ArrayList<Person> result = new ArrayList<Person>();
-            Person person = Person.readPersonByIstUsername(value);
+            Person person = Person.readPersonByUsername(value);
             if (person != null) {
                 result.add(person);
             }

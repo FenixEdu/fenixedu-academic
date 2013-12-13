@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.material;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.resource.Resource;
@@ -11,6 +10,8 @@ import net.sourceforge.fenixedu.predicates.ResourcePredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public class Extension extends Extension_Base {
 
@@ -65,7 +66,7 @@ public class Extension extends Extension_Base {
     }
 
     public static Extension readByNumber(Integer number) {
-        for (Resource resource : RootDomainObject.getInstance().getResources()) {
+        for (Resource resource : Bennu.getInstance().getResourcesSet()) {
             if (resource.isExtension() && ((Extension) resource).getIdentification() != null
                     && ((Extension) resource).getIdentification().equals(number)) {
                 return (Extension) resource;

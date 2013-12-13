@@ -6,13 +6,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -51,7 +51,7 @@ public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
     public static List<PhdCandidacyPeriod> readPhdCandidacyPeriods() {
         List<PhdCandidacyPeriod> phdCandidacyPeriods = new ArrayList<PhdCandidacyPeriod>();
 
-        for (CandidacyPeriod candidacyPeriod : RootDomainObject.getInstance().getCandidacyPeriods()) {
+        for (CandidacyPeriod candidacyPeriod : Bennu.getInstance().getCandidacyPeriodsSet()) {
             if (candidacyPeriod.isPhdCandidacyPeriod()) {
                 phdCandidacyPeriods.add((PhdCandidacyPeriod) candidacyPeriod);
             }
@@ -69,7 +69,7 @@ public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
     }
 
     protected void checkOverlapingDates(DateTime start, DateTime end, PhdCandidacyPeriodType type) {
-        for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
+        for (final CandidacyPeriod period : Bennu.getInstance().getCandidacyPeriodsSet()) {
 
             if (!period.isPhdCandidacyPeriod()) {
                 continue;
@@ -114,6 +114,7 @@ public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
 
         return getEnd().toString("dd/MM/yyyy");
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess> getPhdProgramCandidacyProcesses() {
         return getPhdProgramCandidacyProcessesSet();

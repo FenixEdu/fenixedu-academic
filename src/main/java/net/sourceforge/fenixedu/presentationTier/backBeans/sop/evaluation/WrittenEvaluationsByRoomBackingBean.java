@@ -254,7 +254,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public Collection<SelectItem> getRoomTypeSelectItems() throws FenixServiceException {
-        Collection<RoomClassification> roomClassificationsForEducation = rootDomainObject.getRoomClassification();
+        Collection<RoomClassification> roomClassificationsForEducation = rootDomainObject.getRoomClassificationSet();
         final List<SelectItem> roomTypeSelectItems = new ArrayList<SelectItem>();
         for (RoomClassification classification : RoomClassification
                 .sortByRoomClassificationAndCode(roomClassificationsForEducation)) {

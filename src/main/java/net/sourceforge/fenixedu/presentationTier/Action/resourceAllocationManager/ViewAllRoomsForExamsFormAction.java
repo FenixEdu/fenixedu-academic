@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAllRoomsExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
@@ -26,7 +26,7 @@ public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 
         super.execute(mapping, form, request, response);
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) this.servlet.getServletContext().getAttribute(

@@ -9,7 +9,7 @@
 <em><bean:message key="link.rooms.reserve.management" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="rooms.reserve.title" bundle="SOP_RESOURCES"/></h2>
 
-<logic:present role="RESOURCE_ALLOCATION_MANAGER">
+<logic:present role="role(RESOURCE_ALLOCATION_MANAGER)">
 
 	<logic:messagesPresent message="true">
 		<p>
@@ -20,7 +20,7 @@
 			</span>
 		<p>
 	</logic:messagesPresent>	
-	<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+	<bean:define id="person" name="USER_SESSION_ATTRIBUTE" property="user.person" type="net.sourceforge.fenixedu.domain.Person"/>
 	<html:form action="roomsReserveManagement.do?method=seeSpecificRequest" >
 		<table>
 			<tr>
@@ -86,6 +86,28 @@
 				</tr>
 		</table>
 	</logic:present>
+	<p class="mtop2 "><b>
+	<bean:message key="label.filter.request.by.campus" bundle="SOP_RESOURCES" />
+	</b></p>
+	<p >
+	<bean:message key="label.filter.request.by.campus.note" bundle="SOP_RESOURCES" />
+	</p>
+	<fr:form action="/roomsReserveManagement.do?method=seeFilteredRoomsReserveRequests" >
+	<fr:edit id="filterRoomRequestByCampus" name="campusBean" >
+		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.CampusBean" bundle="APPLICATION_RESOURCES">
+			<fr:slot name="campus" key="label.find.spaces.campus" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+				<fr:property name="size" value="30"/>
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
+				<fr:property name="format"	value="${spaceInformation.presentationName}" />
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>		
+		<fr:destination name="post-back" path="/roomsReserveManagement.do?method=seeFilteredRoomsReserveRequests" />
+	</fr:edit>
+	</fr:form>
 	<p class="mtop2 mbottom05"><b><bean:message key="label.my.rooms.reserve.requests" bundle="SOP_RESOURCES"/></b></p>
 	
 	<logic:empty name="personRequests">

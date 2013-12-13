@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
@@ -20,7 +20,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
         setAnnualCreditsState(annualCreditsState);
         setHasAnyLimitation(false);
         setCreationDate(new DateTime());
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public boolean isPastResume() {
@@ -187,7 +187,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

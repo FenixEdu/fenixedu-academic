@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentMembe
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
@@ -19,7 +19,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -80,7 +80,7 @@ public class DepartmentMemberManageTeacherSupportLessonsDispatchAction extends M
     }
 
     private Teacher getLoggedTeacher(HttpServletRequest request) {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         return userView.getPerson().getTeacher();
     }
 

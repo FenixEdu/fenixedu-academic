@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -23,7 +23,7 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
 
     public CycleCourseGroupInformation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CycleCourseGroupInformation(final CycleCourseGroup cycleCourseGroup, final ExecutionYear executionYear,
@@ -63,7 +63,7 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
         checkParameters();
     }
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

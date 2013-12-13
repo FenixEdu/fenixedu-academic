@@ -5,9 +5,9 @@ import java.net.MalformedURLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
@@ -86,10 +86,8 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
         ResearchUnitSite site = getSite(request);
 
         try {
-            MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(ResearchUnitSite.class);
-            String path =
-                    metaDomainObject.getAssociatedPortal().getNormalizedName().getContent() + "/"
-                            + site.getUnit().getUnitPath("/");
+            MetaDomainObjectPortal portal = MetaDomainObjectPortal.getPortal(ResearchUnitSite.class);
+            String path = portal.getNormalizedName().getContent() + "/" + site.getUnit().getUnitPath("/");
             return RequestUtils.absoluteURL(request, path).toString();
         } catch (MalformedURLException e) {
             return null;

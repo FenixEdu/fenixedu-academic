@@ -33,18 +33,21 @@
 		<td>
 			<bean:write name="degree" property="executionYear.name"/>
 		</td>
+		
 		<td>
-			<dt:format pattern="yyyy-MM-dd"><bean:write name="degree" property="scheduling.startOfProposalPeriod.time"/></dt:format>
+			<bean:write name="degree" format="yyyy-MM-dd" property="scheduling.startOfProposalPeriod"/>
 		</td>
 		<td>
-			<dt:format pattern="HH:mm:ss"><bean:write name="degree" property="scheduling.startOfProposalPeriod.time"/></dt:format>
+			<bean:write name="degree" format="HH:mm:ss" property="scheduling.startOfProposalPeriod"/>
+		</td>
+
+		<td>
+			<bean:write name="degree" format="yyyy-MM-dd" property="scheduling.endOfProposalPeriod"/>
 		</td>
 		<td>
-			<dt:format pattern="yyyy-MM-dd"><bean:write name="degree" property="scheduling.endOfProposalPeriod.time"/></dt:format>
+			<bean:write name="degree" format="HH:mm:ss" property="scheduling.endOfProposalPeriod"/>
 		</td>
-		<td>
-			<dt:format pattern="HH:mm:ss"><bean:write name="degree" property="scheduling.endOfProposalPeriod.time"/></dt:format>
-		</td>
+
 	</tr>
 	</logic:iterate>
 </table>

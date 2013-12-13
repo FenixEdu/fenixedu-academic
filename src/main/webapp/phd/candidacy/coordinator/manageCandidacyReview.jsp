@@ -7,7 +7,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RejectCandidacyProcess"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess"%><html:xhtml/>
 
-<logic:present role="COORDINATOR">
+<logic:present role="role(COORDINATOR)">
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>

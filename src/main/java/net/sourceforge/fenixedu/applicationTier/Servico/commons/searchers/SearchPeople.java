@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
+import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 
 public class SearchPeople implements AutoCompleteProvider<Person> {
 

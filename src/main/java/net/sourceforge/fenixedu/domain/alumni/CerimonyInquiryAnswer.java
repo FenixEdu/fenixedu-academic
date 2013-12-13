@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.alumni;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements Comparable<CerimonyInquiryAnswer> {
@@ -13,7 +13,7 @@ public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements
 
     public CerimonyInquiryAnswer(final CerimonyInquiry cerimonyInquiry) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCerimonyInquiry(cerimonyInquiry);
     }
 
@@ -60,7 +60,7 @@ public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

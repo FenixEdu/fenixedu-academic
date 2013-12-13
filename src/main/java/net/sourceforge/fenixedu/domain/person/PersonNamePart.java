@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.person;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
@@ -11,7 +11,7 @@ public class PersonNamePart extends PersonNamePart_Base {
 
     public PersonNamePart(final String namePart) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setNamePart(namePart);
     }
 
@@ -45,7 +45,7 @@ public class PersonNamePart extends PersonNamePart_Base {
             return indexedPersonNamePart;
         }
 
-        for (final PersonNamePart personNamePart : RootDomainObject.getInstance().getPersonNamePartSet()) {
+        for (final PersonNamePart personNamePart : Bennu.getInstance().getPersonNamePartSet()) {
             final String otherPersonNamePart = personNamePart.getNamePart();
             if (!personNamePartIndexMap.containsKey(otherPersonNamePart)) {
                 personNamePartIndexMap.put(otherPersonNamePart, personNamePart);
@@ -100,7 +100,7 @@ public class PersonNamePart extends PersonNamePart_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

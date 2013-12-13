@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.support;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -11,7 +11,7 @@ public abstract class SupportRequest extends SupportRequest_Base {
 
     protected SupportRequest() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         super.setRequestTime(new DateTime());
     }
 
@@ -51,7 +51,7 @@ public abstract class SupportRequest extends SupportRequest_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

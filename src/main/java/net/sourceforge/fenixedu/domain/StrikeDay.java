@@ -7,7 +7,7 @@ public class StrikeDay extends StrikeDay_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

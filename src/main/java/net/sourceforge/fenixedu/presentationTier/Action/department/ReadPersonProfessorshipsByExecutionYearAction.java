@@ -12,7 +12,6 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByID;
@@ -44,7 +43,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -110,7 +110,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         InfoPerson infoPerson = getInfoPerson(request, dynaForm);
@@ -136,7 +136,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     protected InfoPerson getInfoPerson(HttpServletRequest request, DynaActionForm dynaForm) throws Exception {
         InfoPerson infoPerson = (InfoPerson) request.getAttribute("infoPerson");
         if (infoPerson == null) {
-            final IUserView userView = UserView.getUser();
+            final User userView = Authenticate.getUser();
             infoPerson = ReadPersonByID.run((String) dynaForm.get("externalId"));
             request.setAttribute("infoPerson", infoPerson);
 
@@ -144,7 +144,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         return infoPerson;
     }
 
-    List getDetailedProfessorships(IUserView userView, String personId, DynaActionForm actionForm, HttpServletRequest request)
+    List getDetailedProfessorships(User userView, String personId, DynaActionForm actionForm, HttpServletRequest request)
             throws FenixServiceException {
 
         Collection<Professorship> professorshipList = ((Person) FenixFramework.getDomainObject(personId)).getProfessorships();
@@ -169,7 +169,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         return detailedProfessorshipList;
     }
 
-    protected void extraPreparation(IUserView userView, InfoPerson infoPerson, HttpServletRequest request, DynaActionForm dynaForm)
+    protected void extraPreparation(User userView, InfoPerson infoPerson, HttpServletRequest request, DynaActionForm dynaForm)
             throws FenixServiceException {
 
         prepareConstants(userView, infoPerson, request);
@@ -209,8 +209,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 
     }
 
-    private void prepareConstants(IUserView userView, InfoPerson infoPerson, HttpServletRequest request)
-            throws FenixServiceException {
+    private void prepareConstants(User userView, InfoPerson infoPerson, HttpServletRequest request) throws FenixServiceException {
 
         List executionYears = ReadNotClosedExecutionYears.run();
 
@@ -229,7 +228,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         if (person.getTeacher() != null) {
             Department department = person.getTeacher().getCurrentWorkingDepartment();
             teacherDepartment = InfoDepartment.newInfoFromDomain(department);
-            if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
+            if (userView == null || !userView.getPerson().hasRole(RoleType.CREDITS_MANAGER)) {
                 final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
                 request.setAttribute("isDepartmentManager", (departmentList.contains(department) || department == null));
             } else {

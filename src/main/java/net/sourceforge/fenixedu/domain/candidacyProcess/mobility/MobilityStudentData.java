@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 
 public class MobilityStudentData extends MobilityStudentData_Base {
 
     public MobilityStudentData() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public MobilityStudentData(MobilityIndividualApplication erasmusIndividualCandidacy,
@@ -97,7 +97,7 @@ public class MobilityStudentData extends MobilityStudentData_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

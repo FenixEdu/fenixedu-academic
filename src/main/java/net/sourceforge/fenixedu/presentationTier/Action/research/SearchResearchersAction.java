@@ -59,7 +59,7 @@ public class SearchResearchersAction extends FenixDispatchAction {
             String[] keywordsArray = filterKeywords(keywords.split(" "));
 
             List<Researcher> results = new ArrayList<Researcher>();
-            for (Researcher researcher : rootDomainObject.getResearchers()) {
+            for (Researcher researcher : rootDomainObject.getResearchersSet()) {
                 if (researcher.getAllowsToBeSearched() && researcher.hasAtLeastOneKeyword(keywordsArray)) {
                     results.add(researcher);
                 }
@@ -127,7 +127,7 @@ public class SearchResearchersAction extends FenixDispatchAction {
             request.setAttribute("researchers", results);
             request.setAttribute("department", department);
         }
-        request.setAttribute("departments", rootDomainObject.getDepartments());
+        request.setAttribute("departments", rootDomainObject.getDepartmentsSet());
 
         return mapping.findForward("browseResearchers");
     }

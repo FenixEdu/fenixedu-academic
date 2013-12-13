@@ -15,7 +15,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.ArgumentList;
@@ -28,6 +27,8 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.collections.set.UnmodifiableSet;
+
+import pt.ist.bennu.core.domain.User;
 
 /**
  * A <code>Group</code> is a dynamic aggregation of persons. It works as a
@@ -46,7 +47,10 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Groups are {@link java.io.Serializable Serializable} to allow an easy conversion to it's persisted format. Each sub group must
  * ensure that any changes mantain the compatibility with the persisted format or that the persisted groups are migrated
  * correctly.
+ * 
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public abstract class Group implements Serializable, IGroup {
 
     private static final long serialVersionUID = 1L;
@@ -103,7 +107,7 @@ public abstract class Group implements Serializable, IGroup {
     }
 
     @Override
-    public boolean allows(IUserView userView) {
+    public boolean allows(User userView) {
         return isMember(userView == null ? null : userView.getPerson());
     }
 

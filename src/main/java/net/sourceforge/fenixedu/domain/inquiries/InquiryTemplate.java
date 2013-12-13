@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
@@ -12,7 +12,7 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
         validateInquiryPeriod(begin, end);
         setResponsePeriodBegin(begin);
         setResponsePeriodEnd(end);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected void validateInquiryPeriod(DateTime begin, DateTime end) {
@@ -89,7 +89,7 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -3,15 +3,11 @@ package pt.utl.ist.codeGenerator.database;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -50,13 +46,10 @@ import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
-import net.sourceforge.fenixedu.domain.Login;
-import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
@@ -64,7 +57,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -79,6 +71,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPayme
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -146,9 +139,11 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
+import pt.utl.ist.codeGenerator.database.DataInitializer.InstallationProcess;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -174,22 +169,11 @@ public class CreateTestData {
     }
 
     private static void setPrivledges() {
-        UserView.setUser(new MockUserView());
+        // UserView.setUser(new MockUserView());
     }
 
-    private static RootDomainObject getRootDomainObject() {
-        return RootDomainObject.getInstance();
-    }
-
-    public static class CreateManagerUser extends AtomicAction {
-        @Override
-        public void doIt() {
-            final Person person = Person.readPersonByUsernameWithOpenedLogin("admin");
-            final Country country = Country.readCountryByNationality("Portuguesa");
-            person.setCountry(country);
-            person.setCountryOfBirth(country);
-            person.setCountryOfResidence(country);
-        }
+    private static Bennu getRootDomainObject() {
+        return Bennu.getInstance();
     }
 
     public static class CreateExecutionYears extends AtomicAction {
@@ -332,13 +316,12 @@ public class CreateTestData {
             return "Room" + roomCounter++;
         }
     }
-
-    public static class CreateOrganizationalStructure extends AtomicAction {
-        @Override
-        public void doIt() {
-            final CountryUnit countryUnit = getCountryUnit("Portugal");
-            final UniversityUnit universityUnit = createUniversityUnit(countryUnit);
-            final SchoolUnit institutionUnit = createSchoolUnit(universityUnit, "Escola do Galo", "Fenix");
+    static AdministrativeOffice administrativeOffice;
+    public static class CreateOrganizationalStructure {
+        public void doIt(InstallationProcess process) {
+            final CountryUnit countryUnit = getCountryUnit(process.country.getName());
+            final UniversityUnit universityUnit = createUniversityUnit(countryUnit, process.universityName, process.universityAcronym);
+            final SchoolUnit institutionUnit = createSchoolUnit(universityUnit, process.schoolName, process.schoolAcronym);
             getRootDomainObject().setInstitutionUnit(institutionUnit);
             final AggregateUnit serviceUnits = createAggregateUnit(institutionUnit, "Services");
             createServiceUnits(serviceUnits);
@@ -360,10 +343,11 @@ public class CreateTestData {
             return null;
         }
 
-        private UniversityUnit createUniversityUnit(final CountryUnit countryUnit) {
+        private UniversityUnit createUniversityUnit(final CountryUnit countryUnit, final String universityName,
+                final String universityAcronym) {
             return UniversityUnit
-                    .createNewUniversityUnit(new MultiLanguageString(Language.getDefaultLanguage(), "Universidade de Barcelos"),
-                            null, null, "UB", new YearMonthDay(), null, countryUnit, null, null, false, null);
+                    .createNewUniversityUnit(new MultiLanguageString(Language.getDefaultLanguage(), universityName),
+                            null, null, universityAcronym, new YearMonthDay(), null, countryUnit, null, null, false, null);
         }
 
         private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
@@ -380,11 +364,12 @@ public class CreateTestData {
         }
 
         private void createServiceUnits(final AggregateUnit serviceUnits) {
-//	    final AdministrativeOffice administrativeOffice = new AdministrativeOffice(AdministrativeOfficeType.DEGREE);
-//	    final AdministrativeOfficeUnit administrativeOfficeUnit = AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(
-//		    new MultiLanguageString(Language.getDefaultLanguage(), "Office"), null, null, null, new YearMonthDay(), null,
-//		    serviceUnits, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null, null,
-//		    administrativeOffice, Boolean.FALSE, null);
+            administrativeOffice = new AdministrativeOffice();
+            Unit.createNewUnit(new MultiLanguageString(Language.getDefaultLanguage(), "Office"), null, null, null,
+                    new YearMonthDay(), null, serviceUnits,
+                    AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null, null,
+                    administrativeOffice, Boolean.FALSE, null);
+            new AdministrativeOfficeServiceAgreementTemplate(administrativeOffice);
         }
 
         private void createDepartmentUnits(final AggregateUnit departmentUnits) {
@@ -410,6 +395,7 @@ public class CreateTestData {
         }
 
         private int areaCounter = 0;
+        
 
         private void createCompetenceCourseGroupUnit(final DepartmentUnit departmentUnit) {
             final ScientificAreaUnit scientificAreaUnit =
@@ -457,9 +443,8 @@ public class CreateTestData {
         return new RoleGroup(Role.getRoleByRoleType(roleType));
     }
 
-    public static class CreateDegrees extends AtomicAction {
-        @Override
-        public void doIt() {
+    public static class CreateDegrees {
+        public void doIt(InstallationProcess process) {
             Language.setLocale(Language.getDefaultLocale());
 
             final Unit unit = findUnitByName("Degrees");
@@ -469,11 +454,13 @@ public class CreateTestData {
                         final Degree degree = createDegree(degreeType, (degreeType.ordinal() * 10) + i);
                         createDegreeInfo(degree);
                         associateToDepartment(degree);
-                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree);
+
+                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree, process);
+
                         createExecutionDegrees(degreeCurricularPlan, getCampus());
-
+                        degree.setAdministrativeOffice(administrativeOffice);
                         final DegreeSite degreeSite = degree.getSite();
-
+  
                         DegreeUnit.createNewInternalDegreeUnit(
                                 new MultiLanguageString(Language.getDefaultLanguage(), degree.getName()), null, null,
                                 degree.getSigla(), new YearMonthDay(), null, unit,
@@ -485,7 +472,7 @@ public class CreateTestData {
         }
 
         private Unit findUnitByName(final String unitName) {
-            for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+            for (final Party party : Bennu.getInstance().getPartysSet()) {
                 if (party.isAggregateUnit() && party.getName().equals(unitName)) {
                     return (Unit) party;
                 }
@@ -498,17 +485,21 @@ public class CreateTestData {
                     degreeType.getGradeScale());
         }
 
-        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree) {
-            final DegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-            degreeCurricularPlan.setDegree(degree);
-            degreeCurricularPlan.setName(degree.getSigla());
+        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree, InstallationProcess process) {
+
+            final DegreeCurricularPlan degreeCurricularPlan =
+                    degree.createBolonhaDegreeCurricularPlan(degree.getSigla(), GradeScale.TYPE20,
+                            process.person);
+
             degreeCurricularPlan.setCurricularStage(CurricularStage.APPROVED);
             degreeCurricularPlan.setDescription("Bla bla bla. Desc. do plano curricular do curso. Bla bla bla");
             degreeCurricularPlan.setDescriptionEn("Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.");
             degreeCurricularPlan.setState(DegreeCurricularPlanState.ACTIVE);
+
             if (degree.getDegreeType().isBolonhaType()) {
                 RootCourseGroup.createRoot(degreeCurricularPlan, degree.getSigla(), degree.getSigla());
             }
+
             return degreeCurricularPlan;
         }
 
@@ -601,7 +592,7 @@ public class CreateTestData {
         }
 
         private void createDegreeInfo(final Degree degree) {
-            for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+            for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
                 final DegreeInfo degreeInfo = degree.createCurrentDegreeInfo();
                 degreeInfo.setExecutionYear(executionYear);
                 degreeInfo.setDescription(new MultiLanguageString(Language.pt, "Desc. do curso. Bla bla bla bla bla.").with(
@@ -733,7 +724,7 @@ public class CreateTestData {
         private CurricularPeriod findCurricularPeriod(final DegreeCurricularPlan degreeCurricularPlan, final int y, final int s) {
             final DegreeType degreeType = degreeCurricularPlan.getDegreeType();
             final AcademicPeriod academicPeriod = degreeType.getAcademicPeriod();
-            for (final CurricularPeriod curricularPeriod : RootDomainObject.getInstance().getCurricularPeriodsSet()) {
+            for (final CurricularPeriod curricularPeriod : Bennu.getInstance().getCurricularPeriodsSet()) {
                 if (curricularPeriod.getAcademicPeriod().equals(academicPeriod)) {
                     for (final CurricularPeriod curricularYear : curricularPeriod.getChildsSet()) {
                         if (curricularYear.getChildOrder().intValue() == y) {
@@ -746,7 +737,7 @@ public class CreateTestData {
                     }
                 }
             }
-            for (final CurricularPeriod curricularPeriod : RootDomainObject.getInstance().getCurricularPeriodsSet()) {
+            for (final CurricularPeriod curricularPeriod : Bennu.getInstance().getCurricularPeriodsSet()) {
                 if (curricularPeriod.getAcademicPeriod().equals(academicPeriod) && academicPeriod.equals(AcademicPeriod.YEAR)) {
                     if (curricularPeriod.getChildOrder() == null || curricularPeriod.getChildOrder().intValue() == y) {
                         for (final CurricularPeriod curricularSemester : curricularPeriod.getChildsSet()) {
@@ -808,7 +799,7 @@ public class CreateTestData {
         }
 
         private ExecutionSemester firstExecutionPeriod() {
-            return Collections.min(RootDomainObject.getInstance().getExecutionPeriodsSet());
+            return Collections.min(Bennu.getInstance().getExecutionPeriodsSet());
         }
 
         private CompetenceCourseGroupUnit findCompetenceCourseGroupUnit(final DegreeCurricularPlan degreeCurricularPlan) {
@@ -843,10 +834,10 @@ public class CreateTestData {
         public void doIt() {
             Language.setLocale(Language.getDefaultLocale());
 
-            for (final DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModulesSet()) {
+            for (final DegreeModule degreeModule : Bennu.getInstance().getDegreeModulesSet()) {
                 if (degreeModule.isCurricularCourse()) {
                     final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-                    for (final ExecutionSemester executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+                    for (final ExecutionSemester executionPeriod : Bennu.getInstance().getExecutionPeriodsSet()) {
                         if (curricularCourse.hasActiveScopesInExecutionPeriod(executionPeriod)) {
                             final ExecutionCourse executionCourse =
                                     new ExecutionCourse(curricularCourse.getName(), curricularCourse.getCode(), executionPeriod,
@@ -895,7 +886,6 @@ public class CreateTestData {
 
         private static void createAnnouncements(final AnnouncementBoard announcementBoard, final YearMonthDay day) {
             final Announcement announcement = new Announcement();
-            announcement.setAnnouncementBoard(announcementBoard);
             announcement.setAuthor("Autor do anuncio");
             announcement.setAuthorEmail("http://www.google.com/");
             announcement.setBody(new MultiLanguageString(Language.pt, "Corpo do anuncio. Bla bla bla bla.").with(Language.en,
@@ -912,6 +902,7 @@ public class CreateTestData {
             // announcement.setReferedSubjectEnd();
             announcement.setSubject(new MultiLanguageString(Language.pt, "Assunto Bla.").with(Language.en, "Subject blur."));
             announcement.setVisible(Boolean.TRUE);
+            announcement.setAnnouncementBoard(announcementBoard);
         }
 
         private static void createEvaluationMethod(final ExecutionCourse executionCourse) {
@@ -988,12 +979,12 @@ public class CreateTestData {
         @Override
         public void doIt() {
             //final Person person = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER).getAssociatedPersonsSet().iterator().next();
-            final Person person = RootDomainObject.getInstance().getUsersSet().iterator().next().getPerson();
+            final Person person = Bennu.getInstance().getUsersSet().iterator().next().getPerson();
             Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER).addAssociatedPersons(person);
-            final IUserView userView = new Authenticate().mock(person, "://localhost");
-            UserView.setUser(userView);
+            // final User userView = new Authenticate().mock(person, "://localhost");
+            // UserView.setUser(userView);
 
-            final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+            final Bennu rootDomainObject = Bennu.getInstance();
             for (final ExecutionSemester executionPeriod : rootDomainObject.getExecutionPeriodsSet()) {
                 createWrittenEvaluations(executionPeriod, new Season(Season.SEASON1), "Teste1");
                 for (int i = 0; i++ < 500; writtenTestsRoomManager.getNextDateTime(executionPeriod)) {
@@ -1058,46 +1049,10 @@ public class CreateTestData {
         }
     }
 
-    private static void createTestData() {
-        Language.setLocale(Language.getDefaultLocale());
-
-        doAction(new CreateManagerUser());
-        doAction(new CreateExecutionYears());
-        doAction(new CreateResources());
-        doAction(new CreateOrganizationalStructure());
-        doAction(new CreateDegrees());
-        doAction(new CreateCurricularPeriods());
-        doAction(new CreateCurricularStructure());
-        doAction(new CreateExecutionCourses());
-        doAction(new CreateEvaluations());
-
-        // createUnits();
-        // createExecutionYears();
-        // createCampus();
-        // createRooms();
-        // createDegrees();
-        // createExecutionCourses();
-        // connectShiftsToSchoolClasses();
-        // createWrittenEvaluations();
-        // createStudents();
-    }
-
-    public static void main(String[] args) {
-        try {
-            doIt();
-        } finally {
-            System.err.flush();
-            System.out.flush();
-        }
-        System.out.println("Creation of test data complete.");
-        System.exit(0);
-    }
-
     @Atomic(mode = TxMode.READ)
     private static void doIt() {
-        RootDomainObject.initialize();
         setPrivledges();
-        createTestData();
+        //createTestData();
     }
 
     private static final LessonRoomManager lessonRoomManager = new LessonRoomManager();
@@ -1110,12 +1065,12 @@ public class CreateTestData {
         final Teacher teacher = new Teacher(person);
         person.addPersonRoleByRoleType(RoleType.EMPLOYEE);
         person.addPersonRoleByRoleType(RoleType.TEACHER);
-        final Login login = person.getUser().readUserLoginIdentification();
-        login.openLoginIfNecessary(RoleType.TEACHER);
-        new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject
-                .getInstance().getInstitutionUnit(), AccountabilityTypeEnum.WORKING_CONTRACT, true);
-        new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject
-                .getInstance().getInstitutionUnit(), AccountabilityTypeEnum.MAILING_CONTRACT, true);
+        // final Login login = Login.readUserLoginIdentification(person.getUser());
+        // login.openLoginIfNecessary(RoleType.TEACHER);
+        new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), Bennu.getInstance()
+                .getInstitutionUnit(), AccountabilityTypeEnum.WORKING_CONTRACT, true);
+        new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), Bennu.getInstance()
+                .getInstitutionUnit(), AccountabilityTypeEnum.MAILING_CONTRACT, true);
         person.addPersonRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
         person.addPersonRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
         person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
@@ -1125,43 +1080,31 @@ public class CreateTestData {
          * ExecutionYear.readCurrentExecutionYear());
          */
         final VigilantGroup vigilantGroup;
-        if (RootDomainObject.getInstance().getVigilantGroupsSet().isEmpty()) {
+        if (Bennu.getInstance().getVigilantGroupsSet().isEmpty()) {
             vigilantGroup = new VigilantGroup();
             vigilantGroup.setName("Officers of the Law");
-            vigilantGroup.setUnit(RootDomainObject.getInstance().getInstitutionUnit());
+            vigilantGroup.setUnit(Bennu.getInstance().getInstitutionUnit());
             vigilantGroup.setContactEmail("nowhere@nowhere.com");
             vigilantGroup.setRulesLink("http://www.google.com/");
             ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
             vigilantGroup.setExecutionYear(currentYear);
         } else {
-            vigilantGroup = RootDomainObject.getInstance().getVigilantGroupsSet().iterator().next();
+            vigilantGroup = Bennu.getInstance().getVigilantGroupsSet().iterator().next();
         }
         /* vigilantGroup.addVigilants(vigilant); */
         return teacher;
     }
 
     private static Person createPerson(final String namePrefix, final String usernamePrefix, final int i) {
-        final Person person = new Person();
-
-        person.setName(namePrefix + i);
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
-        person.setDateOfBirthYearMonthDay(new YearMonthDay().minusYears(23));
-        person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
-        person.setDocumentIdNumber(person.getExternalId().toString());
-
-        EmailAddress.createEmailAddress(person, "abc" + person.getExternalId() + "@gmail.com", PartyContactType.PERSONAL, true);
-
-        final User user = person.getUser();
-        final Login login = user.readUserLoginIdentification();
-        login.setPassword(PasswordEncryptor.encryptPassword("pass"));
-        login.setActive(Boolean.TRUE);
-        LoginAlias.createNewCustomLoginAlias(login, usernamePrefix + i);
-        person.setIsPassInKerberos(Boolean.TRUE);
-        return person;
+//        final Login login = Login.readUserLoginIdentification(user);
+//        login.setPassword(PasswordEncryptor.encryptPassword("pass"));
+//        login.setActive(Boolean.TRUE);
+//        LoginAlias.createNewCustomLoginAlias(login, usernamePrefix + i);
+        return null;
     }
 
     private static void createStudents() {
-        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+        final Bennu rootDomainObject = Bennu.getInstance();
         int i = 1;
         for (final DegreeCurricularPlan degreeCurricularPlan : DegreeCurricularPlan.readNotEmptyDegreeCurricularPlans()) {
             for (int k = 1; k <= 20; k++) {
@@ -1182,8 +1125,8 @@ public class CreateTestData {
                 StudentCurricularPlan.createWithEmptyStructure(registration, degreeCurricularPlan,
                         new YearMonthDay().minusMonths(6));
         person.addPersonRoleByRoleType(RoleType.STUDENT);
-        final Login login = person.getUser().readUserLoginIdentification();
-        login.openLoginIfNecessary(RoleType.STUDENT);
+        // final Login login = Login.readUserLoginIdentification(person.getUser());
+        // login.openLoginIfNecessary(RoleType.STUDENT);
         createStudentEnrolments(studentCurricularPlan);
         new DegreeCurricularPlanServiceAgreement(student.getPerson(), degreeCurricularPlan.getServiceAgreementTemplate());
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
@@ -1196,7 +1139,7 @@ public class CreateTestData {
     }
 
     private static ExecutionSemester findFirstExecutionPeriod() {
-        for (final ExecutionSemester executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+        for (final ExecutionSemester executionPeriod : Bennu.getInstance().getExecutionPeriodsSet()) {
             if (executionPeriod.getPreviousExecutionPeriod() == null) {
                 return executionPeriod;
             }
@@ -1204,8 +1147,9 @@ public class CreateTestData {
         return null;
     }
 
-    private static void createDegrees() {
-        final Person person = Person.readPersonByUsernameWithOpenedLogin("admin");
+    private static void createDegrees(InstallationProcess process) {
+        final Person person = process.person;
+
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         final Campus campus = Space.getAllCampus().iterator().next();
 
@@ -1218,7 +1162,7 @@ public class CreateTestData {
             if (degreeType.isBolonhaType()) {
                 degree =
                         new Degree("Agricultura do Conhecimento", "Knowledge Agriculture", "CODE" + i, degreeType, 0d,
-                                gradeScale, null, RootDomainObject.getInstance().getAdministrativeOfficesSet().iterator().next());
+                                gradeScale, null, Bennu.getInstance().getAdministrativeOfficesSet().iterator().next());
                 degreeCurricularPlan = degree.createBolonhaDegreeCurricularPlan("DegreeCurricularPlanName", gradeScale, person);
                 degreeCurricularPlan.setCurricularStage(CurricularStage.PUBLISHED);
             } else {
@@ -1303,10 +1247,10 @@ public class CreateTestData {
     }
 
     private static void createExecutionCourses() {
-        for (final DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModulesSet()) {
+        for (final DegreeModule degreeModule : Bennu.getInstance().getDegreeModulesSet()) {
             if (degreeModule instanceof CurricularCourse) {
                 final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-                for (final ExecutionSemester executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+                for (final ExecutionSemester executionPeriod : Bennu.getInstance().getExecutionPeriodsSet()) {
                     if (!curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod).isEmpty()) {
                         createExecutionCourse(executionPeriod, curricularCourse);
                     }
@@ -1380,7 +1324,7 @@ public class CreateTestData {
 
     private static void createPreBolonhaCurricularCourses(final DegreeCurricularPlan degreeCurricularPlan, int dcpCounter,
             final ExecutionYear executionYear, final Branch branch) {
-        for (final CurricularSemester curricularSemester : RootDomainObject.getInstance().getCurricularSemestersSet()) {
+        for (final CurricularSemester curricularSemester : Bennu.getInstance().getCurricularSemestersSet()) {
             final CurricularYear curricularYear = curricularSemester.getCurricularYear();
             for (int i = 1; i < 6; i++) {
                 final String x = "" + dcpCounter + i + curricularYear.getYear() + curricularSemester.getSemester();
@@ -1413,7 +1357,7 @@ public class CreateTestData {
     }
 
     private static void createProfessorship(final ExecutionCourse executionCourse, final Boolean isResponsibleFor) {
-        final int n = RootDomainObject.getInstance().getTeachersSet().size();
+        final int n = Bennu.getInstance().getTeachersSet().size();
         final Teacher teacher = createTeachers(n + 1);
         final Professorship professorship = new Professorship();
         professorship.setTeacher(teacher);
@@ -1422,7 +1366,7 @@ public class CreateTestData {
     }
 
     private static void connectShiftsToSchoolClasses() {
-        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+        final Bennu rootDomainObject = Bennu.getInstance();
         for (final CurricularCourseScope curricularCourseScope : rootDomainObject.getCurricularCourseScopesSet()) {
             final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
             final CurricularYear curricularYear = curricularSemester.getCurricularYear();
@@ -1443,7 +1387,7 @@ public class CreateTestData {
     }
 
     private static void createWrittenEvaluations() {
-        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+        final Bennu rootDomainObject = Bennu.getInstance();
         for (final ExecutionSemester executionPeriod : rootDomainObject.getExecutionPeriodsSet()) {
             createWrittenEvaluations(executionPeriod, new Season(Season.SEASON1), "Teste1");
             for (int i = 0; i++ < 500; writtenTestsRoomManager.getNextDateTime(executionPeriod)) {
@@ -1587,65 +1531,6 @@ public class CreateTestData {
             }
         }
         return false;
-    }
-
-    private static class MockUserView implements IUserView {
-        private final DateTime userCreationDateTime = new DateTime();
-
-        @Override
-        public DateTime getExpirationDate() {
-            return null;
-        }
-
-        @Override
-        public String getFullName() {
-            return null;
-        }
-
-        @Override
-        public Person getPerson() {
-            return null;
-        }
-
-        @Override
-        public Collection<RoleType> getRoleTypes() {
-            return null;
-        }
-
-        @Override
-        public String getUtilizador() {
-            return null;
-        }
-
-        @Override
-        public boolean hasRoleType(RoleType roleType) {
-            return true;
-        }
-
-        @Override
-        public String getPrivateConstantForDigestCalculation() {
-            return null;
-        }
-
-        @Override
-        public String getUsername() {
-            return null;
-        }
-
-        @Override
-        public boolean hasRole(String role) {
-            return false;
-        }
-
-        @Override
-        public DateTime getLastLogoutDateTime() {
-            return null;
-        }
-
-        @Override
-        public DateTime getUserCreationDateTime() {
-            return userCreationDateTime;
-        }
     }
 
 }

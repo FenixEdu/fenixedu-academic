@@ -19,9 +19,4 @@ public class SystemSender extends SystemSender_Base {
         return String.format("%s (%s)", Unit.getInstitutionAcronym(), "Sistema Fénix");
     }
 
-    @Deprecated
-    public boolean hasSystemRootDomainObject() {
-        return getSystemRootDomainObject() != null;
-    }
-
 }

@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
@@ -48,7 +48,7 @@ public class AuthorGroup extends Group {
     @Override
     public Set<Person> getElements() {
         Set<Person> authors = new HashSet<Person>();
-        for (Party party : RootDomainObject.getInstance().getPartysSet()) {
+        for (Party party : Bennu.getInstance().getPartysSet()) {
             if (party instanceof Person) {
                 if (((Person) party).hasAnyResultParticipations()) {
                     authors.add((Person) party);

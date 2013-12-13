@@ -3,6 +3,10 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * @deprecated Use Bennu Groups instead
+ */
+@Deprecated
 public class ArgumentList extends ArrayList<Argument> {
 
     private static final long serialVersionUID = 1L;

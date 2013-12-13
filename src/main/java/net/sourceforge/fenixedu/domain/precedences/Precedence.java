@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -17,7 +17,7 @@ public class Precedence extends Precedence_Base {
 
     public Precedence() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Precedence(CurricularCourse curricularCourseToAddPrecedence, String className,
@@ -91,7 +91,7 @@ public class Precedence extends Precedence_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

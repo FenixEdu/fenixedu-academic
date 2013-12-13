@@ -2,6 +2,10 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import pt.ist.fenixframework.DomainObject;
 
+/**
+ * @deprecated Use Bennu Groups instead
+ */
+@Deprecated
 public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGroup {
 
     private static final long serialVersionUID = 1L;

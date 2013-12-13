@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
@@ -32,7 +32,7 @@ public class NoOneGroup extends LeafGroup {
      * @return <code>false</code>
      */
     @Override
-    public boolean allows(IUserView userView) {
+    public boolean allows(User userView) {
         return false;
     }
 

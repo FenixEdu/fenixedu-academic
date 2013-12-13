@@ -1,9 +1,10 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.net.URLEncoder"%>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
+<%@page import="pt.ist.bennu.core.util.CoreConfiguration"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -22,7 +23,7 @@ padding: 0;
 
 <h2><bean:message key="label.teachingInquiries.studentInquiriesResults" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<logic:present role="PERSON">
+<logic:present role="role(PERSON)">
 	<bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
 
 	<table class="tstyle2 thwhite thleft tdleft thlight">
@@ -68,7 +69,7 @@ padding: 0;
 	</table>
 </logic:present>
 
-<logic:notPresent role="PERSON">
+<logic:notPresent role="role(PERSON)">
 	<bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
 	<br/>
 	<br/>
@@ -85,18 +86,16 @@ padding: 0;
 		session.setAttribute("ORIGINAL_PARAMETER_MAP", map);
 		session.setAttribute("ORIGINAL_ATTRIBUTE_MAP", map);
 
-	boolean isCasEnabled = PropertiesManager.getBooleanProperty("cas.enabled");
+		boolean isCasEnabled = CoreConfiguration.casConfig().isCasEnabled();
 		if (isCasEnabled) {
-			String casValue = request.getScheme() + "://" + request.getServerName()
-				+ port + request.getContextPath() + "/loginCAS.do";
-			String urlSuffix = "?service=" + casValue;
-		    String loginPage = PropertiesManager.getProperty("cas.loginUrl") + urlSuffix;
+		    String casValue = request.getScheme() + "://" + request.getServerName() + port + request.getContextPath() + "/loginCAS.do";
+			String loginPage = CoreConfiguration.casConfig().getCasLoginUrl(casValue);
 	%>
 			<html:link href="<%= loginPage %>">Login</html:link>
 	<%
 		} else {
 			String urlSuffix = "?service=" + value;
-			String loginPage = PropertiesManager.getProperty("login.page") + urlSuffix;
+			String loginPage = FenixConfigurationManager.getConfiguration().getLoginPage() + urlSuffix;
 	%>
 			<html:link href="<%= loginPage %>">Login</html:link>
 	<%

@@ -740,20 +740,6 @@
 		<put name="body" value="/commons/sites/unitSite/boards/showEvent.jsp" />
 	</definition>		
 
-	<definition name="start-request-login-process" extends="definition.public.mainPageIST">
-		<put name="titleString" value="public.general.login.start" />
-		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
-		<put name="body" value="/publico/researchUnitSite/requestLogin.jsp" />
-	  	<put name="footer" value="/commons/blank.jsp" />
-	</definition>		
-
-	<definition name="request-login-finish-process" extends="definition.public.mainPageIST">
-		<put name="titleString" value="public.general.login.finished" />
-		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
-		<put name="body" value="/publico/researchUnitSite/loginProcessFinished.jsp" />
-	  	<put name="footer" value="/commons/blank.jsp" />
-	</definition>		
-
     <definition name="degree-showDegreeTheses" extends="definition.public.mainPageIST">
         <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
         <put name="body" value="/publico/degreeSite/showDegreeTheses.jsp"/>

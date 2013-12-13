@@ -51,6 +51,7 @@
 				<fr:property name="key(change)" value="label.changeType" />
 				<fr:property name="param(change)" value="externalId/executionCourseOid" />
 				<fr:property name="bundle(change)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+				<fr:property name="visibleIf(change)" value="executionPeriod.executionYear.current" />
 				<fr:property name="confirmationKey(change)" value="message.confirmation.changeExecutionCourseType" />
 				<fr:property name="confirmationBundle(change)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
 				<fr:property name="confirmationTitleKey(change)" value="label.changeType" />

@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
@@ -38,7 +38,7 @@ public class RoomClassification extends RoomClassification_Base {
     public RoomClassification(final RoomClassification parentRoomClassification, final Integer code,
             final MultiLanguageString name) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         edit(parentRoomClassification, code, name);
     }
 
@@ -148,7 +148,7 @@ public class RoomClassification extends RoomClassification_Base {
     }
 
     public static RoomClassification findRoomClassificationByPresentationCode(final String presentationCode) {
-        for (final RoomClassification roomClassification : RootDomainObject.getInstance().getRoomClassificationSet()) {
+        for (final RoomClassification roomClassification : Bennu.getInstance().getRoomClassificationSet()) {
             if (roomClassification.getPresentationCode().equals(presentationCode)) {
                 return roomClassification;
             }
@@ -163,7 +163,7 @@ public class RoomClassification extends RoomClassification_Base {
 
     public static Set<RoomClassification> readClassificationsWithParentSortedByCode() {
         Set<RoomClassification> result = new TreeSet<RoomClassification>(COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE);
-        for (RoomClassification roomClassification : RootDomainObject.getInstance().getRoomClassificationSet()) {
+        for (RoomClassification roomClassification : Bennu.getInstance().getRoomClassificationSet()) {
             if (roomClassification.hasParentRoomClassification()) {
                 result.add(roomClassification);
             }
@@ -289,7 +289,7 @@ public class RoomClassification extends RoomClassification_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

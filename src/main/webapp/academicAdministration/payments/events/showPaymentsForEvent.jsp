@@ -101,7 +101,7 @@
 			<td><fr:view name="transaction" property="whenRegistered" /></td>
 			<td>
 				<logic:notEmpty name="transaction" property="responsibleUser">
-					<fr:view name="transaction" property="responsibleUser.userUId" />
+					<fr:view name="transaction" property="responsibleUser.username" />
 				</logic:notEmpty>
 				<logic:empty name="transaction" property="responsibleUser">-</logic:empty>
 			</td>
@@ -133,7 +133,7 @@
 						<td><fr:view name="adjustingTransaction" property="whenRegistered" /></td>
 						<td>
 							<logic:notEmpty name="adjustingTransaction" property="responsibleUser">
-								<fr:view name="adjustingTransaction" property="responsibleUser.userUId" />
+								<fr:view name="adjustingTransaction" property="responsibleUser.username" />
 							</logic:notEmpty>
 							<logic:empty name="adjustingTransaction" property="responsibleUser">-</logic:empty>
 						</td>

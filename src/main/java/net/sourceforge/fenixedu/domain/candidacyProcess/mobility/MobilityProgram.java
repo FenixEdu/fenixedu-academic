@@ -6,10 +6,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.institutionalRelations.academic.Program;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -26,7 +26,7 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
 
     private MobilityProgram() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public MobilityProgram(RegistrationAgreement agreement) {
@@ -43,7 +43,7 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
     public static List<MobilityProgram> getAllMobilityPrograms() {
         List<MobilityProgram> result = new ArrayList<MobilityProgram>();
 
-        Collection<Program> programs = RootDomainObject.getInstance().getPrograms();
+        Collection<Program> programs = Bennu.getInstance().getProgramsSet();
 
         for (Program program : programs) {
             if (program.isMobility()) {
@@ -82,7 +82,7 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
     }
 
     public static MobilityProgram getByRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-        Collection<Program> programs = RootDomainObject.getInstance().getPrograms();
+        Collection<Program> programs = Bennu.getInstance().getProgramsSet();
         for (Program program : programs) {
             if (program instanceof MobilityProgram) {
                 MobilityProgram mob = ((MobilityProgram) program);

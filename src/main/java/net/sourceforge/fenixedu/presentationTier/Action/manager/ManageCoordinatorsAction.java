@@ -11,7 +11,7 @@ import java.util.ListIterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddCoordinator;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.RemoveCoordinators;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ResponsibleCoordinators;
@@ -31,7 +31,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * @author Tânia Pousão
@@ -46,7 +46,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         String executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         InfoExecutionDegree infoExecutionDegree = null;
         try {
@@ -107,7 +107,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         String executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         InfoExecutionDegree infoExecutionDegree = null;
         try {
@@ -134,7 +134,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
     public ActionForward insert(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
@@ -168,7 +168,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 
         ActionErrors errors = new ActionErrors();
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);

@@ -8,6 +8,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class BibliographicReference extends BibliographicReference_Base {
 
     public static final Comparator<BibliographicReference> COMPARATOR_BY_ORDER = new Comparator<BibliographicReference>() {
@@ -31,7 +33,7 @@ public class BibliographicReference extends BibliographicReference_Base {
 
     public BibliographicReference() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void edit(final String title, final String authors, final String reference, final String year, final Boolean optional) {
@@ -88,6 +90,7 @@ public class BibliographicReference extends BibliographicReference_Base {
     public boolean isOptional() {
         return getOptional() == null || getOptional();
     }
+
     @Deprecated
     public boolean hasExecutionCourse() {
         return getExecutionCourse() != null;
@@ -99,7 +102,7 @@ public class BibliographicReference extends BibliographicReference_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -6,21 +6,27 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation.ThrowableInfo;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 
 public class ExceptionInformation {
 
@@ -31,7 +37,7 @@ public class ExceptionInformation {
     private Throwable exception;
     private List<ThrowableInfo> flatExceptionStack;
     private String formattedStackTrace;
-    private String actionErrorClass;
+    private Class<?> actionErrorClass;
     private String actionErrorMethod;
     private String actionErrorFile;
     private String actionErrorLine;
@@ -42,7 +48,9 @@ public class ExceptionInformation {
 
     //request dependent info
     private String requestURI;
+    private String requestFullUrl;
     private String requestURL;
+    private String requestMethod;
     private String queryString;
     private Map<String, String> queryParameters;
     private ActionMapping actionMapping;
@@ -73,10 +81,11 @@ public class ExceptionInformation {
      * */
 
     public static class ThrowableInfo {
-        private boolean cause;
-        private boolean suppressed;
-        private int level;
-        private Throwable subject;
+        private final boolean cause;
+        private final boolean suppressed;
+        private final int level;
+        private final Throwable subject;
+        private final List<ElementInfo> subjectInfo;
 
         public ThrowableInfo(boolean isCause, boolean isSurpressed, int level, Throwable subject) {
             super();
@@ -84,6 +93,7 @@ public class ExceptionInformation {
             this.suppressed = isSurpressed;
             this.level = level;
             this.subject = subject;
+            this.subjectInfo = getSubjectInfo(subject);
         }
 
         public boolean isCause() {
@@ -100,6 +110,18 @@ public class ExceptionInformation {
 
         public Throwable getSubject() {
             return subject;
+        }
+
+        public List<ElementInfo> getSubjectInfo() {
+            return subjectInfo;
+        }
+
+        private static List<ElementInfo> getSubjectInfo(Throwable subject) {
+            List<ElementInfo> subjectInfo = new ArrayList<>();
+            for (StackTraceElement element : subject.getStackTrace()) {
+                subjectInfo.add(new ElementInfo(element));
+            }
+            return subjectInfo;
         }
 
         public static List<ThrowableInfo> getFlatThrowableInfoList(Throwable t) {
@@ -119,6 +141,79 @@ public class ExceptionInformation {
             }
             return list;
         }
+
+    }
+
+    public static class ElementInfo {
+        private final StackTraceElement element;
+        private boolean isExternalClass;
+        private final String simpleClassName;
+        private final String methodName;
+        private final String packageName;
+        private final int line;
+        private final boolean isNative;
+        private final String fileName;
+
+        public ElementInfo(StackTraceElement element) {
+            this.element = element;
+            this.simpleClassName = getSimpleClassName(element.getClassName());
+            this.packageName = getPackageName(element.getClassName());
+            this.isExternalClass = isExternalClass(element.getClassName());
+            this.methodName = element.getMethodName();
+            this.line = element.getLineNumber();
+            this.isNative = element.isNativeMethod();
+            this.fileName = element.getFileName();
+        }
+
+        private boolean isExternalClass(String className) {
+            return StringUtils.startsWith(className, "net.sourceforge.fenixedu") || StringUtils.startsWith(className, "pt.ist");
+        }
+
+        private String getSimpleClassName(String className) {
+            String[] parse = StringUtils.split(className, ".");
+            return parse[parse.length - 1];
+        }
+
+        private String getPackageName(String className) {
+            return className.substring(0, className.lastIndexOf("."));
+        }
+
+        public StackTraceElement getElement() {
+            return element;
+        }
+
+        public boolean isExternalClass() {
+            return isExternalClass;
+        }
+
+        public void setExternalClass(boolean isExternalClass) {
+            this.isExternalClass = isExternalClass;
+        }
+
+        public String getSimpleClassName() {
+            return simpleClassName;
+        }
+
+        public String getMethodName() {
+            return methodName;
+        }
+
+        public String getPackageName() {
+            return packageName;
+        }
+
+        public int getLine() {
+            return line;
+        }
+
+        public boolean isNative() {
+            return isNative;
+        }
+
+        public String getFileName() {
+            return fileName;
+        }
+
     }
 
     //this method is does too much for non-debug applications. sloowww.
@@ -166,9 +261,16 @@ public class ExceptionInformation {
 
         ActionMapping mapping = info.getActionMapping();
         if (mapping != null) {
-            info.setActionErrorClass(mapping.getType());
-            info.setActionErrorMethod(mapping.getParameter().equals("method") ? info.getQueryParameters().get("method") : "execute");
-            String getString = info.getActionErrorClass() + "." + info.getActionErrorMethod();
+            Class<?> actionClass = actionClass(mapping.getType());
+            info.setActionErrorClass(actionClass);
+            if (DispatchAction.class.isAssignableFrom(actionClass)) {
+                // For DispatchActions we can try to better pinpoint the method...
+                info.setActionErrorMethod(request.getParameter(mapping.getParameter()));
+            } else {
+                // ... for the others, we can just look for execute
+                info.setActionErrorMethod("execute");
+            }
+            String getString = info.getActionErrorClass().getName() + "." + info.getActionErrorMethod();
             String actionError = formattedST.substring(formattedST.indexOf(getString));
             actionError = actionError.substring(0, actionError.indexOf("\n"));
 
@@ -179,6 +281,14 @@ public class ExceptionInformation {
 
         info.setExceptionInfo(exceptionInfo.toString());
         return info;
+    }
+
+    private static final Class<?> actionClass(String type) {
+        try {
+            return Class.forName(type);
+        } catch (ClassNotFoundException e) {
+            throw new Error("I can't seem to find the class I was just in");
+        }
     }
 
     public static String buildUncaughtExceptionInfo(HttpServletRequest request, Throwable ex) {
@@ -225,10 +335,10 @@ public class ExceptionInformation {
 
         SupportRequestBean requestBean;
         String user;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         if (userView != null) {
-            user = userView.getUtilizador();
-            exceptionInfo.append(userView.getUtilizador()).append("\n");
+            user = userView.getUsername();
+            exceptionInfo.append(userView.getUsername()).append("\n");
             requestBean = SupportRequestBean.generateExceptionBean(userView.getPerson());
             if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
                 requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)
@@ -236,11 +346,15 @@ public class ExceptionInformation {
             }
             if (info != null) {
                 info.setUserName(user);
-                info.setUserRoles(userView.getRoleTypes());
+                Set<RoleType> roles = new HashSet<RoleType>();
+                for (Role role : userView.getPerson().getPersonRolesSet()) {
+                    roles.add(role.getRoleType());
+                }
+                info.setUserRoles(roles);
             }
         } else {
             user = "No user logged in, or session was lost.\n";
-            requestBean = new SupportRequestBean();
+            requestBean = SupportRequestBean.generateExceptionBean(null);
         }
         exceptionInfo.append(user + "\n");
         return requestBean;
@@ -252,7 +366,9 @@ public class ExceptionInformation {
         if (info != null) {
             info.setRequestURI(request.getRequestURI());
             info.setRequestURL(request.getRequestURL().toString());
+            info.setRequestFullUrl(getRequestFullUrl(request));
             info.setQueryString(query);
+            info.setRequestMethod(request.getMethod());
 
             String[] params = query.split("&");
             Map<String, String> queryParameters = new HashMap<String, String>();
@@ -279,6 +395,12 @@ public class ExceptionInformation {
         } else {
             exceptionInfo.append("[Path|Name] impossible to get (exception through UncaughtExceptionFilter)\n");
         }
+    }
+
+    private static String getRequestFullUrl(HttpServletRequest request) {
+        StringBuffer requestFullURL = request.getRequestURL();
+        String queryString = request.getQueryString();
+        return queryString == null ? requestFullURL.toString() : requestFullURL.append('?').append(queryString).toString();
     }
 
     private static void requestContextAppend(HttpServletRequest request, StringBuilder exceptionInfo, ExceptionInformation info) {
@@ -481,7 +603,7 @@ public class ExceptionInformation {
         this.actionErrorLine = actionErrorLine;
     }
 
-    public String getActionErrorClass() {
+    public Class<?> getActionErrorClass() {
         return actionErrorClass;
     }
 
@@ -493,7 +615,7 @@ public class ExceptionInformation {
         return actionErrorFile;
     }
 
-    private void setActionErrorClass(String actionErrorClass) {
+    private void setActionErrorClass(Class<?> actionErrorClass) {
         this.actionErrorClass = actionErrorClass;
     }
 
@@ -519,5 +641,21 @@ public class ExceptionInformation {
 
     private void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getRequestFullUrl() {
+        return requestFullUrl;
+    }
+
+    public void setRequestFullUrl(String requestFullUrl) {
+        this.requestFullUrl = requestFullUrl;
+    }
+
+    public String getRequestMethod() {
+        return requestMethod;
+    }
+
+    public void setRequestMethod(String requestMethod) {
+        this.requestMethod = requestMethod;
     }
 }

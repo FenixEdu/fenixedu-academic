@@ -467,7 +467,7 @@
 
 <schema name="coordinator.commissionTeam.manage.contacts" type="net.sourceforge.fenixedu.domain.ScientificCommission">
     <slot name="person" layout="format" read-only="true" key="label.member">
-        <property name="format" value="${name} (${loginIdentification.mostImportantAlias})"/>
+        <property name="format" value="${name} (${user.username})"/>
     </slot>
     <slot name="contact" key="label.scientificCommission.contact"/>
     <slot name="person.email" key="email" read-only="true"/> 

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class TeacherCredits extends TeacherCredits_Base {
@@ -18,7 +19,7 @@ public class TeacherCredits extends TeacherCredits_Base {
         super();
         setTeacher(teacher);
         setTeacherCreditsState(teacherCreditsState);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         saveTeacherCredits();
     }
 
@@ -34,7 +35,7 @@ public class TeacherCredits extends TeacherCredits_Base {
 
     @Atomic
     public static void closeAllTeacherCredits(ExecutionSemester executionSemester) throws ParseException {
-        Collection<Teacher> teachers = RootDomainObject.getInstance().getTeachers();
+        Collection<Teacher> teachers = Bennu.getInstance().getTeachersSet();
         TeacherCreditsState teacherCreditsState = TeacherCreditsState.getTeacherCreditsState(executionSemester);
         if (teacherCreditsState == null) {
             teacherCreditsState = new TeacherCreditsState(executionSemester);
@@ -152,7 +153,7 @@ public class TeacherCredits extends TeacherCredits_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

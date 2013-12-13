@@ -2,48 +2,70 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.presentationTier.Action.LocalAuthenticationAction.AuthenticationForm;
+import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.Config.CasConfig;
-import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.domain.exceptions.AuthorizationException;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.CoreConfiguration;
+import pt.ist.bennu.core.util.CoreConfiguration.CasConfig;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@Mapping(path = "/login", formBeanClass = AuthenticationForm.class)
 public class LocalAuthenticationAction extends BaseAuthenticationAction {
 
-    @Override
-    protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
-            throws  FenixServiceException {
+    public static class AuthenticationForm extends FenixActionForm {
+        private static final long serialVersionUID = 4638914162166756449L;
 
-        final String serverName = request.getServerName();
-        final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);
-        if (casConfig != null && casConfig.isCasEnabled()) {
-            throw new ExcepcaoAutenticacao("errors.noAuthorization");
+        private String username;
+        private String password;
+        private String pendingRequest;
+
+        public String getPendingRequest() {
+            return pendingRequest;
         }
 
-        final DynaActionForm authenticationForm = (DynaActionForm) form;
-        final String username = (String) authenticationForm.get("username");
-        final String password = (String) authenticationForm.get("password");
-        final String requestURL = request.getRequestURL().toString();
+        public void setPendingRequest(String pendingRequest) {
+            this.pendingRequest = pendingRequest;
+        }
 
-        return Authenticate.runAuthenticate(username, password, requestURL, remoteHostName);
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
     }
 
     @Override
-    protected ActionForward getAuthenticationFailedForward(final ActionMapping mapping, final HttpServletRequest request,
-            final String actionKey, final String messageKey) {
-        final ActionErrors actionErrors = new ActionErrors();
-        actionErrors.add(actionKey, new ActionError(messageKey));
-        saveErrors(request, actionErrors);
-        return mapping.getInputForward();
+    protected User doAuthentication(ActionForm form, HttpServletRequest request) {
+        final CasConfig casConfig = CoreConfiguration.casConfig();
+        if (casConfig != null && casConfig.isCasEnabled()) {
+            throw AuthorizationException.authenticationFailed();
+        }
+
+        final AuthenticationForm authenticationForm = (AuthenticationForm) form;
+        final String username = authenticationForm.getUsername();
+        final String password = authenticationForm.getPassword();
+
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+            throw AuthorizationException.authenticationFailed();
+        }
+        return Authenticate.login(request.getSession(true), username, password).getUser();
     }
 
 }

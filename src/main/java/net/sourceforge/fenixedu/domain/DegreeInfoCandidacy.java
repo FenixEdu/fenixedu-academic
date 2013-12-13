@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class DegreeInfoCandidacy extends DegreeInfoCandidacy_Base {
 
     protected DegreeInfoCandidacy(final DegreeInfo degreeInfo) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setDegreeInfo(degreeInfo);
     }
 
@@ -15,7 +17,7 @@ public class DegreeInfoCandidacy extends DegreeInfoCandidacy_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

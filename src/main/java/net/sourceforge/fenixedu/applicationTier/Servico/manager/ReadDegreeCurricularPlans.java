@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -42,6 +41,7 @@ public class ReadDegreeCurricularPlans {
         }
         return infoCurricularPlans;
     }
+
     // Service Invokers migrated from Berserk
 
     private static final ReadDegreeCurricularPlans serviceInstance = new ReadDegreeCurricularPlans();

@@ -1,14 +1,14 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class TSDProfessorship extends TSDProfessorship_Base {
 
     private TSDProfessorship() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public TSDProfessorship(TSDCourse tsdCourse, TSDTeacher tsdTeacher, ShiftType type) {
@@ -53,7 +53,7 @@ public class TSDProfessorship extends TSDProfessorship_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

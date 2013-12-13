@@ -18,10 +18,10 @@ public class FindPersonService extends SearchService {
     }
 
     @Override
-    protected List doSearch(HashMap searchParameters) {
+    protected List<Person> doSearch(HashMap searchParameters) {
 
         String request = (String) searchParameters.get("teacherId");
-        Person person = Person.readPersonByIstUsername(request.trim());
+        Person person = Person.readPersonByUsername(request.trim());
 
         List<Person> returnList = new ArrayList<Person>();
         if (person != null) {

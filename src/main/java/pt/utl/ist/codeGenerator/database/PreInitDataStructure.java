@@ -1,6 +1,6 @@
 package pt.utl.ist.codeGenerator.database;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class PreInitDataStructure {
@@ -15,7 +15,7 @@ public class PreInitDataStructure {
 
     @Atomic
     private static void doIt() {
-        RootDomainObject.initialize();
+        Bennu.getInstance();
     }
 
 }

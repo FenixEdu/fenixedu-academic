@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap;
@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -56,7 +56,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
@@ -103,7 +103,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
             throws Exception {
 
         DynaActionForm examSearchByDegreeAndYearForm = (DynaActionForm) form;
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String[] selectedCurricularYears = (String[]) examSearchByDegreeAndYearForm.get("selectedCurricularYears");
         Boolean selectAllCurricularYears = (Boolean) examSearchByDegreeAndYearForm.get("selectAllCurricularYears");
@@ -170,7 +170,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
     private InfoExamsMap getExamsMap(HttpServletRequest request, List curricularYears, InfoExecutionDegree infoExecutionDegree,
             InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         InfoExamsMap infoRoomExamsMaps = null;
 
         infoRoomExamsMaps =
@@ -182,7 +182,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
     private List getExamsMap(HttpServletRequest request, List curricularYears, List executionDegreeList,
             InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         List infoExamsMaps = new ArrayList();
 
         for (int i = 0; i < executionDegreeList.size(); i++) {

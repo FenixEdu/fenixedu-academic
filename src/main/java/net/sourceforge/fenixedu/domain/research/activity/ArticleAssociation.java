@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.activity;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -24,7 +24,7 @@ public class ArticleAssociation extends ArticleAssociation_Base {
 
     public ArticleAssociation(JournalIssue journalIssue, Article article, Person creator) {
         super();
-        this.setRootDomainObject(RootDomainObject.getInstance());
+        this.setRootDomainObject(Bennu.getInstance());
         this.setJournalIssue(journalIssue);
         this.setArticle(article);
         this.setCreator(creator);
@@ -44,7 +44,7 @@ public class ArticleAssociation extends ArticleAssociation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

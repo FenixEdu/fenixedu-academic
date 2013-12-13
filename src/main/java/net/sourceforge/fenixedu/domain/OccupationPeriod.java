@@ -22,6 +22,7 @@ import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 /**
@@ -33,7 +34,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 
     private OccupationPeriod() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public OccupationPeriod(Interval interval) {
@@ -291,7 +292,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     public static OccupationPeriod readByDates(Date startDate, Date endDate) {
-        for (OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriods()) {
+        for (OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
             if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
                     && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getStart(), startDate)
                     && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getEnd(), endDate)) {
@@ -359,7 +360,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     public static OccupationPeriod readOccupationPeriod(YearMonthDay start, YearMonthDay end) {
-        for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+        for (final OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
             if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
                     && occupationPeriod.getStartYearMonthDay().equals(start) && occupationPeriod.getEndYearMonthDay().equals(end)) {
                 return occupationPeriod;
@@ -370,7 +371,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 
     public static OccupationPeriod readEqualOccupationPeriod(YearMonthDay start, YearMonthDay end, final YearMonthDay startPart2,
             final YearMonthDay endPart2) {
-        for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+        for (final OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
             if (occupationPeriod.isEqualTo(start, end, startPart2, endPart2)) {
                 return occupationPeriod;
             }
@@ -380,7 +381,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 
     public static OccupationPeriod readOccupationPeriod(YearMonthDay start, YearMonthDay end, final YearMonthDay startPart2,
             final YearMonthDay endPart2) {
-        for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+        for (final OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
             if (occupationPeriod.getNextPeriod() == null
                     && occupationPeriod.getPreviousPeriod() == null
                     && occupationPeriod.getStartYearMonthDay().equals(start)
@@ -415,7 +416,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         if (ok && result != null) {
             return result;
         }
-        for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+        for (final OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
             if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
                     && occupationPeriod.getStartYearMonthDay().equals(start) && occupationPeriod.getEndYearMonthDay().equals(end)) {
                 return occupationPeriod;
@@ -436,7 +437,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
                             executionDegree.getPeriodLessons(executionCourse.getExecutionPeriod());
                     if (result == null) {
                         result = occupationPeriod;
-                    } else if (result != occupationPeriod) {
+                    } else if (!result.isEqualTo(occupationPeriod)) {
                         ok = false;
                     }
                 }
@@ -448,7 +449,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
             }
             return createNewPeriodWithExclusions(beginDate, endDate, result);
         }
-        for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+        for (final OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
             if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
                     && occupationPeriod.getStartYearMonthDay().equals(beginDate)
                     && occupationPeriod.getEndYearMonthDay().equals(endDate)) {
@@ -547,7 +548,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     public static OccupationPeriod getOccupationPeriod(final YearMonthDay[] yearMonthDays) {
-        for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+        for (final OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
             if (occupationPeriod.matches(yearMonthDays)) {
                 return occupationPeriod;
             }
@@ -666,7 +667,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

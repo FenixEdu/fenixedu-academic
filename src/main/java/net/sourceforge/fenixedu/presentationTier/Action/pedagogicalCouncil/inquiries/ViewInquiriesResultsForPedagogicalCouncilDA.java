@@ -68,7 +68,7 @@ public class ViewInquiriesResultsForPedagogicalCouncilDA extends ViewInquiriesRe
     public ActionForward chooseDegreeCurricularPlan(ActionMapping actionMapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
-        final List<Degree> degrees = new ArrayList<Degree>(rootDomainObject.getDegrees());
+        final List<Degree> degrees = new ArrayList<Degree>(rootDomainObject.getDegreesSet());
         Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 
         request.setAttribute("degrees", degrees);

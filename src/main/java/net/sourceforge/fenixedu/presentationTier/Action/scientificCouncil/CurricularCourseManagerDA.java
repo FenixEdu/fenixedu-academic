@@ -12,7 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.EditCurriculum;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.InsertCurriculum;
@@ -47,7 +47,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
     public ActionForward prepareSelectDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         ISiteComponent component = new InfoSiteSCDegrees();
         readSiteView(request, userView, null, null, null, component);
         return mapping.findForward("selectDegree");
@@ -56,7 +56,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
     public ActionForward showDegreeCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String degreeIdString = request.getParameter("index");
 
@@ -67,7 +67,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
     public ActionForward showCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String degreeCurricularPlanIdString = request.getParameter("index");
 
@@ -78,7 +78,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
     public ActionForward showBasicCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String degreeCurricularPlanIdString = request.getParameter("index");
 
@@ -104,7 +104,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
     public ActionForward setBasicCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         DynaActionForm basicCoursesList = (DynaActionForm) form;
         String[] coursesIdsString = (String[]) basicCoursesList.get("basicCurricularCourses");
@@ -126,7 +126,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
     public ActionForward viewCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String curricularCourseIdString = request.getParameter("index");
 
@@ -144,7 +144,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
     public ActionForward prepareEditCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String curriculumIdString = request.getParameter("index");
 
@@ -160,7 +160,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
     public ActionForward editCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String program = request.getParameter("program");
         String programEn = request.getParameter("programEn");
@@ -187,7 +187,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
     public ActionForward prepareInsertCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String curricularCourseIdString = request.getParameter("index");
 
@@ -203,7 +203,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
     public ActionForward insertCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String program = request.getParameter("program");
         String programEn = request.getParameter("programEn");
@@ -228,7 +228,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
         return null;
     }
 
-    private SiteView readSiteView(HttpServletRequest request, IUserView userView, String degreeId, Integer coursesIds,
+    private SiteView readSiteView(HttpServletRequest request, User userView, String degreeId, Integer coursesIds,
             String degreeCurricularPlanId, ISiteComponent component) throws FenixActionException {
 
         SiteView siteView = null;

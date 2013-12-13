@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -11,7 +11,7 @@ public class PersonServiceExemption extends PersonServiceExemption_Base {
             final LocalDate endDate, final ServiceExemption serviceExemption, final String serviceExemptionGiafId,
             final DateTime creationDate, final DateTime modifiedDate) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setGiafProfessionalData(giafProfessionalData);
         setBeginDate(beginDate);
         setEndDate(endDate);

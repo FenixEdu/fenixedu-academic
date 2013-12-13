@@ -11,7 +11,6 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.predicates.ResourceAllocationPredicates;
@@ -21,6 +20,8 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public class VehicleAllocation extends VehicleAllocation_Base {
 
@@ -221,7 +222,7 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     }
 
     public static Set<VehicleAllocation> getActiveVehicleAllocations() {
-        Collection<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
+        Collection<ResourceAllocation> resourceAllocations = Bennu.getInstance().getResourceAllocationsSet();
         Set<VehicleAllocation> result = new TreeSet<VehicleAllocation>(COMPARATOR_BY_VEHICLE_NUMBER_PLATE);
         DateTime currentDateTime = new DateTime();
         for (ResourceAllocation resourceAllocation : resourceAllocations) {
@@ -233,7 +234,7 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     }
 
     public static Set<VehicleAllocation> getFutureVehicleAllocations() {
-        Collection<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
+        Collection<ResourceAllocation> resourceAllocations = Bennu.getInstance().getResourceAllocationsSet();
         Set<VehicleAllocation> result = new TreeSet<VehicleAllocation>(COMPARATOR_BY_VEHICLE_NUMBER_PLATE);
         DateTime currentDateTime = new DateTime();
         for (ResourceAllocation resourceAllocation : resourceAllocations) {
@@ -246,7 +247,7 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     }
 
     public static Set<VehicleAllocation> getPastVehicleAllocations(DateTime begin, DateTime end, Vehicle vehicle) {
-        Collection<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
+        Collection<ResourceAllocation> resourceAllocations = Bennu.getInstance().getResourceAllocationsSet();
         Set<VehicleAllocation> result = new TreeSet<VehicleAllocation>(COMPARATOR_BY_VEHICLE_NUMBER_PLATE);
         DateTime currentDateTime = new DateTime();
         for (ResourceAllocation resourceAllocation : resourceAllocations) {

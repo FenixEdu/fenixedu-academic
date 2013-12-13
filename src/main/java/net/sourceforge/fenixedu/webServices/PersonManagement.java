@@ -5,16 +5,16 @@ package net.sourceforge.fenixedu.webServices;
 
 import javax.servlet.ServletRequest;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.UpdatePersonInformationFromCitizenCard;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationDTO;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.HostAccessControl;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;
+
+import pt.ist.bennu.core.domain.User;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -27,15 +27,15 @@ public class PersonManagement implements IPersonManagement {
     private static final String storedUsername;
 
     static {
-        storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
-        storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
+        storedUsername = FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementGetPersonInformationUsername();
+        storedPassword = FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementGetPersonInformationPassword();
     }
 
     @Override
     public PersonInformationDTO getPersonInformation(String username, String password, String unserUID, MessageContext context)
             throws NotAuthorizedException {
         checkPermissions(username, password, context);
-        User foundUser = User.readUserByUserUId(unserUID);
+        User foundUser = User.findByUsername(unserUID);
         return foundUser == null ? null : new PersonInformationDTO(foundUser.getPerson());
     }
 
@@ -63,7 +63,8 @@ public class PersonManagement implements IPersonManagement {
         }
 
         // check hosts accessing this service
-        if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
+        if (!FenixConfigurationManager.getHostAccessControl().isAllowed(this,
+                (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
             throw new NotAuthorizedException();
         }
     }

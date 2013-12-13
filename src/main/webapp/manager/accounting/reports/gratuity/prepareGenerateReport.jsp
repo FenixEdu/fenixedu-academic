@@ -5,7 +5,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobType"%>
 
 <html:xhtml />
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 	<h2><bean:message bundle="MANAGER_RESOURCES" key="title.gratuity.reports" /></h2>
 

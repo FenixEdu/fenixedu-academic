@@ -43,6 +43,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changes file permission in DSpace to private for files with EveryoneGroup" updateFiles.sql
 execute "Add RegistrationStateLog Entity" addRegistrationStateLog.sql
 execute "Removing all the info related with depracated role types" RemoveProjectManagementRoles.sql 
 execute "Updates Sender Enteties so that they take the form <InstitutionAcronym>(<Function>)" sendersUniformization.sql

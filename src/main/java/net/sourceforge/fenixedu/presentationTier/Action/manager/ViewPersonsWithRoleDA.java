@@ -24,7 +24,7 @@ public class ViewPersonsWithRoleDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        request.setAttribute(PresentationConstants.ROLES, rootDomainObject.getRoles());
+        request.setAttribute(PresentationConstants.ROLES, rootDomainObject.getRolesSet());
         return mapping.findForward("SelectRole");
     }
 

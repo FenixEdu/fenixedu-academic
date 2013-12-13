@@ -9,7 +9,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllCountries;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate.ChangeApplicationInfo;
@@ -38,14 +37,15 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 
 public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
 
     public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
 
         String candidateID = (String) changeApplicationInfoForm.get("candidateID");
@@ -122,7 +122,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
         masterDegreeCandidate.setSpecializationArea((String) changeApplicationInfoForm.get("specializationArea"));
 
         Boolean isNewPerson = false;
-        if (userView.getRoleTypes().size() == 2) {
+        if (userView.getPerson().getPersonRolesSet().size() == 2) {
             isNewPerson = true;
         }
 
@@ -160,7 +160,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
             throws Exception {
 
         DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String choosenCandidateID = request.getParameter("candidateID");
         request.setAttribute("candidateID", choosenCandidateID);
@@ -205,7 +205,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
         changeApplicationInfoForm.set("candidateID", masterDegreeCandidate.getExternalId());
 
         // if New Person -> All personal info can be changed
-        if (userView.getRoleTypes().size() == 2) {
+        if (userView.getPerson().getPersonRolesSet().size() == 2) {
             request.setAttribute("newPerson", "true");
         }
 
@@ -216,8 +216,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
 
     }
 
-    private InfoMasterDegreeCandidate readMasterDegreeCandidate(IUserView userView, String candidateID)
-            throws FenixActionException {
+    private InfoMasterDegreeCandidate readMasterDegreeCandidate(User userView, String candidateID) throws FenixActionException {
         InfoMasterDegreeCandidate masterDegreeCandidate = null;
         masterDegreeCandidate = ReadMasterDegreeCandidateByID.run(candidateID);
         return masterDegreeCandidate;

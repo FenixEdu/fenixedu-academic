@@ -8,12 +8,12 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.Transaction;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -27,7 +27,7 @@ public class ListPayedInsurancesByDates {
 
         List<InsuranceTransaction> insuranceTransactions = new ArrayList<InsuranceTransaction>();
 
-        Collection<Transaction> transactions = RootDomainObject.getInstance().getTransactions();
+        Collection<Transaction> transactions = Bennu.getInstance().getTransactionsSet();
         for (Transaction transaction : transactions) {
             if (transaction instanceof InsuranceTransaction) {
                 InsuranceTransaction insuranceTransaction = (InsuranceTransaction) transaction;

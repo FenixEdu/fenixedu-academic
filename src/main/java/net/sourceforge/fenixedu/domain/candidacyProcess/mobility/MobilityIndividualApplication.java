@@ -47,8 +47,6 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
             final MobilityIndividualApplicationProcessBean bean) {
         this();
 
-        bean.getPersonBean().setCreateLoginIdentificationAndUserIfNecessary(false);
-
         Person person = init(bean, process);
 
         createEramusStudentData(bean);

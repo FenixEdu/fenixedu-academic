@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
@@ -15,12 +14,14 @@ import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public abstract class Candidacy extends Candidacy_Base {
 
     protected Candidacy() {
         super();
         setNumber(createCandidacyNumber());
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setStartDate(new YearMonthDay());
     }
 
@@ -33,10 +34,10 @@ public abstract class Candidacy extends Candidacy_Base {
     }
 
     public final Integer createCandidacyNumber() {
-        if (RootDomainObject.getInstance().getCandidaciesSet().size() == 0) {
+        if (Bennu.getInstance().getCandidaciesSet().size() == 0) {
             return Integer.valueOf(1);
         }
-        Candidacy candidacy = Collections.max(RootDomainObject.getInstance().getCandidaciesSet(), new BeanComparator("number"));
+        Candidacy candidacy = Collections.max(Bennu.getInstance().getCandidaciesSet(), new BeanComparator("number"));
         return candidacy.getNumber() + 1;
     }
 
@@ -56,7 +57,7 @@ public abstract class Candidacy extends Candidacy_Base {
     // static methods
 
     public static Candidacy readByCandidacyNumber(Integer candidacyNumber) {
-        for (Candidacy candidacy : RootDomainObject.getInstance().getCandidacies()) {
+        for (Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
             if (candidacy.getNumber().equals(candidacyNumber)) {
                 return candidacy;
             }
@@ -66,7 +67,7 @@ public abstract class Candidacy extends Candidacy_Base {
 
     public static Set<Candidacy> readCandidaciesBetween(final Integer from, final Integer to) {
         final Set<Candidacy> result = new HashSet<Candidacy>();
-        for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {
+        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
             if (candidacy.getNumber() >= from && candidacy.getNumber() <= to) {
                 result.add(candidacy);
             }
@@ -76,7 +77,7 @@ public abstract class Candidacy extends Candidacy_Base {
 
     public static Set<Candidacy> readDegreeCandidaciesBetween(final Integer from, final Integer to) {
         final Set<Candidacy> result = new HashSet<Candidacy>();
-        for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {
+        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
             if (candidacy instanceof DegreeCandidacy) {
                 if (candidacy.getNumber() >= from && candidacy.getNumber() <= to) {
                     result.add(candidacy);
@@ -88,7 +89,7 @@ public abstract class Candidacy extends Candidacy_Base {
 
     public static Set<Candidacy> readDFACandidaciesBetween(final Integer from, final Integer to) {
         final Set<Candidacy> result = new HashSet<Candidacy>();
-        for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {
+        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
             if (candidacy instanceof DFACandidacy) {
                 if (candidacy.getNumber() >= from && candidacy.getNumber() <= to) {
                     result.add(candidacy);
@@ -251,7 +252,7 @@ public abstract class Candidacy extends Candidacy_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

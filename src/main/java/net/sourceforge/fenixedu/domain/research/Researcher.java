@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
@@ -34,7 +34,7 @@ public class Researcher extends Researcher_Base {
         setAllowsContactByStudents(Boolean.FALSE);
         setAllowsContactByMedia(Boolean.FALSE);
         setAllowsContactByOtherResearchers(Boolean.FALSE);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -154,7 +154,7 @@ public class Researcher extends Researcher_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

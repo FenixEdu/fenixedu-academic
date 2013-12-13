@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class FacultyEvaluationProcessYear extends FacultyEvaluationProcessYear_Base {
 
     public FacultyEvaluationProcessYear(final FacultyEvaluationProcess facultyEvaluationProcess, final String year) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setFacultyEvaluationProcess(facultyEvaluationProcess);
         setYear(year);
     }
@@ -27,7 +27,7 @@ public class FacultyEvaluationProcessYear extends FacultyEvaluationProcessYear_B
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

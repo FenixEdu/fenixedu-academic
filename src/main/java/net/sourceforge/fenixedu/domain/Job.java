@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class Job extends Job_Base {
 
     static final public Comparator<Job> REVERSE_COMPARATOR_BY_BEGIN_DATE = new Comparator<Job>() {
@@ -24,7 +26,7 @@ public class Job extends Job_Base {
 
     private Job() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setLastModifiedDate(new DateTime());
     }
 
@@ -166,8 +168,9 @@ public class Job extends Job_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

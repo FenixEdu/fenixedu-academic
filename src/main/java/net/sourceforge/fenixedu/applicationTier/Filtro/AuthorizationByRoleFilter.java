@@ -4,10 +4,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * @author jpvl
@@ -21,9 +22,9 @@ public abstract class AuthorizationByRoleFilter extends Filtro {
     abstract protected RoleType getRoleType();
 
     public void execute() throws NotAuthorizedException {
-        IUserView userView = AccessControl.getUserView();
-        if (((userView != null && userView.getRoleTypes() != null && !userView.hasRoleType(getRoleType()))) || (userView == null)
-                || (userView.getRoleTypes() == null)) {
+        User userView = Authenticate.getUser();
+        if (((userView != null && userView.getPerson().getPersonRolesSet() != null && !userView.getPerson()
+                .hasRole(getRoleType()))) || (userView == null) || (userView.getPerson().getPersonRolesSet() == null)) {
             throw new NotAuthorizedException();
         }
 
