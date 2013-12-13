@@ -25,6 +25,11 @@ h1 {
 /******************************************
 	Structural Classes: Header & Tables
 ******************************************/
+
+.alert {
+	text-align: center;
+}
+
 #container {
 	margin: 80px auto 0 auto;
 	width: 500px;
