@@ -31,6 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 
@@ -187,7 +188,13 @@ public class ExternalAppsDA extends FenixDispatchAction {
         Set<AppUserSession> authSessions = null;
 
         if (appUserAuthorization != null) {
-            authSessions = appUserAuthorization.getSessionSet();
+            authSessions = FluentIterable.from(appUserAuthorization.getSessionSet()).filter(new Predicate<AppUserSession>() {
+
+                @Override
+                public boolean apply(AppUserSession appUserSession) {
+                    return appUserSession.isRefreshTokenValid();
+                }
+            }).toSet();
         }
 
         if (authSessions == null) {
