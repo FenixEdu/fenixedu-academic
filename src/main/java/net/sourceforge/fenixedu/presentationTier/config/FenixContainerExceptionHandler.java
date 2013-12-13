@@ -37,6 +37,6 @@ public class FenixContainerExceptionHandler extends FenixExceptionHandler {
 
         super.execute(ex, ae, mapping, formInstance, request, response);
 
-        return new ActionForward("/showErrorPage.do");
+        return new ActionForward("error-page", "/showErrorPage.do", false, "/");
     }
 }
