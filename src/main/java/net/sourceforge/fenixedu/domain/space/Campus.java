@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.joda.time.YearMonthDay;
 
+import com.google.common.collect.Ordering;
+
 public class Campus extends Campus_Base {
 
     public Campus(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
@@ -22,7 +24,7 @@ public class Campus extends Campus_Base {
 
     public static Campus getDefaultCampus() {
         if (RootDomainObject.getInstance().getDefaultCampus() == null) {
-            return Space.getAllCampus().iterator().next();
+            return Ordering.from(Space.COMPARATOR_BY_PRESENTATION_NAME).min(Space.getAllActiveCampus());
         }
         return RootDomainObject.getInstance().getDefaultCampus();
     }
