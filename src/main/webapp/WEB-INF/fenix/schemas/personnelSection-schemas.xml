@@ -204,6 +204,7 @@
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}:${secondOfMinute,02d}"/>
 	</slot>
 	<slot name="deviceId" key="oauthapps.label.app.device.id" />
+	<slot name="code" key="oauthapps.label.code" />	
 	<slot name="accessToken" key="oauthapps.label.access.token" />
 	<slot name="refreshToken" key="oauthapps.label.refresh.token" />	
 	
@@ -233,7 +234,7 @@
 		<property name="format" value="${person.name} (${person.username})"/>
 	</slot>
 	
-	<slot name="appUserAuthorizationCount" key="oauthapps.label.app.authorizations" />
+	<slot name="appUserAuthorizationCount" key="oauthapps.label.app.authorizations"/>
 	
 	<slot name="description" layout="longText" key="oauthapps.label.app.description"/>
 	<slot name="scopes" layout="flowLayout">
@@ -242,6 +243,7 @@
 		<property name="htmlSeparator" value=", "></property>
 	</slot>
 	<slot name="siteUrl" key="oauthapps.label.app.site.url" />
+	<slot name="redirectUrl" key="oauthapps.label.app.redirect.url" />
 	
 </schema>
 

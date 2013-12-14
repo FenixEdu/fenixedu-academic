@@ -31,16 +31,16 @@
 
 
 
-		<fr:view name="authorizations" schema="oauthapps.view.authorizations">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thcenter thcenter"/>
-				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, tdcenter, tdcenter"/>
-				
-				<fr:property name="linkFormat(revokeAuthorization)" value="<%= "/externalApps.do?method=revokeAuth&authorizationOid=${externalId}" %>" />
-				<fr:property name="key(revokeAuthorization)" value="oauthapps.label.revoke.authorization"/>
-				<fr:property name="bundle(revokeAuthorization)" value="APPLICATION_RESOURCES"/>
-			</fr:layout>
-		</fr:view>
+<fr:view name="authorizations" schema="oauthapps.view.authorizations">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thcenter thcenter"/>
+		<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, tdcenter, tdcenter"/>
+		
+		<fr:property name="linkFormat(revokeAuthorization)" value="<%= "/externalApps.do?method=revokeAuth&authorizationOid=${externalId}" %>" />
+		<fr:property name="key(revokeAuthorization)" value="oauthapps.label.revoke.authorization"/>
+		<fr:property name="bundle(revokeAuthorization)" value="APPLICATION_RESOURCES"/>
+	</fr:layout>
+</fr:view>
 
 
 <p>

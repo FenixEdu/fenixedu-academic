@@ -17,45 +17,53 @@
 <script type="text/javascript" src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>"></script>
 <script type="text/javascript" src="<%= request.getContextPath() + "/javaScript/jquery/jquery-ui.js" %>"></script>
 <script type="text/javascript" src="<%= request.getContextPath() + "/javaScript/dataTables/media/js/jquery.dataTables.js"%>"></script>
-		<script type="text/javascript">
-			$(document).ready(function() {
-	    		$('.results').dataTable( {
-	    		"iDisplayLength": 25,
-	    			"oLanguage" : {
-	    				"sProcessing": "A processar...",
-	    				"sLengthMenu": "Mostrar _MENU_ registos",
-	    				"sZeroRecords": "NÃ£o foram encontrados registos",
-	    				"sInfo": "_START_ - _END_ de _TOTAL_",
-	    				"sInfoEmpty": "0 - 0 de 0",
-	    				"sInfoFiltered": "(filtrado de _MAX_ total de registos)",
-	    				"sInfoPostFix": "",
-	    				"sSearch": "Procura",
-	    				"sFirst": "Primeiro",
-	    				"sPrevious": "Anterior",
-	    				"sNext": "Seguinte",
-	    				"sLast": "Ãšltimo"
-	    			},
-	    			"aaSorting": [[ 3, "desc" ], [ 1, "asc" ]]
-	    			
-	    		}
-	    		);
-			});
-		</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+   		$('.results').dataTable( {
+    		"iDisplayLength": 25,
+    		"aoColumns": [
+				null,
+				null,
+				null,			
+				{ "sType": "numeric" },
+				null,			
+				null,			
+				null,			
+				null	
+			],
+			
+   			"oLanguage" : {
+   				"sProcessing": "A processar...",
+   				"sLengthMenu": "Mostrar _MENU_ registos",
+   				"sZeroRecords": "Não foram encontrados registos",
+   				"sInfo": "_START_ - _END_ de _TOTAL_",
+   				"sInfoEmpty": "0 - 0 de 0",
+   				"sInfoFiltered": "(filtrado de _MAX_ total de registos)",
+   				"sInfoPostFix": "",
+   				"sSearch": "Procura",
+   				"sFirst": "Primeiro",
+   				"sPrevious": "Anterior",
+   				"sNext": "Seguinte",
+   				"sLast": "Último"
+   			},
+    		"aaSorting": [[ 3, "desc" ], [ 1, "asc" ]]	    			
+   		}
+   		);
+	});
+</script>
 		
-		<style type="text/css" title="currentStyle">
-			@import "<%= request.getContextPath() + "/javaScript/dataTables/media/css/demo_table.css" %>";
-			.dataTables_wrapper {
-				position: relative;
-				min-height: 302px;
-				_height: 302px;
-				clear: none;
-			}
-			tr.odd td.sorting_2 {
-				background-color : #FAFAFA !important;
-			}
-		</style>
-
-
+<style type="text/css" title="currentStyle">
+	@import "<%= request.getContextPath() + "/javaScript/dataTables/media/css/demo_table.css" %>";
+	.dataTables_wrapper {
+		position: relative;
+		min-height: 302px;
+		_height: 302px;
+		clear: none;
+	}
+	tr.odd td.sorting_2 {
+		background-color : #FAFAFA !important;
+	}
+</style>
 
 <fr:view name="application" schema="oauthapps.view.applications">
 	<fr:layout name="tabular">			
