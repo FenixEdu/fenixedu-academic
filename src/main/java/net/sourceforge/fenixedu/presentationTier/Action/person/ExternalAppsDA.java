@@ -38,6 +38,7 @@ import com.google.common.collect.ImmutableSet;
 @Mapping(module = "person", path = "/externalApps")
 @Forwards(value = { @Forward(name = "createApplication", path = "/auth/createApplication.jsp"),
         @Forward(name = "editApplication", path = "/auth/editApplication.jsp"),
+        @Forward(name = "editApplicationAdmin", path = "/auth/editApplicationAdmin.jsp"),
         @Forward(name = "manageAuthorizations", path = "/auth/manageAuthorizations.jsp"),
         @Forward(name = "returnKeys", path = "/auth/returnkeys.jsp"),
         @Forward(name = "manageApplications", path = "/auth/manageApplications.jsp"),
@@ -236,6 +237,13 @@ public class ExternalAppsDA extends FenixDispatchAction {
         ExternalApplication app = getDomainObject(request, "appOid");
         request.setAttribute("application", app);
         return mapping.findForward("editApplication");
+    }
+
+    public ActionForward prepareEditApplicationAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ExternalApplication app = getDomainObject(request, "appOid");
+        request.setAttribute("application", app);
+        return mapping.findForward("editApplicationAdmin");
     }
 
     public ActionForward appLogo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

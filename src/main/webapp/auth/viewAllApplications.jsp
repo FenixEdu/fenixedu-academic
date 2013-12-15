@@ -68,9 +68,15 @@
 <fr:view name="application" schema="oauthapps.view.applications">
 	<fr:layout name="tabular">			
 		<fr:property name="classes" value="ttstyle4 tstyle9 mtop05 results resultsLeft"/>
-		<fr:property name="linkFormat(viewAllAuthorizations)" value="/externalApps.do?method=viewAllAuthorizations&appOid=${externalId}" />
+		
+		<fr:property name="linkFormat(viewAllAuthorizations)"  value="<%= "/externalApps.do?method=viewAllAuthorizations&appOid=${externalId}" %>" />
 		<fr:property name="key(viewAllAuthorizations)" value="oauthapps.label.view.application.details"/>
-		<fr:property name="bundle(viewAllAuthorizations)" value="APPLICATION_RESOURCES"/>		
+		<fr:property name="bundle(viewAllAuthorizations)" value="APPLICATION_RESOURCES"/>
+		
+		<fr:property name="linkFormat(editApplication)" value="<%= "/externalApps.do?method=prepareEditApplicationAdmin&appOid=${externalId}" %>" />
+		<fr:property name="key(editApplication)" value="oauthapps.label.edit.application"/>
+		<fr:property name="bundle(editApplication)" value="APPLICATION_RESOURCES"/>
+				
 		<fr:property name="renderCompliantTable" value="true"/>
 	</fr:layout>
 </fr:view>

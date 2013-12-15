@@ -306,6 +306,59 @@
 	</slot>
 </schema>
 
+<schema name="oauthapps.create.admin.app" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
+	<slot name="logoStream" key="oauthapps.label.app.logo">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+            <property name="maxSize" value="3698688"/>
+			<property name="acceptedExtensions" value="gif,jpg,png" />
+			<property name="acceptedTypes" value="image/gif,image/jpg,image/png" />
+			<property name="required" value="false"></property>
+        </validator>"
+	</slot>
+	<slot name="name" key="oauthapps.label.app.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="description" key="oauthapps.label.app.description" layout="longText">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		</validator>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.StringLengthValidator">
+			<property name="min" value="20"/>
+			<property name="max" value="160"/>
+		</validator>
+		<property name="columns" value="60"></property>
+		<property name="rows" value="4"></property>
+	</slot>
+ 	<slot name="siteUrl" key="oauthapps.label.app.site.url" >
+ 		<validator class="pt.ist.utl.fenix.utils.UrlValidator">
+			<property name="required" value="false"/>
+		</validator>
+		<property name="size" value="50"/>
+ 	</slot>
+	<slot name="scopeList" layout="option-select" key="label.scopes" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AuthScopeProvider" />
+		<property name="eachSchema" value="oauthapps.view.scope.complete" />
+		<property name="eachLayout" value="values" />
+		<property name="classes" value="nobullet noindent" />
+		<property name="sortBy" value="name=desc" />
+		<property name="selectAllShown" value="true" />
+	</slot>
+	<setter signature="setScopeList(scopeList)"></setter>
+	<slot name="redirectUrl" key="oauthapps.label.app.redirect.url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	
+	<slot name="secret" key="oauthapps.label.app.client.secret">
+			<property name="size" value="50"/>
+	
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.StringLengthValidator">
+			<property name="min" value="100"/>
+			<property name="max" value="115"/>
+		</validator> 
+	</slot>
+	
+</schema>
+
+
 <schema name="oauthapps.confirm.app" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
 	<slot name="name" />
 	<slot name="scopes" layout="list">
