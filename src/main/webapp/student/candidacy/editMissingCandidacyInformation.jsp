@@ -79,7 +79,7 @@ hideButtons();
 				<fr:property name="sortBy" value="name=asc" />
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 			</fr:slot>	
-			<% if ((personalInformationBean.getSchoolLevel() != null) && !personalInformationBean.getSchoolLevel().isHighSchoolOrEquivalent() && !personalInformationBean.getSchoolLevel().isSchoolLevelBasicCycle()) { %>
+			<% if (personalInformationBean.isHightSchoolCountryFieldRequired()) { %>
 				<fr:slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 					<fr:property name="format" value="${localizedName}"/>
 					<fr:property name="sortBy" value="name=asc" />
@@ -179,7 +179,7 @@ hideButtons();
 					<fr:property name="minChars" value="1"/>
 				</fr:slot>
 				<fr:slot name="grantOwnerType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.GratOwnerTypesProvider" />
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.GrantOwnerTypesProvider" />
 				</fr:slot>
 			   	<fr:slot name="grantOwnerProviderUnitName" layout="autoComplete">
 					<fr:property name="size" value="50"/>

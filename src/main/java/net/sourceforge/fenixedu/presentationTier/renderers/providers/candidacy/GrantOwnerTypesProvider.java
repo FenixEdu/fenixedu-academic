@@ -10,7 +10,7 @@ import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
-public class GratOwnerTypesProvider implements DataProvider {
+public class GrantOwnerTypesProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {

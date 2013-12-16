@@ -276,7 +276,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
 
         PrecedentDegreeInformationBean pdiBean = getRenderedObject("precedentDegreeInformation");
-        pdiBean.checkCountryHighSchoolLevel();
+        pdiBean.updateCountryHighSchoolLevel();
 
         request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
         request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));

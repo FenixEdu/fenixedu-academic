@@ -63,7 +63,7 @@
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 					<fr:property name="destination" value="schoolLevelPostback" />
 				</fr:slot>
-				<% if ((personalInformationBean.getSchoolLevel() != null) && !personalInformationBean.getSchoolLevel().isHighSchoolOrEquivalent() && !personalInformationBean.getSchoolLevel().isSchoolLevelBasicCycle()) { %>
+				<% if (personalInformationBean.isHightSchoolCountryFieldRequired()) { %>
 					<fr:slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 						<fr:property name="format" value="${localizedName}"/>
 						<fr:property name="sortBy" value="name=asc" />

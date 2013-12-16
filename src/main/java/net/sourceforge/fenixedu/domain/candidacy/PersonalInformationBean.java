@@ -461,6 +461,11 @@ public class PersonalInformationBean implements Serializable {
         this.countryWhereFinishedPreviousCompleteDegree = country;
     }
 
+    public boolean isHightSchoolCountryFieldRequired() {
+        return (getSchoolLevel() != null) && !getSchoolLevel().isHighSchoolOrEquivalent()
+                && !getSchoolLevel().isSchoolLevelBasicCycle();
+    }
+
     public Country getCountryWhereFinishedHighSchoolLevel() {
         return this.countryWhereFinishedHighSchoolLevel;
     }
