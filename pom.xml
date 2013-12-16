@@ -451,7 +451,7 @@
 		<dependency>
 			<groupId>pt.ist.bennu</groupId>
 			<artifactId>bennu-user-management</artifactId>
-			<version>1.0.0-M1</version>
+			<version>1.0.0-M2</version>
 		</dependency>
 		<dependency>
 			<groupId>pt.ist.bennu</groupId>
