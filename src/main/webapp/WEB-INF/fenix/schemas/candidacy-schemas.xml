@@ -1047,7 +1047,7 @@
 		<property name="minChars" value="1"/>
 	</slot>
 	<slot name="grantOwnerType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.GratOwnerTypesProvider" />
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.GrantOwnerTypesProvider" />
 	</slot>
    	<slot name="grantOwnerProviderUnitName" layout="autoComplete">
 		<property name="size" value="50"/>

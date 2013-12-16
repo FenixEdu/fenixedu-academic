@@ -37,7 +37,7 @@ import pt.ist.fenixframework.Atomic;
 
 public class PersonalInformationBean implements Serializable {
 
-    static private final LocalDate limitDate = new LocalDate(2012, 11, 21);
+    static private final LocalDate limitDate = new LocalDate(2013, 12, 16);
 
     static public boolean isPastLimitDate() {
         return new LocalDate().isAfter(limitDate);
@@ -459,6 +459,11 @@ public class PersonalInformationBean implements Serializable {
             setCountryWhereFinishedHighSchoolLevel(country);
         }
         this.countryWhereFinishedPreviousCompleteDegree = country;
+    }
+
+    public boolean isHightSchoolCountryFieldRequired() {
+        return (getSchoolLevel() != null) && !getSchoolLevel().isHighSchoolOrEquivalent()
+                && !getSchoolLevel().isSchoolLevelBasicCycle();
     }
 
     public Country getCountryWhereFinishedHighSchoolLevel() {

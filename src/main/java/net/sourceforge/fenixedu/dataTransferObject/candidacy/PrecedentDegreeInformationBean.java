@@ -120,6 +120,11 @@ public class PrecedentDegreeInformationBean implements Serializable {
         this.countryWhereFinishedHighSchoolLevel = countryHighSchool;
     }
 
+    public boolean isHighSchoolCountryFieldRequired() {
+        return (getSchoolLevel() != null) && !getSchoolLevel().isHighSchoolOrEquivalent()
+                && !getSchoolLevel().isSchoolLevelBasicCycle();
+    }
+
     public String getDegreeDesignation() {
         if (isUnitFromRaidesListMandatory()) {
             return getRaidesDegreeDesignation() != null ? getRaidesDegreeDesignation().getDescription() : null;
@@ -322,7 +327,7 @@ public class PrecedentDegreeInformationBean implements Serializable {
         this.conclusionDate = conclusionDate;
     }
 
-    public void checkCountryHighSchoolLevel() {
+    public void updateCountryHighSchoolLevel() {
         if (getSchoolLevel() != null && getSchoolLevel().isSchoolLevelBasicCycle()) {
             setCountryWhereFinishedHighSchoolLevel(null);
         } else if (getSchoolLevel() != null && getSchoolLevel().isHighSchoolOrEquivalent()) {
