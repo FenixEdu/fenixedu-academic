@@ -24,7 +24,7 @@ public class ReadExecutionCoursesByTeacherResponsibility {
     public static List run(String id) throws FenixServiceException {
 
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
-        Person person = Person.readPersonByIstUsername(id);
+        Person person = Person.readPersonByUsername(id);
         if (person.getTeacher() != null) {
             Teacher teacher = person.getTeacher();
 

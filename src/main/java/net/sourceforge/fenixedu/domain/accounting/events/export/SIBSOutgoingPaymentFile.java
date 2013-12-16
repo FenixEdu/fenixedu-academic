@@ -12,7 +12,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
@@ -160,7 +160,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
     }
 
     protected void exportIndividualCandidacyPaymentCodes(SibsOutgoingPaymentFile sibsFile, StringBuilder errorsBuilder) {
-        Set<? extends PaymentCode> individualCandidacyPaymentCodeList = RootDomainObject.getInstance().getPaymentCodesSet();
+        Set<? extends PaymentCode> individualCandidacyPaymentCodeList = Bennu.getInstance().getPaymentCodesSet();
 
         LocalDate date = new LocalDate();
 

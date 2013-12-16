@@ -6,7 +6,7 @@
 	<% response.sendRedirect(response.encodeRedirectURL("http://www.google.com")); %>
 </logic:notPresent>
 <bean:message key="label.user" bundle="GLOBAL_RESOURCES"/>: 
-<bean:write name="USER_SESSION_ATTRIBUTE" property="person.nickname"/>	
+<bean:write name="USER_SESSION_ATTRIBUTE" property="user.person.nickname"/>	
 
 
 <%--

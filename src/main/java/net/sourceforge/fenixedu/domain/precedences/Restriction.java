@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 /**
@@ -11,7 +11,7 @@ public abstract class Restriction extends Restriction_Base {
 
     public Restriction() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -22,7 +22,7 @@ public abstract class Restriction extends Restriction_Base {
 
     public abstract CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext);
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

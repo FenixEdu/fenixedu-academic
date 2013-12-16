@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
@@ -58,7 +58,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     protected AcademicCalendarEntry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete(AcademicCalendarRootEntry rootEntry) {
@@ -820,7 +820,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

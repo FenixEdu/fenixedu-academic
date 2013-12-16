@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CorrectTestGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteTestGroup;
@@ -235,7 +235,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     private Person getPerson(HttpServletRequest request) {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         return userView.getPerson();
     }

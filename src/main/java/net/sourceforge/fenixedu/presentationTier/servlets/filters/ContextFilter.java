@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.Set;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,14 +14,23 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+
+import com.google.common.collect.Sets;
 
 public class ContextFilter implements Filter {
 
     public static String INVALID_CONTENT_PATH_EXCEPTION = "INVALID_CONTENT_PATH_EXCEPTION";
+
+    private static final Set<String> exceptions = Sets.newHashSet();
+
+    static {
+        String property = FenixConfigurationManager.getConfiguration().getContextFilterExceptions();
+        exceptions.addAll(Arrays.asList(property.split(";")));
+    }
 
     @Override
     public void init(FilterConfig config) throws ServletException {
@@ -66,7 +78,16 @@ public class ContextFilter implements Filter {
                 || path.contains("/loginExpired.do") || path.contains("/summariesRSS.do") || path.startsWith("/gwt")
                 || path.startsWith("/remote") || path.startsWith("/jersey") || path.startsWith("/api")
                 || path.startsWith("/downloadFile") || (path.indexOf("/google") >= 0 && path.endsWith(".html"))
-                || path.startsWith("/privado");
+                || path.startsWith("/privado") || isException(path);
+    }
+
+    private boolean isException(String path) {
+        for (String exception : exceptions) {
+            if (path.startsWith(exception)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
@@ -79,7 +100,7 @@ public class ContextFilter implements Filter {
     }
 
     private FunctionalityContext createContext(final HttpServletRequest httpServletRequest) {
-        return new FilterFunctionalityContext(httpServletRequest, PropertiesManager.DEFAULT_CHARSET);
+        return new FilterFunctionalityContext(httpServletRequest, Charset.defaultCharset().name());
     }
 
     private void setContextAttibute(final HttpServletRequest servletRequest, final FunctionalityContext context) {

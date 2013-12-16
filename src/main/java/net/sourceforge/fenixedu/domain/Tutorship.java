@@ -16,6 +16,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class Tutorship extends Tutorship_Base {
 
     public static final Comparator<Tutorship> TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator(
@@ -55,7 +57,7 @@ public class Tutorship extends Tutorship_Base {
 
     private Tutorship(Teacher teacher, Partial tutorshipStartDate, Partial tutorshipEndDate, StudentCurricularPlan scp) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setTeacher(teacher);
         setStudentCurricularPlan(scp);
         setStartDate(tutorshipStartDate);
@@ -186,7 +188,7 @@ public class Tutorship extends Tutorship_Base {
 
     public static List<Tutorship> getStudentActiveTutorships(Integer studentNumber) {
         List<Tutorship> tutorships = new ArrayList<Tutorship>();
-        for (Tutorship t : RootDomainObject.getInstance().getTutorships()) {
+        for (Tutorship t : Bennu.getInstance().getTutorshipsSet()) {
             if (t.getStudent().getNumber().equals(studentNumber) && t.isActive()) {
                 tutorships.add(t);
             }
@@ -235,7 +237,7 @@ public class Tutorship extends Tutorship_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

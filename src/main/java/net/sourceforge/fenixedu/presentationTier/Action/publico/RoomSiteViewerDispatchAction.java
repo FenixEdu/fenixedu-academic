@@ -9,7 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -110,7 +110,7 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
     public ActionForward roomViewer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String roomName = request.getParameter("roomName");
         if (roomName == null) {

@@ -10,7 +10,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -38,7 +38,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         this.setConvokable(true);
         this.setVigilantGroup(group);
         this.setPerson(person);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static final Comparator<VigilantWrapper> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<VigilantWrapper>() {
@@ -472,7 +472,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

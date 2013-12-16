@@ -14,7 +14,7 @@
 
 
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>

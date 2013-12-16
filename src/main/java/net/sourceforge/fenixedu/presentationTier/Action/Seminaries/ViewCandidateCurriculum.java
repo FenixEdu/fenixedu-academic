@@ -8,18 +8,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.Seminaries;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlansForSeminaries;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurriculum;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification;
@@ -32,6 +29,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -54,9 +52,9 @@ public class ViewCandidateCurriculum extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String username = request.getParameter("username");
-        IUserView studentUserView = new MockUserView(username, new ArrayList(0), null);
+        User studentUserView = User.findByUsername(username);
         List cps = null;
         List enrollments = null;
         InfoStudentCurricularPlan selectedSCP = null;

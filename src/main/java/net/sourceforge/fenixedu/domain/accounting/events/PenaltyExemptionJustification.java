@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
@@ -8,7 +8,7 @@ public class PenaltyExemptionJustification extends PenaltyExemptionJustification
 
     protected PenaltyExemptionJustification() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     public PenaltyExemptionJustification(final PenaltyExemption penaltyExemption,

@@ -1,8 +1,8 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <html>
     <head>
@@ -79,7 +79,7 @@
           
           <tr>
             <td> <bean:message key="label.candidate.accessAddress"/> </td>
-            <td> <%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("login.page") %> </td>
+            <td> <%= FenixConfigurationManager.getConfiguration().getLoginPage() %> </td>
           </tr>
 
           <tr>

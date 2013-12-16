@@ -8,10 +8,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  * arguments.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public class NoArgumentsGroupBuilder implements GroupBuilder {
 
-    private Class<? extends Group> groupType;
+    private final Class<? extends Group> groupType;
 
     public NoArgumentsGroupBuilder(Class<? extends Group> groupType) {
         super();

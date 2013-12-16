@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
@@ -56,7 +56,7 @@ public class IndividualCandidacyPaymentCodeGenerator extends PaymentCodeGenerato
 
     private List<IndividualCandidacyPaymentCode> getAllIndividualCandidacyPaymentCodesForType(
             final PaymentCodeType paymentCodeType) {
-        Set<PaymentCode> allPaymentCodes = RootDomainObject.getInstance().getPaymentCodesSet();
+        Set<PaymentCode> allPaymentCodes = Bennu.getInstance().getPaymentCodesSet();
 
         List<IndividualCandidacyPaymentCode> outputList = new ArrayList<IndividualCandidacyPaymentCode>();
         CollectionUtils.select(allPaymentCodes, new Predicate() {

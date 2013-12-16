@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthoriz
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -39,7 +39,7 @@ public class EditTeacherAdviseService {
 
         ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
 
-        Collection<Registration> students = RootDomainObject.getInstance().getRegistrations();
+        Collection<Registration> students = Bennu.getInstance().getRegistrationsSet();
         Registration registration = (Registration) CollectionUtils.find(students, new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {

@@ -16,12 +16,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManage
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.OpenPunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateNewRoomsReserveComment;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean;
+import net.sourceforge.fenixedu.dataTransferObject.spaceManager.CampusBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.RequestState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.jcs.access.exception.InvalidArgumentException;
@@ -62,16 +64,27 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
     public ActionForward seeRoomsReserveRequests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
 
-        Person person = getLoggedPerson(request);
+        request.setAttribute("campusBean", new CampusBean());
+        return mapping.findForward("seeRoomsReserveRequests");
+    }
 
-        List<PunctualRoomsOccupationRequest> personRequests = person.getPunctualRoomsOccupationRequestsToProcessOrderByDate();
+    public ActionForward seeFilteredRoomsReserveRequests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+
+        Person person = getLoggedPerson(request);
+        IViewState viewState = RenderUtils.getViewState("filterRoomRequestByCampus");
+        CampusBean campusBean = (CampusBean) viewState.getMetaObject().getObject();
+        Campus campus = campusBean.getCampus();
+
+        List<PunctualRoomsOccupationRequest> personRequests =
+                person.getPunctualRoomsOccupationRequestsToProcessOrderByDate(campus);
         Set<PunctualRoomsOccupationRequest> openedRequests =
-                PunctualRoomsOccupationRequest.getRequestsByTypeAndDiferentOwnerOrderByDate(RequestState.OPEN, person);
+                PunctualRoomsOccupationRequest.getRequestsByTypeAndDiferentOwnerOrderByDate(RequestState.OPEN, person, campus);
         Set<PunctualRoomsOccupationRequest> newRequests =
-                PunctualRoomsOccupationRequest.getRequestsByTypeOrderByDate(RequestState.NEW);
+                PunctualRoomsOccupationRequest.getRequestsByTypeOrderByDate(RequestState.NEW, campus);
 
         Set<PunctualRoomsOccupationRequest> resolvedRequests =
-                PunctualRoomsOccupationRequest.getResolvedRequestsOrderByMoreRecentComment();
+                PunctualRoomsOccupationRequest.getResolvedRequestsOrderByMoreRecentComment(campus);
         CollectionPager<PunctualRoomsOccupationRequest> collectionPager =
                 new CollectionPager<PunctualRoomsOccupationRequest>(
                         resolvedRequests != null ? resolvedRequests : new ArrayList<PunctualRoomsOccupationRequest>(), 10);

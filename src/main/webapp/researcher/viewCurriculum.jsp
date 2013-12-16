@@ -101,7 +101,7 @@
 <li><bean:message key="researcher.viewCurriculum.name" bundle="RESEARCHER_RESOURCES"/>: <strong><fr:view name="person" property="nickname"/></strong> <logic:present name="person" property="teacher"> (<fr:view name="person" property="teacher.teacherId"/>)</li>
 </logic:present>
 
-<logic:present role="TEACHER">		
+<logic:present role="role(TEACHER)">		
 	<logic:present name="person" property="teacher">
 		<logic:present name="person" property="teacher.category">
 			<li><bean:message key="label.teacher.category" bundle="APPLICATION_RESOURCES"/>: <fr:view name="person" property="teacher.category.name"/></li>

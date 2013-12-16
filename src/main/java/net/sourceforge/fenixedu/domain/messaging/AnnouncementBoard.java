@@ -10,7 +10,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
@@ -153,7 +153,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
     public AnnouncementBoard() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCreationDate(new DateTime());
     }
 

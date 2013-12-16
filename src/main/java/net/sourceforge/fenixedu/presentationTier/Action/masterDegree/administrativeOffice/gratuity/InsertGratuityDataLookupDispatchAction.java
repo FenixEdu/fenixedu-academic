@@ -10,7 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.InsertGratuityData;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByExecutionDegree;
@@ -31,7 +31,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -151,7 +151,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 
     public ActionForward insertGratuityData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         ActionErrors errors = new ActionErrors();
         DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
         maintainState(request, gratuityForm);
@@ -190,7 +190,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
         return mapping.findForward("insertConfirmation");
     }
 
-    private InfoGratuityValues fillGratuity(IUserView userView, DynaValidatorForm actionForm) {
+    private InfoGratuityValues fillGratuity(User userView, DynaValidatorForm actionForm) {
 
         String degree = (String) actionForm.get("degree");
         String degreeId = StringUtils.substringAfter(degree, "#");

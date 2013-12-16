@@ -7,7 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
@@ -314,15 +314,15 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
                     new PhdGratuityPaymentPeriod(periodBean.getPeriodStartDate(), periodBean.getPeriodEndDate(),
                             periodBean.getLimitePaymentDay());
             postingRule.addPhdGratuityPaymentPeriods(period);
-            period.setRootDomainObject(RootDomainObject.getInstance());
+            period.setRootDomainObject(Bennu.getInstance());
         }
 
         for (CreateGratuityPhdPRQuickBean quirkBean : bean.getExceptions()) {
             PhdGratuityPriceQuirk quirk = new PhdGratuityPriceQuirk(quirkBean.getYear(), new Money(quirkBean.getGratuity()));
             postingRule.addPhdGratuityPriceQuirks(quirk);
-            quirk.setRootDomainObject(RootDomainObject.getInstance());
+            quirk.setRootDomainObject(Bennu.getInstance());
         }
-        postingRule.setRootDomainObject(RootDomainObject.getInstance());
+        postingRule.setRootDomainObject(Bennu.getInstance());
 
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -48,7 +48,7 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException, FenixServiceException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String shiftCodeString = request.getParameter("shiftCode");
@@ -58,7 +58,7 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
         try {
             Integer type =
                     VerifyGroupingAndStudentGroupWithoutShift.run(studentGroupCodeString, groupPropertiesCodeString,
-                            shiftCodeString, userView.getUtilizador());
+                            shiftCodeString, userView.getUsername());
             viewStudentGroup = ReadStudentGroupInformation.run(studentGroupCodeString);
             request.setAttribute("ShiftType", type);
         } catch (ExistingServiceException e) {

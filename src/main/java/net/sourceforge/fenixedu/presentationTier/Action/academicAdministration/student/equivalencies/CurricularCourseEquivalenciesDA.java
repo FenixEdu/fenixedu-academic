@@ -9,7 +9,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteCurricularCourseEquivalency;
@@ -34,12 +34,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "academicAdministration", path = "/curricularCourseEquivalencies",
@@ -56,7 +56,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
         final DynaActionForm actionForm = (DynaActionForm) form;
 
         setInfoDegreesToManage(request, userView);
@@ -80,7 +80,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
         final DynaActionForm actionForm = (DynaActionForm) form;
 
         final String degreeCurricularPlanIDString = (String) actionForm.get("degreeCurricularPlanID");
@@ -147,7 +147,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
         return prepare(mapping, form, request, response);
     }
 
-    private void setInfoDegreesToManage(final HttpServletRequest request, final IUserView userView) throws FenixServiceException {
+    private void setInfoDegreesToManage(final HttpServletRequest request, final User userView) throws FenixServiceException {
 
         final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         degrees.addAll(AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
@@ -155,7 +155,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
         request.setAttribute("infoDegrees", degrees);
     }
 
-    private void setInfoDegreesToAdd(final HttpServletRequest request, final IUserView userView) throws FenixServiceException {
+    private void setInfoDegreesToAdd(final HttpServletRequest request, final User userView) throws FenixServiceException {
 
         final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         degrees.addAll(Degree.readAllByDegreeType(DegreeType.DEGREE));
@@ -166,7 +166,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
         request.setAttribute("infoDegrees", degrees);
     }
 
-    private void setInfoDegreeCurricularPlans(final HttpServletRequest request, final IUserView userView, final String degreeID,
+    private void setInfoDegreeCurricularPlans(final HttpServletRequest request, final User userView, final String degreeID,
             final String attributeName) throws FenixServiceException {
 
         final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = ReadDegreeCurricularPlansByDegree.run(degreeID);
@@ -174,7 +174,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
         request.setAttribute(attributeName, infoDegreeCurricularPlans);
     }
 
-    private void setInfoCurricularCourses(final HttpServletRequest request, final IUserView userView,
+    private void setInfoCurricularCourses(final HttpServletRequest request, final User userView,
             final String degreeCurricularPlanID, final String attribute) throws FenixServiceException {
 
         final List<InfoCurricularCourse> infoCurricularCourses =

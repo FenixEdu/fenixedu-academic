@@ -12,7 +12,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

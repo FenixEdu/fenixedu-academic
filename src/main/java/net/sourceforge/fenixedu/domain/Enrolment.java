@@ -45,7 +45,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrappe
 import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -54,6 +53,8 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -107,7 +108,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public Enrolment() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         super.setIsExtraCurricular(Boolean.FALSE);
     }
 
@@ -1566,7 +1567,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public Unit getAcademicUnit() {
-        return RootDomainObject.getInstance().getInstitutionUnit();
+        return Bennu.getInstance().getInstitutionUnit();
     }
 
     @Override
@@ -1662,7 +1663,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         enrolment.setEnrollmentState(optionalEnrolment.getEnrollmentState());
         enrolment.setExecutionPeriod(optionalEnrolment.getExecutionPeriod());
         enrolment.setEnrolmentEvaluationType(optionalEnrolment.getEnrolmentEvaluationType());
-        enrolment.setCreatedBy(AccessControl.getUserView().getUtilizador());
+        enrolment.setCreatedBy(Authenticate.getUser().getUsername());
         enrolment.setCreationDateDateTime(optionalEnrolment.getCreationDateDateTime());
         enrolment.setEnrolmentCondition(optionalEnrolment.getEnrolmentCondition());
         enrolment.setCurriculumGroup(curriculumGroup);

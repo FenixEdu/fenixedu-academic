@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.support;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * @author Luis Cruz
@@ -14,7 +14,7 @@ public class GlossaryEntry extends GlossaryEntry_Base {
 
     public GlossaryEntry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -23,7 +23,7 @@ public class GlossaryEntry extends GlossaryEntry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

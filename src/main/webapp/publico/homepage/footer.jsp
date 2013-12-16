@@ -13,13 +13,7 @@
 <div id="foot_copy">
 	<bean:message bundle="GLOBAL_RESOURCES" key="footer.copyright.label"/>
 	<dt:format pattern="yyyy"><dt:currentTime/></dt:format>
-	-
-	<logic:present name="homepage">
-		<bean:write name="homepage" property="person.name"/>
-	</logic:present>
-	<logic:notPresent name="homepage">
-		<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
-	</logic:notPresent>
+	- <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 </div>
 
 <div class="clear"></div>

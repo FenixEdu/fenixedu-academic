@@ -7,6 +7,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
+import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 
 public class ExternalUnitAutoCompleteProvider implements AutoCompleteProvider<Unit> {
 

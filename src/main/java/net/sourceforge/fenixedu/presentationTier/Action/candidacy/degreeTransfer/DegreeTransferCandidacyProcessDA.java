@@ -32,6 +32,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -283,7 +284,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
     private void createBody(final StyledExcelSpreadsheet excelSpreadsheet,
             final SortedSet<DegreeTransferIndividualCandidacyProcess> candidacies) {
         for (final DegreeTransferIndividualCandidacyProcess process : candidacies) {
-            if (!process.canExecuteActivity(AccessControl.getUserView())) {
+            if (!process.canExecuteActivity(Authenticate.getUser())) {
                 continue;
             }
             excelSpreadsheet.newRow();

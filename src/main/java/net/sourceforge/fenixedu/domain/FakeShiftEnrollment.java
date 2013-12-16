@@ -2,11 +2,13 @@ package net.sourceforge.fenixedu.domain;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class FakeShiftEnrollment extends FakeShiftEnrollment_Base {
 
     public FakeShiftEnrollment() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public FakeShiftEnrollment(FakeShift fakeShift, Person person, String stuff) {
@@ -24,8 +26,9 @@ public class FakeShiftEnrollment extends FakeShiftEnrollment_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

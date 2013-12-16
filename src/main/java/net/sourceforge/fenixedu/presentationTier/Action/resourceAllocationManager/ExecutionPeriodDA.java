@@ -43,6 +43,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
@@ -250,7 +251,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         }
 
         if (modified.size() > 0) {
-            new FirstYearShiftsCapacityToggleLog(executionYear.getFirstExecutionPeriod(), AccessControl.getUserView().getPerson()
+            new FirstYearShiftsCapacityToggleLog(executionYear.getFirstExecutionPeriod(), Authenticate.getUser().getPerson()
                     .getUser());
         }
 

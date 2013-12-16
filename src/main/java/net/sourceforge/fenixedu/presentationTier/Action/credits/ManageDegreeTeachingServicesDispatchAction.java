@@ -13,7 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.UpdateDegreeTeachingServices;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
@@ -31,7 +31,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -81,7 +81,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             RoleType roleType) throws NumberFormatException, FenixServiceException {
 
         DynaActionForm teachingServiceForm = (DynaActionForm) form;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         HashMap<String, String> teacherPercentageMap = (HashMap<String, String>) teachingServiceForm.get("teacherPercentageMap");
 
         String professorshipID = (String) teachingServiceForm.get("professorshipID");

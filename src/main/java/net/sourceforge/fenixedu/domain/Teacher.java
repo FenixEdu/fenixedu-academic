@@ -66,6 +66,9 @@ import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
+
 public class Teacher extends Teacher_Base {
 
     public static final Comparator<Teacher> TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER = new Comparator<Teacher>() {
@@ -91,7 +94,7 @@ public class Teacher extends Teacher_Base {
     public Teacher(Person person) {
         super();
         setPerson(person);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public String getTeacherId() {
@@ -99,7 +102,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public static Teacher readByIstId(String istId) {
-        User user = User.readUserByUserUId(istId);
+        User user = User.findByUsername(istId);
         if (user != null) {
             return user.getPerson().getTeacher();
         } else {
@@ -976,7 +979,7 @@ public class Teacher extends Teacher_Base {
 
     public static List<Teacher> readByNumbers(Collection<String> teacherId) {
         List<Teacher> selectedTeachers = new ArrayList<Teacher>();
-        for (final Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
+        for (final Teacher teacher : Bennu.getInstance().getTeachersSet()) {
             if (teacherId.contains(teacher.getPerson().getIstUsername())) {
                 selectedTeachers.add(teacher);
             }
@@ -1281,15 +1284,6 @@ public class Teacher extends Teacher_Base {
 
     private RoleType getRoleType() {
         return RoleType.TEACHER;
-    }
-
-    public String getRoleLoginAlias() {
-        final List<LoginAlias> roleLoginAlias = getPerson().getLoginIdentification().getRoleLoginAlias(getRoleType());
-        if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
-            return "D" + getPerson().getEmployee().getEmployeeNumber();
-        } else {
-            return roleLoginAlias.iterator().next().getAlias();
-        }
     }
 
     public boolean teachesAt(final Campus campus) {
@@ -1746,7 +1740,7 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -7,7 +7,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
@@ -80,7 +80,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
     public ActionForward chooseFinal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         DynaActionForm chooseDeclaration = (DynaActionForm) form;
 

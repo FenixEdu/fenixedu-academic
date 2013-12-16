@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class InquiryResultComment extends InquiryResultComment_Base {
 
@@ -21,7 +21,7 @@ public class InquiryResultComment extends InquiryResultComment_Base {
     }
 
     private void setGeneralAttributes(Person person, ResultPersonCategory personCategory, Integer resultOrder) {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setPerson(person);
         setPersonCategory(personCategory);
         setResultOrder(resultOrder);
@@ -40,7 +40,7 @@ public class InquiryResultComment extends InquiryResultComment_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

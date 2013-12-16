@@ -12,10 +12,12 @@ import org.apache.jcs.access.exception.InvalidArgumentException;
  * receive arguments and thus be parameterizable.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public abstract class OperatorArgument extends DynamicArgument {
 
-    private ArgumentList arguments;
+    private final ArgumentList arguments;
 
     public OperatorArgument() {
         super();

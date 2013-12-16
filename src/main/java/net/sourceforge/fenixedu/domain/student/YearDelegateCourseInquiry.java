@@ -4,7 +4,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.YearDelegateCourseInquiryDTO;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.joda.time.DateTime;
 
@@ -14,7 +14,7 @@ public class YearDelegateCourseInquiry extends YearDelegateCourseInquiry_Base {
 
     public YearDelegateCourseInquiry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setResponseDateTime(new DateTime());
     }
 
@@ -77,7 +77,7 @@ public class YearDelegateCourseInquiry extends YearDelegateCourseInquiry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

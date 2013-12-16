@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.Job;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
@@ -17,6 +16,8 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 
@@ -39,7 +40,7 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
         Set<Person> elements = super.buildSet();
         DateTime now = new DateTime();
         boolean continueCicle = false;
-        for (Alumni alumni : RootDomainObject.getInstance().getAlumnis()) {
+        for (Alumni alumni : Bennu.getInstance().getAlumnisSet()) {
             if (isCheckJobNotUpdated()) {
                 for (Job job : alumni.getJobs()) {
                     if (job.getLastModifiedDate() == null

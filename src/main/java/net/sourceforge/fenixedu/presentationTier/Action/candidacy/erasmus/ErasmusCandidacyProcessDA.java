@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
@@ -27,6 +26,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -357,7 +357,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
         public Object provide(Object arg0, Object arg1) {
             final Set<MobilityProgram> mobilityPrograms =
                     new TreeSet<MobilityProgram>(MobilityProgram.COMPARATOR_BY_REGISTRATION_AGREEMENT);
-            for (Program program : RootDomainObject.getInstance().getPrograms()) {
+            for (Program program : Bennu.getInstance().getProgramsSet()) {
                 if (program instanceof MobilityProgram) {
                     mobilityPrograms.add((MobilityProgram) program);
                 }

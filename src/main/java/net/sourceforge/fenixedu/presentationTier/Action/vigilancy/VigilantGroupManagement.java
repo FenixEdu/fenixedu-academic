@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
@@ -44,6 +43,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -682,7 +682,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         Collection<VigilantGroup> groups = bean.getVigilantGroups();
         String username = bean.getUsername();
 
-        User user = User.readUserByUserUId(username);
+        User user = User.findByUsername(username);
         Person person;
         if (user != null && (person = user.getPerson()) != null) {
             List<Person> people = new ArrayList<Person>();

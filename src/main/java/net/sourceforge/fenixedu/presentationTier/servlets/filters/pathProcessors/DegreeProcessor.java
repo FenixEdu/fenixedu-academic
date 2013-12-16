@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeSite;
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
@@ -18,7 +17,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 
 public class DegreeProcessor extends PathProcessor {
 
-    private String degreeSiteURI;
+    private final String degreeSiteURI;
 
     public DegreeProcessor(String forwardURI, String degreeSiteURI) {
         super(forwardURI);
@@ -70,8 +69,7 @@ public class DegreeProcessor extends PathProcessor {
              * 04-02-2007 pcma
              */
             DegreeSite portalInstance = degree.getSite();
-            MetaDomainObjectPortal portal =
-                    (MetaDomainObjectPortal) MetaDomainObject.getMeta(portalInstance.getClass()).getAssociatedPortal();
+            MetaDomainObjectPortal portal = MetaDomainObjectPortal.getPortal(portalInstance.getClass());
 
             List<Content> contents = new ArrayList<Content>();
             contents.add(portal);
@@ -99,7 +97,7 @@ public class DegreeProcessor extends PathProcessor {
 
     public static class DegreeContext extends ProcessingContext implements SiteContext {
 
-        private String contextURI;
+        private final String contextURI;
 
         public DegreeContext(ProcessingContext parent, String contextURI) {
             super(parent);

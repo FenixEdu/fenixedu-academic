@@ -5,7 +5,7 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -23,7 +23,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * 
@@ -40,7 +40,7 @@ public class ConfirmMarksAction extends FenixDispatchAction {
 
         // Get students final evaluation
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
         try {
             infoSiteEnrolmentEvaluation = ReadStudentsFinalEvaluationForConfirmation.run(curricularCourseCode, null);
@@ -91,7 +91,7 @@ public class ConfirmMarksAction extends FenixDispatchAction {
         MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
         // set final evaluation to final state
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         ConfirmStudentsFinalEvaluation.run(curricularCourseCode, null, userView);
 

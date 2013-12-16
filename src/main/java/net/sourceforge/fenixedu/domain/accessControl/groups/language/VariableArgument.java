@@ -5,12 +5,14 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language;
  * context variable.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public class VariableArgument extends DynamicArgument {
 
     private static final long serialVersionUID = 1L;
 
-    private String variable;
+    private final String variable;
 
     public VariableArgument(String variable) {
         this.variable = variable;

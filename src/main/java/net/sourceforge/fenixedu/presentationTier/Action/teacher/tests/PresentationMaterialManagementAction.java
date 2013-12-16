@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreatePictureMaterial;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeletePresentationMaterial;
@@ -159,7 +159,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException, IOException {
         PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("create-picture-material");
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         File file = FileUtils.copyToTemporaryFile(bean.getInputStream());
         try {

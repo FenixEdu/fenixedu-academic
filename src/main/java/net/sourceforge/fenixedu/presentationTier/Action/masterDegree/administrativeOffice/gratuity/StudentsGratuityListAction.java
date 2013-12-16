@@ -13,7 +13,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsByDegreeCurricularPlanID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
@@ -46,7 +46,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * @author Tânia Pousão
@@ -104,7 +104,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm studentListForm = (DynaActionForm) actionForm;
         String executionYear = (String) studentListForm.get("executionYear");
@@ -164,7 +164,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
     public ActionForward studentsGratuityList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         // read data from form
         String executionYear = null;
@@ -245,7 +245,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
         DynaActionForm studentGratuityListForm = (DynaActionForm) actionForm;
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         // data from request
         String executionYearString = null;
@@ -337,7 +337,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         ActionErrors errors = new ActionErrors();
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         DynaActionForm studentGratuityListForm = (DynaActionForm) actionForm;
 
         String degree = (String) studentGratuityListForm.get("degree");

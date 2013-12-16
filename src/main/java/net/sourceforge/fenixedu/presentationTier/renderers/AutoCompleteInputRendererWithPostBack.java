@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import pt.ist.fenixWebFramework.rendererExtensions.AutoCompleteInputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlHiddenField;

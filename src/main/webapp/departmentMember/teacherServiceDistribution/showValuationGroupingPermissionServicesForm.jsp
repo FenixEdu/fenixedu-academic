@@ -116,7 +116,7 @@
 			<tr>
 				<td class="courses">
 					<bean:write name="personPermissionsDTOEntry" property="person.name"/> 
-					(<bean:write name="personPermissionsDTOEntry" property="person.mostImportantAlias"/>)
+					(<bean:write name="personPermissionsDTOEntry" property="person.username"/>)
 				</td>
 				<td class="acenter">
 					<logic:equal name="personPermissionsDTOEntry" property="coursesValuationPermission" value="true">

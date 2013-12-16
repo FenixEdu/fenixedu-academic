@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.CurricularCourseMarksheetManagementBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean;
@@ -142,7 +142,7 @@ public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatc
         MarkSheetRectifyBean rectifyBean = (MarkSheetRectifyBean) RenderUtils.getViewState().getMetaObject().getObject();
 
         ActionMessages actionMessages = new ActionMessages();
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         try {
             rectifyBean.createRectificationOldMarkSheet(userView.getPerson());
             return mapping.findForward("searchMarkSheetFilled");

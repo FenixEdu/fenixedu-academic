@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -84,7 +84,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
+    public boolean canExecuteActivity(User userView) {
         return isAllowedToManageProcess(this, userView);
     }
 
@@ -143,7 +143,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
-    static private boolean isAllowedToManageProcess(Over23IndividualCandidacyProcess process, IUserView userView) {
+    static private boolean isAllowedToManageProcess(Over23IndividualCandidacyProcess process, User userView) {
         Set<AcademicProgram> programs =
                 AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                         AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
@@ -176,7 +176,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static public class IndividualCandidacyInformation extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             /*
              * 06/04/2009 The candidacy may be submited by someone who's not
              * authenticated in the system
@@ -187,7 +187,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess dummy, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess dummy, User userView,
                 Object object) {
             return new Over23IndividualCandidacyProcess((Over23IndividualCandidacyProcessBean) object);
         }
@@ -196,7 +196,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class CandidacyPayment extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -206,7 +206,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             return process; // nothing to be done, for now payment is being
             // done by existing interface
@@ -216,7 +216,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class EditCandidacyPersonalInformation extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -226,7 +226,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             final IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) object;
             process.editPersonalCandidacyInformation(bean.getPersonBean());
@@ -237,7 +237,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class EditCandidacyInformation extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -247,7 +247,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             process.editCandidacyHabilitations((IndividualCandidacyProcessBean) object);
             return process.editCandidacyInformation((Over23IndividualCandidacyProcessBean) object);
@@ -257,7 +257,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class IntroduceCandidacyResult extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -276,7 +276,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             final Over23IndividualCandidacyResultBean bean = (Over23IndividualCandidacyResultBean) object;
             process.getCandidacy().editCandidacyResult(bean.getState(), bean.getAcceptedDegree());
@@ -287,7 +287,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class CancelCandidacy extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -298,7 +298,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             process.cancelCandidacy(userView.getPerson());
             return process;
@@ -308,7 +308,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class CreateRegistration extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -324,7 +324,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             createRegistration(process);
             return process;
@@ -343,7 +343,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class BindPersonToCandidacy extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -359,7 +359,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) object;
 
@@ -382,14 +382,14 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class EditPublicCandidacyPersonalInformation extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             process.editPersonalCandidacyInformation(((IndividualCandidacyProcessBean) object).getPersonBean());
             process.saveLanguagesReadWriteSpeak((Over23IndividualCandidacyProcessBean) object);
@@ -406,14 +406,14 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class EditPublicCandidacyDocumentFile extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
             process.bindIndividualCandidacyDocumentFile(bean);
@@ -430,14 +430,14 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class EditPublicCandidacyHabilitations extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) object;
             process.editCandidacyHabilitations(bean);
@@ -459,14 +459,14 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class EditDocuments extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (process.isCandidacyCancelled()) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
             process.bindIndividualCandidacyDocumentFile(bean);
@@ -477,7 +477,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class ChangeProcessCheckedState extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -489,7 +489,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             process.setProcessChecked(((IndividualCandidacyProcessBean) object).getProcessChecked());
             return process;
@@ -553,11 +553,11 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     static private class SendEmailForApplicationSubmission extends Activity<Over23IndividualCandidacyProcess> {
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             DegreeOfficePublicCandidacyHashCode hashCode = (DegreeOfficePublicCandidacyHashCode) object;
             hashCode.sendEmailForApplicationSuccessfullySubmited();
@@ -574,7 +574,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static private class ChangePaymentCheckedState extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -586,7 +586,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             process.setPaymentChecked(((IndividualCandidacyProcessBean) object).getPaymentChecked());
             return process;
@@ -596,14 +596,14 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static protected class RevokeDocumentFile extends Activity<Over23IndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             ((CandidacyProcessDocumentUploadBean) object).getDocumentFile().setCandidacyFileActive(Boolean.FALSE);
             return process;

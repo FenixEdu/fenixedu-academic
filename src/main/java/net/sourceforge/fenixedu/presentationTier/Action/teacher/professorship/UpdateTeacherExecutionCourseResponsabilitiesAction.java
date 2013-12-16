@@ -59,7 +59,7 @@ public class UpdateTeacherExecutionCourseResponsabilitiesAction extends Action {
 
         String teacherId = (String) teacherExecutionYearResponsabilitiesForm.get("teacherName");
         String executionYearId = (String) teacherExecutionYearResponsabilitiesForm.get("executionYearId");
-        Person person = Person.readPersonByIstUsername(teacherId);
+        Person person = Person.readPersonByUsername(teacherId);
         ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearId);
         try {
             UpdateProfessorshipWithPerson.run(person, executionYear, Arrays.asList(executionCourseResponsabilities));

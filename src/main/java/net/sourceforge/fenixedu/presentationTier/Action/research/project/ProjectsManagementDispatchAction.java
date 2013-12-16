@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.project.DeleteResearchProject;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
@@ -26,7 +26,7 @@ public class ProjectsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward listProjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         List<Project> projects = new ArrayList<Project>();
 

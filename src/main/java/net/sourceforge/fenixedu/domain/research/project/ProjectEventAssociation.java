@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain.research.project;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 
 public class ProjectEventAssociation extends ProjectEventAssociation_Base {
 
     public ProjectEventAssociation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
 
     }
 
@@ -30,7 +30,7 @@ public class ProjectEventAssociation extends ProjectEventAssociation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

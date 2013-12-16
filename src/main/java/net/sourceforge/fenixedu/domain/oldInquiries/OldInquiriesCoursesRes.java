@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.oldInquiries;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * @author Jo�o Fialho & Rita Ferreira
@@ -14,7 +14,7 @@ public class OldInquiriesCoursesRes extends OldInquiriesCoursesRes_Base {
 
     public OldInquiriesCoursesRes() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -24,7 +24,7 @@ public class OldInquiriesCoursesRes extends OldInquiriesCoursesRes_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

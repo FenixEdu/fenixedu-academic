@@ -11,7 +11,7 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateBibliographicReference;
@@ -336,7 +336,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final String optional = dynaActionForm.getString("optional");
 
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         CreateBibliographicReference.runCreateBibliographicReference(executionCourse.getExternalId(), title, authors, reference,
                 year, Boolean.valueOf(optional));
@@ -377,7 +377,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         final BibliographicReference bibliographicReference =
                 findBibliographicReference(executionCourse, bibliographicReferenceIDString);
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         EditBibliographicReference.runEditBibliographicReference(bibliographicReference.getExternalId(), title, authors,
                 reference, year, Boolean.valueOf(optional));
@@ -389,7 +389,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final String bibliographicReferenceIDString = request.getParameter("bibliographicReferenceID");
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         DeleteBibliographicReference.runDeleteBibliographicReference(bibliographicReferenceIDString);
 
         return mapping.findForward("bibliographicReference");
@@ -631,7 +631,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     private static ExecutionCourse findExecutionCourse(final HttpServletRequest request, final String executionCourseID) {
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         if (userView != null) {
             final Person person = userView.getPerson();

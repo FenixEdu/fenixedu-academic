@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.utilTests.Element;
 import net.sourceforge.fenixedu.utilTests.ParseMetadata;
@@ -24,7 +24,7 @@ public class Metadata extends Metadata_Base {
             final String difficulty, final Calendar learningTime, final String mainSubject, final String secondarySubject,
             final String level) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setVisibility(Boolean.TRUE);
         setExecutionCourse(executionCourse);
         setAuthor(author);
@@ -38,7 +38,7 @@ public class Metadata extends Metadata_Base {
 
     public Metadata(final ExecutionCourse executionCourse, String file, final Vector<Element> vector) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setVisibility(Boolean.TRUE);
         setExecutionCourse(executionCourse);
         if (file != null) {
@@ -198,7 +198,7 @@ public class Metadata extends Metadata_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

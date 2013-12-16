@@ -11,7 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.ReadExternalPersonsByInstitution;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadAllInstitutions;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -29,7 +29,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -58,7 +58,7 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         ActionErrors actionErrors = new ActionErrors();
 
         try {
@@ -98,7 +98,7 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
 
     public ActionForward visualize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm visualizeExternalPersonsForm = (DynaActionForm) form;
         String institutionId = (String) visualizeExternalPersonsForm.get("institutionId");

@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.pay
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
+import pt.ist.fenixframework.Atomic;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
@@ -20,7 +23,6 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityForStuden
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
-import pt.ist.fenixframework.Atomic;
 
 public class GratuityPaymentPlanManager {
 
@@ -82,11 +84,12 @@ public class GratuityPaymentPlanManager {
                     new PartialRegimeInstallment((FullGratuityPaymentPlanForPartialRegime) paymentPlan, each.getAmount(),
                             each.getStartDate(), each.getEndDate(), each.getMontlyPenaltyPercentage(),
                             each.getWhenToStartApplyPenalty(), each.getMaxMonthsToApplyPenalty(), each.getEctsForAmount(),
-                            each.getExecutionSemesters());
+                            new ArrayList<>(each.getExecutionSemesters()));
 
                 } else {
                     new PartialRegimeInstallment((FullGratuityPaymentPlanForPartialRegime) paymentPlan, each.getAmount(),
-                            each.getStartDate(), each.getEndDate(), each.getEctsForAmount(), each.getExecutionSemesters());
+                            each.getStartDate(), each.getEndDate(), each.getEctsForAmount(), new ArrayList<>(
+                                    each.getExecutionSemesters()));
                 }
 
             } else if (paymentPlan.isForFirstTimeInstitutionStudents() && each.isForFirstTimeInstitutionStudents()) {

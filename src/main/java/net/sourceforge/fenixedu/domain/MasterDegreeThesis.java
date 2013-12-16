@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
@@ -18,7 +20,7 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 
     public MasterDegreeThesis() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public MasterDegreeThesisDataVersion getActiveMasterDegreeThesisDataVersion() {
@@ -119,7 +121,7 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

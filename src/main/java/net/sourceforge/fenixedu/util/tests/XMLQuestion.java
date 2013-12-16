@@ -4,10 +4,10 @@
 
 package net.sourceforge.fenixedu.util.tests;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.util.FenixUtil;
 
 /**
@@ -33,7 +33,7 @@ public class XMLQuestion extends FenixUtil {
     private static final String mattext = "mattext";
 
     // ////////////////////////
-    private static final String start = "<?xml version=\"1.0\" encoding=\"" + PropertiesManager.DEFAULT_CHARSET
+    private static final String start = "<?xml version=\"1.0\" encoding=\"" + Charset.defaultCharset().name()
             + "\"?>\n<!DOCTYPE questestinterop SYSTEM \"file:/qtiasiv1p2.dtd\">\n<questestinterop>\n<item ident=\"xxx\">\n";
 
     private static final String end = "</item>\n</questestinterop>";

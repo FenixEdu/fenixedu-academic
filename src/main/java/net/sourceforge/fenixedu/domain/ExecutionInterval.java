@@ -16,12 +16,13 @@ import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.StandaloneCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.PeriodState;
+import pt.ist.bennu.core.domain.Bennu;
 
 abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
     protected ExecutionInterval() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setState(PeriodState.NOT_OPEN);
     }
 
@@ -43,7 +44,6 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateInterval() {
-        System.out.println(toString() + ": " + getBeginDateYearMonthDay() + " - " + getEndDateYearMonthDay());
         return getBeginDateYearMonthDay() != null && getEndDateYearMonthDay() != null
                 && getBeginDateYearMonthDay().isBefore(getEndDateYearMonthDay());
     }
@@ -144,7 +144,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
     static public List<ExecutionInterval> readExecutionIntervalsWithCandidacyPeriod(final Class<? extends CandidacyPeriod> clazz) {
         final List<ExecutionInterval> result = new ArrayList<ExecutionInterval>();
-        for (final ExecutionInterval executionInterval : RootDomainObject.getInstance().getExecutionIntervals()) {
+        for (final ExecutionInterval executionInterval : Bennu.getInstance().getExecutionIntervalsSet()) {
             if (executionInterval.hasCandidacyPeriods(clazz)) {
                 result.add(executionInterval);
             }
@@ -153,7 +153,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     }
 
     public static ExecutionInterval getExecutionInterval(AcademicInterval academicInterval) {
-        for (ExecutionInterval interval : RootDomainObject.getInstance().getExecutionIntervals()) {
+        for (ExecutionInterval interval : Bennu.getInstance().getExecutionIntervalsSet()) {
             if (interval.getAcademicInterval().equals(academicInterval)) {
                 return interval;
             }
@@ -247,7 +247,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -14,6 +14,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.security.Authenticate;
+
 public class PhdIndividualProgramProcessesReport extends PhdReport {
 
     private final ResourceBundle bundle;
@@ -34,7 +36,7 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
 
         int i = 1;
         for (PhdIndividualProgramProcess process : processes) {
-            if (!process.isAllowedToManageProcess(AccessControl.getUserView())) {
+            if (!process.isAllowedToManageProcess(Authenticate.getUser())) {
                 continue;
             }
 

@@ -5,14 +5,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.LookupDispatchAction;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 public abstract class FenixLookupDispatchAction extends LookupDispatchAction {
 
@@ -23,8 +23,8 @@ public abstract class FenixLookupDispatchAction extends LookupDispatchAction {
         return super.execute(mapping, actionForm, request, response);
     }
 
-    protected static IUserView getUserView(HttpServletRequest request) {
-        return UserView.getUser();
+    protected static User getUserView(HttpServletRequest request) {
+        return Authenticate.getUser();
     }
 
     /**

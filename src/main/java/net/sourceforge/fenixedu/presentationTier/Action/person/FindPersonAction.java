@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.degree.ReadAllDegreesByType;
 import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadAllDepartments;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
@@ -29,8 +28,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
@@ -121,7 +121,7 @@ public class FindPersonAction extends FenixDispatchAction {
     public ActionForward findPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         FindPersonBean bean = getRenderedObject();
 
@@ -223,8 +223,8 @@ public class FindPersonAction extends FenixDispatchAction {
         return mapping.findForward("findPerson");
     }
 
-    private boolean isEmployeeOrTeacher(IUserView userView) {
-        return userView.hasRoleType(RoleType.EMPLOYEE) || userView.hasRoleType(RoleType.TEACHER);
+    private boolean isEmployeeOrTeacher(User userView) {
+        return userView.getPerson().hasRole(RoleType.EMPLOYEE) || userView.getPerson().hasRole(RoleType.TEACHER);
     }
 
     private Boolean getCheckBoxValue(String value) {

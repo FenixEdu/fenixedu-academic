@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.base;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.struts.action.ActionForm;
@@ -11,7 +11,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.ForwardAction;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "publico", path = "/degreeSite/showCourseSite", attribute = "chooseContextDegreeForm",
@@ -26,8 +26,8 @@ public class FenixForwardAction extends ForwardAction {
         return super.execute(mapping, actionForm, request, response);
     }
 
-    protected static IUserView getUserView(HttpServletRequest request) {
-        return UserView.getUser();
+    protected static User getUserView(HttpServletRequest request) {
+        return Authenticate.getUser();
     }
 
     protected Person getLoggedPerson(HttpServletRequest request) {

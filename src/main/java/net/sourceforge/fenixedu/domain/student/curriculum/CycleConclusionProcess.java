@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.student.curriculum;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -15,7 +15,7 @@ public class CycleConclusionProcess extends CycleConclusionProcess_Base {
 
     private CycleConclusionProcess(final RegistrationConclusionBean bean) {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
 
         final CycleCurriculumGroup cycle = bean.getCycleCurriculumGroup();
         final ExecutionYear conclusionYear = bean.getConclusionYear();
@@ -72,7 +72,7 @@ public class CycleConclusionProcess extends CycleConclusionProcess_Base {
     }
 
     @Override
-    public void setRootDomainObject(RootDomainObject rootDomainObject) {
+    public void setRootDomainObject(Bennu rootDomainObject) {
         throw new DomainException("error.ConclusionProcess.method.not.allowed");
     }
 

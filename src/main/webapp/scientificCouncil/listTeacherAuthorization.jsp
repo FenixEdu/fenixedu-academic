@@ -37,7 +37,7 @@
 <bean:define id="auth" name="obj" type="net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization" />
 <tr>
 <td>
-	<bean:write name="auth" property="teacher.person.user.userUId"/>
+	<bean:write name="auth" property="teacher.person.user.username"/>
 </td>
 <td>
 	<bean:write name="auth" property="teacher.person.name"/>

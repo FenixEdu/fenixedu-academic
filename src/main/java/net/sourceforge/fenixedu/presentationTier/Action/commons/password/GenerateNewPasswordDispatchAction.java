@@ -3,9 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons.password;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.SetUserUID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.CreateUserIfNecessary;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswordService;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsername;
@@ -20,6 +19,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -39,7 +39,7 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
     public ActionForward findPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         DynaActionForm newPasswordForm = (DynaActionForm) form;
 
@@ -61,7 +61,7 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
     public ActionForward generatePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String personID = request.getParameter("personID");
 
@@ -69,13 +69,13 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
         final Person person = (Person) FenixFramework.getDomainObject(personID);
         if (person != null) {
-            SetUserUID.run(person);
+            CreateUserIfNecessary.run(person);
         }
 
         // Change the Password
         try {
 
-            password = GenerateNewPasswordService.run(personID);
+            password = GenerateNewPasswordService.run(person);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

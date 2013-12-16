@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.dataTransferObject.commons.CurricularCourseByExecutionSemesterBean;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
@@ -64,7 +64,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
+    public boolean canExecuteActivity(User userView) {
         return isAllowedToManageProcess(this, userView);
     }
 
@@ -107,7 +107,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
     // static information
 
-    static private boolean isAllowedToManageProcess(StandaloneIndividualCandidacyProcess process, IUserView userView) {
+    static private boolean isAllowedToManageProcess(StandaloneIndividualCandidacyProcess process, User userView) {
         Set<AcademicProgram> programs =
                 AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                         AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
@@ -133,7 +133,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
     static public class IndividualCandidacyInformation extends Activity<StandaloneIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -141,7 +141,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
         @Override
         protected StandaloneIndividualCandidacyProcess executeActivity(StandaloneIndividualCandidacyProcess dummy,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             return new StandaloneIndividualCandidacyProcess((StandaloneIndividualCandidacyProcessBean) object);
         }
     }
@@ -149,7 +149,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
     static private class CandidacyPayment extends Activity<StandaloneIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -157,7 +157,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
         @Override
         protected StandaloneIndividualCandidacyProcess executeActivity(StandaloneIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             return process; // nothing to be done, for now payment is being
             // done by existing interface
         }
@@ -166,7 +166,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
     static private class EditCandidacyPersonalInformation extends Activity<StandaloneIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -177,7 +177,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
         @Override
         protected StandaloneIndividualCandidacyProcess executeActivity(StandaloneIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             final StandaloneIndividualCandidacyProcessBean bean = (StandaloneIndividualCandidacyProcessBean) object;
             process.editPersonalCandidacyInformation(bean.getPersonBean());
             return process;
@@ -187,7 +187,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
     static private class EditCandidacyInformation extends Activity<StandaloneIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -199,7 +199,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
         @Override
         protected StandaloneIndividualCandidacyProcess executeActivity(StandaloneIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             return process.editCandidacyInformation((StandaloneIndividualCandidacyProcessBean) object);
         }
     }
@@ -207,7 +207,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
     static private class IntroduceCandidacyResult extends Activity<StandaloneIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -232,7 +232,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
         @Override
         protected StandaloneIndividualCandidacyProcess executeActivity(StandaloneIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.getCandidacy().editCandidacyResult((StandaloneIndividualCandidacyResultBean) object);
             return process;
         }
@@ -241,7 +241,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
     static private class CancelCandidacy extends Activity<StandaloneIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -252,7 +252,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
         @Override
         protected StandaloneIndividualCandidacyProcess executeActivity(StandaloneIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.cancelCandidacy(userView.getPerson());
             return process;
         }
@@ -261,7 +261,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
     static private class CreateRegistration extends Activity<StandaloneIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -276,7 +276,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
         @Override
         protected StandaloneIndividualCandidacyProcess executeActivity(StandaloneIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             createRegistration(process);
             return process;
         }
@@ -289,7 +289,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
     static private class BindPersonToCandidacy extends Activity<StandaloneIndividualCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(StandaloneIndividualCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -306,7 +306,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
         @Override
         protected StandaloneIndividualCandidacyProcess executeActivity(StandaloneIndividualCandidacyProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             StandaloneIndividualCandidacyProcessBean bean = (StandaloneIndividualCandidacyProcessBean) object;
 
             // First edit personal information

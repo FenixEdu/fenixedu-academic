@@ -53,6 +53,7 @@
 					phroper.reset(true);
 				});
 				$('<button id="toggleClassic" type="button"><%= request.getAttribute("buttonRevert") != null ? request.getAttribute("buttonRevert") : "Use old version"  %></button>').appendTo('#photoForm').click( function () {
+					$('#new-info-panel').toggle();
 					$('#old-info-panel').toggle();
 					$('#photo-uploader').toggle();
 					$('#photoForm table').toggle();
@@ -67,10 +68,6 @@
 <em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="label.person.photo.title" /></h2>
 
-<div id="old-info-panel" class="infoop2">
-    <p class="mvert0"><bean:message key="label.person.photo.file.info" /></p>
-</div>
-
 <html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
     <p class="mtop15">
         <span class="error"><!-- Error messages go here -->
@@ -79,8 +76,27 @@
     </p>
 </html:messages>
 
+<logic:notPresent name="preview">
+
+	<div id="new-info-panel" class="infoop2">
+   		<p class="mvert0"><bean:message key="label.person.photo.file.info.crop" /></p>
+	</div>
+	
+	<div id="old-info-panel" class="infoop2">
+   		<p class="mvert0"><bean:message key="label.person.photo.file.info.classic" /></p>
+	</div>
+	
+
+	<p class="mtop2">
+		<html:link page="/uploadPhoto.do?method=backToShowInformation">
+			<bean:message key="link.back" bundle="COMMON_RESOURCES"/>
+		</html:link>
+	</p>
+</logic:notPresent>
+
 <fr:form id="photoForm" action="/uploadPhoto.do" encoding="multipart/form-data">
 	<html:hidden property="method" value="" />
+	
 	<logic:notPresent name="preview">
 		<input type="hidden" id="phroperCaption" value="<%= request.getAttribute("phroperCaption") != null ? request.getAttribute("phroperCaption") : "" %>" />
 		<input type="hidden" id="phroperSubCaption" value="<%= request.getAttribute("phroperSubCaption") != null ? request.getAttribute("phroperSubCaption") : "" %>" />
@@ -89,6 +105,7 @@
 	</logic:notPresent>
 
     <logic:notPresent name="preview">
+		
     	<fr:edit id="photoUpload" name="photo" schema="party.photo.upload">
             <fr:layout name="tabular-editable">
                 <fr:property name="classes" value="tstyle2 thlight thwhite"/>
@@ -101,7 +118,7 @@
     </logic:notPresent>
 
 	<logic:present name="preview">
-        <p>
+        <p class="mtop2">
             <html:link page="/uploadPhoto.do?method=prepare">
                 <bean:message key="link.back" bundle="COMMON_RESOURCES" />
             </html:link>
@@ -112,10 +129,12 @@
 		<div class="mvert1"><html:img align="middle"
 			src="<%=request.getContextPath() + "/person/uploadPhoto.do?method=preview&amp;file=" + tempfile%>"
 			altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showPhoto" /></div>
-		<p class="mtop15 mbottom1">Deseja substituir a imagem antiga por esta?</p>
+		<p class="mtop15 mbottom1">
+			<bean:message key="message.person.uploadPhoto.confirm"/>
+		</p>
 		<p class="mvert0"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 			onclick="this.form.method.value='save'">
-			<bean:message key="button.substitute" />
+			<bean:message key="button.replace" />
 		</html:submit> <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 			onclick="this.form.method.value='cancel'">
 			<bean:message key="button.cancel" />

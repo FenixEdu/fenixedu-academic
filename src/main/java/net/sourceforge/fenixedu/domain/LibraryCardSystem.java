@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.util.Verhoeff;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class LibraryCardSystem extends LibraryCardSystem_Base {
 
     private static final String MILLENIUM_INSTITUTION_PREFIX = "0710";
@@ -60,7 +62,7 @@ public class LibraryCardSystem extends LibraryCardSystem_Base {
 
                 @Override
                 public Set<Person> getElements() {
-                    return RootDomainObject.getInstance().getLibraryCardSystem().getHigherClearenceGroup().getElements();
+                    return Bennu.getInstance().getLibraryCardSystem().getHigherClearenceGroup().getElements();
                 }
             };
         }
@@ -76,8 +78,9 @@ public class LibraryCardSystem extends LibraryCardSystem_Base {
         }
 
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
@@ -25,7 +24,6 @@ import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
@@ -117,6 +115,9 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -197,7 +198,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
      * Checks whether the specified user is allowed to manage this process.
      */
     @Override
-    public boolean isAllowedToManageProcess(IUserView userView) {
+    public boolean isAllowedToManageProcess(User userView) {
         Set<AcademicProgram> programs =
                 AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                         AcademicOperationType.MANAGE_PHD_PROCESSES);
@@ -206,14 +207,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isCurrentUserAllowedToManageProcess() {
-        return isAllowedToManageProcess(AccessControl.getUserView());
+        return isAllowedToManageProcess(Authenticate.getUser());
     }
 
     /**
      * Checks whether the specified user has permission to manage this process,
      * as well as its state
      */
-    public boolean isAllowedToManageProcessState(IUserView userView) {
+    public boolean isAllowedToManageProcessState(User userView) {
         if (!isAllowedToManageProcess(userView)) {
             return false;
         }
@@ -226,20 +227,19 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isCurrentUserAllowedToManageProcessState() {
-        return isAllowedToManageProcessState(AccessControl.getUserView());
+        return isAllowedToManageProcessState(Authenticate.getUser());
     }
 
     @StartActivity
     static public class CreateCandidacy extends PhdIndividualProgramProcessActivity {
 
         @Override
-        protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+        protected void activityPreConditions(PhdIndividualProgramProcess process, User userView) {
             // no precondition to check
         }
 
         @Override
-        protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess noProcess, IUserView userView,
-                Object object) {
+        protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess noProcess, User userView, Object object) {
 
             final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
             final Person person = getOrCreatePerson(bean);
@@ -355,7 +355,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
+    public boolean canExecuteActivity(User userView) {
         return true;
     }
 
@@ -426,7 +426,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         return getPhdIndividualProcessNumber().getFullProcessNumber();
     }
 
-    public PhdIndividualProgramProcess edit(final IUserView userView, final PhdIndividualProgramProcessBean bean) {
+    public PhdIndividualProgramProcess edit(final User userView, final PhdIndividualProgramProcessBean bean) {
 
         checkParameters(getPerson(), getExecutionYear());
 
@@ -520,8 +520,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             final Predicate<PhdIndividualProgramProcess> searchPredicate) {
 
         final Set<PhdIndividualProgramProcess> processesToSearch = new HashSet<PhdIndividualProgramProcess>();
-        for (final PhdIndividualProgramProcessNumber phdIndividualProgramProcessNumber : RootDomainObject.getInstance()
-                .getPhdIndividualProcessNumbers()) {
+        for (final PhdIndividualProgramProcessNumber phdIndividualProgramProcessNumber : Bennu.getInstance()
+                .getPhdIndividualProcessNumbersSet()) {
             if (year == null || phdIndividualProgramProcessNumber.getProcess().getExecutionYear().equals(year)) {
                 processesToSearch.add(phdIndividualProgramProcessNumber.getProcess());
             }
@@ -1006,7 +1006,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         static public class CreatePublicCandidacy extends CreateCandidacy {
 
             @Override
-            protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+            protected void activityPreConditions(PhdIndividualProgramProcess process, User userView) {
                 // no precondition to check
             }
 
@@ -1032,7 +1032,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             }
 
             @Override
-            protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess noProcess, IUserView userView,
+            protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess noProcess, User userView,
                     Object object) {
                 final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
 
@@ -1058,7 +1058,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             return null;
         }
 
-        for (final PhdMigrationProcess migrationProcess : RootDomainObject.getInstance().getPhdMigrationProcesses()) {
+        for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
             for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessData()) {
                 if (processData.getNumber().equals(getPhdStudentNumber())) {
                     return processData;
@@ -1090,7 +1090,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     private PhdMigrationGuiding getAssociatedMigrationgGuidingOrAssistant(String guiderNumber) {
-        for (final PhdMigrationProcess migrationProcess : RootDomainObject.getInstance().getPhdMigrationProcesses()) {
+        for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
             for (final PhdMigrationGuiding guidingData : migrationProcess.getPhdMigrationGuiding()) {
                 if (guidingData.getTeacherNumber().equals(guiderNumber)) {
                     return guidingData;
@@ -1105,7 +1105,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             final Predicate<PhdMigrationIndividualProcessData> searchPredicate) {
         final List<PhdMigrationIndividualProcessData> processDataList = new ArrayList<PhdMigrationIndividualProcessData>();
 
-        for (final PhdMigrationProcess migrationProcess : RootDomainObject.getInstance().getPhdMigrationProcesses()) {
+        for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
             for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessData()) {
                 final ExecutionYear processYear = processData.getExecutionYear();
                 if (processYear == null || year == null || processYear.equals(year)) {
@@ -1119,7 +1119,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public static Collection<PhdMigrationProcess> getMigrationProcesses() {
-        return RootDomainObject.getInstance().getPhdMigrationProcesses();
+        return Bennu.getInstance().getPhdMigrationProcessesSet();
     }
 
     public boolean isTransferable() {

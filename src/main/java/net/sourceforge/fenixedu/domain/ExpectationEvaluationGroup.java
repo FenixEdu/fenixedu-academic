@@ -3,12 +3,13 @@ package net.sourceforge.fenixedu.domain;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class ExpectationEvaluationGroup extends ExpectationEvaluationGroup_Base {
 
     private ExpectationEvaluationGroup() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ExpectationEvaluationGroup(Teacher appraiser, Teacher evaluated, ExecutionYear executionYear) {
@@ -79,8 +80,9 @@ public class ExpectationEvaluationGroup extends ExpectationEvaluationGroup_Base 
             throw new DomainException("error.ExpectationEvaluationGroup.invalid.departments");
         }
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

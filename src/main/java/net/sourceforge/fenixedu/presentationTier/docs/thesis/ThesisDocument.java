@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
@@ -51,12 +51,12 @@ public abstract class ThesisDocument extends FenixReport {
     }
 
     protected void fillInstitution() {
-        addParameter("institutionName", neverNull(RootDomainObject.getInstance().getInstitutionUnit().getName()).toUpperCase());
+        addParameter("institutionName", neverNull(Bennu.getInstance().getInstitutionUnit().getName()).toUpperCase());
     }
 
     protected void fillDegree() {
         final Degree degree = thesis.getDegree();
-        addParameter("studentDegreeName", neverNull(degree.getName()));
+        addParameter("studentDegreeName", neverNull(degree.getNameI18N(thesis.getExecutionYear()).toString()));
     }
 
     protected void fillStudent() {

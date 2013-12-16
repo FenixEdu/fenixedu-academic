@@ -2,8 +2,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
-<logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
-	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+<logic:present role="role(DEPARTMENT_ADMINISTRATIVE_OFFICE)">
+	<logic:present role="role(DEPARTMENT_CREDITS_MANAGER)">
 		<li class="navheader">
 			<strong><bean:message key="link.group.creditsManagement"/></strong>
 		</li>

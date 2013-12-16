@@ -6,7 +6,7 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
-<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>"/>
+<bean:define id="userView" name="USER_SESSION_ATTRIBUTE"/>
 
 <logic:iterate id="roleType" type="net.sourceforge.fenixedu.domain.person.RoleType" name="userView" property="roleTypes">
 	<%

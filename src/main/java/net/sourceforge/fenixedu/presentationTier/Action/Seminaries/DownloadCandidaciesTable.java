@@ -14,7 +14,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.ReadCandidacies;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetails;
@@ -90,7 +90,7 @@ public class DownloadCandidaciesTable extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
         String document = DownloadCandidaciesTable.COLUMNS_HEADERS + "\n";
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         //
         List candidacies = new LinkedList();

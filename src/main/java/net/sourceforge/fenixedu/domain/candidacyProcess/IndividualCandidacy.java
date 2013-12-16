@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
@@ -45,7 +45,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     protected IndividualCandidacy() {
         super();
         super.setWhenCreated(new DateTime());
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
 
     }
 
@@ -549,7 +549,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

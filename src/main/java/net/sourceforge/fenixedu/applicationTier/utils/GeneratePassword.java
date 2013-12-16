@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.utils;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 
 /**
  * @author Barbosa
@@ -12,22 +11,10 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
  */
 public class GeneratePassword {
 
-    private static IGeneratePassword instance = null;
+    private static IGeneratePassword instance = new GeneratePasswordBase();
 
-    public static synchronized IGeneratePassword getInstance() {
-        if (instance == null) {
-            instance = getSpecificInstance();
-        }
+    public static IGeneratePassword getInstance() {
         return instance;
     }
 
-    private static IGeneratePassword getSpecificInstance() {
-        try {
-            String stringClass = PropertiesManager.getProperty("password.generator");
-            Class clazz = Class.forName(stringClass);
-            return (IGeneratePassword) clazz.newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

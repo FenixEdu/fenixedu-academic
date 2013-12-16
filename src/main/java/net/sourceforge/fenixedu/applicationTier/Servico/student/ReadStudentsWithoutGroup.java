@@ -62,7 +62,7 @@ public class ReadStudentsWithoutGroup {
             final Attends attend = (Attends) element;
             final Registration registration = attend.getRegistration();
             final Person person = registration.getPerson();
-            if (person.hasUsername(username)) {
+            if (person.getUser().getUsername().equals(username)) {
                 userStudent = registration;
                 break;
             }

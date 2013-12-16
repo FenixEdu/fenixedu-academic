@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -11,7 +11,7 @@ public class PersonProfessionalContract extends PersonProfessionalContract_Base 
             final LocalDate endDate, final ContractSituation contractSituation, final String contractSituationGiafId,
             final DateTime creationDate, final DateTime modifiedDate) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setGiafProfessionalData(giafProfessionalData);
         setBeginDate(beginDate);
         setEndDate(endDate);
@@ -37,7 +37,7 @@ public class PersonProfessionalContract extends PersonProfessionalContract_Base 
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -19,6 +19,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -34,7 +35,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
 
     @Override
     protected List<Activity> getAllowedActivities(final IndividualCandidacyProcess process) {
-        List<Activity> activities = process.getAllowedActivities(AccessControl.getUserView());
+        List<Activity> activities = process.getAllowedActivities(Authenticate.getUser());
         ArrayList<Activity> resultActivities = new ArrayList<Activity>();
 
         for (Activity activity : activities) {

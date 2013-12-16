@@ -13,12 +13,12 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.IntegerConverter;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.CharEncoding;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -75,11 +75,11 @@ public class UIAutoComplete extends UIInput {
                 labelField, valueField, autoCompleteItemsStyleClass, className, inputTextArgName);
     }
 
-    private IUserView getUserView(FacesContext context) {
-        return UserView.getUser();
+    private User getUserView(FacesContext context) {
+        return Authenticate.getUser();
     }
 
-    private String getInputTextValue(IUserView userView, String externalId, String labelField) {
+    private String getInputTextValue(User userView, String externalId, String labelField) {
         try {
             DomainObject domainObject = FenixFramework.getDomainObject(externalId);
 

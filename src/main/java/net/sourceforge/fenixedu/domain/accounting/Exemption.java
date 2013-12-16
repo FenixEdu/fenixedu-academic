@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -27,7 +27,7 @@ public abstract class Exemption extends Exemption_Base {
 
     protected Exemption() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setWhenCreated(new DateTime());
     }
 
@@ -146,7 +146,7 @@ public abstract class Exemption extends Exemption_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

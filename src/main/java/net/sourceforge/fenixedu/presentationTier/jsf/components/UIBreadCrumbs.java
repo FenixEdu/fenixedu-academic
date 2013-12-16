@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class UIBreadCrumbs extends UIInput {
@@ -48,7 +49,7 @@ public class UIBreadCrumbs extends UIInput {
         final ResourceBundle publicDegreeInformationResourceBundle =
                 ResourceBundle.getBundle("resources/PublicDegreeInformation", locale);
 
-        final String institutionUrl = globalResourceBundle.getObject("institution.url").toString();
+        final String institutionUrl = Instalation.getInstance().getInstituitionURL();
         final String institutionNameAbbreviation = Unit.getInstitutionAcronym();
         final String linkInstitution = globalResourceBundle.getObject("link.institution").toString();
         final String labelEducation =

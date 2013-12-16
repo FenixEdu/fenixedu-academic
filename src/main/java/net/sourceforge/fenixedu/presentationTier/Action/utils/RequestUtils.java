@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.utils;
 
-import pt.ist.fenixframework.Atomic;
-
 import java.io.IOException;
 import java.text.Collator;
 import java.util.ArrayList;
@@ -20,17 +18,18 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.PendingRequest;
-import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -41,8 +40,7 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class RequestUtils {
 
-    public static final int APP_CONTEXT_LENGTH = PropertiesManager.getProperty("app.context").length() + 1;
-    private static final boolean STORE_PENDING_REQUEST = PropertiesManager.getBooleanProperty("store.pending.request");
+    private static final boolean STORE_PENDING_REQUEST = FenixConfigurationManager.getConfiguration().getStorePendingRequest();
 
     public static String getAndSetStringToRequest(HttpServletRequest request, String name) {
         String parameter = request.getParameter(name);
@@ -136,7 +134,8 @@ public class RequestUtils {
         request.getSession(true);
 
         final PendingRequest pendingRequest = STORE_PENDING_REQUEST ? storeRequest(request) : null;
-        response.sendRedirect(generateRedirectLink(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()),
+        response.sendRedirect(generateRedirectLink(
+                FenixConfigurationManager.getHostRedirector().getRedirectPageLogin(request.getRequestURL().toString()),
                 pendingRequest));
     }
 
@@ -167,20 +166,4 @@ public class RequestUtils {
         return new PendingRequest(request);
     }
 
-    public static boolean isPrivateURI(HttpServletRequest request) {
-        final String uri = request.getRequestURI().substring(APP_CONTEXT_LENGTH);
-
-        return uri.length() > 1 && (uri.indexOf("CSS/") == -1) && (uri.indexOf("ajax/") == -1) && (uri.indexOf("images/") == -1)
-                && (uri.indexOf("img/") == -1) && (uri.indexOf("download/") == -1) && (uri.indexOf("external/") == -1)
-                && (uri.indexOf("services/") == -1) && (uri.indexOf("index.jsp") == -1) && (uri.indexOf("index.html") == -1)
-                && (uri.indexOf("login.do") == -1) && (uri.indexOf("loginCAS.do") == -1) && (uri.indexOf("privado") == -1)
-                && (uri.indexOf("loginPage.jsp") == -1) && (uri.indexOf("loginExpired.jsp") == -1)
-                && (uri.indexOf("loginExpired.do") == -1) && (uri.indexOf("logoff.do") == -1) && (uri.indexOf("publico/") == -1)
-                && (uri.indexOf("showErrorPage.do") == -1) && (uri.indexOf("showErrorPageRegistered.do") == -1)
-                && (uri.indexOf("exceptionHandlingAction.do") == -1) && (uri.indexOf("manager/manageCache.do") == -1)
-                && (uri.indexOf("checkPasswordKerberos.do") == -1) && (uri.indexOf("siteMap.do") == -1)
-                && (uri.indexOf("cms/forwardEmailAction.do") == -1) && (uri.indexOf("isAlive.do") == -1)
-                && (uri.indexOf("gwt/") == -1) && (uri.indexOf("remote/") == -1) && (uri.indexOf("downloadFile/") == -1)
-                && !(uri.indexOf("google") >= 0 && uri.endsWith(".html")) && (uri.indexOf("api/fenix") == -1);
-    }
 }

@@ -5,7 +5,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
 public class RegisteredAlumniGroup extends Group {
@@ -19,7 +19,7 @@ public class RegisteredAlumniGroup extends Group {
     public Set<Person> getElements() {
         Set<Person> elements = new HashSet<Person>();
 
-        for (final Alumni alumni : RootDomainObject.getInstance().getAlumnisSet()) {
+        for (final Alumni alumni : Bennu.getInstance().getAlumnisSet()) {
             elements.add(alumni.getStudent().getPerson());
         }
         return elements;

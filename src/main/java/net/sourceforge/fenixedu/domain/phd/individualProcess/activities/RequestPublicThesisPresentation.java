@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 public class RequestPublicThesisPresentation extends PhdIndividualProgramProcessActivity {
 
     @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+    protected void activityPreConditions(PhdIndividualProgramProcess process, User userView) {
 
         if (!process.hasSeminarProcess()
                 || (!process.getSeminarProcess().isExempted() && !process.getSeminarProcess().isConcluded())) {
@@ -29,7 +29,7 @@ public class RequestPublicThesisPresentation extends PhdIndividualProgramProcess
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, IUserView userView,
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, User userView,
             Object object) {
 
         final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;

@@ -7,11 +7,12 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * @author Susana Fernandes
@@ -20,7 +21,7 @@ public class StudentTestLog extends StudentTestLog_Base {
 
     public StudentTestLog(DistributedTest distributedTest, Registration student, String event) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setDistributedTest(distributedTest);
         setStudent(student);
         DateTime now = new DateTime();
@@ -37,7 +38,7 @@ public class StudentTestLog extends StudentTestLog_Base {
                 new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay(),
                         dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute(), 0);
         checksumCode.append(thisDateTime.getMillis());
-        checksumCode.append(RootDomainObject.getInstance().getTestChecksums().iterator().next().getChecksumCode());
+        checksumCode.append(Bennu.getInstance().getTestChecksumsSet().iterator().next().getChecksumCode());
         return (DigestUtils.shaHex(checksumCode.toString()));
     }
 
@@ -87,7 +88,7 @@ public class StudentTestLog extends StudentTestLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

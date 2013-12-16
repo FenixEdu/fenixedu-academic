@@ -96,7 +96,7 @@
 </style>
 
 
-<div class="col_right_photo"><img src="http://www.ist.utl.pt/img/perfil/candidato_photo.jpg" alt="[Foto] Inscrições na secretaria" width="150" height="100" /></div>
+<div class="col_right_photo"><img src="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>img/perfil/candidato_photo.jpg" alt="[Foto] Inscrições na secretaria" width="150" height="100" /></div>
 <h1>Candidato</h1> 
 <p class="greytxt">Bem-vindo &agrave; p&aacute;gina informativa destinada aos  Candidatos a ingressar no <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym() %>. O objectivo &eacute; fornecer aqui os links que pensamos serem mais &uacute;teis para o seu processo de candidatura.</p>
 <h2>Com o <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym() %>, entra no melhor ensino superior europeu</h2>
@@ -120,8 +120,8 @@
 	<ul class="cycles">
 		<li class="btt_one"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>">Licenciaturas (1&ordm; Ciclo)</a></li>
 		<li class="btt_two"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/mestrados" %>">Mestrados (2&ordm; Ciclo)</a></li>
-		<li class="btt_three"><a href="http://www.ist.utl.pt/html/perfil/candidato/pd/">Forma&ccedil;&atilde;o Avan&ccedil;ada</a></li>
-		<li class="btt_four"><a href="http://www.ist.utl.pt/html/perfil/candidato/fa/">Programas Doutorais (3&ordm; Ciclo)</a></li>
+		<li class="btt_three"><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>html/perfil/candidato/pd/">Forma&ccedil;&atilde;o Avan&ccedil;ada</a></li>
+		<li class="btt_four"><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>html/perfil/candidato/fa/">Programas Doutorais (3&ordm; Ciclo)</a></li>
 	</ul>
 
 	<div style="clear: both;"></div>

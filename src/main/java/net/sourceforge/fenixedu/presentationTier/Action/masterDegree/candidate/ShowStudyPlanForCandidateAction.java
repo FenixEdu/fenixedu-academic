@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate.ReadPersonCandidates;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadCandidateEnrolmentsByCandidateID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -26,7 +26,7 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         // transport candidate ID
         request.setAttribute("candidateID", request.getParameter("candidateID"));
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = getMasterDegreeCandidate(userView, request);
         if (infoMasterDegreeCandidate != null) {
             request.setAttribute("masterDegreeCandidate", infoMasterDegreeCandidate);
@@ -37,10 +37,10 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         return mapping.findForward("Sucess");
     }
 
-    private InfoMasterDegreeCandidate getMasterDegreeCandidate(IUserView userView, HttpServletRequest request) {
+    private InfoMasterDegreeCandidate getMasterDegreeCandidate(User userView, HttpServletRequest request) {
         List candidates = null;
         try {
-            candidates = ReadPersonCandidates.run(userView.getUtilizador());
+            candidates = ReadPersonCandidates.run(userView.getUsername());
         } catch (Exception e) {
             return null;
         }
@@ -54,7 +54,7 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         return (InfoMasterDegreeCandidate) candidates.iterator().next();
     }
 
-    private ArrayList getCandidateStudyPlanByCandidateID(String candidateID, IUserView userView) {
+    private ArrayList getCandidateStudyPlanByCandidateID(String candidateID, User userView) {
         try {
             return (ArrayList) ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);
         } catch (Exception e) {

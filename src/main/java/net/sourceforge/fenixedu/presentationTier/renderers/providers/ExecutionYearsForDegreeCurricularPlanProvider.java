@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.interfaces.HasDegreeCurricularPlan;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -24,7 +24,7 @@ public class ExecutionYearsForDegreeCurricularPlanProvider implements DataProvid
 
     public static List<ExecutionYear> getExecutionYears(HasDegreeCurricularPlan bean) {
         List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>();
-        for (ExecutionYear year : RootDomainObject.getInstance().getExecutionYears()) {
+        for (ExecutionYear year : Bennu.getInstance().getExecutionYearsSet()) {
             if (year.isInclusivelyBetween(bean.getDegreeCurricularPlan().getInauguralExecutionYear(), bean
                     .getDegreeCurricularPlan().getLastExecutionYear())) {
                 executionYears.add(year);

@@ -4,7 +4,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SendPhdEmail"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmail" %>

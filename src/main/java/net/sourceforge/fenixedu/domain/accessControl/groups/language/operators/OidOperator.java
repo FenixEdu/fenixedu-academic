@@ -20,7 +20,9 @@ import pt.ist.fenixframework.FenixFramework;
  * </p>
  * 
  * @author Pedro Santos
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public class OidOperator extends OperatorArgument {
     private static final int PARAMETER = 0;
 

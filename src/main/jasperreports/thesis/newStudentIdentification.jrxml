@@ -115,7 +115,7 @@
 					<subreportParameterExpression><![CDATA[$P{orientatorAffiliation}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA["/reports/thesis/thesisReport_studentOrientation.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA["reports/thesis/thesisReport_studentOrientation.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport isUsingCache="true">
 				<reportElement key="subreport-keywords" positionType="Float" mode="Transparent" x="0" y="102" width="425" height="5"/>
@@ -162,7 +162,7 @@
 					<subreportParameterExpression><![CDATA[$P{keywordEn5}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA["/reports/thesis/thesisReport_keywords.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA["reports/thesis/thesisReport_keywords.jasper"]]></subreportExpression>
 			</subreport>
 			<textField isBlankWhenNull="false">
 				<reportElement key="abstractPt-title" positionType="Float" x="0" y="108" width="425" height="17"/>

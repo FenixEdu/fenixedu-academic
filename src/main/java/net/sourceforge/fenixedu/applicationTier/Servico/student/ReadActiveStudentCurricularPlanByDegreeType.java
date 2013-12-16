@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -22,7 +22,7 @@ import pt.ist.fenixframework.Atomic;
 public class ReadActiveStudentCurricularPlanByDegreeType {
 
     @Atomic
-    public static InfoStudentCurricularPlan run(IUserView userView, DegreeType degreeType) {
+    public static InfoStudentCurricularPlan run(User userView, DegreeType degreeType) {
         check(RolePredicates.STUDENT_PREDICATE);
 
         final Person person = userView.getPerson();

@@ -70,10 +70,6 @@
 	<slot name="profession" />
 	<slot name="maritalStatus" />  
 </schema>
-<schema name="net.sourceforge.fenixedu.domain.Login" type="net.sourceforge.fenixedu.domain.Login" bundle="MANAGER_RESOURCES" > 
-	<slot name="username"/>
-	<slot name="active"/>
-</schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.AnyPersonSearchBean" type="net.sourceforge.fenixedu.domain.Person$AnyPersonSearchBean" bundle="MANAGER_RESOURCES" > 
 	<slot name="name">
 		<property name="size" value="50"/>
@@ -247,8 +243,7 @@
 	<slot name="nameOfMother" key="label.person.motherName"/>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.user.info" type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES"> 
-	<slot name="user.userUId" key="label.person.istUsername"/>
-	<slot name="user.aliass" key="label.person.aliass"/>
+	<slot name="user.username" key="label.person.username"/>
 </schema>
 
 <schema name="Unit.view-nameWithAcronym-and-costCenterCode" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="APPLICATION_RESOURCES"> 

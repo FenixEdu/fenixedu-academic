@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditCurriculum;
@@ -26,7 +26,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -57,7 +57,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm curriculumForm = (DynaActionForm) form;
 
@@ -99,7 +99,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm editForm = (DynaActionForm) form;
 
@@ -137,7 +137,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
         infoCurriculum.setExecutionYearId(executionYearId);
 
         try {
-            EditCurriculum.run(infoCurriculum, request.getParameter("language"), userView.getUtilizador());
+            EditCurriculum.run(infoCurriculum, request.getParameter("language"), userView.getUsername());
 
         } catch (NonExistingServiceException nonExistingServiceException) {
             nonExistingServiceException.printStackTrace();

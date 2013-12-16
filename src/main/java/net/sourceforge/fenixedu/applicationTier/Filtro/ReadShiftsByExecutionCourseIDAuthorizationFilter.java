@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -16,6 +15,8 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 //modified by gedl AT rnl dot IST dot uTl dot pT , September the 16th, 2003
@@ -34,10 +35,11 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
     }
 
     public void execute(String executionCourseID) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
-        if ((((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, executionCourseID)) || (id == null) || (id
-                .getRoleTypes() == null))) && (!lecturesExecutionCourse(id, executionCourseID))) {
+        User id = Authenticate.getUser();
+        if ((((id != null && id.getPerson().getPersonRolesSet() != null && !containsRoleType(id.getPerson().getPersonRolesSet()))
+                || (id != null && id.getPerson().getPersonRolesSet() != null && !hasPrivilege(id, executionCourseID))
+                || (id == null) || (id.getPerson().getPersonRolesSet() == null)))
+                && (!lecturesExecutionCourse(id, executionCourseID))) {
             throw new NotAuthorizedException();
         }
     }
@@ -58,12 +60,12 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, String executionCourseID) {
-        if (id.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+    private boolean hasPrivilege(User id, String executionCourseID) {
+        if (id.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             return true;
         }
 
-        if (id.hasRoleType(RoleType.COORDINATOR)) {
+        if (id.getPerson().hasRole(RoleType.COORDINATOR)) {
 
             final Person person = id.getPerson();
 
@@ -96,13 +98,13 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
         return false;
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, String executionCourseID) {
+    private boolean lecturesExecutionCourse(User id, String executionCourseID) {
         if (executionCourseID == null) {
             return false;
         }
         try {
 
-            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUsername());
             Professorship professorship = null;
             if (teacher != null) {
                 ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);

@@ -19,6 +19,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 
@@ -28,7 +29,7 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 
     public MasterDegreeCandidate() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         this.setHasGuider(false);
         this.setCourseAssistant(false);
     }
@@ -76,7 +77,7 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
             final SituationName situationName) {
 
         final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
-        for (final MasterDegreeCandidate masterDegreeCandidate : RootDomainObject.getInstance().getMasterDegreeCandidatesSet()) {
+        for (final MasterDegreeCandidate masterDegreeCandidate : Bennu.getInstance().getMasterDegreeCandidatesSet()) {
             if (executionDegree != null && masterDegreeCandidate.getExecutionDegree() != executionDegree) {
                 continue;
             }
@@ -131,7 +132,7 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

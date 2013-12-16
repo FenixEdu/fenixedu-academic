@@ -13,7 +13,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -22,6 +21,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Splitter;
@@ -46,7 +46,7 @@ public class AuthorizationsManagementBean implements Serializable {
         this.groups = new ArrayList<AuthorizationGroupBean>();
         if (party != null) {
             for (PersistentAccessGroup group : party.getPersistentAccessGroup()) {
-                if (group instanceof PersistentAcademicAuthorizationGroup && !group.hasDeletedRootDomainObject()) {
+                if (group instanceof PersistentAcademicAuthorizationGroup && !group.hasDeletedBennu()) {
                     AuthorizationGroupBean bean = new AuthorizationGroupBean((PersistentAcademicAuthorizationGroup) group);
                     groups.add(bean);
                 }
@@ -66,7 +66,7 @@ public class AuthorizationsManagementBean implements Serializable {
 
     public List<Degree> getDegrees() {
 
-        List<Degree> degrees = new ArrayList<Degree>(RootDomainObject.getInstance().getDegrees());
+        List<Degree> degrees = new ArrayList<Degree>(Bennu.getInstance().getDegreesSet());
 
         Collections.sort(degrees);
 
@@ -75,7 +75,7 @@ public class AuthorizationsManagementBean implements Serializable {
 
     public List<PhdProgram> getPhdPrograms() {
 
-        List<PhdProgram> programs = new ArrayList<PhdProgram>(RootDomainObject.getInstance().getPhdPrograms());
+        List<PhdProgram> programs = new ArrayList<PhdProgram>(Bennu.getInstance().getPhdProgramsSet());
 
         Collections.sort(programs, PhdProgram.COMPARATOR_BY_NAME);
 
@@ -92,7 +92,7 @@ public class AuthorizationsManagementBean implements Serializable {
     }
 
     public Set<AdministrativeOffice> getAdministrativeOffices() {
-        return RootDomainObject.getInstance().getAdministrativeOfficesSet();
+        return Bennu.getInstance().getAdministrativeOfficesSet();
     }
 
     public void removeAuthorization(String parameter) {

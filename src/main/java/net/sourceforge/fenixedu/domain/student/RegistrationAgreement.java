@@ -43,7 +43,7 @@ public enum RegistrationAgreement {
 
     ANGOLA_TELECOM(false, true),
 
-    ERASMUS_MUNDUS(false, true),
+    ERASMUS_MUNDUS(false, false),
 
     ALMEIDA_GARRETT(false, false),
 
@@ -59,7 +59,7 @@ public enum RegistrationAgreement {
 
     AFRICA_AGREEMENTS(false, false), BRAZIL_AGREEMENTS(false, false),
 
-    SCIENCE_WITHOUT_BORDERS(false, false), USA_AGREEMENTS(false, true), KIC_INNOENERGY(false, true);
+    SCIENCE_WITHOUT_BORDERS(false, false), USA_AGREEMENTS(false, true), KIC_INNOENERGY(false, false);
 
     private boolean enrolmentByStudentAllowed;
 

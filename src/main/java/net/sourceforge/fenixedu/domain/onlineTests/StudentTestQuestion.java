@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -38,7 +38,7 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
 
     public StudentTestQuestion() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public List<SubQuestion> getStudentSubQuestions() {
@@ -166,7 +166,7 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

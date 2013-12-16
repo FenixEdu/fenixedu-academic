@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
@@ -39,6 +38,7 @@ import org.joda.time.Partial;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -277,7 +277,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
      */
     private List<ExecutionSemester> provideSemesters(Tutorship tutorship) {
         final List<ExecutionSemester> executionSemestersFinal =
-                new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriods());
+                new ArrayList<ExecutionSemester>(Bennu.getInstance().getExecutionPeriodsSet());
         Collections.sort(executionSemestersFinal, new ReverseComparator());
         List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
 
@@ -318,17 +318,18 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         student.getActiveRegistrations();
         if (student.getActiveRegistrations().size() > 1) {
             // mandar mensagem de erro se tiver mais que uma matricula
-            addActionMessage(request, "Aluno tem mais que uma matricula");
+            addActionMessage(request, "error.student.enrolment.more.than.one");
             return mapping.findForward("viewTutorship");
         }
 
         if (student.getActiveRegistrations().isEmpty()) {
             // mandar mensagem de erro se não tiver matricula
-            addActionMessage(request, "Aluno não tem matricula");
+            addActionMessage(request, "error.student.enrolment.none");
             return mapping.findForward("viewTutorship");
         }
 
-        StudentCurricularPlan studentCurricularPlan = student.getActiveRegistrations().iterator().next().getActiveStudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlan =
+                student.getActiveRegistrations().iterator().next().getActiveStudentCurricularPlan();
         Degree degree = studentCurricularPlan.getDegree();
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         ExecutionDegree executionDegree =

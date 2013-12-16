@@ -9,7 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.LoggedCoordinatorCanEdit;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCurrentExecutionDegreeByDegreeCurricularPlanID;
@@ -219,7 +219,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     public ActionForward viewActiveCurricularCourseInformation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String infoCurricularCourseCode = getAndSetStringToRequest("infoCurricularCourseCode", request);
         String degreeCurricularPlanID = getAndSetStringToRequest("degreeCurricularPlanID", request);
@@ -236,7 +236,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         Boolean canEdit = new Boolean(false);
 
         try {
-            canEdit = LoggedCoordinatorCanEdit.run(infoExecutionDegreeCode, infoCurricularCourseCode, userView.getUtilizador());
+            canEdit = LoggedCoordinatorCanEdit.run(infoExecutionDegreeCode, infoCurricularCourseCode, userView.getUsername());
         } catch (FenixServiceException e) {
             if (e.getMessage().equals("nullExecutionDegreeCode")) {
                 addErrorMessage(request, "nullExecutionDegreeCode", "error.coordinator.noExecutionDegree");
@@ -375,7 +375,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
     public ActionForward prepareEditCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String infoExecutionDegreeCode = getAndSetStringToRequest("infoExecutionDegreeCode", request);
         String infoCurricularCourseCode = getAndSetStringToRequest("infoCurricularCourseCode", request);
@@ -385,7 +385,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         Boolean canEdit = new Boolean(false);
 
         try {
-            canEdit = LoggedCoordinatorCanEdit.run(infoExecutionDegreeCode, infoCurricularCourseCode, userView.getUtilizador());
+            canEdit = LoggedCoordinatorCanEdit.run(infoExecutionDegreeCode, infoCurricularCourseCode, userView.getUsername());
 
         } catch (NonExistingServiceException e) {
             addErrorMessage(request, "chosenCurricularCourse", "error.coordinator.chosenCurricularCourse");
@@ -456,7 +456,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
     public ActionForward editCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String infoExecutionDegreeCode = getAndSetStringToRequest("infoExecutionDegreeCode", request);
         String infoCurricularCourseCode = getAndSetStringToRequest("infoCurricularCourseCode", request);
@@ -470,7 +470,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         try {
             result =
                     EditCurriculumForCurricularCourse.runEditCurriculumForCurricularCourse(infoExecutionDegreeCode,
-                            infoCurriculumCode, infoCurricularCourseCode, infoCurriculum, userView.getUtilizador(), language);
+                            infoCurriculumCode, infoCurricularCourseCode, infoCurriculum, userView.getUsername(), language);
         } catch (NonExistingServiceException e) {
             if (e.getMessage().equals("noCurricularCourse")) {
                 addErrorMessage(request, "chosenCurricularCourse", "error.coordinator.chosenCurricularCourse");

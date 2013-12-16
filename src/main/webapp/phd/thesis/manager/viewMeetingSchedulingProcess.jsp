@@ -11,7 +11,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeeting"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%>
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 <bean:define id="individualProcess" name="process" property="individualProgramProcess" />
 <bean:define id="meetingProcess" name="process" property="meetingProcess" />

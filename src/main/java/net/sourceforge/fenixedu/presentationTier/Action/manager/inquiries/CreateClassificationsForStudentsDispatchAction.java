@@ -14,7 +14,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric.ReadActiveDegreeCurricularPlansByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -29,7 +29,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -40,7 +40,7 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         InfoExecutionYear executionYear = ReadCurrentExecutionYear.run();
 
@@ -67,7 +67,7 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
     public ActionForward createClassifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, IOException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String degreeCurricularPlanID = (String) dynaActionForm.get("degreeCurricularPlanID");

@@ -14,9 +14,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
+@Mapping(path = "/redirect")
 public class LoginRedirectAction extends Action {
 
     public static String addToUrl(String url, String param, String value) {
@@ -59,6 +61,21 @@ public class LoginRedirectAction extends Action {
         }
     }
 
+    private static String addParametersFromAttributes(String url, HttpServletRequest request) {
+        final Object attributes = request.getAttribute("body_param_list");
+
+        if (attributes != null) {
+            for (PendingRequestParameter parameter : (List<PendingRequestParameter>) attributes) {
+                final String parameterKey = parameter.getParameterKey();
+                if (!parameterKey.startsWith("javax.")) { // dirty hack because javax properties are present as attributes
+                    url = addToUrl(url, parameterKey, parameter.getParameterValue());
+                }
+            }
+        }
+
+        return url;
+    }
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -66,10 +83,10 @@ public class LoginRedirectAction extends Action {
             if (reconstructURL(request)) {
                 String url = (String) request.getAttribute("url");
                 if (url.contains("oauth")) {
-                    response.sendRedirect(url);
+                    response.sendRedirect(addParametersFromAttributes(url, request));
                     return null;
                 }
-                return mapping.findForward("show-redirect-page");
+                return new ActionForward("/redirect.jsp");
             }
         } catch (Exception e) {
             System.out.println("Login: Catched " + e.getClass().getName() + " OID with pendingRequest  "

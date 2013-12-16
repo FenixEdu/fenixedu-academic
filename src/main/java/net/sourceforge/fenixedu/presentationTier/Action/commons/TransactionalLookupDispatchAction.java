@@ -5,8 +5,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
 
 import org.apache.struts.action.ActionForm;
@@ -16,7 +16,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.actions.LookupDispatchAction;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * Contains util functions for struts transaction management.
@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public abstract class TransactionalLookupDispatchAction extends LookupDispatchAction {
 
-    protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+    protected static final Bennu rootDomainObject = Bennu.getInstance();
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
@@ -84,8 +84,8 @@ public abstract class TransactionalLookupDispatchAction extends LookupDispatchAc
 
     }
 
-    protected static IUserView getUserView(HttpServletRequest request) {
-        return UserView.getUser();
+    protected static User getUserView(HttpServletRequest request) {
+        return Authenticate.getUser();
     }
 
     @Override

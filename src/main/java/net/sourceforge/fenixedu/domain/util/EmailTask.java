@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.domain.util;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.scheduler.CronTask;
+import pt.ist.bennu.scheduler.annotation.Task;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
-public class EmailTask extends EmailTask_Base {
+@Task(englishTitle = "EmailTask")
+public class EmailTask extends CronTask {
 
     private static class SingleEmailDispatcher extends Thread {
         private final String oid;
@@ -23,7 +26,7 @@ public class EmailTask extends EmailTask_Base {
 
     @Override
     public void runTask() {
-        for (final Email email : RootDomainObject.getInstance().getEmailQueueSet()) {
+        for (final Email email : Bennu.getInstance().getEmailQueueSet()) {
             final SingleEmailDispatcher emailDispatcher = new SingleEmailDispatcher(email);
             emailDispatcher.start();
             try {

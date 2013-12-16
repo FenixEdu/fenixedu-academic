@@ -9,11 +9,12 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public abstract class DelegateElection extends DelegateElection_Base {
 
@@ -41,7 +42,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
 
     protected DelegateElection() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setSentResultsToCandidates(Boolean.FALSE);
     }
 
@@ -206,7 +207,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
     }
 
     public static DelegateElection readCurrentDelegateElectionByDegree(Degree degree) {
-        for (DelegateElection election : RootDomainObject.getInstance().getDelegateElections()) {
+        for (DelegateElection election : Bennu.getInstance().getDelegateElectionsSet()) {
             if (election.isCurrentDelegationElection() && election.getDegree().equals(degree)) {
                 return election;
             }
@@ -281,7 +282,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

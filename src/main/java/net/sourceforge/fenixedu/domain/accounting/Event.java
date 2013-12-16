@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -34,6 +32,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class Event extends Event_Base {
@@ -49,7 +49,7 @@ public abstract class Event extends Event_Base {
     protected Event() {
         super();
 
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setWhenOccured(new DateTime());
         super.setCreatedBy(AccessControl.getPerson() != null ? AccessControl.getPerson().getIstUsername() : null);
 
@@ -266,6 +266,18 @@ public abstract class Event extends Event_Base {
         return result;
     }
 
+    public List<AccountingTransaction> getAllAdjustedAccountingTransactions() {
+        final List<AccountingTransaction> result = new ArrayList<AccountingTransaction>();
+
+        for (final AccountingTransaction transaction : super.getAccountingTransactionsSet()) {
+            if (transaction.isAdjustingTransaction()) {
+                result.add(transaction);
+            }
+        }
+
+        return result;
+    }
+
     public List<AccountingTransaction> getAdjustedTransactions() {
         final List<AccountingTransaction> result = new ArrayList<AccountingTransaction>();
 
@@ -299,6 +311,20 @@ public abstract class Event extends Event_Base {
 
     public Money getPayedAmount() {
         return getPayedAmount(null);
+    }
+
+    public Money getPayedAmountFor(EntryType entryType) {
+        if (isCancelled()) {
+            throw new DomainException("error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
+        }
+
+        Money payedAmount = Money.ZERO;
+        for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+            if (transaction.getToAccountEntry().getEntryType().equals(entryType)) {
+                payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+            }
+        }
+        return payedAmount;
     }
 
     public Money getPayedAmount(final DateTime until) {
@@ -652,7 +678,7 @@ public abstract class Event extends Event_Base {
     public static List<Event> readNotCancelled() {
         final List<Event> result = new ArrayList<Event>();
 
-        for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {
+        for (final Event event : Bennu.getInstance().getAccountingEventsSet()) {
             if (!event.isCancelled()) {
                 result.add(event);
             }
@@ -846,7 +872,7 @@ public abstract class Event extends Event_Base {
     public static List<Event> readBy(final EventType eventType) {
 
         final List<Event> result = new ArrayList<Event>();
-        for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {
+        for (final Event event : Bennu.getInstance().getAccountingEventsSet()) {
             if (event.getEventType() == eventType) {
                 result.add(event);
             }
@@ -1110,7 +1136,7 @@ public abstract class Event extends Event_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

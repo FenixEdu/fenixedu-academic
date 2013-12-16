@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
 <%@ page language="java" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -14,7 +15,7 @@
 
 <div class="breadcumbs mvert0">
     <bean:define id="institutionUrl">
-        <bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
+        <%= Instalation.getInstance().getInstituitionURL() %>
     </bean:define>
     <bean:define id="structureUrl">
         <bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>

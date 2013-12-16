@@ -67,7 +67,7 @@ public class RoomSiteComponentBuilder {
     }
 
     // private boolean isCurrentUserRoomManager(AllocatableSpace room) {
-    // IUserView view = (IUserView) UserView.getUser();
+    // User view = (User) Authenticate.getUser();
     // Person person = view == null ? null : view.getPerson();
     // return person != null ? room.isActiveManager(person) : false;
     // }

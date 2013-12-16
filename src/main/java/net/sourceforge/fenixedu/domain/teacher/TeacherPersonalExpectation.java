@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.teacher;
 import net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
@@ -14,7 +14,7 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
 
     private TeacherPersonalExpectation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public TeacherPersonalExpectation(TeacherPersonalExpectationBean infoTeacherPersonalExpectation) {
@@ -168,7 +168,7 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

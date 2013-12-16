@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStud
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalencyWithCurricularCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class GetAllEquivalencies {
@@ -17,7 +17,7 @@ public class GetAllEquivalencies {
     public List<InfoEquivalency> run() {
         List<InfoEquivalency> result = new LinkedList<InfoEquivalency>();
 
-        Collection<CourseEquivalency> courseEquivalencies = RootDomainObject.getInstance().getCourseEquivalencys();
+        Collection<CourseEquivalency> courseEquivalencies = Bennu.getInstance().getCourseEquivalencysSet();
         for (CourseEquivalency courseEquivalency : courseEquivalencies) {
             result.add(InfoEquivalencyWithCurricularCourse.newInfoFromDomain(courseEquivalency));
         }

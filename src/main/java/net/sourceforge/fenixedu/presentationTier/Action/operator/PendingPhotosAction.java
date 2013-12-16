@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.PhotoState;
 import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -28,7 +28,7 @@ public class PendingPhotosAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         List<Photograph> pending = new ArrayList<Photograph>();
-        for (Photograph photo : RootDomainObject.getInstance().getPendingPhotographsSet()) {
+        for (Photograph photo : Bennu.getInstance().getPendingPhotographsSet()) {
             if (photo.getState() == PhotoState.PENDING) {
                 pending.add(photo);
             }

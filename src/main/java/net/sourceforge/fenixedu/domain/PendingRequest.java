@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 public class PendingRequest extends PendingRequest_Base {
@@ -14,7 +15,7 @@ public class PendingRequest extends PendingRequest_Base {
 
     public PendingRequest(HttpServletRequest request) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setGenerationDate(new DateTime());
         setPost(!request.getMethod().equalsIgnoreCase("GET"));
         setUrl(request.getContextPath() + request.getServletPath());
@@ -81,7 +82,7 @@ public class PendingRequest extends PendingRequest_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

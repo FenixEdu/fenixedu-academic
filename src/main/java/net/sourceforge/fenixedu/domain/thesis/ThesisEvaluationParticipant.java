@@ -6,7 +6,7 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -35,7 +35,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     public ThesisEvaluationParticipant(Thesis thesis, Person person, ThesisParticipationType type) {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
 
         setType(type);
         setThesis(thesis);
@@ -184,7 +184,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

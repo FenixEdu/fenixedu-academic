@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -40,12 +39,13 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ParkingParty extends ParkingParty_Base {
 
     public static ParkingParty readByCardNumber(Long cardNumber) {
-        for (ParkingParty parkingParty : RootDomainObject.getInstance().getParkingParties()) {
+        for (ParkingParty parkingParty : Bennu.getInstance().getParkingPartiesSet()) {
             if (parkingParty.getCardNumber() != null && parkingParty.getCardNumber().equals(cardNumber)) {
                 return parkingParty;
             }
@@ -55,7 +55,7 @@ public class ParkingParty extends ParkingParty_Base {
 
     public ParkingParty(Party party) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setParty(party);
         setAuthorized(Boolean.FALSE);
         setAcceptedRegulation(Boolean.FALSE);
@@ -523,7 +523,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public static Collection<ParkingParty> getAll() {
-        return RootDomainObject.getInstance().getParkingParties();
+        return Bennu.getInstance().getParkingPartiesSet();
     }
 
     public void edit(ParkingPartyBean parkingPartyBean) {
@@ -824,7 +824,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

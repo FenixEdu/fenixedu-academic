@@ -16,7 +16,7 @@
 	  		<bean:message key="link.teacherServiceDistribution.tsdProcessVisualization"/>
 	  	</html:link>
 	</li>
-<logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
+<logic:present role="role(DEPARTMENT_ADMINISTRATIVE_OFFICE)">
 	<li>
 	  	<html:link page="/tsdProcess.do?method=prepareForTSDProcessCreation">
 	  		<bean:message key="link.teacherServiceDistribution.tsdProcessCreation"/>

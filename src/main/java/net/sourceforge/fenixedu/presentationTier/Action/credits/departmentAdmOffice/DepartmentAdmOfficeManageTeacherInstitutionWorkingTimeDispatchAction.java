@@ -5,7 +5,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -18,7 +18,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -50,7 +50,7 @@ public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchActio
     private boolean isTeacherOfManageableDepartments(Teacher teacher, ExecutionSemester executionSemester,
             HttpServletRequest request) {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
 
         if (teacher != null) {

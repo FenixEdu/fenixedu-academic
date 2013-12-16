@@ -3,10 +3,11 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <logic:present name="siteView">
 	<logic:present name="siteView" property="commonComponent.executionCourse.nome">
-		<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+		<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
 		<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
 		<bean:define id="executionCourseName" name="siteView" property="commonComponent.executionCourse.nome" />

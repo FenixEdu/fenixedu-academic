@@ -1,4 +1,4 @@
-<%@page import="net.sourceforge.fenixedu.domain.User"%>
+<%@page import="pt.ist.bennu.core.domain.User"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.renderers.util.RendererMessageResourceProvider"%>
 <%@page import="pt.utl.ist.fenix.tools.resources.IMessageResourceProvider"%>
 <%@page import="java.util.Properties"%>

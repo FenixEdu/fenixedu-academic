@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.student.registrationStates;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 
@@ -11,7 +11,7 @@ public class RegistrationStateLog extends RegistrationStateLog_Base {
 
     private RegistrationStateLog() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setWhenCreated(new DateTime());
     }
 
@@ -59,7 +59,7 @@ public class RegistrationStateLog extends RegistrationStateLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

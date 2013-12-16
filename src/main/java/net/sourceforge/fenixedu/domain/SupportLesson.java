@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.WeekDay;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * @author Fernanda Quit�rio 17/10/2003
@@ -33,7 +34,7 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
 
     public SupportLesson(SupportLessonDTO supportLessonDTO, Professorship professorship, RoleType roleType) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setProfessorship(professorship);
         update(supportLessonDTO, roleType);
     }
@@ -96,7 +97,7 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
 
     private SupportLesson() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static SupportLesson create(SupportLessonDTO supportLessonDTO, Professorship professorship, RoleType roleType) {
@@ -157,7 +158,7 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

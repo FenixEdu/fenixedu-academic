@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplicationEvent;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmationEvent;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class ManageCareerWorkshopApplicationsBean implements Serializable {
@@ -49,7 +49,7 @@ public class ManageCareerWorkshopApplicationsBean implements Serializable {
 
     public ManageCareerWorkshopApplicationsBean() {
         existingEvents =
-                new ArrayList<CareerWorkshopApplicationEvent>(RootDomainObject.getInstance().getCareerWorkshopApplicationEvents());
+                new ArrayList<CareerWorkshopApplicationEvent>(Bennu.getInstance().getCareerWorkshopApplicationEventsSet());
     }
 
     public DateTime getNewEventStartDate() {
@@ -88,14 +88,14 @@ public class ManageCareerWorkshopApplicationsBean implements Serializable {
         setNewEventEndDate(null);
         setNewEventInformation(null);
         existingEvents =
-                new ArrayList<CareerWorkshopApplicationEvent>(RootDomainObject.getInstance().getCareerWorkshopApplicationEvents());
+                new ArrayList<CareerWorkshopApplicationEvent>(Bennu.getInstance().getCareerWorkshopApplicationEventsSet());
     }
 
     @Atomic
     public void deleteEvent(CareerWorkshopApplicationEvent careerWorkshopApplicationEvent) {
         careerWorkshopApplicationEvent.delete();
         existingEvents =
-                new ArrayList<CareerWorkshopApplicationEvent>(RootDomainObject.getInstance().getCareerWorkshopApplicationEvents());
+                new ArrayList<CareerWorkshopApplicationEvent>(Bennu.getInstance().getCareerWorkshopApplicationEventsSet());
     }
 
     @Atomic

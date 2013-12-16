@@ -3,10 +3,11 @@ package net.sourceforge.fenixedu.domain.inquiries;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base {
 
@@ -17,7 +18,7 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
     }
 
     public static CoordinatorInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {
-        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = Bennu.getInstance().getInquiryTemplatesSet();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof CoordinatorInquiryTemplate
                     && executionSemester == inquiryTemplate.getExecutionPeriod()) {
@@ -28,7 +29,7 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
     }
 
     public static CoordinatorInquiryTemplate getCurrentTemplate() {
-        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = Bennu.getInstance().getInquiryTemplatesSet();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof CoordinatorInquiryTemplate && inquiryTemplate.isOpen()) {
                 return (CoordinatorInquiryTemplate) inquiryTemplate;

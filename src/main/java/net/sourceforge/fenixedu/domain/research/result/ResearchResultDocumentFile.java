@@ -5,13 +5,13 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
@@ -53,25 +53,25 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
         super.delete();
     }
 
-    @Override
-    protected Boolean deletItemOnDelete() {
-        return Boolean.FALSE;
-    }
-
     public final static Group getPermittedGroup(FileResultPermittedGroupType permissionType) {
         switch (permissionType) {
         case INSTITUTION:
             return new RoleGroup(Role.getRoleByRoleType(RoleType.PERSON));
 
         case PUBLIC:
-            return null;
+            return new EveryoneGroup();
 
         case RESEARCHER:
             return new RoleGroup(Role.getRoleByRoleType(RoleType.RESEARCHER));
 
         default:
-            return null;
+            return new EveryoneGroup();
         }
+    }
+
+    @Override
+    public Group getPermittedGroup() {
+        return getPermittedGroup(getFileResultPermittedGroupType());
     }
 
     public final static ResearchResultDocumentFile readByOID(String oid) {
@@ -104,8 +104,6 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
         final Group group = getPermittedGroup(fileResultPermittedGroupType);
         super.setFileResultPermittedGroupType(fileResultPermittedGroupType);
         super.setPermittedGroup(group);
-        FileManagerFactory.getFactoryInstance().getContentFileManager()
-                .changeFilePermissions(getExternalStorageIdentification(), (group != null) ? true : false);
     }
 
     public void moveFileToNewResearchResultType(ResearchResult result) {

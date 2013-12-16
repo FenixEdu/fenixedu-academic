@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
@@ -46,7 +46,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     protected ThesisJuryElement() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCreationDate(new DateTime());
     }
 
@@ -252,7 +252,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

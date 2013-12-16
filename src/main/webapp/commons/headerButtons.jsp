@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -6,7 +7,7 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="str" %>
 <html:xhtml/>
 
-<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<bean:define id="institutionUrl" type="java.lang.String"><%= Instalation.getInstance().getInstituitionURL() %></bean:define>
 <bean:define id="centralApplicationsUrl" type="java.lang.String"><bean:message key="centralApplications.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/></bean:define>
 <bean:define id="contextId" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedTopLevelContainer.externalId" />

@@ -11,11 +11,13 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class FakeShift extends FakeShift_Base {
 
     public FakeShift() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public FakeShift(String name, Integer capacity) {
@@ -73,7 +75,7 @@ public class FakeShift extends FakeShift_Base {
     public static Collection<FakeShift> readAFewRandomFakeShifts() {
         ArrayList<FakeShift> aFewRandomFakeShifts = new ArrayList<FakeShift>();
 
-        ArrayList<FakeShift> allFakeShiftsShuffled = new ArrayList<FakeShift>(RootDomainObject.getInstance().getFakeShifts());
+        ArrayList<FakeShift> allFakeShiftsShuffled = new ArrayList<FakeShift>(Bennu.getInstance().getFakeShiftsSet());
         Collections.shuffle(allFakeShiftsShuffled);
 
         int maxElements = 10;
@@ -99,7 +101,7 @@ public class FakeShift extends FakeShift_Base {
     }
 
     public static void deleteAllFakeShifts() {
-        for (FakeShift fakeShift : RootDomainObject.getInstance().getFakeShifts()) {
+        for (FakeShift fakeShift : Bennu.getInstance().getFakeShiftsSet()) {
             fakeShift.delete();
         }
     }
@@ -120,7 +122,7 @@ public class FakeShift extends FakeShift_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

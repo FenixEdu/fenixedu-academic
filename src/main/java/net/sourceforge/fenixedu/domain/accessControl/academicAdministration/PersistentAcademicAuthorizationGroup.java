@@ -9,7 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType.Scope;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -313,7 +313,7 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
     public static Set<Person> getElements(AcademicOperationType operation, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices) {
         Set<Person> members = new HashSet<Person>();
-        for (PersistentAccessGroup group : RootDomainObject.getInstance().getPersistentAccessGroupSet()) {
+        for (PersistentAccessGroup group : Bennu.getInstance().getPersistentAccessGroupSet()) {
             if (group instanceof PersistentAcademicAuthorizationGroup) {
                 PersistentAcademicAuthorizationGroup academicGroup = (PersistentAcademicAuthorizationGroup) group;
                 if (academicGroup.getOperation().equals(operation) && academicGroup.getFullProgramSet().containsAll(programs)
@@ -327,7 +327,7 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
 
     public static Set<Person> getElements(Scope scope) {
         Set<Person> members = new HashSet<Person>();
-        for (PersistentAccessGroup group : RootDomainObject.getInstance().getPersistentAccessGroupSet()) {
+        for (PersistentAccessGroup group : Bennu.getInstance().getPersistentAccessGroupSet()) {
             if (group instanceof PersistentAcademicAuthorizationGroup) {
                 PersistentAcademicAuthorizationGroup academicGroup = (PersistentAcademicAuthorizationGroup) group;
                 if (academicGroup.getOperation().isOfScope(scope)) {

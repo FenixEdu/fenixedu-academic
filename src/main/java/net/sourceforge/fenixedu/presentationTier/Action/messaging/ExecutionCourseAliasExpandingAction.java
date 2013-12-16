@@ -7,11 +7,10 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.ExpandExecutionCourseMailAlias;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.util.HostAccessControl;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -39,7 +38,7 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
             HttpServletResponse response) throws FenixActionException {
         String result = "400 Error: Email alias expanding service did not run";
 
-        if (HostAccessControl.isAllowed(this, request)) {
+        if (FenixConfigurationManager.getHostAccessControl().isAllowed(this, request)) {
 
             String address = request.getParameter("address");
 
@@ -102,7 +101,7 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
     }
 
     public static String mailingListDomainConfiguration() {
-        return PropertiesManager.getProperty("mailingList.host.name");
+        return FenixConfigurationManager.getConfiguration().getMailingListHostName();
     }
 
     private void sendAnswer(HttpServletResponse response, String result) throws IOException {

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChang
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
+import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 import pt.ist.fenixframework.FenixFramework;
 
 public class SearchPaymentCodesByExecutionYear implements AutoCompleteProvider<PaymentCode> {

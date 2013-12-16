@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
@@ -21,7 +21,7 @@ public class Senior extends Senior_Base {
 
     public Senior(final Registration registration) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRegistration(registration);
     }
 
@@ -179,7 +179,7 @@ public class Senior extends Senior_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

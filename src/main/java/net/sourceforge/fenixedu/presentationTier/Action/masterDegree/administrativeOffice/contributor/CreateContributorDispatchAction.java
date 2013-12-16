@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administra
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor.ContributorType;
@@ -65,7 +65,7 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
             throws Exception {
 
         DynaActionForm createContributorForm = (DynaActionForm) form;
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         final String contributorName = (String) createContributorForm.get("contributorName");
         try {

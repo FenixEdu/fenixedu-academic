@@ -33,7 +33,7 @@
 		</html:link>
 	</logic:notPresent>
 
-	<logic:present role="MANAGER">
+	<logic:present role="role(MANAGER)">
 		<logic:notEmpty name="cardGenerationBatch" property="peopleForEntryCreation">
 			|
 			<bean:define id="urlClearConstructionFlag" type="java.lang.String">/manageCardGeneration.do?method=clearConstructionFlag&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="externalId"/></bean:define>

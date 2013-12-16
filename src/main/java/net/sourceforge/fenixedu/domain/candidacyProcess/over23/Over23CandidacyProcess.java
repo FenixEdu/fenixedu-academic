@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -27,6 +26,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 import com.google.common.collect.Sets;
@@ -85,8 +85,8 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
-        return isAllowedToManageProcess(userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL);
+    public boolean canExecuteActivity(User userView) {
+        return isAllowedToManageProcess(userView) || userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL);
     }
 
     @Override
@@ -120,7 +120,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_DEGREE,
             DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
-    static private boolean isAllowedToManageProcess(IUserView userView) {
+    static private boolean isAllowedToManageProcess(User userView) {
         for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                 AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
             if (ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
@@ -134,14 +134,14 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     static public class CreateCandidacyPeriod extends Activity<Over23CandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23CandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
+        protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, User userView, Object object) {
             final CandidacyProcessBean bean = (CandidacyProcessBean) object;
             return new Over23CandidacyProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
         }
@@ -150,14 +150,14 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     static private class EditCandidacyPeriod extends Activity<Over23CandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23CandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
+        protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, User userView, Object object) {
             final CandidacyProcessBean bean = (CandidacyProcessBean) object;
             process.edit(bean.getStart(), bean.getEnd());
             return process;
@@ -167,7 +167,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     static private class SendInformationToJury extends Activity<Over23CandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23CandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -182,7 +182,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
         }
 
         @Override
-        protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
+        protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, User userView, Object object) {
             process.setState(CandidacyProcessState.SENT_TO_JURY);
             return process;
         }
@@ -191,7 +191,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     static private class PrintCandidacies extends Activity<Over23CandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23CandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -201,7 +201,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
         }
 
         @Override
-        protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
+        protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, User userView, Object object) {
             return process; // for now, nothing to be done
         }
     }
@@ -209,14 +209,14 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     static private class SelectAvailableDegrees extends Activity<Over23CandidacyProcess> {
 
         @Override
-        public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(Over23CandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
+        protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, User userView, Object object) {
             final CandidacyProcessSelectDegreesBean bean = (CandidacyProcessSelectDegreesBean) object;
             final List<Degree> degrees = bean.getDegrees();
             process.getDegreeSet().addAll(degrees);

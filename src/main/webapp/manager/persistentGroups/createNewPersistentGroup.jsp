@@ -7,7 +7,7 @@
 
 <h2><bean:message key="label.create.new.persistent.group" bundle="MANAGER_RESOURCES"/></h2>
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 	<logic:messagesPresent message="true">
 		<p>

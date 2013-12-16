@@ -3,13 +3,14 @@ package net.sourceforge.fenixedu.domain.residence;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public class ResidenceYear extends ResidenceYear_Base {
 
@@ -21,7 +22,7 @@ public class ResidenceYear extends ResidenceYear_Base {
         super();
         setYear(year);
         setUnit(residenceManagementUnit);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         for (Month month : Month.values()) {
             new ResidenceMonth(month, this);
         }
@@ -35,7 +36,7 @@ public class ResidenceYear extends ResidenceYear_Base {
 
     private static Integer getNextYear() {
         Integer next = null;
-        for (ResidenceYear year : RootDomainObject.getInstance().getResidenceYears()) {
+        for (ResidenceYear year : Bennu.getInstance().getResidenceYearsSet()) {
             if (next == null || year.getYear() > next) {
                 next = year.getYear();
             }
@@ -46,7 +47,7 @@ public class ResidenceYear extends ResidenceYear_Base {
 
     public static ResidenceYear getCurrentYear() {
         Integer currentYear = new LocalDate().getYear();
-        for (ResidenceYear year : RootDomainObject.getInstance().getResidenceYears()) {
+        for (ResidenceYear year : Bennu.getInstance().getResidenceYearsSet()) {
             if (year.getYear().equals(currentYear)) {
                 return year;
             }
@@ -78,7 +79,7 @@ public class ResidenceYear extends ResidenceYear_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

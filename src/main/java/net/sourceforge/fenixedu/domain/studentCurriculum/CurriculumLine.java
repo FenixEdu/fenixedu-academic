@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -41,7 +42,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     public CurriculumLine() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCreatedBy(getCurrentUser());
         setUsedInSeparationCycle(false);
     }
@@ -253,7 +254,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     protected String getCurrentUser() {
-        return AccessControl.getUserView() != null ? AccessControl.getUserView().getUtilizador() : null;
+        return Authenticate.getUser() != null ? Authenticate.getUser().getUsername() : null;
     }
 
     abstract public boolean isApproved();

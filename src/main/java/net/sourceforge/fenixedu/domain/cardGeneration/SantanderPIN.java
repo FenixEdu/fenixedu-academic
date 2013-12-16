@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import com.google.common.io.BaseEncoding;
 
@@ -21,10 +20,6 @@ public class SantanderPIN extends SantanderPIN_Base {
         this();
         setPerson(person);
         setEncryptedPIN(encryptedPIN);
-    }
-
-    protected RootDomainObject getRootDomainObject() {
-        return getPerson().getRootDomainObject();
     }
 
     public void delete() {

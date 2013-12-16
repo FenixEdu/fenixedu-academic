@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.util;
 
-import net.sourceforge.fenixedu.util.PrinterManager;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 public class FunctionalityPrinters extends FunctionalityPrinters_Base {
 
@@ -9,7 +9,7 @@ public class FunctionalityPrinters extends FunctionalityPrinters_Base {
     }
 
     public String[] getPrinterNames() {
-        return PrinterManager.getFunctionPrinterNames(getKeyPrinters());
+        return FenixConfigurationManager.getPrinterManager().getFunctionPrinterNames(getKeyPrinters());
     }
 
     @Deprecated
@@ -23,7 +23,7 @@ public class FunctionalityPrinters extends FunctionalityPrinters_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

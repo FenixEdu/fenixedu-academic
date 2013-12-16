@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -24,9 +26,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -36,6 +36,9 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.photograph.PictureMode;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
+import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication.PreferredComparator;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -46,14 +49,18 @@ import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.google.common.base.Strings;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
-@Path("/services")
+@Path("/jersey/services")
 public class JerseyServices {
 
     @GET
@@ -94,11 +101,11 @@ public class JerseyServices {
             roles = new RoleType[0];
         }
         final StringBuilder builder = new StringBuilder();
-        for (final User user : RootDomainObject.getInstance().getUsersSet()) {
-            if (!StringUtils.isEmpty(user.getUserUId())) {
+        for (final User user : Bennu.getInstance().getUsersSet()) {
+            if (!StringUtils.isEmpty(user.getUsername())) {
                 final Person person = user.getPerson();
                 if (roles.length == 0 || person.hasAnyRole(roles)) {
-                    builder.append(user.getUserUId());
+                    builder.append(user.getUsername());
                     builder.append("\t");
                     builder.append(person.getName());
                     builder.append("\t");
@@ -115,14 +122,14 @@ public class JerseyServices {
     @Path("readAllEmails")
     public static String readAllEmails() {
         final StringBuilder builder = new StringBuilder();
-        for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+        for (final Party party : Bennu.getInstance().getPartysSet()) {
             if (party.isPerson()) {
                 final Person person = (Person) party;
                 final String email = person.getEmailForSendingEmails();
                 if (email != null) {
                     final User user = person.getUser();
                     if (user != null) {
-                        final String username = user.getUserUId();
+                        final String username = user.getUsername();
                         builder.append(username);
                         builder.append("\t");
                         builder.append(email);
@@ -139,10 +146,10 @@ public class JerseyServices {
     @Produces(MediaType.APPLICATION_JSON)
     public String readUsers() {
         JSONArray users = new JSONArray();
-        for (final User user : RootDomainObject.getInstance().getUsersSet()) {
-            if (!StringUtils.isEmpty(user.getUserUId()) && user.hasPerson()) {
+        for (final User user : Bennu.getInstance().getUsersSet()) {
+            if (!StringUtils.isEmpty(user.getUsername()) && user.getPerson() != null) {
                 JSONObject json = new JSONObject();
-                json.put("istId", user.getUserUId());
+                json.put("istId", user.getUsername());
                 json.put("name", user.getPerson().getName());
                 if (user.getPerson().getEmailForSendingEmails() != null) {
                     json.put("email", user.getPerson().getEmailForSendingEmails());
@@ -154,20 +161,51 @@ public class JerseyServices {
     }
 
     @GET
+    @Path("preferred")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String readPreferred() {
+        JsonArray array = new JsonArray();
+        for (Party party : Bennu.getInstance().getPartysSet()) {
+            if (party instanceof Person) {
+                Person person = (Person) party;
+                if (person.getUsername() != null && !person.getPreferredPublicationSet().isEmpty()) {
+                    SortedSet<ResearchResultPublication> results = new TreeSet<>(new PreferredComparator(person));
+                    for (PreferredPublication preferred : person.getPreferredPublicationSet()) {
+                        results.add(preferred.getPreferredPublication());
+                    }
+                    JsonObject researcher = new JsonObject();
+                    researcher.addProperty("istID", person.getUsername());
+                    JsonArray preferences = new JsonArray();
+                    int count = 5;
+                    for (ResearchResultPublication publication : results) {
+                        if (count-- == 0) {
+                            break;
+                        }
+                        preferences.add(new JsonPrimitive(publication.getExternalId()));
+                    }
+                    researcher.add("preference", preferences);
+                    array.add(researcher);
+                }
+            }
+        }
+        return array.toString();
+    }
+
+    @GET
     @Path("researchers")
     @Produces(MediaType.APPLICATION_JSON)
     public String readResearchers() {
         JSONArray researchers = new JSONArray();
 
         final Map<User, Set<Unit>> researchUnitMap = new HashMap<User, Set<Unit>>();
-        for (final User user : RootDomainObject.getInstance().getUsersSet()) {
+        for (final User user : Bennu.getInstance().getUsersSet()) {
             Person person = user.getPerson();
-            if (!StringUtils.isEmpty(user.getUserUId()) && person != null
+            if (!StringUtils.isEmpty(user.getUsername()) && person != null
                     && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
                 researchUnitMap.put(user, new HashSet<Unit>());
             }
         }
-        for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+        for (final Party party : Bennu.getInstance().getPartysSet()) {
             if (party instanceof ResearchUnit) {
                 final ResearchUnit unit = (ResearchUnit) party;
                 for (final Teacher teacher : unit.getAllTeachers()) {
@@ -185,10 +223,10 @@ public class JerseyServices {
         for (final Entry<User, Set<Unit>> entry : researchUnitMap.entrySet()) {
             final User user = entry.getKey();
             final Person person = user.getPerson();
-            if (!StringUtils.isEmpty(user.getUserUId()) && person != null
+            if (!StringUtils.isEmpty(user.getUsername()) && person != null
                     && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
                 JSONObject json = new JSONObject();
-                json.put("istId", user.getUserUId());
+                json.put("istId", user.getUsername());
 
                 JSONArray array = new JSONArray();
                 for (Unit unit : entry.getValue()) {
@@ -303,8 +341,7 @@ public class JerseyServices {
     public static String readPhdThesis() {
         JSONArray infos = new JSONArray();
 
-        for (PhdIndividualProgramProcessNumber phdProcessNumber : RootDomainObject.getInstance()
-                .getPhdIndividualProcessNumbersSet()) {
+        for (PhdIndividualProgramProcessNumber phdProcessNumber : Bennu.getInstance().getPhdIndividualProcessNumbersSet()) {
             PhdIndividualProgramProcess phdProcess = phdProcessNumber.getProcess();
             if (phdProcess.isConcluded()) {
                 JSONObject phdInfo = new JSONObject();
@@ -340,7 +377,7 @@ public class JerseyServices {
 
         }
 
-        for (Thesis t : RootDomainObject.getInstance().getThesesSet()) {
+        for (Thesis t : Bennu.getInstance().getThesesSet()) {
             if (t.isEvaluated()) {
                 JSONObject mscInfo = new JSONObject();
                 mscInfo.put("id", t.getExternalId());
@@ -378,9 +415,9 @@ public class JerseyServices {
         Person clientPerson = null;
         //set users
         try {
-            photoPerson = User.readUserByUserUId(photoUsername).getPerson();
+            photoPerson = User.findByUsername(photoUsername).getPerson();
             if (!clientUsername.equals("NoUser")) {
-                clientPerson = User.readUserByUserUId(clientUsername).getPerson();
+                clientPerson = User.findByUsername(clientUsername).getPerson();
             }
         } catch (NullPointerException e) {
             throw new WebApplicationException(Status.BAD_REQUEST);
@@ -421,7 +458,7 @@ public class JerseyServices {
     @POST
     @Path("role/developer/{istid}")
     public static Response addDeveloperRole(@PathParam("istid") String istid) {
-        User user = User.readUserByUserUId(istid);
+        User user = User.findByUsername(istid);
         if (user != null && user.getPerson() != null) {
             if (user.getPerson().getPersonRole(RoleType.DEVELOPER) == null) {
                 addDeveloper(user);

@@ -8,7 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
@@ -78,7 +78,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
     public ActionForward editGuideSituation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         Integer guideYear = new Integer(request.getParameter("year"));
         Integer guideNumber = new Integer(request.getParameter("number"));
         Integer guideVersion = new Integer(request.getParameter("version"));

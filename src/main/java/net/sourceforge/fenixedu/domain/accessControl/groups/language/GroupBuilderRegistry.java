@@ -96,6 +96,7 @@ import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup.AcademicAuthorizationGroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.ActiveStudentsFromDegreeTypeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.groups.BennuGroupBridge;
 import net.sourceforge.fenixedu.domain.accessControl.groups.DepartmentAdministrativeOfficeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.DepartmentPresidentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.InternalOrExternalTeacherGroup;
@@ -115,7 +116,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
  * Keeps all the registered {@link GroupBuilder} by name.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public class GroupBuilderRegistry {
 
     private static final Logger logger = LoggerFactory.getLogger(GroupBuilderRegistry.class);
@@ -291,6 +294,7 @@ public class GroupBuilderRegistry {
         register("searchDegreeStudentsGroup", SearchDegreeStudentsGroup.class, new SearchDegreeStudentsGroup.Builder());
         register("academic", AcademicAuthorizationGroup.class, new AcademicAuthorizationGroupBuilder());
         register("phdProcessGuidingsGroup", PhdProcessGuidingsGroup.class, new PhdProcessGuidingsGroup.Builder());
+        register("bennu", BennuGroupBridge.class, new BennuGroupBridge.Builder());
 
         registerGroupsWithNoArguments();
     }

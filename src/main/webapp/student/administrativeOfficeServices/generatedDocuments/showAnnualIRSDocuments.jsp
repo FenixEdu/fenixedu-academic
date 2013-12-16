@@ -4,7 +4,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
 	<h2><strong><bean:message key="label.documents.anualIRS" bundle="STUDENT_RESOURCES"/></strong></h2>
 		
 	<logic:empty name="annualIRSDocuments">

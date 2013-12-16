@@ -6,7 +6,7 @@
  */
 package net.sourceforge.fenixedu.domain.gesdis;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * @author Leonor Almeida
@@ -17,7 +17,7 @@ public class StudentCourseReport extends StudentCourseReport_Base {
 
     public StudentCourseReport() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Deprecated
@@ -46,7 +46,7 @@ public class StudentCourseReport extends StudentCourseReport_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

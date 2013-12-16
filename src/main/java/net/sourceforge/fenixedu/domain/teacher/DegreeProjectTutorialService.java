@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.credits.util.ProjectTutorialServiceBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -15,7 +15,7 @@ public class DegreeProjectTutorialService extends DegreeProjectTutorialService_B
 
     public DegreeProjectTutorialService(Professorship professorship, Attends attend, Integer percentageValue) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setProfessorship(professorship);
         TeacherService teacherService =
                 TeacherService.getTeacherService(professorship.getTeacher(), professorship.getExecutionCourse()

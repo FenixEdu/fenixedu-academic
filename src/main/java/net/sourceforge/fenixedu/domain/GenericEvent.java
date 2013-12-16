@@ -23,6 +23,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -60,7 +61,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
             throw new DomainException("error.GenericEvent.invalid.dailyFrequency");
         }
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setTitle(title);
         setDescription(description);
         setFrequency(frequencyType);
@@ -190,7 +191,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     public static Set<GenericEvent> getActiveGenericEventsForRoomOccupations() {
         Set<GenericEvent> result = new TreeSet<GenericEvent>(COMPARATOR_BY_DATE_AND_TIME);
-        for (GenericEvent genericEvent : RootDomainObject.getInstance().getGenericEvents()) {
+        for (GenericEvent genericEvent : Bennu.getInstance().getGenericEventsSet()) {
             if (genericEvent.isActive()) {
                 result.add(genericEvent);
             }
@@ -233,11 +234,13 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     }
 
     public DateTime getLastInstant() {
-        return (!getGenericEventSpaceOccupations().isEmpty()) ? getGenericEventSpaceOccupations().iterator().next().getLastInstant() : null;
+        return (!getGenericEventSpaceOccupations().isEmpty()) ? getGenericEventSpaceOccupations().iterator().next()
+                .getLastInstant() : null;
     }
 
     public DateTime getFirstInstant() {
-        return (!getGenericEventSpaceOccupations().isEmpty()) ? getGenericEventSpaceOccupations().iterator().next().getFirstInstant() : null;
+        return (!getGenericEventSpaceOccupations().isEmpty()) ? getGenericEventSpaceOccupations().iterator().next()
+                .getFirstInstant() : null;
     }
 
     public Calendar getBeginTimeCalendar() {
@@ -297,8 +300,8 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     @Override
     public List<Interval> getGanttDiagramEventSortedIntervals() {
         if (!getGenericEventSpaceOccupations().isEmpty()) {
-            return getGenericEventSpaceOccupations().iterator().next().getEventSpaceOccupationIntervals((YearMonthDay) null,
-                    (YearMonthDay) null);
+            return getGenericEventSpaceOccupations().iterator().next()
+                    .getEventSpaceOccupationIntervals((YearMonthDay) null, (YearMonthDay) null);
         }
         return Collections.emptyList();
     }
@@ -370,7 +373,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     public static Set<GenericEvent> getAllGenericEvents(DateTime begin, DateTime end, AllocatableSpace allocatableSpace) {
         Set<GenericEvent> events = new TreeSet<GenericEvent>(GenericEvent.COMPARATOR_BY_DATE_AND_TIME);
-        for (GenericEvent genericEvent : RootDomainObject.getInstance().getGenericEvents()) {
+        for (GenericEvent genericEvent : Bennu.getInstance().getGenericEventsSet()) {
             if (genericEvent.intersectPeriod(begin, end)
                     && (allocatableSpace == null || genericEvent.constainsRoom(allocatableSpace))) {
                 events.add(genericEvent);
@@ -467,7 +470,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

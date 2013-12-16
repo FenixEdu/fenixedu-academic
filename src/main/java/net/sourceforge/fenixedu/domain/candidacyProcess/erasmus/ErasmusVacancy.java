@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,7 +16,7 @@ public class ErasmusVacancy extends ErasmusVacancy_Base {
 
     private ErasmusVacancy() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ErasmusVacancy(final MobilityApplicationPeriod period, Degree degree, UniversityUnit unit, Integer numberOfVacancies) {
@@ -93,7 +93,7 @@ public class ErasmusVacancy extends ErasmusVacancy_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

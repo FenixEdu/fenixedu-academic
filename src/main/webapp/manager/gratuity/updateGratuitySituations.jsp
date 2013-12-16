@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<h:form>
 		<h:panelGrid columns="2">
 			<h:selectOneMenu value="#{updateGratuitySituations.executionYear}">

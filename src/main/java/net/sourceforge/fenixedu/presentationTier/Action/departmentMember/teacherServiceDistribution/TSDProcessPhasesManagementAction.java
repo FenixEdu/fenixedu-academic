@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CloseTSDProcessPhase;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyLastYearRealDataToTSDProcessPhase;
@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
     private static final Integer COPY_LAST_YEAR_REAL_DATA = 0;
@@ -51,7 +51,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
     public ActionForward createTSDProcessPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcess tsdProcess = getTSDProcess(userView, dynaForm);
@@ -66,7 +66,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
     public ActionForward setCurrentTSDProcessPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
@@ -78,7 +78,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
 
     public ActionForward closeTSDProcessPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
@@ -90,7 +90,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
 
     public ActionForward openTSDProcessPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
@@ -102,7 +102,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
 
     public ActionForward deleteTSDProcessPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
@@ -114,7 +114,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
 
     public ActionForward setPublishedStateOnTSDProcessPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
@@ -129,7 +129,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
     public ActionForward loadTSDProcessPhases(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcess tsdProcess = getTSDProcess(userView, dynaForm);
@@ -143,7 +143,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
     public ActionForward prepareForCurrentTSDProcessPhaseDataManagement(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         String tsdProcessId = getFromRequestAndSetOnFormTSDProcessId(request, dynaForm);
@@ -156,7 +156,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
     public ActionForward showTSDProcessPhaseDataManagementOptions(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
         TSDProcess tsdProcess = getTSDProcess(userView, dynaForm);
 
@@ -168,7 +168,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
     public ActionForward manageCurrentTSDProcessPhaseData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
         TSDProcess tsdProcess = getTSDProcess(userView, dynaForm);
 
@@ -190,7 +190,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
     public ActionForward prepareForOmissionValuesValuation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         String tsdProcessId = getFromRequestAndSetOnFormTSDProcessId(request, dynaForm);
@@ -214,7 +214,7 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareToChooseTSDProcessPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -242,11 +242,11 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
         return tsdProcessId;
     }
 
-    private TSDProcess getTSDProcess(IUserView userView, DynaActionForm dynaForm) {
+    private TSDProcess getTSDProcess(User userView, DynaActionForm dynaForm) {
         return getDomainObject(dynaForm, "tsdProcess");
     }
 
-    private TSDProcessPhase getSelectedTSDProcessPhase(IUserView userView, DynaActionForm dynaForm) {
+    private TSDProcessPhase getSelectedTSDProcessPhase(User userView, DynaActionForm dynaForm) {
         return getDomainObject(dynaForm, "tsdProcessPhase");
     }
 }

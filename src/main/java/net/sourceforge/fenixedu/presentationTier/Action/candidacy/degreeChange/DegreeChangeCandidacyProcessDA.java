@@ -34,6 +34,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -235,7 +236,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
     private void createBody(final StyledExcelSpreadsheet excelSpreadsheet,
             final SortedSet<DegreeChangeIndividualCandidacyProcess> candidacies) {
         for (final DegreeChangeIndividualCandidacyProcess process : candidacies) {
-            if (!process.canExecuteActivity(AccessControl.getUserView())) {
+            if (!process.canExecuteActivity(Authenticate.getUser())) {
                 continue;
             }
             excelSpreadsheet.newRow();

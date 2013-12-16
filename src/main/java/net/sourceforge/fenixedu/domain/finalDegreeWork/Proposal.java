@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
@@ -137,7 +137,7 @@ public class Proposal extends Proposal_Base {
 
     public Proposal() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -169,16 +169,16 @@ public class Proposal extends Proposal_Base {
         return false;
     }
 
-    public boolean canBeReadBy(final IUserView userView) {
+    public boolean canBeReadBy(final User userView) {
         if (getStatus() != null && getStatus().equals(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS)) {
             return true;
         }
         if (getOrientator() != null && getOrientator() != null && userView != null
-                && getOrientator().getUsername().equals(userView.getUtilizador())) {
+                && getOrientator().getUsername().equals(userView.getUsername())) {
             return true;
         }
         if (getCoorientator() != null && getCoorientator() != null && userView != null
-                && getCoorientator().getUsername().equals(userView.getUtilizador())) {
+                && getCoorientator().getUsername().equals(userView.getUsername())) {
             return true;
         }
         if (userView != null) {
@@ -415,7 +415,7 @@ public class Proposal extends Proposal_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

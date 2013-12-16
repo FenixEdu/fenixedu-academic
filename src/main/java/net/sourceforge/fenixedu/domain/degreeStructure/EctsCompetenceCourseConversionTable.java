@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
@@ -16,7 +16,7 @@ public class EctsCompetenceCourseConversionTable extends EctsCompetenceCourseCon
         setCompetenceCourse(competenceCourse);
     }
 
-    protected RootDomainObject getRootDomainObject() {
+    protected Bennu getRootDomainObject() {
         return getCompetenceCourse().getRootDomainObject();
     }
 

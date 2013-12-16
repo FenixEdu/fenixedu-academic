@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@page import="net.sourceforge.fenixedu.domain.RootDomainObject"%>
+<%@page import="pt.ist.bennu.core.domain.Bennu"%>
 <%@page import="net.sourceforge.fenixedu.domain.StrikeDay"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -37,7 +37,7 @@
 		<th class="listClasses">
 		</th>
 	</tr>
-	<% for (final StrikeDay strikeDay : RootDomainObject.getInstance().getStrikeDaySet()) { %>
+	<% for (final StrikeDay strikeDay : Bennu.getInstance().getStrikeDaySet()) { %>
 		<tr>
 			<td class="listClasses">
 				<%= strikeDay.getDate().toString("yyyy-MM-dd") %>

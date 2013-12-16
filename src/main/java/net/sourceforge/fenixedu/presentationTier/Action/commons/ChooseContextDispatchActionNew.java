@@ -8,7 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
@@ -34,7 +34,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -84,7 +84,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY);
         if (infoExecutionPeriod == null) {
-            IUserView userView = UserView.getUser();
+            User userView = Authenticate.getUser();
             infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
             request.setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
         }
@@ -173,7 +173,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             throws Exception {
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String nextPage = (String) request.getAttribute(PresentationConstants.NEXT_PAGE);
         if (nextPage == null) {

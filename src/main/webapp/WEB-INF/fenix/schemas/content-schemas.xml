@@ -25,20 +25,11 @@
         <slot name="prefix"/>
 </schema>
 
-<schema name="view.meta.domain.object"    
-	   type="net.sourceforge.fenixedu.domain.MetaDomainObject"
+<schema name="view.meta.domain.object.portal"    
+	   type="net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal"
 	   bundle="CONTENT_RESOURCES"
 	   >
         <slot name="type"/>
-</schema>
-
-<schema name="create.meta.domain.object"    
-	   type="net.sourceforge.fenixedu.domain.MetaDomainObject"
- 	   bundle="CONTENT_RESOURCES"
-	   constructor="type">
-        <slot name="type">
-        	<property name="size" value="50"/>
-        </slot>
 </schema>
 
 <schema name="edit.portal.using.bean"    
@@ -55,7 +46,7 @@
 	   >
 		<slot name="portal" layout="menu-select">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.contents.MetaDomainObjectPortalProvider"/>
-			<property name="format" value="${metaDomainObject.type}"/>
+			<property name="format" value="${type}"/>
 		</slot>
 </schema>
 
@@ -92,7 +83,7 @@
 </schema>
 
 <schema name="view.contents.details.MetaDomainObjectPortal" type="net.sourceforge.fenixedu.domain.contents.Portal" extends="view.contents.Content" bundle="CONTENT_RESOURCES">
-	<slot name="metaDomainObject.type"/>
+	<slot name="type"/>
 </schema>
 
 <schema name="view.contents.details.Functionality" type="net.sourceforge.fenixedu.domain.functionalities.Functionality" extends="view.contents.Content" bundle="CONTENT_RESOURCES">

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
@@ -17,7 +17,7 @@ public class ResearchEvent extends ResearchEvent_Base implements ParticipationsI
     public ResearchEvent() {
         super();
         setStage(ResearchActivityStage.DRAFT);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ResearchEvent(String name, EventType type, ScopeType scope) {
@@ -134,7 +134,7 @@ public class ResearchEvent extends ResearchEvent_Base implements ParticipationsI
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

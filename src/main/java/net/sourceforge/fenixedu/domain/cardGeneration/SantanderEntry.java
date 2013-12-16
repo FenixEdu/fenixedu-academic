@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
 
@@ -20,7 +21,7 @@ public class SantanderEntry extends SantanderEntry_Base {
 
     public SantanderEntry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCreated(new DateTime());
     }
 
@@ -40,8 +41,26 @@ public class SantanderEntry extends SantanderEntry_Base {
         deleteDomainObject();
     }
 
+    public static SantanderEntry readByUsernameAndCategory(String username, String category) {
+        for (SantanderEntry entry : Bennu.getInstance().getSantanderEntriesSet()) {
+            if (entry
+                    .getLine()
+                    .subSequence(1 + 10 + 15 + 15 + 40 + 50 + 50 + 8 + 30 + 10 + 10 + 9 + 16 + 10,
+                            1 + 10 + 15 + 15 + 40 + 50 + 50 + 8 + 30 + 10 + 10 + 9 + 16 + 10 + 10).equals(username)
+                    && entry.getLine()
+                            .subSequence(
+                                    1 + 10 + 15 + 15 + 40 + 50 + 50 + 8 + 30 + 10 + 10 + 9 + 16 + 10 + 10 + 1 + 2 + 8 + 11 + 1
+                                            + 4 + 4 + 10 + 5,
+                                    1 + 10 + 15 + 15 + 40 + 50 + 50 + 8 + 30 + 10 + 10 + 9 + 16 + 10 + 10 + 1 + 2 + 8 + 11 + 1
+                                            + 4 + 4 + 10 + 5 + 1).equals(category)) {
+                return entry;
+            }
+        }
+        return null;
+    }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

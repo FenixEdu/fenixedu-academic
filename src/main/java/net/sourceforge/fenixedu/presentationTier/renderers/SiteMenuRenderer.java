@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
@@ -173,7 +173,7 @@ public class SiteMenuRenderer extends OutputRenderer {
                         (FilterFunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
 
                 if (context == null) {
-                    context = new FilterFunctionalityContext(request, PropertiesManager.DEFAULT_CHARSET);
+                    context = new FilterFunctionalityContext(request, Charset.defaultCharset().name());
                 }
 
                 Collection<MenuEntry> entries = getEntries(object);

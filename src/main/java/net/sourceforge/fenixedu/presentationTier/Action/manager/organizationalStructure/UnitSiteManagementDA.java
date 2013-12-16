@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnitSite;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -47,7 +47,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
     @Override
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("units", Collections.singleton(RootDomainObject.getInstance().getInstitutionUnit()));
+        request.setAttribute("units", Collections.singleton(Bennu.getInstance().getInstitutionUnit()));
         return mapping.findForward("showUnits");
     }
 

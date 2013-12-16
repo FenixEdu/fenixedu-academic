@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -31,7 +32,7 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends CoordinatorAu
     }
 
     public void execute(String executionCourseID) throws NotAuthorizedException {
-        Person person = AccessControl.getUserView().getPerson();
+        Person person = Authenticate.getUser().getPerson();
 
         if (!person.hasRole(RoleType.COORDINATOR)) {
             deny();

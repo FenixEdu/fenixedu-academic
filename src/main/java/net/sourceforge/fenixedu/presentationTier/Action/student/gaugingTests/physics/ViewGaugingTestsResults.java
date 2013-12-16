@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.gaugingTests.ph
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.gaugingTests.physics.readGaugingTestsResults;
 import net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics.InfoGaugingTestResult;
@@ -34,7 +34,7 @@ public class ViewGaugingTestsResults extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         try {
             InfoGaugingTestResult result = readGaugingTestsResults.run(userView);

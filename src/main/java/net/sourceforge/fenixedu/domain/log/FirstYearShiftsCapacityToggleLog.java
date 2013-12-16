@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.log;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.User;
+import pt.ist.bennu.core.domain.User;
 
 import org.joda.time.DateTime;
 
@@ -14,7 +14,7 @@ public class FirstYearShiftsCapacityToggleLog extends FirstYearShiftsCapacityTog
         setCreationDate(new DateTime());
     }
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.domain.functionalities;
 
 import java.util.UUID;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class ExecutionPath extends ExecutionPath_Base {
 
     protected ExecutionPath() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ExecutionPath(final Functionality functionality, final String executionPath) {
@@ -25,7 +25,7 @@ public class ExecutionPath extends ExecutionPath_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

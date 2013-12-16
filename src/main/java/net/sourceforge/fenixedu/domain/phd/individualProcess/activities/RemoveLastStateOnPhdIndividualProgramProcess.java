@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 public class RemoveLastStateOnPhdIndividualProgramProcess extends PhdIndividualProgramProcessActivity {
 
     @Override
-    public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+    public void activityPreConditions(PhdIndividualProgramProcess process, User userView) {
         if (!process.isAllowedToManageProcessState(userView)) {
             throw new PreConditionNotValidException();
         }
@@ -15,11 +15,11 @@ public class RemoveLastStateOnPhdIndividualProgramProcess extends PhdIndividualP
     }
 
     @Override
-    protected void processPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
+    protected void processPreConditions(final PhdIndividualProgramProcess process, final User userView) {
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, User userView, Object object) {
         process.removeLastState();
         return process;
     }

@@ -5,14 +5,14 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class ShiftDistribution extends ShiftDistribution_Base {
 
     private ShiftDistribution() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     public ShiftDistribution(ExecutionYear executionYear) {
@@ -79,7 +79,7 @@ public class ShiftDistribution extends ShiftDistribution_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

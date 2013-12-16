@@ -8,7 +8,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType"%>
 <html:xhtml/>
 
-<logic:present role="SPACE_MANAGER">
+<logic:present role="role(SPACE_MANAGER)">
 	
 	<logic:notEmpty name="eventSpaceOccupationsBean">
 		

@@ -6,13 +6,14 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class CoordinatorExecutionDegreeCoursesReport extends CoordinatorExecutionDegreeCoursesReport_Base {
 
     public CoordinatorExecutionDegreeCoursesReport() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     private CoordinatorExecutionDegreeCoursesReport(final ExecutionDegree executionDegree,
@@ -68,8 +69,9 @@ public class CoordinatorExecutionDegreeCoursesReport extends CoordinatorExecutio
         setLastEditionDate(new DateTime());
         super.setTeachingBestPracticesDevelopedByTeachers(teachingBestPracticesDevelopedByTeachers);
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.log.requests;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.ArrayUtils;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * 
@@ -14,7 +15,7 @@ public class RequestMapping extends RequestMapping_Base {
 
     public RequestMapping() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     private RequestMapping(String path, String... parameters) {
@@ -25,7 +26,7 @@ public class RequestMapping extends RequestMapping_Base {
 
     public static RequestMapping createOrRetrieveRequestMapping(String path, String... parameters) {
 
-        for (RequestMapping requestMapping : RootDomainObject.getInstance().getRequestMappings()) {
+        for (RequestMapping requestMapping : Bennu.getInstance().getRequestMappingsSet()) {
             if (requestMapping.getPath().equals(path)) {
                 if (ArrayUtils.haveArraysSameElements(requestMapping.getParameters().split("&"), parameters)) {
                     return requestMapping;
@@ -52,7 +53,7 @@ public class RequestMapping extends RequestMapping_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

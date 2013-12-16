@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -40,7 +40,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         if (executionDegrees.isEmpty()) {
             throw new NullPointerException("error.OutboundMobilityCandidacyContestGroup.must.have.execution.degree");
         }
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         addOutboundMobilityCandidacyContest(contest);
         getExecutionDegreeSet().addAll(executionDegrees);
 
@@ -56,7 +56,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         if (executionDegrees.isEmpty()) {
             throw new NullPointerException("error.OutboundMobilityCandidacyContestGroup.must.have.execution.degree");
         }
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         getExecutionDegreeSet().addAll(executionDegrees);
 
         // TODO : This is a hack due to a bug in the consistency predicate or fenix-framework code.
@@ -491,7 +491,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

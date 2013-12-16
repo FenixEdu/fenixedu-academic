@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
@@ -72,7 +72,7 @@ public class PrecedentDegreeInformationBeanFactory {
         }
 
         bean.setDegreeDesignation(studentCurricularPlan.getName());
-        bean.setInstitutionUnitName(RootDomainObject.getInstance().getInstitutionUnit().getUnitName());
+        bean.setInstitutionUnitName(Bennu.getInstance().getInstitutionUnit().getUnitName());
 
         if (studentCurricularPlan.getConclusionDate(cycleType) != null) {
             bean.setConclusionDate(new LocalDate(studentCurricularPlan.getConclusionDate(cycleType)));
@@ -102,9 +102,9 @@ public class PrecedentDegreeInformationBeanFactory {
         bean.setDegreeDesignation(studentCurricularPlan.getName());
         bean.setConclusionDate(new LocalDate(studentCurricularPlan.getRegistration().getConclusionDate()));
         bean.setConclusionGrade(studentCurricularPlan.getRegistration().getFinalAverage().toString());
-        bean.setInstitution(RootDomainObject.getInstance().getInstitutionUnit());
-        bean.setInstitutionName(RootDomainObject.getInstance().getInstitutionUnit().getName());
-        bean.setInstitutionUnitName(RootDomainObject.getInstance().getInstitutionUnit().getUnitName());
+        bean.setInstitution(Bennu.getInstance().getInstitutionUnit());
+        bean.setInstitutionName(Bennu.getInstance().getInstitutionUnit().getName());
+        bean.setInstitutionUnitName(Bennu.getInstance().getInstitutionUnit().getUnitName());
 
         bean.setNumberOfEnroledCurricularCourses(calculateNumberOfEnroledCurricularCourses(studentCurricularPlan));
         bean.setNumberOfApprovedCurricularCourses(calculateNumberOfApprovedCurricularCourses(studentCurricularPlan));

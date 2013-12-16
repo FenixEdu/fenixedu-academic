@@ -16,6 +16,15 @@
 <bean:define id="postingRuleId" name="postingRuleEditor"
 	property="dfaGratuityPR.externalId" />
 
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages id="messages" message="true" bundle="MANAGER_RESOURCES" >
+			<li><span class="error0"><bean:write name="messages"/></span></li>
+		</html:messages>
+	</ul>
+	<br />
+</logic:messagesPresent>
+
 <fr:hasMessages type="conversion" for="postingRuleEditor">
 	<ul class="nobullet list6">
 		<fr:messages>
@@ -23,6 +32,7 @@
 		</fr:messages>
 	</ul>
 </fr:hasMessages>
+
 <bean:define id="postingRuleEditorClassName" name="postingRuleEditor" property="class.simpleName" />
 <fr:edit id="postingRuleEditor" name="postingRuleEditor" schema="<%=postingRuleEditorClassName + ".edit"%>" 
 action="<%= "/postingRules.do?method=editDFAGratuityPR&degreeCurricularPlanId=" + degreeCurricularPlanId %>">

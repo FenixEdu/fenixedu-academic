@@ -4,7 +4,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 
 	<h2>Referências criadas</h2>

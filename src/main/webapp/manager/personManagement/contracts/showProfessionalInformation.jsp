@@ -117,7 +117,7 @@
 				<strong><bean:message key="label.situations" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
 			<bean:define id="schema" value="view.person.personContractSituation"/>
-			<logic:present role="MANAGER">
+			<logic:present role="role(MANAGER)">
 				<bean:define id="schema" value="view.person.personContractSituation.MANAGER"/>
 			</logic:present>
 			<fr:view name="situations" schema="<%=schema.toString()%>">

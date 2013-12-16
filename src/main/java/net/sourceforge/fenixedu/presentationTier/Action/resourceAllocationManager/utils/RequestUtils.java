@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYear;
@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -194,14 +194,14 @@ public abstract class RequestUtils {
 
     public static final InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws FenixActionException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         // Read executionPeriod from request
         InfoExecutionPeriod infoExecutionPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
 
         // If executionPeriod not in request nor in DB, read current
         if (infoExecutionPeriod == null) {
-            userView = UserView.getUser();
+            userView = Authenticate.getUser();
             infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
         }
         return infoExecutionPeriod;

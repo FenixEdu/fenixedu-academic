@@ -1,77 +1,27 @@
 package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
+
+import org.joda.time.DateTime;
 
 public class FenixCourseGroup {
 
-    public static class Grouping {
-
-        public static class Group {
-
-            public static class Student {
-                String istId;
-                String name;
-
-                public Student(String istId, String name) {
-                    super();
-                    this.istId = istId;
-                    this.name = name;
-                }
-
-                public String getIstId() {
-                    return istId;
-                }
-
-                public void setIstId(String istId) {
-                    this.istId = istId;
-                }
-
-                public String getName() {
-                    return name;
-                }
-
-                public void setName(String name) {
-                    this.name = name;
-                }
-
-            }
-
-            Integer number;
-            List<Student> students;
-
-            public Group(Integer number, List<Student> students) {
-                super();
-                this.number = number;
-                this.students = students;
-            }
-
-            public Integer getNumber() {
-                return number;
-            }
-
-            public void setNumber(Integer number) {
-                this.number = number;
-            }
-
-            public List<Student> getStudents() {
-                return students;
-            }
-
-            public void setStudents(List<Student> students) {
-                this.students = students;
-            }
-
-        }
+    public static class GroupedCourse {
 
         String name;
-        String description;
-        List<Group> groups;
+        String degrees;
+        String id;
 
-        public Grouping(String name, String description, List<Group> groups) {
-            super();
-            this.name = name;
-            this.description = description;
-            this.groups = groups;
+        public GroupedCourse(final ExecutionCourse executionCourse) {
+            this.name = executionCourse.getName();
+            this.id = executionCourse.getExternalId();
+            this.degrees = executionCourse.getDegreePresentationString();
         }
 
         public String getName() {
@@ -82,67 +32,108 @@ public class FenixCourseGroup {
             this.name = name;
         }
 
-        public String getDescription() {
-            return description;
+        public String getId() {
+            return id;
         }
 
-        public void setDescription(String description) {
-            this.description = description;
+        public void setId(String id) {
+            this.id = id;
         }
 
-        public List<Group> getGroups() {
-            return groups;
+        public String getDegrees() {
+            return degrees;
         }
 
-        public void setGroups(List<Group> groups) {
-            this.groups = groups;
+        public void setDegrees(String degrees) {
+            this.degrees = degrees;
         }
 
     }
 
     String name;
-    String year;
-    Integer semester;
-    List<Grouping> groupings;
+    String description;
+    FenixInterval enrolmentPeriod;
+    String enrolmentPolicy;
+    Integer minimumCapacity;
+    Integer maximumCapacity;
+    Integer idealCapacity;
+    List<GroupedCourse> associatedCourses = new ArrayList<>();
 
-    public FenixCourseGroup(String name, String year, Integer semester, List<Grouping> groupings) {
-        super();
-        this.name = name;
-        this.year = year;
-        this.semester = semester;
-        this.groupings = groupings;
+    public FenixCourseGroup(final Grouping grouping) {
+        this.name = grouping.getName();
+        this.description = grouping.getProjectDescription();
+        
+        final DateTime start = grouping.getEnrolmentBeginDayDateDateTime();
+        final DateTime end = grouping.getEnrolmentEndDayDateDateTime();
+        this.enrolmentPeriod = new FenixInterval(start, end);
+
+        final EnrolmentGroupPolicyType enrolmentPolicy = grouping.getEnrolmentPolicy();
+        this.enrolmentPolicy = enrolmentPolicy == null ? null : enrolmentPolicy.getTypeFullName();
+
+        this.minimumCapacity = grouping.getMinimumCapacity();
+        this.maximumCapacity = grouping.getMaximumCapacity();
+        this.idealCapacity = grouping.getIdealCapacity();
+
+        for (final ExportGrouping exportGrouping : grouping.getExportGroupingsSet()) {
+            final ExecutionCourse executionCourse = exportGrouping.getExecutionCourse();
+            associatedCourses.add(new GroupedCourse(executionCourse));
+        }
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
-    public String getYear() {
-        return year;
+    public String getDescription() {
+        return description;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setDescription(final String description) {
+        this.description = description;
     }
 
-    public Integer getSemester() {
-        return semester;
+    public FenixInterval getEnrolmentPeriod() {
+        return enrolmentPeriod;
     }
 
-    public void setSemester(Integer semester) {
-        this.semester = semester;
+    public void setEnrolmentPeriod(final FenixInterval enrolmentPeriod) {
+        this.enrolmentPeriod = enrolmentPeriod;
     }
 
-    public List<Grouping> getGroupings() {
-        return groupings;
+    public String getEnrolmentPolicy() {
+        return enrolmentPolicy;
     }
 
-    public void setGroupings(List<Grouping> groupings) {
-        this.groupings = groupings;
+    public void setEnrolmentPolicy(final String enrolmentPolicy) {
+        this.enrolmentPolicy = enrolmentPolicy;
+    }
+
+    public Integer getMinimumCapacity() {
+        return minimumCapacity;
+    }
+
+    public void setMinimumCapacity(final Integer minimumCapacity) {
+        this.minimumCapacity = minimumCapacity;
+    }
+
+    public Integer getMaximumCapacity() {
+        return maximumCapacity;
+    }
+
+    public void setMaximumCapacity(final Integer maximumCapacity) {
+        this.maximumCapacity = maximumCapacity;
+    }
+
+    public Integer getIdealCapacity() {
+        return idealCapacity;
+    }
+
+    public void setIdealCapacity(final Integer idealCapacity) {
+        this.idealCapacity = idealCapacity;
     }
 
 }

@@ -12,7 +12,7 @@
 <em><bean:message bundle="SOP_RESOURCES" key="title.resourceManager.management"/></em>
 <h2><bean:message key="title.access.groups.management" bundle="SOP_RESOURCES"/></h2>
 
-<logic:present role="RESOURCE_ALLOCATION_MANAGER">
+<logic:present role="role(RESOURCE_ALLOCATION_MANAGER)">
 
 	<logic:messagesPresent message="true">
 		<p>

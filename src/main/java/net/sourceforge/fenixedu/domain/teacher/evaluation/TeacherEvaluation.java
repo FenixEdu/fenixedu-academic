@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
+import pt.ist.bennu.core.domain.Bennu;
+
+import pt.ist.fenixframework.Atomic;
+
 import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.EmailAddressList;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -14,14 +17,12 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.Atomic;
-
 public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
 
     public TeacherEvaluation() {
         super();
         setCreatedDate(new DateTime());
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public TeacherEvaluationState getState() {
@@ -80,7 +81,7 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
             final String body =
                     BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
                             "message.email.stamp.teacher.evaluation.process", title);
-            final SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+            final SystemSender systemSender = Bennu.getInstance().getSystemSender();
             final Message message =
                     new Message(systemSender, Collections.EMPTY_LIST, Collections.EMPTY_LIST, title, body, new EmailAddressList(
                             Collections.EMPTY_LIST).toString());
@@ -118,6 +119,7 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
             }
         }
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFile> getTeacherEvaluationFile() {
         return getTeacherEvaluationFileSet();
@@ -144,7 +146,7 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -18,14 +19,13 @@ import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationType;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -80,7 +80,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         final Map<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> candidates =
                 new TreeMap<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>>(PhdProgramFocusArea.COMPARATOR_BY_NAME);
 
-        for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodesSet()) {
+        for (final PublicCandidacyHashCode hashCode : Bennu.getInstance().getCandidacyHashCodesSet()) {
             if (hashCode.isFromPhdProgram() && hashCode.hasCandidacyProcess()) {
 
                 final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
@@ -605,7 +605,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         }
 
         public Page write(final String value) throws IOException {
-            writer.write(value.getBytes(PropertiesManager.DEFAULT_CHARSET));
+            writer.write(value.getBytes(Charset.defaultCharset().name()));
             writer.write("\n".getBytes());
             return this;
         }

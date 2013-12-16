@@ -10,7 +10,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.AssociateParent;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.ChooseCorrector;
@@ -127,7 +127,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     private NewQuestionBank getOwnedQuestionBank(HttpServletRequest request) throws FenixServiceException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         Person person = userView.getPerson();
 
