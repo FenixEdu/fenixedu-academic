@@ -705,23 +705,31 @@ public class Lesson extends Lesson_Base {
     }
 
     public SortedSet<Interval> getAllLessonIntervalsWithoutInstanceDates() {
-        SortedSet<Interval> dates = new TreeSet<Interval>();
+        SortedSet<Interval> dates = new TreeSet<Interval>(new Comparator<Interval>() {
+
+            @Override
+            public int compare(Interval o1, Interval o2) {
+                return o1.getStart().compareTo(o2.getStart());
+            }
+
+        });
         if (!wasFinished()) {
             YearMonthDay startDateToSearch = getLessonStartDay();
             YearMonthDay endDateToSearch = getLessonEndDay();
             for (final YearMonthDay yearMonthDay : getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch)) {
                 final HourMinuteSecond b = getBeginHourMinuteSecond();
                 final HourMinuteSecond e = getEndHourMinuteSecond();
-                final DateTime start = new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
-                        b.getHour(), b.getMinuteOfHour(), b.getSecondOfMinute(), 0);
-                final DateTime end = new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(), 
-                        e.getHour(), e.getMinuteOfHour(), e.getSecondOfMinute(), 0);
+                final DateTime start =
+                        new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
+                                b.getHour(), b.getMinuteOfHour(), b.getSecondOfMinute(), 0);
+                final DateTime end =
+                        new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
+                                e.getHour(), e.getMinuteOfHour(), e.getSecondOfMinute(), 0);
                 dates.add(new Interval(start, end));
             }
         }
         return dates;
     }
-
 
     public SortedSet<YearMonthDay> getAllLessonDates() {
         SortedSet<YearMonthDay> dates = getAllLessonInstanceDates();
@@ -798,7 +806,9 @@ public class Lesson extends Lesson_Base {
 
         if (!wasFinished() && startDateToSearch != null && endDateToSearch != null && !startDateToSearch.isAfter(endDateToSearch)) {
             Campus lessonCampus = getLessonCampus();
-            final int dayIncrement = getFrequency() == FrequencyType.BIWEEKLY ? FrequencyType.WEEKLY.getNumberOfDays() : getFrequency().getNumberOfDays();
+            final int dayIncrement =
+                    getFrequency() == FrequencyType.BIWEEKLY ? FrequencyType.WEEKLY.getNumberOfDays() : getFrequency()
+                            .getNumberOfDays();
             boolean shouldAdd = true;
             while (true) {
                 if (isDayValid(startDateToSearch, lessonCampus)) {
