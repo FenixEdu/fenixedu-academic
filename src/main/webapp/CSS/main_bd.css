@@ -42,7 +42,7 @@ table tr.disabled td span.success0 {
 	width: 185px;
 	height: 135px;
 	margin: 10px;
-	border: none;
+	border: 2px solid #f6f4ed;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
