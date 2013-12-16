@@ -196,6 +196,10 @@
 		<filter-name>MultipartFilter</filter-name>
 		<url-pattern>*.faces</url-pattern>
 	</filter-mapping>
+    <filter-mapping>
+        <filter-name>ExceptionHandlerFilter</filter-name>
+        <url-pattern>*.faces</url-pattern>
+    </filter-mapping>
 <!-- 	<filter-mapping> -->
 <!--         <filter-name>CharsetEncoding</filter-name> -->
 <!--         <url-pattern>/*</url-pattern> -->
