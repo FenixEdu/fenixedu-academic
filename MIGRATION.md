@@ -139,13 +139,41 @@ Note that in order to properly migrate the application, there must be NO `FileLo
     }
     ```
 
-9. Go to `https://<url>/bennu-io-ui/index.html` and configure the file storage that will be used for new files, and then, associate the file types with the desired storage.
+9. Still in the Custom Task view, run the following script, to fill out the user's expiration dates
+
+    ```java
+    package pt.ist.fenix;
+    
+    import java.util.Objects;
+    
+    import pt.ist.bennu.core.domain.Bennu;
+    import pt.ist.bennu.core.domain.User;
+    import pt.ist.bennu.scheduler.custom.CustomTask;
+    import pt.ist.bennu.user.management.UserLoginPeriod;
+    import pt.ist.fenixframework.Atomic.TxMode;
+    
+    public class FillUserExpirations extends CustomTask {
+    
+        @Override
+        public void runTask() throws Exception {
+            for (User user : Bennu.getInstance().getUsersSet()) {
+                Object original = user.getExpiration();
+                UserLoginPeriod.computeUserExpiration(user);
+                if (!Objects.equals(original, user.getExpiration())) {
+                    taskLog("Set expiration for user %s (%s) to %s\n", user.getUsername(), user.getExternalId(), user.getExpiration());
+                }
+            }
+        }
+    }
+    ```
+
+10. Go to `https://<url>/bennu-io-ui/index.html` and configure the file storage that will be used for new files, and then, associate the file types with the desired storage.
 
     Note that the provided `DSpaceFileStorage` is provided only as a legacy compatibility layer, and as such, it only allows reading from DSpace, and should NOT be used for new files.
 
-10. Go to `https://<url>/bennu-scheduler-ui/index.html` and configure the Schedules for the scripts that were previously run in Cron.
+11. Go to `https://<url>/bennu-scheduler-ui/index.html` and configure the Schedules for the scripts that were previously run in Cron.
 
-11. Your application should now be fully functional :)
+12. Your application should now be fully functional :)
 
 ## 1.1.0
  * Run etc/database_operations/run
