@@ -1,4 +1,4 @@
-<%@page import="net.sourceforge.fenixedu.domain.User"%>
+<%@page import="pt.ist.bennu.core.domain.User"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplication"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>

@@ -7,6 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>
+<%@page import="pt.ist.bennu.core.security.Authenticate"%>
 <%@page import="pt.ist.bennu.core.domain.User"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>

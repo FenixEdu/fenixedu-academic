@@ -262,7 +262,7 @@
 					</td>
 					<td>
 						<%
-							final User user = User.readUserByUserUId(microPaymentEvent.getCreatedBy());
+							final User user = User.findByUsername(microPaymentEvent.getCreatedBy());
 							if (user != null) {
 						%>
 								<%= user.getPerson().getNickname() %>

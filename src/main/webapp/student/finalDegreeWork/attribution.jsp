@@ -122,7 +122,7 @@
 						<logic:present name="infoGroup" property="groupStudents">
 							<logic:iterate id="groupStudent" indexId="i" name="infoGroup" property="groupStudents">
 								<td rowspan="2">
-										<% pt.ist.bennu.core.domain.User userView = pt.ist.fenixWebFramework.security.Authenticate.getUser(); %>
+										<% pt.ist.bennu.core.domain.User userView = pt.ist.bennu.core.security.Authenticate.getUser(); %>
 									<bean:define id="username"><%= userView.getUsername() %></bean:define>
 									<logic:equal name="groupStudent" property="student.infoPerson.username" value="<%= username %>">
 										<bean:define id="onChange">

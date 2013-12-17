@@ -1,4 +1,3 @@
-<%@page import="net.sourceforge.fenixedu.presentationTier.util.HostRedirector"%>
 <%@page import="pt.ist.fenixframework.FenixFramework"%>
 <%@ page language="java" %>
 
