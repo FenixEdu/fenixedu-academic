@@ -64,11 +64,14 @@
 
 <!-- NavGeral -->
 <div id="navtop">
-	<% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 	<h1 class="applicationName">
-		<%=Instalation.getInstance().getInstalationName() %><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
+		<% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
+			<%=Instalation.getInstance().getInstalationName() %><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
+		<% } %>
+		<% if (!FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
+			<img alt="<%=Instalation.getInstance().getInstalationName() %>" src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
+		<% } %>
 	</h1>
-	<% } %>
 	<tiles:insert attribute="navGeral" />
 </div>
 <!-- End NavGeral -->
