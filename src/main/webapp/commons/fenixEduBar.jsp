@@ -42,7 +42,7 @@
 	
 		<% if (CoreConfiguration.getConfiguration().developmentMode()) { %>
 			<h1 id="debug-mode">
-				<a class="button" href="#">Debug Mode</a>
+				<a class="button" href="#"><bean:message key="debug.mode" bundle="GLOBAL_RESOURCES" /></a>
 			</h1>
 		<% } %>
 		
