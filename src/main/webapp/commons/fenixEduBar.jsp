@@ -1,3 +1,4 @@
+<%@page import="pt.ist.bennu.core.util.CoreConfiguration"%>
 <%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
 <%@ page language="java"%>
@@ -38,6 +39,13 @@
 			</logic:notPresent>
 			<bean:write name="USER_SESSION_ATTRIBUTE" property="user.person.firstAndLastName"/>	
 		</p>
+	
+		<% if (CoreConfiguration.getConfiguration().developmentMode()) { %>
+			<h1 id="debug-mode">
+				<a class="button" href="#">Debug Mode</a>
+			</h1>
+		<% } %>
+		
 		<h1 id="logout">
 			<a class="button" href="<%=request.getContextPath()%>/logoff.do"><bean:message key="link.logout" bundle="GLOBAL_RESOURCES" /></a>
 		</h1>

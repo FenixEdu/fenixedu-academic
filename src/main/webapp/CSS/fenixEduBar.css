@@ -2,7 +2,7 @@
 	margin: 0px;
 	padding: 0px;
 	padding-left: 25px;
-	padding-right: 0px;
+	padding-right: 25px;
 	border: 0px;
 	width: 100%;
 	height: 34px;
@@ -65,11 +65,9 @@
 #fenixEduBar #authentication  {
 	display: block;
 	height: 34px;
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 273px;
+	float: right;
 	z-index: 1000;
+	margin-right: 50px;
 }
 
 #fenixEduBar #user {
@@ -89,12 +87,11 @@
 	padding-bottom: 0px;
 
 	padding-left: 0px;
-	padding-right: 20px;
 	padding-top: 11px;
 
 }
 
-#fenixEduBar #logout {
+#fenixEduBar #authentication h1 {
 	color: rgb(255, 255, 255);
 	display: block;
 	float: left;
@@ -107,9 +104,10 @@
 	width: 100px;
 	z-index: auto;
 	margin-top: 0px;
+	margin-left: 20px;
 }
 
-#fenixEduBar #logout .button {
+#fenixEduBar #authentication .button {
 	float: left;
 	background-color: rgba(51, 51, 51, 0.498039);
 	cursor: auto;
