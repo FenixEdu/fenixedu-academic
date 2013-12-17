@@ -44,20 +44,7 @@
 
 
 <!-- Header -->
-<div id="top">
-	<h1 id="logo">
-		<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
-	</h1>
-
-	<%--
-	<tiles:getAsString name="serviceName" />
-	--%>
-
-	<tiles:insert page="/commons/headerButtons.jsp" />
-	<p id="user">
-		<tiles:insert page="/commons/personalInfoTitleBar.jsp" />
-	</p>
-</div>
+	<tiles:insert page="/commons/fenixEduBar.jsp" />
 <!-- End Header -->
 
 
