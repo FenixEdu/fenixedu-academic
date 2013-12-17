@@ -52,55 +52,18 @@ height: 1%; /* fixes unwanted margin in IE for 100% width elements inside conten
 
 /* --- Top Header --- */
 
-#top {
-height: 73px;
-position: relative;
-}
-#top ul {
-font-size: 0.85em;
-position: absolute;
-top: 0;
-right: 0;
-background: #062833 url(../images/sup_corner2.gif) bottom left no-repeat;
-margin: 0;
-padding: 0.5em 0.5em 0.75em 2.75em;
-}
-#top ul li { 
-display: inline;
-margin: 0 4px;
-}
-#top ul li.institution a {
-padding: 0.4em;
-padding-left: 18px;
-}
-#top ul li.centralApplications a {
-padding: 0.4em;
-padding-left: 18px;
-}
-#top ul li.support a {
-padding: 0.4em;
-padding-left: 18px;
-}
-#top ul li.suggestion a {
-padding: 0.4em;
-padding-left: 18px;
-}
-#top ul li.logout a {
-padding: 0.4em;
-padding-left: 18px;
-}
 #top #logo {
-padding: 0 0 0 0;
-margin: 0;
+	padding: 0 0 0 0;
+	margin: 0;
 }
-#top #user {text-align: right; }
+#top #user { text-align: right; }
 #top #user {
-position: absolute;
-bottom: 0;
-right: 0;
-font-size: 0.85em;
-margin: 0;
-padding: 0.75em 1em;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	font-size: 0.85em;
+	margin: 0;
+	padding: 0.75em 1em;
 }
 
 /* --- Main Navigation --- */
