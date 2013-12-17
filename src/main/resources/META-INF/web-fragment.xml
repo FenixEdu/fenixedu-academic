@@ -45,22 +45,6 @@
 			<param-value>1m</param-value>
 		</init-param>
 	</filter>
-<!-- 	<filter> -->
-<!-- 		<filter-name>CharsetEncoding</filter-name> -->
-<!-- 		<filter-class>pt.ist.fenixWebFramework.servlets.filters.CharsetEncodingFilter</filter-class> -->
-<!-- 	</filter> -->
-<!-- 	<filter> -->
-<!-- 	    <filter-name>CloseTxFilter</filter-name> -->
-<!-- 	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.CloseTransactionFilter</filter-class> -->
-<!-- 	</filter> -->
-<!--    	<filter> -->
-<!-- 	    <filter-name>CasAuthenticationFilter</filter-name> -->
-<!-- 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.authentication.cas.CasAuthenticationFilter</filter-class> -->
-<!-- 	</filter> -->
-<!-- 	<filter> -->
-<!-- 	    <filter-name>SetUserViewFilter</filter-name> -->
-<!-- 	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter</filter-class> -->
-<!-- 	</filter> -->
 	<filter>
 	    <filter-name>RequestWrapperFilter</filter-name>
 	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter</filter-class>
@@ -69,22 +53,6 @@
 	    <filter-name>ManagerFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ManagerFilter</filter-class>
 	</filter>
-<!--     <filter> -->
-<!--         <filter-name>PathAccessControlFilter</filter-name> -->
-<!--         <filter-class>pt.ist.fenixWebFramework.servlets.filters.PathAccessControlFilter</filter-class> -->
-<!--         <init-param> -->
-<!--             <param-name>use-request-path</param-name> -->
-<!--             <param-value>true</param-value>  -->
-<!--         </init-param> -->
-<!--     </filter> -->
-<!-- 	<filter> -->
-<!-- 		 <filter-name>ProfilingFilter</filter-name> -->
-<!-- 		 <filter-class>pt.ist.fenixWebFramework.servlets.filters.ProfilingFilter</filter-class> -->
-<!-- 	</filter> -->
-<!-- 	<filter> -->
-<!-- 	    <filter-name>I18NFilter</filter-name> -->
-<!-- 	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.I18NFilter</filter-class> -->
-<!-- 	</filter> -->
 	<filter>
 	    <filter-name>LoginPageFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.LoginPageFilter</filter-class>
@@ -184,10 +152,6 @@
  		 <filter-name>LoginPageFilter</filter-name>
  		 <url-pattern>/login</url-pattern>
 	</filter-mapping>
-<!--     <filter-mapping> -->
-<!--         <filter-name>PathAccessControlFilter</filter-name> -->
-<!--         <url-pattern>/*</url-pattern>generate mappings only for paths that have restrictions configured -->
-<!--     </filter-mapping> -->
     <filter-mapping>
     	<filter-name>StaticCacheFilter</filter-name>
     	<url-pattern>/*</url-pattern>
@@ -200,26 +164,6 @@
         <filter-name>ExceptionHandlerFilter</filter-name>
         <url-pattern>*.faces</url-pattern>
     </filter-mapping>
-<!-- 	<filter-mapping> -->
-<!--         <filter-name>CharsetEncoding</filter-name> -->
-<!--         <url-pattern>/*</url-pattern> -->
-<!--     </filter-mapping> -->
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>CloseTxFilter</filter-name> -->
-<!-- 		<url-pattern>/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
-<!-- 	<filter-mapping> -->
-<!--         <filter-name>CasAuthenticationFilter</filter-name> -->
-<!--         	<url-pattern>/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>SetUserViewFilter</filter-name> -->
-<!-- 		<url-pattern>/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>I18NFilter</filter-name> -->
-<!-- 		<url-pattern>/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
 	<filter-mapping>
 		<filter-name>ManagerFilter</filter-name>
 		<url-pattern>/manager/*</url-pattern>
@@ -228,10 +172,6 @@
 		<filter-name>ManagerFilter</filter-name>
 		<url-pattern>/domainbrowser/*</url-pattern>
 	</filter-mapping>
-<!-- 	<filter-mapping> -->
-<!--  		 <filter-name>ProfilingFilter</filter-name> -->
-<!--  		 <url-pattern>/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
    	<filter-mapping>
 	    <filter-name>CASFilter</filter-name>
 	    <url-pattern>/loginCAS.do</url-pattern>
@@ -310,25 +250,6 @@
         <servlet-name>XFireServlet</servlet-name>
         <servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
     </servlet>
-<!--     <servlet> -->
-<!--        <servlet-name>Jersey API Web Application</servlet-name> -->
-<!--        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class> -->
-<!--        <load-on-startup>1</load-on-startup> -->
-<!--        <init-param> -->
-<!-- 			<param-name>com.sun.jersey.config.property.resourceConfigClass</param-name>			 -->
-<!-- 			<param-value>net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyPackageResourceConfig</param-value> -->
-<!-- 		</init-param> -->
-<!--        <init-param> -->
-<!--       		<param-name>com.sun.jersey.config.property.packages</param-name> -->
-<!--       		<param-value>net.sourceforge.fenixedu.webServices.jersey.api</param-value> -->
-<!--     	</init-param> -->
-<!--      </servlet> -->
-    
-    <!-- Servlet Mapping -->
-<!--     <servlet-mapping> -->
-<!--        <servlet-name>Jersey API Web Application</servlet-name> -->
-<!--        <url-pattern>/api/fenix/*</url-pattern> -->
-<!--     </servlet-mapping> -->
     <servlet-mapping>
         <servlet-name>XFireServlet</servlet-name>
         <url-pattern>/servlet/XFireServlet/*</url-pattern>
@@ -349,33 +270,5 @@
 	<session-config>
 			<session-timeout>120</session-timeout>
 	</session-config>
-	
-	<welcome-file-list>
-    	<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
-	
-    <jsp-config>
-		<jsp-property-group>
-	      <description>All JSPs</description>
-	      <url-pattern>*.jsp</url-pattern>
-	      <el-ignored>true</el-ignored>
-	      <!--<page-encoding>UTF-8</page-encoding>-->
-	      <page-encoding>UTF-8</page-encoding>
-	    </jsp-property-group>
-    </jsp-config>
-    
-	<security-constraint>
-		<web-resource-collection>
-	          <web-resource-name>KerberosPasswordCheck</web-resource-name>
-	          <description />
-	          <url-pattern>/checkKerberosPassword.do</url-pattern>
-	          <http-method>POST</http-method>
-	          <http-method>GET</http-method>
-	     </web-resource-collection>
-	     <user-data-constraint>
-	          <description>SSL</description>
-	          <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-	     </user-data-constraint>
-	</security-constraint>
 
 </web-fragment>
