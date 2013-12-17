@@ -2,13 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-
 	<parent>
-		<groupId>pt.ist</groupId>
-		<artifactId>fenix-framework-project</artifactId>
-		<version>1.1.0</version>
+        <groupId>org.fenixedu</groupId>
+        <artifactId>fenix-framework-project</artifactId>
+        <version>1.2.0</version>
 	</parent>
 
+    <groupId>pt.ist</groupId>
 	<artifactId>fenix</artifactId>
 	<packaging>jar</packaging>
 	<version>2.0.0-SNAPSHOT</version>
@@ -160,9 +160,9 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>pt.ist.bennu</groupId>
+			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-renderers</artifactId>
-			<version>3.0.0-M1</version>
+			<version>3.0.0-M2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -444,24 +444,29 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>pt.ist.bennu</groupId>
-			<artifactId>bennu-core</artifactId>
-			<version>2.0.0-M3</version>
+		    <groupId>org.fenixedu</groupId>
+		    <artifactId>fenixedu-commons</artifactId>
+		    <version>1.0.0-M2</version>
 		</dependency>
 		<dependency>
-			<groupId>pt.ist.bennu</groupId>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>bennu-core</artifactId>
+			<version>2.0.0-M4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-user-management</artifactId>
 			<version>1.0.0-M2</version>
 		</dependency>
 		<dependency>
-			<groupId>pt.ist.bennu</groupId>
+			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-scheduler</artifactId>
-			<version>2.0.0-M2</version>
+			<version>2.0.0-M4</version>
 		</dependency>
 		<dependency>
-			<groupId>pt.ist.bennu</groupId>
+			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-io</artifactId>
-			<version>2.0.0-M2</version>
+			<version>2.0.0-M4</version>
 		</dependency>
 	</dependencies>
 
