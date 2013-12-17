@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
 <%@page contentType="text/html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -58,10 +59,7 @@ $(document).ready(function() {
 <bean:define id="roleType" name="annualTeachingCreditsBean" property="roleType"/>
 
 <div class="infoop2">
-	<ul>
-		<li><a href="https://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/regulamento-de-prestacao-de-servico-dos-docentes-do-ist">Regulamento de Prestação de Serviço dos Docentes do IST</a></li>
-		<li><a href="http://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/glossario-do-rsd-(versao-19-9-2012)">Glossário do RSD (versão 19-9-2012)</a></li>
-	</ul>
+	<bean:message key="label.credits.usefull.information" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 </div>
 
 <logic:notEqual name="roleType" value="DEPARTMENT_MEMBER">
@@ -86,6 +84,10 @@ $(document).ready(function() {
 <logic:notEqual name="areCreditsCalculated" value="true">
 	<div class="infoop2">
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
+			<%
+				final ExecutionSemester executionSemester = ((net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsByPeriodBean) annualTeachingCreditsByPeriodBean).getExecutionPeriod();
+				if (executionSemester.isBeforeOrEquals(ExecutionSemester.readActualExecutionSemester())) {
+			%>
 			<bean:define id="executionPeriodQualifiedName" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"></bean:define>
 			<bean:define id="executionPeriodOid" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
 			<p>
@@ -108,6 +110,7 @@ $(document).ready(function() {
 					</html:link>
 				</logic:equal>
 			</p>
+			<%	} %>
 		</logic:iterate>
 	</div>
 </logic:notEqual>

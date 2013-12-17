@@ -63,6 +63,13 @@
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 					<fr:property name="destination" value="schoolLevelPostback" />
 				</fr:slot>
+				<% if (personalInformationBean.isHightSchoolCountryFieldRequired()) { %>
+					<fr:slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+						<fr:property name="format" value="${localizedName}"/>
+						<fr:property name="sortBy" value="name=asc" />
+						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+					</fr:slot>
+				<% } %>
 				<% if(personalInformationBean.isUnitFromRaidesListMandatory()) { %>
 					<fr:slot name="institutionUnitName" layout="autoCompleteWithPostBack" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 						<fr:property name="size" value="50"/>

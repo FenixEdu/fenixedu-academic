@@ -26,10 +26,13 @@ public class MobilityStudentData extends MobilityStudentData_Base {
         setHomeInstitutionFax(erasmusStudentDataBean.getHomeInstitutionFax());
         setHomeInstitutionName(erasmusStudentDataBean.getHomeInstitutionName());
         setHomeInstitutionPhone(erasmusStudentDataBean.getHomeInstitutionPhone());
+        setMobilityCountryHighSchool(erasmusStudentDataBean.getCountryWhereFinishedHighSchoolLevel());
         setMainSubjectThesis(erasmusStudentDataBean.getMainSubjectThesis());
         setNameOfContact(erasmusStudentDataBean.getNameOfContact());
         setTypesOfProgramme(erasmusStudentDataBean.getTypeOfProgrammeList());
         setSelectedOpening(selectedOpening);
+        setCurrentSchoolLevel(erasmusStudentDataBean.getCurrentSchoolLevel());
+        setCurrentOtherSchoolLevel(erasmusStudentDataBean.getCurrentOtherSchoolLevel());
         setSchoolLevel(erasmusStudentDataBean.getSchoolLevel());
         setOtherSchoolLevel(erasmusStudentDataBean.getOtherSchoolLevel());
 
@@ -64,9 +67,12 @@ public class MobilityStudentData extends MobilityStudentData_Base {
         setHomeInstitutionFax(erasmusStudentDataBean.getHomeInstitutionFax());
         setHomeInstitutionName(erasmusStudentDataBean.getHomeInstitutionName());
         setHomeInstitutionPhone(erasmusStudentDataBean.getHomeInstitutionPhone());
+        setMobilityCountryHighSchool(erasmusStudentDataBean.getCountryWhereFinishedHighSchoolLevel());
         setMainSubjectThesis(erasmusStudentDataBean.getMainSubjectThesis());
         setNameOfContact(erasmusStudentDataBean.getNameOfContact());
         setTypesOfProgramme(erasmusStudentDataBean.getTypeOfProgrammeList());
+        setCurrentSchoolLevel(erasmusStudentDataBean.getCurrentSchoolLevel());
+        setCurrentOtherSchoolLevel(erasmusStudentDataBean.getCurrentOtherSchoolLevel());
         setSchoolLevel(erasmusStudentDataBean.getSchoolLevel());
         setOtherSchoolLevel(erasmusStudentDataBean.getOtherSchoolLevel());
 
@@ -81,6 +87,7 @@ public class MobilityStudentData extends MobilityStudentData_Base {
         setApplyFor(erasmusStudentDataBean.getApplyFor());
 
     }
+
     @Deprecated
     public boolean hasIntensivePortugueseCourseFebruary() {
         return getIntensivePortugueseCourseFebruary() != null;

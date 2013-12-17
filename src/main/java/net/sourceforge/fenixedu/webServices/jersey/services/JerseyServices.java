@@ -1,13 +1,20 @@
 package net.sourceforge.fenixedu.webServices.jersey.services;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -15,6 +22,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -36,10 +44,14 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.photograph.PictureMode;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
+import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication.PreferredComparator;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
+import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.webServices.ExportPublications;
 
 import org.apache.commons.lang.StringUtils;
@@ -50,11 +62,20 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 @Path("/services")
 public class JerseyServices {
+    @Context
+    HttpServletRequest request;
+    @Context
+    HttpServletResponse response;
+    @Context
+    ServletContext context;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -151,6 +172,37 @@ public class JerseyServices {
             }
         }
         return users.toJSONString();
+    }
+
+    @GET
+    @Path("preferred")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String readPreferred() {
+        JsonArray array = new JsonArray();
+        for (Party party : RootDomainObject.getInstance().getPartysSet()) {
+            if (party instanceof Person) {
+                Person person = (Person) party;
+                if (person.getUsername() != null && !person.getPreferredPublicationSet().isEmpty()) {
+                    SortedSet<ResearchResultPublication> results = new TreeSet<>(new PreferredComparator(person));
+                    for (PreferredPublication preferred : person.getPreferredPublicationSet()) {
+                        results.add(preferred.getPreferredPublication());
+                    }
+                    JsonObject researcher = new JsonObject();
+                    researcher.addProperty("istID", person.getUsername());
+                    JsonArray preferences = new JsonArray();
+                    int count = 5;
+                    for (ResearchResultPublication publication : results) {
+                        if (count-- == 0) {
+                            break;
+                        }
+                        preferences.add(new JsonPrimitive(publication.getExternalId()));
+                    }
+                    researcher.add("preference", preferences);
+                    array.add(researcher);
+                }
+            }
+        }
+        return array.toString();
     }
 
     @GET
@@ -367,55 +419,78 @@ public class JerseyServices {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Path("photograph/{photoUsername}/{clientUsername}")
-    public byte[] getPhotograph(@PathParam("photoUsername") String photoUsername,
+    public Response getPhotograph(@PathParam("photoUsername") String photoUsername,
             @PathParam("clientUsername") String clientUsername, @QueryParam("xRatio") final String xRatioParameter,
             @QueryParam("yRatio") final String yRatioParameter, @QueryParam("width") final String widthParameter,
-            @QueryParam("height") final String heightParameter, @QueryParam("mode") final String modeParameter) {
+            @QueryParam("height") final String heightParameter, @QueryParam("mode") final String modeParameter,
+            @QueryParam("default") final String unavailableDefault) {
 
-        Person photoPerson;
-        Person clientPerson = null;
         //set users
-        try {
-            photoPerson = User.readUserByUserUId(photoUsername).getPerson();
-            if (!clientUsername.equals("NoUser")) {
-                clientPerson = User.readUserByUserUId(clientUsername).getPerson();
-            }
-        } catch (NullPointerException e) {
+        User user = User.readUserByUserUId(photoUsername);
+        if (user == null) {
             throw new WebApplicationException(Status.BAD_REQUEST);
         }
+        Person client = null;
+        if (!clientUsername.equals("NoUser")) {
+            User clientUser = User.readUserByUserUId(clientUsername);
+            if (clientUser == null) {
+                throw new WebApplicationException(Status.BAD_REQUEST);
+            }
+            client = clientUser.getPerson();
+        }
+        int xRatio = 1, yRatio = 1, width = 100, height = 100;
+        PictureMode pictureMode = PictureMode.FIT;
+        //prepare arguments
+        if (xRatioParameter != null) {
+            xRatio = Integer.parseInt(xRatioParameter);
+        }
+        if (yRatioParameter != null) {
+            yRatio = Integer.parseInt(yRatioParameter);
+        }
+        if (widthParameter != null) {
+            width = Integer.parseInt(widthParameter);
+        }
+        if (heightParameter != null) {
+            height = Integer.parseInt(heightParameter);
+        }
+        if (modeParameter != null) {
+            pictureMode = PictureMode.valueOf(modeParameter);
+        }
 
-        if (photoPerson.isPhotoAvailableToPerson(clientPerson)) {
-            Photograph photo = photoPerson.getPersonalPhoto();
-            if (photo != null) {
-                int xRatio = 1, yRatio = 1, width = 100, height = 100;
-                PictureMode pictureMode = PictureMode.FIT;
-                //prepare arguments
-                if (xRatioParameter != null) {
-                    xRatio = Integer.parseInt(xRatioParameter);
-                }
-                if (yRatioParameter != null) {
-                    yRatio = Integer.parseInt(yRatioParameter);
-                }
-                if (widthParameter != null) {
-                    width = Integer.parseInt(widthParameter);
-                }
-                if (heightParameter != null) {
-                    height = Integer.parseInt(heightParameter);
-                }
-                if (modeParameter != null) {
-                    pictureMode = PictureMode.valueOf(modeParameter);
-                }
-
-                try {
-                    return photo.getCustomAvatar(xRatio, yRatio, width, height, pictureMode);
-                } catch (Exception e) {
-                    throw new WebApplicationException(Status.BAD_REQUEST);
-                }
+        Photograph photo = user.getPerson().getPersonalPhoto();
+        if (photo == null) {
+            if (unavailableDefault != null) {
+                return unavailableDefaultProcess(xRatio, yRatio, width, height, pictureMode, unavailableDefault);
+            }
+            throw new WebApplicationException(Status.NOT_FOUND);
+        }
+        if (user.getPerson().isPhotoAvailableToPerson(client)) {
+            try {
+                return Response.ok(photo.getCustomAvatar(xRatio, yRatio, width, height, pictureMode),
+                        ContentType.PNG.getMimeType()).build();
+            } catch (Exception e) {
+                throw new WebApplicationException(Status.BAD_REQUEST);
             }
         }
+        if (unavailableDefault != null) {
+            return unavailableDefaultProcess(xRatio, yRatio, width, height, pictureMode, unavailableDefault);
+        }
         throw new WebApplicationException(Status.UNAUTHORIZED);
+    }
+
+    private Response unavailableDefaultProcess(int xRatio, int yRatio, int width, int height, PictureMode pictureMode,
+            String unavailableDefault) {
+        if (unavailableDefault.equals("mm")) {
+            return Response.ok(Photograph.mysteryManPhoto(xRatio, yRatio, width, height, pictureMode),
+                    ContentType.PNG.getMimeType()).build();
+        }
+        try {
+            response.sendRedirect(URLDecoder.decode(unavailableDefault, Charsets.UTF_8.name()));
+            return null;
+        } catch (IOException e) {
+            throw new WebApplicationException(Status.UNAUTHORIZED);
+        }
     }
 
     @POST

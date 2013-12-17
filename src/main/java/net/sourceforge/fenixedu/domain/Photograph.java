@@ -23,10 +23,8 @@ import net.sourceforge.fenixedu.domain.photograph.AspectRatio;
 import net.sourceforge.fenixedu.domain.photograph.Picture;
 import net.sourceforge.fenixedu.domain.photograph.PictureMode;
 import net.sourceforge.fenixedu.domain.photograph.PictureOriginal;
-import net.sourceforge.fenixedu.domain.photograph.PictureSize;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.ByteArray;
@@ -39,6 +37,8 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import com.google.common.io.ByteStreams;
 
 public class Photograph extends Photograph_Base implements Comparable<Photograph> {
 
@@ -200,14 +200,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     }
 
     public byte[] getDefaultAvatar() {
-        final PictureOriginal original = getOriginal();
-        final BufferedImage image = original.getPictureFileFormat() == ContentType.JPG ?
-                Picture.readImage(original.getPictureData().getBytes()) : read(original);
-
-        final BufferedImage adjustedImage = Picture.transformFit(image, 1, 1);
-        final BufferedImage avatar = Scalr.resize(adjustedImage, Method.QUALITY, Mode.FIT_EXACT, 100, 100);
-                //Picture.fitTo(adjustedImage, 200, 200);
-        return Picture.writeImage(avatar, ContentType.PNG).getBytes();
+        return getCustomAvatar(1, 1, 100, 100, PictureMode.FIT);
     }
 
     private BufferedImage read(PictureOriginal original) {
@@ -218,21 +211,10 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     }
 
     public byte[] getCustomAvatar(int xRatio, int yRatio, int width, int height, PictureMode pictureMode) {
-        BufferedImage image, transformed, scaled;
-        image = Picture.readImage(getOriginal().getPictureData().getBytes());
-        switch (pictureMode) {
-        case FIT:
-            transformed = Picture.transformFit(image, xRatio, yRatio);
-            break;
-        case ZOOM:
-            transformed = Picture.transformZoom(image, xRatio, yRatio);
-            break;
-        default:
-            transformed = Picture.transformFit(image, xRatio, yRatio);
-            break;
-        }
-        scaled = Picture.fitTo(transformed, width, height);
-        return Picture.writeImage(scaled, getOriginal().getPictureFileFormat()).getBytes();
+        PictureOriginal original = getOriginal();
+        BufferedImage image =
+                original.getPictureFileFormat() == ContentType.JPG ? Picture.readImage(original.getPictureData().getBytes()) : read(original);
+        return processImage(image, xRatio, yRatio, width, height, pictureMode);
     }
 
     public byte[] getCustomAvatar(AspectRatio aspectRatio, int width, int height, PictureMode pictureMode) {
@@ -386,6 +368,35 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     public byte[] exportAsJPEG(byte[] photo) {
         return exportAsJPEG(photo, Color.WHITE);
+    }
+
+    public static byte[] mysteryManPhoto(int xRatio, int yRatio, int width, int height, PictureMode pictureMode) {
+        BufferedImage image;
+        try {
+            image =
+                    Picture.readImage(ByteStreams.toByteArray(Photograph.class.getClassLoader().getResourceAsStream(
+                            "images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif")));
+            return processImage(image, xRatio, yRatio, width, height, pictureMode);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    private static byte[] processImage(BufferedImage image, int xRatio, int yRatio, int width, int height, PictureMode pictureMode) {
+        final BufferedImage transformed, scaled;
+        switch (pictureMode) {
+        case FIT:
+            transformed = Picture.transformFit(image, xRatio, yRatio);
+            break;
+        case ZOOM:
+            transformed = Picture.transformZoom(image, xRatio, yRatio);
+            break;
+        default:
+            transformed = Picture.transformFit(image, xRatio, yRatio);
+            break;
+        }
+        scaled = Scalr.resize(transformed, Method.QUALITY, Mode.FIT_EXACT, width, height);
+        return Picture.writeImage(scaled, ContentType.PNG).getBytes();
     }
 
 }

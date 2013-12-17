@@ -2032,7 +2032,7 @@ public class Registration extends Registration_Base {
             res.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.of.the.male")).append(StringUtils.SINGLE_SPACE);
         }
 
-        if (!isEmptyDegree()) {
+        if (!isEmptyDegree() && !degreeType.isEmpty()) {
             res.append(degreeType.getPrefix(locale));
             res.append(degreeType.getFilteredName(locale).toUpperCase());
 
@@ -2746,7 +2746,7 @@ public class Registration extends Registration_Base {
     }
 
     final public CycleType getCycleType(final ExecutionYear executionYear) {
-        if (!isBolonha() || isEmptyDegree()) {
+        if (!isBolonha() || isEmptyDegree() || getDegreeType().isEmpty()) {
             return null;
         }
 

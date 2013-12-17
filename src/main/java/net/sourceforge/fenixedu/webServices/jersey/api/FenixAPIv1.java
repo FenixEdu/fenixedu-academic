@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +47,7 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInform
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -53,6 +55,7 @@ import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grouping;
@@ -782,19 +785,18 @@ public class FenixAPIv1 {
 
         List<FenixDegree> fenixDegrees = new ArrayList<>();
 
-        for (Degree degree : Degree.readBolonhaDegrees()) {
-            if (degree.isBolonhaMasterOrDegree()) {
-                fenixDegrees.add(getFenixDegree(executionYear, degree));
-            }
+        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+            fenixDegrees.add(getFenixDegree(executionYear, executionDegree));
         }
         return fenixDegrees;
     }
 
-    private FenixDegree getFenixDegree(ExecutionYear executionYear, Degree degree) {
+    private FenixDegree getFenixDegree(ExecutionYear executionYear, ExecutionDegree executionDegree) {
+        final Degree degree = executionDegree.getDegree();
         List<String> degreeCampus = new ArrayList<>();
 
         String id = degree.getExternalId();
-        String name = degree.getPresentationName();
+        String name = degree.getPresentationName(executionYear);
         String type = degree.getDegreeTypeName();
         String sigla = degree.getSigla();
         String typeName = degree.getDegreeType().getFilteredName();
@@ -827,10 +829,12 @@ public class FenixAPIv1 {
         }
 
         final List<FenixTeacher> teachers = new ArrayList<>();
-        Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYear);
-
-        if (responsibleCoordinatorsTeachers.isEmpty()) {
-            responsibleCoordinatorsTeachers = degree.getCurrentResponsibleCoordinatorsTeachers();
+        final Collection<Teacher> responsibleCoordinatorsTeachers =
+                new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
+        for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+            if (coordinator.isResponsible()) {
+                responsibleCoordinatorsTeachers.add(coordinator.getTeacher());
+            }
         }
 
         for (Teacher teacher : responsibleCoordinatorsTeachers) {
@@ -865,7 +869,9 @@ public class FenixAPIv1 {
         ExecutionYear executionYear = getExecutionYear(year);
 
         if (degree.isBolonhaMasterOrDegree()) {
-            return getFenixDegree(executionYear, degree);
+            for (final ExecutionDegree executionDegree : degree.getExecutionDegreesForExecutionYear(executionYear)) {
+                return getFenixDegree(executionYear, executionDegree);
+            }
         }
 
         return new FenixDegree();
@@ -1154,7 +1160,7 @@ public class FenixAPIv1 {
         final DateTime end = writtenEvaluation.getEnrolmentPeriodEnd();
         final String enrollmentPeriodStart = start == null ? null : start.toString("yyyy-MM-dd HH:mm:ss");
         final String enrollmentPeriodEnd = end == null ? null : end.toString("yyyy-MM-dd HH:mm:ss");
-        
+
         if (type.equals(EvaluationType.EXAM_TYPE)) {
             return new FenixCourseEvaluation.Exam(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentPeriodStart,
                     enrollmentPeriodEnd, rooms);

@@ -2013,6 +2013,13 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/editCycleCourseGroupInformation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>	
+	<navigation-rule>
 		<from-view-id>/bolonhaManager/curricularPlans/orderCourseGroup.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>editCurricularPlanStructure</from-outcome>

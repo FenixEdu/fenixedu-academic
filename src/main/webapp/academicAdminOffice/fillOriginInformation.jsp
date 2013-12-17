@@ -53,7 +53,7 @@
 			</fr:slot>
 			<fr:slot name="motherProfessionType" />
 			<fr:slot name="motherProfessionalCondition" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 			</fr:slot>
 		
 			<fr:slot name="fatherSchoolLevel" layout="menu-select">
@@ -62,7 +62,7 @@
 			</fr:slot>
 			<fr:slot name="fatherProfessionType"/>
 			<fr:slot name="fatherProfessionalCondition" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 			</fr:slot>	    
 		</fr:schema>
 		<fr:layout name="tabular" >

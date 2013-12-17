@@ -84,6 +84,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
             HttpServletResponse response) {
         final PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
         RenderUtils.invalidateViewState("personalInformationBean.editPrecedentDegreeInformation");
+        RenderUtils.invalidateViewState("personalInformationBean.editPersonalInformation");
         personalInformationBean.resetInstitutionAndDegree();
         request.setAttribute("personalInformationBean", personalInformationBean);
 
@@ -102,6 +103,12 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
         final PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
+
+        if (personalInformationBean.getSchoolLevel() != null
+                && personalInformationBean.getSchoolLevel().isHighSchoolOrEquivalent()) {
+            personalInformationBean.setCountryWhereFinishedHighSchoolLevel(personalInformationBean
+                    .getCountryWhereFinishedPreviousCompleteDegree());
+        }
 
         final Set<String> messages = personalInformationBean.validateForAcademicService();
         if (!messages.isEmpty()) {

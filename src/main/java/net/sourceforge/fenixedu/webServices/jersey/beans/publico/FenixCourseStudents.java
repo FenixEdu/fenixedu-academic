@@ -25,7 +25,7 @@ public class FenixCourseStudents {
             this.username = person.getUsername();
             final Degree degree = registration.getDegree();
             this.degree = degree.getSigla();
-            this.degree = degree.getExternalId();
+            this.degreeId = degree.getExternalId();
         }
 
         public String getUsername() {

@@ -83,17 +83,17 @@ public class FenixSchedule {
 
     }
 
-    public static class FenixLessonOccuremce extends FenixInterval {
+    public static class FenixLessonOccurence extends FenixInterval {
 
         FenixRoom room;
 
-        public FenixLessonOccuremce(final LessonInstance instance) {
+        public FenixLessonOccurence(final LessonInstance instance) {
             super(instance.getBeginDateTime(), instance.getEndDateTime());
             final AllocatableSpace room = instance.getRoom();
             this.room = room == null ? null : new FenixRoom(room);
         }
 
-        public FenixLessonOccuremce(final Interval interval, final AllocatableSpace room) {
+        public FenixLessonOccurence(final Interval interval, final AllocatableSpace room) {
             super(interval);
             this.room = room == null ? null : new FenixRoom(room);
         }
@@ -112,7 +112,7 @@ public class FenixSchedule {
 
         String name;
         List<String> types = new ArrayList<>();
-        List<FenixLessonOccuremce> lessons;
+        List<FenixLessonOccurence> lessons = new ArrayList<>();
 
         public FenixShift(final Shift shift) {
             this.name = shift.getNome();
@@ -124,10 +124,10 @@ public class FenixSchedule {
             }
             for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
                 for (final LessonInstance lessonInstance : lesson.getLessonInstancesSet()) {
-                    lessons.add(new FenixLessonOccuremce(lessonInstance));
+                    lessons.add(new FenixLessonOccurence(lessonInstance));
                 }
                 for (final Interval interval : lesson.getAllLessonIntervalsWithoutInstanceDates()) {
-                    lessons.add(new FenixLessonOccuremce(interval, lesson.getSala()));
+                    lessons.add(new FenixLessonOccurence(interval, lesson.getSala()));
                 }
             }
         }
@@ -140,11 +140,11 @@ public class FenixSchedule {
             this.name = name;
         }
 
-        public List<FenixLessonOccuremce> getLessons() {
+        public List<FenixLessonOccurence> getLessons() {
             return lessons;
         }
 
-        public void setLessons(List<FenixLessonOccuremce> lessons) {
+        public void setLessons(List<FenixLessonOccurence> lessons) {
             this.lessons = lessons;
         }
 

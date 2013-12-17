@@ -37,7 +37,7 @@ import pt.ist.fenixframework.Atomic;
 
 public class PersonalInformationBean implements Serializable {
 
-    static private final LocalDate limitDate = new LocalDate(2012, 11, 21);
+    static private final LocalDate limitDate = new LocalDate(2013, 12, 16);
 
     static public boolean isPastLimitDate() {
         return new LocalDate().isAfter(limitDate);
@@ -80,6 +80,7 @@ public class PersonalInformationBean implements Serializable {
     private String degreeDesignation;
     private DegreeDesignation raidesDegreeDesignation;
     private Country countryWhereFinishedPreviousCompleteDegree;
+    private Country countryWhereFinishedHighSchoolLevel;
     private SchoolLevelType schoolLevel;
     private String otherSchoolLevel;
     private DateTime lastModifiedDate;
@@ -118,6 +119,7 @@ public class PersonalInformationBean implements Serializable {
         setConclusionGrade(degreeInfo.getConclusionGrade());
         setConclusionYear(degreeInfo.getConclusionYear());
         setCountryWhereFinishedPreviousCompleteDegree(degreeInfo.getCountry());
+        setCountryWhereFinishedHighSchoolLevel(degreeInfo.getCountryHighSchool());
 
         Unit institution = degreeInfo.getInstitution();
         if (!isUnitFromRaidesListMandatory() || (institution != null && !StringUtils.isEmpty(institution.getCode()))) {
@@ -453,7 +455,23 @@ public class PersonalInformationBean implements Serializable {
     }
 
     public void setCountryWhereFinishedPreviousCompleteDegree(Country country) {
+        if ((getSchoolLevel() != null) && getSchoolLevel().isHighSchoolOrEquivalent()) {
+            setCountryWhereFinishedHighSchoolLevel(country);
+        }
         this.countryWhereFinishedPreviousCompleteDegree = country;
+    }
+
+    public boolean isHightSchoolCountryFieldRequired() {
+        return (getSchoolLevel() != null) && !getSchoolLevel().isHighSchoolOrEquivalent()
+                && !getSchoolLevel().isSchoolLevelBasicCycle();
+    }
+
+    public Country getCountryWhereFinishedHighSchoolLevel() {
+        return this.countryWhereFinishedHighSchoolLevel;
+    }
+
+    public void setCountryWhereFinishedHighSchoolLevel(Country country) {
+        this.countryWhereFinishedHighSchoolLevel = country;
     }
 
     public SchoolLevelType getSchoolLevel() {
@@ -494,7 +512,7 @@ public class PersonalInformationBean implements Serializable {
                 || !isProfessionTypeValid() || !isMotherSchoolLevelValid() || !isMotherProfessionTypeValid()
                 || !isMotherProfessionalConditionValid() || !isFatherProfessionalConditionValid()
                 || !isFatherProfessionTypeValid() || !isFatherSchoolLevelValid()
-                || getCountryWhereFinishedPreviousCompleteDegree() == null
+                || getCountryWhereFinishedPreviousCompleteDegree() == null || !isCountryWhereFinishedHighSchoolValid()
                 || (getDegreeDesignation() == null && !isUnitFromRaidesListMandatory())
                 || (getInstitution() == null && StringUtils.isEmpty(getInstitutionName()))) {
             result.add("error.CandidacyInformationBean.required.information.must.be.filled");
@@ -508,6 +526,11 @@ public class PersonalInformationBean implements Serializable {
         int birthYear = getStudent().getPerson().getDateOfBirthYearMonthDay().getYear();
         if (getConclusionYear() != null && getConclusionYear() < birthYear) {
             result.add("error.personalInformation.year.before.birthday");
+        }
+
+        if (getSchoolLevel() != null && !getSchoolLevel().isSchoolLevelBasicCycle() && !getSchoolLevel().isOther()
+                && getConclusionYear() != null && getConclusionYear() < birthYear + 15) {
+            result.add("error.personalInformation.year.before.fifteen.years.old");
         }
 
         if (isUnitFromRaidesListMandatory()) {
@@ -588,6 +611,14 @@ public class PersonalInformationBean implements Serializable {
 
     public boolean isSchoolLevelValid() {
         return hasSchoolLevel() && getSchoolLevel().isForStudent();
+    }
+
+    private boolean isCountryWhereFinishedHighSchoolValid() {
+        if (getSchoolLevel() == null) {
+            return false;
+        }
+        return (getCountryWhereFinishedHighSchoolLevel() != null && !getSchoolLevel().isSchoolLevelBasicCycle())
+                || (getCountryWhereFinishedHighSchoolLevel() == null && getSchoolLevel().isSchoolLevelBasicCycle());
     }
 
     public boolean isHighSchoolLevelValid() {

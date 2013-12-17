@@ -25,7 +25,6 @@
 <logic:notEmpty name="process">
 	<bean:define id="processId" name="process" property="externalId" />
 	<bean:define id="candidacy" name="process" property="candidacy" />
-	
 	<logic:notEmpty name="activities">
 		<%-- list process activities --%>
 		<ul class="mtop15 mbottom2">

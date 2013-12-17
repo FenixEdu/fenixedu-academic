@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -314,21 +315,15 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         String studentPersonId = request.getParameter("studentId");
         Person studentPerson = FenixFramework.getDomainObject(studentPersonId);
         Student student = studentPerson.getStudent();
-
-        student.getActiveRegistrations();
-        if (student.getActiveRegistrations().size() > 1) {
-            // mandar mensagem de erro se tiver mais que uma matricula
-            addActionMessage(request, "Aluno tem mais que uma matricula");
+        Registration registration = null;
+        try {
+            registration = getValidRegistration(mapping, request, student);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey());
             return mapping.findForward("viewTutorship");
         }
 
-        if (student.getActiveRegistrations().isEmpty()) {
-            // mandar mensagem de erro se não tiver matricula
-            addActionMessage(request, "Aluno não tem matricula");
-            return mapping.findForward("viewTutorship");
-        }
-
-        StudentCurricularPlan studentCurricularPlan = student.getActiveRegistrations().iterator().next().getActiveStudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
         Degree degree = studentCurricularPlan.getDegree();
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         ExecutionDegree executionDegree =
@@ -339,6 +334,27 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         request.setAttribute("tutors", teacherTutorshipCreationBean);
         request.setAttribute("studentId", studentPersonId);
         return mapping.findForward("prepareCreateNewTutorship");
+    }
+
+    private Registration getValidRegistration(ActionMapping mapping, HttpServletRequest request, Student student) {
+        Registration registration = null;
+        if (student.getActiveRegistrations().size() == 1) {
+            registration = student.getActiveRegistrations().iterator().next();
+        } else {
+            for (Registration regs : student.getActiveRegistrations()) {
+                if (!regs.getActiveStudentCurricularPlan().isEmptyDegree()) {
+                    if (registration == null) {
+                        registration = regs;
+                    } else {// we already found one, can't have another
+                        throw new DomainException("error.student.enrolment.more.than.one");
+                    }
+                }
+            }
+            if (registration == null) {
+                throw new DomainException("error.student.enrolment.none");
+            }
+        }
+        return registration;
     }
 
     /**

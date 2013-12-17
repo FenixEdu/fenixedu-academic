@@ -463,7 +463,7 @@ public class Teacher extends Teacher_Base {
             for (DegreeTeachingService teachingService : teachingServices) {
                 duration =
                         duration.plus(new Duration(new Double((teachingService.getPercentage() / 100)
-                                * teachingService.getShift().getTotalDuration().getMillis()).longValue()));
+                                * teachingService.getShift().getCourseLoadWeeklyAverage().doubleValue() * 3600 * 1000).longValue()));
             }
         }
         return duration;

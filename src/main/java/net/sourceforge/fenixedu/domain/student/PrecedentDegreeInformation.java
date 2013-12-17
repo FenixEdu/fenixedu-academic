@@ -113,6 +113,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         setConclusionGrade(precedentDegreeInformationBean.getConclusionGrade());
         setConclusionYear(precedentDegreeInformationBean.getConclusionYear());
         setCountry(precedentDegreeInformationBean.getCountry());
+        setCountryHighSchool(precedentDegreeInformationBean.getCountryWhereFinishedHighSchoolLevel());
         setSchoolLevel(precedentDegreeInformationBean.getSchoolLevel());
         setOtherSchoolLevel(precedentDegreeInformationBean.getOtherSchoolLevel());
 
@@ -136,6 +137,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         this.setConclusionGrade(precedentDegreeInformationBean.getConclusionGrade());
         this.setConclusionYear(precedentDegreeInformationBean.getConclusionYear());
         this.setCountry(precedentDegreeInformationBean.getCountry());
+        this.setCountryHighSchool(precedentDegreeInformationBean.getCountryWhereFinishedHighSchoolLevel());
         this.setSchoolLevel(precedentDegreeInformationBean.getSchoolLevel());
         this.setOtherSchoolLevel(precedentDegreeInformationBean.getOtherSchoolLevel());
         setLastModifiedDate(new DateTime());
@@ -153,6 +155,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         setConclusionGrade(bean.getConclusionGrade());
         setConclusionYear(bean.getConclusionYear());
         setCountry(bean.getCountryWhereFinishedPreviousCompleteDegree());
+        setCountryHighSchool(bean.getCountryWhereFinishedHighSchoolLevel());
         Unit institution = bean.getInstitution();
         if (institution == null && !StringUtils.isEmpty(bean.getInstitutionName())) {
             institution = UnitUtils.readExternalInstitutionUnitByName(bean.getInstitutionName());
@@ -229,6 +232,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
     public void delete() {
         setCountry(null);
+        setCountryHighSchool(null);
         setInstitution(null);
         setSourceInstitution(null);
 
@@ -350,6 +354,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         return super.getPrecedentInstitution();
 
     }
+
     @Deprecated
     public boolean hasCandidacyInternal() {
         return getCandidacyInternal() != null;

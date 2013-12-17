@@ -78,9 +78,11 @@ public class DepartmentCreditsPoolBean implements Serializable {
     private void addToSet(SortedSet<DepartmentExecutionCourse> set, ExecutionCourse executionCourse) {
         DepartmentExecutionCourse departmentExecutionCourse = new DepartmentExecutionCourse(executionCourse);
         set.add(departmentExecutionCourse);
-        assignedCredits =
-                assignedCredits.add(departmentExecutionCourse.getDepartmentEffectiveLoad().multiply(
-                        executionCourse.getUnitCreditValue()));
+        final BigDecimal departmentEffectiveLoad = departmentExecutionCourse.getDepartmentEffectiveLoad();
+        final BigDecimal unitCreditValue = executionCourse.getUnitCreditValue();
+        if (departmentEffectiveLoad != null && unitCreditValue != null) {
+            assignedCredits = assignedCredits.add(departmentEffectiveLoad.multiply(unitCreditValue));
+        }
     }
 
     private boolean isTaughtByTeacherFromThisDepartment(ExecutionCourse executionCourse) {

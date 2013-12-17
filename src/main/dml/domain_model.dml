@@ -7032,6 +7032,8 @@ class candidacyProcess.mobility.MobilityStudentData  {
 	String homeInstitutionFax;
 	String homeInstitutionEmail;
 	
+	SchoolLevelType currentSchoolLevel;
+	String currentOtherSchoolLevel;
 	Boolean hasDiplomaOrDegree;
 	Integer diplomaConclusionYear;
 	String diplomaName;
@@ -13287,6 +13289,13 @@ relation PrecedentDegreeInformationCountry {
     Country playsRole country;
 }
 
+relation PrecedentDegreeInformationCountryHighSchool {
+    student.PrecedentDegreeInformation playsRole precedentDegreeInformationsHighSchool {
+        multiplicity *;
+    }
+    Country playsRole countryHighSchool;
+}
+
 relation PrecedentDegreeInformationPrecedentCountry {
     student.PrecedentDegreeInformation playsRole originPrecedentDegreeInformations {
         multiplicity *;
@@ -18388,6 +18397,13 @@ relation StandaloneIndividualCandidacyCurricularCourses {
 relation MobilityIndividualApplicationMobilityStudentData {
 	candidacyProcess.mobility.MobilityIndividualApplication playsRole mobilityIndividualApplication;
 	candidacyProcess.mobility.MobilityStudentData playsRole mobilityStudentData;
+}
+
+relation MobilityStudentDataCountryHighSchool {
+    candidacyProcess.mobility.MobilityStudentData playsRole mobilityStudentDataHighSchool {
+        multiplicity *;
+    }
+    Country playsRole mobilityCountryHighSchool;
 }
 
 relation MobilityIndividualApplicationCurricularCourses {

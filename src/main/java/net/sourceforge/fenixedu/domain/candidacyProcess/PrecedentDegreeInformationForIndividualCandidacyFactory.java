@@ -47,6 +47,9 @@ public class PrecedentDegreeInformationForIndividualCandidacyFactory {
 
         pdi.setPrecedentCountry(erasmusStudentDataBean.getSelectedCountry());
         pdi.setPrecedentInstitution(erasmusStudentDataBean.getSelectedUniversity());
+        pdi.setPrecedentSchoolLevel(erasmusStudentDataBean.getCurrentSchoolLevel());
+        pdi.setOtherPrecedentSchoolLevel(erasmusStudentDataBean.getCurrentOtherSchoolLevel());
+        pdi.setCountryHighSchool(erasmusStudentDataBean.getCountryWhereFinishedHighSchoolLevel());
 
         if (erasmusStudentDataBean.getHasDiplomaOrDegree()) {
             pdi.setDegreeDesignation(erasmusStudentDataBean.getDiplomaName());
@@ -180,6 +183,9 @@ public class PrecedentDegreeInformationForIndividualCandidacyFactory {
 
         pid.setPrecedentCountry(erasmusStudentDataBean.getSelectedCountry());
         pid.setPrecedentInstitution(erasmusStudentDataBean.getSelectedUniversity());
+        pid.setPrecedentSchoolLevel(erasmusStudentDataBean.getCurrentSchoolLevel());
+        pid.setOtherPrecedentSchoolLevel(erasmusStudentDataBean.getCurrentOtherSchoolLevel());
+        pid.setCountryHighSchool(erasmusStudentDataBean.getCountryWhereFinishedHighSchoolLevel());
 
         if (erasmusStudentDataBean.getHasDiplomaOrDegree()) {
             pid.setDegreeDesignation(erasmusStudentDataBean.getDiplomaName());
