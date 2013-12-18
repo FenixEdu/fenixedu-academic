@@ -57,27 +57,21 @@
 
 <!-- Header -->
 <% if (!FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
-<div id="top">
-	<h1 id="logo">
-		<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>" style="padding-left:30px;padding-top:20px;" src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
-	</h1>
-
-	<tiles:insert page="/commons/headerButtons.jsp" />
-	<p id="user">
-		<tiles:insert page="/commons/personalInfoTitleBar.jsp" />
-	</p>
-</div>
+	<tiles:insert page="/commons/fenixEduBar.jsp" />
 <% } %>
 <!-- End Header -->
 
 
 <!-- NavGeral -->
 <div id="navtop">
-	<% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 	<h1 class="applicationName">
-		<%=Instalation.getInstance().getInstalationName() %><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
+		<% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
+			<%=Instalation.getInstance().getInstalationName() %><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
+		<% } %>
+		<% if (!FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
+			<img alt="<%=Instalation.getInstance().getInstalationName() %>" src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
+		<% } %>
 	</h1>
-	<% } %>
 	<tiles:insert attribute="navGeral" />
 </div>
 <!-- End NavGeral -->
