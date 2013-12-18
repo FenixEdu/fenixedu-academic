@@ -1,6 +1,6 @@
 package pt.ist.fenix.user.management;
 
-import pt.ist.bennu.user.management.UsernameGenerator;
+import org.fenixedu.bennu.user.management.UsernameGenerator;
 
 public class ISTUsernameGenerator extends UsernameGenerator<Object> {
 

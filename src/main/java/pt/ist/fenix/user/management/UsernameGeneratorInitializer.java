@@ -4,7 +4,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import pt.ist.bennu.user.management.UsernameGenerator;
+import org.fenixedu.bennu.user.management.UsernameGenerator;
 
 @WebListener
 public class UsernameGeneratorInitializer implements ServletContextListener {
