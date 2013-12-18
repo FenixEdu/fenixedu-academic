@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
@@ -26,7 +25,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -34,6 +32,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -223,8 +222,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 
     private List<PublicCandidacyHashCode> getIndividualCandidacyHashCodesNotBounded() {
         List<PublicCandidacyHashCode> publicCandidacyHashCodeList =
-                new ArrayList<PublicCandidacyHashCode>(CollectionUtils.select(
-                        DomainObjectUtil.readAllDomainObjects(PublicCandidacyHashCode.class),
+                new ArrayList<PublicCandidacyHashCode>(CollectionUtils.select(Bennu.getInstance().getCandidacyHashCodesSet(),
                         new org.apache.commons.collections.Predicate() {
 
                             @Override

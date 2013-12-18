@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneCan
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyResultBean;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
@@ -60,7 +61,7 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
     }
 
     @Override
-    protected Class getProcessType() {
+    protected Class<? extends Process> getProcessType() {
         return StandaloneIndividualCandidacyProcess.class;
     }
 
@@ -161,7 +162,7 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
     }
 
     public ActionForward executeEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "EditCandidacyPersonalInformation", getIndividualCandidacyProcessBean());
@@ -213,7 +214,7 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
     }
 
     public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "EditCandidacyInformation", getIndividualCandidacyProcessBean());
@@ -239,7 +240,7 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
     }
 
     public ActionForward executeIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "IntroduceCandidacyResult", getCandidacyResultBean());
@@ -257,13 +258,13 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
     }
 
     public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         request.setAttribute("degree", getProcess(request).getCandidacySelectedDegree());
         return mapping.findForward("create-registration");
     }
 
     public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "CreateRegistration");
         } catch (EnrollmentDomainException ex) {

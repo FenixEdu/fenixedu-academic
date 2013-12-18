@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJob;
@@ -26,6 +25,7 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -365,7 +365,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 
         if (GratuityReportQueueJobType.DATE_INTERVAL.equals(getType())) {
             executionYearList = new ArrayList<ExecutionYear>();
-            executionYearList.addAll(DomainObjectUtil.readAllDomainObjects(ExecutionYear.class));
+            executionYearList.addAll(Bennu.getInstance().getExecutionYearsSet());
         } else if (GratuityReportQueueJobType.EXECUTION_YEAR.equals(getType())) {
             executionYearList = Collections.singletonList(getExecutionYear());
         }

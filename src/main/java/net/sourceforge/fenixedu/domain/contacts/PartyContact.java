@@ -21,6 +21,9 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
+
 public abstract class PartyContact extends PartyContact_Base {
 
     public static Comparator<PartyContact> COMPARATOR_BY_TYPE = new Comparator<PartyContact>() {
@@ -272,7 +275,7 @@ public abstract class PartyContact extends PartyContact_Base {
         Set<PartyContact> contacts = new HashSet<PartyContact>();
 
         for (Class<? extends PartyContact> clazz : contactClasses) {
-            contacts.addAll(DomainObjectUtil.readAllDomainObjects(clazz));
+            contacts.addAll(getAllInstancesOf(clazz));
         }
 
         return contacts;
@@ -592,4 +595,7 @@ public abstract class PartyContact extends PartyContact_Base {
         return getPrevPartyContact() != null;
     }
 
+    private static Set<PartyContact> getAllInstancesOf(Class<? extends PartyContact> type) {
+        return Sets.newHashSet(Iterables.filter(Bennu.getInstance().getPartyContactsSet(), type));
+    }
 }

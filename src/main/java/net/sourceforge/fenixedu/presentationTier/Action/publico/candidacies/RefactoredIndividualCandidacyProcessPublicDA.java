@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
@@ -33,6 +32,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean.PrecedentDegreeType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess.SendEmailForApplicationSubmission;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
@@ -42,11 +42,14 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
 import com.octo.captcha.module.struts.CaptchaServicePlugin;
 import com.octo.captcha.service.CaptchaServiceException;
 
@@ -121,13 +124,13 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
         return preparePreCreationOfCandidacy(mapping, form, request, response);
     }
 
-    @SuppressWarnings("unchecked")
     protected CandidacyProcess getCurrentOpenParentProcess() {
-        Set<CandidacyProcess> degreeChangeCandidacyProcesses = DomainObjectUtil.readAllDomainObjects(getParentProcessType());
+        Set<Process> degreeChangeCandidacyProcesses =
+                Sets.newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), getParentProcessType()));
 
-        for (CandidacyProcess candidacyProcess : degreeChangeCandidacyProcesses) {
-            if (candidacyProcess.hasOpenCandidacyPeriod()) {
-                return candidacyProcess;
+        for (Process candidacyProcess : degreeChangeCandidacyProcesses) {
+            if (candidacyProcess instanceof CandidacyProcess && ((CandidacyProcess) candidacyProcess).hasOpenCandidacyPeriod()) {
+                return (CandidacyProcess) candidacyProcess;
             }
         }
 
