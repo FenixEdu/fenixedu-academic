@@ -162,14 +162,14 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.user.management.UserLoginPeriod;
+import org.fenixedu.bennu.user.management.UserManager;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.bennu.user.management.UserLoginPeriod;
-import pt.ist.bennu.user.management.UserManager;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;

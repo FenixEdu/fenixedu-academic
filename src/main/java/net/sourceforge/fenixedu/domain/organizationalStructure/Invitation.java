@@ -6,10 +6,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.fenixedu.bennu.user.management.UserLoginPeriod;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.bennu.user.management.UserLoginPeriod;
 
 public class Invitation extends Invitation_Base {
 
