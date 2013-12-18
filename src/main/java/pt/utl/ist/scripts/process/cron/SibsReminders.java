@@ -4,9 +4,10 @@ import java.util.Collections;
 
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
-import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.scheduler.CronTask;
-import pt.ist.bennu.scheduler.annotation.Task;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.scheduler.CronTask;
+import org.fenixedu.bennu.scheduler.annotation.Task;
 
 @Task(englishTitle = "SibsReminders")
 public class SibsReminders extends CronTask {

@@ -18,13 +18,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
-import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.scheduler.annotation.Task;
 
 @Task(englishTitle = "ImportPersonProfessionalRegimesFromGiaf")
 public class ImportPersonProfessionalRegimesFromGiaf extends ImportFromGiaf {

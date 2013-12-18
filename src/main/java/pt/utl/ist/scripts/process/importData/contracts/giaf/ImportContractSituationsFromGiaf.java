@@ -10,7 +10,9 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ContractSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import pt.ist.bennu.scheduler.annotation.Task;
+
+import org.fenixedu.bennu.scheduler.annotation.Task;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Task(englishTitle = "ImportContractSituationsFromGiaf")

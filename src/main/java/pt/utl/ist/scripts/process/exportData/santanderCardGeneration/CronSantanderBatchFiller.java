@@ -1,7 +1,7 @@
 package pt.utl.ist.scripts.process.exportData.santanderCardGeneration;
 
-import pt.ist.bennu.scheduler.CronTask;
-import pt.ist.bennu.scheduler.annotation.Task;
+import org.fenixedu.bennu.scheduler.CronTask;
+import org.fenixedu.bennu.scheduler.annotation.Task;
 
 @Task(englishTitle = "CronSantanderBatchFiller")
 public class CronSantanderBatchFiller extends CronTask {

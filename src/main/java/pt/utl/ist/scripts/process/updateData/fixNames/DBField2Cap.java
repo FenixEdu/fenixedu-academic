@@ -11,9 +11,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
-
-import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.scheduler.CronTask;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.scheduler.CronTask;
 
 public class DBField2Cap extends CronTask {
     private static DBField2Cap field = new DBField2Cap();

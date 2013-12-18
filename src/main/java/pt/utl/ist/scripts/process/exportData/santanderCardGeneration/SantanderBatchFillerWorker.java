@@ -31,11 +31,10 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class SantanderBatchFillerWorker {
     private static String recordEnd = "*";

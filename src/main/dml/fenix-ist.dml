@@ -5,7 +5,7 @@ class user.management.IstUsernameCounter {
 }
 
 relation BennuHasIstUsernameCounter {
-    .pt.ist.bennu.core.domain.Bennu playsRole bennu {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
         multiplicity 1..1;
     }
     user.management.IstUsernameCounter playsRole istUsernameCounter;

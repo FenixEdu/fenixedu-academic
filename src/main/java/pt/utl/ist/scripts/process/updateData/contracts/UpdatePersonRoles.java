@@ -18,12 +18,11 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfession
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.scheduler.CronTask;
+import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.scheduler.CronTask;
-import pt.ist.bennu.scheduler.annotation.Task;
 
 @Task(englishTitle = "UpdatePersonRoles")
 public class UpdatePersonRoles extends CronTask {

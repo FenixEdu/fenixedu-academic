@@ -15,20 +15,20 @@
     <name>Fenix IST</name>
     <url>http://www.fenixedu.org</url>
     <description>IST Specific Features for FenixEdu</description>
-	
-	<build>
-		<plugins>
-					<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<fork>true</fork>
-					<maxmem>2048</maxmem>
-					<meminitial>1536</meminitial>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <maxmem>2048</maxmem>
+                    <meminitial>1536</meminitial>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
@@ -36,12 +36,12 @@
             <artifactId>fenix</artifactId>
             <version>2.0.0-SNAPSHOT</version>
         </dependency>
-		<dependency>
-			<groupId>pt.ist.bennu</groupId>
-			<artifactId>bennu-scheduler</artifactId>
-			<version>2.0.0-M2</version>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-scheduler</artifactId>
+            <version>2.0.0-M5</version>
+        </dependency>
+    </dependencies>
 
     <repositories>
         <repository>

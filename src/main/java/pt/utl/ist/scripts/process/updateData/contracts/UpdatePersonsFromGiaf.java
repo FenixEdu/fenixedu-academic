@@ -25,11 +25,12 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGia
 import net.sourceforge.fenixedu.util.StringFormatter;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.scheduler.annotation.Task;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.scripts.process.importData.contracts.giaf.ImportFromGiaf;
 import pt.utl.ist.scripts.process.updateData.fixNames.DBField2Cap;
@@ -51,7 +52,7 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
     public void runTask() {
         getLogger().debug("Start UpdatePersonsFromGiaf");
         try {
-            Authenticate.mock(pt.ist.bennu.core.domain.User.findByUsername("ist23932"));
+            Authenticate.mock(User.findByUsername("ist23932"));
 
             int count = 0, notImported = 0;
             Set<Person> newPersons = new HashSet<Person>();

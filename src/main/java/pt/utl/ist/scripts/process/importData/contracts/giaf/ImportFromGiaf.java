@@ -17,8 +17,10 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCo
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRelation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ServiceExemption;
-import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.scheduler.CronTask;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.scheduler.CronTask;
+
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public abstract class ImportFromGiaf extends CronTask {

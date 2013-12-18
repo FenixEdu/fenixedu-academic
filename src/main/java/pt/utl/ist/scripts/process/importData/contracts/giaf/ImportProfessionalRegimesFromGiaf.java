@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.scheduler.CronTask;
+import org.fenixedu.bennu.scheduler.annotation.Task;
 
-import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.scheduler.CronTask;
-import pt.ist.bennu.scheduler.annotation.Task;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Task(englishTitle = "ImportProfessionalRegimesFromGiaf")
