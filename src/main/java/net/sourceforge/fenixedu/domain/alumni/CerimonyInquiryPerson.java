@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.alumni;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 
 public class CerimonyInquiryPerson extends CerimonyInquiryPerson_Base {
 

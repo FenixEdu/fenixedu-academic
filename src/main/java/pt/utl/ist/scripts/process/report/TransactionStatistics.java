@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.fenixedu.util.ConnectionManager;
 
+import org.fenixedu.bennu.scheduler.CronTask;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -21,7 +22,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import pt.ist.bennu.scheduler.CronTask;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class TransactionStatistics extends CronTask {

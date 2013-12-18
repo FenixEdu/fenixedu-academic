@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
-import pt.ist.bennu.core.domain.Bennu;
-
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class MessageId extends MessageId_Base {

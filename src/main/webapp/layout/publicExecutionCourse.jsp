@@ -5,7 +5,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.contents.Node"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
-<%@page import="pt.ist.bennu.core.security.Authenticate"%>
+<%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>

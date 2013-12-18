@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.domain.contents;
 import java.util.Collection;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.contents.pathProcessors.AbstractPathProcessor;
-import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Predicate;

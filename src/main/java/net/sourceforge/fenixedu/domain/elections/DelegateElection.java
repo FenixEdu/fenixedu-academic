@@ -12,9 +12,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public abstract class DelegateElection extends DelegateElection_Base {
 

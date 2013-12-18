@@ -4,8 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain.oldInquiries;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesRoom;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 

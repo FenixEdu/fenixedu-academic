@@ -2,7 +2,8 @@ package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
 import java.math.BigDecimal;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import pt.ist.fenixframework.Atomic;

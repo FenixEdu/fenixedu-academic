@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
 
-import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 
 public class SetEmail {

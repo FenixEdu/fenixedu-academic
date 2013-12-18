@@ -6,11 +6,11 @@ import java.util.SortedSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 

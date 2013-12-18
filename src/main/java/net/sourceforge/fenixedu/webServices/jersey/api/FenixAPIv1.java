@@ -119,13 +119,13 @@ import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace.Room
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.JSONObject;
 
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.domain.candidacy.util;
 
 import java.io.Serializable;
 
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
-import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 
 public class GenericApplicationUserBean implements Serializable {

@@ -14,8 +14,7 @@ import net.sourceforge.fenixedu.util.State;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * This class contains all the information regarding a Reimbursement Guide. <br/>

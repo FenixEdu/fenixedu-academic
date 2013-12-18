@@ -1,4 +1,4 @@
-<%@page import="pt.ist.bennu.core.util.CoreConfiguration"%>
+<%@page import="org.fenixedu.bennu.core.util.CoreConfiguration"%>
 <%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
 <%@ page language="java"%>

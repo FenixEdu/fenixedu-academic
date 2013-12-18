@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
 import java.util.Comparator;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ApprovedTeacherEvaluationProcessMark extends ApprovedTeacherEvaluationProcessMark_Base {
 

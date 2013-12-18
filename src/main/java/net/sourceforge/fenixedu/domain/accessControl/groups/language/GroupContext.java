@@ -17,7 +17,7 @@ public interface GroupContext {
 
     /**
      * The standard name of the context variable that contains the currently
-     * logged {@link pt.ist.bennu.core.domain.User}.
+     * logged {@link org.fenixedu.bennu.core.domain.User}.
      */
     public static final String VAR_USER = "user";
 

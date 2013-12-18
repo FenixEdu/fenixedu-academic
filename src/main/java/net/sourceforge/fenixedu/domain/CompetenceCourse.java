@@ -35,9 +35,9 @@ import net.sourceforge.fenixedu.predicates.CompetenceCoursePredicates;
 import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

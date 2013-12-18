@@ -28,11 +28,11 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 import org.apache.commons.lang.CharSetUtils;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 

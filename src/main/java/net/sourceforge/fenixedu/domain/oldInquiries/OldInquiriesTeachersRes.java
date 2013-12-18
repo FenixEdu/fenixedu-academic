@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.oldInquiries;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Jo�o Fialho & Rita Ferreira

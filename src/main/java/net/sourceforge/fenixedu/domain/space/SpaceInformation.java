@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 public abstract class SpaceInformation extends SpaceInformation_Base implements Comparable<SpaceInformation> {

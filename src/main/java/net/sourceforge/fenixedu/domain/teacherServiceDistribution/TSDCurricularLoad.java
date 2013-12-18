@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;

@@ -11,7 +11,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -63,6 +62,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 

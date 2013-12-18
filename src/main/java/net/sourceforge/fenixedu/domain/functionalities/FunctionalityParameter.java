@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * The <code>FunctionalityParameter</code> reifies a parameters that is required

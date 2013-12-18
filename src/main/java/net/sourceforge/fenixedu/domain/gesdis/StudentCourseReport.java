@@ -6,7 +6,7 @@
  */
 package net.sourceforge.fenixedu.domain.gesdis;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Leonor Almeida

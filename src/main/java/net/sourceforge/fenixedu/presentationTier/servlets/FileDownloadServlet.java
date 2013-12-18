@@ -15,8 +15,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.httpclient.HttpStatus;
-
-import pt.ist.bennu.core.util.CoreConfiguration;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 @WebServlet(urlPatterns = "/downloadFile/*")
 public class FileDownloadServlet extends HttpServlet {

@@ -4,7 +4,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-<%@page import="pt.ist.bennu.core.util.CoreConfiguration"%>
+<%@page import="org.fenixedu.bennu.core.util.CoreConfiguration"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>

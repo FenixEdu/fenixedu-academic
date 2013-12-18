@@ -1,8 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class DeleteFileLog extends DeleteFileLog_Base {
 

@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
-import pt.ist.bennu.core.domain.Bennu;
 
 public class PhdProgramsProvider extends AbstractDomainObjectProvider {
 

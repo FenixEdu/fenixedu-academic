@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.tests;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class NewPresentationMaterial extends NewPresentationMaterial_Base implements Positionable {

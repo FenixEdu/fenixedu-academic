@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.person;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class IdDocumentTypeObject extends IdDocumentTypeObject_Base {
 

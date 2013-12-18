@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.domain.Bennu;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Util {

@@ -2,9 +2,8 @@ package net.sourceforge.fenixedu.domain.caseHandling;
 
 import java.util.Comparator;
 
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.Bennu;
-
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 public class ProcessLog extends ProcessLog_Base {

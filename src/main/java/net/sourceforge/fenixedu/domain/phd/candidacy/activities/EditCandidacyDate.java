@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy.activities;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.LocalDate;
 
 public class EditCandidacyDate extends PhdProgramCandidacyProcessActivity {

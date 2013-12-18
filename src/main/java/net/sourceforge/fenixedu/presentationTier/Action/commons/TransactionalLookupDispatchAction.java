@@ -5,8 +5,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
 
 import org.apache.struts.action.ActionForm;
@@ -15,8 +13,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.actions.LookupDispatchAction;
-
-import pt.ist.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * Contains util functions for struts transaction management.

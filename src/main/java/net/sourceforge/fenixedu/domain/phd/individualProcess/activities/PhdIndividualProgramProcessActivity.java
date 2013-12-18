@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
 import java.util.Collections;
 
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;

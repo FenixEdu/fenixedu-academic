@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 public class StudentInquiryExecutionPeriod extends StudentInquiryExecutionPeriod_Base {

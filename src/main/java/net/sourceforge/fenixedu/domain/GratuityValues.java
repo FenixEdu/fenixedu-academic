@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collections;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class GratuityValues extends GratuityValues_Base {
 

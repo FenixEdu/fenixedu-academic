@@ -5,9 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import pt.ist.bennu.core.domain.Bennu;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 

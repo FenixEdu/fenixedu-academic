@@ -4,9 +4,8 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class CurricularCourseInquiryTemplate extends CurricularCourseInquiryTemplate_Base {
 

@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.credits;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.bennu.core.domain.Bennu;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;

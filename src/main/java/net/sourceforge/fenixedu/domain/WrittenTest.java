@@ -23,12 +23,11 @@ import net.sourceforge.fenixedu.predicates.WrittenTestPredicates;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * @author Ana e Ricardo

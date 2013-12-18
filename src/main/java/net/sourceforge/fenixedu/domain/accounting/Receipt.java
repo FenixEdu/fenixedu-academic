@@ -24,10 +24,9 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class Receipt extends Receipt_Base {
 

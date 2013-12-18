@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -14,7 +16,6 @@ import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationE
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-import pt.ist.bennu.core.domain.Bennu;
 
 public abstract class DebtsFile extends DebtsFile_Base {
 

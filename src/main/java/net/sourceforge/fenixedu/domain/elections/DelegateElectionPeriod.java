@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.elections;
 
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 public abstract class DelegateElectionPeriod extends DelegateElectionPeriod_Base {

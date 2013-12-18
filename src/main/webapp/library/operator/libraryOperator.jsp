@@ -1,6 +1,6 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance"%>
-<%@page import="pt.ist.bennu.core.security.Authenticate"%>
-<%@page import="pt.ist.bennu.core.domain.Bennu"%>
+<%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
+<%@page import="org.fenixedu.bennu.core.domain.Bennu"%>
 <%@ page language="java"%>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>

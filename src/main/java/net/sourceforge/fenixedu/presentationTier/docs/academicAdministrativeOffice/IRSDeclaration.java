@@ -11,9 +11,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class IRSDeclaration extends AdministrativeOfficeDocument {
 

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.tests;
 
 import java.util.Comparator;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class NewGroupElement extends NewGroupElement_Base {
 

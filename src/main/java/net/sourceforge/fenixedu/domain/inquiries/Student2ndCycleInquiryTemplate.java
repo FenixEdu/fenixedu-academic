@@ -2,9 +2,8 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import java.util.Collection;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class Student2ndCycleInquiryTemplate extends Student2ndCycleInquiryTemplate_Base {
 

@@ -3,7 +3,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
-<%@ page import="pt.ist.bennu.core.domain.Bennu"%>
+<%@ page import="org.fenixedu.bennu.core.domain.Bennu"%>
 <%@ page import="net.sourceforge.fenixedu.domain.Department"%>
 <%@ page import="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory"%>
 <html:xhtml/>

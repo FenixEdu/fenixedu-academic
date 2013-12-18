@@ -9,9 +9,8 @@ import net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation;
 import net.sourceforge.fenixedu.predicates.ResourcePredicates;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class Extension extends Extension_Base {
 

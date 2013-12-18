@@ -6,9 +6,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 
 public class DegreeJurisdictionManagementBean implements Serializable {

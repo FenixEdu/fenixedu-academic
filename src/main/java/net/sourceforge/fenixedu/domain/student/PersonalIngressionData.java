@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBe
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GrantOwnerType;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class PersonalIngressionData extends PersonalIngressionData_Base {

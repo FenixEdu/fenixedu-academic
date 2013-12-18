@@ -2,7 +2,8 @@ package net.sourceforge.fenixedu.domain.functionalities;
 
 import java.util.UUID;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 /**

@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.library;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.documents.LibraryMissingCardsDocument;
 import net.sourceforge.fenixedu.domain.documents.LibraryMissingLettersDocument;
 

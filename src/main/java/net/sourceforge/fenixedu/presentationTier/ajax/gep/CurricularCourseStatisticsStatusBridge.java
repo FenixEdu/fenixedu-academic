@@ -8,8 +8,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

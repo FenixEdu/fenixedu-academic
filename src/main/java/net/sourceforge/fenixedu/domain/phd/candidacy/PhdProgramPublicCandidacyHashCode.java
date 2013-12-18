@@ -2,9 +2,10 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.UUID;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.util.StringUtils;

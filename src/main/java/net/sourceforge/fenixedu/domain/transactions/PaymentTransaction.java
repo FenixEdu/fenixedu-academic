@@ -3,11 +3,12 @@ package net.sourceforge.fenixedu.domain.transactions;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 
 /**

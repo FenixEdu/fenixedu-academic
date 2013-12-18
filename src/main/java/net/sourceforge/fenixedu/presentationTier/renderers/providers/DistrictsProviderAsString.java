@@ -6,8 +6,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.District;
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 

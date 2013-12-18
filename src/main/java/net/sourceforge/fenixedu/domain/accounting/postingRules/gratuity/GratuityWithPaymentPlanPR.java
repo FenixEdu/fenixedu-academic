@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransact
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryWithInstallmentDTO;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
@@ -29,6 +28,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base implements IGratuityPR {

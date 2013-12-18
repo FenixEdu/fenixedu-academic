@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class InquiryQuestion extends InquiryQuestion_Base {

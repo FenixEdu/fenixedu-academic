@@ -8,8 +8,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.struts.taglib.logic.ConditionalTagBase;
-
-import pt.ist.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class ActivityAvailableTag extends ConditionalTagBase {
 

@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import java.util.Collection;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import pt.ist.bennu.core.domain.Bennu;
 
 public class ResultsInquiryTemplate extends ResultsInquiryTemplate_Base {
 

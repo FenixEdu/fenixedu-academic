@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
-import pt.ist.bennu.core.domain.Bennu;
 
 public class ShiftProfessorship extends ShiftProfessorship_Base implements ICreditsEventOriginator {
 

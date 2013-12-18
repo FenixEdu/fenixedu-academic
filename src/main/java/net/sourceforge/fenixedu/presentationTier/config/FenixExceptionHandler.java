@@ -23,8 +23,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
-
-import pt.ist.bennu.core.util.CoreConfiguration;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 /**
  * @author João Mota

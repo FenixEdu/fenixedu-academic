@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.domain.contents.pathProcessors;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym;
-import pt.ist.bennu.core.domain.Bennu;
 
 public class DepartmentSitePathProcessor extends AbstractPathProcessor {
 

@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.domain.oldInquiries;
 
 import java.util.Map;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.AffiliatedTeacherDTO;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesQuestion;
@@ -14,7 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeacherInquiryDT
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 

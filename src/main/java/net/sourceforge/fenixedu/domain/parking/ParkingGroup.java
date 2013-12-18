@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.parking;
 
 import java.util.Collection;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ParkingGroup extends ParkingGroup_Base {
 

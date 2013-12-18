@@ -3,9 +3,10 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-import pt.ist.bennu.core.domain.Bennu;
 
 public class FenixAbout {
 

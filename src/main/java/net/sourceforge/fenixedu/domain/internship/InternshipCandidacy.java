@@ -4,11 +4,11 @@ import java.util.Collections;
 import java.util.Random;
 
 import net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;

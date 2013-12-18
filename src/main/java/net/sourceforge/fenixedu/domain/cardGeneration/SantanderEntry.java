@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
-import pt.ist.bennu.core.domain.Bennu;
-
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Person;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class SantanderEntry extends SantanderEntry_Base {

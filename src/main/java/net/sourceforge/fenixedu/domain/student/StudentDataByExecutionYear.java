@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.domain.student;
 
 import java.util.Comparator;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**

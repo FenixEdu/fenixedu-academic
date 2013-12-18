@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class CreditNote extends CreditNote_Base {

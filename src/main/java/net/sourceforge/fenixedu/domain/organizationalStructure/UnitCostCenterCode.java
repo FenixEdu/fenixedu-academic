@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class UnitCostCenterCode extends UnitCostCenterCode_Base {
 

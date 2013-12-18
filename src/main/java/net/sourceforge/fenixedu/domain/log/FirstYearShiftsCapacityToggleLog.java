@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.log;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import pt.ist.bennu.core.domain.User;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 public class FirstYearShiftsCapacityToggleLog extends FirstYearShiftsCapacityToggleLog_Base {

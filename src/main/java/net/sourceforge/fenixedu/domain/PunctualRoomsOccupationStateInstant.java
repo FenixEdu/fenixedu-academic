@@ -6,9 +6,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class PunctualRoomsOccupationStateInstant extends PunctualRoomsOccupationStateInstant_Base {
 

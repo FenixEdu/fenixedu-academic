@@ -6,11 +6,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriodReference;
 import net.sourceforge.fenixedu.domain.OccupationPeriodType;
-import pt.ist.bennu.core.domain.Bennu;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.HashMultimap;

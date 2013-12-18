@@ -1,9 +1,9 @@
 <%@ page language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<%@ page import="pt.ist.bennu.core.domain.User" %>
+<%@ page import="org.fenixedu.bennu.core.domain.User" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" %>
-<%@ page import="pt.ist.bennu.core.security.Authenticate" %>
+<%@ page import="org.fenixedu.bennu.core.security.Authenticate" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>

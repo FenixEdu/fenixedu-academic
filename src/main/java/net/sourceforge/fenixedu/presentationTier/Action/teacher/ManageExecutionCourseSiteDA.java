@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Person;
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 public class ManageExecutionCourseSiteDA extends SiteManagementDA {
 

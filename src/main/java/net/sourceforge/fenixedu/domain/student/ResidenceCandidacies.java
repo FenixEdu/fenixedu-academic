@@ -4,8 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
-import pt.ist.bennu.core.domain.Bennu;
-
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 /**

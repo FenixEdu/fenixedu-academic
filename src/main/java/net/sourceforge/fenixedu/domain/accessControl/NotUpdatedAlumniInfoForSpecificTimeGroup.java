@@ -14,10 +14,9 @@ import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 

@@ -5,8 +5,9 @@ package net.sourceforge.fenixedu.injectionCode;
 
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.User;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>

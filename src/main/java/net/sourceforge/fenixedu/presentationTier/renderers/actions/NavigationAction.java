@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.presentationTier.renderers.actions;
 
 import javax.servlet.http.HttpServletRequest;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 
 import org.apache.struts.action.Action;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 

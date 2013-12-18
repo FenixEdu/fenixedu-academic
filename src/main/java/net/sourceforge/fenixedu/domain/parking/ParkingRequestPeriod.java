@@ -2,10 +2,9 @@ package net.sourceforge.fenixedu.domain.parking;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class ParkingRequestPeriod extends ParkingRequestPeriod_Base {
 

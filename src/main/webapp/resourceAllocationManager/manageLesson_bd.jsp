@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@page import="pt.ist.bennu.core.domain.Bennu"%>
+<%@page import="org.fenixedu.bennu.core.domain.Bennu"%>
 <%@page import="org.joda.time.Weeks"%>
 <%@page import="org.joda.time.YearMonthDay"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>

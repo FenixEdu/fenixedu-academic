@@ -7,11 +7,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class Holiday extends Holiday_Base {
 

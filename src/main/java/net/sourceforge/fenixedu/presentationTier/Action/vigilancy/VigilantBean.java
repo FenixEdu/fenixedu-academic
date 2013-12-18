@@ -6,12 +6,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import pt.ist.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import pt.ist.bennu.core.security.Authenticate;
 
 public class VigilantBean implements Serializable {
 

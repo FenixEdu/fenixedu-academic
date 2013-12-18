@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.research.project;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * Class representing the connection between Project and Party classified by a

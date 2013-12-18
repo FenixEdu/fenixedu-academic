@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -11,6 +10,7 @@ import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProc
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.LocalDate;
 
 public class ExemptPublicPresentationSeminarComission extends PhdIndividualProgramProcessActivity {

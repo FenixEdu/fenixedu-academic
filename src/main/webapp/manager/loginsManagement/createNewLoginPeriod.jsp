@@ -25,7 +25,7 @@
 	</p>
 	
 	<bean:define id="managePeriodsURL" type="java.lang.String">/loginsManagement.do?method=prepareManageLoginTimeIntervals&personID=<bean:write name="user" property="person.externalId"/></bean:define>								
-	<fr:create id="createNewLoginPeriodID" type="pt.ist.bennu.user.management.UserLoginPeriod" schema="CreateUserLoginPeriod" action="<%= managePeriodsURL %>">
+	<fr:create id="createNewLoginPeriodID" type="org.fenixedu.bennu.user.management.UserLoginPeriod" schema="CreateUserLoginPeriod" action="<%= managePeriodsURL %>">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1"/>
 		    <fr:property name="columnClasses" value=",,noborder"/>

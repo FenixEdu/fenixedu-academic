@@ -1,8 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import org.apache.commons.codec.digest.DigestUtils;
-
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ExternalUser extends ExternalUser_Base {
 

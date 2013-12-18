@@ -14,7 +14,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;

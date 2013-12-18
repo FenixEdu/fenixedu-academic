@@ -4,7 +4,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.DomainObject;
 
 public final class DomainObjectUtil {
@@ -420,7 +421,7 @@ public final class DomainObjectUtil {
                         return Bennu.getInstance().getCandidacysSet();
                     }
                 });
-        closureAccessMap.put(pt.ist.bennu.core.domain.User.class.getName(), new DomainObjectReader() {
+        closureAccessMap.put(org.fenixedu.bennu.core.domain.User.class.getName(), new DomainObjectReader() {
             @Override
             public java.util.Set readAllDomainObjects() {
                 return Bennu.getInstance().getUsersSet();

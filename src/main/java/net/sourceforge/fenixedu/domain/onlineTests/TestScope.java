@@ -7,8 +7,9 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * 

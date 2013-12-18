@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
@@ -9,6 +8,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 public class AbandonIndividualProgramProcess extends PhdIndividualProgramProcessActivity {

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class SibsPaymentFile extends SibsPaymentFile_Base {
 

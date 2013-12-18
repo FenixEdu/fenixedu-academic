@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.support;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Luis Cruz

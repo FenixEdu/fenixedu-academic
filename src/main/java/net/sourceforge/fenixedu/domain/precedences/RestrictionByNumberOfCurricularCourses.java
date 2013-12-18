@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author David Santos in Jun 9, 2004

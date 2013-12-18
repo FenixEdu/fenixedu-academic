@@ -12,9 +12,8 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class PhdDiploma extends AdministrativeOfficeDocument {
 

@@ -4,7 +4,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-<%@page import="pt.ist.bennu.core.util.CoreConfiguration"%>
+<%@page import="org.fenixedu.bennu.core.util.CoreConfiguration"%>
 <%@page import="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
 <%@page import="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType"%>

@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.student;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.Attends;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.DurationFieldType;

@@ -16,8 +16,7 @@ import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.codehaus.xfire.MessageContext;
-
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class SearchResearcher implements ISearchResearcher {
 

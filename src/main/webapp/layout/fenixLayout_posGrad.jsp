@@ -2,7 +2,7 @@
 <%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
-<%@page import="pt.ist.bennu.core.security.Authenticate"%>
+<%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>

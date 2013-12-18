@@ -2,10 +2,11 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
-import pt.ist.bennu.core.domain.Bennu;
 
 public class ManagementGroups extends ManagementGroups_Base {
 

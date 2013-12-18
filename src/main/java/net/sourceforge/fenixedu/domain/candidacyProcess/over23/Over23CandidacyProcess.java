@@ -24,9 +24,9 @@ import net.sourceforge.fenixedu.domain.period.CandidacyProcessCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 import com.google.common.collect.Sets;

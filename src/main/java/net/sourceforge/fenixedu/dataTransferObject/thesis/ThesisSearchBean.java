@@ -2,12 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject.thesis;
 
 import java.io.Serializable;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisLibraryState;
-import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * Bean with fields to search by author, title, library reference, state or

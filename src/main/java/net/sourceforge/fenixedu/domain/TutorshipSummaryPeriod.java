@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryPeriodBean;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class TutorshipSummaryPeriod extends TutorshipSummaryPeriod_Base {

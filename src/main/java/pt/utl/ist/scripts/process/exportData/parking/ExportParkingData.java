@@ -1,8 +1,9 @@
 package pt.utl.ist.scripts.process.exportData.parking;
 
+import org.fenixedu.bennu.scheduler.CronTask;
+import org.fenixedu.bennu.scheduler.annotation.Task;
+
 import net.sourceforge.fenixedu.domain.reports.ParkingDataReportFile;
-import pt.ist.bennu.scheduler.CronTask;
-import pt.ist.bennu.scheduler.annotation.Task;
 
 @Task(englishTitle = "ExportParkingData")
 public class ExportParkingData extends CronTask {

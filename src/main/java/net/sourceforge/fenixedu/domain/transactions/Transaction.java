@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.transactions;
 import java.math.BigDecimal;
 import java.util.Comparator;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>

@@ -8,7 +8,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,6 +15,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.strategies.Strategy;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategyFactory;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategySugestion;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;

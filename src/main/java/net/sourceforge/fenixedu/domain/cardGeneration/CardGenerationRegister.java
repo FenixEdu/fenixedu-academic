@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
 public class CardGenerationRegister extends CardGenerationRegister_Base {

@@ -451,7 +451,7 @@
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-core</artifactId>
-			<version>2.0.0-M4</version>
+			<version>2.0.0-M5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fenixedu</groupId>
@@ -461,12 +461,12 @@
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-scheduler</artifactId>
-			<version>2.0.0-M4</version>
+			<version>2.0.0-M5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-io</artifactId>
-			<version>2.0.0-M4</version>
+			<version>2.0.0-M5</version>
 		</dependency>
 	</dependencies>
 

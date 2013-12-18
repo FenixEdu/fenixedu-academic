@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.phd.migration;
 
 import java.util.ResourceBundle;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -46,6 +45,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFir
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 

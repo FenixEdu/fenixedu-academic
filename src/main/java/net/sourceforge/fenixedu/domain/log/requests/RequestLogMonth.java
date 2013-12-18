@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.log.requests;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class RequestLogMonth extends RequestLogMonth_Base {
 

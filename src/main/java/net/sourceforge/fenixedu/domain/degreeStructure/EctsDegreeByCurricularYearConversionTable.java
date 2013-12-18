@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;

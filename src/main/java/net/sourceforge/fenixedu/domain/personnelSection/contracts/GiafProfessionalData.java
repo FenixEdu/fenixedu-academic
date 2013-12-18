@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 import java.util.HashSet;
 import java.util.Set;
 
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 

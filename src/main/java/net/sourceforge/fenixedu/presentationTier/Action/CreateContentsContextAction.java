@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/home")

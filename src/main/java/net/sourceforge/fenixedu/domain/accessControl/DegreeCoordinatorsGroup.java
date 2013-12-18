@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Collection;
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -11,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import pt.ist.bennu.core.domain.Bennu;
 
 public class DegreeCoordinatorsGroup extends Group {
 

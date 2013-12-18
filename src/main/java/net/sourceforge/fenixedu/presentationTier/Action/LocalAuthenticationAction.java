@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.exceptions.AuthorizationException;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.bennu.core.util.CoreConfiguration.CasConfig;
 
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.exceptions.AuthorizationException;
-import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.util.CoreConfiguration;
-import pt.ist.bennu.core.util.CoreConfiguration.CasConfig;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/login", formBeanClass = AuthenticationForm.class)

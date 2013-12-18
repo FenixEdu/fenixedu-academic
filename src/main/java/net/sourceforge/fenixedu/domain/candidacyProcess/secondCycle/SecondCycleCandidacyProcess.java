@@ -28,9 +28,8 @@ import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.User;
 
 import com.google.common.collect.Sets;
 

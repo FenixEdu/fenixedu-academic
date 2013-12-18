@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.domain.photograph.Picture;
 import net.sourceforge.fenixedu.domain.photograph.PictureOriginal;
 import net.sourceforge.fenixedu.util.ContentType;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class SantanderPhotoEntry extends SantanderPhotoEntry_Base {

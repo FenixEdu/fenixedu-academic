@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.domain.support.FAQSection;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.fenixedu.bennu.core.domain.Bennu;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class ReadFAQSections {

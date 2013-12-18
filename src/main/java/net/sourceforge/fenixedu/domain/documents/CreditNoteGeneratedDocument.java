@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.documents;
 
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
@@ -7,7 +9,6 @@ import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.Acad
 import net.sourceforge.fenixedu.domain.accounting.CreditNote;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.bennu.core.util.CoreConfiguration;
 import pt.ist.fenixframework.Atomic;
 
 /**

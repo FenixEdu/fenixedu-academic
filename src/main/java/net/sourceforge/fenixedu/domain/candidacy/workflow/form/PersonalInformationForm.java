@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.bennu.core.domain.User;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PersonalInformationForm extends Form {

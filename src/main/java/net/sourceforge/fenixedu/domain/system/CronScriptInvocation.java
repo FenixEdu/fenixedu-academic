@@ -2,8 +2,7 @@ package net.sourceforge.fenixedu.domain.system;
 
 import java.util.Comparator;
 
-import pt.ist.bennu.core.domain.Bennu;
-
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 

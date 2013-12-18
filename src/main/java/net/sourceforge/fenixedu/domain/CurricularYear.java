@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Collection;
 import java.util.Comparator;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author dcs-rjao

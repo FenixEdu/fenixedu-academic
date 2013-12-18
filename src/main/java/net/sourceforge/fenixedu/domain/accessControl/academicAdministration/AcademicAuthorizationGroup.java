@@ -27,9 +27,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestYear;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Interval;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;

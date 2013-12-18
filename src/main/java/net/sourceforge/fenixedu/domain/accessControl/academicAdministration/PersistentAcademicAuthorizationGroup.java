@@ -6,10 +6,11 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType.Scope;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;

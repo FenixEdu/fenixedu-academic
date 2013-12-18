@@ -27,8 +27,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.collections.set.UnmodifiableSet;
-
-import pt.ist.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.User;
 
 /**
  * A <code>Group</code> is a dynamic aggregation of persons. It works as a

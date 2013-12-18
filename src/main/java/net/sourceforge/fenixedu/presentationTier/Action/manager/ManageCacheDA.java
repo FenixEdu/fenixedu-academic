@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.Custodian;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadNumberCachedItems;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.tools.Profiler;
@@ -21,6 +20,7 @@ import net.sourceforge.fenixedu.tools.Profiler;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;

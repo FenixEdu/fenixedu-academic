@@ -17,8 +17,7 @@ import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
-
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ResourceAllocationRole extends ResourceAllocationRole_Base {
 

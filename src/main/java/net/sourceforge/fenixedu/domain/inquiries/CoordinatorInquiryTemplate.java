@@ -5,9 +5,8 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base {
 

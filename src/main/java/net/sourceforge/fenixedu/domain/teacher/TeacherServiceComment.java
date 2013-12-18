@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 
 public class TeacherServiceComment extends TeacherServiceComment_Base {

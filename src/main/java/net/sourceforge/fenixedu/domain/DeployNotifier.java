@@ -5,12 +5,12 @@ import java.util.Properties;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.DurationFieldType;
 import org.joda.time.Minutes;
 import org.joda.time.Period;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.PropertiesManager;
 
 public class DeployNotifier extends DeployNotifier_Base {

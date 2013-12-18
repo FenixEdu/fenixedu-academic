@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * 

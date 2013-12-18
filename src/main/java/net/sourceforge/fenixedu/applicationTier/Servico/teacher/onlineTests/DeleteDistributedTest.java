@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import pt.ist.fenixframework.Atomic;

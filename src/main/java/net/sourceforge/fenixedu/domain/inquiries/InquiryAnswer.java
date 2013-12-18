@@ -1,8 +1,7 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import pt.ist.bennu.core.domain.Bennu;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class InquiryAnswer extends InquiryAnswer_Base {

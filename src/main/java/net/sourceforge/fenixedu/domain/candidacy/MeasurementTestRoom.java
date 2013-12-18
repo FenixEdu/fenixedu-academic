@@ -2,7 +2,8 @@ package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Comparator;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;

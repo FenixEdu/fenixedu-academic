@@ -8,7 +8,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import pt.ist.bennu.core.domain.User;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;

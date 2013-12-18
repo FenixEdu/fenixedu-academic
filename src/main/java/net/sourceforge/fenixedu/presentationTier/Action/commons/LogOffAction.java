@@ -20,10 +20,10 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.bennu.core.util.CoreConfiguration.CasConfig;
 
-import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.util.CoreConfiguration;
-import pt.ist.bennu.core.util.CoreConfiguration.CasConfig;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/logoff")

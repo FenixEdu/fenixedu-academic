@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.gaugingTests.ph
 
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import pt.ist.bennu.core.domain.User;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics.InfoGaugingTestResult;
 import net.sourceforge.fenixedu.domain.Person;

@@ -5,11 +5,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.ist.fenixframework.FenixFramework;
 

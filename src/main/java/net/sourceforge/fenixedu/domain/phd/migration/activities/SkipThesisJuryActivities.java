@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.migration.activities;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
@@ -9,6 +8,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PhdThesisActivity;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.LocalDate;
 
 public class SkipThesisJuryActivities extends PhdThesisActivity {

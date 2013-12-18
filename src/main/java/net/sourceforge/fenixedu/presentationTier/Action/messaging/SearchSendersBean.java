@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 

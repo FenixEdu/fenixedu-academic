@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
-import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 
 public class ChangePassword {

@@ -60,9 +60,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.LocalDate;
-
-import pt.ist.bennu.core.domain.User;
 
 public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base {
 

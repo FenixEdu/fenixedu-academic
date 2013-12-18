@@ -40,17 +40,17 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
 
 import org.apache.commons.fileupload.FileUpload;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
+import org.fenixedu.bennu.core.domain.groups.DynamicGroup;
+import org.fenixedu.bennu.core.domain.groups.Group;
+import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter;
+import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomeHandler;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.exceptions.BennuCoreDomainException;
-import pt.ist.bennu.core.domain.groups.DynamicGroup;
-import pt.ist.bennu.core.domain.groups.Group;
-import pt.ist.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter;
-import pt.ist.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomeHandler;
-import pt.ist.bennu.core.util.CoreConfiguration;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter;

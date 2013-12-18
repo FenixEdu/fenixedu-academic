@@ -5,7 +5,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ page import="pt.ist.bennu.core.domain.User"%>
+<%@ page import="org.fenixedu.bennu.core.domain.User"%>
 
 <logic:present role="role(DEPARTMENT_MEMBER)">
 

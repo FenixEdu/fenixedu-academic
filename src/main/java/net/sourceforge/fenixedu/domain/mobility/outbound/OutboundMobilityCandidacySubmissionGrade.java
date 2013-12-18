@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.mobility.outbound;
 
 import java.math.BigDecimal;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCandidacySubmissionGrade_Base implements
         Comparable<OutboundMobilityCandidacySubmissionGrade> {

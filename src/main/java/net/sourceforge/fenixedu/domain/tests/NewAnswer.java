@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.domain.tests;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer;
 import net.sourceforge.fenixedu.domain.tests.answers.NullAnswer;
 import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class NewAnswer extends NewAnswer_Base {

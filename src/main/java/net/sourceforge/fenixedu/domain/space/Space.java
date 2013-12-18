@@ -38,11 +38,11 @@ import net.sourceforge.fenixedu.predicates.SpacePredicates;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 

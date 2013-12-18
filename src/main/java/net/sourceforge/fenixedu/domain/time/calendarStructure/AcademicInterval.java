@@ -12,12 +12,12 @@ import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicYearDateTimeFieldType;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Chronology;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.joda.time.base.AbstractInterval;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.FenixFramework;
 
 public class AcademicInterval extends AbstractInterval implements Serializable {

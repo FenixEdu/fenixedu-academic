@@ -25,11 +25,11 @@ import net.sourceforge.fenixedu.domain.util.email.MessageId;
 import net.sourceforge.fenixedu.domain.util.email.MessageTransportResult;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class Email extends Email_Base {

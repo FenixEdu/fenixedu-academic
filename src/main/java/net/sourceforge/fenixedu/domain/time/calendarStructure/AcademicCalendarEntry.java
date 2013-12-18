@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.Academic
 import net.sourceforge.fenixedu.util.DayType;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 

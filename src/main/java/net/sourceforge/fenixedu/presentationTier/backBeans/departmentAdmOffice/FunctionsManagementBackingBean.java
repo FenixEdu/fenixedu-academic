@@ -45,9 +45,9 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;

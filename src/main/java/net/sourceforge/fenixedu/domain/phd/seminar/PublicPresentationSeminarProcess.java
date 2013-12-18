@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.LocalDate;
 
 public class PublicPresentationSeminarProcess extends PublicPresentationSeminarProcess_Base {

@@ -28,8 +28,7 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
-
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class CourseGroup extends CourseGroup_Base {
 

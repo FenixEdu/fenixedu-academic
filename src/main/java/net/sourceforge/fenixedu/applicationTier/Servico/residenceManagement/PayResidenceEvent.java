@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement;
 
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;

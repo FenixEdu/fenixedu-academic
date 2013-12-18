@@ -4,9 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import pt.ist.bennu.core.domain.User;
 
 /**
  * The context in wich a functionality is being executed.

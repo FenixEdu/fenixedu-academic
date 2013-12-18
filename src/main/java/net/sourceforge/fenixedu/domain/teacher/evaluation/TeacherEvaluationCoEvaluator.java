@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class TeacherEvaluationCoEvaluator extends TeacherEvaluationCoEvaluator_Base {
 

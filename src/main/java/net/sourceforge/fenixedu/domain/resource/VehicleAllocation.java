@@ -18,10 +18,9 @@ import net.sourceforge.fenixedu.predicates.ResourceAllocationPredicates;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class VehicleAllocation extends VehicleAllocation_Base {
 

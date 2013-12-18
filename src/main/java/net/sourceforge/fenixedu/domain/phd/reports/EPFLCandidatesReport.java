@@ -13,9 +13,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.bennu.core.security.Authenticate;
 
 public class EPFLCandidatesReport extends PhdReport {
 

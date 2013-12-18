@@ -7,7 +7,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@page import="org.apache.struts.tiles.DirectStringAttribute"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
-<%@page import="pt.ist.bennu.core.security.Authenticate"%>
+<%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.tiles.LayoutLinkInjector"%>
 <html:html xhtml="true">
 <head>

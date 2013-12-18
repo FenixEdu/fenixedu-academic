@@ -4,8 +4,8 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.YearDelegateCourseInquiryDTO;
-import pt.ist.bennu.core.domain.Bennu;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;

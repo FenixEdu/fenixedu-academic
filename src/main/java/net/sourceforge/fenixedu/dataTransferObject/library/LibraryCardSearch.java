@@ -19,8 +19,7 @@ import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.apache.commons.lang.StringUtils;
-
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class LibraryCardSearch implements Serializable {
 

@@ -2,7 +2,8 @@ package net.sourceforge.fenixedu.domain.contents;
 
 import java.util.Collection;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

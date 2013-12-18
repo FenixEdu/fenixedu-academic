@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 import java.util.Collection;
 import java.util.Map;
 
-import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 
 public abstract class SearchParties<T> implements AutoCompleteProvider<T> {
 

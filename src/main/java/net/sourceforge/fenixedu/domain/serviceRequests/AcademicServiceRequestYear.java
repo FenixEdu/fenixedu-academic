@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 import java.util.Collection;
 import java.util.Collections;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class AcademicServiceRequestYear extends AcademicServiceRequestYear_Base {
     private AcademicServiceRequestYear(final int year) {

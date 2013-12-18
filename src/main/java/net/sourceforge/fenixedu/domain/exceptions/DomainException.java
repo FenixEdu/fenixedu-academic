@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.exceptions;
 
 import javax.ws.rs.core.Response.Status;
 
-public class DomainException extends pt.ist.bennu.core.domain.exceptions.DomainException {
+public class DomainException extends org.fenixedu.bennu.core.domain.exceptions.DomainException {
 
     private static final String DEFAULT_BUNDLE = "resources.ApplicationResources";
 

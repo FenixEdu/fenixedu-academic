@@ -9,10 +9,9 @@ import java.util.UUID;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base {
 

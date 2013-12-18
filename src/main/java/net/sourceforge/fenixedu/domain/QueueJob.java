@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public abstract class QueueJob extends QueueJob_Base {

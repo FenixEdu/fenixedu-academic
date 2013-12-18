@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {

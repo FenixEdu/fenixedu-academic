@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Degree;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;

@@ -14,8 +14,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
-import pt.ist.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class PhdGuidersReport extends PhdReport {
     private final ResourceBundle bundle;

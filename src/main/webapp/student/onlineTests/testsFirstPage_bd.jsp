@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ page import="pt.ist.bennu.core.security.Authenticate" %>
+<%@ page import="org.fenixedu.bennu.core.security.Authenticate" %>
 
 <em class="invisible"><bean:message key="title.student.portalTitle"/></em>
 <h2 class="mbottom15"><bean:message key="link.tests"/></h2>
@@ -31,7 +31,7 @@
 						<td><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
 						<td class="acenter">
 							<% 
-							pt.ist.bennu.core.domain.User user = Authenticate.getUser();
+							org.fenixedu.bennu.core.domain.User user = Authenticate.getUser();
 							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(student.toString());
 								if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 							<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
@@ -69,7 +69,7 @@
 						<td><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
 						<td class="acenter">
 							<% 
-							pt.ist.bennu.core.domain.User user = Authenticate.getUser();
+							org.fenixedu.bennu.core.domain.User user = Authenticate.getUser();
 							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(student.toString());
 								if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 							<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
@@ -110,7 +110,7 @@
 					<td><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
 					<td class="acenter">
 						<% 
-						pt.ist.bennu.core.domain.User user = Authenticate.getUser();
+						org.fenixedu.bennu.core.domain.User user = Authenticate.getUser();
 						net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
 							if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 						<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
@@ -147,7 +147,7 @@
 			<td><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
 			<td class="acenter">
 				<% 
-				pt.ist.bennu.core.domain.User user = Authenticate.getUser();
+				org.fenixedu.bennu.core.domain.User user = Authenticate.getUser();
 				net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
 					if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 				<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>

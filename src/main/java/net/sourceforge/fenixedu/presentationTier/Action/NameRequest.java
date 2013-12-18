@@ -11,8 +11,8 @@ import org.apache.commons.lang.CharEncoding;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
-import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import com.lowagie.text.DocumentException;

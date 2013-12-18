@@ -2,11 +2,10 @@ package pt.utl.ist.scripts.process.cron;
 
 import net.sourceforge.fenixedu.domain.PendingRequest;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.scheduler.CronTask;
+import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.scheduler.CronTask;
-import pt.ist.bennu.scheduler.annotation.Task;
 
 @Task(englishTitle = "RemoveOldPendentRequestScript")
 public class RemoveOldPendentRequestScript extends CronTask {

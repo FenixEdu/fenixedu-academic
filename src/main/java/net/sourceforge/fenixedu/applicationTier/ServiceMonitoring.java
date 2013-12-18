@@ -2,10 +2,9 @@ package net.sourceforge.fenixedu.applicationTier;
 
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.ist.bennu.core.security.Authenticate;
 
 public class ServiceMonitoring {
 

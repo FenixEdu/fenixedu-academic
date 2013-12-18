@@ -6,12 +6,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.fenixedu.bennu.core.annotation.CustomGroupArgument;
+import org.fenixedu.bennu.core.annotation.CustomGroupOperator;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.groups.Group;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.annotation.CustomGroupArgument;
-import pt.ist.bennu.core.annotation.CustomGroupOperator;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.groups.Group;
 import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Function;

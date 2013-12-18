@@ -5,9 +5,9 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class ExternalTeacherAuthorization extends ExternalTeacherAuthorization_Base {

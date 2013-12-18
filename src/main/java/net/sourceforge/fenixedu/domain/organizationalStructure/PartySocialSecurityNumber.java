@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.bennu.core.domain.Bennu;
 
 public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
 

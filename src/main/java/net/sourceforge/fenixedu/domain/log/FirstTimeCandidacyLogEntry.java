@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.log;
 
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class FirstTimeCandidacyLogEntry extends FirstTimeCandidacyLogEntry_Base {

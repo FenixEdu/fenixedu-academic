@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class EnrolmentInstructions extends EnrolmentInstructions_Base {

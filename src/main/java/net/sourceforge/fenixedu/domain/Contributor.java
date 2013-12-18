@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * This class only exists to allow database access in scripts. A Contributor is

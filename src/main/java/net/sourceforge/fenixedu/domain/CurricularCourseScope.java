@@ -14,9 +14,8 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class CurricularCourseScope extends CurricularCourseScope_Base {
 

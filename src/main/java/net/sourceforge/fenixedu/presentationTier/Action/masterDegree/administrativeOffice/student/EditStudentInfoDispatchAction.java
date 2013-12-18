@@ -17,7 +17,6 @@ import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ChangePersonalStudentInfo;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -35,6 +34,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
 
 public class EditStudentInfoDispatchAction extends FenixDispatchAction {
 

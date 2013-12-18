@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import pt.ist.bennu.core.domain.Bennu;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;

@@ -42,7 +42,7 @@
 			<bean:define id="loginPeriods" name="person" property="user.loginPeriod" />
 			<logic:notEmpty name="loginPeriods">							
 				<fr:view name="loginPeriods">
-					<fr:schema type="pt.ist.bennu.user.management.UserLoginPeriod" bundle="MANAGER_RESOURCES">
+					<fr:schema type="org.fenixedu.bennu.user.management.UserLoginPeriod" bundle="MANAGER_RESOURCES">
 						<fr:slot name="beginDate" />
 						<fr:slot name="endDate" />
 					</fr:schema>

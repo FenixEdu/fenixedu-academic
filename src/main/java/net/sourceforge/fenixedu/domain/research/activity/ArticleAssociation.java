@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.research.activity;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 

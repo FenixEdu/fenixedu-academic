@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchParties;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
-import pt.ist.bennu.core.domain.Bennu;
 
 public class SearchPartyByNif extends SearchParties<Party> {
 

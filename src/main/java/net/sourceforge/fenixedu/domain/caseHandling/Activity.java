@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.caseHandling;
 
-import pt.ist.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.User;
 
 public abstract class Activity<P extends Process> {
 

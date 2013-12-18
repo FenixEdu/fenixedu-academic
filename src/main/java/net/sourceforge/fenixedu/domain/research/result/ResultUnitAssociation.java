@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import pt.ist.bennu.core.domain.Bennu;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.predicates.ResultPredicates;

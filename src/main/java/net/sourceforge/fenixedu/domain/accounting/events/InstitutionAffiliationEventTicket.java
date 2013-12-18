@@ -1,14 +1,13 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.User;
 
 public class InstitutionAffiliationEventTicket extends InstitutionAffiliationEventTicket_Base {
 

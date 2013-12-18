@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-<%@page import="pt.ist.bennu.core.util.CoreConfiguration"%>
+<%@page import="org.fenixedu.bennu.core.util.CoreConfiguration"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.net.URLEncoder"%>

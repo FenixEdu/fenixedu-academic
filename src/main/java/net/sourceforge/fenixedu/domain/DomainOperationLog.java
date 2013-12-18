@@ -4,9 +4,8 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class DomainOperationLog extends DomainOperationLog_Base {
 

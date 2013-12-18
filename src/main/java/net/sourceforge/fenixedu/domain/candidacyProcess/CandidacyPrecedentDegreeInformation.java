@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.math.BigDecimal;
 
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
 @Deprecated

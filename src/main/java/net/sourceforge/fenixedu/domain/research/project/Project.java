@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.domain.research.project;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Period;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**

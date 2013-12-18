@@ -3,9 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.domain.credits.CreditsState;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class TeacherCreditsState extends TeacherCreditsState_Base {
 

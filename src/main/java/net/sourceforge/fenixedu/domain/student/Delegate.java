@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Interval;
 
 public class Delegate extends Delegate_Base {

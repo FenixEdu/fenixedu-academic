@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.domain.Bennu;
-import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 
 public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<CerimonyInquiry> {

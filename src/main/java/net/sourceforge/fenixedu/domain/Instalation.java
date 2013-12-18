@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class Instalation extends Instalation_Base {

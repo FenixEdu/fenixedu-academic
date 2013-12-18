@@ -14,7 +14,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate;
 
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -29,6 +28,7 @@ import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;

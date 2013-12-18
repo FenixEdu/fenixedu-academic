@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.student.registrationStates;
 
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class RegistrationStateLog extends RegistrationStateLog_Base {

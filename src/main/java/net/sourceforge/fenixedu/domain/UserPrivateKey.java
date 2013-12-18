@@ -5,9 +5,9 @@ import javax.crypto.SecretKey;
 
 import net.sourceforge.fenixedu.util.ByteArray;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 
 public class UserPrivateKey extends UserPrivateKey_Base {

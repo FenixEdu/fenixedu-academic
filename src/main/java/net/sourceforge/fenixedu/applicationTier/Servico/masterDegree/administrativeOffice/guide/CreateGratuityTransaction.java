@@ -9,7 +9,8 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-import pt.ist.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class CandidacyDocument extends CandidacyDocument_Base {
 

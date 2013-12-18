@@ -7,10 +7,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManageme
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class ResidenceYear extends ResidenceYear_Base {
 

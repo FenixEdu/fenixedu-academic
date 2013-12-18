@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.project;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 
 public class ProjectEventAssociation extends ProjectEventAssociation_Base {

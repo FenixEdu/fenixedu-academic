@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.util.phd;
 
+import org.fenixedu.bennu.core.annotation.ConfigurationManager;
+import org.fenixedu.bennu.core.annotation.ConfigurationProperty;
+import org.fenixedu.bennu.core.util.ConfigurationInvocationHandler;
+
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
-import pt.ist.bennu.core.annotation.ConfigurationManager;
-import pt.ist.bennu.core.annotation.ConfigurationProperty;
-import pt.ist.bennu.core.util.ConfigurationInvocationHandler;
 
 public class EPFLPhdCandidacyProcessProperties {
     @ConfigurationManager(description = "EPFL Properties")

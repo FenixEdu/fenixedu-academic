@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Date;
 
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 public class Accountability extends Accountability_Base {

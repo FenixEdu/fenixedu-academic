@@ -41,9 +41,9 @@ Note that in order to properly migrate the application, there must be NO `FileLo
     update USER_LOGIN_PERIOD set OID_USER = (SELECT OID_USER from IDENTIFICATION where IDENTIFICATION.OID = OID_LOGIN);
     
     -- Update DomainClassInfo entries, so that no OIDs need changing
-    update FF$DOMAIN_CLASS_INFO set DOMAIN_CLASS_NAME = 'pt.ist.bennu.core.domain.Bennu' where DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.RootDomainObject';
-    update FF$DOMAIN_CLASS_INFO set DOMAIN_CLASS_NAME = 'pt.ist.bennu.core.domain.User' where DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.User';
-    update FF$DOMAIN_CLASS_INFO set DOMAIN_CLASS_NAME = 'pt.ist.bennu.user.management.UserLoginPeriod' where DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.LoginPeriod';
+    update FF$DOMAIN_CLASS_INFO set DOMAIN_CLASS_NAME = 'org.fenixedu.bennu.core.domain.Bennu' where DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.RootDomainObject';
+    update FF$DOMAIN_CLASS_INFO set DOMAIN_CLASS_NAME = 'org.fenixedu.bennu.core.domain.User' where DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.User';
+    update FF$DOMAIN_CLASS_INFO set DOMAIN_CLASS_NAME = 'org.fenixedu.bennu.user.management.UserLoginPeriod' where DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.LoginPeriod';
     
     -- Update MetaDomainObject
     alter table `CONTENT` add `TYPE` text, add `OID_BENNU` bigint unsigned;
@@ -103,8 +103,8 @@ Note that in order to properly migrate the application, there must be NO `FileLo
     
     import org.joda.time.DateTime;
     
-    import pt.ist.bennu.core.domain.User;
-    import pt.ist.bennu.scheduler.custom.CustomTask;
+    import org.fenixedu.bennu.core.domain.User;
+    import org.fenixedu.bennu.scheduler.custom.CustomTask;
     import pt.ist.fenixframework.FenixFramework;
     
     import com.google.common.io.BaseEncoding;
@@ -146,10 +146,10 @@ Note that in order to properly migrate the application, there must be NO `FileLo
     
     import java.util.Objects;
     
-    import pt.ist.bennu.core.domain.Bennu;
-    import pt.ist.bennu.core.domain.User;
-    import pt.ist.bennu.scheduler.custom.CustomTask;
-    import pt.ist.bennu.user.management.UserLoginPeriod;
+    import org.fenixedu.bennu.core.domain.Bennu;
+    import org.fenixedu.bennu.core.domain.User;
+    import org.fenixedu.bennu.scheduler.custom.CustomTask;
+    import org.fenixedu.bennu.user.management.UserLoginPeriod;
     import pt.ist.fenixframework.Atomic.TxMode;
     
     public class FillUserExpirations extends CustomTask {

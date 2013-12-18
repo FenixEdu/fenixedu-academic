@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.raides;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class DegreeClassification extends DegreeClassification_Base {
 

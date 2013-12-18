@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
 import java.math.BigDecimal;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * This class contains all the information regarding a Reimbursement Guide

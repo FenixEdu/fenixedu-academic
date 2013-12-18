@@ -2,9 +2,8 @@ package net.sourceforge.fenixedu.domain.finalDegreeWork;
 
 import java.util.Comparator;
 
-import pt.ist.bennu.core.domain.Bennu;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class GroupProposal extends GroupProposal_Base {
 

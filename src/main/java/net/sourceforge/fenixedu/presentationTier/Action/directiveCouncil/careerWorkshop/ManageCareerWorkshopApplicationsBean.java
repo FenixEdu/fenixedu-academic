@@ -7,9 +7,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplicationEvent;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmationEvent;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class ManageCareerWorkshopApplicationsBean implements Serializable {

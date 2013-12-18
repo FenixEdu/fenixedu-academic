@@ -5,7 +5,6 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.PublishMarks;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsAndMarksByEvaluation;
@@ -24,6 +23,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.fenixedu.bennu.core.domain.User;
 
 public class MarksListAction extends FenixDispatchAction {
 

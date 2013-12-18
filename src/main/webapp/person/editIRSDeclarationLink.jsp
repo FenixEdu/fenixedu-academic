@@ -24,7 +24,7 @@
 </fr:edit>
 
     <%
-    	pt.ist.bennu.core.domain.Bennu rootDomainObject = pt.ist.bennu.core.domain.Bennu.getInstance();
+    	org.fenixedu.bennu.core.domain.Bennu rootDomainObject = org.fenixedu.bennu.core.domain.Bennu.getInstance();
     	if (rootDomainObject.getIrsDeclarationLink() != null) {
     	    %>
     				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= rootDomainObject.getIrsDeclarationLink().getIrsLink() %>">

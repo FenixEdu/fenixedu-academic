@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.support;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class FAQSection extends FAQSection_Base {
 

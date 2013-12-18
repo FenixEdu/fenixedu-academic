@@ -8,11 +8,11 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.FileContent;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * A <code>Container</code> is a composed content, that is, a grouping of other

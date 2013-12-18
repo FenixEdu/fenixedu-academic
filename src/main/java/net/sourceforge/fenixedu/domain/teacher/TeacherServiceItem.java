@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class TeacherServiceItem extends TeacherServiceItem_Base {
 

@@ -8,7 +8,6 @@ import java.util.Random;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
@@ -16,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandida
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * Code Format: 8<sequentialNumber{4}><typeDigit{2}><controlDigits{2}>

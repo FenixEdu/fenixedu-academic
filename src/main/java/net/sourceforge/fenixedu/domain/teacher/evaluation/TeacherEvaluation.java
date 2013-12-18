@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
-import pt.ist.bennu.core.domain.Bennu;
-
 import pt.ist.fenixframework.Atomic;
 
 import java.util.Collections;
@@ -15,6 +13,7 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public abstract class TeacherEvaluation extends TeacherEvaluation_Base {

@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import pt.ist.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;

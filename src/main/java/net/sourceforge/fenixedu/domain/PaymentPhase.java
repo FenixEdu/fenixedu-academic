@@ -7,8 +7,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 
 import org.apache.struts.util.MessageResources;
-
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author T�nia Pous�o

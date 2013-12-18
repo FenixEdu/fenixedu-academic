@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.domain.parking;
 
 import java.util.ResourceBundle;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
-import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Vehicle extends Vehicle_Base {

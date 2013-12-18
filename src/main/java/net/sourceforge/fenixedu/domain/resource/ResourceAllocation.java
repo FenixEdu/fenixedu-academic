@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.resource;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class ResourceAllocation extends ResourceAllocation_Base {

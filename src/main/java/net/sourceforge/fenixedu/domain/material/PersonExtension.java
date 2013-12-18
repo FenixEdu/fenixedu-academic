@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.material;
 
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 public class PersonExtension extends PersonExtension_Base {

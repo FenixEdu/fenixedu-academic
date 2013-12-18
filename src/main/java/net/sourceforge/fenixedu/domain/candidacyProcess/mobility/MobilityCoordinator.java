@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Degree;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;

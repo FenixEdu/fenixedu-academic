@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
 import java.math.BigDecimal;
 
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;

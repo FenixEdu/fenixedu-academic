@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.parking;
 
-import pt.ist.bennu.core.domain.Bennu;
-
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class ParkingPartyHistory extends ParkingPartyHistory_Base {

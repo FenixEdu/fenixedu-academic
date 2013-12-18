@@ -30,10 +30,10 @@ import net.sourceforge.fenixedu.domain.period.DegreeCandidacyForGraduatedPersonC
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 import com.google.common.collect.Sets;

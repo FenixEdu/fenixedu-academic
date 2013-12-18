@@ -10,9 +10,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * @author Susana Fernandes

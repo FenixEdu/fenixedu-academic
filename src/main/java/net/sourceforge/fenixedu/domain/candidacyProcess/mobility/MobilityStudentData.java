@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 
 public class MobilityStudentData extends MobilityStudentData_Base {

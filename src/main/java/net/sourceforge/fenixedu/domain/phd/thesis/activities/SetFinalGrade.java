@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
@@ -8,6 +7,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.LocalDate;
 
 public class SetFinalGrade extends PhdThesisActivity {

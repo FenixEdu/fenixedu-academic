@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.Set;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -29,10 +28,10 @@ import net.sourceforge.fenixedu.predicates.CycleCurriculumGroupPredicates;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * 

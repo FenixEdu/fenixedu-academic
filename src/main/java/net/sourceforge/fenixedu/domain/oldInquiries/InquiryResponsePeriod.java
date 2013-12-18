@@ -7,9 +7,8 @@ import java.util.Date;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.Bennu;
 
 public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
 

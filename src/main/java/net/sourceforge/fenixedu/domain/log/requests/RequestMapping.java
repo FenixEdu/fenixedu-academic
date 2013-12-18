@@ -3,8 +3,7 @@ package net.sourceforge.fenixedu.domain.log.requests;
 import net.sourceforge.fenixedu.util.ArrayUtils;
 
 import org.apache.commons.lang.StringUtils;
-
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * 

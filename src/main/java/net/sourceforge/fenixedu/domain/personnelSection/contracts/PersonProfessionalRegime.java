@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
-import pt.ist.bennu.core.domain.Bennu;
-
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;

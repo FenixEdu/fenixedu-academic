@@ -4,9 +4,10 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
 import java.util.ResourceBundle;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionBlankVote;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVote;

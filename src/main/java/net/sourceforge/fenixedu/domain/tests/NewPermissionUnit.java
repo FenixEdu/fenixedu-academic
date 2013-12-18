@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.tests;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class NewPermissionUnit extends NewPermissionUnit_Base {
 

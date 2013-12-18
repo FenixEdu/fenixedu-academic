@@ -2,8 +2,7 @@ package net.sourceforge.fenixedu.domain.log.requests;
 
 import java.util.ArrayList;
 
-import pt.ist.bennu.core.domain.Bennu;
-
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class RequestLogDay extends RequestLogDay_Base {

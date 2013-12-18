@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class TSDProfessorship extends TSDProfessorship_Base {

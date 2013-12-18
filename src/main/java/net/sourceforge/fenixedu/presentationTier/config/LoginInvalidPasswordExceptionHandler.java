@@ -13,8 +13,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.config.ExceptionConfig;
-
-import pt.ist.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.User;
 
 public class LoginInvalidPasswordExceptionHandler extends FenixExceptionHandler {
 

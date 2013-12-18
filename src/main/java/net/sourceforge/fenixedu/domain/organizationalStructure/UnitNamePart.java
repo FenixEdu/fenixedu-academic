@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.HashMap;
 import java.util.Map;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 

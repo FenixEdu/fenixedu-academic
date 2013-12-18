@@ -2,12 +2,13 @@ package net.sourceforge.fenixedu.domain.accessControl.groups;
 
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.groups.Group;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.groups.Group;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import pt.ist.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class EducationArea extends EducationArea_Base {
 
