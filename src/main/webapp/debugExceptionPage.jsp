@@ -84,7 +84,7 @@
 								--><logic:notEqual name="debugExceptionInfo" property="actionErrorLine" value="0"><!--
 								-->:<!--
 								--><span class="lineNumber"><bean:write name="debugExceptionInfo" property="actionErrorLine"/></span><!--
-								--></logic:notEqual><!-- 
+								--></logic:notEqual><!--
 							--></span><!--
 							-->)<!--
 							--></logic:present>
