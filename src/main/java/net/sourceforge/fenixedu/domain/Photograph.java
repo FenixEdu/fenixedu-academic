@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
@@ -48,17 +49,13 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     private static final String RESOURCE_BUNDLE_NAME = "resources.PersonalInformationResources";
 
-    private static final String REJECTION_MAIL_SENDER = Sender.getNoreplyMail();
-
-    private static final String REJECTION_MAIL_SENDER_KEY = "photo.email.sender.rejection";
-
     private static final String REJECTION_MAIL_SUBJECT_KEY = "photo.email.subject.rejection";
 
     private static final String REJECTION_MAIL_BODY_KEY = "photo.email.body.rejection";
 
     private Photograph() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setSubmission(new DateTime());
     }
 
@@ -120,7 +117,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
             super.setState(state);
             setStateChange(new DateTime());
             if (state == PhotoState.PENDING) {
-                setPendingHolder(RootDomainObject.getInstance());
+                setPendingHolder(Bennu.getInstance());
             } else {
                 setPendingHolder(null);
             }
@@ -337,7 +334,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

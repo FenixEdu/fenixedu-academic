@@ -2,7 +2,8 @@ package net.sourceforge.fenixedu.domain.functionalities;
 
 import java.util.UUID;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 /**
@@ -15,7 +16,7 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
 
     protected AvailabilityPolicy() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setContentId(UUID.randomUUID().toString());
     }
 
@@ -43,7 +44,7 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
 
     public abstract Group getTargetGroup();
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

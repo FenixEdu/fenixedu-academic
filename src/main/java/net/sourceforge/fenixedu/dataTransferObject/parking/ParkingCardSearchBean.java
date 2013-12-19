@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
@@ -73,7 +73,7 @@ public class ParkingCardSearchBean implements Serializable {
 
     public void doSearch() {
         getSearchedParkingParties().clear();
-        for (ParkingParty parkingParty : RootDomainObject.getInstance().getParkingParties()) {
+        for (ParkingParty parkingParty : Bennu.getInstance().getParkingPartiesSet()) {
             if (parkingParty.hasAnyVehicles() && satisfiesSearch(parkingParty)) {
                 getSearchedParkingParties().add(parkingParty);
             }

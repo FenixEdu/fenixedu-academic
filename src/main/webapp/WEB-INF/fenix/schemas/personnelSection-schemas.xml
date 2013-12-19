@@ -166,7 +166,7 @@
 
 
 <schema name="oauthapps.view.app.basic.details" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
-<slot name="this" key="oauthapps.label.app.logo" layout="view-as-image">
+	<slot name="this" key="oauthapps.label.app.logo" layout="view-as-image">
 			<property name="useParent" value="false"/>
 			<property name="moduleRelative" value="true"/>
 			<property name="contextRelative" value="false"/>
@@ -189,12 +189,60 @@
 	<slot name="redirectUrl" key="oauthapps.label.app.redirect.url" />
 </schema>
 
+<schema name="oauthapps.view.app.all.authorizations" type="net.sourceforge.fenixedu.domain.AppUserAuthorization" bundle="APPLICATION_RESOURCES">
+
+	<slot name="user" key="oauthapps.label.app.user" layout="format">
+		<property name="format" value="${person.name} (${person.username})"/>
+	</slot>
+	
+	<slot name="sessionCount" key="oauthapps.label.app.number.authorizations" />	
+</schema>
+
+<schema name="oauthapps.view.app.all.sessions" type="net.sourceforge.fenixedu.domain.AppUserSession" bundle="APPLICATION_RESOURCES">
+	
+	<slot name="creationDate" key="oauthapps.label.app.creation.date" >
+		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}:${secondOfMinute,02d}"/>
+	</slot>
+	<slot name="deviceId" key="oauthapps.label.app.device.id" />
+	<slot name="accessToken" key="oauthapps.label.access.token" />
+	<slot name="refreshToken" key="oauthapps.label.refresh.token" />	
+	
+			
+</schema>
+
+
 <schema name="oauthapps.view.authorizations" type="net.sourceforge.fenixedu.domain.AppUserSession" bundle="APPLICATION_RESOURCES">
 	<slot name="creationDate" key="oauthapps.label.app.creation.date" >
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}:${secondOfMinute,02d}"/>
 	</slot>
 	<slot name="deviceId" key="oauthapps.label.app.device.id" />
 	<slot name="accessToken" key="oauthapps.label.access.token" />
+</schema>
+
+<schema name="oauthapps.view.applications" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
+
+	<slot name="this" key="oauthapps.label.app.logo" layout="view-as-image">
+			<property name="useParent" value="false"/>
+			<property name="moduleRelative" value="true"/>
+			<property name="contextRelative" value="false"/>
+			<property name="imageFormat" value="/externalApps.do?method=appLogo&amp;appOid=${externalId}"/>
+	</slot>
+	<slot name="name" key="oauthapps.label.app.name" />
+	
+	<slot name="author" key="oauthapps.label.app.author" layout="format">
+		<property name="format" value="${person.name} (${person.username})"/>
+	</slot>
+	
+	<slot name="appUserAuthorizationCount" key="oauthapps.label.app.authorizations" />
+	
+	<slot name="description" layout="longText" key="oauthapps.label.app.description"/>
+	<slot name="scopes" layout="flowLayout">
+		<property name="eachLayout" value="values"></property>
+		<property name="eachSchema" value="oauthapps.view.scope.name"></property>
+		<property name="htmlSeparator" value=", "></property>
+	</slot>
+	<slot name="siteUrl" key="oauthapps.label.app.site.url" />
+	
 </schema>
 
 <schema name="oauthapps.view.scope.name" type="net.sourceforge.fenixedu.domain.AuthScope">
@@ -262,6 +310,6 @@
 		<property name="eachLayout" value="values"></property>
 		<property name="eachSchema" value="oauthapps.view.scope.complete"></property>
 	</slot>
-	<slot name="author.userUId" />
+	<slot name="author.username" />
 	<slot name="author.person.email" />
 </schema>

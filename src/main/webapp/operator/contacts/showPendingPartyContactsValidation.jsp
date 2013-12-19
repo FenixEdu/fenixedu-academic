@@ -7,7 +7,7 @@
 
 <h2><bean:message key="label.contacts.validate.address" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
-<logic:present role="OPERATOR">
+<logic:present role="role(OPERATOR)">
 	 
 	<logic:notEmpty name="partyContacts">
 		<p class="mtop15 mbottom3"><b><bean:message key="label.contacts.validate.pending.address" bundle="ACADEMIC_OFFICE_RESOURCES"/></b></p>		

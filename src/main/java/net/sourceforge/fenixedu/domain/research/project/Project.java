@@ -3,8 +3,7 @@ package net.sourceforge.fenixedu.domain.research.project;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Period;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -27,14 +26,14 @@ public class Project extends Project_Base {
         super();
         // Only internal projects are created
         this.setProjectType(ProjectType.INTERNAL_PROJECT);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Project(MultiLanguageString title, ProjectType type) {
         super();
         this.setProjectType(type);
         this.setTitle(title);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     /**
@@ -91,7 +90,7 @@ public class Project extends Project_Base {
     public static List<Project> getProjectsByTitle(String searchedTitle) {
         final String searcherTitleLower = searchedTitle.toLowerCase();
         List<Project> result = new ArrayList<Project>();
-        for (Project project : RootDomainObject.getInstance().getProjects()) {
+        for (Project project : Bennu.getInstance().getProjectsSet()) {
             // First try to match with the default aplication language title
             // perhaps this sould be changed to try to match with the title in
             // the
@@ -139,7 +138,7 @@ public class Project extends Project_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

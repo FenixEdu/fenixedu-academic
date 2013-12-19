@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -21,7 +23,7 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
     }
 
     public void execute(String executionDegreeID) throws NotAuthorizedException {
-        Person person = AccessControl.getUserView().getPerson();
+        Person person = Authenticate.getUser().getPerson();
 
         if (!person.hasRole(getRoleType())) {
             throw new NotAuthorizedException();

@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.utils;
 
 import java.security.SecureRandom;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import com.Ostermiller.util.PasswordVerifier;
 import com.Ostermiller.util.RandPass;
@@ -34,7 +34,7 @@ public class GeneratePasswordBase implements IGeneratePassword {
     @Override
     public String generatePassword(Person person) {
 
-        return randPass.getPass(PropertiesManager.getIntegerProperty("passSize"));
+        return randPass.getPass(FenixConfigurationManager.getConfiguration().getGeneratedPasswordSize());
 
     }
 }

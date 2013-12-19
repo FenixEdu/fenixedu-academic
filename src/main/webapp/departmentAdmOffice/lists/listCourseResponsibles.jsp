@@ -41,7 +41,7 @@
 			<fr:slot name="campus.name" key="campus"/>
 			<fr:slot name="responsible.name" key="label.responsible" layout="link">
 				<fr:property name="useParent" value="true"/>
-				<fr:property name="linkFormat" value="https://fenix.ist.utl.pt/homepage/${responsible.user.userUId}"/>
+				<fr:property name="linkFormat" value="https://fenix.ist.utl.pt/homepage/${responsible.user.username}"/>
 			</fr:slot>
 			<fr:slot name="executionSemester.semester" key="label.semester"/>
 		</fr:schema>

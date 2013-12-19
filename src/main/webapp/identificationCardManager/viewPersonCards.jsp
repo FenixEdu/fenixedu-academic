@@ -12,7 +12,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.StudentCurricularPlan"%>
 <%@page import="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry"%>
 <%@page import="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch"%>
-<%@page import="net.sourceforge.fenixedu.domain.RootDomainObject"%><html:xhtml/>
+<%@page import="org.fenixedu.bennu.core.domain.Bennu"%><html:xhtml/>
 
 <em>Cartões de Identificação</em>
 <h2><bean:message key="link.card.generation.search.people" /></h2>
@@ -53,7 +53,7 @@
 				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
 				<fr:property name="order(view)" value="1" />
 
-				<logic:present role="MANAGER">
+				<logic:present role="role(MANAGER)">
 					<fr:property name="link(delete)" value="/manageCardGeneration.do?method=deletePersonCard"/>
 					<fr:property name="key(delete)" value="label.delete" />
 					<fr:property name="param(delete)" value="OID/cardGenerationEntryId" />

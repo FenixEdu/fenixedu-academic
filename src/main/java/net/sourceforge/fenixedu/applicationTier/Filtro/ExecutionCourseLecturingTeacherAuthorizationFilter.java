@@ -5,7 +5,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
@@ -43,10 +45,10 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
     }
 
     public void execute(ExecutionCourse executionCourse) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
 
         try {
-            if ((id == null) || (id.getRoleTypes() == null) || !lecturesExecutionCourse(id, executionCourse)) {
+            if ((id == null) || (id.getPerson().getPersonRolesSet() == null) || !lecturesExecutionCourse(id, executionCourse)) {
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
@@ -54,7 +56,7 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
         }
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, ExecutionCourse executionCourse) {
+    private boolean lecturesExecutionCourse(User id, ExecutionCourse executionCourse) {
         if (executionCourse == null) {
             return false;
         }

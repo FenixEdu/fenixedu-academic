@@ -7,10 +7,12 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -25,7 +27,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ChangeStudentsShift {
 
     @Atomic
-    public static void run(IUserView userView, String oldShiftId, String newShiftId, final Set<Registration> registrations)
+    public static void run(User userView, String oldShiftId, String newShiftId, final Set<Registration> registrations)
             throws FenixServiceException {
         check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
@@ -66,8 +68,9 @@ public class ChangeStudentsShift {
         final String message = messagePrefix + messagePosfix;
 
         Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
-        Sender sender = RootDomainObject.getInstance().getSystemSender();
-        new Message(sender, new ConcreteReplyTo("gop@ist.utl.pt").asCollection(), recipient.asCollection(), subject, message, "");
+        Sender sender = Bennu.getInstance().getSystemSender();
+        String gopEmailAddress = Instalation.getInstance().getInstituitionalEmailAddress("gop");
+        new Message(sender, new ConcreteReplyTo(gopEmailAddress).asCollection(), recipient.asCollection(), subject, message, "");
     }
 
     public static class UnableToTransferStudentsException extends FenixServiceException {

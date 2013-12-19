@@ -4,7 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -19,7 +20,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadCoordinationResponsibility {
 
-    protected Boolean run(String executionDegreeId, IUserView userView) throws FenixServiceException {
+    protected Boolean run(String executionDegreeId, User userView) throws FenixServiceException {
         ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
         Coordinator coordinator = executionDegree.getCoordinatorByTeacher(userView.getPerson());
 
@@ -34,7 +35,7 @@ public class ReadCoordinationResponsibility {
     private static final ReadCoordinationResponsibility serviceInstance = new ReadCoordinationResponsibility();
 
     @Atomic
-    public static Boolean runReadCoordinationResponsibility(String executionDegreeId, IUserView userView)
+    public static Boolean runReadCoordinationResponsibility(String executionDegreeId, User userView)
             throws FenixServiceException, NotAuthorizedException {
         DegreeCoordinatorAuthorizationFilter.instance.execute(executionDegreeId);
         return serviceInstance.run(executionDegreeId, userView);

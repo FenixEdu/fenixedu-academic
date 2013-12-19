@@ -4,7 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Person;
@@ -21,7 +22,7 @@ public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthori
     }
 
     @Override
-    protected boolean verifyCondition(IUserView id, String degreeCurricularPlanID) {
+    protected boolean verifyCondition(User id, String degreeCurricularPlanID) {
         final Person person = id.getPerson();
         final Teacher teacher = person == null ? null : person.getTeacher();
 

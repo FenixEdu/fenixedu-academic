@@ -1,13 +1,13 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
-<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
-<bean:define id="institutionUrlStudents" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>pt/alunos/</bean:define>
-<bean:define id="institutionUrlTeachers" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>pt/docentes/</bean:define>
-<bean:define id="institutionUrlEmployees" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>pt/pessoal/</bean:define>
-<bean:define id="institutionUrlCandidates" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>pt/candidatos/</bean:define>
-<bean:define id="institutionUrlInternational" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>en/</bean:define>
-<bean:define id="institutionUrlAlumni" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>pt/alumni/</bean:define>
+<bean:define id="institutionUrl" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %></bean:define>
+<bean:define id="institutionUrlStudents" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>pt/alunos/</bean:define>
+<bean:define id="institutionUrlTeachers" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>pt/docentes/</bean:define>
+<bean:define id="institutionUrlEmployees" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>pt/pessoal/</bean:define>
+<bean:define id="institutionUrlCandidates" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>pt/candidatos/</bean:define>
+<bean:define id="institutionUrlInternational" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>en/</bean:define>
+<bean:define id="institutionUrlAlumni" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>pt/alumni/</bean:define>
 
 <ul>
 	<li><a href="<%= institutionUrl %>">In&iacute;cio</a></li>

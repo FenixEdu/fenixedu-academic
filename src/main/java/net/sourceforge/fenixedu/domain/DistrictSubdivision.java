@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.TreeSet;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
@@ -22,7 +24,7 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
 
     private DistrictSubdivision() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     public DistrictSubdivision(final String code, final String name, final District district) {
@@ -58,7 +60,7 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
         String normalizedName = StringNormalizer.normalize(name).toLowerCase();
         Collection<DistrictSubdivision> result = new TreeSet<DistrictSubdivision>(COMPARATOR_BY_NAME);
 
-        for (DistrictSubdivision districtSubdivision : RootDomainObject.getInstance().getDistrictSubdivisions()) {
+        for (DistrictSubdivision districtSubdivision : Bennu.getInstance().getDistrictSubdivisionsSet()) {
             if (StringNormalizer.normalize(districtSubdivision.getName()).toLowerCase().contains(normalizedName)) {
                 result.add(districtSubdivision);
                 if (result.size() >= size) {
@@ -74,7 +76,7 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
         DistrictSubdivision result = null;
 
         if (!StringUtils.isEmpty(code)) {
-            for (final DistrictSubdivision iter : RootDomainObject.getInstance().getDistrictSubdivisions()) {
+            for (final DistrictSubdivision iter : Bennu.getInstance().getDistrictSubdivisionsSet()) {
                 if (iter.getCode().equalsIgnoreCase(code)) {
                     result = iter;
                 }
@@ -150,7 +152,7 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

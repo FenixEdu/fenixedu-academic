@@ -8,7 +8,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
@@ -21,7 +23,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadInfoEnrolmentEvaluationByEvaluationOID {
 
     @Atomic
-    public static InfoEnrolmentEvaluation run(IUserView userView, Integer studentNumber, DegreeType degreeType,
+    public static InfoEnrolmentEvaluation run(User userView, Integer studentNumber, DegreeType degreeType,
             String enrolmentOID) throws ExcepcaoInexistente, FenixServiceException {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         return (new GetEnrolmentGrade()).run((Enrolment) FenixFramework.getDomainObject(enrolmentOID));

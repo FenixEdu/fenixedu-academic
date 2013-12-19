@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.util.Email;
 
 public class MessageTransportResult extends MessageTransportResult_Base {
 
     public MessageTransportResult(final Email email, final Integer code, final String description) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setEmail(email);
         setCode(code);
         setDescription(description);
@@ -25,7 +26,7 @@ public class MessageTransportResult extends MessageTransportResult_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

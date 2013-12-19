@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
@@ -36,7 +37,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 
     public GratuitySituation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public GratuitySituation(GratuityValues gratuityValues, StudentCurricularPlan studentCurricularPlan) {
@@ -380,7 +381,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

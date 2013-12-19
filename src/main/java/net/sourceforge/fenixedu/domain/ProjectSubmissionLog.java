@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class ProjectSubmissionLog extends ProjectSubmissionLog_Base {
@@ -20,7 +21,7 @@ public class ProjectSubmissionLog extends ProjectSubmissionLog_Base {
 
     public ProjectSubmissionLog() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ProjectSubmissionLog(DateTime submissionDateTime, String filename, String fileMimeType, String fileChecksum,
@@ -58,7 +59,7 @@ public class ProjectSubmissionLog extends ProjectSubmissionLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

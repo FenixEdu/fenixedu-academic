@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.StudentListByCurricularCourseAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -14,13 +13,14 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentListByCurricularCourse {
 
-    protected List run(final IUserView userView, final String curricularCourseID, final String executionYear)
+    protected List run(final User userView, final String curricularCourseID, final String executionYear)
             throws FenixServiceException {
 
         final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseID);
@@ -53,7 +53,7 @@ public class ReadStudentListByCurricularCourse {
     private static final ReadStudentListByCurricularCourse serviceInstance = new ReadStudentListByCurricularCourse();
 
     @Atomic
-    public static List runReadStudentListByCurricularCourse(IUserView userView, String curricularCourseID, String executionYear)
+    public static List runReadStudentListByCurricularCourse(User userView, String curricularCourseID, String executionYear)
             throws FenixServiceException, NotAuthorizedException {
         StudentListByCurricularCourseAuthorizationFilter.instance.execute(curricularCourseID);
         return serviceInstance.run(userView, curricularCourseID, executionYear);

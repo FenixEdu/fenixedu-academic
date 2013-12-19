@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
@@ -24,7 +25,7 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
         setDegree(degree);
     }
 
-    protected RootDomainObject getRootDomainObject() {
+    protected Bennu getRootDomainObject() {
         return getDegree().getRootDomainObject();
     }
 

@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class PunctualRoomsOccupationStateInstant extends PunctualRoomsOccupationStateInstant_Base {
@@ -19,7 +20,7 @@ public class PunctualRoomsOccupationStateInstant extends PunctualRoomsOccupation
     public PunctualRoomsOccupationStateInstant(PunctualRoomsOccupationRequest request, RequestState state, DateTime instant) {
 //        check(this, ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationStateInstants);
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRequest(request);
         setRequestState(state);
         setInstant(instant);
@@ -55,7 +56,7 @@ public class PunctualRoomsOccupationStateInstant extends PunctualRoomsOccupation
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

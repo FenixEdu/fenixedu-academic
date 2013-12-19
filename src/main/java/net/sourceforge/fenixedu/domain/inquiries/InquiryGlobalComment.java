@@ -1,16 +1,17 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class InquiryGlobalComment extends InquiryGlobalComment_Base {
 
     public InquiryGlobalComment(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setExecutionCourse(executionCourse);
         setExecutionDegree(executionDegree);
         setCommentOnTeacher(false);
@@ -18,7 +19,7 @@ public class InquiryGlobalComment extends InquiryGlobalComment_Base {
 
     public InquiryGlobalComment(Person teacher, ExecutionSemester executionSemester) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setTeacher(teacher);
         setExecutionSemester(executionSemester);
         setCommentOnTeacher(true);
@@ -61,7 +62,7 @@ public class InquiryGlobalComment extends InquiryGlobalComment_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

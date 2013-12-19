@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author T�nia Pous�o
@@ -25,7 +26,7 @@ public class PaymentPhase extends PaymentPhase_Base {
 
     public PaymentPhase() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public String getDescriptionFromMessageResourses() {
@@ -91,7 +92,7 @@ public class PaymentPhase extends PaymentPhase_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

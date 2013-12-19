@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
@@ -97,12 +99,21 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
         final List<EntryDTO> result = new ArrayList<EntryDTO>(super.calculateEntries(event, when));
+        Map<EntryType, Money> payedAmounts = new HashMap<EntryType, Money>();
         final Iterator<EntryDTO> iterator = result.iterator();
         while (iterator.hasNext()) {
             final EntryDTO entryDTO = iterator.next();
-
+            Money payedAmount = payedAmounts.get(entryDTO.getEntryType());
+            if (payedAmount == null) {
+                payedAmount = event.getPayedAmountFor(entryDTO.getEntryType());
+            }
+            entryDTO.setAmountToPay(entryDTO.getAmountToPay().subtract(payedAmount));
             if (!entryDTO.getAmountToPay().isPositive()) {
                 iterator.remove();
+                payedAmount = entryDTO.getAmountToPay().abs();
+                payedAmounts.put(entryDTO.getEntryType(), payedAmount);
+            } else {
+                payedAmounts.put(entryDTO.getEntryType(), Money.ZERO);
             }
         }
 

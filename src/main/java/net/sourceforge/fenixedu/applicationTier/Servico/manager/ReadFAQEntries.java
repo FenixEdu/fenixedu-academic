@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQEntry;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.support.FAQEntry;
 import pt.ist.fenixframework.Atomic;
 
@@ -15,7 +16,7 @@ public class ReadFAQEntries {
     public static Collection run() {
         List<InfoFAQEntry> result = new ArrayList<InfoFAQEntry>();
 
-        for (FAQEntry faqEntry : RootDomainObject.getInstance().getFAQEntrys()) {
+        for (FAQEntry faqEntry : Bennu.getInstance().getFAQEntrysSet()) {
             result.add(InfoFAQEntry.newInfoFromDomain(faqEntry));
         }
 

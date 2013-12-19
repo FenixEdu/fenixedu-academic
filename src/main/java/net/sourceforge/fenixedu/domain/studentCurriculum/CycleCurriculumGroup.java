@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -29,10 +28,10 @@ import net.sourceforge.fenixedu.predicates.CycleCurriculumGroupPredicates;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -162,7 +161,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     private void checkRulesToDelete() {
         if (isFirstCycle()) {
             if (getRegistration().getIngression() == Ingression.DA1C || getRegistration().getIngression() == Ingression.CIA2C) {
-                final IUserView userView = UserView.getUser();
+                final User userView = Authenticate.getUser();
                 if (AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                         AcademicOperationType.STUDENT_ENROLMENTS).contains(getRegistration().getDegree())
                         || userView.getPerson().hasRole(RoleType.MANAGER)) {

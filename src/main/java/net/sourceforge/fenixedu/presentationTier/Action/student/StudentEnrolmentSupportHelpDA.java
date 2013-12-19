@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction;
 
 import org.apache.struts.action.ActionForm;
@@ -31,7 +33,7 @@ public class StudentEnrolmentSupportHelpDA extends ExceptionHandlingAction {
     public final ActionForward prepareSupportHelp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final SupportRequestBean requestBean = new SupportRequestBean();
+        final SupportRequestBean requestBean = SupportRequestBean.generateExceptionBean(AccessControl.getPerson());
         requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
         requestBean.setRequestContext(FenixFramework.<Content> getDomainObject(request.getParameter("contextId")));
 
@@ -50,8 +52,7 @@ public class StudentEnrolmentSupportHelpDA extends ExceptionHandlingAction {
 
     @Override
     protected String getSendToEmailAddress(HttpServletRequest request, SupportRequestBean requestBean) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
-        return bundle.getString("support.enrolments.mail");
+        return Instalation.getInstance().getInstituitionalEmailAddress("inscricoes");
     }
 
 }

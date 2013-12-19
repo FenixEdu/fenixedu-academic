@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.Custodian;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadNumberCachedItems;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.tools.Profiler;
@@ -21,6 +20,7 @@ import net.sourceforge.fenixedu.tools.Profiler;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -50,7 +50,7 @@ public class ManageCacheDA extends FenixDispatchAction {
         Profiler.report();
         Profiler.resetInstance();
 
-        // IUserView userView = UserView.getUser();
+        // User userView = Authenticate.getUser();
 
         Integer numberCachedItems = ReadNumberCachedItems.run();
 
@@ -92,9 +92,9 @@ public class ManageCacheDA extends FenixDispatchAction {
                 final Role firstRole = domainRelation.getFirstRole();
                 final Role secondRole = domainRelation.getSecondRole();
 
-                if (firstRole.getType().getFullName().equals(RootDomainObject.class.getName())) {
+                if (firstRole.getType().getFullName().equals(Bennu.class.getName())) {
                     numberOfReadDomainObjects += loadDomainObjects(secondRole);
-                } else if (secondRole.getType().getFullName().equals(RootDomainObject.class.getName())) {
+                } else if (secondRole.getType().getFullName().equals(Bennu.class.getName())) {
                     numberOfReadDomainObjects += loadDomainObjects(firstRole);
                 }
                 final Integer numberCachedItems = ReadNumberCachedItems.run();
@@ -117,7 +117,7 @@ public class ManageCacheDA extends FenixDispatchAction {
         final String methodName = "get" + Character.toUpperCase(roleName.charAt(0)) + roleName.substring(1);
         int numberOfReadDomainObjects = 0;
         try {
-            final Method method = RootDomainObject.class.getMethod(methodName, (Class[]) null);
+            final Method method = Bennu.class.getMethod(methodName, (Class[]) null);
             final Collection<DomainObject> domainObjects =
                     (Collection<DomainObject>) method.invoke(rootDomainObject, (Object[]) null);
             numberOfReadDomainObjects = domainObjects.size();

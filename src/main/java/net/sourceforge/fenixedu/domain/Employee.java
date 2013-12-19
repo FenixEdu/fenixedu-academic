@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCa
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -40,7 +41,7 @@ public class Employee extends Employee_Base {
         setCreationDate(new DateTime());
         setPerson(person);
         setWorkingHours(0);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -241,7 +242,7 @@ public class Employee extends Employee_Base {
     }
 
     public static Employee readByNumber(final Integer employeeNumber) {
-        for (final Employee employee : RootDomainObject.getInstance().getEmployees()) {
+        for (final Employee employee : Bennu.getInstance().getEmployeesSet()) {
             if (employee.getEmployeeNumber().equals(employeeNumber)) {
                 return employee;
             }
@@ -262,15 +263,6 @@ public class Employee extends Employee_Base {
 
     private RoleType getRoleType() {
         return RoleType.EMPLOYEE;
-    }
-
-    public String getRoleLoginAlias() {
-        final List<LoginAlias> roleLoginAlias = getPerson().getLoginIdentification().getRoleLoginAlias(getRoleType());
-        if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
-            return "F" + getEmployeeNumber();
-        } else {
-            return roleLoginAlias.iterator().next().getAlias();
-        }
     }
 
     public Unit getCurrentSectionOrScientificArea() {
@@ -328,14 +320,14 @@ public class Employee extends Employee_Base {
 
     private static int findMaxEmployeeNumber() {
         int max = 0;
-        for (final Employee employee : RootDomainObject.getInstance().getEmployeesSet()) {
+        for (final Employee employee : Bennu.getInstance().getEmployeesSet()) {
             max = Math.max(max, employee.getEmployeeNumber().intValue());
         }
         return max;
     }
 
     public boolean hasMultipleDepartments() {
-        Collection<Department> departments = RootDomainObject.getInstance().getDepartments();
+        Collection<Department> departments = Bennu.getInstance().getDepartmentsSet();
         int count = 0;
         final int several = 2;
         for (Department department : departments) {
@@ -458,7 +450,7 @@ public class Employee extends Employee_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

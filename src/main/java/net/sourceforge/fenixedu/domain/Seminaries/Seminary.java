@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain.Seminaries;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -20,7 +20,7 @@ public class Seminary extends Seminary_Base {
 
     public Seminary() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     /**
@@ -212,7 +212,7 @@ public class Seminary extends Seminary_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

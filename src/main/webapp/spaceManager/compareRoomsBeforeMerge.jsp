@@ -8,7 +8,7 @@
 <em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message key="merge.space.title" bundle="SPACE_RESOURCES"/></h2>
 
-<logic:present role="SPACE_MANAGER">
+<logic:present role="role(SPACE_MANAGER)">
 
 	<logic:notEmpty name="spaceBean">
 		

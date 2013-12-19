@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.domain.tests;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class NewGroupElement extends NewGroupElement_Base {
 
     public NewGroupElement() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void deleteUp() {
@@ -51,7 +51,7 @@ public class NewGroupElement extends NewGroupElement_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

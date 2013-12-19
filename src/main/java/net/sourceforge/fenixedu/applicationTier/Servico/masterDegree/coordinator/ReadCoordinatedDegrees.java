@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -27,7 +28,7 @@ import pt.ist.fenixframework.Atomic;
 public class ReadCoordinatedDegrees {
 
     @Atomic
-    public static List<InfoDegreeCurricularPlan> run(IUserView userView) throws FenixServiceException {
+    public static List<InfoDegreeCurricularPlan> run(User userView) throws FenixServiceException {
         check(RolePredicates.COORDINATOR_PREDICATE);
         final Person person = userView.getPerson();
         if (person == null) {

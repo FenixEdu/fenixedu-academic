@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -14,7 +14,7 @@ public class AccountabilityType extends AccountabilityType_Base {
 
     protected AccountabilityType() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public AccountabilityType(AccountabilityTypeEnum accountabilityTypeEnum, MultiLanguageString name) {
@@ -32,7 +32,7 @@ public class AccountabilityType extends AccountabilityType_Base {
     }
 
     public static AccountabilityType readByType(AccountabilityTypeEnum typeEnum) {
-        Collection<AccountabilityType> allAccountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
+        Collection<AccountabilityType> allAccountabilityTypes = Bennu.getInstance().getAccountabilityTypesSet();
         for (AccountabilityType accountabilityType : allAccountabilityTypes) {
             if (accountabilityType.getType().equals(typeEnum)) {
                 return accountabilityType;
@@ -101,7 +101,7 @@ public class AccountabilityType extends AccountabilityType_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

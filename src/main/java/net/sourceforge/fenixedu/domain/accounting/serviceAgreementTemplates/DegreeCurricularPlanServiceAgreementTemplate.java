@@ -3,9 +3,10 @@ package net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
@@ -118,8 +119,7 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricul
 
     public static DegreeCurricularPlanServiceAgreementTemplate readByDegreeCurricularPlan(
             final DegreeCurricularPlan degreeCurricularPlan) {
-        for (final ServiceAgreementTemplate serviceAgreementTemplate : RootDomainObject.getInstance()
-                .getServiceAgreementTemplates()) {
+        for (final ServiceAgreementTemplate serviceAgreementTemplate : Bennu.getInstance().getServiceAgreementTemplatesSet()) {
 
             if (serviceAgreementTemplate instanceof DegreeCurricularPlanServiceAgreementTemplate) {
                 final DegreeCurricularPlanServiceAgreementTemplate degreeCurricularPlanServiceAgreementTemplate =

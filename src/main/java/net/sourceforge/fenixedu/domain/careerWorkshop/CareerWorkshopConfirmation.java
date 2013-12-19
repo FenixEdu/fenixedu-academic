@@ -68,7 +68,7 @@ public class CareerWorkshopConfirmation extends CareerWorkshopConfirmation_Base 
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

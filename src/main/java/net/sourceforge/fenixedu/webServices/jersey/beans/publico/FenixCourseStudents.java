@@ -1,69 +1,39 @@
 package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class FenixCourseStudents {
 
     public static class FenixCourseStudent {
 
-        public static class Evaluation {
-
-            String evaluation;
-            String mark;
-
-            public Evaluation(String evaluation, String mark) {
-                super();
-                this.evaluation = evaluation;
-                this.mark = mark;
-            }
-
-            public String getEvaluation() {
-                return evaluation;
-            }
-
-            public void setEvaluation(String evaluation) {
-                this.evaluation = evaluation;
-            }
-
-            public String getMark() {
-                return mark;
-            }
-
-            public void setMark(String mark) {
-                this.mark = mark;
-            }
-
-        }
-
-        Integer number;
-        String name;
+        String username;
         String degree;
         String degreeId;
-        List<Evaluation> evaluations;
 
-        public FenixCourseStudent(Integer number, String name, String degree, String degreeId, List<Evaluation> evaluations) {
-            super();
-            this.number = number;
-            this.name = name;
-            this.degree = degree;
-            this.degreeId = degreeId;
-            this.evaluations = evaluations;
+        public FenixCourseStudent(final Attends attends) {
+            final Registration registration = attends.getRegistration();
+            final Person person = registration.getPerson();
+            this.username = person.getUsername();
+            final Degree degree = registration.getDegree();
+            this.degree = degree.getSigla();
+            this.degree = degree.getExternalId();
         }
 
-        public Integer getNumber() {
-            return number;
+        public String getUsername() {
+            return username;
         }
 
-        public void setNumber(Integer number) {
-            this.number = number;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
+        public void setUsername(String username) {
+            this.username = username;
         }
 
         public String getDegree() {
@@ -82,62 +52,40 @@ public class FenixCourseStudents {
             this.degreeId = degreeId;
         }
 
-        public List<Evaluation> getEvaluations() {
-            return evaluations;
+    }
+
+    int enrolmentCount;
+    int attendingCount;
+    List<FenixCourseStudent> students = new ArrayList<>();
+
+    public FenixCourseStudents(final ExecutionCourse executionCourse) {
+        final Set<Attends> attendsSet = executionCourse.getAttendsSet();
+        attendingCount = attendsSet.size();
+
+        for (final Attends attends : attendsSet) {
+            final Enrolment enrolment = attends.getEnrolment();
+            if (enrolment != null) {
+                enrolmentCount++;
+            }
+
+            students.add(new FenixCourseStudent(attends));
         }
-
-        public void setEvaluations(List<Evaluation> evaluations) {
-            this.evaluations = evaluations;
-        }
-
     }
 
-    Integer enrolmentNumber;
-    String name;
-    Integer semester;
-    String year;
-    List<FenixCourseStudent> students;
-
-    public FenixCourseStudents(Integer enrolmentNumber, String name, Integer semester, String year,
-            List<FenixCourseStudent> students) {
-        super();
-        this.enrolmentNumber = enrolmentNumber;
-        this.name = name;
-        this.semester = semester;
-        this.year = year;
-        this.students = students;
+    public int getEnrolmentCount() {
+        return enrolmentCount;
     }
 
-    public Integer getEnrolmentNumber() {
-        return enrolmentNumber;
+    public void setEnrolmentCount(int enrolmentCount) {
+        this.enrolmentCount = enrolmentCount;
     }
 
-    public void setEnrolmentNumber(Integer enrolmentNumber) {
-        this.enrolmentNumber = enrolmentNumber;
+    public int getAttendingCount() {
+        return attendingCount;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Integer semester) {
-        this.semester = semester;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
+    public void setAttendingCount(int attendingCount) {
+        this.attendingCount = attendingCount;
     }
 
     public List<FenixCourseStudent> getStudents() {

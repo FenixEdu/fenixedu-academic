@@ -6,15 +6,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.SummariesControlAction;
 
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -30,7 +30,7 @@ public class DepartmentAdmOfficeSummariesControlAction extends SummariesControlA
     protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixServiceException {
 
         List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
         Person person = userView.getPerson();
         Collection<Department> manageableDepartments = person.getManageableDepartmentCredits();
         for (Department department : manageableDepartments) {

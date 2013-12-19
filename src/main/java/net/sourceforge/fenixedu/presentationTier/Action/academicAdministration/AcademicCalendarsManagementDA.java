@@ -61,7 +61,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward prepareChooseCalendar(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Collection<AcademicCalendarRootEntry> academicCalendars = rootDomainObject.getAcademicCalendars();
+        Collection<AcademicCalendarRootEntry> academicCalendars = rootDomainObject.getAcademicCalendarsSet();
         request.setAttribute("academicCalendars", academicCalendars);
 
         return mapping.findForward("prepareChooseCalendar");

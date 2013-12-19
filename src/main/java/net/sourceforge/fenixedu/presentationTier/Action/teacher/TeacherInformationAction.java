@@ -12,7 +12,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditTeacherInformation;
@@ -39,8 +38,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -437,8 +437,8 @@ public class TeacherInformationAction extends FenixDispatchAction {
      */
     private InfoSiteTeacherInformation readInfoSiteTeacherInformation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request) throws FenixServiceException {
-        IUserView userView = UserView.getUser();
-        SiteView siteView = ReadTeacherInformation.runReadTeacherInformation(userView.getUtilizador(), new String());
+        User userView = Authenticate.getUser();
+        SiteView siteView = ReadTeacherInformation.runReadTeacherInformation(userView.getUsername(), new String());
         return (InfoSiteTeacherInformation) siteView.getComponent();
     }
 

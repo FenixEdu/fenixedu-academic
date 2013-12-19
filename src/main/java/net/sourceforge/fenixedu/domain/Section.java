@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -49,7 +50,7 @@ public class Section extends Section_Base {
 
         setCreationDate(new DateTime());
         setShowSubSections(true);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Section(Container parent, MultiLanguageString name) {

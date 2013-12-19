@@ -4,8 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -19,7 +20,7 @@ public class Orientation extends Orientation_Base {
 
     public Orientation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Orientation(Teacher teacher, InfoOrientation infoOrientation) {
@@ -73,7 +74,7 @@ public class Orientation extends Orientation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -9,9 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.security.UserView;
 
 public class ManagerFilter implements Filter {
 
@@ -27,8 +28,9 @@ public class ManagerFilter implements Filter {
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
             throws IOException, ServletException {
 
-        final IUserView userView = UserView.getUser();
-        if (userView == null || !(userView.hasRoleType(RoleType.MANAGER) || userView.hasRoleType(RoleType.OPERATOR))) {
+        final User userView = Authenticate.getUser();
+        if (userView == null
+                || !(userView.getPerson().hasRole(RoleType.MANAGER) || userView.getPerson().hasRole(RoleType.OPERATOR))) {
             throw new RuntimeException();
         }
 

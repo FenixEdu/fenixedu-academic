@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -15,7 +17,7 @@ public class CourseLoad extends CourseLoad_Base {
             throw new DomainException("error.CourseLoad.executionCourse.already.contains.type");
         }
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setUnitQuantity(unitQuantity);
         setTotalQuantity(totalQuantity);
         setExecutionCourse(executionCourse);
@@ -98,6 +100,7 @@ public class CourseLoad extends CourseLoad_Base {
     private boolean isTotalQuantityValid() {
         return getUnitQuantity() == null || getTotalQuantity().compareTo(getUnitQuantity()) != -1;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.LessonInstance> getLessonInstances() {
         return getLessonInstancesSet();
@@ -129,7 +132,7 @@ public class CourseLoad extends CourseLoad_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

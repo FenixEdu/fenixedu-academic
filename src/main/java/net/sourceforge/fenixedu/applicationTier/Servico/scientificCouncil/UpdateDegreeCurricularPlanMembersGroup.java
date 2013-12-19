@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -88,7 +89,7 @@ public class UpdateDegreeCurricularPlanMembersGroup {
             }
         }
 
-        Collection<Department> departments = RootDomainObject.getInstance().getDepartments();
+        Collection<Department> departments = Bennu.getInstance().getDepartmentsSet();
         for (Department department : departments) {
             Group group = department.getCompetenceCourseMembersGroup();
             if (group != null && group.isMember(person)) {

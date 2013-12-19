@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
@@ -12,7 +13,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingPr
 public class ScheduleThesisMeetingRequest extends PhdMeetingSchedulingActivity {
 
     @Override
-    protected void activityPreConditions(PhdMeetingSchedulingProcess process, IUserView userView) {
+    protected void activityPreConditions(PhdMeetingSchedulingProcess process, User userView) {
 
         if (!process.getActiveState().equals(PhdMeetingSchedulingProcessStateType.WITHOUT_THESIS_MEETING_REQUEST)) {
             throw new PreConditionNotValidException();
@@ -24,7 +25,7 @@ public class ScheduleThesisMeetingRequest extends PhdMeetingSchedulingActivity {
     }
 
     @Override
-    protected PhdMeetingSchedulingProcess executeActivity(PhdMeetingSchedulingProcess process, IUserView userView, Object object) {
+    protected PhdMeetingSchedulingProcess executeActivity(PhdMeetingSchedulingProcess process, User userView, Object object) {
         final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
         final PhdThesisProcess thesisProcess = process.getThesisProcess();
 

@@ -4,7 +4,8 @@ import java.io.StringReader;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.NodeGroup;
@@ -26,7 +27,9 @@ import antlr.TokenStreamRecognitionException;
  * Note that because the group may require a context to be evaluated it cannot be easily combined with other groups.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public class ExpressionGroup extends Group implements GroupContextProvider {
 
     private static Logger logger = Logger.getLogger(ExpressionGroup.class.getName());
@@ -170,7 +173,7 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
      * @inheritDoc
      */
     @Override
-    public boolean allows(IUserView userView) {
+    public boolean allows(User userView) {
         return getGroup().allows(userView);
     }
 
@@ -190,11 +193,11 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
     }
 
     /**
-     * This method behaves like {@link #allows(IUserView)} but seup the
+     * This method behaves like {@link #allows(User)} but seup the
      * expression's group context so that it's available during the entire
      * group's evaluation.
      */
-    public boolean allows(GroupContext context, IUserView userView) {
+    public boolean allows(GroupContext context, User userView) {
         setContext(context);
 
         try {

@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.EditGratuitySituationById;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
@@ -23,6 +22,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -44,7 +44,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
     public ActionForward insertExemptionGratuity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         InfoGratuitySituation infoGratuitySituation = fillInfoGratuityValues(userView, request, (DynaActionForm) actionForm);
         try {
             infoGratuitySituation = (InfoGratuitySituation) EditGratuitySituationById.run(infoGratuitySituation);
@@ -61,7 +61,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
         return mapping.findForward("confirmationExemptionGratuity");
     }
 
-    private InfoGratuitySituation fillInfoGratuityValues(IUserView userView, HttpServletRequest request,
+    private InfoGratuitySituation fillInfoGratuityValues(User userView, HttpServletRequest request,
             DynaActionForm exemptionForm) {
         Integer valueExemptionGratuity = Integer.valueOf((String) exemptionForm.get("valueExemptionGratuity"));
         String justificationExemptionGratuity = (String) exemptionForm.get("justificationExemptionGratuity");
@@ -99,7 +99,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
         return infoGratuitySituation;
     }
 
-    private InfoGratuitySituation fillGratuitySituationFromRequest(IUserView userView, HttpServletRequest request) {
+    private InfoGratuitySituation fillGratuitySituationFromRequest(User userView, HttpServletRequest request) {
 
         String studentCurricularPlanID = request.getParameter("studentCurricularPlanID");
         request.setAttribute("studentCurricularPlanID", studentCurricularPlanID);
@@ -134,7 +134,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
             HttpServletResponse response) throws Exception {
 
         ActionErrors errors = new ActionErrors();
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         InfoGratuitySituation infoGratuitySituation = fillGratuitySituationFromRequest(userView, request);
 
         // to remove an exemption is equivalent to put 0 in exemption percentage

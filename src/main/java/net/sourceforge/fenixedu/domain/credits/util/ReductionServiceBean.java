@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.domain.credits.util;
 
 import java.io.Serializable;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
@@ -64,7 +65,7 @@ public class ReductionServiceBean implements Serializable {
 
     public FacultyEvaluationProcessYear getFacultyEvaluationProcessYear() {
         FacultyEvaluationProcessYear lastFacultyEvaluationProcessYear = null;
-        for (final FacultyEvaluationProcessYear facultyEvaluationProcessYear : RootDomainObject.getInstance()
+        for (final FacultyEvaluationProcessYear facultyEvaluationProcessYear : Bennu.getInstance()
                 .getFacultyEvaluationProcessYearSet()) {
             if (facultyEvaluationProcessYear.getApprovedTeacherEvaluationProcessMarkSet().size() != 0
                     && (lastFacultyEvaluationProcessYear == null || facultyEvaluationProcessYear.getYear().compareTo(

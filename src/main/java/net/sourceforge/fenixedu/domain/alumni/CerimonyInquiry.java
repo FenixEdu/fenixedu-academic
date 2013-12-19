@@ -6,11 +6,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -19,7 +19,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
 
     public CerimonyInquiry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setBegin(new DateTime().plusDays(1));
         setEnd(getBegin().plusDays(15));
     }
@@ -50,7 +50,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
     @Atomic
     public void addPeople(final Set<String> usernames) {
         for (final String username : usernames) {
-            final User user = User.readUserByUserUId(username);
+            final User user = User.findByUsername(username);
             if (user != null) {
                 final Person person = user.getPerson();
                 if (!containsPerson(person)) {
@@ -133,7 +133,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

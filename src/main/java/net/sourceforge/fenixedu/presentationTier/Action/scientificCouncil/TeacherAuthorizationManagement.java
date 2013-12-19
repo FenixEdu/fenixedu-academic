@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,15 +14,12 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -33,6 +31,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -92,7 +92,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
         @Atomic
         ExternalTeacherAuthorization create() throws FenixActionException {
 
-            User user = User.readUserByUserUId(getIstUsername());
+            User user = User.findByUsername(getIstUsername());
             if (user == null) {
                 throw new FenixActionException("label.invalid.istUsername");
             }
@@ -113,7 +113,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
             eta.setAuthorizer(AccessControl.getPerson());
             eta.setExecutionSemester(getExecutionSemester());
             eta.setProfessionalCategory(getProfessionalCategory());
-            eta.setRootDomainObject(RootDomainObject.getInstance());
+            eta.setRootDomainObject(Bennu.getInstance());
             eta.setActive(true);
             eta.setCanPark(getCanPark());
             eta.setCanHaveCard(false);
@@ -201,7 +201,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
         public String getFileContent() {
             if (fileContent == null) {
                 try {
-                    fileContent = FileUtils.readFile(new InputStreamReader(inputStream, PropertiesManager.DEFAULT_CHARSET));
+                    fileContent = FileUtils.readFile(new InputStreamReader(inputStream, Charset.defaultCharset().name()));
                 } catch (final UnsupportedEncodingException e) {
                     throw new Error(e);
                 } catch (final IOException e) {
@@ -239,7 +239,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
                     final Boolean canHaveCard = Boolean.valueOf("S".equalsIgnoreCase(parts[4].trim()));
                     final Department department = Department.find(parts[5].trim());
 
-                    if (istUsername == null || istUsername.isEmpty() || User.readUserByUserUId(istUsername) == null) {
+                    if (istUsername == null || istUsername.isEmpty() || User.findByUsername(istUsername) == null) {
                         messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
                                 "label.message.istUsername.invalid", Integer.toString(lineCount), parts[0].trim()));
                         continue;
@@ -297,7 +297,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         ArrayList<ExternalTeacherAuthorization> teacher = new ArrayList<ExternalTeacherAuthorization>();
 
-        for (TeacherAuthorization teacherAuthorization : RootDomainObject.getInstance().getTeacherAuthorization()) {
+        for (TeacherAuthorization teacherAuthorization : Bennu.getInstance().getTeacherAuthorizationSet()) {
             if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
                 teacher.add((ExternalTeacherAuthorization) teacherAuthorization);
             }

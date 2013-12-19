@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -15,7 +14,8 @@ public class CreateNewRoomsReserve {
         if (AccessControl.getPerson().hasRole(RoleType.TEACHER) || AccessControl.getPerson().hasAnyProfessorships()) {
 
             if (bean != null) {
-                return new PunctualRoomsOccupationRequest(bean.getRequestor(), bean.getSubject(), bean.getDescription());
+                return new PunctualRoomsOccupationRequest(bean.getRequestor(), bean.getSubject(), bean.getCampus(),
+                        bean.getDescription());
             }
             return null;
         } else {

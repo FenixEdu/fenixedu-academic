@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.struts.taglib.logic.ConditionalTagBase;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class ActivityAvailableTag extends ConditionalTagBase {
 
@@ -45,7 +46,7 @@ public class ActivityAvailableTag extends ConditionalTagBase {
         }
 
         try {
-            activity.checkPreConditions(getProcess(), AccessControl.getUserView());
+            activity.checkPreConditions(getProcess(), Authenticate.getUser());
             return true;
         } catch (final PreConditionNotValidException e) {
             return false;

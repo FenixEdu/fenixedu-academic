@@ -7,13 +7,12 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -22,7 +21,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteExercise {
 
-    protected void run(String executionCourseId, String metadataId) throws InvalidArgumentsServiceException, ExcepcaoPersistencia {
+    protected void run(String executionCourseId, String metadataId) throws FenixServiceException {
         Metadata metadata = FenixFramework.getDomainObject(metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
@@ -49,10 +48,10 @@ public class DeleteExercise {
         }
     }
 
-    private void removeTestQuestionFromTest(TestQuestion testQuestion) throws ExcepcaoPersistencia {
+    private void removeTestQuestionFromTest(TestQuestion testQuestion) throws FenixServiceException {
         Test test = testQuestion.getTest();
         if (test == null) {
-            throw new ExcepcaoPersistencia();
+            throw new FenixServiceException();
         }
 
         List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
@@ -74,8 +73,7 @@ public class DeleteExercise {
     private static final DeleteExercise serviceInstance = new DeleteExercise();
 
     @Atomic
-    public static void runDeleteExercise(String executionCourseId, String metadataId) throws InvalidArgumentsServiceException,
-            ExcepcaoPersistencia, NotAuthorizedException {
+    public static void runDeleteExercise(String executionCourseId, String metadataId) throws FenixServiceException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, metadataId);
     }

@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
@@ -11,7 +12,7 @@ public class UnitNamePart extends UnitNamePart_Base {
 
     public UnitNamePart(final String namePart) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setNamePart(namePart);
     }
 
@@ -45,7 +46,7 @@ public class UnitNamePart extends UnitNamePart_Base {
             return indexedUnitNamePart;
         }
 
-        for (final UnitNamePart unitNamePart : RootDomainObject.getInstance().getUnitNamePartSet()) {
+        for (final UnitNamePart unitNamePart : Bennu.getInstance().getUnitNamePartSet()) {
             final String otherUnitNamePart = unitNamePart.getNamePart();
             if (!unitNamePartIndexMap.containsKey(otherUnitNamePart)) {
                 unitNamePartIndexMap.put(otherUnitNamePart, unitNamePart);
@@ -100,7 +101,7 @@ public class UnitNamePart extends UnitNamePart_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

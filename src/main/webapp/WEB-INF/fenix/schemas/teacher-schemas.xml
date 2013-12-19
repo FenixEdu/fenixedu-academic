@@ -1,4 +1,9 @@
 <schema name="CreateRoomsPunctualOccupationRequest" type="net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean" bundle="APPLICATION_RESOURCES">	
+	<slot name="campus" key="label.find.spaces.campus" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+		<property name="size" value="30"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
+		<property name="format"	value="${spaceInformation.presentationName}" />
+	</slot>
 	<slot name="subject"  key="label.subject" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" >
 		<property name="rows" value="1" />
 		<property name="columns" value="60"/>
@@ -10,6 +15,11 @@
 </schema>
 
 <schema name="EditRoomsPunctualOccupationRequestFirstComment" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment" bundle="APPLICATION_RESOURCES">	
+	<slot name="request.campus" key="label.find.spaces.campus" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+		<property name="size" value="30"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
+		<property name="format"	value="${spaceInformation.presentationName}" />
+	</slot>
 	<slot name="subject"  key="label.subject" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" >
 		<property name="rows" value="1" />
 		<property name="columns" value="60"/>

@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * 
@@ -34,7 +35,7 @@ public class SchoolClass extends SchoolClass_Base {
 
         checkIfExistsSchoolClassWithSameName(executionDegree, executionSemester, curricularYear, name);
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setExecutionDegree(executionDegree);
         setExecutionPeriod(executionSemester);
         setAnoCurricular(curricularYear);
@@ -48,7 +49,7 @@ public class SchoolClass extends SchoolClass_Base {
         ExecutionSemester executionInterval = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
         checkIfExistsSchoolClassWithSameName(executionDegree, executionInterval, curricularYear, name);
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setExecutionDegree(executionDegree);
         // FIXME: cast shouldn't be needed, SchoolClass should relate directly
         // with ExecutionInterval.
@@ -197,7 +198,7 @@ public class SchoolClass extends SchoolClass_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

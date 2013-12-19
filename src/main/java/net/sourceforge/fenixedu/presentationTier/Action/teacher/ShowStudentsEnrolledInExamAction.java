@@ -12,7 +12,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsEnrolledInWrittenEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeacherStudentsEnrolledList;
@@ -31,6 +30,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 public class ShowStudentsEnrolledInExamAction extends FenixAction {
 
@@ -38,7 +38,7 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         final String executionCourseCode = request.getParameter("objectCode");
         final String writtenEvaluationCode = request.getParameter("evaluationCode");

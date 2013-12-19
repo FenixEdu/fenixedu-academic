@@ -6,7 +6,7 @@
 
 <html:xhtml/>
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 	<h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 	

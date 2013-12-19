@@ -19,7 +19,6 @@ import java.util.Set;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.AssociateNewFunctionToPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeletePersonFunction;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.EditPersonFunction;
@@ -46,6 +45,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -306,7 +306,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         if (personTypeAux.equals(RoleType.EMPLOYEE) || personTypeAux.equals(RoleType.TEACHER)
                 || personTypeAux.equals(RoleType.GRANT_OWNER)) {
             List<Employee> allEmployees = new ArrayList<Employee>();
-            allEmployees.addAll(rootDomainObject.getEmployees());
+            allEmployees.addAll(rootDomainObject.getEmployeesSet());
             for (Employee employee : allEmployees) {
                 if (employee.getEmployeeNumber().equals(personNumber)) {
                     allPersons.add(employee.getPerson());
@@ -315,7 +315,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             }
         } else if (personTypeAux.equals(RoleType.STUDENT)) {
             List<Registration> allStudents = new ArrayList<Registration>();
-            allStudents.addAll(rootDomainObject.getRegistrations());
+            allStudents.addAll(rootDomainObject.getRegistrationsSet());
             for (Registration registration : allStudents) {
                 if (registration.getNumber().equals(personNumber)) {
                     allPersons.add(registration.getPerson());
@@ -407,7 +407,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getExecutionPeriods() throws FenixServiceException {
-        Collection<ExecutionYear> allExecutionYears = rootDomainObject.getExecutionYears();
+        Collection<ExecutionYear> allExecutionYears = rootDomainObject.getExecutionYearsSet();
         List<SelectItem> list = new ArrayList<SelectItem>();
         String[] year = null;
 
@@ -488,7 +488,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public Unit getEmployeeDepartmentUnit() {
 
-        IUserView userView = getUserView();
+        User userView = getUserView();
         Employee personEmployee = userView.getPerson().getEmployee();
         Unit departmentUnit = null;
 
@@ -866,7 +866,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     private String getCurrentExecutionPeriodID() throws FenixServiceException {
-        Collection<ExecutionSemester> allExecutionPeriods = rootDomainObject.getExecutionPeriods();
+        Collection<ExecutionSemester> allExecutionPeriods = rootDomainObject.getExecutionPeriodsSet();
         for (ExecutionSemester period : allExecutionPeriods) {
             if (period.getState().equals(PeriodState.CURRENT)) {
                 return period.getExternalId();

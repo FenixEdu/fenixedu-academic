@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
@@ -38,6 +37,7 @@ import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -46,7 +46,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class RegisterCandidate {
 
     @Atomic
-    public static InfoCandidateRegistration run(String candidateID, String branchID, Integer studentNumber, IUserView userView)
+    public static InfoCandidateRegistration run(String candidateID, String branchID, Integer studentNumber, User userView)
             throws FenixServiceException {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
@@ -145,13 +145,13 @@ public class RegisterCandidate {
         candidateSituation.setSituation(SituationName.ENROLLED_OBJ);
     }
 
-    private static void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
+    private static void createEnrolments(User userView, MasterDegreeCandidate masterDegreeCandidate,
             StudentCurricularPlan studentCurricularPlan) {
         Collection<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
             new Enrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(), executionSemester,
-                    EnrollmentCondition.FINAL, userView.getUtilizador());
+                    EnrollmentCondition.FINAL, userView.getUsername());
         }
     }
 

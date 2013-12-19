@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -9,7 +10,7 @@ public abstract class ExemptionJustification extends ExemptionJustification_Base
 
     protected ExemptionJustification() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     protected void init(final Exemption exemption, final String reason) {
@@ -52,7 +53,7 @@ public abstract class ExemptionJustification extends ExemptionJustification_Base
     abstract public LabelFormatter getDescription();
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

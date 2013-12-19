@@ -10,7 +10,7 @@
 <em><bean:message bundle="RESOURCE_MANAGER_RESOURCES" key="title.resourceManager.management"/></em>
 <h2><bean:message key="label.material.management" bundle="RESOURCE_MANAGER_RESOURCES"/></h2>
 
-<logic:present role="RESOURCE_MANAGER">
+<logic:present role="role(RESOURCE_MANAGER)">
 	
 	<logic:messagesPresent message="true">
 		<p>

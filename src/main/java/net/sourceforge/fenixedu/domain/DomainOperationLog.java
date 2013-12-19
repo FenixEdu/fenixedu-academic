@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class DomainOperationLog extends DomainOperationLog_Base {
@@ -24,7 +25,7 @@ public class DomainOperationLog extends DomainOperationLog_Base {
 
     public DomainOperationLog() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         this.setPerson(AccessControl.getPerson());
         this.setWhenDateTime(new DateTime());
     }
@@ -46,7 +47,7 @@ public class DomainOperationLog extends DomainOperationLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

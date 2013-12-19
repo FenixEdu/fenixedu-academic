@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadAllDepartments;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -23,14 +22,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         List<InfoDepartment> departmentList = null;
         try {
@@ -45,7 +44,7 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
 
     public ActionForward createCompetenceCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm actionForm = (DynaActionForm) form;
 
         String code = (String) actionForm.get("code");
@@ -67,7 +66,7 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String competenceCourseID = request.getParameter("competenceCourse");
 
@@ -102,7 +101,7 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm actionForm = (DynaActionForm) form;
         String competenceCourseID = (String) actionForm.get("competenceCourseID");
         String code = (String) actionForm.get("code");

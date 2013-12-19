@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.domain.accessControl.groups;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.DomainBackedGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -45,13 +46,13 @@ public class InternalOrExternalTeacherGroup extends DomainBackedGroup<Person> {
     public Set<Person> getElements() {
         HashSet<Person> set = new HashSet<Person>();
 
-        for (Party party : RootDomainObject.getInstance().getPartys()) {
+        for (Party party : Bennu.getInstance().getPartysSet()) {
             if (party instanceof Person && ((Person) party).hasAnyProfessorships()) {
                 set.add((Person) party);
             }
         }
 
-        for (Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
+        for (Teacher teacher : Bennu.getInstance().getTeachersSet()) {
             set.add(teacher.getPerson());
         }
 

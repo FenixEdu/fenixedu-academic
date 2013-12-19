@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
@@ -10,12 +11,12 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdGuiderAcceptanceLetter;
 public class AddAssistantGuidingInformation extends PhdIndividualProgramProcessActivity {
 
     @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+    protected void activityPreConditions(PhdIndividualProgramProcess arg0, User arg1) {
         // no precondition to check
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, User userView, Object object) {
         PhdParticipantBean bean = (PhdParticipantBean) object;
         PhdParticipant addAssistantGuiding = process.addAssistantGuiding((PhdParticipantBean) object);
 

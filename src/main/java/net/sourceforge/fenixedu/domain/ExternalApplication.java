@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import pt.ist.fenixframework.Atomic;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +12,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+
+import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
@@ -22,7 +24,7 @@ public class ExternalApplication extends ExternalApplication_Base {
 
     public ExternalApplication() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setSecret(RandomStringUtils.randomAlphanumeric(115));
     }
 

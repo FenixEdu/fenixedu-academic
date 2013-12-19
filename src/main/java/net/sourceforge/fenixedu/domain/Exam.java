@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
@@ -153,7 +155,7 @@ public class Exam extends Exam_Base {
     public static List<Exam> readExams() {
         List<Exam> result = new ArrayList<Exam>();
 
-        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
+        for (Evaluation evaluation : Bennu.getInstance().getEvaluationsSet()) {
             if (evaluation instanceof Exam) {
                 result.add((Exam) evaluation);
             }
@@ -190,6 +192,7 @@ public class Exam extends Exam_Base {
         return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.exam") + " "
                 + BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", getSeason().getKey());
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest> getExamDateCertificateRequests() {
         return getExamDateCertificateRequestsSet();

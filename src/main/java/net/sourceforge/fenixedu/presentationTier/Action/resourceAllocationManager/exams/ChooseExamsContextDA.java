@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularYearByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
@@ -18,8 +17,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -47,7 +47,7 @@ public class ChooseExamsContextDA extends FenixContextDispatchAction {
 
         DynaActionForm chooseExamsContextForm = (DynaActionForm) form;
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         /* Determine Selected Curricular Year */
         String anoCurricular = (String) chooseExamsContextForm.get("curricularYear");

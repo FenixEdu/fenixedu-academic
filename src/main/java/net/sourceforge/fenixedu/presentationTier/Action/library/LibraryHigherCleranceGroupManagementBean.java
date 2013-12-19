@@ -41,7 +41,7 @@ public class LibraryHigherCleranceGroupManagementBean implements Serializable {
     }
 
     public void search() {
-        Person res = Person.readPersonByIstUsername(getSearchUserId());
+        Person res = Person.readPersonByUsername(getSearchUserId());
 
         if (res != null && res.hasRole(RoleType.LIBRARY)) {
             setOperator(res);

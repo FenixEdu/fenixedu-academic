@@ -6,7 +6,6 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -14,20 +13,21 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     public AdministrativeOffice() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     // static methods
     @Deprecated
     public static AdministrativeOffice readByAdministrativeOfficeType(AdministrativeOfficeType administrativeOfficeType) {
 
-        for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance().getAdministrativeOffices()) {
+        for (final AdministrativeOffice administrativeOffice : Bennu.getInstance().getAdministrativeOfficesSet()) {
 
             if (administrativeOffice.getAdministrativeOfficeType() == administrativeOfficeType) {
                 return administrativeOffice;
@@ -155,6 +155,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
         }
         return false;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob> getEventReportQueueJob() {
         return getEventReportQueueJobSet();
@@ -221,7 +222,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -34,6 +34,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -106,7 +107,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     protected List<Activity> getAllowedActivities(final CandidacyProcess process) {
-        List<Activity> activities = process.getAllowedActivities(AccessControl.getUserView());
+        List<Activity> activities = process.getAllowedActivities(Authenticate.getUser());
         ArrayList<Activity> resultActivities = new ArrayList<Activity>();
 
         for (Activity activity : activities) {
@@ -197,7 +198,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
             new Predicate<IndividualCandidacyProcess>() {
                 @Override
                 public boolean apply(IndividualCandidacyProcess process) {
-                    return process.canExecuteActivity(AccessControl.getUserView());
+                    return process.canExecuteActivity(Authenticate.getUser());
                 }
             };
 
@@ -421,7 +422,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
             if (hideCancelledCandidacies.getValue() && individualProcess.isCandidacyCancelled()) {
                 continue;
             }
-            if (individualProcess.canExecuteActivity(AccessControl.getUserView())) {
+            if (individualProcess.canExecuteActivity(Authenticate.getUser())) {
                 buildIndividualCandidacyReport(spreadsheet, individualProcess);
             }
         }

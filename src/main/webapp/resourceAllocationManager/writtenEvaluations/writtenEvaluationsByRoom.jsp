@@ -19,7 +19,7 @@
 		//-->
 	</script>		
 	
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundle"/>
 	
 	<h:outputFormat value="<em class='printhidden'>#{bundle['link.writtenEvaluationManagement']}</em>" escape="false"/>

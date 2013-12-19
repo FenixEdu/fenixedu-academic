@@ -19,7 +19,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddExecutionDegreeToScheduling;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AttributeFinalDegreeWork;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ChangeStatusOfFinalDegreeWorkProposals;
@@ -96,9 +95,10 @@ import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
@@ -121,7 +121,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward showChooseExecutionDegreeForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
 
         // keep degreeCurricularPlan in request
         final String degreeCurricularPlanOID = (String) getFromRequest(request, "degreeCurricularPlanID");
@@ -137,7 +137,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward showChooseExecutionDegreeFormForDepartment(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         final Department department = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
 
         final Set<ExecutionDegree> executionDegrees =
@@ -431,7 +431,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException, FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         Integer degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
@@ -615,7 +615,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         request.setAttribute("executionDegree", getDomainObject(request, "executionDegreeOID"));
 
         if (finalDegreeWorkProposalOIDString != null && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
-            IUserView userView = UserView.getUser();
+            User userView = Authenticate.getUser();
 
             try {
                 InfoProposal infoProposal =
@@ -726,7 +726,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward createNewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         ExecutionDegree executionDegree = getExecutionDegree(request);
         // DynaActionForm finalWorkForm = (DynaActionForm) form;
@@ -949,7 +949,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         Person person = null;
         if (number.substring(0, 3).equals("ist")) {
-            person = Person.readPersonByIstUsername(number);
+            person = Person.readPersonByUsername(number);
         }
         if (StringUtils.isNumeric(number)) {
             final Integer n = new Integer(number);
@@ -990,7 +990,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareFinalWorkInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         finalWorkForm.set("degreeType", DegreeType.DEGREE.toString());
@@ -1069,7 +1069,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward publishAprovedProposals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         final ExecutionDegree executionDegree = getExecutionDegree(request);
         final Scheduleing scheduleing = executionDegree.getScheduling();

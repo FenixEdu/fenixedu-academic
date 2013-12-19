@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.nape.student.candidacie
 
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.candidacy.registrations.RegisteredDegreeCandidaciesDA;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -16,7 +17,7 @@ public class RegisteredDegreeCandidaciesDAForNAPE extends RegisteredDegreeCandid
 
     @Override
     protected Set<Degree> getDegreesToSearch() {
-        return RootDomainObject.getInstance().getDegreesSet();
+        return Bennu.getInstance().getDegreesSet();
     }
 
 }

@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 /**
  * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -13,7 +15,7 @@ public class InsuranceValue extends InsuranceValue_Base {
 
     public InsuranceValue() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Deprecated
@@ -54,7 +56,7 @@ public class InsuranceValue extends InsuranceValue_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

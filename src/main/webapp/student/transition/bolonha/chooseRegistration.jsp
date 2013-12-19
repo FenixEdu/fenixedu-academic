@@ -5,7 +5,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
 	<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES" /></em>
 	<h2><bean:message key="label.transition.bolonha.registrationsInTransition"
 		bundle="STUDENT_RESOURCES" /></h2>

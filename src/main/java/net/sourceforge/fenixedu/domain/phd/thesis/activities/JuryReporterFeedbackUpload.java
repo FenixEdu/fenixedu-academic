@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
@@ -13,7 +14,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 public class JuryReporterFeedbackUpload extends PhdThesisActivity {
 
     @Override
-    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+    protected void activityPreConditions(PhdThesisProcess process, User userView) {
 
         if (!process.isJuryValidated()) {
             throw new PreConditionNotValidException();
@@ -38,7 +39,7 @@ public class JuryReporterFeedbackUpload extends PhdThesisActivity {
     }
 
     @Override
-    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, User userView, Object object) {
         final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 
         for (final PhdProgramDocumentUploadBean documentBean : bean.getDocuments()) {

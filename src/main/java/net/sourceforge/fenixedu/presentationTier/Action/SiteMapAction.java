@@ -12,6 +12,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/siteMap")
 public class SiteMapAction extends FenixAction {
 
     @Override
@@ -19,7 +22,7 @@ public class SiteMapAction extends FenixAction {
         final TreeSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         degrees.addAll(Degree.readNotEmptyDegrees());
         request.setAttribute("degrees", degrees);
-        return mapping.findForward("site-map");
+        return new ActionForward("/siteMap.jsp");
     }
 
 }

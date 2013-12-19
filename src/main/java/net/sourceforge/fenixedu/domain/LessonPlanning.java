@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -21,7 +23,7 @@ public class LessonPlanning extends LessonPlanning_Base {
     public LessonPlanning(MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType,
             ExecutionCourse executionCourse) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setLastOrder(executionCourse, lessonType);
         setTitle(title);
         setPlanning(planning);
@@ -136,13 +138,14 @@ public class LessonPlanning extends LessonPlanning_Base {
                 "log.executionCourse.curricular.planning.edited", getTitle().getContent(), getLessonType().getFullNameTipoAula(),
                 getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
     }
+
     @Deprecated
     public boolean hasExecutionCourse() {
         return getExecutionCourse() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

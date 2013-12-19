@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.domain.File;
 import pt.ist.fenixWebFramework.renderers.StringRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlImage;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
 public class FileAsPictureRenderer extends StringRenderer {
 
@@ -26,8 +25,7 @@ public class FileAsPictureRenderer extends StringRenderer {
 
         HtmlImage image = new HtmlImage();
 
-        image.setSource(FileManagerFactory.getFactoryInstance().getFileManager()
-                .formatDownloadUrl(file.getExternalStorageIdentification(), file.getFilename()));
+        image.setSource(file.getDownloadUrl());
         image.setTitle(file.getDisplayName());
 
         image.setClasses(classes);

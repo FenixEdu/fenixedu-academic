@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation"%>
 <%@page language="java" %>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <%@page import="org.apache.struts.Globals"%>
@@ -10,47 +11,69 @@
 
 <html>
 
-
 <head>
 	<title>
 		<bean:message key="debug.page.title" bundle="GLOBAL_RESOURCES"/>
 	</title>
    	<link rel="stylesheet"  href="<%= request.getContextPath() %>/CSS/debug.css">
+   	<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery.js"></script>
 	<meta charset="UTF-8">
 </head>
 
 <body>
-<h1><bean:message key="debug.page.title" bundle="GLOBAL_RESOURCES"/></h1>
-
+	<bean:define id="exception" name="debugExceptionInfo" property="exception"/>
+	<bean:define id="exceptionClass" name="exception" property="class"/>
+	
+	<div id="debugPage">
+		<h1 class="debugTitleException"><bean:write name="exceptionClass" property="name"/></h1>
+		<div class="debugTitleCause">
+		<logic:notPresent name="debugExceptionInfo" property="jspExceptionMessage">
+			<logic:notEmpty name="exception" property="message">
+				<bean:write name="exception" property="message"/>
+			</logic:notEmpty>
+			<logic:empty name="exception" property="message">
+				&nbsp;
+			</logic:empty>
+		</logic:notPresent>
+		<logic:present name="debugExceptionInfo" property="jspExceptionMessage">
+			<bean:write name="debugExceptionInfo" property="jspExceptionMessage"/>
+		</logic:present>
+		</div>
+		
+	</div>
 				
 	<!-- HACK: I'm using comments to prevent extra whitespace! Please bear the horror and forgive me! -->
 	<div id="errorInfo">
    		<table>
 			<tr>
-				<th colspan="2"><bean:message key="debug.page.header.error" bundle="GLOBAL_RESOURCES"/></th>
-			</tr>
-			<tr>
-				<bean:define id="exception" name="debugExceptionInfo" property="exception"/>
-				<bean:define id="exceptionClass" name="exception" property="class"/>
-				<td><bean:message key="debug.page.label.error.description" bundle="GLOBAL_RESOURCES"/>:</td>
-				<td><!--
+				<td>Exception Description:</td>
+				<td style="font-size: 15px;"><!--
 					--><span class="traceException"><!--
 						--><span class="traceExceptionClassLabel"><!--
-							--><span class="traceExceptionClass"><bean:write name="exceptionClass" property="name"/></span><!--
-							-->:<!--
+							--><span class="traceExceptionClassPackage"><bean:write name="exceptionClass" property="package.name"/>.</span><!--
+							--><span class="traceExceptionClassName"><bean:write name="exceptionClass" property="simpleName"/></span><!--
 						--></span><!-- 
-						--><span class="traceExceptionMessage"><bean:write name="exception" property="localizedMessage"/></span><!--
+						--><span class="traceExceptionMessage">
+					<logic:present name="debugExceptionInfo" property="jspExceptionMessage">
+						<bean:write name="debugExceptionInfo" property="jspExceptionMessage"/>
+					</logic:present>
+					<logic:notPresent name="debugExceptionInfo" property="jspExceptionMessage">
+						<bean:write name="exception" property="localizedMessage"/>
+					</logic:notPresent>
+						</span><!--
 					--></span><!--
 				--></td>
 			</tr>
 			<tr>
-				<td><bean:message key="debug.page.label.error.location" bundle="GLOBAL_RESOURCES"/>:</td>
-				<td><!--
+				<td>Thrown at:</td>
+				<td style="font-size: 15px;"><!--
 				--><logic:present name="debugExceptionInfo" property="actionMapping"><!-- 
 					--><span class="traceLine level0"><!-- 
 						--><span class="traceLocation"><!--
 							--><span class="javaLocation"><!--
-								--><span class="className"><bean:write name="debugExceptionInfo" property="actionErrorClass"/></span><!--
+								--><span class="classPackage"><bean:write name="debugExceptionInfo" property="actionErrorClass.package.name"/></span><!--
+								-->.<!--
+								--><span class="className"><bean:write name="debugExceptionInfo" property="actionErrorClass.simpleName"/></span><!--
 								-->.<!--
 								--><span class="methodName"><bean:write name="debugExceptionInfo" property="actionErrorMethod"/></span><!--
 							--></span><!--
@@ -71,188 +94,188 @@
 			</tr>
 		</table>
     </div>
+    
+   	<logic:present name="debugExceptionInfo" property="jspExceptionMessage">
+		<h2>Template</h2>
+		
+		<table class="source cut-top cut-bottom">
+   
+   <bean:define id="lines"  name="debugExceptionInfo" property = "jspExceptionSourceBefore"/>
+			<logic:iterate id="l" name="lines">
+      <tr><th><bean:write name="l" property="lineNumber" /></th>
+      <td>    <bean:write name="l" property="line"/>
+</td></tr>
+			</logic:iterate>
+	<bean:define id="l"  name="debugExceptionInfo" property = "jspExceptionSourceLine"/>
+      <tr class="error"><th><bean:write name="l" property="lineNumber" /></th>
+      <td>    <bean:write name="l" property="line"/>
+</td></tr>
+   <bean:define id="lines"  name="debugExceptionInfo" property = "jspExceptionSourceAfter"/>
+			<logic:iterate id="l" name="lines">
+      <tr><th><bean:write name="l" property="lineNumber" /></th>
+      <td>    <bean:write name="l" property="line"/>
+</td></tr>
+			</logic:iterate>
+   
+   
+   </tbody></table>
+
+	</logic:present>
 
     <div id="userInfo">
-		<table>
-			<tr>
-				<th colspan="2"><bean:message key="debug.page.header.user" bundle="GLOBAL_RESOURCES"/></th>
-			</tr>
+    	<h2>User Information</h2>
+		<table border="0" cellspacing="0">
 			<logic:present name="debugExceptionInfo" property="userName">
 			<tr>
-				<td><bean:message key="debug.page.label.user.id" bundle="GLOBAL_RESOURCES"/>:</td>
+			<td><span class="label">User id:</span></td>
 				<td><bean:write name="debugExceptionInfo" property="userName"/></td>
 			</tr>
 			<tr>
-				<td><bean:message key="debug.page.label.user.roles" bundle="GLOBAL_RESOURCES"/>:</td>
-					<logic:iterate id="roleType" name="debugExceptionInfo" property="userRoles"><!--
-						--><td><span class="userRole"><bean:write name="roleType"/></span></td><!--
+				<td><span class="label">User roles:</span></td>
+					<td><logic:iterate id="roleType" name="debugExceptionInfo" property="userRoles"><!--
+						--><div class="userRole"><bean:write name="roleType"/></div><!--
 					--></logic:iterate>
+					</td>
 			</tr>
 			</logic:present>
 			<logic:notPresent name="debugExceptionInfo" property="userName">
-				<tr>
-					<td>
-						<bean:message key="debug.page.message.noUser" bundle="GLOBAL_RESOURCES"/>
-					</td>
-				</tr>
+				<tr><td>No user</td></tr>
 			</logic:notPresent>
-			
 		</table>
     </div>
     
     <div id="requestInfo">
-    	<table>
+    	<h2>Request description</h2>
+    	<table id="requestInfoTable" class="super-table">
 			<tr>
-				<th colspan="2"><bean:message key="debug.page.header.request" bundle="GLOBAL_RESOURCES"/></th>
+				<td><span class="label">Method:</span></td>
+				<td><bean:write name="debugExceptionInfo" property="requestMethod"/></td>
 			</tr>
 			<tr>
-				<td><bean:message key="debug.page.label.request.uri" bundle="GLOBAL_RESOURCES"/>:</td>
-				<td><bean:write name="debugExceptionInfo" property="requestURI"/></td>
+				<td><span class="label">URL:</span></td>
+				<td><bean:write name="debugExceptionInfo" property="requestFullUrl"/></td>
 			</tr>
 			<tr>
-				<td><bean:message key="debug.page.label.request.url" bundle="GLOBAL_RESOURCES"/>:</td>
+				<td><span class="label">Path:</span></td>
 				<td><bean:write name="debugExceptionInfo" property="requestURL"/></td>
 			</tr>
 			<tr>
-				<td><bean:message key="debug.page.label.request.query.full" bundle="GLOBAL_RESOURCES"/>:</td>
+				<td><span class="label">Query Path:</span></td>
 				<td><bean:write name="debugExceptionInfo" property="queryString"/></td>
 			</tr>
 			<tr>
-				<td><bean:message key="debug.page.label.request.query.params" bundle="GLOBAL_RESOURCES"/>:</td>
-				<td>
-					<table>
-						<bean:define id="queryParameters"  name="debugExceptionInfo" property = "queryParameters"/>
-						<tr>
-							<th><bean:message key="debug.page.header.element.key" bundle="GLOBAL_RESOURCES"/></th>
-							<th><bean:message key="debug.page.header.element.value" bundle="GLOBAL_RESOURCES"/></th>
-						</tr>
-  			 			<logic:iterate id="element" name="queryParameters">
- 			 				<tr>
- 			  					<td><bean:write name="element" property="key"/></td>
-  			 					<td><bean:write name="element" property="value"/></td>
-  			 				</tr>
-			    		</logic:iterate>
-    				</table>
-    			</td>
+				<td><span class="label">Request Parameters:</span></td>
 			</tr>
+
 		</table>
+		<bean:define id="queryParameters"  name="debugExceptionInfo" property = "queryParameters"/>
+		<logic:notEmpty name="queryParameters">
+		<table class="parameters-table">
+ 			<logic:iterate id="element" name="queryParameters">
+				<tr>
+ 					<td><span class="label key"><bean:write name="element" property="key"/></span></td>
+ 					<td class="value"><bean:write name="element" property="value"/></td>
+ 				</tr>
+    		</logic:iterate>
+		</table>
+		</logic:notEmpty>
     </div>
     
     
     <div id="mappingInfo">
-    	<table>
-			<tr>
-				<th colspan="2"><bean:message key="debug.page.header.mapping" bundle="GLOBAL_RESOURCES"/></th>
-			</tr>
+    	<h2>Mapping Description</h2>
+    	<table id="mappingInfoTable" class="super-table">
 			<logic:present name="debugExceptionInfo" property="actionMapping">
 				<bean:define id="mapping" name="debugExceptionInfo" property="actionMapping"/>
 				<bean:define id="module" name="mapping" property="moduleConfig"/>
 				<tr>
-					<td><bean:message key="debug.page.label.mapping.module.prefix" bundle="GLOBAL_RESOURCES"/>:</td>
+					<td><span class="label">Module Prefix:</span></td>
 					<td><bean:write name="module" property="prefix"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="debug.page.label.mapping.path" bundle="GLOBAL_RESOURCES"/>:</td>
+					<td><span class="label">Mapping Path:</span></td>
 					<td><bean:write name="mapping" property="path"/></td>
 				</tr>
 				<logic:present name="mapping" property="type">
 				<tr>
-					<td><bean:message key="debug.page.label.mapping.type" bundle="GLOBAL_RESOURCES"/>:</td>
+					<td><span class="label">Mapping Type:</span></td>
 					<td><bean:write name="mapping" property="type"/></td>
 				</tr>
 				</logic:present>
 				<logic:present name="mapping" property="forward">
 				<tr>
-					<td><bean:message key="debug.page.label.mapping.forward" bundle="GLOBAL_RESOURCES"/>:</td>
+					<td><span class="label">Mapping Forward:</span></td>
 					<td><bean:write name="mapping" property="forward"/></td>
 				</tr>
 				</logic:present>
 				<logic:present name="mapping" property="include">
 				<tr>
-					<td><bean:message key="debug.page.label.mapping.include" bundle="GLOBAL_RESOURCES"/>:</td>
+					<td><span class="label">Mapping Include:</span></td>
 					<td><bean:write name="mapping" property="include"/></td>
 				</tr>
 				</logic:present>
 				<tr>
-					<td><bean:message key="debug.page.label.mapping.name" bundle="GLOBAL_RESOURCES"/>:</td>
+					<td><span class="label">Mapping Name:</span></td>
 					<td><bean:write name="mapping" property="name"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="debug.page.label.mapping.scope" bundle="GLOBAL_RESOURCES"/>:</td>
+					<td><span class="label">Mapping Scope:</span></td>
 					<td><bean:write name="mapping" property="scope"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="debug.page.label.mapping.attribute" bundle="GLOBAL_RESOURCES"/>:</td>
+					<td><span class="label">Mapping Attribute:</span></td>
 					<td><bean:write name="mapping" property="attribute"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="debug.page.label.mapping.suffix" bundle="GLOBAL_RESOURCES"/>:</td>
+					<td><span class="label">Mapping Suffix:</span></td>
 					<td><bean:write name="mapping" property="suffix"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="debug.page.label.mapping.roles" bundle="GLOBAL_RESOURCES"/>:</td>
+					<td><span class="label">Mapping Roles:</span></td>
 					<td><bean:write name="mapping" property="roles"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="debug.page.label.mapping.multipartClass" bundle="GLOBAL_RESOURCES"/>:</td>
+					<td><span class="label">Multipart Class:</span></td>
 					<td><bean:write name="mapping" property="multipartClass"/></td>
 				</tr>
 			</logic:present>
 			<logic:notPresent name="debugExceptionInfo" property="actionMapping">
-				<tr>
-					<td>
-						<bean:message key="debug.page.message.uncaughtException" bundle="GLOBAL_RESOURCES"/>
-					</td>
-				</tr>
+				<tr><td><i>Unavailable</i></td></tr>
 			</logic:notPresent>
 			
 		</table>
     </div>
     
-    <div id="requestContextInfo">
+    <div id="requestContextInfo" class="super-table">
+    	<h2>Request Context</h2>
     	<bean:define id="contextEntries"  name="debugExceptionInfo" property = "requestContextEntries"/>
-    	<table>
-			<tr>
-				<th colspan="2"><bean:message key="debug.page.header.requestContext" bundle="GLOBAL_RESOURCES"/></th>
-			</tr>
-			<tr>
-				<th><bean:message key="debug.page.header.element.key" bundle="GLOBAL_RESOURCES"/></th>
-				<th><bean:message key="debug.page.header.element.value" bundle="GLOBAL_RESOURCES"/></th>
-			</tr>
+    	<table class="parameters-table">			
    			<logic:iterate name="contextEntries" id="entry">
    				<tr>
-   					<td><bean:write name="entry" property="key"/></td>
-   					<td><bean:write name="entry" property="value"/></td>
+   					<td><span class="label key"><bean:write name="entry" property="key"/></span></td>
+   					<td><span class="value"><bean:write name="entry"  property="value"/></span></td>
    				</tr>
     		</logic:iterate>
     	</table>
     </div>
     
     <div id="sessionContextInfo">
+    	<h2>Session Context</h2>
     	<bean:define id="sessionEntries"  name="debugExceptionInfo" property = "sessionContextEntries"/>
-   		<table>
-			<tr>
-				<th colspan="2"><bean:message key="debug.page.header.sessionContext" bundle="GLOBAL_RESOURCES"/></th>
-			</tr>
-			<tr>
-				<th><bean:message key="debug.page.header.element.key" bundle="GLOBAL_RESOURCES"/></th>
-				<th><bean:message key="debug.page.header.element.value" bundle="GLOBAL_RESOURCES"/></th>
-			</tr>
+		<table class="parameters-table">
    			<logic:iterate name="sessionEntries" id="entry">
    				<tr>
-   					<td><bean:write name="entry" property="key"/></td>
-   					<td><bean:write name="entry" property="value"/></td>
+   					<td><span class="label key"><bean:write name="entry" property="key"/></span></td>
+   					<td><span class="value"><bean:write name="entry" property="value"/></span></td>
    				</tr>
     		</logic:iterate>
     	</table>
     </div>
     
 	<logic:present name="debugExceptionInfo" property="extraInfo">
+	<h2>Extra Information</h2>
     <div id="extraInfo">
     	<table>
-    		<th>
-    			<bean:message key="debug.page.header.extra" bundle="GLOBAL_RESOURCES"/>
-    		</th>
 			<logic:iterate name="debugExceptionInfo" property="extraInfo" id="object">
 				<tr>
 					<td>
@@ -272,20 +295,25 @@
 	<!-- TODO: 	Hide uninteresting parts of the stack trace.
 				Like java, remove all lines that are repeated in causes. -->
 	<div id="stackTrace">
+		<h2>Stack Trace</h2>
 		<table>
-			<tr>
-				<th><bean:message key="debug.page.header.stackTrace" bundle="GLOBAL_RESOURCES"/></th>
-			</tr>
 			<tr>
 			<td>
 			<bean:define id="exceptionInfoStack" name="debugExceptionInfo" property="flatExceptionStack"/>
+			<script>
+				$(function(){
+					$("#stackTrace span.traceExceptionMessage").map(function(i,x){
+						$(x).html($(x).html().replace(/\n/g, "<br />"))
+					})
+				})
+			</script>
 			<logic:iterate name="exceptionInfoStack" id="exceptionInfo">
 				<bean:define id="cause" name="exceptionInfo" property="cause"/>
 				<bean:define id="suppressed" name="exceptionInfo" property="suppressed"/>
 				<bean:define id="level" name="exceptionInfo" property="level"/>
-				<bean:define id="exception" name="exceptionInfo" property="subject"/>
-				<bean:define id="stackTrace" name="exception" property="stackTrace"/>
-				<bean:define id="exceptionClass" name="exception" property="class"/>
+<%-- 				<bean:define id="exception" name="exceptionInfo" property="subject"/> --%>
+				<bean:define id="stackTrace" name="exceptionInfo" property="subjectInfo"/>
+				<bean:define id="exceptionClass" name="exceptionInfo" property="subject.class"/>
 				
 				<span class="traceFirstLine level<bean:write name="level"/>"><!--
 					--><span class="traceLineRole"><!--
@@ -303,34 +331,48 @@
 								--><span class="exceptionText"><!--
 									-->Exception in thread "<!--
 									--><span class="traceThread"><bean:write name="debugExceptionInfo" property="threadName"/></span><!-- 
-									-->" -<!--
+									-->": <br/><!--
 								--></span><!--
 							--></logic:notEqual><!--
 						--></logic:notEqual><!--
 					--></span><!--
 					--><span class="traceException"><!--
 						--><span class="traceExceptionClassLabel"><!--
-							--><span class="traceExceptionClass"><bean:write name="exceptionClass" property="name"/></span><!--
+							--><span class="traceExceptionClassPackage"><bean:write name="exceptionClass" property="package.name"/><!--
+							-->.<!--
+							--><span class="traceExceptionClass"><bean:write name="exceptionClass" property="simpleName"/></span><!--
 							-->:<!--
 						--></span><!-- 
 						--><span class="traceExceptionMessage"><bean:write name="exception" property="localizedMessage"/></span><!--
 					--></span><!--
 				--></span>
 				<br/>
+		
 				<logic:iterate name="stackTrace" id="element">
+				
 					<span class="traceLine level<bean:write name="level"/>"><!--
+					
+						--><logic:equal name="element" property="externalClass" value="false"><!--
+							--><span class="externalException"><!--
+						--></logic:equal><!--
+					
 						--><span class="traceLineRole"><!--
 							--><span class="locationText <bean:write name="role"/>Indent">at</span><!--
 							-->:<!--
 						--></span><!-- 
+
 						--><span class="traceLocation"><!--
-							--><bean:define id="line" name="element" property="lineNumber"/><!--
-							--><bean:define id="isNative" name="element" property="nativeMethod"/><!--
+							--><bean:define id="line" name="element" property="line"/><!--
+							--><bean:define id="isNative" name="element" property="native"/><!--
+							
 							--><span class="javaLocation"><!--
-								--><span class="className"><bean:write name="element" property="className"/></span><!--
+								--><span class="classPackage"><bean:write name="element" property="packageName"/></span><!--
+								-->.<!--
+								--><span class="className"><bean:write name="element" property="simpleClassName"/></span><!--
 								-->.<!--
 								--><span class="methodName"><bean:write name="element" property="methodName"/></span><!--
 							--></span><!--
+							
 							-->(<!--
 							--><span class="fileLocation"><!--
 								--><logic:notEmpty name="element" property="fileName"><!--
@@ -350,7 +392,11 @@
 								--></logic:empty><!--
 							--></span><!--
 							-->)<!--
+							
 						--></span><!--
+						--><logic:equal name="element" property="externalClass" value="true"><!--
+							--></span><!--
+						--></logic:equal><!--
 					--></span>
 					<br/>
 				</logic:iterate>
@@ -360,10 +406,6 @@
     	</table>
     </div>
     
-        
-   
-	
-	
 </body>
 
 </html>

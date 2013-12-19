@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.User;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 
@@ -30,7 +30,7 @@ public interface FunctionalityContext {
     /**
      * @return the current <code>UserView</code>
      */
-    public IUserView getUserView();
+    public User getUserView();
 
     /**
      * The context gives access to the current logged user.

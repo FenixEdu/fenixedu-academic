@@ -1,8 +1,9 @@
 <%@ page language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<%@ page import="net.sourceforge.fenixedu.applicationTier.IUserView" %>
+<%@ page import="org.fenixedu.bennu.core.domain.User" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" %>
+<%@ page import="org.fenixedu.bennu.core.security.Authenticate" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -39,8 +40,8 @@
 		<br/>
 		<br/>
 		<%
-			IUserView userView = (IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
-			if(userView.getUtilizador().startsWith("D"))
+			User userView = Authenticate.getUser();
+			if(userView.getUsername().startsWith("D"))
 			{
 				InfoStudentCurricularPlan infoScp = (InfoStudentCurricularPlan) ((List) studentCPList).get(0);
 				String personCode = infoScp.getInfoStudent().getInfoPerson().getExternalId();

@@ -11,7 +11,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -39,6 +38,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -60,7 +60,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
@@ -68,7 +68,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 
         try {
 
-            VerifyStudentGroupAtributes.run(groupPropertiesCodeString, shiftCodeString, null, userView.getUtilizador(),
+            VerifyStudentGroupAtributes.run(groupPropertiesCodeString, shiftCodeString, null, userView.getUsername(),
                     new Integer(2));
 
         } catch (NotAuthorizedException e) {
@@ -110,7 +110,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
         try {
             studentsNotEnroled =
                     (InfoSiteStudentsWithoutGroup) ReadStudentsWithoutGroup.run(groupPropertiesCodeString,
-                            userView.getUtilizador());
+                            userView.getUsername());
 
         } catch (ExistingServiceException e) {
             ActionErrors actionErrors1 = new ActionErrors();
@@ -153,7 +153,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 
         DynaActionForm enrolmentForm = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
@@ -165,7 +165,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 
         try {
             GroupEnrolment.run(groupPropertiesCodeString, shiftCodeString, groupNumber, studentUsernames,
-                    userView.getUtilizador());
+                    userView.getUsername());
 
         } catch (NonExistingServiceException e) {
             ActionErrors actionErrors1 = new ActionErrors();

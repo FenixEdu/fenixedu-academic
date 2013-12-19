@@ -7,12 +7,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicYearDateTimeFieldType;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Chronology;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -269,18 +269,18 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     @Deprecated
     public static List<AcademicInterval> readAcademicIntervals(AcademicPeriod academicPeriod) {
-        RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+        Bennu rootDomainObject = Bennu.getInstance();
 
         if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
             List<AcademicInterval> result = new ArrayList<AcademicInterval>();
-            for (ExecutionSemester semester : rootDomainObject.getExecutionPeriods()) {
+            for (ExecutionSemester semester : rootDomainObject.getExecutionPeriodsSet()) {
                 result.add(semester.getAcademicInterval());
             }
 
             return result;
         } else if (academicPeriod.equals(AcademicPeriod.YEAR)) {
             List<AcademicInterval> result = new ArrayList<AcademicInterval>();
-            for (ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
+            for (ExecutionYear executionYear : rootDomainObject.getExecutionYearsSet()) {
                 result.add(executionYear.getAcademicInterval());
             }
 

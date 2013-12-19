@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
@@ -25,7 +27,7 @@ public class EmptyDegree extends EmptyDegree_Base {
 
     private EmptyDegree() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         super.setDegreeType(DegreeType.EMPTY);
     }
 
@@ -38,7 +40,7 @@ public class EmptyDegree extends EmptyDegree_Base {
         if (instance == null) {
             synchronized (EmptyDegree.class) {
                 if (instance == null) {
-                    for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+                    for (final Degree degree : Bennu.getInstance().getDegreesSet()) {
                         if (degree.isEmpty()) {
                             instance = (EmptyDegree) degree;
                         }

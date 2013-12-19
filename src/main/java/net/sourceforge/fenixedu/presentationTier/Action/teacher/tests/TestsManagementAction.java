@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CorrectTestGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteTestGroup;
@@ -26,6 +25,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -235,7 +235,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     private Person getPerson(HttpServletRequest request) {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         return userView.getPerson();
     }

@@ -39,7 +39,7 @@
 		</logic:iterate>
 	</ul>
 	</logic:notEmpty>
-	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
+	<logic:present role="role(INTERNATIONAL_RELATION_OFFICE)">
 		<logic:equal name="process" property="candidacy.mostRecentApprovedLearningAgreementNotViewed" value="true">
 			<div class="infoop-blue">
 				<bean:message key="message.erasmus.most.approved.learning.agreement.is.not.viewed" bundle="ACADEMIC_OFFICE_RESOURCES" />
@@ -47,7 +47,7 @@
 		</logic:equal>
 	</logic:present>
 	
-	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
+	<logic:present role="role(INTERNATIONAL_RELATION_OFFICE)">
 		<logic:equal name="process" property="processWithMostRecentAlertMessageNotViewed" value="true">
 			<div class="infoop-blue">
 				<bean:message key="message.erasmus.most.recent.alert.not.viewed" bundle="ACADEMIC_OFFICE_RESOURCES" />
@@ -84,7 +84,7 @@
 	</fr:view>
 	
 	
-	<logic:present role="MANAGER">
+	<logic:present role="role(MANAGER)">
 	<%-- show public candidacy access information --%>
 	<h3 style="margin-top: 1em;"><bean:message key="title.public.candidacy.information.access" bundle="CANDIDATE_RESOURCES" />:</h3>
 	
@@ -155,7 +155,7 @@
 		</logic:iterate>
 	</table>	
 	
-	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
+	<logic:present role="role(INTERNATIONAL_RELATION_OFFICE)">
 		<p class="mbottom05"><html:link page="<%= "/caseHandling" + processName.toString() + ".do?method=retrieveLearningAgreement&processId=" + processId %>">Download learning agreement</html:link></p>
 	</logic:present>
 	
@@ -219,7 +219,7 @@
 		
 		<bean:define id="registrationOID" name="individualCandidacyProcess" property="candidacy.registration.externalId" />
 		
-		<logic:present role="TEACHER">
+		<logic:present role="role(TEACHER)">
 			<html:link action="<%= "/viewCurriculum.do?method=prepare&registrationOID=" + registrationOID %>" target="_blank">
 				<bean:message key="title.student.curriculum" bundle="APPLICATION_RESOURCES" />
 			</html:link>

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.research.project;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * Class representing the connection between Project and Party classified by a
@@ -10,7 +10,7 @@ public class ProjectParticipation extends ProjectParticipation_Base {
 
     public ProjectParticipation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -37,7 +37,7 @@ public class ProjectParticipation extends ProjectParticipation_Base {
         }
     }
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

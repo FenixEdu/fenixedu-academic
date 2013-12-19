@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -124,18 +123,18 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         super.disconnect();
     }
 
-    /*
-     * This method works properly because disconnect is re-implemented and
-     * super.disconnect is called first
-     */
-    @Override
-    protected void createDeleteFileRequest() {
-        Person person = AccessControl.getPerson();
-        if (person == null) {
-            person = getPhdProgramProcess().getPerson();
-        }
-        new DeleteFileRequest(person, getExternalStorageIdentification());
-    }
+//    /*
+//     * This method works properly because disconnect is re-implemented and
+//     * super.disconnect is called first
+//     */
+//    @Override
+//    protected void createDeleteFileRequest() {
+//        Person person = AccessControl.getPerson();
+//        if (person == null) {
+//            person = getPhdProgramProcess().getPerson();
+//        }
+//        new DeleteFileRequest(person, getExternalStorageIdentification());
+//    }
 
     public boolean hasType(final PhdIndividualProgramDocumentType type) {
         return getDocumentType().equals(type);
@@ -145,8 +144,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
     public boolean isPersonAllowedToAccess(Person person) {
         if (person != null) {
             if (getPhdProgramProcess().getPerson() == person
-                    || new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(AccessControl
-                            .getPerson())
+                    || new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(person)
                     || getPhdProgramProcess().getIndividualProgramProcess().isCoordinatorForPhdProgram(person)
                     || getPhdProgramProcess().getIndividualProgramProcess().isGuiderOrAssistentGuider(person)) {
                 return true;

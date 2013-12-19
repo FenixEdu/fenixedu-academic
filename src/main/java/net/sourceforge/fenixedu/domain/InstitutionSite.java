@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
@@ -31,7 +33,7 @@ public class InstitutionSite extends InstitutionSite_Base {
      * @return the site associated with the institution unit
      */
     public static UnitSite initialize() {
-        Unit unit = RootDomainObject.getInstance().getInstitutionUnit();
+        Unit unit = Bennu.getInstance().getInstitutionUnit();
 
         if (unit.hasSite()) {
             return unit.getSite();

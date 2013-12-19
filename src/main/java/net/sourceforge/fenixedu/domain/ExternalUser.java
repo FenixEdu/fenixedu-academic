@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ExternalUser extends ExternalUser_Base {
 
     public ExternalUser() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ExternalUser(final String username, final String password) {
@@ -25,7 +26,7 @@ public class ExternalUser extends ExternalUser_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
@@ -37,12 +39,12 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, String[] ids) {
-        if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+    private boolean hasPrivilege(User id, String[] ids) {
+        if (id.getPerson().hasRole(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }
 
-        if (id.hasRoleType(RoleType.COORDINATOR)) {
+        if (id.getPerson().hasRole(RoleType.COORDINATOR)) {
 
             final Person person = id.getPerson();
 
@@ -64,10 +66,11 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
     }
 
     public void execute(String[] situations, String[] ids, String[] remarks, String[] substitutes) throws NotAuthorizedException {
-        IUserView userView = AccessControl.getUserView();
-        if ((userView != null && userView.getRoleTypes() != null && !containsRoleType(userView.getRoleTypes()))
-                || (userView != null && userView.getRoleTypes() != null && !hasPrivilege(userView, ids)) || (userView == null)
-                || (userView.getRoleTypes() == null)) {
+        User userView = Authenticate.getUser();
+        if ((userView != null && userView.getPerson().getPersonRolesSet() != null && !containsRoleType(userView.getPerson()
+                .getPersonRolesSet()))
+                || (userView != null && userView.getPerson().getPersonRolesSet() != null && !hasPrivilege(userView, ids))
+                || (userView == null) || (userView.getPerson().getPersonRolesSet() == null)) {
             throw new NotAuthorizedException();
         }
 

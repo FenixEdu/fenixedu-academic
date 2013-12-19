@@ -18,7 +18,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -42,7 +41,6 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -118,6 +116,9 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
@@ -169,7 +170,7 @@ public class Registration extends Registration_Base {
 
     private Registration() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRegistrationAgreement(RegistrationAgreement.NORMAL);
     }
 
@@ -1388,7 +1389,7 @@ public class Registration extends Registration_Base {
     @Deprecated
     final public static Registration readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType) {
         Registration nonActiveRegistration = null;
-        for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+        for (Registration registration : Bennu.getInstance().getRegistrationsSet()) {
             if (registration.getNumber().intValue() == number.intValue() && registration.getDegreeType().equals(degreeType)) {
                 if (registration.isActive()) {
                     return registration;
@@ -1401,7 +1402,7 @@ public class Registration extends Registration_Base {
 
     final public static Registration readByNumberAndDegreeCurricularPlan(Integer number, DegreeCurricularPlan degreeCurricularPlan) {
         Registration nonActiveRegistration = null;
-        for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+        for (Registration registration : Bennu.getInstance().getRegistrationsSet()) {
             if (registration.getNumber().intValue() == number.intValue()
                     && registration.getDegreeCurricularPlans().contains(degreeCurricularPlan)) {
                 if (registration.isActive()) {
@@ -1414,7 +1415,7 @@ public class Registration extends Registration_Base {
     }
 
     final public static Registration readRegisteredRegistrationByNumberAndDegreeType(Integer number, DegreeType degreeType) {
-        for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+        for (Registration registration : Bennu.getInstance().getRegistrationsSet()) {
             if (registration.getNumber().intValue() == number.intValue() && registration.getDegreeType().equals(degreeType)
                     && registration.isInRegisteredState()) {
                 return registration;
@@ -1426,7 +1427,7 @@ public class Registration extends Registration_Base {
     @Deprecated
     final public static Registration readRegistrationByNumberAndDegreeTypes(Integer number, DegreeType... degreeTypes) {
         final List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
-        for (RegistrationNumber registrationNumber : RootDomainObject.getInstance().getRegistrationNumbersSet()) {
+        for (RegistrationNumber registrationNumber : Bennu.getInstance().getRegistrationNumbersSet()) {
             if (registrationNumber.getNumber().intValue() == number.intValue()) {
                 final Registration registration = registrationNumber.getRegistration();
                 if (degreeTypesList.contains(registration.getDegreeType())) {
@@ -1441,7 +1442,7 @@ public class Registration extends Registration_Base {
             DegreeType... degreeTypes) {
         List<Registration> result = new ArrayList<Registration>();
         final List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
-        for (RegistrationNumber registrationNumber : RootDomainObject.getInstance().getRegistrationNumbersSet()) {
+        for (RegistrationNumber registrationNumber : Bennu.getInstance().getRegistrationNumbersSet()) {
             if (registrationNumber.getNumber().intValue() == number.intValue()) {
                 final Registration registration = registrationNumber.getRegistration();
                 if (degreeTypesList.contains(registration.getDegreeType())) {
@@ -1454,7 +1455,7 @@ public class Registration extends Registration_Base {
 
     final public static List<Registration> readByNumber(Integer number) {
         final List<Registration> registrations = new ArrayList<Registration>();
-        for (RegistrationNumber registrationNumber : RootDomainObject.getInstance().getRegistrationNumbersSet()) {
+        for (RegistrationNumber registrationNumber : Bennu.getInstance().getRegistrationNumbersSet()) {
             if (registrationNumber.getNumber().intValue() == number.intValue()) {
                 registrations.add(registrationNumber.getRegistration());
             }
@@ -1464,7 +1465,7 @@ public class Registration extends Registration_Base {
 
     final public static List<Registration> readByNumberAndDegreeType(Integer number, DegreeType degreeType) {
         final List<Registration> registrations = new ArrayList<Registration>();
-        for (RegistrationNumber registrationNumber : RootDomainObject.getInstance().getRegistrationNumbersSet()) {
+        for (RegistrationNumber registrationNumber : Bennu.getInstance().getRegistrationNumbersSet()) {
             if (registrationNumber.getNumber().intValue() == number.intValue()
                     && registrationNumber.getRegistration().getDegreeType() == degreeType) {
                 registrations.add(registrationNumber.getRegistration());
@@ -1476,7 +1477,7 @@ public class Registration extends Registration_Base {
     final public static List<Registration> readByNumberAndDegreeTypeAndAgreement(Integer number, DegreeType degreeType,
             boolean normalAgreement) {
         final List<Registration> registrations = new ArrayList<Registration>();
-        for (RegistrationNumber registrationNumber : RootDomainObject.getInstance().getRegistrationNumbersSet()) {
+        for (RegistrationNumber registrationNumber : Bennu.getInstance().getRegistrationNumbersSet()) {
             if (registrationNumber.getNumber().intValue() == number.intValue()
                     && registrationNumber.getRegistration().getDegreeType() == degreeType
                     && registrationNumber.getRegistration().getRegistrationAgreement().isNormal() == normalAgreement) {
@@ -1520,7 +1521,7 @@ public class Registration extends Registration_Base {
         int toNumberInt = toNumber.intValue();
 
         final List<Registration> students = new ArrayList<Registration>();
-        for (final Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
+        for (final Registration registration : Bennu.getInstance().getRegistrationsSet()) {
             int studentNumberInt = registration.getNumber().intValue();
             if (studentNumberInt >= fromNumberInt && studentNumberInt <= toNumberInt) {
                 students.add(registration);
@@ -1536,7 +1537,7 @@ public class Registration extends Registration_Base {
 
     final public static List<Registration> readRegistrationsByDegreeType(DegreeType degreeType) {
         final List<Registration> students = new ArrayList<Registration>();
-        for (final Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
+        for (final Registration registration : Bennu.getInstance().getRegistrationsSet()) {
             if (registration.getDegreeType().equals(degreeType)) {
                 students.add(registration);
             }
@@ -1838,7 +1839,7 @@ public class Registration extends Registration_Base {
     // ;
 
     private void checkIfReachedAttendsLimit() {
-        final IUserView userView = AccessControl.getUserView();
+        final User userView = Authenticate.getUser();
         if (userView == null
                 || !AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                         AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree())) {
@@ -2032,7 +2033,7 @@ public class Registration extends Registration_Base {
             res.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.of.the.male")).append(StringUtils.SINGLE_SPACE);
         }
 
-        if (!isEmptyDegree()) {
+        if (!isEmptyDegree() && !degreeType.isEmpty()) {
             res.append(degreeType.getPrefix(locale));
             res.append(degreeType.getFilteredName(locale).toUpperCase());
 
@@ -2746,7 +2747,7 @@ public class Registration extends Registration_Base {
     }
 
     final public CycleType getCycleType(final ExecutionYear executionYear) {
-        if (!isBolonha() || isEmptyDegree()) {
+        if (!isBolonha() || isEmptyDegree() || getDegreeType().isEmpty()) {
             return null;
         }
 
@@ -2773,7 +2774,7 @@ public class Registration extends Registration_Base {
     }
 
     private boolean isEmptyDegree() {
-        return getLastDegreeCurricularPlan().isEmpty();
+        return (getLastStudentCurricularPlan() != null ? getLastStudentCurricularPlan().isEmpty() : true);
     }
 
     final public CycleType getLastConcludedCycleType() {
@@ -3995,7 +3996,7 @@ public class Registration extends Registration_Base {
     @SuppressWarnings("unchecked")
     public static String readAllStudentInfo() {
         JSONArray infos = new JSONArray();
-        for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+        for (Registration registration : Bennu.getInstance().getRegistrationsSet()) {
             if (registration.isConcluded()) {
                 ExecutionYear conclusionYear = new RegistrationConclusionBean(registration).calculateConclusionYear();
                 String endDate = Integer.toString(conclusionYear.getEndDateYearMonthDay().getYear());
@@ -4027,13 +4028,13 @@ public class Registration extends Registration_Base {
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         Set<Registration> registrations = new HashSet<Registration>();
         LocalDate today = new LocalDate();
-        for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+        for (Registration registration : Bennu.getInstance().getRegistrationsSet()) {
             if (registration.hasAnyActiveState(currentExecutionYear) && registration.isBolonha()
                     && !registration.getDegreeType().equals(DegreeType.EMPTY)) {
                 registrations.add(registration);
             }
         }
-        for (ConclusionProcess conclusionProcess : RootDomainObject.getInstance().getConclusionProcessesSet()) {
+        for (ConclusionProcess conclusionProcess : Bennu.getInstance().getConclusionProcessesSet()) {
             if (conclusionProcess.getConclusionDate() != null
                     && !conclusionProcess.getConclusionDate().plusYears(1).isBefore(today)) {
                 registrations.add(conclusionProcess.getRegistration());
@@ -4399,7 +4400,7 @@ public class Registration extends Registration_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -8,7 +8,7 @@
 <html:xhtml/>
 
 <logic:present role="PERSON">
-<bean:define id="person" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person"/>
+<bean:define id="person" name="USER_SESSION_ATTRIBUTE" property="user.person"/>
 
 <em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="label.person.title.photoHistory"/></h2>
@@ -19,7 +19,7 @@
 
 <p class="mtop2">
 	<html:link page="/photoHistory.do?method=backToShowInformation">
-		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		<bean:message key="link.back" bundle="COMMON_RESOURCES"/>
 	</html:link>
 </p>
 

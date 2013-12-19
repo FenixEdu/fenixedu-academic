@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.AcademicProgram;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.PersonName;
@@ -14,6 +13,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
 
 public class StudentsSearchBean implements Serializable {
 
@@ -97,9 +97,9 @@ public class StudentsSearchBean implements Serializable {
                 }
             }
         } else if (!StringUtils.isEmpty(getUsername())) {
-            Login login = Login.readLoginByUsername(getUsername());
-            if (login != null && login.getUser().getPerson().hasStudent()) {
-                students.add(login.getUser().getPerson().getStudent());
+            User user = User.findByUsername(getUsername());
+            if (user != null && user.getPerson().hasStudent()) {
+                students.add(user.getPerson().getStudent());
             }
         }
 

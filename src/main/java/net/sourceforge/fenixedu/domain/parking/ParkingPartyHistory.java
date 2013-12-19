@@ -1,14 +1,13 @@
 package net.sourceforge.fenixedu.domain.parking;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class ParkingPartyHistory extends ParkingPartyHistory_Base {
 
     public ParkingPartyHistory(ParkingParty parkingParty, Boolean onlineRequest) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setParty(parkingParty.getParty());
         setCardStartDate(parkingParty.getCardStartDate());
         setCardEndDate(parkingParty.getCardEndDate());
@@ -38,7 +37,7 @@ public class ParkingPartyHistory extends ParkingPartyHistory_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

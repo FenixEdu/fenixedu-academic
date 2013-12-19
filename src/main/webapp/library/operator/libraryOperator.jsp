@@ -1,6 +1,6 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance"%>
-<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
-<%@page import="net.sourceforge.fenixedu.domain.RootDomainObject"%>
+<%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
+<%@page import="org.fenixedu.bennu.core.domain.Bennu"%>
 <%@ page language="java"%>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -163,13 +163,14 @@
 								<fr:slot name="personLibraryCardNumber" key="label.person.libraryCardNumber" />
 							</logic:present>
 							<fr:slot name="person.emailForSendingEmails" layout="null-as-label" key="label.card.person.email" />
-
+							<fr:slot name="person.mobile" key="label.person.mobile" />
+							
 							<logic:notEmpty name="attendance" property="giafProfessionalDataSet">
-								<logic:iterate id="giafProfessionalData" name="attendance" property="giafProfessionalDataSet" indexId="i">
-									<bean:define id="labelId" name="giafProfessionalData" property="professionalCategory.categoryType"/>
-									<fr:slot name="<%="giafProfessionalDatas["+ i+"]"%>" key="<%=labelId.toString() %>" bundle="ENUMERATION_RESOURCES">
+								<logic:iterate id="giafProfessionalDataSet" name="attendance" property="giafProfessionalDataSet" indexId="i">
+									<bean:define id="labelId" name="giafProfessionalDataSet" property="professionalCategory.categoryType"/>
+									<fr:slot name="<%="giafProfessionalDataSet["+ i+"]"%>" key="<%=labelId.toString() %>" bundle="ENUMERATION_RESOURCES">
 										<fr:property name="format" value="${contractSituation.name}" />
-										<logic:notEmpty name="giafProfessionalData" property="personProfessionalData.person.workingPlaceUnitForAnyRoleType">
+										<logic:notEmpty name="giafProfessionalDataSet" property="personProfessionalData.person.workingPlaceUnitForAnyRoleType">
 											<fr:property name="format" value="${contractSituation.name} <br/> ${personProfessionalData.person.workingPlaceUnitForAnyRoleType.presentationName}" />
 											<fr:property name="escaped" value="false" />
 										</logic:notEmpty>
@@ -181,17 +182,6 @@
 							</logic:present>
 							<logic:present name="attendance" property="researcherUnit">
 								<fr:slot name="researcherUnit.presentationName" key="label.person.researcher" />
-							</logic:present>
-							<logic:present name="attendance" property="grantOwnerUnit">
-								<fr:slot name="grantOwnerUnit" layout="conditionalFormats" key="label.person.grantOwner">
-									<fr:property name="format(noDate)" value="${grantOwnerUnit.presentationName}" />
-									<fr:property name="useFormatIfNot(noDate)" value="hasGrantOwnerEnd" />
-									<fr:property name="useParent(date)" value="true" />
-
-									<fr:property name="format(date)" value="${grantOwnerUnit.presentationName} - Fim: ${grantOwnerEnd}" />
-									<fr:property name="useFormatIf(date)" value="hasGrantOwnerEnd" />
-									<fr:property name="useParent(date)" value="true" />
-								</fr:slot>
 							</logic:present>
 							<logic:present name="attendance" property="employeeUnit">
 								<fr:slot name="employeeUnit.presentationName" key="label.person.employee" />
@@ -219,7 +209,7 @@
 							<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05" />
 						</fr:layout>
 					</fr:view>
-					<bean:define id="userHasHigherClerance" value="<%= "" + RootDomainObject.getInstance().getLibraryCardSystem().getHigherClearenceGroup().allows(AccessControl.getUserView()) %>" />
+					<bean:define id="userHasHigherClerance" value="<%= "" + Bennu.getInstance().getLibraryCardSystem().getHigherClearenceGroup().allows(Authenticate.getUser()) %>" />
 					<logic:equal name="userHasHigherClerance" value="true">
 						<logic:notPresent name="attendance" property="personLibraryCardNumber">
 							<bean:define id="personIstUsername" name="attendance" property="person.istUsername" />

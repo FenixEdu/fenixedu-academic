@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
@@ -41,7 +42,7 @@ public class InstitutionSiteManagers extends LeafGroup {
      */
     private UnitSite initialize() {
         if (this.institutionSite == null) {
-            this.institutionSite = RootDomainObject.getInstance().getInstitutionUnit().getSite();
+            this.institutionSite = Bennu.getInstance().getInstitutionUnit().getSite();
         }
 
         return this.institutionSite;

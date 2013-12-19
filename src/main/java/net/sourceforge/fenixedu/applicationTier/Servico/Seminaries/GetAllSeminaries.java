@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStud
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -21,7 +21,7 @@ public class GetAllSeminaries {
     protected List run(Boolean inEnrollmentPeriod) throws BDException {
         List<InfoSeminary> result = new LinkedList<InfoSeminary>();
 
-        Collection<Seminary> seminaries = RootDomainObject.getInstance().getSeminarys();
+        Collection<Seminary> seminaries = Bennu.getInstance().getSeminarysSet();
         for (Seminary seminary : seminaries) {
 
             if (!inEnrollmentPeriod) {

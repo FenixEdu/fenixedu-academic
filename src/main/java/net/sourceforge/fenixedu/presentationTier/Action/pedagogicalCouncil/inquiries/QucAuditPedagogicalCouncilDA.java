@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.CompetenceCourseRes
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.ExecutionCourseQucAuditSearchBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -60,7 +60,7 @@ public class QucAuditPedagogicalCouncilDA extends ViewQucAuditProcessDA {
 
     private List<ExecutionCourseAudit> getExecutionCoursesAudits(ExecutionSemester executionSemester) {
         List<ExecutionCourseAudit> result = new ArrayList<ExecutionCourseAudit>();
-        for (ExecutionCourseAudit executionCourseAudit : RootDomainObject.getInstance().getExecutionCourseAudits()) {
+        for (ExecutionCourseAudit executionCourseAudit : Bennu.getInstance().getExecutionCourseAuditsSet()) {
             if (executionCourseAudit.getExecutionCourse().getExecutionPeriod() == executionSemester) {
                 result.add(executionCourseAudit);
             }

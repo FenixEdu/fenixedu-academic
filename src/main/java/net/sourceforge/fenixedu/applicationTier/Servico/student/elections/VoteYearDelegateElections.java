@@ -4,9 +4,10 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
 import java.util.ResourceBundle;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionBlankVote;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVote;
@@ -41,7 +42,7 @@ public class VoteYearDelegateElections {
                 DelegateElectionVote vote = createDelegateElectionVote(votingPeriod, votedStudent);
                 votingPeriod.addVotingStudents(student);
                 votingPeriod.addVotes(vote);
-                new Message(RootDomainObject.getInstance().getSystemSender(), new ConcreteReplyTo(fromAddress).asCollection(), new Recipient(
+                new Message(Bennu.getInstance().getSystemSender(), new ConcreteReplyTo(fromAddress).asCollection(), new Recipient(
                         new PersonGroup(person)).asCollection(), subject, msg, "");
             } else {
                 throw new FenixServiceException("error.student.elections.voting.studentAlreadyVoted");

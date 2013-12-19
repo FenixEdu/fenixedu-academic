@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class ForumSubscription extends ForumSubscription_Base {
 
     public ForumSubscription() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setReceivePostsByEmail(false);
         setFavorite(false);
 
@@ -40,7 +41,7 @@ public class ForumSubscription extends ForumSubscription_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

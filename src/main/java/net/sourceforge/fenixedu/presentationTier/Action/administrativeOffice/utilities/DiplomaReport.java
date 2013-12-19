@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.utilities;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 abstract public class DiplomaReport extends FenixReport {
@@ -34,7 +34,7 @@ abstract public class DiplomaReport extends FenixReport {
         addParameter("birthLocale", StringFormatter.prettyPrint(this.studentDiplomaInformation.getBirthLocale()));
 
         addParameter("conclusionDate", this.studentDiplomaInformation.getConclusionDate().toString(DD_MMMM_YYYY, getLocale()));
-        addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+        addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
         addParameter("day", new YearMonthDay().toString(DD_MMMM_YYYY, getLocale()));
         addParameter("dissertationTitle", this.studentDiplomaInformation.getDissertationTitle());
 

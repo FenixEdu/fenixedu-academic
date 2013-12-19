@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -44,7 +45,7 @@ public class StudentGroup extends StudentGroup_Base {
     public StudentGroup() {
         super();
         super.setValid(true);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public StudentGroup(Integer groupNumber, Grouping grouping) {
@@ -134,7 +135,7 @@ public class StudentGroup extends StudentGroup_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

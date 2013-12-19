@@ -8,7 +8,7 @@
 
 <h2><bean:message key="title.units.merge" bundle="MANAGER_RESOURCES"/></h2>
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 	<script language="JavaScript">
 		function check(e,v)

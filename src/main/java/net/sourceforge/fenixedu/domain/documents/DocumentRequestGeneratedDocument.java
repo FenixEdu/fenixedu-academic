@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.documents;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
@@ -25,7 +26,7 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
 
     @Override
     public boolean isPersonAllowedToAccess(Person person) {
-        if (person.hasRole(RoleType.RECTORATE) && getSource().hasRegistryCode()) {
+        if (person != null && person.hasRole(RoleType.RECTORATE) && getSource().hasRegistryCode()) {
             return true;
         }
         return super.isPersonAllowedToAccess(person);
@@ -44,10 +45,11 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
 
     @Atomic
     public static void store(IDocumentRequest source, String filename, byte[] content) {
-        if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
+        if (!CoreConfiguration.getConfiguration().developmentMode()) {
             new DocumentRequestGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
         }
     }
+
     @Deprecated
     public boolean hasSource() {
         return getSource() != null;

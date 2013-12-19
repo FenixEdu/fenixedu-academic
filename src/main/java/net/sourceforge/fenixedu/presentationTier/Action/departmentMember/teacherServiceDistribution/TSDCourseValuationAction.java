@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetTSDCourse;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
@@ -28,8 +27,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.FenixFramework;
 
 public class TSDCourseValuationAction extends FenixDispatchAction {
@@ -37,7 +37,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     public ActionForward prepareForTSDCourseValuation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         getFromRequestAndSetOnForm(request, dynaForm);
@@ -177,7 +177,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
 
     public ActionForward setTSDCourseStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
@@ -204,8 +204,8 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     /*
      * public ActionForward removeTSDCourseLoad( ActionMapping mapping,
      * ActionForm form, HttpServletRequest request, HttpServletResponse
-     * response) throws  FenixServiceException { IUserView
-     * userView = UserView.getUser(); DynaActionForm dynaForm = (DynaActionForm)
+     * response) throws  FenixServiceException { User
+     * userView = Authenticate.getUser(); DynaActionForm dynaForm = (DynaActionForm)
      * form;
      * 
      * TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm); Map<String, Object>
@@ -232,7 +232,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
 
     public ActionForward setTSDCourseWeights(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
@@ -261,7 +261,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
 
     public ActionForward setTSDCourseHours(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);

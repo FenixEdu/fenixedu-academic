@@ -13,7 +13,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
@@ -34,13 +33,14 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.ConnectionManager;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.bennu.backend.util.ConnectionManager;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
@@ -752,7 +752,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     public static List<EventReportQueueJob> retrieveAllGeneratedReports() {
         List<EventReportQueueJob> reports = new ArrayList<EventReportQueueJob>();
 
-        CollectionUtils.select(RootDomainObject.getInstance().getQueueJobSet(), new Predicate() {
+        CollectionUtils.select(Bennu.getInstance().getQueueJobSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -767,7 +767,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     public static List<EventReportQueueJob> retrieveDoneGeneratedReports() {
         List<EventReportQueueJob> reports = new ArrayList<EventReportQueueJob>();
 
-        CollectionUtils.select(RootDomainObject.getInstance().getQueueJobSet(), new Predicate() {
+        CollectionUtils.select(Bennu.getInstance().getQueueJobSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {

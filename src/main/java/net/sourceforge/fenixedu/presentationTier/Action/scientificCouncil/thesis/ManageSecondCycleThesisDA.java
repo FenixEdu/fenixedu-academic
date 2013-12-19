@@ -271,15 +271,15 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
     public ActionForward substituteDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        return substituteDocumant(mapping, request, true);
+        return substituteDocument(mapping, request, true);
     }
 
     public ActionForward substituteExtendedAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        return substituteDocumant(mapping, request, false);
+        return substituteDocument(mapping, request, false);
     }
 
-    public ActionForward substituteDocumant(final ActionMapping mapping, final HttpServletRequest request,
+    public ActionForward substituteDocument(final ActionMapping mapping, final HttpServletRequest request,
             final boolean dissertationFile) throws Exception {
         final Thesis thesis = getDomainObject(request, "thesisOid");
         ThesisFileBean bean = getRenderedObject();

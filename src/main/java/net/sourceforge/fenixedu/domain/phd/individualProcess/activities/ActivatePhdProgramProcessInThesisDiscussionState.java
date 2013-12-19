@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -10,12 +11,12 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 
 public class ActivatePhdProgramProcessInThesisDiscussionState extends PhdIndividualProgramProcessActivity {
     @Override
-    protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+    protected void processPreConditions(PhdIndividualProgramProcess process, User userView) {
         // remove restrictions
     }
 
     @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+    protected void activityPreConditions(PhdIndividualProgramProcess process, User userView) {
         if (!process.isAllowedToManageProcessState(userView)) {
             throw new PreConditionNotValidException();
         }
@@ -23,7 +24,7 @@ public class ActivatePhdProgramProcessInThesisDiscussionState extends PhdIndivid
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, User userView, Object object) {
 
         PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
 

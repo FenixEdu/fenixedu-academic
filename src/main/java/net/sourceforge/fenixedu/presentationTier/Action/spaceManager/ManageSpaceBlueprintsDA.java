@@ -179,7 +179,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         // getExternalStorageIdentification());
         // Science it doesn't, we'll do...
 
-        final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
+        final byte[] blueprintBytes = blueprintFile.getContentFile().getBytes();
         final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
 
         response.setContentType("text/plain");

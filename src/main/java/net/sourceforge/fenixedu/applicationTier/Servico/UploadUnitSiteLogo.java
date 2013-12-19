@@ -1,16 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteFile;
@@ -19,10 +15,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.commons.io.FileUtils;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -30,14 +23,14 @@ public class UploadUnitSiteLogo {
 
     protected File run(UnitSite site, java.io.File fileToUpload, String name) throws IOException, FenixServiceException {
 
-        if (site.hasLogo()) {
-            UnitSiteFile logo = site.getLogo();
-            if (logo.getExternalStorageIdentification() != null) {
-            	new DeleteFileRequest(AccessControl.getPerson(), logo.getExternalStorageIdentification());
-            }
-
-            logo.delete();
-        }
+//        if (site.hasLogo()) {
+//            UnitSiteFile logo = site.getLogo();
+//            if (logo.getExternalStorageIdentification() != null) {
+//                new DeleteFileRequest(AccessControl.getPerson(), logo.getExternalStorageIdentification());
+//            }
+//
+//            logo.delete();
+//        }
 
         if (fileToUpload == null || name == null) {
             return null;
@@ -77,23 +70,6 @@ public class UploadUnitSiteLogo {
         metaData.add(FileSetMetaData.createTitleMeta(site.getUnit().getNameWithAcronym() + " Logo"));
 
         return metaData;
-    }
-
-    private FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
-            Collection<FileSetMetaData> metaData, java.io.File file) throws IOException, FenixServiceException {
-        IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-        InputStream is = null;
-        try {
-            is = new FileInputStream(file);
-            return fileManager.saveFile(filePath, fileName, isPrivate, metaData, file);
-        } catch (FileNotFoundException e) {
-            throw new FenixServiceException(e.getMessage());
-        } finally {
-            if (is != null) {
-                is.close();
-            }
-        }
-
     }
 
     // Service Invokers migrated from Berserk

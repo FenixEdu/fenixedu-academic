@@ -4,9 +4,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public abstract class ReplyTo extends ReplyTo_Base {
 
@@ -25,7 +26,7 @@ public abstract class ReplyTo extends ReplyTo_Base {
 
     public ReplyTo() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void safeDelete() {
@@ -67,7 +68,7 @@ public abstract class ReplyTo extends ReplyTo_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -9,7 +9,6 @@ import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditWrittenEvaluationEnrolmentPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
@@ -29,8 +28,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author Tânia Nunes
@@ -45,7 +44,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEnrolmentManagement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String evaluationCode = getFromRequest("evaluationCode", request);
 
@@ -85,7 +84,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditEvaluationEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String evaluationCode = getFromRequest("evaluationCode", request);
 
@@ -125,7 +124,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         DynaActionForm examEnrollmentForm = (DynaActionForm) form;
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String examExternalId = request.getParameter("evaluationCode");
         String disciplinaExecucaoExternalId = request.getParameter("objectCode");

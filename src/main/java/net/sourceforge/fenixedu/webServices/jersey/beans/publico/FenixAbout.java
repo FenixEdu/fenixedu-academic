@@ -1,43 +1,82 @@
 package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import org.fenixedu.bennu.core.domain.Bennu;
+
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 public class FenixAbout {
 
-    String newsRss;
-    String eventsRss;
+    public static class FenixRSSFeed {
+        String description;
+        String uri;
 
-    @JsonIgnore
-    private static FenixAbout instance;
+        public FenixRSSFeed(final String description, final String uri) {
+            this.description = description;
+            this.uri = uri;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getUri() {
+            return uri;
+        }
+
+        public void setUri(String uri) {
+            this.uri = uri;
+        }
+    }
+
+    String institutionName = null;
+    String institutionUrl = null;
+    List<FenixRSSFeed> rssFeeds = new ArrayList<>();
 
     private FenixAbout() {
-        newsRss = PropertiesManager.getProperty("fenix.api.news.rss.url");
-        eventsRss = PropertiesManager.getProperty("fenix.api.events.rss.url");
+        final Bennu instance = Bennu.getInstance();
+        final Unit unit = instance.getInstitutionUnit();
+        if (unit != null) {
+            institutionName = unit.getName();
+            institutionUrl = unit.getDefaultWebAddressUrl();
+        }
+        rssFeeds.add(new FenixRSSFeed("News", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrl()));
+        rssFeeds.add(new FenixRSSFeed("Events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrl()));
     }
 
     public static FenixAbout getInstance() {
-        if (instance == null) {
-            instance = new FenixAbout();
-        }
-        return instance;
+        return new FenixAbout();
     }
 
-    public String getNewsRss() {
-        return newsRss;
+    public String getInstitutionName() {
+        return institutionName;
     }
 
-    public void setNewsRss(String newsRss) {
-        this.newsRss = newsRss;
+    public void setInstitutionName(String institutionName) {
+        this.institutionName = institutionName;
     }
 
-    public String getEventsRss() {
-        return eventsRss;
+    public String getInstitutionUrl() {
+        return institutionUrl;
     }
 
-    public void setEventsRss(String eventsRss) {
-        this.eventsRss = eventsRss;
+    public void setInstitutionUrl(String institutionUrl) {
+        this.institutionUrl = institutionUrl;
+    }
+
+    public List<FenixRSSFeed> getRssFeeds() {
+        return rssFeeds;
+    }
+
+    public void setRssFeeds(List<FenixRSSFeed> rssFeeds) {
+        this.rssFeeds = rssFeeds;
     }
 
 }

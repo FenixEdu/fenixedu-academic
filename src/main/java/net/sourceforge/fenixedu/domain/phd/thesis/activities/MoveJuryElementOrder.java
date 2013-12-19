@@ -6,7 +6,8 @@ package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
@@ -15,7 +16,7 @@ import pt.utl.ist.fenix.tools.util.Pair;
 public class MoveJuryElementOrder extends PhdThesisActivity {
 
     @Override
-    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+    protected void activityPreConditions(PhdThesisProcess process, User userView) {
 
         if (!process.isAllowedToManageProcess(userView)) {
             throw new PreConditionNotValidException();
@@ -24,7 +25,7 @@ public class MoveJuryElementOrder extends PhdThesisActivity {
 
     @Override
     @SuppressWarnings("unchecked")
-    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, User userView, Object object) {
 
         final Pair<ThesisJuryElement, Integer> elementInfo = (Pair<ThesisJuryElement, Integer>) object;
         final List<ThesisJuryElement> elements = new ArrayList<ThesisJuryElement>(process.getOrderedThesisJuryElements());

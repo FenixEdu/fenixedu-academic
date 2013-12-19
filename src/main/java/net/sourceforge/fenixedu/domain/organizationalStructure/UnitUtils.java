@@ -11,9 +11,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 public class UnitUtils {
@@ -35,7 +35,7 @@ public class UnitUtils {
 
     public static List<Unit> readAllUnitsWithoutParents() {
         List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();
-        for (Party party : RootDomainObject.getInstance().getPartys()) {
+        for (Party party : Bennu.getInstance().getPartysSet()) {
             if (party.isUnit()) {
                 Unit unit = (Unit) party;
                 if (unit.getParentUnits().isEmpty()) {
@@ -96,7 +96,7 @@ public class UnitUtils {
         final List<Unit> result = new ArrayList<Unit>();
         final YearMonthDay now = new YearMonthDay();
         if (unitClassification != null) {
-            for (Party party : RootDomainObject.getInstance().getPartys()) {
+            for (Party party : Bennu.getInstance().getPartysSet()) {
                 if (party.isUnit()) {
                     Unit unit = (Unit) party;
                     if (unit.getClassification() != null && unit.getClassification().equals(unitClassification)
@@ -128,15 +128,15 @@ public class UnitUtils {
     }
 
     public static Unit readExternalInstitutionUnit() {
-        return RootDomainObject.getInstance().getExternalInstitutionUnit();
+        return Bennu.getInstance().getExternalInstitutionUnit();
     }
 
     public static Unit readInstitutionUnit() {
-        return RootDomainObject.getInstance().getInstitutionUnit();
+        return Bennu.getInstance().getInstitutionUnit();
     }
 
     public static Unit readEarthUnit() {
-        return RootDomainObject.getInstance().getEarthUnit();
+        return Bennu.getInstance().getEarthUnit();
     }
 
     public static Set<Unit> readExternalUnitsByNameAndTypes(final String unitName, List<PartyTypeEnum> types) {
@@ -191,7 +191,7 @@ public class UnitUtils {
         }
         final String nameToSearch = unitName.replaceAll("%", ".*").toLowerCase();
         final List<Unit> result = new ArrayList<Unit>();
-        for (final UnitName name : RootDomainObject.getInstance().getUnitNameSet()) {
+        for (final UnitName name : Bennu.getInstance().getUnitNameSet()) {
             if (name.getName().toLowerCase().matches(nameToSearch) && name.getIsExternalUnit()
                     && types.contains(name.getUnit().getType())) {
                 result.add(name.getUnit());
@@ -203,7 +203,7 @@ public class UnitUtils {
     public static Collection<Unit> readAllUnitsWithClassification(UnitClassification classification) {
         List<Unit> result = new ArrayList<Unit>();
 
-        for (Party party : RootDomainObject.getInstance().getPartys()) {
+        for (Party party : Bennu.getInstance().getPartysSet()) {
             if (party.isUnit()) {
                 Unit unit = (Unit) party;
 

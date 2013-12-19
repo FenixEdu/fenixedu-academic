@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -14,7 +14,7 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 
     public GiafProfessionalData() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public GiafProfessionalData(final PersonProfessionalData personProfessionalData, final String personGiafIdentification,
@@ -28,7 +28,7 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
             final String professionalRegimeGiafId, final LocalDate professionalRegimeDate, final Campus campus,
             final DateTime creationDate, final DateTime modifiedDate) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setPersonProfessionalData(personProfessionalData);
         setGiafPersonIdentification(personGiafIdentification);
         setInstitutionEntryDate(institutionEntryDate);
@@ -215,7 +215,7 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

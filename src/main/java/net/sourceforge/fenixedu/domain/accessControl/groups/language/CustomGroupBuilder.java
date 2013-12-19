@@ -21,7 +21,9 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  * @author cfgi
  * 
  * @see net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.ClassOperator
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 class CustomGroupBuilder implements GroupBuilder {
 
     @Override

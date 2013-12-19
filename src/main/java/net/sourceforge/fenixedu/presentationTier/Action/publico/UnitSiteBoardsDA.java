@@ -8,7 +8,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -107,7 +107,7 @@ public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
             return boards;
         }
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         for (AnnouncementBoard board : unit.getBoards()) {
             if (board.getReaders() == null) {
                 boards.add(board);

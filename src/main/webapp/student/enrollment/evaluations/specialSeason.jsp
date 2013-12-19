@@ -8,7 +8,7 @@
 <em><bean:message bundle="STUDENT_RESOURCES"  key="title.student.portalTitle" /></em>
 <h2><bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.specialSeason" /></h2>
 
-<logic:notPresent role="STUDENT">
+<logic:notPresent role="role(STUDENT)">
 	<span class="error"><bean:message key="error.exception.notAuthorized" bundle="STUDENT_RESOURCES" /></span>
 </logic:notPresent>
 
@@ -37,7 +37,7 @@
 </logic:messagesPresent>
 
 
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
 	<div class="infoop2">
 		<bean:message key="label.student.SpecialSeasonEnrollment.description" bundle="STUDENT_RESOURCES"/><br/><br/>
 	</div>

@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
@@ -25,11 +24,13 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -55,7 +56,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     public static List<WrittenEvaluation> readWrittenEvaluations() {
         List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
 
-        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
+        for (Evaluation evaluation : Bennu.getInstance().getEvaluationsSet()) {
             if (evaluation instanceof Evaluation) {
                 result.add((WrittenEvaluation) evaluation);
             }
@@ -188,8 +189,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     protected void checkIntervalBetweenEvaluations() {
-        final IUserView userView = AccessControl.getUserView();
-        if (userView == null || !userView.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        final User userView = Authenticate.getUser();
+        if (userView == null || !userView.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             checkIntervalBetweenEvaluationsCondition();
         }
     }
@@ -1102,6 +1103,26 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     @Deprecated
     public boolean hasVigilantsReport() {
         return getVigilantsReport() != null;
+    }
+
+    public DateTime getEnrolmentPeriodStart() {
+        final YearMonthDay yearMonthDay = getEnrollmentBeginDayDateYearMonthDay();
+        final HourMinuteSecond hourMinuteSecond = getEnrollmentBeginTimeDateHourMinuteSecond();
+        return toDateTime(yearMonthDay, hourMinuteSecond);
+    }
+
+    public DateTime getEnrolmentPeriodEnd() {
+        final YearMonthDay yearMonthDay = getEnrollmentEndDayDateYearMonthDay();
+        final HourMinuteSecond hourMinuteSecond = getEnrollmentEndTimeDateHourMinuteSecond();
+        return toDateTime(yearMonthDay, hourMinuteSecond);
+    }
+
+    private DateTime toDateTime(final YearMonthDay yearMonthDay, final HourMinuteSecond hourMinuteSecond) {
+        if (yearMonthDay == null || hourMinuteSecond == null) {
+            return null;
+        }
+        return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
+                hourMinuteSecond.getHour(), hourMinuteSecond.getMinuteOfHour(), hourMinuteSecond.getSecondOfMinute(), 0);
     }
 
 }

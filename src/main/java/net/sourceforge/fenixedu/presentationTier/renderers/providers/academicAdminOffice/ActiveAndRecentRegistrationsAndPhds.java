@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.academicAd
 import java.util.HashSet;
 import java.util.Set;
 
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -30,7 +32,7 @@ public class ActiveAndRecentRegistrationsAndPhds implements DataProvider {
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
-            if (!phdProcess.isAllowedToManageProcess(AccessControl.getUserView())) {
+            if (!phdProcess.isAllowedToManageProcess(Authenticate.getUser())) {
                 continue;
             }
             if ((phdProcess.isProcessActive() && student.hasValidInsuranceEvent())) {

@@ -5,8 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class PersonAutoCompleteProvider implements AutoCompleteProvider<Person> {

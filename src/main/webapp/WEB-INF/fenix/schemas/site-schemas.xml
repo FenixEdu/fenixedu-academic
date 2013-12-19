@@ -273,28 +273,6 @@
 	<slot name="documentIDNumber" read-only="true"/>
 </schema>	
 
-<schema name="edit.loginBean" type="net.sourceforge.fenixedu.presentationTier.Action.publico.LoginRequestBean" bundle="SITE_RESOURCES">
-	<slot name="name" read-only="true"/>	
-    <slot name="documentType" read-only="true"/>
-	<slot name="documentIDNumber" read-only="true"/>
-	<slot name="email" read-only="true"/>
-	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="radio">
-		<property name="classes" value="liinline"/>
-	</slot>
-	<slot name="phone" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="username" read-only="true"/>
-	<slot name="password" layout="input-with-comment">
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.StringLengthValidator">
-			<property name="min" value="8"/>
-		</validator>
-		<property name="subLayout" value="password"/>
-		<property name="bundle" value="RESEARCHER_RESOURCES"/>
-		<property name="comment" value="label.passwordLength.explanation"/>
-		<property name="commentClasses" value="smalltxt color555"/>
-	</slot>
-	<slot name="passwordConfirmation" layout="password" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-</schema>	
-
 <schema name="unitSite.choose.introductionContent" type="net.sourceforge.fenixedu.domain.UnitSite" bundle="WEBSITEMANAGER_RESOURCES">
 	<slot name="initialContent" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.UnitSiteInitialSectionProvider"/>
@@ -391,7 +369,7 @@
 </schema>
 
 <schema name="unitSite.manager" type="net.sourceforge.fenixedu.domain.Person" bundle="SITE_RESOURCES">
-    <slot name="mostImportantAlias" key="label.alias"/>
+    <slot name="username" key="label.alias"/>
     <slot name="name" key="label.name"/>
 </schema>
 

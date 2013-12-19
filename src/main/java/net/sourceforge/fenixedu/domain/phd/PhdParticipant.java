@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList;
@@ -14,13 +13,14 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 abstract public class PhdParticipant extends PhdParticipant_Base {
 
     protected PhdParticipant() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setWhenCreated(new DateTime());
         setAccessTypes(PhdProcessAccessTypeList.EMPTY);
     }
@@ -186,7 +186,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     static public PhdParticipant readByAccessHashCode(final String hash) {
-        for (final PhdParticipant participant : RootDomainObject.getInstance().getPhdParticipants()) {
+        for (final PhdParticipant participant : Bennu.getInstance().getPhdParticipantsSet()) {
             if (participant.hasAccessHashCode(hash)) {
                 return participant;
             }
@@ -226,7 +226,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

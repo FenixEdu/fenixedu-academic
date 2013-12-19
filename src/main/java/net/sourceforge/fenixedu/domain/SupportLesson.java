@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 import java.util.Date;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -33,7 +35,7 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
 
     public SupportLesson(SupportLessonDTO supportLessonDTO, Professorship professorship, RoleType roleType) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setProfessorship(professorship);
         update(supportLessonDTO, roleType);
     }
@@ -96,7 +98,7 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
 
     private SupportLesson() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static SupportLesson create(SupportLessonDTO supportLessonDTO, Professorship professorship, RoleType roleType) {
@@ -157,7 +159,7 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

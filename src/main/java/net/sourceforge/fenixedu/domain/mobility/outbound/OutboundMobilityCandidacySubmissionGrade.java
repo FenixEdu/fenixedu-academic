@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.mobility.outbound;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCandidacySubmissionGrade_Base implements
         Comparable<OutboundMobilityCandidacySubmissionGrade> {
@@ -10,7 +10,7 @@ public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCa
     public OutboundMobilityCandidacySubmissionGrade(final OutboundMobilityCandidacySubmission submission,
             final OutboundMobilityCandidacyContestGroup mobilityGroup, final BigDecimal grade) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setOutboundMobilityCandidacySubmission(submission);
         setOutboundMobilityCandidacyContestGroup(mobilityGroup);
         edit(grade);
@@ -39,7 +39,7 @@ public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCa
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

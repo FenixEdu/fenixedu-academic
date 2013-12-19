@@ -5,11 +5,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -29,7 +30,7 @@ public class SearchRaidesDegreeDesignations implements AutoCompleteProvider<Degr
         List<DegreeDesignation> result = new ArrayList<DegreeDesignation>();
         Collection<DegreeDesignation> possibleDesignations = null;
         if (unit == null) {
-            possibleDesignations = RootDomainObject.getInstance().getDegreeDesignationsSet();
+            possibleDesignations = Bennu.getInstance().getDegreeDesignationsSet();
         } else {
             possibleDesignations = unit.getDegreeDesignation();
         }

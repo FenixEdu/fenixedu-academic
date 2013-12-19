@@ -6,11 +6,11 @@ import java.util.GregorianCalendar;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -90,7 +90,7 @@ public class UniversityUnit extends UniversityUnit_Base {
 
     @SuppressWarnings("unchecked")
     final static public UniversityUnit getInstitutionsUniversityUnit() {
-        /*final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+        /*final Unit institutionUnit = Bennu.getInstance().getInstitutionUnit();
         final Collection<UniversityUnit> parentUniversityUnits =
                 (Collection<UniversityUnit>) institutionUnit.getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
                         UniversityUnit.class);
@@ -105,7 +105,7 @@ public class UniversityUnit extends UniversityUnit_Base {
 
     @SuppressWarnings("unchecked")
     final static public UniversityUnit getInstitutionsUniversityUnitByDate(DateTime dateTime) {
-        final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+        final Unit institutionUnit = Bennu.getInstance().getInstitutionUnit();
         final Collection<UniversityUnit> parentUniversityUnits =
                 (Collection<UniversityUnit>) institutionUnit.getParentPartiesByDates(
                         AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, UniversityUnit.class, dateTime);
@@ -143,7 +143,7 @@ public class UniversityUnit extends UniversityUnit_Base {
     }
 
     final public Person getInstitutionsUniversityResponsible(FunctionType functionType) {
-        final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+        final Unit institutionUnit = Bennu.getInstance().getInstitutionUnit();
         if (!getChildParties(Unit.class).contains(institutionUnit)) {
             throw new DomainException("UniversityUnit.not.parent.of.institution.unit");
         }

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -32,8 +34,8 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends Filtro {
         return roles;
     }
 
-    protected String hasPrevilege(IUserView id, Object registration, DegreeType degreeType) {
-        if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+    protected String hasPrevilege(User id, Object registration, DegreeType degreeType) {
+        if (id.getPerson().hasRole(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
 
             if (!(checkDegreeType(degreeType, MASTER_DEGREE_TYPE) || checkDegreeType(degreeType, DFA_TYPE))) {
                 return "error.masterDegree.type";
@@ -44,8 +46,8 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends Filtro {
             }
         }
 
-        if (id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-                || id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+        if (id.getPerson().hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+                || id.getPerson().hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
 
             if (!checkDegreeType(degreeType, DEGREE_TYPE)) {
                 return "error.degree.type";
@@ -77,12 +79,12 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends Filtro {
     }
 
     public void execute(Object registration, DegreeType degreeType) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
         String messageException = hasPrevilege(id, registration, degreeType);
 
-        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && messageException != null) || (id == null)
-                || (id.getRoleTypes() == null)) {
+        if ((id != null && id.getPerson().getPersonRolesSet() != null && !containsRoleType(id.getPerson().getPersonRolesSet()))
+                || (id != null && id.getPerson().getPersonRolesSet() != null && messageException != null) || (id == null)
+                || (id.getPerson().getPersonRolesSet() == null)) {
             throw new NotAuthorizedException(messageException);
         }
     }

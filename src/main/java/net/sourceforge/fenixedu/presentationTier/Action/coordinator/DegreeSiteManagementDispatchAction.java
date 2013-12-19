@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.CreateCurrentDegreeInfo;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -22,8 +21,9 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -123,7 +123,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
         }
 
         if (currentDegreeInfo == null) {
-            final IUserView userView = UserView.getUser();
+            final User userView = Authenticate.getUser();
 
             if (!userView.getPerson().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear)
                     && !userView.getPerson().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear.getNextExecutionYear())) {
@@ -177,7 +177,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         if (degreeCurricularPlan.hasAnyExecutionDegrees()) {
-            final IUserView userView = UserView.getUser();
+            final User userView = Authenticate.getUser();
             request.setAttribute("executionDegrees", userView.getPerson().getCoordinatedExecutionDegrees(degreeCurricularPlan));
         }
 

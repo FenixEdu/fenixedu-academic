@@ -9,11 +9,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -25,7 +25,7 @@ public class ReadAvailableExecutionPeriods {
         check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         final Collection<ExecutionSemester> filteredExecutionPeriods =
-                new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriodsSet());
+                new ArrayList<ExecutionSemester>(Bennu.getInstance().getExecutionPeriodsSet());
         for (final String executionPeriodID : unavailableExecutionPeriodsIDs) {
             final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
             filteredExecutionPeriods.remove(executionSemester);

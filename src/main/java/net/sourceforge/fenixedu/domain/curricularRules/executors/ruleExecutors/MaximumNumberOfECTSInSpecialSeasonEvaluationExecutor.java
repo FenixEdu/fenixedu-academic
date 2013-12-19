@@ -33,8 +33,8 @@ public class MaximumNumberOfECTSInSpecialSeasonEvaluationExecutor extends Curric
         final BigDecimal totalEcts = getTotalEcts(registration, enrolmentContext);
 
         if (!rule.allowEcts(totalEcts)) {
-            // is student enroling, then return false
-            if (enrolmentContext.isResponsiblePersonStudent()) {
+            // a person can not enroll it self if ects are exceeded (usually the students case)
+            if (enrolmentContext.isRegistrationFromResponsiblePerson()) {
                 return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
                         "curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.ects",
                         rule.getMaxEcts().toPlainString());

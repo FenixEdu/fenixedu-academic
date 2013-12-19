@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -28,7 +30,6 @@ import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
@@ -380,7 +381,7 @@ public class MergeExecutionCourses {
 
             message.append(BundleUtil.getStringFromResourceBundle("resources.GlobalResources",
                     "mergeExecutionCourses.email.greetings"));
-            SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+            SystemSender systemSender = Bennu.getInstance().getSystemSender();
             new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST,
                     BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExecutionCourses.email.subject",
                             new String[] { executionCourseTo.getNome() }), message.toString(), bccs);
@@ -476,7 +477,7 @@ public class MergeExecutionCourses {
             throws FenixServiceException {
 
         if (!executionCourseTo.hasSite()) {
-            throw new FenixServiceException("Unable to copy foruns, destination doesn't have site");
+            throw new FenixServiceException("Unable to copy forums, destination doesn't have site");
         }
 
         while (!executionCourseFrom.getForuns().isEmpty()) {

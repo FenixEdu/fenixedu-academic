@@ -6,7 +6,7 @@
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%><html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
-<logic:present role="PEDAGOGICAL_COUNCIL">
+<logic:present role="role(PEDAGOGICAL_COUNCIL)">
 	<%
 		request.setAttribute("site", PedagogicalCouncilSite.getSite());
 		request.setAttribute("unit", PedagogicalCouncilSite.getSite().getUnit());
@@ -173,7 +173,7 @@
 	</ul>
 </logic:present>
 
-<logic:present role="TUTORSHIP">
+<logic:present role="role(TUTORSHIP)">
 
     <ul>
         <li class="navheader">

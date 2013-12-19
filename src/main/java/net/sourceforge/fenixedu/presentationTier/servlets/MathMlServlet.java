@@ -9,18 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial;
 import net.sourceforge.jeuclid.util.Converter;
 
 import org.apache.avalon.framework.logger.NullLogger;
 import org.apache.tools.ant.filters.StringInputStream;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.FenixFramework;
 
 public class MathMlServlet extends HttpServlet {
 
-    RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+    Bennu rootDomainObject = Bennu.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

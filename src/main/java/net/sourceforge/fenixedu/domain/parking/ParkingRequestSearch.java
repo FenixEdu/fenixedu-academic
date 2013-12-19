@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -76,7 +77,7 @@ public class ParkingRequestSearch implements Serializable {
                 }
             }
         } else if (parkingRequestState != null || partyClassification != null || carPlateNumber != null) {
-            for (ParkingRequest request : RootDomainObject.getInstance().getParkingRequests()) {
+            for (ParkingRequest request : Bennu.getInstance().getParkingRequestsSet()) {
                 if (satisfiedPersonClassification(request) && satisfiedPersonName(request) && satisfiedRequestState(request)
                         && satisfiedCarPlateNumber(request)) {
                     parkingRequests.add(request);

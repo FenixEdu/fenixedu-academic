@@ -5,7 +5,6 @@ import java.util.Comparator;
 import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 /**
@@ -92,7 +92,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
     public PrecedentDegreeInformation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setLastModifiedDate(new DateTime());
     }
 
@@ -344,7 +344,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     @Override
     public net.sourceforge.fenixedu.domain.organizationalStructure.Unit getPrecedentInstitution() {
         if (isCandidacyInternal()) {
-            return RootDomainObject.getInstance().getInstitutionUnit();
+            return Bennu.getInstance().getInstitutionUnit();
         }
 
         return super.getPrecedentInstitution();
@@ -361,7 +361,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

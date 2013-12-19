@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -29,6 +28,7 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -82,7 +82,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 
     public CardGenerationBatch(String description, final ExecutionYear executionYear, boolean createEmptyBatch) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setExecutionYear(executionYear);
         setDescription(description);
         final DateTime dateTime = new DateTime();
@@ -311,7 +311,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 
     public static SortedSet<CardGenerationBatch> getAvailableBatchesFor() {
         final SortedSet<CardGenerationBatch> cardGenerationBatchs = new TreeSet<CardGenerationBatch>(COMPARATOR_BY_CREATION_DATE);
-        for (final CardGenerationBatch cardGenerationBatch : RootDomainObject.getInstance().getCardGenerationBatchesSet()) {
+        for (final CardGenerationBatch cardGenerationBatch : Bennu.getInstance().getCardGenerationBatchesSet()) {
             final ExecutionYear executionYear = cardGenerationBatch.getExecutionYear();
             if (executionYear.isCurrent()) {
                 cardGenerationBatchs.add(cardGenerationBatch);
@@ -959,7 +959,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

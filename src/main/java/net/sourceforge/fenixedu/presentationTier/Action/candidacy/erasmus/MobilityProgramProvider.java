@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean;
@@ -23,7 +24,7 @@ public class MobilityProgramProvider implements DataProvider {
         MobilityStudentDataBean bean = (MobilityStudentDataBean) source;
         Set<MobilityProgram> mobilityPrograms =
                 new TreeSet<MobilityProgram>(MobilityProgram.COMPARATOR_BY_REGISTRATION_AGREEMENT);
-        for (MobilityAgreement agreement : RootDomainObject.getInstance().getMobilityAgreements()) {
+        for (MobilityAgreement agreement : Bennu.getInstance().getMobilityAgreementsSet()) {
             if (agreement.getUniversityUnit() == bean.getSelectedUniversity()) {
                 mobilityPrograms.add(agreement.getMobilityProgram());
             }

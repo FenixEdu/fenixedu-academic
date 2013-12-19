@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEq
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.SelectCandidaciesDTO;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Grade;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
@@ -25,6 +24,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -33,7 +33,7 @@ public class SelectCandidaciesService {
     protected SelectCandidaciesDTO run(Boolean inEnrollmentPeriod, String seminaryID) throws FenixServiceException {
         SelectCandidaciesDTO result = new SelectCandidaciesDTO();
 
-        Collection<Seminary> seminaries = RootDomainObject.getInstance().getSeminarys();
+        Collection<Seminary> seminaries = Bennu.getInstance().getSeminarysSet();
         List infoSeminaries = getSeminaries(inEnrollmentPeriod, seminaries);
         result.setSeminaries(infoSeminaries);
 

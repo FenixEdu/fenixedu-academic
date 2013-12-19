@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -31,7 +32,7 @@ public class Homepage extends Homepage_Base {
     public Homepage() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
 
         setActivated(false);
         setShowUnit(false);
@@ -74,7 +75,7 @@ public class Homepage extends Homepage_Base {
     public static List<Homepage> getAllHomepages() {
         List<Homepage> result = new ArrayList<Homepage>();
 
-        for (Content content : RootDomainObject.getInstance().getContents()) {
+        for (Content content : Bennu.getInstance().getContentsSet()) {
             if (content instanceof Homepage) {
                 result.add((Homepage) content);
             }

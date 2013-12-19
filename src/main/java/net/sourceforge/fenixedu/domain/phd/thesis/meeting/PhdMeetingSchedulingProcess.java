@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -26,12 +27,12 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
     static public class StartThesisMeetings extends PhdMeetingSchedulingActivity {
 
         @Override
-        protected void activityPreConditions(PhdMeetingSchedulingProcess process, IUserView userView) {
+        protected void activityPreConditions(PhdMeetingSchedulingProcess process, User userView) {
             // Activity on main process ensures access control
         }
 
         @Override
-        protected PhdMeetingSchedulingProcess executeActivity(PhdMeetingSchedulingProcess process, IUserView userView,
+        protected PhdMeetingSchedulingProcess executeActivity(PhdMeetingSchedulingProcess process, User userView,
                 Object object) {
 
             final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
@@ -57,7 +58,7 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
     }
 
     @Override
-    public boolean isAllowedToManageProcess(IUserView userView) {
+    public boolean isAllowedToManageProcess(User userView) {
         return this.getIndividualProgramProcess().isAllowedToManageProcess(userView);
     }
 
@@ -82,7 +83,7 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
+    public boolean canExecuteActivity(User userView) {
         return false;
     }
 

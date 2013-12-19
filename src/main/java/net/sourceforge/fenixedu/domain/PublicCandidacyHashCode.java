@@ -9,6 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -17,7 +18,7 @@ abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Ba
 
     protected PublicCandidacyHashCode() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setWhenCreated(new DateTime());
     }
 
@@ -46,7 +47,7 @@ abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Ba
             return null;
         }
 
-        for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodes()) {
+        for (final PublicCandidacyHashCode hashCode : Bennu.getInstance().getCandidacyHashCodesSet()) {
             if (hash.equals(hashCode.getValue())) {
                 return hashCode;
             }
@@ -57,20 +58,21 @@ abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Ba
 
     protected static List<PublicCandidacyHashCode> getHashCodesAssociatedWithEmail(final String email) {
         final List<PublicCandidacyHashCode> result = new ArrayList<PublicCandidacyHashCode>();
-        for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodes()) {
+        for (final PublicCandidacyHashCode hashCode : Bennu.getInstance().getCandidacyHashCodesSet()) {
             if (hashCode.getEmail().equals(email)) {
                 result.add(hashCode);
             }
         }
         return result;
     }
+
     @Deprecated
     public boolean hasValue() {
         return getValue() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

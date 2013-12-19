@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain.inquiries;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class TeacherInquiryTemplate extends TeacherInquiryTemplate_Base {
@@ -15,7 +15,7 @@ public class TeacherInquiryTemplate extends TeacherInquiryTemplate_Base {
     }
 
     public static TeacherInquiryTemplate getCurrentTemplate() {
-        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = Bennu.getInstance().getInquiryTemplatesSet();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof TeacherInquiryTemplate && inquiryTemplate.isOpen()) {
                 return (TeacherInquiryTemplate) inquiryTemplate;
@@ -25,7 +25,7 @@ public class TeacherInquiryTemplate extends TeacherInquiryTemplate_Base {
     }
 
     public static TeacherInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {
-        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = Bennu.getInstance().getInquiryTemplatesSet();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof TeacherInquiryTemplate && executionSemester == inquiryTemplate.getExecutionPeriod()) {
                 return (TeacherInquiryTemplate) inquiryTemplate;

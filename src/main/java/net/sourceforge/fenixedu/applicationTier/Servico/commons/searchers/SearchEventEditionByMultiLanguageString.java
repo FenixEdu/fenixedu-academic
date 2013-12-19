@@ -7,13 +7,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -26,7 +26,7 @@ public class SearchEventEditionByMultiLanguageString implements AutoCompleteProv
         List<EventEdition> result = new ArrayList<EventEdition>();
 
         String slotName = argsMap.get("slot");
-        Collection<EventEdition> objects = RootDomainObject.getInstance().getEventEditionsSet();
+        Collection<EventEdition> objects = Bennu.getInstance().getEventEditionsSet();
 
         if (value == null) {
             result.addAll(objects);

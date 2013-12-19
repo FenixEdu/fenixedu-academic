@@ -7,7 +7,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod;
@@ -48,7 +50,7 @@ public class StudentVoteBean implements Serializable {
     }
 
     public List<Student> getSelectedStudentVote(String studentType) {
-        final IUserView userView = AccessControl.getUserView();
+        final User userView = Authenticate.getUser();
         final Student student = userView.getPerson().getStudent();
         final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(student);
 

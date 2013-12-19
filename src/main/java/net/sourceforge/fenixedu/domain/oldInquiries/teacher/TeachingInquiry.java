@@ -4,15 +4,15 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeachingInquiryDTO;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class TeachingInquiry extends TeachingInquiry_Base {
 
     public TeachingInquiry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setResponseDateTime(new DateTime());
     }
 
@@ -400,7 +400,7 @@ public class TeachingInquiry extends TeachingInquiry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

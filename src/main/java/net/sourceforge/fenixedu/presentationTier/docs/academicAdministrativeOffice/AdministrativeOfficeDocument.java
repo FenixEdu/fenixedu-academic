@@ -13,7 +13,6 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
@@ -45,6 +44,7 @@ import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringFormatter;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -177,7 +177,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     protected String getInstitutionName() {
-        return RootDomainObject.getInstance().getInstitutionUnit().getPartyName().getContent(getLanguage());
+        return Bennu.getInstance().getInstitutionUnit().getPartyName().getContent(getLanguage());
     }
 
     @Override

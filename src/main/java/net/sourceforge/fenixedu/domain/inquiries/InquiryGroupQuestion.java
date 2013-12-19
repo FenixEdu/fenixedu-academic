@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
 
     public InquiryGroupQuestion() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRequired(false);
     }
 
@@ -122,7 +123,7 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

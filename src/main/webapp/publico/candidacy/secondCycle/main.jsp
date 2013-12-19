@@ -11,7 +11,7 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="title.application.name.secondCycle" bundle="CANDIDATE_RESOURCES"/>
 </div>
@@ -41,14 +41,14 @@
 <p>Podem candidatar-se a um Mestrado de 2º ciclo do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>, ou a um 2º ciclo de um Mestrado Integrado do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>, os estudantes que estejam nas seguintes condições:</p>
 
 <ul>
-	<li>tenham terminado no <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> uma Licenciatura de 1º ciclo, ou o 1º ciclo de um Mestrado Integrado, sem <a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">coerência científica</a> com o curso de 2º ciclo a que se candidatam;</li>
+	<li>tenham terminado no <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> uma Licenciatura de 1º ciclo, ou o 1º ciclo de um Mestrado Integrado, sem <a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/ensino/coerencias_cientificas_0910.pdf">coerência científica</a> com o curso de 2º ciclo a que se candidatam;</li>
 	<li>sejam titulares de uma formação de 1º ciclo na área de Ciências e Tecnologia (exceptua-se o caso do 2º ciclo em Arquitectura que pressupõe uma formação de 1º ciclo em Arquitectura);</li>
 	<li>sejam detentores de um currículo escolar, científico ou profissional, que ateste a sua capacidade para realização do Mestrado a que se candidatam.</li>
 </ul>
 
 <p>Os candidatos que se encontrem a terminar uma Licenciatura de 1º ciclo, ou o 1º ciclo de um Mestrado Integrado, poderão submeter a sua candidatura nos prazos estipulados para o efeito, ficando esta condicionada ao término do referido ciclo até ao dia 30 de Setembro de 2009.</p>
 
-<p><a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">Tabela de Coerência Científica entre cursos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a></p>
+<p><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/ensino/coerencias_cientificas_0910.pdf">Tabela de Coerência Científica entre cursos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a></p>
 
 <h2 id="vag">Vagas 2º ciclo</h2>
 
@@ -273,7 +273,7 @@
 <p>A1: Não, nestes casos a transição para o 2º ciclo é automática.</p>
 
 <h3>Q2: Sou finalista do 1º ciclo de um curso de Licenciatura (ou Mestrado Integrado) no <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>. Em que condições a mudança para outro 2º ciclo diferente é automática?</h3>
-<p>A2: É sempre possível mudar de curso e prosseguir estudos noutra área após completar o 1º ciclo desde que esteja garantida a coerência científica entre os dois cursos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>. Esta coerência verifica-se sempre que as competências de formação do 1º ciclo respeitem as necessidades de formação para ingresso no 2º ciclo. A <a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">Tabela de Coerência Científica entre cursos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> mostra-te em que situações a mudança para um 2º ciclo diferente é automática.</p>
+<p>A2: É sempre possível mudar de curso e prosseguir estudos noutra área após completar o 1º ciclo desde que esteja garantida a coerência científica entre os dois cursos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>. Esta coerência verifica-se sempre que as competências de formação do 1º ciclo respeitem as necessidades de formação para ingresso no 2º ciclo. A <a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/ensino/coerencias_cientificas_0910.pdf">Tabela de Coerência Científica entre cursos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> mostra-te em que situações a mudança para um 2º ciclo diferente é automática.</p>
 
 <h3>Q3: Sou finalista do 1º ciclo de um curso de Licenciatura (ou Mestrado Integrado) no <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>. O que devo fazer se pretender prosseguir os estudos num 2º ciclo do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> sem coerência científica com o curso de 1º ciclo?</h3>
 <p>A3: Deves submeter um processo de candidatura ao 2º ciclo de acordo com os prazos e regulamento em vigor, sendo o processo analisado juntamente com as candidaturas de alunos externos que pretendem ingressar num curso de 2º ciclo do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>.</p>

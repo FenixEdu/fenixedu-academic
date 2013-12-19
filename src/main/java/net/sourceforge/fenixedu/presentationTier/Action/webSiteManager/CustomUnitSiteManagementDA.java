@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.site.RearrangeUnitSiteFu
 import net.sourceforge.fenixedu.applicationTier.Servico.site.RemoveUnitSiteManager;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.UnitSite;
@@ -49,6 +48,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
@@ -497,14 +497,14 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         }
 
         String username = bean.getString();
-        Login login = StringUtils.isEmpty(username) ? null : Login.readLoginByUsername(username);
+        User login = StringUtils.isEmpty(username) ? null : User.findByUsername(username);
 
         if (login == null) {
             addActionMessage("addPersonError", request, "site.functions.addPerson.noUsername");
             return null;
         }
 
-        return login.getUser().getPerson();
+        return login.getPerson();
     }
 
     public ActionForward manageExistingFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

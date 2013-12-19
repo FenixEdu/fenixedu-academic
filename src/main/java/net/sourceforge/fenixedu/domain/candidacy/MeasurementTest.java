@@ -5,9 +5,10 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -16,7 +17,7 @@ public class MeasurementTest extends MeasurementTest_Base {
 
     protected MeasurementTest() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public MeasurementTest(EntryPhase entryPhase, ExecutionYear executionYear, Campus campus) {
@@ -78,7 +79,7 @@ public class MeasurementTest extends MeasurementTest_Base {
     }
 
     public static MeasurementTest readBy(EntryPhase entryPhase, ExecutionYear executionYear, Campus campus) {
-        for (final MeasurementTest test : RootDomainObject.getInstance().getMeasurementTests()) {
+        for (final MeasurementTest test : Bennu.getInstance().getMeasurementTestsSet()) {
             if (test.isFor(entryPhase, executionYear, campus)) {
                 return test;
             }
@@ -117,7 +118,7 @@ public class MeasurementTest extends MeasurementTest_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

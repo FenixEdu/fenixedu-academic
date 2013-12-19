@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixframework.Atomic;
 
@@ -13,7 +14,7 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
 
     public OutboundMobilityCandidacySubmission(final OutboundMobilityCandidacyPeriod candidacyPeriod,
             final Registration registration) {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setOutboundMobilityCandidacyPeriod(candidacyPeriod);
         setRegistration(registration);
     }
@@ -166,7 +167,7 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

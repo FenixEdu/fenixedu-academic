@@ -3,10 +3,10 @@
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-html" prefix="html"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-logic" prefix="logic"%>
-<%@ page import="net.sourceforge.fenixedu.domain.RootDomainObject"%>
+<%@ page import="org.fenixedu.bennu.core.domain.Bennu"%>
 
 <% 
-	request.setAttribute("scopes", RootDomainObject.getInstance().getAuthScopes());
+	request.setAttribute("scopes", Bennu.getInstance().getAuthScopes());
 %>
 
 <div class="mtop3" style="width:600px;">

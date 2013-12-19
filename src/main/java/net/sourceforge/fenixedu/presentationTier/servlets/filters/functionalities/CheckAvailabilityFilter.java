@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.presentationTier.servlets.startup.FenixInitializer.FenixCustomExceptionHandler;
 
 /**
  * This filter restricts the access to certain functionalities based on the
@@ -40,6 +41,8 @@ public class CheckAvailabilityFilter implements Filter {
 
     private static final String errorPage = "/publico/notFound.do";
     private static final String unathorizedPage = "/publico/notAuthorized.do";
+
+    private final FenixCustomExceptionHandler exceptionHandler = new FenixCustomExceptionHandler();
 
     /**
      * Initializes the filter. There are two init parameters that are used by
@@ -69,24 +72,42 @@ public class CheckAvailabilityFilter implements Filter {
 
         final FilterFunctionalityContext functionalityContext = getContextAttibute(httpServletRequest);
 
+        // If we are not dealing with a functionality, just keep going
         if (functionalityContext == null || functionalityContext.getSelectedContent() == null
                 || functionalityContext.hasBeenForwarded || isActionRequest(httpServletRequest)) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
 
+        // We are dealing with a functionality, check if the user has permission
+        // to access it
+
         Content content = functionalityContext.getSelectedContent();
 
-        if (content != null && !content.isAvailable(functionalityContext)) {
+        if (!isAvailable(functionalityContext)) {
             if (functionalityContext.getLastContentInPath(Site.class) == null
                     || !((content instanceof Section) || (content instanceof Item))) {
-
                 showUnathorizedPage(content, httpServletRequest, httpServletResponse);
                 return;
             }
         }
 
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        try {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+        } catch (Throwable t) {
+            // Manually handle exceptions in functionalities
+            exceptionHandler.handle(httpServletRequest, httpServletResponse, t);
+        }
+    }
+
+    private boolean isAvailable(FilterFunctionalityContext functionalityContext) {
+        for (Content content : functionalityContext.getSelectedContents()) {
+            if (!content.isAvailable(functionalityContext)) {
+                return false;
+            }
+        }
+        // If all filters passed, content is available
+        return true;
     }
 
     private boolean isActionRequest(final HttpServletRequest httpServletRequest) {

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionDegree;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -24,7 +25,7 @@ public class CurricularYearsProvider implements DataProvider {
         }
 
         List<CurricularYear> curricularYearsSet = new ArrayList<CurricularYear>();
-        curricularYearsSet.addAll(RootDomainObject.getInstance().getCurricularYears());
+        curricularYearsSet.addAll(Bennu.getInstance().getCurricularYearsSet());
         Collections.sort(curricularYearsSet, CurricularYear.CURRICULAR_YEAR_COMPARATORY_BY_YEAR);
         return index == null ? curricularYearsSet : curricularYearsSet.subList(0, index);
     }

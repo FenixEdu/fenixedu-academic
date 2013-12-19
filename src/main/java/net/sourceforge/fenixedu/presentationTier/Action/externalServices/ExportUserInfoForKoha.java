@@ -11,7 +11,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
@@ -40,6 +39,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -55,14 +55,11 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 @Mapping(module = "external", path = "/exportUserInfoForKoha", scope = "request", parameter = "method")
 public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
 
-    private static final String USERNAME_KEY = "externalServices.koha.username";
-    private static final String PASSWORD_KEY = "externalServices.koha.password";
-
     private boolean chackCredentials(final HttpServletRequest request) {
         final String username = (String) getFromRequest(request, "username");
         final String password = (String) getFromRequest(request, "password");
-        final String usernameProp = PropertiesManager.getProperty(USERNAME_KEY);
-        final String passwordProp = PropertiesManager.getProperty(PASSWORD_KEY);
+        final String usernameProp = FenixConfigurationManager.getConfiguration().getExternalServicesKohaUsername();
+        final String passwordProp = FenixConfigurationManager.getConfiguration().getExternalServicesKohaPassword();
 
         return !StringUtils.isEmpty(username) && !StringUtils.isEmpty(password) && !StringUtils.isEmpty(usernameProp)
                 && !StringUtils.isEmpty(passwordProp) && username.equals(usernameProp) && password.equals(passwordProp);
@@ -302,13 +299,13 @@ public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
 
     public String getEmail(final Person person) {
         final EmailAddress email = person.getEmailAddressForSendingEmails();
-        return email != null && isVisible(email) ? email.getValue() : " ";
+        return email != null ? email.getValue() : " ";
     }
 
     private String getTelefone(final Person person) {
         final StringBuilder builder = new StringBuilder();
         for (final PartyContact partyContact : person.getPartyContactsSet()) {
-            if (partyContact.isActiveAndValid() && isVisible(partyContact)) {
+            if (partyContact.isActiveAndValid()) {
                 if (partyContact.isPhone()) {
                     final Phone phone = (Phone) partyContact;
                     if (builder.length() > 0) {
@@ -325,10 +322,6 @@ public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
             }
         }
         return builder.toString();
-    }
-
-    private boolean isVisible(final PartyContact partyContact) {
-        return partyContact.getVisibleToEmployees() || partyContact.getVisibleToPublic();
     }
 
     private String getCGDCode(final Person person) {

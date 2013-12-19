@@ -9,12 +9,15 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/respondToFirstTimeCycleInquiry")
 public class RespondToFirstTimeCycleInquiry extends FenixDispatchAction {
 
     public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        return mapping.findForward("inquiryNotice");
+        return new ActionForward("/firstTimeCycleInquiryWarning.jsp");
     }
 
     private ActionForward forward(final String path) {

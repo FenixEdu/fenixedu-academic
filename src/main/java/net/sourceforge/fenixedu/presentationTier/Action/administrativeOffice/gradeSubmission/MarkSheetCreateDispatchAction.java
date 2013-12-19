@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean;
@@ -23,6 +22,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -130,7 +130,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         createBean.setTeacher(Teacher.readByIstId(createBean.getTeacherId()));
 
         ActionMessages actionMessages = createActionMessages();
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         try {
             MarkSheet markSheet = createMarkSheet(createBean, userView);
             ((DynaActionForm) actionForm).set("msID", markSheet.getExternalId());
@@ -162,7 +162,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         return mapping.findForward("searchMarkSheetFilled");
     }
 
-    protected MarkSheet createMarkSheet(MarkSheetManagementCreateBean createBean, IUserView userView) {
+    protected MarkSheet createMarkSheet(MarkSheetManagementCreateBean createBean, User userView) {
         return createBean.createMarkSheet(userView.getPerson());
     }
 }

@@ -2,14 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PortalBean implements Serializable {
-
-    private MetaDomainObject metaDomainObject;
 
     private Container container;
 
@@ -26,20 +23,12 @@ public class PortalBean implements Serializable {
         setName(portal.getName());
         setPrefix(portal.getPrefix());
         setContentId(portal.getContentId());
-        setMetaDomainObject(null);
         setContainer(null);
     }
 
     public PortalBean(Container container) {
-        setMetaDomainObject(null);
         setPortal(null);
         setContainer(container);
-    }
-
-    public PortalBean(MetaDomainObject metaDomainObject) {
-        setPortal(null);
-        setMetaDomainObject(metaDomainObject);
-        setContainer(null);
     }
 
     public String getContentId() {
@@ -48,14 +37,6 @@ public class PortalBean implements Serializable {
 
     public void setContentId(String contentId) {
         this.contentId = contentId;
-    }
-
-    public MetaDomainObject getMetaDomainObject() {
-        return metaDomainObject;
-    }
-
-    public void setMetaDomainObject(MetaDomainObject metaDomainObject) {
-        this.metaDomainObject = metaDomainObject;
     }
 
     public String getPrefix() {

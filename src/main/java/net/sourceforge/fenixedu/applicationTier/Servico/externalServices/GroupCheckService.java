@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -94,7 +93,7 @@ public class GroupCheckService {
 
         GroupCheckQuery groupCheckQuery = parseQuery(query);
 
-        Person person = Person.readPersonByIstUsername(groupCheckQuery.username);
+        Person person = Person.readPersonByUsername(groupCheckQuery.username);
 
         if (person == null) {
             return false;

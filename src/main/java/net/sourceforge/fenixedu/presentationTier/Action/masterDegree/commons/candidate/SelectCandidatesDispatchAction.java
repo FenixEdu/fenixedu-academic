@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.degree.ReadNumerusClausus;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -36,6 +35,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.domain.User;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -47,7 +47,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
         DynaActionForm approvalForm = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String executionYear = (String) request.getAttribute("executionYear");
         String degree = (String) request.getAttribute("degree");
 
@@ -164,7 +164,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
         DynaActionForm approvalForm = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         if (!isTokenValid(request)) {
             return mapping.findForward("BackError");
@@ -222,7 +222,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward next(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         DynaActionForm approvalForm = (DynaActionForm) form;
 
@@ -374,7 +374,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
         DynaActionForm resultForm = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String[] candidateList = (String[]) resultForm.get("situations");
         String[] ids = (String[]) resultForm.get("candidatesID");
@@ -464,7 +464,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
         DynaActionForm substituteForm = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         // if (!isTokenValid(request)){
         // return mapping.findForward("BackError");

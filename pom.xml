@@ -2,16 +2,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-
 	<parent>
-		<groupId>pt.ist</groupId>
-		<artifactId>fenix-framework-project</artifactId>
-		<version>1.1.0</version>
+        <groupId>org.fenixedu</groupId>
+        <artifactId>fenix-framework-project</artifactId>
+        <version>1.2.0</version>
 	</parent>
 
+    <groupId>pt.ist</groupId>
 	<artifactId>fenix</artifactId>
 	<packaging>jar</packaging>
-	<version>1.1.0-SNAPSHOT</version>
+	<version>2.0.0-SNAPSHOT</version>
 	<name>Fenix</name>
 	<url>http://fenix-ashes.ist.utl.pt</url>
 
@@ -30,27 +30,12 @@
 				<targetPath>${project.build.outputDirectory}/images</targetPath>
 				<filtering>false</filtering>
 			</resource>
-               <resource>
-                <directory>src/main/webapp</directory>
-                <targetPath>META-INF/resources</targetPath>
-            </resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<targetPath>META-INF/resources</targetPath>
+			</resource>
 		</resources>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>.</directory>
-							<includes>
-								<include>.actionAnnotationLog</include>
-							</includes>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>antlr-maven-plugin</artifactId>
@@ -72,41 +57,9 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<fork>true</fork>
-					<annotationProcessors>
-						<annotationProcessor>pt.ist.fenixWebFramework.struts.annotations.ActionAnnotationProcessor</annotationProcessor>
-					</annotationProcessors>
 					<maxmem>2048</maxmem>
 					<meminitial>1536</meminitial>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-				<executions>
-					<execution>
-						<id>copy-annotation-logs</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.outputDirectory}/${project.artifactId}</outputDirectory>
-							<resources>
-								<resource>
-									<directory>.</directory>
-									<filtering>false</filtering>
-									<includes>
-										<include>.actionAnnotationLog</include>
-									</includes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>com.alexnederlof</groupId>
@@ -145,11 +98,6 @@
 			<groupId>net.sourceforge.barbecue</groupId>
 			<artifactId>barbecue</artifactId>
 			<version>1.5-beta1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.alexnederlof</groupId>
-			<artifactId>jasperreports-plugin</artifactId>
-			<version>1.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>taglibs</groupId>
@@ -202,9 +150,9 @@
 			<version>5.4</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4.2</version>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>bibtex</groupId>
@@ -212,9 +160,9 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>pt.ist</groupId>
-			<artifactId>fenix-web-framework</artifactId>
-			<version>2.1.2</version>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>bennu-renderers</artifactId>
+			<version>3.0.0-M2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -305,17 +253,6 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>cas</groupId>
-			<artifactId>casclient</artifactId>
-			<version>2.1.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.servlet</groupId>
-					<artifactId>servlet-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>org.codehaus.xfire</groupId>
 			<artifactId>xfire-all</artifactId>
 			<version>1.2.2</version>
@@ -396,11 +333,6 @@
 			<version>0.20.5</version>
 		</dependency>
 		<dependency>
-			<groupId>pt.ist</groupId>
-			<artifactId>scheduler-plugin</artifactId>
-			<version>0.1.0</version>
-		</dependency>
-		<dependency>
 			<groupId>ehcache</groupId>
 			<artifactId>ehcache</artifactId>
 			<version>1.0</version>
@@ -447,8 +379,8 @@
 		</dependency>
 		<dependency>
 			<groupId>pt.ist</groupId>
-			<artifactId>jodaplace</artifactId>
-			<version>1.0.0</version>
+			<artifactId>standards</artifactId>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>dom4j</groupId>
@@ -511,6 +443,31 @@
 			<artifactId>miredot-annotations</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.fenixedu</groupId>
+		    <artifactId>fenixedu-commons</artifactId>
+		    <version>1.0.0-M2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>bennu-core</artifactId>
+			<version>2.0.0-M5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>bennu-user-management</artifactId>
+			<version>1.0.0-M2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>bennu-scheduler</artifactId>
+			<version>2.0.0-M5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>bennu-io</artifactId>
+			<version>2.0.0-M5</version>
+		</dependency>
 	</dependencies>
 
 	<profiles>
@@ -554,7 +511,8 @@
 							</execution>
 						</executions>
 						<configuration>
-							<licence> <!-- Free open source license for the pro version of MireDot, valid for one year (expires 2014-09-23) -->
+							<licence> <!-- Free open source license for the pro version of MireDot, valid for one 
+									year (expires 2014-09-23) -->
 								UHJvamVjdHxwdC5pc3R8ZmVuaXgjTUN3Q0ZIWGIrVlJsQ2hIWUJLUDJONWkyNG1CekpObHlBaFJDTnZ2K0hqZlcraVhoVFhwRG1BVWlubG9DVlE9PQ==
 							</licence>
 						</configuration>

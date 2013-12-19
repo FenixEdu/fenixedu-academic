@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author jpvl
@@ -42,7 +43,7 @@ public class Role extends Role_Base implements Comparable {
         final SoftReference<Role> roleReference = roleMap.get(roleType);
         if (roleReference != null) {
             final Role role = roleReference.get();
-            if (role != null && role.getRootDomainObject() == RootDomainObject.getInstance() && role.getRoleType() == roleType) {
+            if (role != null && role.getRootDomainObject() == Bennu.getInstance() && role.getRoleType() == roleType) {
                 return role;
             } else {
                 roleMap.remove(roleType);
@@ -50,7 +51,7 @@ public class Role extends Role_Base implements Comparable {
         }
         // *** end of hack
 
-        for (final Role role : RootDomainObject.getInstance().getRoles()) {
+        for (final Role role : Bennu.getInstance().getRolesSet()) {
             // Temporary solution until DML provides indexed relations.
             roleMap.put(role.getRoleType(), new SoftReference<Role>(role));
             // *** end of hack
@@ -67,7 +68,7 @@ public class Role extends Role_Base implements Comparable {
 
     public Role(final RoleType roleType, final String portalSubApplication, final String page, final String pageNameProperty) {
         this();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRoleType(roleType);
         setPortalSubApplication(portalSubApplication);
         setPage(page);
@@ -154,7 +155,7 @@ public class Role extends Role_Base implements Comparable {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

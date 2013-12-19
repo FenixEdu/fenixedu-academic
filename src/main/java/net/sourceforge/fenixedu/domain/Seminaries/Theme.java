@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain.Seminaries;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -21,11 +21,11 @@ public class Theme extends Theme_Base {
     public Theme() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static Collection<Theme> getAllThemes() {
-        return RootDomainObject.getInstance().getThemes();
+        return Bennu.getInstance().getThemesSet();
     }
 
     @Deprecated
@@ -69,7 +69,7 @@ public class Theme extends Theme_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

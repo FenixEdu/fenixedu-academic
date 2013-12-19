@@ -56,6 +56,7 @@ import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
@@ -92,6 +93,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -180,7 +183,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private StudentCurricularPlan() {
         super();
         setCurrentState(StudentCurricularPlanState.ACTIVE);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setWhenDateTime(new DateTime());
         setGivenCredits(Double.valueOf(0));
     }
@@ -416,6 +419,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public boolean isConclusionProcessed() {
         if (!isBolonhaDegree()) {
             return getRegistration().hasConclusionProcess();
+        }
+
+        if (isEmptyDegree()) {
+            return getRegistration().getLastActiveState().getStateType().equals(RegistrationStateType.CONCLUDED);
         }
 
         for (final CycleCurriculumGroup cycleCurriculumGroup : getInternalCycleCurriculumGrops()) {
@@ -2121,8 +2128,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                     executionSemester.getQualifiedName() });
         }
 
-        new OptionalEnrolment(this, curriculumGroup, curricularCourse, executionSemester, enrollmentCondition, AccessControl
-                .getUserView().getUtilizador(), optionalCurricularCourse);
+        new OptionalEnrolment(this, curriculumGroup, curricularCourse, executionSemester, enrollmentCondition, Authenticate
+                .getUser().getUsername(), optionalCurricularCourse);
     }
 
     final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final NoCourseGroupEnrolmentBean bean) {
@@ -3177,7 +3184,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

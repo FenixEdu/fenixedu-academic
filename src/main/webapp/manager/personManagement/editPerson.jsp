@@ -7,7 +7,7 @@
 
 <h2><bean:message key="edit.person.title" bundle="MANAGER_RESOURCES"/></h2>
 
-<logic:present role="MANAGER,OPERATOR">
+<logic:present role="(role(MANAGER) | role(OPERATOR))">
 	<logic:notEmpty name="person">
 
 		<logic:messagesPresent message="true">

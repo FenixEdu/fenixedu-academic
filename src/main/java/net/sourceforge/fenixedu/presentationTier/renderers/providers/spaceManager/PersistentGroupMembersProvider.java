@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -15,7 +16,7 @@ public class PersistentGroupMembersProvider implements DataProvider {
     @Override
     public Object provide(Object source, Object currentValue) {
         List<PersistentGroupMembers> result = new ArrayList<PersistentGroupMembers>();
-        for (PersistentGroupMembers persistentGroupMembers : RootDomainObject.getInstance().getPersistentGroupMembers()) {
+        for (PersistentGroupMembers persistentGroupMembers : Bennu.getInstance().getPersistentGroupMembersSet()) {
             if (persistentGroupMembers.getType().equals(PersistentGroupMembersType.SPACE_OCCUPATION)) {
                 result.add(persistentGroupMembers);
             }

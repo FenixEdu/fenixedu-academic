@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
@@ -60,7 +61,7 @@ public class LessonInstance extends LessonInstance_Base {
                 new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(),
                         endTime.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setBeginDateTime(beginDateTime);
         setEndDateTime(endDateTime);
         setLesson(lesson);
@@ -99,7 +100,7 @@ public class LessonInstance extends LessonInstance_Base {
                 new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(),
                         endTime.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setBeginDateTime(beginDateTime);
         setEndDateTime(endDateTime);
         setLesson(lesson);
@@ -259,7 +260,7 @@ public class LessonInstance extends LessonInstance_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

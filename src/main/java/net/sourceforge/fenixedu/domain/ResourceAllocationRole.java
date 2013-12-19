@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ResourceAllocationRole extends ResourceAllocationRole_Base {
 
@@ -33,11 +34,11 @@ public class ResourceAllocationRole extends ResourceAllocationRole_Base {
         setPortalSubApplication(portalSubApplication);
         setPage(page);
         setPageNameProperty(pageNameProperty);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     private void checkIfAlreadyExistsRole() {
-        Set<Role> rolesSet = RootDomainObject.getInstance().getRolesSet();
+        Set<Role> rolesSet = Bennu.getInstance().getRolesSet();
         for (Role role : rolesSet) {
             if (role.isResourceAllocationRole() && !role.equals(this)) {
                 throw new DomainException("error.ResourceAllocationRole.already.exists");
@@ -240,6 +241,7 @@ public class ResourceAllocationRole extends ResourceAllocationRole_Base {
             }
         }
     }
+
     @Deprecated
     public boolean hasSpacesAccessGroup() {
         return getSpacesAccessGroup() != null;

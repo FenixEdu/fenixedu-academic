@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -31,7 +32,7 @@ public class GOPSendMessageService {
             GOP_SENDER = initGOPSender();
             if (GOP_SENDER == null) {
                 System.out.println("WARN: GOPSender couldn't be found, using SystemSender ...");
-                GOP_SENDER = RootDomainObject.getInstance().getSystemSender();
+                GOP_SENDER = Bennu.getInstance().getSystemSender();
             }
         }
         return GOP_SENDER;
@@ -135,7 +136,7 @@ public class GOPSendMessageService {
         Set<String> emails = new HashSet<String>();
         for (ExecutionDegree executionDegree : degrees) {
             if (executionDegree.getCampus().isCampusAlameda()) {
-                emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop.alameda"));
+                emails.add(Instalation.getInstance().getInstituitionalEmailAddress("gop"));
             }
             if (executionDegree.getCampus().isCampusTaguspark()) {
                 emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop.taguspark"));

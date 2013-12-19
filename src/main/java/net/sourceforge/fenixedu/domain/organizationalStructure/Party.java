@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
@@ -64,6 +63,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -124,7 +124,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public Party() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         createAccount(AccountType.INTERNAL);
         createAccount(AccountType.EXTERNAL);
     }
@@ -1595,7 +1595,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public static String readAllResearchInterests() {
         JSONArray result = new JSONArray();
-        for (Party party : RootDomainObject.getInstance().getPartysSet()) {
+        for (Party party : Bennu.getInstance().getPartysSet()) {
             if (party instanceof Person && ((Person) party).getUsername() != null) {
                 Person person = (Person) party;
                 if (person.hasAnyResearchInterests()) {
@@ -1876,7 +1876,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 
@@ -1906,7 +1906,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectExternalScholarshipProvider() {
+    public boolean hasBennuExternalScholarshipProvider() {
         return getRootDomainObjectExternalScholarshipProvider() != null;
     }
 

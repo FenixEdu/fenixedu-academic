@@ -15,7 +15,6 @@ import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompetenceCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCompetenceCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCompetenceCourse;
@@ -56,6 +55,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -125,7 +125,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public Department getPersonDepartment() {
-        final IUserView userView = getUserView();
+        final User userView = getUserView();
         final Person person = userView == null ? null : userView.getPerson();
         final Employee employee = person == null ? null : person.getEmployee();
         return employee == null ? null : employee.getCurrentDepartmentWorkingPlace();

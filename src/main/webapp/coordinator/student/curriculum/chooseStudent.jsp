@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
 
-<logic:present role="COORDINATOR">
+<logic:present role="role(COORDINATOR)">
 	<h2><bean:message key="title.student.curriculum" /></h2>
 
 	<ul class="nobullet list6">

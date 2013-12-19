@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.phd.migration;
 
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -46,6 +45,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFir
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -386,7 +386,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     @Atomic
-    public Boolean proceedWithMigration(IUserView userView) {
+    public Boolean proceedWithMigration(User userView) {
 
         PhdMigrationProcessStateType activeState;
         PhdIndividualProgramProcess individualProcess = null;
@@ -455,7 +455,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         return returnVal;
     }
 
-    private PhdIndividualProgramProcess createCandidacyProcess(final IUserView userView) {
+    private PhdIndividualProgramProcess createCandidacyProcess(final User userView) {
         final PhdProgramCandidacyProcessBean candidacyBean = new PhdProgramCandidacyProcessBean();
 
         candidacyBean.setCandidacyDate(getProcessBean().getStartProcessDate());
@@ -476,7 +476,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         return individualProcess;
     }
 
-    private void sendCandidacyToCoordinator(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+    private void sendCandidacyToCoordinator(final User userView, final PhdIndividualProgramProcess individualProcess) {
         final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
 
         final PhdProgramCandidacyProcessStateBean reviewBean =
@@ -496,7 +496,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
                 requestRatifyBean);
     }
 
-    private void ratifyCandidacyProcess(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+    private void ratifyCandidacyProcess(final User userView, final PhdIndividualProgramProcess individualProcess) {
         final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
         final RatifyCandidacyBean ratifyBean = new RatifyCandidacyBean(candidacyProcess);
         ratifyBean.setWhenRatified(getProcessBean().getRatificationDate());
@@ -504,7 +504,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
                 net.sourceforge.fenixedu.domain.phd.candidacy.activities.RatifyCandidacy.class.getSimpleName(), ratifyBean);
     }
 
-    private void formalizeRegistration(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+    private void formalizeRegistration(final User userView, final PhdIndividualProgramProcess individualProcess) {
         final PhdIndividualProgramProcessBean individualProcessBean = new PhdIndividualProgramProcessBean(individualProcess);
         individualProcessBean.setQualificationExamsPerformed(QualificationExamsResult.NO);
         individualProcessBean.setQualificationExamsRequired(QualificationExamsResult.NO);
@@ -531,7 +531,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         }
     }
 
-    private void requirePublicThesisPresentation(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+    private void requirePublicThesisPresentation(final User userView, final PhdIndividualProgramProcess individualProcess) {
         ExecuteProcessActivity.run(individualProcess, ExemptPublicPresentationSeminarComission.class.getSimpleName(),
                 new PublicPresentationSeminarProcessBean());
 
@@ -577,7 +577,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         // + guidingNumber);
     }
 
-    private void skipJuryActivities(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+    private void skipJuryActivities(final User userView, final PhdIndividualProgramProcess individualProcess) {
         final PhdThesisProcess thesisProcess = individualProcess.getThesisProcess();
         final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean();
         thesisBean.setThesisProcess(thesisProcess);
@@ -587,7 +587,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
                 thesisBean);
     }
 
-    private void manageMeetingsAndFinalThesis(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+    private void manageMeetingsAndFinalThesis(final User userView, final PhdIndividualProgramProcess individualProcess) {
         final PhdThesisProcess thesisProcess = individualProcess.getThesisProcess();
         final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean();
         thesisBean.setThesisProcess(thesisProcess);
@@ -625,7 +625,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         }
     }
 
-    private void ratifyFinalThesis(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+    private void ratifyFinalThesis(final User userView, final PhdIndividualProgramProcess individualProcess) {
         final PhdThesisProcess thesisProcess = individualProcess.getThesisProcess();
         final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean();
         thesisBean.setThesisProcess(thesisProcess);
@@ -639,7 +639,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         ExecuteProcessActivity.run(thesisProcess, SetFinalGrade.class, thesisBean);
     }
 
-    private void cancelPhdProgram(final IUserView userView, final PhdIndividualProgramProcess individualProcess,
+    private void cancelPhdProgram(final User userView, final PhdIndividualProgramProcess individualProcess,
             LocalDate anullmentDate) {
         final PhdIndividualProgramProcessBean processBean = new PhdIndividualProgramProcessBean(individualProcess);
         processBean.setStateDate(anullmentDate);
@@ -657,7 +657,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

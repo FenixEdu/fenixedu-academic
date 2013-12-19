@@ -5,7 +5,7 @@
 
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%><html:xhtml/>
 
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
 
 <%
 	ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();

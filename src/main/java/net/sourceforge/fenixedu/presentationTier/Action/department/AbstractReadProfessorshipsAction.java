@@ -11,7 +11,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -23,8 +22,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author jpvl
@@ -34,7 +33,7 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         InfoTeacher infoTeacher = getInfoTeacher(request, dynaForm);
@@ -57,14 +56,14 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
         return mapping.findForward("list-professorships");
     }
 
-    protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request,
+    protected void extraPreparation(User userView, InfoTeacher infoTeacher, HttpServletRequest request,
             DynaActionForm dynaForm) throws Exception {
     }
 
     protected InfoTeacher getInfoTeacher(HttpServletRequest request, DynaActionForm dynaForm) throws Exception {
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
         if (infoTeacher == null) {
-            final IUserView userView = UserView.getUser();
+            final User userView = Authenticate.getUser();
             infoTeacher = (InfoTeacher) ReadTeacherByOID.runReadTeacherByOID(dynaForm.get("externalId").toString());
             request.setAttribute("infoTeacher", infoTeacher);
 
@@ -72,6 +71,6 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
         return infoTeacher;
     }
 
-    abstract List getDetailedProfessorships(IUserView userView, String teacherId, DynaActionForm actionForm,
+    abstract List getDetailedProfessorships(User userView, String teacherId, DynaActionForm actionForm,
             HttpServletRequest request) throws FenixServiceException;
 }

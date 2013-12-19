@@ -7,7 +7,7 @@
 
 <h2><bean:message key="label.contacts.validate.address" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
-<logic:present role="OPERATOR">
+<logic:present role="role(OPERATOR)">
 
 		<h3 class="mtop2 mbottom05">Informação do Pedido</h3>
 		<fr:view name="physicalAddressValidation" schema="contacts.PhysicalAddressValidation.view">			

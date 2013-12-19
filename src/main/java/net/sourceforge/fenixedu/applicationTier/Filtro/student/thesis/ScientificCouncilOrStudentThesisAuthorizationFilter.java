@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -13,8 +15,8 @@ public class ScientificCouncilOrStudentThesisAuthorizationFilter extends Student
 
     @Override
     public void execute(Thesis thesis) throws NotAuthorizedException {
-        final IUserView userView = AccessControl.getUserView();
-        if (!userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+        final User userView = Authenticate.getUser();
+        if (!userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
             super.execute(thesis);
         }
     }

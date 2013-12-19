@@ -13,8 +13,8 @@
 <h3><bean:message key="label.managementFunctionNote" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 
 <logic:present name="personFunctions">
-	<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>"/>
-	<bean:define id="teacher" name="userView" property="person.teacher"/>
+	<bean:define id="userView" name="USER_SESSION_ATTRIBUTE"/>
+	<bean:define id="teacher" name="userView" property="user.person.teacher"/>
 	<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="teacher" property="person.username"/></bean:define>
 	<table class="headerTable"><tr>
 	<td><img src="<%= request.getContextPath() + url %>"/></td>
@@ -30,7 +30,7 @@
 	</tr></table>
 
 	<br/><br/>
-	<span class="error">Para efeitos da avaliação de docentes consulte a tabela disponível na página do <a href="http://fenix.ist.utl.pt/ccad" target="_blank">CCAD</a></span>
+	<span class="error"><bean:message key="message.consultCCAD" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span>
 	<br/>
 	<logic:notEmpty name="personFunctions">
 		<table class="tstyle2 thlight thleft mtop05 mbottom05">

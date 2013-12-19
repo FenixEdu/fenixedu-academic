@@ -20,8 +20,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author Luis Cruz
@@ -85,9 +85,9 @@ public class CaptureFilter implements Filter {
     }
 
     private String getUsername(HttpServletRequest request) {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         if (userView != null) {
-            return userView.getUtilizador();
+            return userView.getUsername();
         }
 
         return null;

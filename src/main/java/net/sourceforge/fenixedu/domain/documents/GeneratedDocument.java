@@ -28,8 +28,6 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
  * @author Pedro Santos (pmrsa)
  */
 public abstract class GeneratedDocument extends GeneratedDocument_Base {
-    protected static final String CONFIG_DSPACE_DOCUMENT_STORE = "dspace.generated.document.store";
-
     private static final String ROOT_DIR_DESCRIPTION = "Generated Documents";
 
     private static final String ROOT_DIR = "GeneratedDocuments";
@@ -99,6 +97,7 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
         }
 
     };
+
     @Deprecated
     public boolean hasType() {
         return getType() != null;

@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import jvstm.cps.ConsistencyPredicate;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class StudentDataShareAuthorization extends StudentDataShareAuthorization_Base {
@@ -28,7 +28,7 @@ public class StudentDataShareAuthorization extends StudentDataShareAuthorization
         return !getSince().isAfterNow();
     }
 
-    protected RootDomainObject getRootDomainObject() {
+    protected Bennu getRootDomainObject() {
         return getStudent().getRootDomainObject();
     }
 

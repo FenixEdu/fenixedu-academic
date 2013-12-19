@@ -8,9 +8,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.email.EmailBean;
 import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
@@ -25,9 +23,11 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -104,11 +104,11 @@ public class EmailsDA extends FenixDispatchAction {
             return viewSentEmails(mapping, request, senderParam);
         }
 
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
         final Set<Sender> sendersGroups = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
         final TreeSet<ExecutionCourseSender> sendersGroupsCourses =
                 new TreeSet<ExecutionCourseSender>(ExecutionCourseSender.COMPARATOR_BY_EXECUTION_COURSE_SENDER);
-        for (final Sender sender : RootDomainObject.getInstance().getUtilEmailSendersSet()) {
+        for (final Sender sender : Bennu.getInstance().getUtilEmailSendersSet()) {
             boolean allow = sender.getMembers().allows(userView);
             boolean isExecutionCourseSender = sender instanceof ExecutionCourseSender;
             if (allow && !isExecutionCourseSender) {

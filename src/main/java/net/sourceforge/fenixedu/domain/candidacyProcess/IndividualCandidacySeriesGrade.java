@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class IndividualCandidacySeriesGrade extends IndividualCandidacySeriesGrade_Base {
 
     public IndividualCandidacySeriesGrade() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Deprecated
@@ -15,7 +15,7 @@ public class IndividualCandidacySeriesGrade extends IndividualCandidacySeriesGra
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

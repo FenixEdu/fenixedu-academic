@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * The <code>FunctionalityParameter</code> reifies a parameters that is required
@@ -14,7 +13,7 @@ public class FunctionalityParameter extends FunctionalityParameter_Base {
 
     protected FunctionalityParameter() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public FunctionalityParameter(Functionality functionality, String name) {
@@ -24,13 +23,7 @@ public class FunctionalityParameter extends FunctionalityParameter_Base {
         setName(name);
     }
 
-    public FunctionalityParameter(Functionality functionality, String name, MetaDomainObject type) {
-        this(functionality, name);
-        setType(type);
-    }
-
     public void delete() {
-        setType(null);
         setFunctionality(null);
         setRootDomainObject(null);
 
@@ -43,13 +36,8 @@ public class FunctionalityParameter extends FunctionalityParameter_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
     }
 
     @Deprecated

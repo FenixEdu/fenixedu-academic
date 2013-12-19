@@ -59,7 +59,7 @@ public class AnnouncementBoardsManagement extends FenixDispatchAction {
         int invisibleNotExpiredAnnouncementsCount = 0;
         int invisibleExpiredAnnouncementsCount = 0;
 
-        for (final Content content : rootDomainObject.getContents()) {
+        for (final Content content : rootDomainObject.getContentsSet()) {
             if (content.isAnAnnouncementBoard()) {
                 boardsCount++;
             }

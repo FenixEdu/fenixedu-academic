@@ -39,7 +39,7 @@
 </schema>
 
 <schema name="library.thesis.operator" type="net.sourceforge.fenixedu.domain.Person">
-	<slot name="mostImportantAlias" />
+	<slot name="user.username" />
 </schema>
 
 <schema name="library.thesis.author" type="net.sourceforge.fenixedu.domain.thesis.Thesis"

@@ -1,8 +1,8 @@
-<%@page import="net.sourceforge.fenixedu.domain.User"%>
+<%@page import="org.fenixedu.bennu.core.domain.User"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplication"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
-<%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
+<%@page import="net.sourceforge.fenixedu.domain.Person"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>

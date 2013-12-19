@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixframework.Atomic;
@@ -17,7 +18,7 @@ public class EctsInstitutionByCurricularYearConversionTable extends EctsInstitut
         setCycle(cycle);
     }
 
-    protected RootDomainObject getRootDomainObject() {
+    protected Bennu getRootDomainObject() {
         return getSchool().getRootDomainObject();
     }
 

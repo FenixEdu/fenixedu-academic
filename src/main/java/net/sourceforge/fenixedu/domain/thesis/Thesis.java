@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -55,6 +54,7 @@ import net.sourceforge.fenixedu.predicates.ThesisPredicates;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -123,7 +123,7 @@ public class Thesis extends Thesis_Base {
     protected Thesis() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setDeclarationAccepted(false);
 
         create();
@@ -382,7 +382,7 @@ public class Thesis extends Thesis_Base {
         // setExtendedAbstract(null);
 
         setDegree(null);
-        setEnrolment(null);
+        removeEnrolment();
 
         deleteDomainObject();
     }
@@ -394,7 +394,7 @@ public class Thesis extends Thesis_Base {
     protected static Collection<Thesis> getThesisInState(Degree degree, ExecutionYear year, ThesisState state) {
         List<Thesis> theses = new ArrayList<Thesis>();
 
-        for (Thesis thesis : RootDomainObject.getInstance().getTheses()) {
+        for (Thesis thesis : Bennu.getInstance().getThesesSet()) {
             if (thesis.getState() != state) {
                 continue;
             }
@@ -1728,7 +1728,7 @@ public class Thesis extends Thesis_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 
@@ -1833,7 +1833,7 @@ public class Thesis extends Thesis_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectFromPendingPublication() {
+    public boolean hasBennuFromPendingPublication() {
         return getRootDomainObjectFromPendingPublication() != null;
     }
 

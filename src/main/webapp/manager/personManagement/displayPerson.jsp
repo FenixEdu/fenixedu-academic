@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -210,7 +211,7 @@ function check(e,v){
                     </fr:view>
                     
 					<logic:equal name="personalInfo" property="homePageAvailable" value="true">
-						<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+						<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
 						<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>				
 						<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="personalInfo" property="istUsername"/></bean:define>						
 						<tr>

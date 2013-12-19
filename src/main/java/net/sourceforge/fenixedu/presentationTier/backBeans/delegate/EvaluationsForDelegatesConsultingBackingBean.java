@@ -12,7 +12,6 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -28,8 +27,10 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -138,7 +139,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 
     public CurricularYear getCurricularYear() {
         final String curricularYearID = getCurricularYearID();
-        if (curricularYearID != null) {
+        if (!StringUtils.isEmpty(curricularYearID)) {
             return FenixFramework.getDomainObject(curricularYearID);
         } else {
             return null;
@@ -273,7 +274,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
     private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse) {
         final Map<String, String> linkParameters = new HashMap<String, String>();
         linkParameters.put("method", "evaluations");
-        linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
+        linkParameters.put("executionCourseID", executionCourse.getExternalId());
         return linkParameters;
     }
 
@@ -305,7 +306,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
     }
 
     public String getApplicationContext() {
-        final String appContext = PropertiesManager.getProperty("app.context");
+        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
         return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
     }
 

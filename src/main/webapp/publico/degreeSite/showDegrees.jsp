@@ -13,7 +13,7 @@
 			<bean:define id="degreeType" name="infoDegree" property="tipoCurso" />	
 	</logic:iterate>
 				
-<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<bean:define id="institutionUrl" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %></bean:define>
 <div class="breadcumbs mvert0"><a href="<%= institutionUrl %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>  > Ensino</div>
 				<div class="version"><span class="px10"><a href="#">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="<bean:message key="icon_uk" bundle="IMAGE_RESOURCES" />" width="16" height="12" /></span></div> 
 

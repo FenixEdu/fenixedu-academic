@@ -7,7 +7,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 	<h2>Gerir Ficheiro de Sumário</h2>
 
 	<fr:hasMessages for="student-number-bean" type="conversion">

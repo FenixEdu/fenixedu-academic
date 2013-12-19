@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 /**
  * @author joaosa & rmalo
  */
@@ -11,7 +13,7 @@ public class ExportGrouping extends ExportGrouping_Base {
 
     public ExportGrouping() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ExportGrouping(Grouping groupProperties, ExecutionCourse executionCourse) {
@@ -42,7 +44,7 @@ public class ExportGrouping extends ExportGrouping_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

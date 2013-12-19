@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadCandidateEnrolmentsByCandidateID;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadMasterDegreeCandidateByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.coordinator.ReadDegreeCandidates;
@@ -18,8 +17,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class CandidateOperationDispatchAction extends FenixDispatchAction {
 
@@ -36,7 +35,7 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
     public ActionForward getCandidates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String degreeCurricularPlanId = request.getParameter("degreeCurricularPlanID");
 
@@ -58,7 +57,7 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
     public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
         String candidateID = request.getParameter("candidateID");
@@ -82,7 +81,7 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
      * @param userView
      * @return
      */
-    private ArrayList getCandidateStudyPlanByCandidateID(String candidateID, IUserView userView) {
+    private ArrayList getCandidateStudyPlanByCandidateID(String candidateID, User userView) {
         try {
             return (ArrayList) ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);
         } catch (Exception e) {

@@ -9,7 +9,6 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -29,6 +28,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyProcessCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.DegreeTransferCandidacyPeriod;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -92,7 +92,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
+    public boolean canExecuteActivity(User userView) {
         return isAllowedToManageProcess(userView);
     }
 
@@ -116,7 +116,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
     private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_DEGREE,
             DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
-    static private boolean isAllowedToManageProcess(IUserView userView) {
+    static private boolean isAllowedToManageProcess(User userView) {
         for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                 AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
             if (ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
@@ -129,14 +129,14 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
     @StartActivity
     static public class CreateCandidacyPeriod extends Activity<DegreeTransferCandidacyProcess> {
         @Override
-        public void checkPreConditions(DegreeTransferCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeTransferCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess dummy, IUserView userView,
+        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess dummy, User userView,
                 Object object) {
             final CandidacyProcessBean bean = (CandidacyProcessBean) object;
             return new DegreeTransferCandidacyProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
@@ -145,14 +145,14 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
 
     static private class EditCandidacyPeriod extends Activity<DegreeTransferCandidacyProcess> {
         @Override
-        public void checkPreConditions(DegreeTransferCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeTransferCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, IUserView userView,
+        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, User userView,
                 Object object) {
             final CandidacyProcessBean bean = (CandidacyProcessBean) object;
             process.edit(bean.getStart(), bean.getEnd());
@@ -162,7 +162,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
 
     static private class SendToCoordinator extends Activity<DegreeTransferCandidacyProcess> {
         @Override
-        public void checkPreConditions(DegreeTransferCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeTransferCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -177,7 +177,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
         }
 
         @Override
-        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, IUserView userView,
+        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, User userView,
                 Object object) {
             process.setState(CandidacyProcessState.SENT_TO_COORDINATOR);
             return process;
@@ -186,7 +186,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
 
     static private class SendToScientificCouncil extends Activity<DegreeTransferCandidacyProcess> {
         @Override
-        public void checkPreConditions(DegreeTransferCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeTransferCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -201,7 +201,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
         }
 
         @Override
-        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, IUserView userView,
+        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, User userView,
                 Object object) {
             process.setState(CandidacyProcessState.SENT_TO_SCIENTIFIC_COUNCIL);
             return process;
@@ -210,7 +210,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
 
     static private class PrintCandidaciesFromInstitutionDegrees extends Activity<DegreeTransferCandidacyProcess> {
         @Override
-        public void checkPreConditions(DegreeTransferCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeTransferCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -220,7 +220,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
         }
 
         @Override
-        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, IUserView userView,
+        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, User userView,
                 Object object) {
             return process; // for now, nothing to be done
         }
@@ -228,7 +228,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
 
     static private class PrintCandidaciesFromExternalDegrees extends Activity<DegreeTransferCandidacyProcess> {
         @Override
-        public void checkPreConditions(DegreeTransferCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeTransferCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -238,7 +238,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
         }
 
         @Override
-        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, IUserView userView,
+        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, User userView,
                 Object object) {
             return process; // for now, nothing to be done
         }
@@ -313,14 +313,14 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
     static private class ExportCandidacies extends Activity<DegreeTransferCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(DegreeTransferCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeTransferCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, IUserView userView,
+        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, User userView,
                 Object object) {
             return process; // for now, nothing to be done
         }
@@ -329,14 +329,14 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
     static private class SelectAvailableDegrees extends Activity<DegreeTransferCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(DegreeTransferCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeTransferCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, IUserView userView,
+        protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, User userView,
                 Object object) {
             final CandidacyProcessSelectDegreesBean bean = (CandidacyProcessSelectDegreesBean) object;
             final List<Degree> degrees = bean.getDegrees();

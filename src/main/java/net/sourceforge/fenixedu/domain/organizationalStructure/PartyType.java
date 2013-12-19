@@ -3,14 +3,15 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.Collections;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class PartyType extends PartyType_Base {
 
     public PartyType(final PartyTypeEnum partyTypeEnum) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setType(partyTypeEnum);
     }
 
@@ -23,7 +24,7 @@ public class PartyType extends PartyType_Base {
     }
 
     public static PartyType readPartyTypeByType(final PartyTypeEnum partyTypeEnum) {
-        for (final PartyType partyType : RootDomainObject.getInstance().getPartyTypes()) {
+        for (final PartyType partyType : Bennu.getInstance().getPartyTypesSet()) {
             if (partyType.getType() == partyTypeEnum) {
                 return partyType;
             }
@@ -35,6 +36,7 @@ public class PartyType extends PartyType_Base {
         final PartyType partyType = readPartyTypeByType(partyTypeEnum);
         return partyType == null ? Collections.EMPTY_SET : partyType.getPartiesSet();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule> getAllowedChildConnectionRules() {
         return getAllowedChildConnectionRulesSet();
@@ -66,7 +68,7 @@ public class PartyType extends PartyType_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

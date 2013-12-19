@@ -63,10 +63,10 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
         generateNameAndHeaders(spreadsheet, executionYear, degreeType);
 
         Map<ExecutionCourse, Boolean> areLessonsWithoutTeacherConsidered = new HashMap<ExecutionCourse, Boolean>();
-        for (ExecutionCourse executionCourse : getRootDomainObject().getExecutionCourses()) {
+        for (ExecutionCourse executionCourse : getRootDomainObject().getExecutionCoursesSet()) {
             areLessonsWithoutTeacherConsidered.put(executionCourse, false);
         }
-        for (Teacher teacher : getRootDomainObject().getTeachers()) {
+        for (Teacher teacher : getRootDomainObject().getTeachersSet()) {
             for (final ExecutionSemester semester : executionYear.getExecutionPeriods()) {
                 ExecutionCourse executionCourse = null;
                 for (Professorship professorship : teacher.getDegreeProfessorshipsByExecutionPeriod(semester)) {
@@ -138,7 +138,7 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
                     }
                 }
                 if ((executionCourse != null) && (areLessonsWithoutTeacherConsidered.get(executionCourse) == false)) {
-                    for (Lesson lesson : getRootDomainObject().getLessons()) {
+                    for (Lesson lesson : getRootDomainObject().getLessonsSet()) {
                         if (lesson.getExecutionCourse() != executionCourse) {
                             continue;
                         }

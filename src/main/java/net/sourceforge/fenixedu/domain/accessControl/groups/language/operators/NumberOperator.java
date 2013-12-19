@@ -29,7 +29,9 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  * <code>$N(1) = 1</code> and <code>$N($P(section)) = 1</code> and <code>$N($P(grade), float) = 16.5</code>
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public class NumberOperator extends OperatorArgument {
 
     private static final long serialVersionUID = 1L;

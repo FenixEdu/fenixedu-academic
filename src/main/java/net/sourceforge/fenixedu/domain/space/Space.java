@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.DomainObjectActionLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
@@ -39,6 +38,7 @@ import net.sourceforge.fenixedu.predicates.SpacePredicates;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -497,7 +497,7 @@ public abstract class Space extends Space_Base {
     public static List<Space> getAllSpacesByPresentationName(String name) {
         List<Space> result = new ArrayList<Space>();
         String[] identificationWords = getIdentificationWords(name);
-        for (Resource resource : RootDomainObject.getInstance().getResources()) {
+        for (Resource resource : Bennu.getInstance().getResourcesSet()) {
             if (resource.isSpace() && ((Space) resource).verifyNameEquality(identificationWords)) {
                 result.add((Space) resource);
             }
@@ -561,7 +561,7 @@ public abstract class Space extends Space_Base {
 
     private static List<? extends Space> getAllSpacesByClass(Class<? extends Space> clazz, Boolean active) {
         List<Space> result = new ArrayList<Space>();
-        for (Resource space : RootDomainObject.getInstance().getResources()) {
+        for (Resource space : Bennu.getInstance().getResourcesSet()) {
             if (space.getClass().equals(clazz) && (active == null || ((Space) space).isActive() == active.booleanValue())) {
                 result.add((Space) space);
             }
@@ -918,7 +918,7 @@ public abstract class Space extends Space_Base {
                 person.addPersonRoleByRoleType(RoleType.SPACE_MANAGER);
             }
         } else {
-            for (Resource resource : RootDomainObject.getInstance().getResources()) {
+            for (Resource resource : Bennu.getInstance().getResourcesSet()) {
                 if (resource.isSpace()) {
                     Space space = (Space) resource;
                     for (Person person : elementsToManage) {
@@ -1087,7 +1087,7 @@ public abstract class Space extends Space_Base {
             Set<ExecutionCourse> executionCoursesToTest = searchExecutionCoursesByName(searchType, labelWords);
             Collection<Person> personsToTest = searchPersonsByName(searchType, labelToSearch);
 
-            for (Resource resource : RootDomainObject.getInstance().getResources()) {
+            for (Resource resource : Bennu.getInstance().getResourcesSet()) {
 
                 if (resource.isSpace() && ((Space) resource).isActive() && !resource.equals(campus) && !resource.equals(building)) {
 
@@ -1304,7 +1304,7 @@ public abstract class Space extends Space_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectForLibrary() {
+    public boolean hasBennuForLibrary() {
         return getRootDomainObjectForLibrary() != null;
     }
 

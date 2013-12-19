@@ -33,8 +33,8 @@
 	--%>
 </ul>
 
-<bean:define id="autoEvalProcesses" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacherEvaluationProcessFromEvalueeSet" type="java.util.List"/>
-<bean:define id="evalProcesses" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacherEvaluationProcessFromEvaluator" type="java.util.List"/>
+<bean:define id="autoEvalProcesses" name="USER_SESSION_ATTRIBUTE" property="user.person.teacherEvaluationProcessFromEvalueeSet" type="java.util.List"/>
+<bean:define id="evalProcesses" name="USER_SESSION_ATTRIBUTE" property="user.person.teacherEvaluationProcessFromEvaluator" type="java.util.List"/>
 <%
 	final Person person = AccessControl.getPerson();
 	if (person.isTeacherEvaluationCoordinatorCouncilMember() || !autoEvalProcesses.isEmpty() || !evalProcesses.isEmpty()) {
@@ -71,14 +71,14 @@
 	}
 %>
 
-<logic:present role="RESEARCHER">
+<logic:present role="role(RESEARCHER)">
 	<ul style="margin-top: 0.75em;">
 		<li class="navheader"><bean:message key="researcher.find.an.expert" bundle="RESEARCHER_RESOURCES"/></li>
 		<li><html:link page="/researcherManagement.do?method=prepare"><bean:message key="label.options" bundle="RESEARCHER_RESOURCES"/></html:link></li>
 	</ul>
 </logic:present>
 	
-<bean:define id="workingResearchUnits" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.workingResearchUnitsAndParents" type="java.util.List"/>
+<bean:define id="workingResearchUnits" name="USER_SESSION_ATTRIBUTE" property="user.person.workingResearchUnitsAndParents" type="java.util.List"/>
 <logic:notEmpty name="workingResearchUnits">
 <ul>
 	<li class="navheader"><bean:message key="label.researchUnits" bundle="RESEARCHER_RESOURCES"/></li>

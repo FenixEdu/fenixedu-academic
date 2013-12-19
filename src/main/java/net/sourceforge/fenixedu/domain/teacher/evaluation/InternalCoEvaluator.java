@@ -21,7 +21,7 @@ public class InternalCoEvaluator extends InternalCoEvaluator_Base {
 
     @Override
     public String getDescription() {
-        return getPerson().getName() + " (" + getPerson().getMostImportantAlias() + ")";
+        return getPerson().getName() + " (" + getPerson().getUsername() + ")";
     }
 
     @Deprecated

@@ -105,12 +105,5 @@
 			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
 		</div>
-
-		<br/>
-		request charset: <%= request.getCharacterEncoding() %>
-		<br/>
-		default charst: <%= Charset.defaultCharset() %>
-		<br/>
-
 	</body>
 </html:html>

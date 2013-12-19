@@ -80,7 +80,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         if (doc != null) {
             final ServletOutputStream writer = response.getOutputStream();
             try {
-                response.setContentLength(doc.getSize());
+                response.setContentLength(doc.getSize().intValue());
                 response.setContentType("application/pdf");
                 response.addHeader("Content-Disposition", "attachment; filename=" + doc.getFilename());
                 writer.write(doc.getContents());

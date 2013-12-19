@@ -64,7 +64,7 @@
 				<bean:define id="executionCourseId" name="infoExecutionCourse" property="externalId" />													
 				<tr>
 					<td class="listClasses" style="text-align:left">
-						<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+						<logic:present role="role(DEPARTMENT_CREDITS_MANAGER)">
 							<html:hidden alt='<%= "hours("+ executionCourseId +")" %>' property='<%= "hours("+ executionCourseId +")" %>' />							
 						</logic:present>
 						<% args.clear(); args.put("executionCourseID", executionCourseId); args.put("teacherId_", teacherId); %>						

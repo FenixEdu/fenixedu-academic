@@ -10,12 +10,12 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -173,7 +173,7 @@ public class Function extends Function_Base {
     public static Set<Function> readAllActiveFunctionsByType(FunctionType functionType) {
         Set<Function> result = new HashSet<Function>();
         YearMonthDay currentDate = new YearMonthDay();
-        Collection<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
+        Collection<AccountabilityType> accountabilityTypes = Bennu.getInstance().getAccountabilityTypesSet();
         for (AccountabilityType accountabilityType : accountabilityTypes) {
             if (accountabilityType.isFunction() && ((Function) accountabilityType).getFunctionType() != null
                     && ((Function) accountabilityType).getFunctionType().equals(functionType)
@@ -186,7 +186,7 @@ public class Function extends Function_Base {
 
     public static Set<Function> readAllFunctionsByType(FunctionType functionType) {
         Set<Function> result = new HashSet<Function>();
-        Collection<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
+        Collection<AccountabilityType> accountabilityTypes = Bennu.getInstance().getAccountabilityTypesSet();
         for (AccountabilityType accountabilityType : accountabilityTypes) {
             if (accountabilityType.isFunction() && ((Function) accountabilityType).getFunctionType() != null
                     && ((Function) accountabilityType).getFunctionType().equals(functionType)) {

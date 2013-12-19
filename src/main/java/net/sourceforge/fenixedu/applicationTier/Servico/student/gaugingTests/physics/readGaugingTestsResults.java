@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.gaugingTests.ph
 
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics.InfoGaugingTestResult;
 import net.sourceforge.fenixedu.domain.Person;
@@ -15,10 +17,10 @@ import pt.ist.fenixframework.Atomic;
 public class readGaugingTestsResults {
 
     @Atomic
-    public static InfoGaugingTestResult run(IUserView userView) throws FenixServiceException {
+    public static InfoGaugingTestResult run(User userView) throws FenixServiceException {
         check(RolePredicates.STUDENT_PREDICATE);
 
-        Person person = Person.readPersonByUsername(userView.getUtilizador());
+        Person person = Person.readPersonByUsername(userView.getUsername());
 
         Registration registration = person.readStudentByDegreeType(DegreeType.DEGREE);
         if (registration == null) {

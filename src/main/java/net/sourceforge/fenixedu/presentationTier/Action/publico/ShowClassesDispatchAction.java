@@ -6,7 +6,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadDegreeByOID;
 import net.sourceforge.fenixedu.commons.collections.Table;
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
@@ -29,8 +28,9 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -70,11 +70,12 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
             final ExecutionSemester nextExecutionPeriod = executionSemester.getNextExecutionPeriod();
             ExecutionSemester otherExecutionPeriodToShow = null;
             if (nextExecutionPeriod != null) {
-                final IUserView userview = (IUserView) UserView.getUser();
+                final User userview = Authenticate.getUser();
                 if (nextExecutionPeriod.getState() == PeriodState.OPEN) {
                     otherExecutionPeriodToShow = nextExecutionPeriod;
                 } else if (userview != null && nextExecutionPeriod.getState() == PeriodState.NOT_OPEN) {
-                    if (userview.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER) || userview.hasRoleType(RoleType.COORDINATOR)) {
+                    if (userview.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)
+                            || userview.getPerson().hasRole(RoleType.COORDINATOR)) {
                         otherExecutionPeriodToShow = nextExecutionPeriod;
                     }
                 }

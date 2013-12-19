@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeThesisState;
 import net.sourceforge.fenixedu.util.State;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -18,7 +19,7 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 
     public MasterDegreeThesis() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public MasterDegreeThesisDataVersion getActiveMasterDegreeThesisDataVersion() {
@@ -119,7 +120,7 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

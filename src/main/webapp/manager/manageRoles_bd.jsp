@@ -53,12 +53,7 @@
     			Utilizador selecionado:
     			<br/>
     			<strong>
-	    			<logic:iterate id="loginAlias" name="person" property="loginAliasOrderByImportance" length="1">
-		    			<strong><bean:write name="loginAlias" property="alias"/></strong>
-   					</logic:iterate>
-	    			<logic:iterate id="loginAlias" name="person" property="loginAliasOrderByImportance" offset="1">
-		    			, <strong><bean:write name="loginAlias" property="alias"/></strong>
-   					</logic:iterate>
+	    			<bean:write name="person" property="user.username" />
    				</strong>
    				 <br/>
     			<strong><bean:write name="person" property="name"/></strong>

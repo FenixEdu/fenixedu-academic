@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.ConfirmMarkSheet;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.DeleteMarkSheet;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -32,6 +31,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -127,7 +127,7 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
 
         DynaActionForm form = (DynaActionForm) actionForm;
         MarkSheet markSheet = getDomainObject(form, "msID");
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         ActionMessages actionMessages = new ActionMessages();
         try {
             ConfirmMarkSheet.run(markSheet, userView.getPerson());
