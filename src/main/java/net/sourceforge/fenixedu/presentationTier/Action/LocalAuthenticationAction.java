@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.presentationTier.Action.LocalAuthenticationAction.AuthenticationForm;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.AuthorizationException;
@@ -62,9 +61,6 @@ public class LocalAuthenticationAction extends BaseAuthenticationAction {
         final String username = authenticationForm.getUsername();
         final String password = authenticationForm.getPassword();
 
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
-            throw AuthorizationException.authenticationFailed();
-        }
         return Authenticate.login(request.getSession(true), username, password).getUser();
     }
 
