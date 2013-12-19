@@ -77,13 +77,17 @@
 								-->.<!--
 								--><span class="methodName"><bean:write name="debugExceptionInfo" property="actionErrorMethod"/></span><!--
 							--></span><!--
+							--><logic:present name="debugExceptionInfo" property="actionErrorFile"><!--
 							-->(<!--
 							--><span class="fileLocation"><!--
 								--><span class="fileName"><bean:write name="debugExceptionInfo" property="actionErrorFile"/></span><!--
+								--><logic:notEqual name="debugExceptionInfo" property="actionErrorLine" value="0"><!--
 								-->:<!--
 								--><span class="lineNumber"><bean:write name="debugExceptionInfo" property="actionErrorLine"/></span><!--
+								--></logic:notEqual><!--
 							--></span><!--
 							-->)<!--
+							--></logic:present>
 						--></span><!--
 					--></span><!--
 				--></logic:present>
