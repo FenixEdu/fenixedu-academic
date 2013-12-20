@@ -20,6 +20,8 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.util.EncodingUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -27,6 +29,9 @@ import org.apache.commons.httpclient.util.EncodingUtil;
  * 
  */
 public class SmsUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(SmsUtil.class);
+
     private static SmsUtil _instance = null;
 
     private String host;
@@ -133,7 +138,7 @@ public class SmsUtil {
             client.executeMethod(httpMethod);
 
             String result = httpMethod.getResponseBodyAsString();
-            System.err.println(result);
+            logger.info(result);
 
             httpMethod.releaseConnection();
 
@@ -177,7 +182,7 @@ public class SmsUtil {
             client.executeMethod(httpMethod);
 
             String result = httpMethod.getResponseBodyAsString();
-            System.err.println(result);
+            logger.info(result);
 
             httpMethod.releaseConnection();
 

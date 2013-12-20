@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -23,6 +25,8 @@ import com.tecnick.htmlutils.htmlentities.HTMLEntities;
  * @author cfgi
  */
 public class HtmlToTextConverter extends TidyConverter {
+
+    private static final Logger logger = LoggerFactory.getLogger(HtmlToTextConverter.class);
 
     private static final String DEFAULT_INDENT = "    ";
 
@@ -79,7 +83,7 @@ public class HtmlToTextConverter extends TidyConverter {
             writer.write(this.buffer.toString());
             writer.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new ConversionException("renderers.converter.text.write");
         }
     }
@@ -190,7 +194,7 @@ public class HtmlToTextConverter extends TidyConverter {
         try {
             outStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new ConversionException("renderers.converter.text.write");
         }
 

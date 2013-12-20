@@ -27,6 +27,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -52,6 +54,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "show-recovery-email-sent", path = "second.cycle.recovery.email.sent"),
         @Forward(name = "upload-photo", path = "second.cycle.upload.photo") })
 public class SecondCycleIndividualCandidacyProcessRefactoredDA extends RefactoredIndividualCandidacyProcessPublicDA {
+
+    private static final Logger logger = LoggerFactory.getLogger(SecondCycleIndividualCandidacyProcessRefactoredDA.class);
 
     @Override
     protected Class<? extends CandidacyProcess> getParentProcessType() {
@@ -218,7 +222,7 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
             return mapping.findForward("inform-submited-candidacy");
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage(), e.getArgs());
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             return mapping.findForward("candidacy-continue-creation");
         }

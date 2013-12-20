@@ -16,12 +16,16 @@ import net.sourceforge.fenixedu.domain.functionalities.exceptions.MatchPathConfl
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class ModuleManagementAction extends FunctionalitiesDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ModuleManagementAction.class);
 
     public ActionForward view(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -134,7 +138,7 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
         try {
             return new Integer(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

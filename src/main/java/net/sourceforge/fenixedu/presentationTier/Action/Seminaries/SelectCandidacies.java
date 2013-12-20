@@ -22,6 +22,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -41,6 +43,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
         @Forward(name = "showSelectCandidacies", path = "/teacher/showSelectCandidacies.jsp", tileProperties = @Tile(
                 navLocal = "/teacher/showSeminariesIndex_bd.jsp", title = "private.seminars.selectcandidate")) })
 public class SelectCandidacies extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(SelectCandidacies.class);
+
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
         User userView = Authenticate.getUser();
@@ -108,7 +113,7 @@ public class SelectCandidacies extends FenixDispatchAction {
             previousSelected = (Integer[]) selectCases.get("previousSelected");
             previousUnselected = (Integer[]) selectCases.get("previousUnselected");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex.getMessage(), ex);
             throw new FenixActionException();
         }
         if (selectedStudents == null || previousSelected == null || previousUnselected == null) {

@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -38,6 +40,8 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
                 title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents")) })
 public class ResultAssociationsManagementAction extends ResultsManagementAction {
 
+    private static final Logger logger = LoggerFactory.getLogger(ResultAssociationsManagementAction.class);
+
     /**
      * Actions for Result Unit Associations
      */
@@ -63,7 +67,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 
             CreateResultUnitAssociation.run(bean);
         } catch (FileManagerException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "label.communicationError");
         } catch (Exception e) {
             addActionMessage(request, e.getMessage());
@@ -104,7 +108,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 
             CreateResultUnitAssociation.run(bean);
         } catch (FileManagerException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "label.communicationError");
         } catch (Exception e) {
             addActionMessage(request, e.getMessage());

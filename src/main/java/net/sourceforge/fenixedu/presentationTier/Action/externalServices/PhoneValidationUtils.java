@@ -24,7 +24,7 @@ import com.twilio.sdk.resource.factory.CallFactory;
 import com.twilio.sdk.resource.instance.Account;
 
 public class PhoneValidationUtils {
-    private static final Logger LOG = LoggerFactory.getLogger(PhoneValidationUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(PhoneValidationUtils.class);
 
     private String TWILIO_FROM_NUMBER;
     private TwilioRestClient TWILIO_CLIENT;
@@ -87,10 +87,10 @@ public class PhoneValidationUtils {
         initHostname();
         initCIISTSMSGateway();
         if (canRun()) {
-            LOG.info("Twilio Initialized:\n\tfrom number {} \n\thost: {} \n", TWILIO_FROM_NUMBER, HOST);
-            LOG.info("DSI SMS Gateway Initialized: {}\n", CIIST_SMS_GATEWAY_URL);
+            logger.info("Twilio Initialized:\n\tfrom number {} \n\thost: {} \n", TWILIO_FROM_NUMBER, HOST);
+            logger.info("DSI SMS Gateway Initialized: {}\n", CIIST_SMS_GATEWAY_URL);
         } else {
-            LOG.info("Twilio/DSI SMS Gateway not initialized");
+            logger.info("Twilio/DSI SMS Gateway not initialized");
         }
     }
 
@@ -107,12 +107,11 @@ public class PhoneValidationUtils {
                 callFactory.create(callParams);
                 return true;
             } catch (TwilioRestException e) {
-                System.err.println("Error makeCall: " + e);
+                logger.error("Error makeCall: " + e.getMessage(), e);
                 return false;
             }
         } else {
-            System.out.println("Call to >" + phoneNumber + "<: Bem-vindo ao sistema Fénix. Introduza o código " + code
-                    + " . Obrigado!");
+            logger.info("Call to >" + phoneNumber + "<: Bem-vindo ao sistema Fénix. Introduza o código " + code + " . Obrigado!");
             return true;
         }
     }
@@ -131,15 +130,15 @@ public class PhoneValidationUtils {
                 }
             } catch (HttpException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
                 return false;
             } catch (IOException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
                 return false;
             }
         } else {
-            System.out.println("SMS to >" + number + "<: " + message);
+            logger.info("SMS to >" + number + "<: " + message);
         }
         return true;
     }

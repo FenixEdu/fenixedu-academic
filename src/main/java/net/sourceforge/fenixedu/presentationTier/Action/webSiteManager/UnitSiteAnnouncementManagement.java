@@ -15,8 +15,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementMa
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagement {
+
+    private static final Logger logger = LoggerFactory.getLogger(UnitSiteAnnouncementManagement.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -33,7 +37,7 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
         try {
             return new Integer(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

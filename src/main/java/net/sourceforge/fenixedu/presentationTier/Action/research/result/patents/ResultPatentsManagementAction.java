@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultsM
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -35,6 +37,8 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
         @Forward(name = "listPatents", path = "/researcher/result/patents/managePatents.jsp", tileProperties = @Tile(
                 title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents")) })
 public class ResultPatentsManagementAction extends ResultsManagementAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ResultPatentsManagementAction.class);
 
     public ActionForward management(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
@@ -67,7 +71,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
         try {
             AddDefaultDocumentToResearchResult.run(patent);
         } catch (FileManagerException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "label.communicationError");
         }
         return showPatent(mapping, form, request, response);
@@ -113,7 +117,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
         try {
             UpdateMetaInformation.run(patent);
         } catch (FileManagerException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "label.communicationError");
         }
 

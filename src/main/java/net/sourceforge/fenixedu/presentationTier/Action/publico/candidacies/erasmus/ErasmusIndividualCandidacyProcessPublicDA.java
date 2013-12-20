@@ -48,13 +48,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.Refa
 import net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus.LearningAgreementDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import org.apache.commons.lang.StringUtils;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.stork.AttributesManagement;
 import net.sourceforge.fenixedu.util.stork.SPUtil;
 import net.sourceforge.fenixedu.util.stork.StorkToPersonBeanTranslation;
 import net.spy.memcached.MemcachedClient;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -62,6 +62,8 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -104,6 +106,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "show-bind-process-success", path = "mobility.show.bind.process.success"),
         @Forward(name = "open-candidacy-process-closed", path = "mobility.candidacy.process.closed") })
 public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndividualCandidacyProcessPublicDA {
+
+    private static final Logger logger = LoggerFactory.getLogger(ErasmusIndividualCandidacyProcessPublicDA.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -460,7 +464,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             return mapping.findForward("inform-submited-candidacy");
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage(), e.getArgs());
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             sendSubmissionErrorReportMail(getIndividualCandidacyProcessBean(), e);
             return mapping.findForward("error-on-application-submission");
@@ -543,13 +547,15 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
                 String errorCode = attrManagement.getStorkErrorCode();
                 String errorMessage = attrManagement.getStorkErrorMessage();
 
-                new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s", errorCode,
-                        errorMessage)).printStackTrace();
+                Exception e =
+                        new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
+                                errorCode, errorMessage));
+                logger.error(e.getMessage(), e);
                 return mapping.findForward("stork-error-authentication-failed");
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return mapping.findForward("stork-error-authentication-failed");
         }
 
@@ -607,13 +613,15 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             attrManagement = new AttributesManagement(attrList);
 
             if (!AttributesManagement.STORK_RETURN_CODE_OK.equals(attrManagement.getStorkReturnCode())) {
-                new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
-                        attrManagement.getStorkErrorCode(), attrManagement.getStorkErrorMessage())).printStackTrace();
+                Exception e =
+                        new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
+                                attrManagement.getStorkErrorCode(), attrManagement.getStorkErrorMessage()));
+                logger.error(e.getMessage(), e);
                 return mapping.findForward("stork-error-authentication-failed");
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return mapping.findForward("stork-error-authentication-failed");
         }
 
@@ -954,13 +962,15 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             attrManagement = new AttributesManagement(attrList);
 
             if (!AttributesManagement.STORK_RETURN_CODE_OK.equals(attrManagement.getStorkReturnCode())) {
-                new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
-                        attrManagement.getStorkErrorCode(), attrManagement.getStorkErrorMessage())).printStackTrace();
+                Exception e =
+                        new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
+                                attrManagement.getStorkErrorCode(), attrManagement.getStorkErrorMessage()));
+                logger.error(e.getMessage(), e);
                 return mapping.findForward("stork-error-authentication-failed");
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return mapping.findForward("stork-error-authentication-failed");
         }
 

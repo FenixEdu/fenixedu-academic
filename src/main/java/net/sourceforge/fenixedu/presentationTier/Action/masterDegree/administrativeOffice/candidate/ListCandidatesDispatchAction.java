@@ -56,6 +56,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -66,6 +68,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  * 
  */
 public class ListCandidatesDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ListCandidatesDispatchAction.class);
 
     /** request params * */
     public static final String REQUEST_DOCUMENT_TYPE = "documentType";
@@ -620,7 +624,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
         try {
             return ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

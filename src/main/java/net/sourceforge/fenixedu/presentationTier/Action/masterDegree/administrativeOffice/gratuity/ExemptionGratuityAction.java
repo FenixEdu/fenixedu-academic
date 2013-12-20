@@ -40,12 +40,16 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Tânia Pousão
  * 
  */
 public class ExemptionGratuityAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExemptionGratuityAction.class);
 
     public ActionForward prepareReadStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -123,7 +127,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
             }
 
         } catch (FenixServiceException fenixServiceException) {
-            fenixServiceException.printStackTrace();
+            logger.error(fenixServiceException.getMessage(), fenixServiceException);
             errors.add("noStudentCurricularPlans", new ActionError("error.impossible.readStudent"));
             saveErrors(request, errors);
             return mapping.getInputForward();
@@ -164,7 +168,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         try {
             infoStudentCurricularPlan = ReadStudentCurricularPlan.run(studentCurricularPlanID);
         } catch (FenixServiceException fenixServiceException) {
-            fenixServiceException.printStackTrace();
+            logger.error(fenixServiceException.getMessage(), fenixServiceException);
             errors.add("noStudentCurricularPlans", new ActionError("error.impossible.readStudent"));
             saveErrors(request, errors);
             return mapping.getInputForward();
@@ -179,7 +183,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
                     (InfoGratuityValues) ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear.run(infoStudentCurricularPlan
                             .getInfoDegreeCurricularPlan().getExternalId(), executionYear);
         } catch (FenixServiceException fenixServiceException) {
-            fenixServiceException.printStackTrace();
+            logger.error(fenixServiceException.getMessage(), fenixServiceException);
             errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
             errors.add("noGratuityValues", new ActionError("error.impossible.problemsWithDegree", infoStudentCurricularPlan
                     .getInfoDegreeCurricularPlan().getInfoDegree().getNome()));
@@ -205,7 +209,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
                     (InfoGratuitySituation) ReadGratuitySituationByStudentCurricularPlanByGratuityValues.run(
                             studentCurricularPlanID, infoGratuityValues.getExternalId());
         } catch (FenixServiceException fenixServiceException) {
-            fenixServiceException.printStackTrace();
+            logger.error(fenixServiceException.getMessage(), fenixServiceException);
             errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
             saveErrors(request, errors);
             return mapping.getInputForward();

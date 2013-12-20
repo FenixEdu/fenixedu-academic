@@ -6,12 +6,17 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
 import net.sourceforge.fenixedu.domain.contents.Content;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This class represents an availability policy base on groups.
  * 
  * @author cfgi
  */
 public class GroupAvailability extends GroupAvailability_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(GroupAvailability.class);
 
     protected GroupAvailability() {
         super();
@@ -52,10 +57,10 @@ public class GroupAvailability extends GroupAvailability_Base {
         try {
             return getTargetGroup().allows(context.getUserView());
         } catch (GroupDynamicExpressionException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw e;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new GroupDynamicExpressionException(e, "accessControl.group.expression.evaluation.error");
         }
     }
@@ -63,6 +68,7 @@ public class GroupAvailability extends GroupAvailability_Base {
     public String getExpression() {
         return getTargetGroup().getExpression();
     }
+
     @Deprecated
     public boolean hasTargetGroup() {
         return getTargetGroup() != null;

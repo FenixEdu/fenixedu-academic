@@ -30,6 +30,8 @@ import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -53,6 +55,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "edit-candidacy-documents", path = "degree.change.edit.candidacy.documents"),
         @Forward(name = "upload-photo", path = "degree.change.upload.photo") })
 public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividualCandidacyProcessPublicDA {
+
+    private static final Logger logger = LoggerFactory.getLogger(DegreeChangeIndividualCandidacyProcessDA.class);
 
     @Override
     protected Class<? extends CandidacyProcess> getParentProcessType() {
@@ -220,7 +224,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
             return mapping.findForward("inform-submited-candidacy");
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage(), e.getArgs());
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             getIndividualCandidacyProcessBean().getPersonBean().setPerson(null);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             return mapping.findForward("candidacy-continue-creation");

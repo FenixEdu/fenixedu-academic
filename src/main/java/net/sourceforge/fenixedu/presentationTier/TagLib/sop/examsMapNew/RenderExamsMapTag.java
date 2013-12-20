@@ -18,12 +18,16 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderer
 
 import org.apache.struts.Globals;
 import org.apache.struts.util.MessageResources;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
  */
 public class RenderExamsMapTag extends TagSupport {
+
+    private static final Logger logger = LoggerFactory.getLogger(RenderExamsMapTag.class);
 
     // Name of atribute containing ExamMap
     private String name;
@@ -80,10 +84,10 @@ public class RenderExamsMapTag extends TagSupport {
         try {
             writer.print(renderer.render(locale, pageContext));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new JspException(messages.getMessage("generateExamsMap.io", e.toString()));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return (SKIP_BODY);

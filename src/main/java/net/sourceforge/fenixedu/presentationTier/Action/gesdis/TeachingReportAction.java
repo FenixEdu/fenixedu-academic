@@ -30,12 +30,16 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  */
 public class TeachingReportAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(TeachingReportAction.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -83,7 +87,7 @@ public class TeachingReportAction extends FenixDispatchAction {
             dynaForm.set("executionPeriodId", infoExecutionCourse.getInfoExecutionPeriod().getExternalId());
             dynaForm.set("executionYearId", infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getExternalId());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

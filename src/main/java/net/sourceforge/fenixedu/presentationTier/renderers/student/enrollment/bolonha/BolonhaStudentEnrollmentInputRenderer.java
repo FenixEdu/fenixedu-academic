@@ -2,11 +2,16 @@ package net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.b
 
 import java.util.ResourceBundle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
+
+    private static final Logger logger = LoggerFactory.getLogger(BolonhaStudentEnrollmentInputRenderer.class);
 
     final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
     final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
@@ -216,11 +221,11 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
             Class<?> clazz = Class.forName(defaultLayout);
             return (Layout) clazz.newInstance();
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return null;
     }

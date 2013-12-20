@@ -46,6 +46,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -73,6 +75,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
         key = "resources.Action.exceptions.NonExistingActionException",
         handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class PayGratuityDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(PayGratuityDispatchAction.class);
 
     public ActionForward chooseContributor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -159,7 +163,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
                     mapping.findForward("chooseContributor"));
         } catch (FenixActionException e) {
 
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
 
@@ -335,8 +339,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @return
      * @throws FenixActionException
      */
-    private InfoGratuitySituation readGratuitySituation(User userView, String gratuitySituationId)
-            throws FenixActionException {
+    private InfoGratuitySituation readGratuitySituation(User userView, String gratuitySituationId) throws FenixActionException {
         InfoGratuitySituation infoGratuitySituation = null;
 
         try {
@@ -382,8 +385,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @return
      * @throws FenixActionException
      */
-    private InfoInsuranceValue readInsuranceValue(User userView, String insuranceExecutionYearId)
-            throws FenixActionException {
+    private InfoInsuranceValue readInsuranceValue(User userView, String insuranceExecutionYearId) throws FenixActionException {
         InfoInsuranceValue infoInsuranceValue = null;
 
         try {

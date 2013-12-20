@@ -43,6 +43,8 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.loaders.IFileLine;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -50,6 +52,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class StudentLine implements IFileLine, java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    private static final Logger logger = LoggerFactory.getLogger(StudentLine.class);
 
     protected static final List<Integer> STUDENTS_WITH_CET = Arrays.asList(new Integer[] { 70855, 70696, 70757, 70786, 55647,
             59218, 70749, 70856, 70678, 70681, 70712, 70737, 70837, 70793, 10425, 38565, 70783, 70664, 70859, 70766, 70844,
@@ -1013,7 +1017,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
             getObservations();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return false;
         }
 
@@ -1050,7 +1054,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
             this.student = student;
             enrolledInAnualCoursesLastYear = false;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return false;
         }
 

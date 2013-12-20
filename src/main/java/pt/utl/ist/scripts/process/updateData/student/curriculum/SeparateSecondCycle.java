@@ -4,9 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-import org.fenixedu.bennu.scheduler.CronTask;
-import org.fenixedu.bennu.scheduler.annotation.Task;
-
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -16,6 +13,12 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.SeparationCyclesManagement;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+
+import org.fenixedu.bennu.scheduler.CronTask;
+import org.fenixedu.bennu.scheduler.annotation.Task;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -23,12 +26,14 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 @Task(englishTitle = "SeparateSecondCycle")
 public class SeparateSecondCycle extends CronTask {
 
+    private static final Logger logger = LoggerFactory.getLogger(SeparateSecondCycle.class);
+
     public static void doAction(Thread action) {
         action.start();
         try {
             action.join();
         } catch (InterruptedException ie) {
-            System.out.println("Caught an interrupt during the execution of an atomic action, but proceeding anyway...");
+            logger.warn("Caught an interrupt during the execution of an atomic action, but proceeding anyway...");
         }
     }
 

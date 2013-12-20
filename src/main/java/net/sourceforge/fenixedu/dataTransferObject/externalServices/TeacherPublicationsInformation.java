@@ -14,12 +14,17 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 
 public class TeacherPublicationsInformation implements Serializable {
+
+    private static final Logger logger = LoggerFactory.getLogger(TeacherPublicationsInformation.class);
+
     private static final String BASE_URL = "https://sotis.tecnico.ulisboa.pt/";
 
     private static final String CURRICULUM_PATH = "api/sotis-core/curriculum/a3es";
@@ -53,9 +58,9 @@ public class TeacherPublicationsInformation implements Serializable {
                 teacherPublicationsInformationMap.put(teacher, teacherPublicationsList);
             }
         } catch (UniformInterfaceException e) {
-            System.out.println(e);
+            logger.error(e.getMessage(), e);
         } catch (ParseException e) {
-            System.out.println(e);
+            logger.error(e.getMessage(), e);
         }
         return teacherPublicationsInformationMap;
     }

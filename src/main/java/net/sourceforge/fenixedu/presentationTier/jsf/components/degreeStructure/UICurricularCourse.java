@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
 
 public class UICurricularCourse extends UIDegreeModule {
+
     public static final String COMPONENT_TYPE =
             "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICurricularCourse";
 

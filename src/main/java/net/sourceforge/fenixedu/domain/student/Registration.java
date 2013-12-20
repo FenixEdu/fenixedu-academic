@@ -111,11 +111,11 @@ import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 import net.sourceforge.fenixedu.util.PeriodState;
-import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -125,11 +125,15 @@ import org.joda.time.ReadableInstant;
 import org.joda.time.YearMonthDay;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Registration extends Registration_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(Registration.class);
 
     static private final List<DegreeType> DEGREE_TYPES_TO_ENROL_BY_STUDENT = Arrays.asList(new DegreeType[] {
             DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE,
@@ -4083,7 +4087,7 @@ public class Registration extends Registration_Base {
             }
             return studentInfoForJobBank;
         } catch (Throwable e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new Error(e);
         }
     }

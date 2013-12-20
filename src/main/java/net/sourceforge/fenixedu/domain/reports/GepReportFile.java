@@ -16,11 +16,17 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
+
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public abstract class GepReportFile extends GepReportFile_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(GepReportFile.class);
 
     public GepReportFile() {
         super();
@@ -144,7 +150,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
         queueJobResult.setContentType("application/txt");
         queueJobResult.setContent(byteArrayOS.toByteArray());
 
-        System.out.println("Job " + getFilename() + " completed");
+        logger.info("Job " + getFilename() + " completed");
 
         return queueJobResult;
     }
@@ -195,6 +201,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
         }
         return null;
     }
+
     @Deprecated
     public boolean hasType() {
         return getType() != null;

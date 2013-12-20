@@ -53,6 +53,8 @@ import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
@@ -64,6 +66,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  * 
  */
 public class ContextUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(ContextUtils.class);
 
     @Deprecated
     public static final void setExecutionPeriodContext(HttpServletRequest request) throws FenixServiceException {
@@ -144,7 +148,7 @@ public class ContextUtils {
 
                 infoCurricularYear = ReadCurricularYearByOID.run(curricularYearOID);
             } catch (FenixServiceException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
 
             if (infoCurricularYear != null) {
@@ -282,7 +286,7 @@ public class ContextUtils {
 
                 infoClass = ReadClassByOID.run(classOIDString);
             } catch (FenixServiceException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
 
             // Place it in request
@@ -613,8 +617,7 @@ public class ContextUtils {
             }
             if (request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID) != null) {
                 executionDegree =
-                        FenixFramework.getDomainObject((String) request
-                                .getAttribute(PresentationConstants.EXECUTION_DEGREE_OID));
+                        FenixFramework.getDomainObject((String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID));
             } else if (request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID) != null) {
                 executionDegree =
                         FenixFramework.getDomainObject(request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID));
@@ -622,12 +625,10 @@ public class ContextUtils {
             if (request.getAttribute(PresentationConstants.CURRICULAR_YEAR_OID) != null
                     && !request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID).equals("null")) {
                 curricularYear =
-                        FenixFramework.getDomainObject((String) request
-                                .getAttribute(PresentationConstants.CURRICULAR_YEAR_OID));
+                        FenixFramework.getDomainObject((String) request.getAttribute(PresentationConstants.CURRICULAR_YEAR_OID));
             } else if (request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID) != null
                     && !request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID).equals("null")) {
-                curricularYear =
-                        FenixFramework.getDomainObject(request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID));
+                curricularYear = FenixFramework.getDomainObject(request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID));
             }
             if (request.getAttribute("execution_course_name") != null) {
                 courseName = (String) request.getAttribute("execution_course_name");

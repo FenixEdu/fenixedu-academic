@@ -184,9 +184,6 @@ public class ImportIdentificationCardDataFromFile {
         result.append("Matched lines " + matchedLines + "\n");
         result.append("New lines " + newLines + "\n");
 
-        System.out.flush();
-        System.err.flush();
-
         return result.toString();
     }
 
@@ -311,9 +308,6 @@ public class ImportIdentificationCardDataFromFile {
             return peopleForId.iterator().next();
         } else if (peopleForId.size() > 1) {
             multipleIdMatches++;
-//	    System.out.println("Multiple people for: " + identificationId);
-        } else {
-//	    System.out.println("No match found for: " + identificationId);
         }
 
         final String name = getName(line);
@@ -323,9 +317,6 @@ public class ImportIdentificationCardDataFromFile {
             return peopleForName.iterator().next();
         } else if (peopleForName.size() > 1) {
             multipleNameMatches++;
-//	    System.out.println("Multiple people for: " + name);
-        } else {
-//	    System.out.println("No match found for: " + name);
         }
 
         final Set<Integer> numbers = getNumbers(line);

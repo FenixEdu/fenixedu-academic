@@ -38,6 +38,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -68,6 +70,8 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "createSection", path = "/person/portals/createSection.jsp", tileProperties = @Tile(
                 title = "private.administrator.functionalitiesmanagement.displayfunctionalities.system.portalroot")) })
 public class ContentManagement extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ContentManagement.class);
 
     public ActionForward viewContent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
@@ -358,7 +362,7 @@ public class ContentManagement extends FenixDispatchAction {
         try {
             return new Integer(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

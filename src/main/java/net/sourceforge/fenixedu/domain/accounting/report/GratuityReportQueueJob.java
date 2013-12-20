@@ -27,11 +27,15 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(GratuityReportQueueJob.class);
 
     private GratuityReportQueueJob() {
         super();
@@ -86,7 +90,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
         queueJobResult.setContentType("text/csv");
         queueJobResult.setContent(byteArrayOS.toByteArray());
 
-        System.out.println("Job " + getFilename() + " completed");
+        logger.info("Job " + getFilename() + " completed");
 
         return queueJobResult;
     }
@@ -121,7 +125,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
             }
 
             if (++i % 100 == 0) {
-                System.out.println(String.format("Lido %d propinas", i));
+                logger.info(String.format("Lido %d propinas", i));
             }
         }
 
@@ -373,7 +377,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
         for (ExecutionYear executionYear : executionYearList) {
             for (AnnualEvent event : executionYear.getAnnualEvents()) {
                 if ((++i % 1000) == 0) {
-                    System.out.println(String.format("Read %s events", i));
+                    logger.info(String.format("Read %s events", i));
                 }
 
                 if (event.isCancelled()) {

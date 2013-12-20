@@ -26,10 +26,10 @@ public class PrinterManager {
 
     public PrintService getPrintServiceByName(String name) {
         if (name == null) {
-            System.out.println("returning default printer: " + defaultPrinter);
+            logger.info("returning default printer: " + defaultPrinter);
             return defaultPrinter;
         }
-        System.out.println("returning non default printer: " + printers.get(name));
+        logger.info("returning non default printer: " + printers.get(name));
         return printers.get(name);
     }
 

@@ -19,6 +19,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionServlet;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
@@ -32,6 +34,9 @@ import com.google.common.io.ByteStreams;
  */
 @Mapping(module = "person", path = "/retrievePersonalPhoto", scope = "session", parameter = "method")
 public class RetrievePersonalPhotoAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(RetrievePersonalPhotoAction.class);
+
     public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
         final String uuid = request.getParameter("uuid");
@@ -95,7 +100,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
             dos.write(avatar);
             dos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -112,7 +117,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
             ByteStreams.copy(stream, response.getOutputStream());
             stream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 }

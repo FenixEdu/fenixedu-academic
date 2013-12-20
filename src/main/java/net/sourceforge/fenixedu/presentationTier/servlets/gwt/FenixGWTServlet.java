@@ -8,6 +8,9 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
@@ -17,6 +20,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class FenixGWTServlet extends RemoteServiceServlet {
 
     private static final long serialVersionUID = 262190617986363827L;
+
+    private static final Logger logger = LoggerFactory.getLogger(FenixGWTServlet.class);
 
     public ServletConfig servletConfig = null;
 
@@ -106,9 +111,9 @@ public class FenixGWTServlet extends RemoteServiceServlet {
     @Override
     //Overridden for debug purpose only
     protected void doUnexpectedFailure(Throwable e) {
-        System.out.println("\n\n--------------Unwrapped Exception Starts Here------------");
-        e.printStackTrace();
-        System.out.println("--------------Unwrapped Exception Ends Here------------\n\n");
+        logger.debug("\n\n--------------Unwrapped Exception Starts Here------------");
+        logger.error(e.getMessage(), e);
+        logger.debug("--------------Unwrapped Exception Ends Here------------\n\n");
         super.doUnexpectedFailure(e);
     }
 

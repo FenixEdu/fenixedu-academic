@@ -8,8 +8,12 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 import org.apache.commons.lang.CharEncoding;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ResponseExternalization {
+
+    private static final Logger logger = LoggerFactory.getLogger(ResponseExternalization.class);
 
     public static String externalize(Response source) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -26,7 +30,7 @@ public class ResponseExternalization {
             return out.toString(Charset.defaultCharset().name());
         } catch (UnsupportedEncodingException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return out.toString();
         }
     }
@@ -40,13 +44,13 @@ public class ResponseExternalization {
         try {
             decoder = new XMLDecoder(new ByteArrayInputStream(xmlResponse.getBytes(CharEncoding.UTF_8)));
         } catch (UnsupportedEncodingException e1) {
-            e1.printStackTrace();
+            logger.error(e1.getMessage(), e1);
         }
         Response response = null;
         try {
             response = (Response) decoder.readObject();
         } catch (ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         decoder.close();
         return response;

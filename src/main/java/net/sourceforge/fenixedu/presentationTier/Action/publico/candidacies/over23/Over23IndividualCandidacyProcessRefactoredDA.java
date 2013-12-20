@@ -22,11 +22,13 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualC
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -48,6 +50,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "edit-candidacy-habilitations", path = "over23.edit.candidacy.habilitations"),
         @Forward(name = "edit-candidacy-documents", path = "over23.edit.candidacy.documents") })
 public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndividualCandidacyProcessPublicDA {
+
+    private static final Logger logger = LoggerFactory.getLogger(Over23IndividualCandidacyProcessRefactoredDA.class);
 
     @Override
     protected String getCandidacyInformationLinkDefaultLanguage() {
@@ -320,7 +324,7 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
             return mapping.findForward("inform-submited-candidacy");
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage(), e.getArgs());
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             return mapping.findForward("candidacy-continue-creation");
         }

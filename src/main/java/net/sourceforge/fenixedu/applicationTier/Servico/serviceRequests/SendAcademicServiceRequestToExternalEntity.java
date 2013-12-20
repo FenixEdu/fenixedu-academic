@@ -35,10 +35,10 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServi
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.ApprovementInfoForEquivalenceProcess;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.CharEncoding;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -125,8 +125,9 @@ public class SendAcademicServiceRequestToExternalEntity {
 
             final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(resultStream.toByteArray());
 
-            final String restEndpoint = FenixConfigurationManager.getConfiguration().getExternalApplicationWorkflowEquivalencesUri();
-            System.out.println("SendAcademicServiceRequestToExternalEntity : " + restEndpoint);
+            final String restEndpoint =
+                    FenixConfigurationManager.getConfiguration().getExternalApplicationWorkflowEquivalencesUri();
+            logger.info("SendAcademicServiceRequestToExternalEntity : " + restEndpoint);
 
             final String restUser = FenixConfigurationManager.getConfiguration().getJerseyUsername();
             final String restPass = FenixConfigurationManager.getConfiguration().getJerseyPassword();
@@ -325,7 +326,7 @@ public class SendAcademicServiceRequestToExternalEntity {
             out.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return resultStream;

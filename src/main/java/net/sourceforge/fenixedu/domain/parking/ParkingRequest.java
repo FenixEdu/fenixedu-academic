@@ -25,6 +25,8 @@ import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -33,6 +35,8 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ParkingRequest extends ParkingRequest_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(ParkingRequest.class);
 
     public ParkingRequest(ParkingRequestFactoryCreator creator) {
         super();
@@ -100,6 +104,9 @@ public class ParkingRequest extends ParkingRequest_Base {
     }
 
     public static abstract class ParkingRequestFactory implements Serializable, FactoryExecutor {
+
+        private static final Logger logger = LoggerFactory.getLogger(ParkingRequest.ParkingRequestFactory.class);
+
         private ParkingParty parkingParty;
 
         private String firstVechicleID;
@@ -241,14 +248,14 @@ public class ParkingRequest extends ParkingRequest_Base {
                     b = byteArrayOutputStream.toByteArray();
                     byteArrayOutputStream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             } finally {
                 try {
                     inputStream.close();
                     byteArrayOutputStream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             }
             return b;
@@ -700,6 +707,8 @@ public class ParkingRequest extends ParkingRequest_Base {
 
     public static class ParkingRequestFactoryCreator extends ParkingRequestFactory {
 
+        private static final Logger logger = LoggerFactory.getLogger(ParkingRequest.ParkingRequestFactoryCreator.class);
+
         public ParkingRequestFactoryCreator(ParkingParty parkingParty) {
             super(parkingParty);
             if ((!getParkingParty().hasAnyParkingRequests()) && parkingParty.getParty().getParkingPartyHistoriesSet().size() != 0) {
@@ -761,7 +770,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
                     return parkingRequest;
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             }
             return null;
@@ -769,6 +778,9 @@ public class ParkingRequest extends ParkingRequest_Base {
     }
 
     public static class ParkingRequestFactoryEditor extends ParkingRequestFactory {
+
+        private static final Logger logger = LoggerFactory.getLogger(ParkingRequest.ParkingRequestFactoryEditor.class);
+
         private ParkingRequest parkingRequest;
 
         public ParkingRequestFactoryEditor(ParkingParty parkingParty) {
@@ -872,7 +884,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                 }
                 return parkingRequest;
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
             return null;
         }

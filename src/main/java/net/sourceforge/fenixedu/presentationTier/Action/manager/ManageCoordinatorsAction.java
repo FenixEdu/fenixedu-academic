@@ -31,12 +31,16 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Tânia Pousão
  * 
  */
 public class ManageCoordinatorsAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ManageCoordinatorsAction.class);
 
     public ActionForward view(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -51,7 +55,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         try {
             infoExecutionDegree = ReadExecutionDegree.runReadExecutionDegree(executionDegreeId);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
         }
         if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
@@ -112,7 +116,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         try {
             infoExecutionDegree = ReadExecutionDegree.runReadExecutionDegree(executionDegreeId);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
         }
         if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
@@ -152,7 +156,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         try {
             AddCoordinator.run(executionDegreeId, istUsername);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             errors.add("impossibleInsertCoordinator", new ActionError("error.impossibleInsertCoordinator"));
         }
         if (!errors.isEmpty()) {
@@ -188,7 +192,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
             try {
                 ResponsibleCoordinators.run(executionDegreeId, responsibleCoordinatorsIdsList);
             } catch (FenixServiceException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
                 errors.add("impossibleInsertCoordinator", new ActionError("error.impossibleInsertCoordinator"));
             }
             if (!errors.isEmpty()) {

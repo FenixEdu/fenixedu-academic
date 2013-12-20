@@ -25,11 +25,15 @@ import org.joda.time.Days;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class GanttDiagramTagLib extends TagSupport {
+
+    private static final Logger logger = LoggerFactory.getLogger(GanttDiagramTagLib.class);
 
     private static final String F = "F";
 
@@ -116,7 +120,7 @@ public class GanttDiagramTagLib extends TagSupport {
             pageContext.getOut().print(ganttDiagram);
 
         } catch (IOException e) {
-            e.printStackTrace(System.out);
+            logger.error(e.getMessage(), e);
         }
 
         return SKIP_BODY;

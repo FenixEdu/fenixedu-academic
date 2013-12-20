@@ -31,10 +31,14 @@ import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 
 public class CardGenerationBatch extends CardGenerationBatch_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(CardGenerationBatch.class);
 
     public static final Comparator<CardGenerationBatch> COMPARATOR_BY_CREATION_DATE = new Comparator<CardGenerationBatch>() {
 
@@ -126,11 +130,9 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
                     final DegreeType degreeType = studentCurricularPlan.getDegreeType();
                     if (!degreeType.isEmpty()) {
                         if (degreeType.compareTo(maxDegreeType) >= 0) {
-                            // System.out.println("Using: " + degreeType +
-                            // " same as " + maxDegreeType);
                             createCardGenerationEntry(person, studentCurricularPlan);
                         } else {
-                            System.out.println("Not using: " + degreeType + " because of " + maxDegreeType);
+                            logger.info("Not using: " + degreeType + " because of " + maxDegreeType);
                         }
                     }
                 }
@@ -216,9 +218,8 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 
     protected void createCardGenerationEntry(final Person person, final StudentCurricularPlan studentCurricularPlan) {
         if (studentCurricularPlan.getDegreeType() == DegreeType.MASTER_DEGREE) {
-            System.out.println("Master degree student curricular plan: "
-                    + studentCurricularPlan.getDegreeCurricularPlan().getName() + " - " + studentCurricularPlan.getDegreeType()
-                    + " " + person.getUsername());
+            logger.info("Master degree student curricular plan: " + studentCurricularPlan.getDegreeCurricularPlan().getName()
+                    + " - " + studentCurricularPlan.getDegreeType() + " " + person.getUsername());
         }
         final CardGenerationEntry cardGenerationEntry = new CardGenerationEntry();
         cardGenerationEntry.setCreated(getCreated());

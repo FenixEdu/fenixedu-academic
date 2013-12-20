@@ -26,6 +26,8 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.Order
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -44,6 +46,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
         @Forward(name = "editPatent", path = "/resultPatents/showPatent.do"),
         @Forward(name = "listPatents", path = "/resultPatents/management.do") })
 public class ResultParticipationManagementAction extends ResultsManagementAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ResultParticipationManagementAction.class);
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
@@ -440,7 +444,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
         try {
             return new Integer(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

@@ -29,12 +29,16 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AlumniReportFile extends AlumniReportFile_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(AlumniReportFile.class);
 
     private static final String GABINETE_ESTUDOS_PLANEAMENTO = "Gabinete de Estudos e Planeamento";
     private transient ResourceBundle eBundle;
@@ -75,7 +79,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
         queueJobResult.setContentType("application/vnd.ms-excel");
         queueJobResult.setContent(byteArrayOS.toByteArray());
 
-        System.out.println("Job " + getFilename() + " completed");
+        logger.info("Job " + getFilename() + " completed");
 
         return queueJobResult;
     }
@@ -112,7 +116,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
         for (Person person : Person.readPersonsByRoleType(RoleType.ALUMNI)) {
             if ((++count % 100) == 0) {
-                System.out.println(String.format("Count %s persons", count));
+                logger.info(String.format("Count %s persons", count));
             }
 
             if (!person.hasStudent()) {

@@ -15,12 +15,16 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Fernanda Quit�rio Created on 6/Set/2004
  * 
  */
 public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegreeThesisDataVersion {
+
+    private static final Logger logger = LoggerFactory.getLogger(InfoMasterDegreeThesisDataVersionWithGuiders.class);
 
     private List<GuiderDTO> allGuiders;
 
@@ -32,7 +36,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
         try {
             properties.load(inputStream);
         } catch (IOException e1) {
-            e1.printStackTrace();
+            logger.error(e1.getMessage(), e1);
         }
         String institution = Unit.getInstitutionAcronym();
 

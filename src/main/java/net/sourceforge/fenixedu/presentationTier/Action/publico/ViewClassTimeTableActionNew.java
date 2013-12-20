@@ -27,6 +27,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -41,6 +43,8 @@ import pt.ist.fenixframework.FenixFramework;
         attribute = "chooseSearchContextForm", formBean = "chooseSearchContextForm", scope = "request", validate = false)
 @Forwards(value = { @Forward(name = "Sucess", path = "viewClassTimeTable") })
 public class ViewClassTimeTableActionNew extends FenixAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ViewClassTimeTableActionNew.class);
 
     /**
      * Constructor for ViewClassTimeTableAction.
@@ -58,7 +62,7 @@ public class ViewClassTimeTableActionNew extends FenixAction {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
         String className = request.getParameter("className");

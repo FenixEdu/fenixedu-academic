@@ -39,11 +39,11 @@ import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -56,11 +56,15 @@ import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 import org.restlet.data.Status;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class MobilityIndividualApplicationProcess extends MobilityIndividualApplicationProcess_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(MobilityIndividualApplicationProcess.class);
 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
@@ -1398,12 +1402,11 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
             Response response = client.handle(request);
 
             if (response.getStatus().equals(Status.SUCCESS_OK)) {
-                System.out.println(String.format("Imported username %s", process.getPersonalDetails().getPerson()
-                        .getIstUsername()));
+                logger.info("Imported username {}", process.getPersonalDetails().getPerson().getIstUsername());
                 return true;
             } else {
-                System.out.println("error.erasmus.create.user: " + process.getPersonalDetails().getPerson().getIstUsername()
-                        + " " + response.getStatus().getName() + " " + new Integer(response.getStatus().getCode()).toString());
+                logger.info("error.erasmus.create.user: " + process.getPersonalDetails().getPerson().getIstUsername() + " "
+                        + response.getStatus().getName() + " " + new Integer(response.getStatus().getCode()).toString());
                 throw new DomainException("error.erasmus.create.user", new String[] {
                         process.getPersonalDetails().getPerson().getIstUsername(), response.getStatus().getName(),
                         new Integer(response.getStatus().getCode()).toString() });
@@ -1417,7 +1420,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                 }
             } catch (Exception e) {
                 // Cannot stop the client, this WILL cause a memory leak!
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
 
         }

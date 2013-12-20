@@ -27,6 +27,8 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -58,6 +60,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "select-destination-period-to-copy", path = "/candidacy/secondCycle/selectDestinationPeriodToCopy.jsp"),
         @Forward(name = "set-not-accepted-state", path = "/candidacy/secondCycle/setNotAcceptedState.jsp") })
 public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
+
+    private static final Logger logger = LoggerFactory.getLogger(SecondCycleIndividualCandidacyProcessDA.class);
 
     @Override
     protected Class<? extends Process> getParentProcessType() {
@@ -390,7 +394,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
         } catch (final DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return mapping.findForward("select-destination-period-to-copy");
         }
 
@@ -436,7 +440,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
         } catch (final DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return mapping.findForward("set-not-accepted-state");
         }
     }

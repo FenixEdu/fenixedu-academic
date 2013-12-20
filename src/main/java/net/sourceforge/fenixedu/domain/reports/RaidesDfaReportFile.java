@@ -16,11 +16,15 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(RaidesDfaReportFile.class);
 
     public RaidesDfaReportFile() {
         super();
@@ -47,7 +51,7 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
         ExecutionYear executionYear = getExecutionYear();
         createHeaders(spreadsheet);
 
-        System.out.println("BEGIN report for " + getDegreeType().name());
+        logger.info("BEGIN report for " + getDegreeType().name());
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansToProcess(executionYear)) {
             final Registration registration = studentCurricularPlan.getRegistration();
 

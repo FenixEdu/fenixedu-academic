@@ -26,6 +26,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -50,6 +52,8 @@ import com.octo.captcha.module.struts.CaptchaServicePlugin;
         @Forward(name = "alumniPublicAccessMessage", path = "alumni.alumniPublicAccessMessage"),
         @Forward(name = "alumniPublicAccessRegistrationEmail", path = "alumni.alumniPublicAccessRegistrationEmail") })
 public class AlumniPublicAccessDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(AlumniPublicAccessDA.class);
 
     final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
 
@@ -211,12 +215,12 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
                 String aluminiEmailAddress = Instalation.getInstance().getInstituitionalEmailAddress("alumni");
                 email.send(aluminiEmailAddress, "Erro Registo Alumni", mailBody.toString());
                 if (CoreConfiguration.getConfiguration().developmentMode()) {
-                    System.out.println("send email to " + aluminiEmailAddress + "with subject Erro Registo Alumni and body : "
+                    logger.info("send email to " + aluminiEmailAddress + "with subject Erro Registo Alumni and body : "
                             + mailBody.toString());
                 }
             }
         } catch (Throwable t) {
-            t.printStackTrace();
+            logger.error(t.getMessage(), t);
             throw new Error(t);
         }
 

@@ -27,6 +27,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.Prese
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -40,6 +42,9 @@ import pt.ist.fenixframework.core.WriteOnReadError;
  */
 
 public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
+
+    private static final Logger logger = LoggerFactory
+            .getLogger(ReadGratuitySituationListByExecutionDegreeAndSpecialization.class);
 
     /**
      * Constructor
@@ -181,8 +186,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
         } catch (WriteOnReadError e) {
             throw e;
         } catch (Exception e) {
-
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             if (e.getMessage() != null && e.getMessage().length() > 0) {
                 throw new FenixServiceException(e.getMessage());
             }

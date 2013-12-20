@@ -9,12 +9,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
 public class ListStudentThesis {
+
+    private static final Logger logger = LoggerFactory.getLogger(ListStudentThesis.class);
 
     private String degreeCurricularPlanID;
 
@@ -39,10 +44,10 @@ public class ListStudentThesis {
             return ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan.run(degreeCurricularPlanID);
         } catch (IllegalDataAccessException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (FenixServiceException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return null;

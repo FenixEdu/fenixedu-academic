@@ -33,6 +33,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -57,6 +59,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
         @Forward(name = "showAllRestrictions", path = "/manager/precedences/manageRestriction.jsp", tileProperties = @Tile(
                 navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
 public class MakeSimplePrecedenceAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(MakeSimplePrecedenceAction.class);
 
     public ActionForward showAllRestrictions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -87,7 +91,7 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
         try {
             curricularCoursesList = ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanID);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             errors.add("impossibleCCOfDCP", new ActionError("error.manager.impossible.readCCofDCP"));
         }
         if (curricularCoursesList == null || curricularCoursesList.size() <= 0) {
@@ -153,7 +157,7 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
             InsertSimplePrecedence.run(classeNameRestriction, curricularCourseToAddPrecedenceID, precedentCurricularCourseID,
                     number);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             errors.add("impossibleInsertPrecedence", new ActionError("error.manager.impossible.insertPrecedence"));
         }
 

@@ -16,7 +16,12 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificateRequest_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(PhdFinalizationCertificateRequest.class);
 
     protected PhdFinalizationCertificateRequest() {
         super();
@@ -112,7 +117,7 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
             DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
             return data;
         } catch (JRException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new DomainException("error.phdDiplomaRequest.errorGeneratingDocument");
         }
     }

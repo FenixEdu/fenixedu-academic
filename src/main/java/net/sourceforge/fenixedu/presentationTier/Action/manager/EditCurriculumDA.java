@@ -26,6 +26,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -53,6 +55,8 @@ import pt.ist.fenixframework.FenixFramework;
         key = "resources.Action.exceptions.NonExistingActionException",
         handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class EditCurriculumDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(EditCurriculumDA.class);
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
@@ -140,11 +144,11 @@ public class EditCurriculumDA extends FenixDispatchAction {
             EditCurriculum.run(infoCurriculum, request.getParameter("language"), userView.getUsername());
 
         } catch (NonExistingServiceException nonExistingServiceException) {
-            nonExistingServiceException.printStackTrace();
+            logger.error(nonExistingServiceException.getMessage(), nonExistingServiceException);
             throw new NonExistingActionException("message.nonExistingCurricularCourse",
                     mapping.findForward("readDegreeCurricularPlan"));
         } catch (FenixServiceException fenixServiceException) {
-            fenixServiceException.printStackTrace();
+            logger.error(fenixServiceException.getMessage(), fenixServiceException);
             throw new FenixActionException(fenixServiceException.getMessage());
         }
         return mapping.findForward("readCurricularCourse");

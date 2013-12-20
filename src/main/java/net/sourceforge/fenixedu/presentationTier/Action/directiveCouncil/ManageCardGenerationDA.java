@@ -45,6 +45,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
@@ -53,6 +55,8 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class ManageCardGenerationDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ManageCardGenerationDA.class);
 
     static public class UploadBean implements Serializable {
 
@@ -515,6 +519,8 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     private static class CardEmissionEntry {
 
+        private static final Logger logger = LoggerFactory.getLogger(ManageCardGenerationDA.CardEmissionEntry.class);
+
         final Set<CardGenerationEntry> cardGenerationEntries = new HashSet<CardGenerationEntry>();
 
         final String line;
@@ -525,7 +531,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
             this.line = line;
             final String[] parts = line.split("\t");
             if (parts.length != 3) {
-                System.out.println("Invalid format for line: " + line);
+                logger.info("Invalid format for line: " + line);
             } else {
                 final String identifier = parts[0].trim();
                 final String date = parts[1].trim();
@@ -538,13 +544,13 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
                     if (person == null) {
                         person = cardGenerationEntry.getPerson();
                     } else if (person != cardGenerationEntry.getPerson()) {
-                        System.out.println("Line      : " + line);
-                        System.out.println("identifier: " + identifier);
+                        logger.info("Line      : " + line);
+                        logger.info("identifier: " + identifier);
                         for (final CardGenerationEntry cge : cardGenerationEntries) {
                             final Person p = cge.getPerson();
-                            System.out.println("CGE.id: " + cge.getExternalId() + " " + "P.id: "
+                            logger.info("CGE.id: " + cge.getExternalId() + " " + "P.id: "
                                     + (p == null ? "" : p.getExternalId() + " (" + p.getUsername() + ")"));
-                            System.out.println(cge.getLine());
+                            logger.info(cge.getLine());
                         }
                         throw new Error("Card emitted matches multiple people! " + line);
                     }
@@ -560,7 +566,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
                         year = -1;
                         month = -1;
                         day = -1;
-                        System.out.println("Unkown date format: " + date);
+                        logger.debug("Unkown date format: " + date);
                     } else if (si1 == -1) {
                         final int hi2 = date.indexOf('-', hi1 + 1);
                         if (hi1 == 4) {
@@ -598,8 +604,8 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
                             }
                         }
                     } else {
-                        System.out.println("hi1: " + hi1);
-                        System.out.println("si1: " + si1);
+                        logger.info("hi1: " + hi1);
+                        logger.info("si1: " + si1);
                         throw new Error("Unkown date format: " + date);
                     }
 

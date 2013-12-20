@@ -46,6 +46,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -61,6 +63,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "firstPage", path = "/manager/guideManagement/welcomeScreen.jsp"),
         @Forward(name = "chooseGuide", path = "/manager/guideManagement/chooseGuide.jsp") })
 public class GuideManagementDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(GuideManagementDispatchAction.class);
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -96,10 +100,10 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
         } catch (NonExistingServiceException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (FenixServiceException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         // read transactions
@@ -112,7 +116,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
                 paymentTransaction = ReadPaymentTransactionByGuideEntryID.run(guideEntry.getExternalId());
             } catch (FenixServiceException e1) {
                 // TODO Auto-generated catch block
-                e1.printStackTrace();
+                logger.error(e1.getMessage(), e1);
             }
 
             paymentTransactions.add(paymentTransaction);
@@ -123,7 +127,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
             executionYears = ReadExecutionYears.run();
         } catch (FenixServiceException e1) {
             // TODO Auto-generated catch block
-            e1.printStackTrace();
+            logger.error(e1.getMessage(), e1);
         }
 
         List degreeCurricularPlans = null;
@@ -232,7 +236,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
         } catch (FenixServiceException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return chooseGuide(mapping, actionForm, request, response);
@@ -283,7 +287,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
             DeleteGuideEntryAndPaymentTransactionInManager.run(selectedGuideEntryID);
         } catch (FenixServiceException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return chooseGuide(mapping, actionForm, request, response);
@@ -302,7 +306,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
             DeleteGuideVersionInManager.run(guideID);
         } catch (FenixServiceException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return chooseGuide(mapping, actionForm, request, response);
         }
 

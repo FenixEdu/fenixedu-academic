@@ -46,12 +46,16 @@ import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Tânia Pousão
  * 
  */
 public class StudentsGratuityListAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(StudentsGratuityListAction.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -189,7 +193,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         try {
             executionDegreeId = findExecutionDegreeId(degree);
         } catch (NumberFormatException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             errors.add("noList", new ActionError("error.masterDegree.gratuity.impossible.studentsGratuityList"));
             saveErrors(request, errors);
             return mapping.getInputForward();
@@ -207,7 +211,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
                             .runReadGratuitySituationListByExecutionDegreeAndSpecialization(executionDegreeId, executionYear,
                                     specialization, situation);
         } catch (FenixServiceException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             if (exception.getMessage().startsWith("error.impossible.noGratuityValues.degreeName")) {
                 String msgError = exception.getMessage().substring(0, exception.getMessage().indexOf(">"));
                 String nameExecutionDegree =
@@ -278,7 +282,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
                     ReadExecutionDegreeByDegreeCurricularPlanID.runReadExecutionDegreeByDegreeCurricularPlanID(
                             degreeCurricularPlanID, executionYearString);
         } catch (FenixServiceException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
@@ -301,7 +305,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
                             .runReadGratuitySituationListByExecutionDegreeAndSpecialization(infoExecutionDegree.getExternalId(),
                                     infoExecutionDegree.getInfoExecutionYear().getYear(), specialization, situation);
         } catch (FenixServiceException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             saveErrors(request, errors);
             // return mapping.getInputForward();
         }
@@ -345,7 +349,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         try {
             executionDegreeID = findExecutionDegreeId(degree);
         } catch (NumberFormatException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             errors.add("noList", new ActionError("error.masterDegree.gratuity.impossible.studentsGratuityList"));
             saveErrors(request, errors);
             return mapping.getInputForward();
@@ -430,7 +434,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
                     externalId = idInString;
                 }
             } catch (NumberFormatException numberFormatException) {
-                numberFormatException.printStackTrace();
+                logger.error(numberFormatException.getMessage(), numberFormatException);
                 throw new NumberFormatException();
             }
         }

@@ -4,13 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.framework;
 
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Leonor Almeida
@@ -18,6 +19,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  * 
  */
 public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    private static final Logger logger = LoggerFactory.getLogger(DomainObjectAuthorizationFilter.class);
 
     @Override
     abstract protected RoleType getRoleType();
@@ -41,7 +44,7 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new NotAuthorizedException(e.getMessage());
         }
     }

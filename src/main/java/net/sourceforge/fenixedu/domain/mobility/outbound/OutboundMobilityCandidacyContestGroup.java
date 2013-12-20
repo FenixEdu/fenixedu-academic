@@ -22,6 +22,8 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -29,6 +31,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandidacyContestGroup_Base implements
         Comparable<OutboundMobilityCandidacyContestGroup> {
+
+    private static final Logger logger = LoggerFactory.getLogger(OutboundMobilityCandidacyContestGroup.class);
 
     public OutboundMobilityCandidacyContestGroup(final OutboundMobilityCandidacyContest contest,
             final Set<ExecutionDegree> executionDegrees) {
@@ -374,7 +378,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         }
 
         for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : grades) {
-            System.out.println("Selecting for: "
+            logger.info("Selecting for: "
                     + submissionGrade.getOutboundMobilityCandidacySubmission().getRegistration().getPerson().getUsername());
             final BigDecimal grade = submissionGrade.getGrade();
             if (grade.signum() == 1) {

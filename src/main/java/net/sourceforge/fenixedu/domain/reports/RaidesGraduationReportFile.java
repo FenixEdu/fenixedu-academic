@@ -17,10 +17,14 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.Conclu
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(RaidesGraduationReportFile.class);
 
     public RaidesGraduationReportFile() {
         super();
@@ -41,7 +45,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
         ExecutionYear executionYear = getExecutionYear();
         createHeaders(spreadsheet);
 
-        System.out.println("BEGIN report for " + getDegreeType().name());
+        logger.info("BEGIN report for " + getDegreeType().name());
 
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansToProcess(executionYear)) {
             final Registration registration = studentCurricularPlan.getRegistration();
@@ -86,7 +90,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
             }
         }
 
-        System.out.println("END report for " + getDegreeType().name());
+        logger.info("END report for " + getDegreeType().name());
     }
 
     private Set<StudentCurricularPlan> getStudentCurricularPlansToProcess(ExecutionYear executionYear) {

@@ -5,10 +5,10 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.MissingPersonalDataException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.ParseException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class PhdMigrationProcess extends PhdMigrationProcess_Base {
 

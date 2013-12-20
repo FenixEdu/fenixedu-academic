@@ -50,10 +50,15 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class TeacherCurricularInformation implements Serializable {
+
+    private static final Logger logger = LoggerFactory.getLogger(TeacherCurricularInformation.class);
+
     protected Teacher teacher;
     protected Degree degree;
     protected SortedSet<ExecutionSemester> executionSemesters = new TreeSet<ExecutionSemester>(
@@ -164,7 +169,7 @@ public class TeacherCurricularInformation implements Serializable {
             } else if (lastCategory.getName().getContent().equalsIgnoreCase("Professor Catedrático Convidado")) {
                 return "Professor Catedrático convidado";
             }
-            System.out.println("Invalid category: " + lastCategory.getName().getContent());
+            logger.debug("Invalid category: " + lastCategory.getName().getContent());
         }
         return lastCategory == null ? null : lastCategory.getName().getContent();
     }
@@ -429,7 +434,7 @@ public class TeacherCurricularInformation implements Serializable {
             final String t = convertShiftType(type);
             if (t != null && !t.isEmpty()) {
                 String string = builder.toString();
-                if (!string.equals(t) && !string.startsWith(t+',') && !string.endsWith("," + t)) {
+                if (!string.equals(t) && !string.startsWith(t + ',') && !string.endsWith("," + t)) {
                     if (!string.isEmpty()) {
                         builder.append(',');
                     }
@@ -550,7 +555,7 @@ public class TeacherCurricularInformation implements Serializable {
                 return "TP";
             } else if (shiftType.equals(StringUtils.EMPTY)) {
                 return StringUtils.EMPTY;
-            } else if (shiftType.indexOf(',')>0) {
+            } else if (shiftType.indexOf(',') > 0) {
                 return shiftType;
             }
             return "O";

@@ -21,12 +21,16 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author João Mota
  * 
  */
 public class ViewClassTimeTableAction extends FenixContextAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ViewClassTimeTableAction.class);
 
     /**
      * Constructor for ViewClassTimeTableAction.
@@ -38,7 +42,7 @@ public class ViewClassTimeTableAction extends FenixContextAction {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         String className = request.getParameter("className");
