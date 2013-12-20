@@ -169,6 +169,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
         spreadsheet.addHeader(getResourceMessage("label.phone"));
         spreadsheet.addHeader(getResourceMessage("label.email"));
         spreadsheet.addHeader(getResourceMessage("label.address"));
+        spreadsheet.addHeader(getResourceMessage("label.areaCode"));
     }
 
     private void fillSpreadSheetResults(ExecutionYear executionYear, final StyledExcelSpreadsheet spreadsheet) {
@@ -202,12 +203,14 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
                 String phone = "-";
                 String email = "-";
                 String address = "-";
+                String areaCode = "-";
                 if (delegate != null) {
                     phone = (StringUtils.isEmpty(delegate.getDefaultPhoneNumber())) ? "-" : delegate.getDefaultPhoneNumber();
                     email =
                             (StringUtils.isEmpty(delegate.getDefaultEmailAddressValue())) ? "-" : delegate
                                     .getDefaultEmailAddressValue();
                     address = (StringUtils.isEmpty(delegate.getAddress())) ? "-" : delegate.getAddress();
+                    areaCode = (StringUtils.isEmpty(delegate.getAreaCode())) ? "-" : delegate.getAreaCode();
                 }
                 spreadsheet.addCell(year);
                 spreadsheet.addCell(number);
@@ -215,6 +218,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
                 spreadsheet.addCell(phone);
                 spreadsheet.addCell(email);
                 spreadsheet.addCell(address);
+                spreadsheet.addCell(areaCode);
             }
         }
     }
@@ -440,8 +444,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 
         DelegateBean bean = (DelegateBean) getFromRequest(request, "delegateBean");
         if (bean == null) {
-            final Function function =
-                    (Function) FenixFramework.getDomainObject(request.getParameter("selectedGgaeFunction"));
+            final Function function = (Function) FenixFramework.getDomainObject(request.getParameter("selectedGgaeFunction"));
 
             bean = new DelegateBean();
             bean.setGgaeDelegateFunction(function);
