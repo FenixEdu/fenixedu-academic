@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisState;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -31,6 +33,8 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
     private static final String SUBJECT_KEY = "thesis.proposal.jury.approve.subject";
     private static final String BODY_KEY = "thesis.proposal.jury.approve.body";
     private static final String COORDINATOR_BODY_KEY = "thesis.proposal.jury.approve.body.coordinator";
+    private static final String NO_DATE_KEY = "thesis.proposal.jury.approve.body.noDate";
+    private static final String WITH_DATE_KEY = "thesis.proposal.jury.approve.body.withDate";
 
     private static final String DEGREE_ANNOUNCEMENTS_BOARD_NAME = "Anúncios";
 
@@ -96,18 +100,31 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         String date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", new Date());
         String currentPersonName = currentPerson.getNickname();
 
+        String dateMessage;
+        String discussedDate = "";
+
+        if (thesis.getDiscussed() == null) {
+            //No date was defined to the thesis
+            dateMessage = getMessage(NO_DATE_KEY);
+        } else {
+            dateMessage = getMessage(WITH_DATE_KEY);
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd/yyyy");
+            discussedDate = thesis.getDiscussed().toString(fmt);
+        }
+
         if (thesis.isCoordinator()) {
             return getMessage(COORDINATOR_BODY_KEY, year, degreeName, studentName, studentNumber, presidentName,
                     presidentAffiliation, orientatorName, orientatorAffiliation, includeFlag(coorientatorName), coorientatorName,
                     coorientatorAffiliation, includeFlag(vowel1Name), vowel1Name, vowel1Affiliation, includeFlag(vowel2Name),
-                    vowel2Name, vowel2Affiliation, includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, date,
-                    currentPersonName);
+                    vowel2Name, vowel2Affiliation, includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, dateMessage,
+                    discussedDate, date, currentPersonName);
         } else {
             return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
                     orientatorName, orientatorAffiliation, includeFlag(coorientatorName), coorientatorName,
                     coorientatorAffiliation, includeFlag(vowel1Name), vowel1Name, vowel1Affiliation, includeFlag(vowel2Name),
-                    vowel2Name, vowel2Affiliation, includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, date,
-                    currentPersonName);
+                    vowel2Name, vowel2Affiliation, includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, dateMessage,
+                    discussedDate, date, currentPersonName);
+
         }
     }
 
