@@ -827,15 +827,11 @@ public class FenixAPIv1 {
                     new FenixDegreeInfo(description, objectives, designFor, requisites, profissionalExits, history,
                             operationRegime, gratuity, links);
         }
-
+        
+      
+       
         final List<FenixTeacher> teachers = new ArrayList<>();
-        final Collection<Teacher> responsibleCoordinatorsTeachers =
-                new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
-        for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-            if (coordinator.isResponsible()) {
-                responsibleCoordinatorsTeachers.add(coordinator.getTeacher());
-            }
-        }
+        final Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYear);
 
         for (Teacher teacher : responsibleCoordinatorsTeachers) {
             String teacherName = teacher.getPerson().getName();
