@@ -68,7 +68,7 @@ public class ExceptionInformation {
     private final String sessionContext;
     private final String stackTrace;
 
-    public static class JSPLine{
+    public static class JSPLine {
         public String lineNumber;
         public String line;
 
@@ -76,32 +76,30 @@ public class ExceptionInformation {
             this.lineNumber = lineNumber.trim();
             this.line = line;
         }
-        
-        public String getLineNumber(){
+
+        public String getLineNumber() {
             return lineNumber;
         }
-        
-        public void setLineNumber(String ln){
+
+        public void setLineNumber(String ln) {
             lineNumber = ln;
         }
-       
-        public String getLine(){
+
+        public String getLine() {
             return line;
         }
-        
-        public void setLine(String ln){
+
+        public void setLine(String ln) {
             line = ln;
         }
     }
-    
+
     private String jspExceptionMessage;
     private ArrayList<JSPLine> jspExceptionSourceBefore;
     private JSPLine jspExceptionSourceLine;
     private ArrayList<JSPLine> jspExceptionSourceAfter;
     private String jspExceptionLine;
-    
- 
-    
+
     public static class ThrowableInfo {
         private final boolean cause;
         private final boolean suppressed;
@@ -280,7 +278,7 @@ public class ExceptionInformation {
             }
         }
         this.exceptionInfo = exceptionInfo.toString();
-        
+
         if (ex.getClass().getName().equals("org.apache.jasper.JasperException")) {
             String message = ex.getLocalizedMessage();
             if (message.contains("\n")) {
@@ -295,15 +293,15 @@ public class ExceptionInformation {
                     int state = 0;
                     for (String s : Arrays.copyOfRange(name, 2, name.length - 3)) {
                         int i = s.indexOf(":");
-                        JSPLine line = new JSPLine(s.substring(0, i).toString(), s.substring(i+1,s.length()).toString());                                
+                        JSPLine line = new JSPLine(s.substring(0, i).toString(), s.substring(i + 1, s.length()).toString());
                         switch (state) {
                         case 0:
-                            if (s.startsWith(jspExceptionLine)){
-                                
+                            if (s.startsWith(jspExceptionLine)) {
+
                                 setJspExceptionSourceLine(line);
                                 state = 1;
-                            }else{
-                                getJspExceptionSourceBefore().add(line);                                    
+                            } else {
+                                getJspExceptionSourceBefore().add(line);
                             }
                             break;
                         case 1:
@@ -398,9 +396,11 @@ public class ExceptionInformation {
             String[] params = query.split("&");
             for (String param : params) {
                 String[] entry = param.split("=");
-                String name = entry[0];
-                String value = entry[1];
-                queryParameters.put(name, value);
+                if (entry.length >= 1) {
+                    String name = entry[0];
+                    String value = entry.length == 2 ? entry[1] : null;
+                    queryParameters.put(name, value);
+                }
             }
         }
         setQueryParameters(queryParameters);
