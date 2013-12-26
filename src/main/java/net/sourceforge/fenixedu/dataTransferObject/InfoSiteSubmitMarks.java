@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.LogLevel;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,14 +29,12 @@ public class InfoSiteSubmitMarks extends DataTranferObject implements ISiteCompo
     public boolean equals(Object objectToCompare) {
         boolean result = false;
 
-        if (LogLevel.DEBUG) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("equalsInfoSiteSubmitMarks");
-                try {
-                    throw new Exception();
-                } catch (Exception e) {
-                    logger.debug(e.getStackTrace().toString());
-                }
+        if (logger.isDebugEnabled()) {
+            logger.debug("equalsInfoSiteSubmitMarks");
+            try {
+                throw new Exception();
+            } catch (Exception e) {
+                logger.debug(e.getStackTrace().toString());
             }
         }
 

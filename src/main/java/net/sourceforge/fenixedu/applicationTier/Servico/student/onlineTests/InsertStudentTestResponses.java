@@ -9,7 +9,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -91,11 +90,9 @@ public class InsertStudentTestResponses {
             for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
                 Response thisResponse = response[studentTestQuestion.getTestQuestionOrder().intValue() - 1];
 
-                if (LogLevel.DEBUG) {
-                    if (logger.isDebugEnabled()) {
-                        logger.debug(StringAppender.append(logIdString, " infoStudentTestQuestion.getResonse()= ",
-                                getLogString(new Response[] { thisResponse })));
-                    }
+                if (logger.isDebugEnabled()) {
+                    logger.debug(StringAppender.append(logIdString, " infoStudentTestQuestion.getResonse()= ",
+                            getLogString(new Response[] { thisResponse })));
                 }
 
                 if (thisResponse.isResponsed()) {
@@ -191,9 +188,6 @@ public class InsertStudentTestResponses {
                 decimalFormatSymbols.setDecimalSeparator('.');
                 df.setDecimalFormatSymbols(decimalFormatSymbols);
                 String grade = df.format(Math.max(0, totalMark));
-                if (LogLevel.INFO) {
-                    System.out.println("GRADE ----------------------> " + registration.getNumber() + " " + grade);
-                }
                 mark.setMark(grade);
             }
             StudentTestLog studentTestLog = new StudentTestLog(distributedTest, registration, event);

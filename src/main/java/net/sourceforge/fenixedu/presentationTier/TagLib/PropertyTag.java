@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.TagLib;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu._development.LogLevel;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,10 +48,8 @@ public class PropertyTag extends TagSupport {
         if (parent != null) {
             parent.addProperty(getName(), getValue());
         } else {
-            if (LogLevel.WARN) {
-                logger.warn("property tag was using inside an invalid containerCOULD NOT SET PROPERTY");
-                logger.warn("could not set property: " + getName() + "=" + getValue());
-            }
+            logger.warn("property tag was using inside an invalid containerCOULD NOT SET PROPERTY");
+            logger.warn("could not set property: " + getName() + "=" + getValue());
         }
 
         return SKIP_BODY;

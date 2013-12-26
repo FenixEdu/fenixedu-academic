@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import net.sourceforge.fenixedu._development.LogLevel;
-
 import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +25,7 @@ public class ReverseFile {
     public static void main(String[] args) {
         try {
             if (args == null || args.length < 1 || args.length > 2) {
-                if (LogLevel.FATAL) {
-                    logger.error("Invalid arguments.");
-                }
+                logger.error("Invalid arguments.");
                 throw new InvalidArgumentException("Usage: <filename> [<output filename>]");
             }
 
@@ -39,9 +35,7 @@ public class ReverseFile {
                 reverseFile(args[0], args[1]);
             }
         } catch (Exception ex) {
-            if (LogLevel.FATAL) {
-                logger.error("Encountered fatal exception: " + ex.getMessage(), ex);
-            }
+            logger.error("Encountered fatal exception: " + ex.getMessage(), ex);
         }
 
         System.exit(0);
@@ -61,10 +55,8 @@ public class ReverseFile {
             }
             fileWriter.close();
 
-            if (LogLevel.DEBUG) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Wrote " + lines.length + " lines to " + outputFilename);
-                }
+            if (logger.isDebugEnabled()) {
+                logger.debug("Wrote " + lines.length + " lines to " + outputFilename);
             }
         }
     }

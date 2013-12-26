@@ -10,8 +10,6 @@ import java.util.Map;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu._development.LogLevel;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +18,7 @@ import edu.emory.mathcs.backport.java.util.Arrays;
 public class HostAccessControl {
     private static final Logger logger = LoggerFactory.getLogger(HostAccessControl.class);
 
-    private Map<String, List<InetAddress>> configuration = new HashMap<>();
+    private final Map<String, List<InetAddress>> configuration = new HashMap<>();
 
     HostAccessControl() {
     }
@@ -57,29 +55,21 @@ public class HostAccessControl {
 
             List<InetAddress> hostList = this.configuration.get(name);
             if (hostList == null) {
-                if (LogLevel.WARN) {
-                    logger.warn(name + " denied[" + remoteAddress + "]: allowed hosts not defined");
-                }
+                logger.warn(name + " denied[" + remoteAddress + "]: allowed hosts not defined");
                 return false;
             }
 
             for (InetAddress allowedHost : hostList) {
                 if (remoteAddress.equals(allowedHost)) {
-                    if (LogLevel.DEBUG) {
-                        logger.debug(name + " allowed[" + remoteAddress + "]: matches group " + hostList);
-                    }
+                    logger.debug(name + " allowed[" + remoteAddress + "]: matches group " + hostList);
 
                     return true;
                 }
             }
 
-            if (LogLevel.WARN) {
-                logger.warn(name + " denied[" + remoteAddress + "]: is not member of " + hostList);
-            }
+            logger.warn(name + " denied[" + remoteAddress + "]: is not member of " + hostList);
         } catch (UnknownHostException e) {
-            if (LogLevel.WARN) {
-                logger.warn(name + " denied[" + address + "]: could not find host");
-            }
+            logger.warn(name + " denied[" + address + "]: could not find host");
         }
 
         return false;

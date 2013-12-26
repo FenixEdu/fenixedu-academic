@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Map;
 
-import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.LibraryCardSystem.HigherClearenceGroupBuilder;
 import net.sourceforge.fenixedu.domain.ManagementGroups;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorCycle1Group;
@@ -148,9 +147,7 @@ public class GroupBuilderRegistry {
             throw new GroupBuilderNameTakenException(name);
         }
 
-        if (LogLevel.DEBUG) {
-            logger.debug("registering builder: " + name + " = " + builder);
-        }
+        logger.debug("registering builder: " + name + " = " + builder);
         instance.builders.put(name, new Pair<Class, GroupBuilder>(groupClass, builder));
     }
 

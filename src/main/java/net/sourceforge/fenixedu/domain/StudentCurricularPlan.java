@@ -17,7 +17,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
@@ -1898,10 +1897,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 final CurricularYear curricularYear = curricularSemester.getCurricularYear();
                 if (curricularYearInteger == null || curricularYear.getYear().intValue() <= curricularYearInteger.intValue()) {
                     if (!isCurricularCourseApproved(curricularCourse)) {
-                        if (LogLevel.INFO) {
-                            System.out.println("curricular course failed: " + curricularCourse.getName() + " "
-                                    + curricularCourse.getCode());
-                        }
                         return false;
                     }
                 }

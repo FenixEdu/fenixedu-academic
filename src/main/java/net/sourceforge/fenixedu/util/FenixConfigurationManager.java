@@ -246,9 +246,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "rmi.stream.bytes.min")
         public String getRMIStreamBytesMin();
 
-        @ConfigurationProperty(key = "script.isAlive.check.db", defaultValue = "false")
-        public Boolean getScriptIsAliveCheckDB();
-
         @ConfigurationProperty(key = "semester.for.from.enrolments")
         public String getSemesterForFromEnrolments();
 
