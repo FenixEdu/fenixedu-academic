@@ -1,17 +1,19 @@
 package net.sourceforge.fenixedu.domain.accounting.events.export;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 public class SIBSOutgoingPaymentQueueJob extends SIBSOutgoingPaymentQueueJob_Base {
 
@@ -34,8 +36,7 @@ public class SIBSOutgoingPaymentQueueJob extends SIBSOutgoingPaymentQueueJob_Bas
     }
 
     public static List<SIBSOutgoingPaymentQueueJob> readAllSIBSOutgoingPaymentQueueJobs() {
-        return new ArrayList<SIBSOutgoingPaymentQueueJob>(
-                DomainObjectUtil.readAllDomainObjects(SIBSOutgoingPaymentQueueJob.class));
+        return Lists.newArrayList(Iterables.filter(Bennu.getInstance().getJobsSet(), SIBSOutgoingPaymentQueueJob.class));
     }
 
     public static SIBSOutgoingPaymentQueueJob getQueueJobNotDoneAndNotCancelled() {

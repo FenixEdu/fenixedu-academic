@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
@@ -17,6 +16,9 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
 
 public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCode_Base {
 
@@ -98,7 +100,7 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 
     protected static IndividualCandidacyPaymentCode getAvailablePaymentCodeForReuse() {
         Set<IndividualCandidacyPaymentCode> individualCandidacyPaymentCodes =
-                DomainObjectUtil.readAllDomainObjects(IndividualCandidacyPaymentCode.class);
+                Sets.newHashSet(Iterables.filter(Bennu.getInstance().getPaymentCodesSet(), IndividualCandidacyPaymentCode.class));
 
         for (IndividualCandidacyPaymentCode paymentCode : individualCandidacyPaymentCodes) {
             if (paymentCode.isAvailableForReuse()) {

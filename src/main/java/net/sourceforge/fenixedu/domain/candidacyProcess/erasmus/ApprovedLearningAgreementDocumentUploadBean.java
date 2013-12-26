@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
 import java.io.IOException;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class ApprovedLearningAgreementDocumentUploadBean extends CandidacyProcessDocumentUploadBean {
@@ -16,7 +16,7 @@ public class ApprovedLearningAgreementDocumentUploadBean extends CandidacyProces
     private static final long serialVersionUID = 1L;
 
     @Override
-    public IndividualCandidacyDocumentFile createIndividualCandidacyDocumentFile(Class<? extends CandidacyProcess> processType,
+    public IndividualCandidacyDocumentFile createIndividualCandidacyDocumentFile(Class<? extends Process> processType,
             String documentIdNumber) throws IOException {
         String fileName = this.getFileName();
         long fileLength = this.getFileSize();
