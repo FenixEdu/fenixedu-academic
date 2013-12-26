@@ -92,7 +92,7 @@ public class InfoContributor extends InfoObject {
     }
 
     @Atomic
-    public void createContributor() throws InvalidArgumentsServiceException {
+    public void createContributor() throws InvalidArgumentsServiceException, DomainException {
         if (getContributorType() == ContributorType.EXTERNAL_PERSON) {
             Person.createContributor(getContributorName(), getContributorNumber().toString(), new PhysicalAddressData(
                     getContributorAddress(), getAreaCode(), getAreaOfAreaCode(), getArea(), getParishOfResidence(),

@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor.ContributorType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -20,6 +21,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
@@ -117,6 +120,12 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
         Object args[] = { infoContributor };
         try {
             infoContributor.createContributor();
+        } catch (DomainException e) {
+            //Contributor number already exists
+            ActionMessages errors = new ActionMessages();
+            errors.add(e.getKey(), new ActionMessage(e.getKey()));
+            saveErrors(request, errors);
+            return mapping.findForward("PrepareReady");
         } catch (InvalidArgumentsServiceException e) {
             throw new ExistingActionException("O Contribuinte", e);
         }
