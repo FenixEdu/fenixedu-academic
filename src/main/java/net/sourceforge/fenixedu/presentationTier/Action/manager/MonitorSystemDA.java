@@ -4,10 +4,13 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.net.ssl.SSLContext;
@@ -16,7 +19,6 @@ import javax.net.ssl.X509TrustManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -66,6 +68,8 @@ import org.restlet.util.Series;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixframework.core.SharedIdentityMap;
+
 /**
  * @author Luis Cruz
  */
@@ -76,14 +80,9 @@ public class MonitorSystemDA extends FenixDispatchAction {
     public ActionForward monitor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        SystemInfo systemInfoApplicationServer = new SystemInfo();
-        request.setAttribute("systemInfoApplicationServer", systemInfoApplicationServer);
+        request.setAttribute("properties", System.getProperties());
 
-        SystemInfo systemInfoWebContainer = new SystemInfo();
-        request.setAttribute("systemInfoWebContainer", systemInfoWebContainer);
-
-        boolean useBarraAsAuth = FenixConfigurationManager.isBarraAsAuthenticationBroker();
-        request.setAttribute("useBarraAsAuth", useBarraAsAuth);
+        request.setAttribute("useBarraAsAuth", FenixConfigurationManager.isBarraAsAuthenticationBroker());
 
         request.setAttribute("startMillis", ""
                 + ExecutionSemester.readActualExecutionSemester().getAcademicInterval().getStartMillis());
@@ -91,8 +90,36 @@ public class MonitorSystemDA extends FenixDispatchAction {
                 + ExecutionSemester.readActualExecutionSemester().getAcademicInterval().getEndMillis());
         request.setAttribute("chronology", ""
                 + ExecutionSemester.readActualExecutionSemester().getAcademicInterval().getChronology().toString());
+        request.setAttribute("cacheSize", SharedIdentityMap.getCache().size());
 
         return mapping.findForward("Show");
+    }
+
+    public ActionForward dumpThreadTrace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Map<Thread, StackTraceElement[]> traces = Thread.getAllStackTraces();
+
+        StringBuilder builder = new StringBuilder();
+
+        for (Entry<Thread, StackTraceElement[]> trace : traces.entrySet()) {
+            builder.append(trace.getKey());
+            builder.append(":\n");
+            for (StackTraceElement element : trace.getValue()) {
+                builder.append("\t");
+                builder.append(element);
+                builder.append("\n");
+            }
+            builder.append("\n");
+        }
+
+        try (PrintWriter writer = response.getWriter()) {
+            response.setContentType("text/plain");
+            response.setStatus(HttpServletResponse.SC_OK);
+            writer.write(builder.toString());
+            writer.flush();
+        }
+
+        return null;
     }
 
     public ActionForward testRestlet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
