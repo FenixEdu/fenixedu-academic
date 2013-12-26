@@ -8,7 +8,7 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
 <bean:define id="executionCourse" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer"/>
 <bean:define id="executionCourseID" name="executionCourse" property="externalId"/>
-<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean"/>
+<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceCoursesBean"/>
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/checkall.js"></script>
 
@@ -16,7 +16,6 @@
 <h2><bean:message key="label.search.scorm"/></h2>
 
 	<div class="infoop2">
-
 		<bean:message key="label.information.about.search.line1"/>
 		<bean:message key="label.information.about.search.line2"/>
 	</div>
@@ -92,71 +91,15 @@
 				</script>
 			</td>
 		</tr>
-
-		<logic:iterate id="searchElement" indexId="index" name="bean" property="searchElements">
+		
 		<tr>
 			<th>
-				<logic:equal name="index" value="0">
-					<bean:message key="label.searchField"/>:
-				</logic:equal>
-				
-				<logic:notEqual name="index" value="0">
-					<fr:edit id="<%="conjunctionType" + index%>" name="searchElement" slot="conjunction">
-					<fr:layout>
-						<fr:property name="defaultText" value=""/>
-					</fr:layout>
-					</fr:edit>
-				</logic:notEqual>
-
+				<bean:message key="label.searchField" />:
 			</th>
-
 			<td>
-				<fr:edit id="<%="valueField" + index%>" name="searchElement" slot="queryValue" >
-					<fr:layout>
-						<fr:property name="size" value="40"/>
-					</fr:layout>
-				</fr:edit>
-
-				<bean:message key="label.in" bundle="APPLICATION_RESOURCES"/>
-				<fr:edit id="<%= "searchTypeField" + index%>" name="searchElement" slot="searchField">
-				<fr:layout>
-					<fr:property name="excludedValues" value="TYPE, DATE, UNIT"/> 
-					<fr:property name="sort" value="true"/>
-				</fr:layout>
-				</fr:edit>
-
- 
-				<logic:equal name="index" value="0">
-					<div class="switchNone">
-					<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria"  + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link>			
-					<logic:greaterThan name="bean" property="searchElementsSize" value="1">
-					 , 
-					<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></html:link>								
-					</logic:greaterThan>
-					</div>
-					<div class="switchInline">
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='" + request.getContextPath() + "/publico/searchScormContent.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a>
-					<logic:greaterThan name="bean" property="searchElementsSize" value="1">
-					 , 
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='" + request.getContextPath() + "/publico/searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></a>
-					</logic:greaterThan>
-					</div>
-				</logic:equal>
-				
-				<logic:notEqual name="index" value="0">
-					<div class="switchNone">
-					<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link> , 			
-					<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
-					</div>
-					<div class="switchInline">
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='" + request.getContextPath() + "/publico/searchScormContent.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) +  "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a> , 
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='" + request.getContextPath() + "/publico/searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();"%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></a>
-					</div>
-				</logic:notEqual>
+				<fr:edit id="searchTextField" name="bean" slot="searchText" />
 			</td>
 		</tr>
-		</logic:iterate>
-
 
 		</table>
 			<html:submit><bean:message key="label.search" /></html:submit>
@@ -172,7 +115,7 @@
 <p>
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
-	"/publico/searchScormContent.do?method=moveIndex&amp" + bean.getSearchElementsAsParameters()  %>" 
+	"/publico/searchScormContent.do?method=moveIndex" + bean.getSearchElementsAsParameters()  %>" 
 	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="10"/>
 </p>
 </logic:notEqual>

@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.AddFunctionalityT
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ApplyStructureModifications;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.RemoveContentFromContainer;
 import net.sourceforge.fenixedu.domain.FileContent;
+import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
@@ -143,7 +144,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         FileContentCreationBean bean = new FileContentCreationBean(container, site);
 
         if (!site.isFileClassificationSupported()) {
-            bean.setEducationalLearningResourceType(FileContentCreationBean.EducationalResourceType.SITE_CONTENT);
+            bean.setEducationalLearningResourceType(EducationalResourceType.SITE_CONTENT);
             request.setAttribute("skipFileClassification", true);
         }
 
@@ -473,7 +474,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         ScormCreationBean bean = new ScormCreationBean(getSelectContainer(request), site);
 
         if (!site.isFileClassificationSupported()) {
-            bean.setEducationalLearningResourceType(FileContentCreationBean.EducationalResourceType.SITE_CONTENT);
+            bean.setEducationalLearningResourceType(EducationalResourceType.SITE_CONTENT);
             request.setAttribute("skipFileClassification", true);
         }
 

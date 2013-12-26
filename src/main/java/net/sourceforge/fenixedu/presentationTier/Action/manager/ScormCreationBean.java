@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.io.InputStream;
 
+import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
 

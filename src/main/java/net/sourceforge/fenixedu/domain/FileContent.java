@@ -10,27 +10,38 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class FileContent extends FileContent_Base {
 
+    public enum EducationalResourceType {
+        EXERCISE("exercise"), SIMULATION("simulation"), QUESTIONNARIE("questionnaire"), FIGURE("figure"), SLIDE("slide"), TABLE(
+                "table"), EXAM("exam"), TEST("test"), INFORMATIONS("informations"), MARKSHEET("marksheet"), PROJECT_SUBMISSION(
+                "projectSubmission"), LABORATORY_GUIDE("laboratoryGuide"), DIDACTIL_TEXT("didactilText"),
+        STUDY_BOOK("studyBook"), SITE_CONTENT("siteContent"), PROGRAM("program"), SUPPORT_TEXT("supportText");
+
+        private String type;
+
+        private EducationalResourceType(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+    }
+
     protected FileContent() {
         super();
 
         setAttachment(null);
     }
 
-    protected FileContent(Attachment attachment) {
-        super();
-
-        setAttachment(attachment);
-    }
-
-    public FileContent(Attachment attachment, VirtualPath path, String filename, String displayName,
-            Collection<FileSetMetaData> metadata, byte[] content, Group group) {
-        this(attachment);
-        init(path, filename, displayName, metadata, content, group);
-    }
-
     public FileContent(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
             byte[] content, Group group) {
         init(path, filename, displayName, metadata, content, group);
+    }
+
+    public FileContent(String filename, String displayName, byte[] content, Group group, EducationalResourceType type) {
+        init(null, filename, displayName, null, content, group);
+        setResourceType(type);
     }
 
     @Override

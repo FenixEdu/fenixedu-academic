@@ -220,6 +220,7 @@ enum net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState 						
 enum net.sourceforge.fenixedu.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType                                  as MobilityEmailTemplateType;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGradeState                                 as IndividualCandidacySeriesGradeState;
+enum net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType                                                  as EducationalResourceType;
 /*
  * Value types that need special externalization
  */
@@ -1351,6 +1352,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     
     
         class FileContent extends File {
+        	EducationalResourceType resourceType;
         }
 
             class messaging.PublicBoardFileContent extends FileContent {

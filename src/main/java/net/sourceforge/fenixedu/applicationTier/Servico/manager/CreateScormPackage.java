@@ -6,20 +6,19 @@ import java.io.IOException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SiteManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateScormPackage extends CreateFileContent {
 
     @Override
     protected void run(Site site, Container container, File file, String originalFilename, String displayName,
-            Group permittedGroup, Person person, EducationalResourceType type) throws DomainException, FenixServiceException,
-            IOException {
+            Group permittedGroup, Person person, EducationalResourceType type) throws DomainException, IOException {
 
         super.run(site, container, file, originalFilename, displayName, permittedGroup, person, type);
     }
