@@ -29,6 +29,10 @@ import org.apache.struts.actions.DispatchAction;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Maps;
+
 public class ExceptionInformation {
 
     //thread info
@@ -53,7 +57,7 @@ public class ExceptionInformation {
     private String requestURL;
     private String requestMethod;
     private String queryString;
-    private Map<String, String> queryParameters;
+    private Map<String, String> requestParameters;
     private ActionMapping actionMapping;
     private Map<String, Object> requestContextEntries;
     private Map<String, Object> sessionContextEntries;
@@ -391,19 +395,7 @@ public class ExceptionInformation {
         setRequestFullUrl(getRequestFullUrl(request));
         setQueryString(query);
         setRequestMethod(request.getMethod());
-        Map<String, String> queryParameters = new HashMap<String, String>();
-        if (query != null) {
-            String[] params = query.split("&");
-            for (String param : params) {
-                String[] entry = param.split("=");
-                if (entry.length >= 1) {
-                    String name = entry[0];
-                    String value = entry.length == 2 ? entry[1] : null;
-                    queryParameters.put(name, value);
-                }
-            }
-        }
-        setQueryParameters(queryParameters);
+        setRequestParameters(getRequestParameters(request));
         exceptionInfo.append("[RequestURI] ").append(request.getRequestURI()).append("\n");
         exceptionInfo.append("[RequestURL] ").append(request.getRequestURL()).append("\n");
         exceptionInfo.append("[QueryString] ").append(request.getQueryString()).append("\n");
@@ -416,6 +408,18 @@ public class ExceptionInformation {
         } else {
             exceptionInfo.append("[Path|Name] impossible to get (exception through UncaughtExceptionFilter)\n");
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, String> getRequestParameters(HttpServletRequest request) {
+        Map<String, String[]> parametersMap = request.getParameterMap();
+        final Function<String[], String> valuesJoiner = new Function<String[], String>() {
+            @Override
+            public String apply(String[] parameters) {
+                return Joiner.on(", ").join(parameters);
+            }
+        };
+        return Maps.newHashMap(Maps.transformValues(parametersMap, valuesJoiner));
     }
 
     private static String getRequestFullUrl(HttpServletRequest request) {
@@ -492,8 +496,8 @@ public class ExceptionInformation {
         return queryString;
     }
 
-    public Map<String, String> getQueryParameters() {
-        return queryParameters;
+    public Map<String, String> getRequestParameters() {
+        return requestParameters;
     }
 
     public ActionMapping getActionMapping() {
@@ -556,8 +560,8 @@ public class ExceptionInformation {
         this.queryString = queryString;
     }
 
-    private void setQueryParameters(Map<String, String> queryParameters) {
-        this.queryParameters = queryParameters;
+    private void setRequestParameters(Map<String, String> requestParameters) {
+        this.requestParameters = requestParameters;
     }
 
     private void setActionMapping(ActionMapping actionMapping) {

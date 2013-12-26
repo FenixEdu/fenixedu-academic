@@ -150,6 +150,7 @@
     
     <div id="requestInfo">
     	<h2>Request description</h2>
+		<bean:define id="requestParameters"  name="debugExceptionInfo" property = "requestParameters"/>
     	<table id="requestInfoTable" class="super-table">
 			<tr>
 				<td><span class="label">Method:</span></td>
@@ -169,19 +170,18 @@
 			</tr>
 			<tr>
 				<td><span class="label">Request Parameters:</span></td>
+				<logic:empty name="requestParameters"><td><i>Unavailable</i></td></logic:empty>
 			</tr>
-
 		</table>
-		<bean:define id="queryParameters"  name="debugExceptionInfo" property = "queryParameters"/>
-		<logic:notEmpty name="queryParameters">
-		<table class="parameters-table">
- 			<logic:iterate id="element" name="queryParameters">
-				<tr>
- 					<td><span class="label key"><bean:write name="element" property="key"/></span></td>
- 					<td class="value"><bean:write name="element" property="value"/></td>
- 				</tr>
-    		</logic:iterate>
-		</table>
+		<logic:notEmpty name="requestParameters">
+			<table class="parameters-table">
+	 			<logic:iterate id="element" name="requestParameters">
+					<tr>
+	 					<td><span class="label key"><bean:write name="element" property="key"/></span></td>
+	 					<td class="value"><bean:write name="element" property="value"/></td>
+	 				</tr>
+	    		</logic:iterate>
+			</table>
 		</logic:notEmpty>
     </div>
     
