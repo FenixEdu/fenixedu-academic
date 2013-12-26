@@ -72,18 +72,10 @@ Note that in order to properly migrate the application, there must be NO `FileLo
     -- Rename FILE, as File now extends GenericFile
     DROP TABLE `GENERIC_FILE`;
     RENAME TABLE `FILE` TO `GENERIC_FILE`;
-    ALTER TABLE `GENERIC_FILE` CHANGE `CONTENT` `CONTENT_FILE` longblob; /* blueprint files */
-    ALTER TABLE `GENERIC_FILE` CHANGE `SIZE` `SIZE` bigint(20) default NULL;
-    ALTER TABLE `GENERIC_FILE` CHANGE `UPLOAD_TIME` `CREATION_DATE` timestamp NULL default NULL;
-    ALTER TABLE `GENERIC_FILE` CHANGE `MIME_TYPE` `CONTENT_TYPE` text;
-    ALTER TABLE `GENERIC_FILE` CHANGE `DISPLAY_NAME` `DISPLAY_NAME` text;
-    ALTER TABLE `GENERIC_FILE` CHANGE `FILENAME` `FILENAME` text;
-    ALTER TABLE `GENERIC_FILE` ADD `CONTENT_KEY` text;
-    ALTER TABLE `GENERIC_FILE` ADD `OID_STORAGE` bigint unsigned, add index (OID_STORAGE);
+    ALTER TABLE `GENERIC_FILE` CHANGE `CONTENT` `CONTENT_FILE` longblob, CHANGE `SIZE` `SIZE` bigint(20) default NULL, CHANGE `UPLOAD_TIME` `CREATION_DATE` timestamp NULL default NULL,CHANGE `MIME_TYPE` `CONTENT_TYPE` text,CHANGE `DISPLAY_NAME` `DISPLAY_NAME` text,CHANGE `FILENAME` `FILENAME` text, ADD `CONTENT_KEY` text, ADD `OID_STORAGE` bigint unsigned, add index (OID_STORAGE);
     
     -- All existing files should be connected to the DSpace file storage
-    UPDATE GENERIC_FILE SET OID_STORAGE = (SELECT OID_D_SPACE_FILE_STORAGE FROM BENNU);
-    UPDATE GENERIC_FILE SET CONTENT_KEY = EXTERNAL_STORAGE_IDENTIFICATION;
+    UPDATE GENERIC_FILE SET OID_STORAGE = (SELECT OID_D_SPACE_FILE_STORAGE FROM BENNU), CONTENT_KEY = EXTERNAL_STORAGE_IDENTIFICATION;
     ```
 
 6. You can now safely start you application. It is now time to import some data and perform initial configurations.
