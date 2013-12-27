@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.phd;
 
+import java.security.SecureRandom;
 import java.util.UUID;
 
-import net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidac
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -86,7 +87,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     public void ensureExternalAccess() {
         if (StringUtils.isEmpty(getAccessHashCode())) {
             super.setAccessHashCode(UUID.randomUUID().toString());
-            super.setPassword(new GeneratePasswordBase().generatePassword(null));
+            super.setPassword(RandomStringUtils.random(15, 0, 0, true, true, null, new SecureRandom()));
         }
     }
 

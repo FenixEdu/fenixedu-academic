@@ -43,7 +43,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-import org.json.JSONArray;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -53,6 +52,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonPrimitive;
 
 @Mapping(path = "/alumni", module = "publicRelations")
 @Forwards({ @Forward(name = "alumni.showAlumniStatistics", path = "/gep/alumni/alumniStatistics.jsp"),
@@ -113,12 +115,12 @@ public class AlumniInformationAction extends FenixDispatchAction {
     }
 
     private String createJsonArray(Map<Long, Integer> registrationsByDay) {
-        JSONArray data = new JSONArray();
+        JsonArray data = new JsonArray();
         for (Entry<Long, Integer> entry : registrationsByDay.entrySet()) {
-            JSONArray dataEntry = new JSONArray();
-            dataEntry.put(entry.getKey());
-            dataEntry.put(entry.getValue());
-            data.put(dataEntry);
+            JsonArray dataEntry = new JsonArray();
+            dataEntry.add(new JsonPrimitive(entry.getKey()));
+            dataEntry.add(new JsonPrimitive(entry.getValue()));
+            data.add(dataEntry);
         }
         return data.toString();
     }

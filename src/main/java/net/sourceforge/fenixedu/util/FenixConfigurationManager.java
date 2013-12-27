@@ -111,9 +111,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "file.download.url.local.content")
         public String getFileDownloadUrlLocalContent();
 
-        @ConfigurationProperty(key = "passSize", defaultValue = "8")
-        public Integer getGeneratedPasswordSize();
-
         @ConfigurationProperty(key = "generic.application.email.confirmation.link")
         public String getGenericApplicationEmailConfirmationLink();
 
