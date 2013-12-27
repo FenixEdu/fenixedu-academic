@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.cardGeneration;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -16,8 +17,6 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import edu.emory.mathcs.backport.java.util.Collections;
 
 public class SantanderBatch extends SantanderBatch_Base {
 
