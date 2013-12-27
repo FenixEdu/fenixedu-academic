@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.util.StringUtils;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -46,6 +44,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class CreateContributorDispatchAction extends FenixDispatchAction {
 
+    private final String prepareReadyForward = "PrepareReady";
+
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
@@ -61,7 +61,7 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
         createContributorForm.set("districtSubdivisionOfResidence", null);
         createContributorForm.set("districtOfResidence", null);
 
-        return mapping.findForward("PrepareReady");
+        return mapping.findForward(prepareReadyForward);
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -74,10 +74,10 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
         try {
             Integer.valueOf((String) createContributorForm.get("contributorName"));
 
-            ActionErrors errors = new ActionErrors();
-            errors.add("error.invalid.contributorName", new ActionError("error.invalid.contributorName"));
+            ActionMessages errors = new ActionMessages();
+            errors.add("error.invalid.contributorName", new ActionMessage("error.invalid.contributorName"));
             saveErrors(request, errors);
-            return mapping.getInputForward();
+            return mapping.findForward(prepareReadyForward);
         } catch (NumberFormatException e) {
             // do nothing, name is not a number, it's correct
         }
@@ -86,23 +86,23 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
         try {
             contributorNumber = Integer.valueOf((String) createContributorForm.get("contributorNumber"));
             if (contributorNumber.intValue() == 0) {
-                ActionErrors errors = new ActionErrors();
-                errors.add("error.invalid.contributorNumber", new ActionError("error.invalid.contributorNumber"));
+                ActionMessages errors = new ActionMessages();
+                errors.add("error.invalid.contributorNumber", new ActionMessage("error.invalid.contributorNumber"));
                 saveErrors(request, errors);
-                return mapping.getInputForward();
+                return mapping.findForward(prepareReadyForward);
             }
         } catch (NumberFormatException e) {
-            ActionErrors errors = new ActionErrors();
-            errors.add("error.invalid.contributorNumber", new ActionError("error.invalid.contributorNumber"));
+            ActionMessages errors = new ActionMessages();
+            errors.add("error.invalid.contributorNumber", new ActionMessage("error.invalid.contributorNumber"));
             saveErrors(request, errors);
-            return mapping.getInputForward();
+            return mapping.findForward(prepareReadyForward);
         }
 
         if (StringUtils.isEmpty(createContributorForm.getString("contributorType"))) {
-            ActionErrors errors = new ActionErrors();
-            errors.add("error.invalid.contributorType", new ActionError("error.invalid.contributorType"));
+            ActionMessages errors = new ActionMessages();
+            errors.add("error.invalid.contributorType", new ActionMessage("error.invalid.contributorType"));
             saveErrors(request, errors);
-            return mapping.getInputForward();
+            return mapping.findForward(prepareReadyForward);
         }
 
         InfoContributor infoContributor = new InfoContributor();
@@ -125,7 +125,7 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
             ActionMessages errors = new ActionMessages();
             errors.add(e.getKey(), new ActionMessage(e.getKey()));
             saveErrors(request, errors);
-            return mapping.findForward("PrepareReady");
+            return mapping.findForward(prepareReadyForward);
         } catch (InvalidArgumentsServiceException e) {
             throw new ExistingActionException("O Contribuinte", e);
         }
