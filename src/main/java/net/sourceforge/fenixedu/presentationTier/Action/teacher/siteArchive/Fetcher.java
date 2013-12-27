@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherRequestWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherServletResponseWrapper;
+import net.sourceforge.fenixedu.presentationTier.servlets.FileDownloadServlet;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 import com.google.common.io.ByteStreams;
@@ -165,7 +166,7 @@ public class Fetcher {
 
     private void writeFileToStream(String url, OutputStream stream) throws IOException {
         if (url.startsWith(File.getFileDownloadPrefix())) {
-            File fileFromURL = File.getFileFromURL(url);
+            File fileFromURL = FileDownloadServlet.getFileFromURL(url);
             if (fileFromURL != null) {
                 ByteStreams.copy(fileFromURL.getStream(), stream);
             }

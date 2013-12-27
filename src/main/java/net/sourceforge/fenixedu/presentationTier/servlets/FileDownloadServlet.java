@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.servlets;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -48,9 +47,9 @@ public class FileDownloadServlet extends HttpServlet {
         } else {
             final Person person = AccessControl.getPerson();
             if (!file.isPrivate() || file.isPersonAllowedToAccess(person)) {
+                byte[] content = file.getContent();
                 response.setContentType(file.getMimeType());
                 response.setContentLength(file.getSize().intValue());
-                byte[] content = file.getContent();
                 try (OutputStream stream = response.getOutputStream()) {
                     stream.write(content);
                     stream.flush();
@@ -81,7 +80,7 @@ public class FileDownloadServlet extends HttpServlet {
         response.getWriter().close();
     }
 
-    private final static File getFileFromURL(String url) {
+    public final static File getFileFromURL(String url) {
         // Remove trailing path, and split the tokens
         String[] parts = url.substring(url.indexOf(SERVLET_PATH)).replace(SERVLET_PATH, "").split("\\/");
         if (parts.length == 0) {
