@@ -4,8 +4,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 
-import org.apache.jcs.access.exception.InvalidArgumentException;
-
 /**
  * An operator represents a dynamic argument that obtains it's value by using a
  * specific operation available to the group expression. The operation can

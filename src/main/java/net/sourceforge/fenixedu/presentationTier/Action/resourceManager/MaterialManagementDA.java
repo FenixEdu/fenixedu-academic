@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -33,7 +32,7 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 public class MaterialManagementDA extends FenixDispatchAction {
 
     public ActionForward prepareMaterialManage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         MaterialBean bean = new MaterialBean(null, null);
         request.setAttribute("materialBean", bean);
@@ -41,7 +40,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward listMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         MaterialBean bean = null;
         MaterialType materialType = null;
@@ -66,7 +65,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         Material material = getMaterialFromParameter(request);
         request.setAttribute("material", material);
@@ -74,7 +73,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareCreateMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         MaterialBean bean = getRenderedObject("prepareCreateMaterialBeanID");
         bean = bean != null ? bean : (MaterialBean) getRenderedObject("createMaterialBeanID");
@@ -88,7 +87,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         MaterialBean bean = getRenderedObject("createMaterialBeanID");
 
@@ -105,7 +104,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Material material = getMaterialFromParameter(request);
         Class<? extends Material> materialClass = material.getClass();

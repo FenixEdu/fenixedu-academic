@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
 
-import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -112,7 +111,7 @@ public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
     }
 
     public ActionForward showThesisList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         final Person person = AccessControl.getPerson();
         if (person != null) {
@@ -128,7 +127,7 @@ public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
     }
 
     public ActionForward viewThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
         final String thesisIdString = request.getParameter("thesisID");
 
         final Thesis thesis = FenixFramework.getDomainObject(thesisIdString);
@@ -141,13 +140,13 @@ public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
     }
 
     public ActionForward showConfirmationPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
         request.setAttribute("showConfirmationPage", Boolean.TRUE);
         return viewThesis(mapping, form, request, response);
     }
 
     public ActionForward confirmDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final String thesisIdString = request.getParameter("thesisID");
 
         final Thesis thesis = FenixFramework.getDomainObject(thesisIdString);
