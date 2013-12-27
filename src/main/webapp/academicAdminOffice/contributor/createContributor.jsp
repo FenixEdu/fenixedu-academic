@@ -27,13 +27,13 @@
 		<!-- Contributor Name -->
 		<tr>
 			<th><bean:message key="label.masterDegree.administrativeOffice.contributorName" />:</th>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorNumber" property="contributorName" size="40"/></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorName" property="contributorName" size="40"/></td>
 		</tr>
 
 		<!-- Contributor Number -->
 		<tr>
 			<th><bean:message key="label.masterDegree.administrativeOffice.contributorNumber" />:</th>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorName" property="contributorNumber" size="20"/></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorNumber" property="contributorNumber" size="20"/></td>
 		</tr>
 
 		<!-- Contributor Address -->
