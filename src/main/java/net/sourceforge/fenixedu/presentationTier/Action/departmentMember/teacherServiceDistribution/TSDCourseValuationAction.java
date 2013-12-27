@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetTSDCourse;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCompetenceCourse;

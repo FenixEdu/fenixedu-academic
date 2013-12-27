@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.academicAdministration.SearchStudentsByDegreeParametersBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean;

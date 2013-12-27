@@ -13,7 +13,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
@@ -25,6 +24,7 @@ import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoar
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.util.PeriodState;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;

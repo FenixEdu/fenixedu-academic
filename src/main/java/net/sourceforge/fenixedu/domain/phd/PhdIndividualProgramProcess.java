@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Alert;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -527,7 +526,17 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             }
         }
 
-        return CollectionUtils.filter(processesToSearch, searchPredicate);
+        return filter(processesToSearch, searchPredicate);
+    }
+
+    private static <T> List<T> filter(Collection<T> collection, Predicate<T> predicate) {
+        final List<T> result = new ArrayList<T>();
+        for (final T each : collection) {
+            if (predicate.eval(each)) {
+                result.add(each);
+            }
+        }
+        return result;
     }
 
     public Set<PhdAlert> getActiveAlerts() {
@@ -1114,7 +1123,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             }
         }
 
-        return CollectionUtils.filter(processDataList, searchPredicate);
+        return filter(processDataList, searchPredicate);
 
     }
 

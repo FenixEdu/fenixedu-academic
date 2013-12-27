@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;

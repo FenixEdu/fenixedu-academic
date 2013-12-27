@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;

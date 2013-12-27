@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.fenixedu.bennu.core.domain.User;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 

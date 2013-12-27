@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.operator.contacts;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation;
@@ -47,10 +47,19 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
 
         final Collection<PartyContactValidation> partyContactValidation =
                 Bennu.getInstance().getInvalidPartyContactValidationsSet();
-        final List<PartyContactValidation> invalidPartyContactValidations =
-                CollectionUtils.filter(partyContactValidation, predicate);
+        final List<PartyContactValidation> invalidPartyContactValidations = filter(partyContactValidation, predicate);
         request.setAttribute("partyContacts", invalidPartyContactValidations);
         return mapping.findForward("showPendingPartyContactsValidation");
+    }
+
+    private static <T> List<T> filter(Collection<T> collection, Predicate<T> predicate) {
+        final List<T> result = new ArrayList<T>();
+        for (final T each : collection) {
+            if (predicate.eval(each)) {
+                result.add(each);
+            }
+        }
+        return result;
     }
 
     public ActionForward validate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.phd;
 
 import javax.servlet.jsp.JspException;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.taglib.logic.ConditionalTagBase;
 
 public class AccessTypeAvailableTag extends ConditionalTagBase {

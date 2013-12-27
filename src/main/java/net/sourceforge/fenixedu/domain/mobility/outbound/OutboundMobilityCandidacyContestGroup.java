@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.commons.Transformer;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -23,6 +22,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
@@ -74,10 +74,10 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     }
 
     public String getDescription() {
-        return StringUtils.join(getSortedExecutionDegrees(), ", ", new Transformer<ExecutionDegree, String>() {
+        return StringUtils.join(getSortedExecutionDegrees(), ", ", new Transformer() {
             @Override
-            public String transform(final ExecutionDegree executionDegree) {
-                return executionDegree.getDegree().getSigla();
+            public String transform(final Object executionDegree) {
+                return ((ExecutionDegree) executionDegree).getDegree().getSigla();
             }
         });
     }

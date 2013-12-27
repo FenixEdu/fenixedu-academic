@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthoriza
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualTeacher;

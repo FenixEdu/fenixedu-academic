@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.log.requests;
 
-import net.sourceforge.fenixedu.util.ArrayUtils;
+import java.util.Arrays;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -27,7 +27,7 @@ public class RequestMapping extends RequestMapping_Base {
 
         for (RequestMapping requestMapping : Bennu.getInstance().getRequestMappingsSet()) {
             if (requestMapping.getPath().equals(path)) {
-                if (ArrayUtils.haveArraysSameElements(requestMapping.getParameters().split("&"), parameters)) {
+                if (Arrays.equals(requestMapping.getParameters().split("&"), parameters)) {
                     return requestMapping;
                 }
             }

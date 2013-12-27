@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;

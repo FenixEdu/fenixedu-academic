@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;

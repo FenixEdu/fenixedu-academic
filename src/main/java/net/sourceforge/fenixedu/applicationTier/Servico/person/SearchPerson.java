@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyTSDProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDProcess;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;

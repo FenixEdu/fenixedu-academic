@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistributi
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.MergeTeacherServiceDistributions;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetCoursesAndTeachersValuationPermission;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetPersonPermissionsOnTSDProcess;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.PersonPermissionsDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TeacherServiceDistributionDTOEntry;
 import net.sourceforge.fenixedu.domain.Employee;

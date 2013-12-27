@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
@@ -91,10 +92,22 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
                 scopeIDList.add(((InfoCurricularCourseScope) iter2.next()).getExternalId().toString());
             }
         }
-        String[] scopeIDArray = CollectionUtils.toArrayOfString(scopeIDList);
+        String[] scopeIDArray = toArrayOfString(scopeIDList);
         createExamForm.set("scopes", scopeIDArray);
 
         return mapping.findForward("showCreateForm");
+    }
+
+    private static String[] toArrayOfString(Collection collection) {
+        String[] strings = new String[collection.size()];
+
+        int i = 0;
+        Iterator iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            strings[i++] = (String) iterator.next();
+        }
+
+        return strings;
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -216,7 +229,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         request.setAttribute(PresentationConstants.LABLELIST_SEASONS, examSeasons);
 
         String[] scopeIDArray = (String[]) createExamForm.get("scopes");
-        List scopeIDList = CollectionUtils.toList(scopeIDArray);
+        List scopeIDList = Arrays.asList(scopeIDArray);
         InfoExecutionCourse executionCourse = (InfoExecutionCourse) executionCourseList.get(executionCourseList.size() - 1);
         Iterator iter2 = executionCourse.getAssociatedInfoCurricularCourses().iterator();
         while (iter2.hasNext()) {
@@ -225,7 +238,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
                 scopeIDList.add(((InfoCurricularCourseScope) iter3.next()).getExternalId().toString());
             }
         }
-        scopeIDArray = CollectionUtils.toArrayOfString(scopeIDList);
+        scopeIDArray = toArrayOfString(scopeIDList);
         createExamForm.set("scopes", scopeIDArray);
 
         String[] rooms = (String[]) createExamForm.get("rooms");

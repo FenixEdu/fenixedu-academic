@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDProfessorship;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetExtraCreditsToTSDTeacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetTSDProfessorship;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TeacherServiceDistributionDTOEntry;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
