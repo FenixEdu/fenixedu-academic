@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.servlets;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,32 +13,48 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.servlets.startup.FenixInitializer.FenixCustomExceptionHandler;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 
-@WebServlet(urlPatterns = "/downloadFile/*")
+import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.FenixFramework;
+
+@WebServlet(urlPatterns = FileDownloadServlet.SERVLET_PATH + "*")
 public class FileDownloadServlet extends HttpServlet {
 
     private static final long serialVersionUID = 6954413451468325605L;
 
+    static final String SERVLET_PATH = "/downloadFile/";
+
+    private final FenixCustomExceptionHandler exceptionHandler = new FenixCustomExceptionHandler();
+
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            super.service(request, response);
+        } catch (Throwable t) {
+            exceptionHandler.handle(request, response, t);
+        }
+    }
+
     @Override
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
-
-        final File file = File.getFileFromURL(request.getRequestURI());
+        final File file = getFileFromURL(request.getRequestURI());
         if (file == null) {
             sendBadRequest(response);
         } else {
             final Person person = AccessControl.getPerson();
             if (!file.isPrivate() || file.isPersonAllowedToAccess(person)) {
                 response.setContentType(file.getMimeType());
-                response.addHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
-                //response.addHeader("Content-Disposition", "attachment; filename=" + file.getFilename());
                 response.setContentLength(file.getSize().intValue());
-                final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-                dos.write(file.getContents());
-                dos.close();
+                byte[] content = file.getContent();
+                try (OutputStream stream = response.getOutputStream()) {
+                    stream.write(content);
+                    stream.flush();
+                }
             } else if (file.isPrivate() && person == null) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.sendRedirect(sendLoginRedirect(request, file));
@@ -62,6 +79,20 @@ public class FileDownloadServlet extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_BAD_REQUEST));
         response.getWriter().close();
+    }
+
+    private final static File getFileFromURL(String url) {
+        // Remove trailing path, and split the tokens
+        String[] parts = url.substring(url.indexOf(SERVLET_PATH)).replace(SERVLET_PATH, "").split("\\/");
+        if (parts.length == 0) {
+            return null;
+        }
+        DomainObject object = FenixFramework.getDomainObject(parts[0]);
+        if (object instanceof File) {
+            return (File) object;
+        } else {
+            return null;
+        }
     }
 
 }

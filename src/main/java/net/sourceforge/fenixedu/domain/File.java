@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -101,19 +100,6 @@ public abstract class File extends File_Base {
 
     public final static String getFileDownloadPrefix() {
         return FenixConfigurationManager.getConfiguration().getFileDownloadUrlLocalContent();
-    }
-
-    public final static File getFileFromURL(String url) {
-        Matcher match = Pattern.compile("downloadFile\\/([0-9]+)\\/").matcher(url);
-        if (match.matches()) {
-            if (match.groupCount() == 2) {
-                String oid = match.group(1);
-                if (oid != null) {
-                    return FenixFramework.getDomainObject(oid);
-                }
-            }
-        }
-        return null;
     }
 
     protected void disconnect() {
