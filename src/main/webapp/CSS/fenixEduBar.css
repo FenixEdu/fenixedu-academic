@@ -1,8 +1,6 @@
 #fenixEduBar {
 	margin: 0px;
 	padding: 0px;
-	padding-left: 25px;
-	padding-right: 25px;
 	border: 0px;
 	width: 100%;
 	height: 34px;
@@ -50,14 +48,14 @@
 	float: left;
 	font-weight: normal;
 	
-	width: 180px;
+/* 	width: 180px; */
 	height: 23px;
 	line-height: 12px;
 	
 	margin: 0px 0px;
 
 	padding-bottom: 0px;
-	padding-left: 0px;
+	padding-left: 25px;
 	padding-right: 0px;
 	padding-top: 11px;
 }

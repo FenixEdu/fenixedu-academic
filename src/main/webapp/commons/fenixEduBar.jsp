@@ -5,10 +5,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0"
-	prefix="dt"%>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1"
-	prefix="str"%>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="str"%>
 <html:xhtml />
 
 <bean:define id="institutionUrl" type="java.lang.String">
@@ -22,10 +20,11 @@
 </bean:define>
 	<bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES" />
 </bean:define>
-<bean:define id="contextId" name="<%=net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY%>" property="selectedTopLevelContainer.externalId" />
+<%-- <bean:define id="contextId" name="<%=net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY%>" property="selectedTopLevelContainer.externalId" /> --%>
 
 <head>
 	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/fenixEduBar.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/general.css" media="screen" />
 </head>
 
 <div id="fenixEduBar">
@@ -33,21 +32,26 @@
 		<a href="<%=institutionUrl%>" target="_blank"><%=institutionName %></a>
 	</h1>
 	<div id="authentication">
-		<p id="user">
-			<logic:notPresent name="USER_SESSION_ATTRIBUTE">
-				<% response.sendRedirect(response.encodeRedirectURL("http://www.google.com")); %>
-			</logic:notPresent>
-			<bean:write name="USER_SESSION_ATTRIBUTE" property="user.person.firstAndLastName"/>	
-		</p>
-	
-		<% if (CoreConfiguration.getConfiguration().developmentMode()) { %>
-			<h1 id="debug-mode">
-				<a class="button" href="#"><bean:message key="debug.mode" bundle="GLOBAL_RESOURCES" /></a>
+		<logic:notPresent name="USER_SESSION_ATTRIBUTE">
+			<h1 id="logout">
+				<html:link styleClass="button" href="loginPage.jsp">Login</html:link>
 			</h1>
-		<% } %>
+		</logic:notPresent>
 		
-		<h1 id="logout">
-			<a class="button" href="<%=request.getContextPath()%>/logoff.do"><bean:message key="link.logout" bundle="GLOBAL_RESOURCES" /></a>
-		</h1>
+		<logic:present name="USER_SESSION_ATTRIBUTE">
+			<p id="user">
+				<bean:write name="USER_SESSION_ATTRIBUTE" property="user.person.firstAndLastName"/>	
+			</p>
+		
+			<% if (CoreConfiguration.getConfiguration().developmentMode()) { %>
+				<h1 id="debug-mode">
+					<a class="button" href="#"><bean:message key="debug.mode" bundle="GLOBAL_RESOURCES" /></a>
+				</h1>
+			<% } %>
+			
+			<h1 id="logout">
+				<a class="button" href="<%=request.getContextPath()%>/logoff.do"><bean:message key="link.logout" bundle="GLOBAL_RESOURCES" /></a>
+			</h1>
+		</logic:present>
 	</div>
 </div>
