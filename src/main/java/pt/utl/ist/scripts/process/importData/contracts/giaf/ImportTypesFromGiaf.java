@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCo
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ServiceExemption;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.fenixedu.bennu.scheduler.annotation.Task;
 
