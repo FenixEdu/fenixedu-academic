@@ -35,6 +35,7 @@
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" key="GEP_RESOURCES" parameter="resources.GEPResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
       <message-resources null="false" key="DEFAULT" parameter="resources.ApplicationResources"></message-resources>
