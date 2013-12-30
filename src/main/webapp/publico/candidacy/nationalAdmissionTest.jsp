@@ -48,7 +48,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/leamb?locale=pt">Licenciatura em Engenharia do Ambiente</a></td>
-			<td>0807/9099</td>
+			<td>1518/9099</td>
 			<td>Alameda</td>
 			<td>35</td>
 			<td>Matemática + Física e Química ou Matem&aacute;tica + Biologia e Geologia</td>
@@ -56,7 +56,7 @@
 		</tr>
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/lean?locale=pt">Licenciatura em Engenharia e Arquitectura Naval</a></td>
-			<td>0807/9911</td>
+			<td>1518/9911</td>
 			<td>Alameda</td>
 			<td>10</td>
 			<td>Matemática + Física e Química</td>
@@ -64,7 +64,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/lee?locale=pt">Licenciatura em Engenharia Electrónica</a></td>
-			<td>0808/9912</td>
+			<td>1519/9912</td>
 			<td>Taguspark</td>			
 			<td>33</td>
 			<td>Matemática + Física e Química</td>
@@ -72,7 +72,7 @@
 		</tr>
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/legm?locale=pt">Licenciatura em Engenharia Geológica e de Minas</a></td>
-			<td>0807/9913</td>
+			<td>1518/9913</td>
 			<td>Alameda</td>
 			<td>15</td>
 			<td>Matemática + Física e Química ou Matemática + Biologia e Geologia</td>
@@ -80,7 +80,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/legi?locale=pt">Licenciatura em Engenharia e Gestão Industrial</a></td>
-			<td>0808/9104</td>
+			<td>1519/9104</td>
 			<td>Taguspark</td>			
 			<td>40</td>
 			<td>Matemática + Física e Química</td>
@@ -88,7 +88,7 @@
 		</tr>
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/leic-a?locale=pt">Licenciatura em Engenharia Informática e de Computadores</a></td>
-			<td>0807/9121</td>
+			<td>1518/9121</td>
 			<td>Alameda</td>
 			<td>170</td>
 			<td>Matemática + Física e Química ou Matemática + Biologia e Geologia</td>
@@ -96,7 +96,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/leic-t?locale=pt">Licenciatura em Engenharia Informática e de Computadores</a></td>
-			<td>0808/9121</td>
+			<td>1519/9121</td>
 			<td>Taguspark</td>			
 			<td>98</td>
 			<td>Matemática + Física e Química ou Matemática + Biologia e Geologia</td>
@@ -104,7 +104,7 @@
 		</tr>	
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/lemat?locale=pt">Licenciatura em Engenharia de Materiais</a></td>
-			<td>0807/9096</td>
+			<td>1518/9096</td>
 			<td>Alameda</td>
 			<td>20</td>
 			<td>Matemática + Física e Química ou Matemática + Biologia e Geologia</td>
@@ -112,7 +112,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/lerc?locale=pt">Licenciatura em Engenharia de Redes de Comunicações</a></td>
-			<td>0808/9746</td>
+			<td>1519/9746</td>
 			<td>Taguspark</td>			
 			<td>68</td>
 			<td>Matemática + Física e Química ou Matemática + Biologia e Geologia</td>
@@ -120,7 +120,7 @@
 		</tr>
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/lmac?locale=pt">Licenciatura em Matemática Aplicada e Computação</a></td>
-			<td>0807/9345</td>
+			<td>1518/9345</td>
 			<td>Alameda</td>			
 			<td>30</td>
 			<td>Matemática + Física e Química ou Matemática + Biologia e Geologia</td>
@@ -141,7 +141,7 @@
 
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/ma?locale=pt">Mestrado em Arquitectura</a></td>
-			<td>0807/9257</td>
+			<td>1518/9257</td>
 
 			<td>Alameda</td>
 			<td>50</td>
@@ -149,7 +149,7 @@
 		</tr>
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/meaer?locale=pt">Mestrado em Engenharia Aeroespacial</a></td>
-			<td>0807/9357</td>
+			<td>1518/9357</td>
 
 			<td>Alameda</td>
 			<td>65</td>
@@ -157,7 +157,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/mebiol?locale=pt">Mestrado em Engenharia Biológica</a></td>
-			<td>0807/9358</td>
+			<td>1518/9358</td>
 
 			<td>Alameda</td>
 			<td>65</td>
@@ -165,7 +165,7 @@
 		</tr>		
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/mebiom?locale=pt">Mestrado em Engenharia Biomédica</a></td>
-			<td>0807/9359</td>
+			<td>1518/9359</td>
 
 			<td>Alameda</td>
 			<td>50</td>
@@ -173,7 +173,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/mec?locale=pt">Mestrado em Engenharia Civil</a></td>
-			<td>0807/9360</td>
+			<td>1518/9360</td>
 
 			<td>Alameda</td>
 			<td>185</td>
@@ -181,7 +181,7 @@
 		</tr>		
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/meec?locale=pt">Mestrado em Engenharia Electrotécnica e de Computadores</a></td>
-			<td>0807/9367</td>
+			<td>1518/9367</td>
 
 			<td>Alameda</td>
 			<td>205</td>
@@ -189,7 +189,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/meft?locale=pt">Mestrado em Engenharia Física Tecnológica</a></td>
-			<td>0807/9458</td>
+			<td>1518/9458</td>
 
 			<td>Alameda</td>
 			<td>60</td>
@@ -197,7 +197,7 @@
 		</tr>
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/memec?locale=pt">Mestrado em Engenharia Mecânica</a></td>	
-			<td>0807/9369</td>	
+			<td>1518/9369</td>	
 			<td>Alameda</td>	
 			<td>165</td>	
 			<td>Matemática + Física e Química</td>	
@@ -205,7 +205,7 @@
 
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/meq?locale=pt">Mestrado em Engenharia Química</a></td>
-			<td>0807/9461</td>
+			<td>1518/9461</td>
 			<td>Alameda</td>
 			<td>70</td>
 			<td>Matemática + Física e Química</td>

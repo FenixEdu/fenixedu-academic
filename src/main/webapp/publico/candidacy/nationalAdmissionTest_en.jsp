@@ -48,7 +48,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/lmac?locale=en">Degree in Applied Mathematics and Computation</a></td>
-			<td>0807/9345</td>
+			<td>1518/9345</td>
 			<td>Alameda</td>			
 			<td>30</td>
 
@@ -56,7 +56,7 @@
 		</tr>
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/lerc?locale=en">Degree in Communication Networks Engineering</a></td>
-			<td>0808/9746</td>
+			<td>1519/9746</td>
 			<td>Taguspark</td>			
 			<td>68</td>
 
@@ -64,7 +64,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/lee?locale=en">Degree in Electronics Engineering</a></td>
-			<td>0808/9912</td>
+			<td>1519/9912</td>
 			<td>Taguspark</td>			
 			<td>33</td>
 
@@ -72,7 +72,7 @@
 		</tr>
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/leamb?locale=en">Degree in Environmental Engineering</a></td>
-			<td>0807/9099</td>
+			<td>1518/9099</td>
 			<td>Alameda</td>
 			<td>35</td>
 
@@ -80,7 +80,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/legi?locale=en">Degree in Industrial Engineering and Management</a></td>
-			<td>0808/9104</td>
+			<td>1519/9104</td>
 			<td>Taguspark</td>			
 			<td>40</td>
 
@@ -88,7 +88,7 @@
 		</tr>
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/leic-a?locale=en">Degree in Information Systems and Computer Engineering</a></td>
-			<td>0807/9121</td>
+			<td>1518/9121</td>
 			<td>Alameda</td>
 			<td>170</td>
 
@@ -96,7 +96,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/leic-t?locale=en">Degree in Information Systems and Computer Engineering</a></td>
-			<td>0808/9121</td>
+			<td>1519/9121</td>
 			<td>Taguspark</td>			
 			<td>98</td>
 
@@ -104,7 +104,7 @@
 		</tr>	
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/lemat?locale=en">Degree in Materials Engineering</a></td>
-			<td>0807/9096</td>
+			<td>1518/9096</td>
 			<td>Alameda</td>
 			<td>20</td>
 
@@ -112,7 +112,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/legm?locale=en">Degree in Mining and Geological Engineering</a></td>
-			<td>0807/9913</td>
+			<td>1518/9913</td>
 			<td>Alameda</td>
 			<td>15</td>
 
@@ -120,7 +120,7 @@
 		</tr>
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/lean?locale=en">Degree in Naval Architecture and Marine Engineering</a></td>
-			<td>0807/9911</td>
+			<td>1518/9911</td>
 			<td>Alameda</td>
 			<td>10</td>
 
@@ -140,7 +140,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/ma?locale=en">Integrated Master Degree in Architecture</a></td>
-			<td>0807/9257</td>
+			<td>1518/9257</td>
 
 			<td>Alameda</td>
 			<td>50</td>
@@ -148,7 +148,7 @@
 		</tr>
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/meaer?locale=en">Integrated Master Degree in Aerospace Engineering</a></td>
-			<td>0807/9357</td>
+			<td>1518/9357</td>
 
 			<td>Alameda</td>
 			<td>65</td>
@@ -156,7 +156,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/mebiol?locale=en">Integrated Master Degree in Biological Engineering</a></td>
-			<td>0807/9358</td>
+			<td>1518/9358</td>
 
 			<td>Alameda</td>
 			<td>65</td>
@@ -164,7 +164,7 @@
 		</tr>		
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/mebiom?locale=en">Integrated Master Degree in Biomedical Engineering</a></td>
-			<td>0807/9359</td>
+			<td>1518/9359</td>
 
 			<td>Alameda</td>
 			<td>50</td>
@@ -172,7 +172,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/mec?locale=en">Integrated Master Degree in Civil Engineering</a></td>
-			<td>0807/9360</td>
+			<td>1518/9360</td>
 
 			<td>Alameda</td>
 			<td>185</td>
@@ -180,7 +180,7 @@
 		</tr>		
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/meec?locale=en">Integrated Master Degree in Electrical and Computer Engineering</a></td>
-			<td>0807/9367</td>
+			<td>1518/9367</td>
 
 			<td>Alameda</td>
 			<td>205</td>
@@ -188,7 +188,7 @@
 		</tr>
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/meft?locale=en">Integrated Master Degree in Physics Engineering</a></td>
-			<td>0807/9458</td>
+			<td>1518/9458</td>
 
 			<td>Alameda</td>
 			<td>60</td>
@@ -196,7 +196,7 @@
 		</tr>
 		<tr class="bluecell">
 			<td><a href="http://fenix.ist.utl.pt/memec?locale=en">Integrated Master Degree in Mechanical Engineering</a></td>	
-			<td>0807/9369</td>	
+			<td>1518/9369</td>	
 			<td>Alameda</td>	
 			<td>165</td>	
 			<td>Mathematics + Physics and Chemistry</td>	
@@ -204,7 +204,7 @@
 
 		<tr>
 			<td><a href="http://fenix.ist.utl.pt/meq?locale=en">Integrated Master Degree in Chemistry</a></td>
-			<td>0807/9461</td>
+			<td>1518/9461</td>
 			<td>Alameda</td>
 			<td>70</td>
 			<td>Mathematics + Physics and Chemistry</td>

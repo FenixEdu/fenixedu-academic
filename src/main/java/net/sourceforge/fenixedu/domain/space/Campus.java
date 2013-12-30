@@ -18,8 +18,8 @@ public class Campus extends Campus_Base {
     private static final String ALAMEDA_NAME = "Alameda";
     private static final String TAGUSPARK_NAME = "Taguspark";
 
-    private static final String ALAMEDA_UNIVERSITY_CODE = "0807";
-    private static final String TAGUSPARK_UNIVERSITY_CODE = "0808";
+    private static final String ALAMEDA_UNIVERSITY_CODE = "1518";
+    private static final String TAGUSPARK_UNIVERSITY_CODE = "1519";
     public static final String DEFAULT_UNIVERSITY_CODE = ALAMEDA_UNIVERSITY_CODE;
 
     public Campus(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {

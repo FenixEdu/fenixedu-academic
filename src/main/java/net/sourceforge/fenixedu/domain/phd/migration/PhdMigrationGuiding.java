@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.Incomplet
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrationGuidingNotFoundException;
 
 public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
-    public static final String IST_INSTITUTION_CODE = "0807";
+    public static final String IST_INSTITUTION_CODE = "1518";
 
     private transient PhdMigrationGuidingBean guidingBean;
 
