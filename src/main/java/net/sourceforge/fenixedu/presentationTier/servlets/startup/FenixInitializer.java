@@ -16,7 +16,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -99,18 +98,6 @@ public class FenixInitializer implements ServletContextListener {
             throw new Error("Error reading actual execution period!", e);
         }
 
-        try {
-            final Boolean result = CheckIsAliveService.run();
-
-            if (result != null && result.booleanValue()) {
-                logger.info("Check is alive is working.");
-            } else {
-                logger.info("Check is alive is not working.");
-            }
-        } catch (Exception ex) {
-            logger.info("Check is alive is not working. Caught excpetion.");
-            ex.printStackTrace();
-        }
         Instalation.ensureInstalation();
         loadLogins();
         loadPersonNames();
